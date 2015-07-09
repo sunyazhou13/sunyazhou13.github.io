@@ -4,7 +4,7 @@
   <title><![CDATA[Asia Sun 的技术博客]]></title>
   <link href="http://sunyazhou13.github.io//atom.xml" rel="self"/>
   <link href="http://sunyazhou13.github.io//"/>
-  <updated>2015-07-09T09:38:11+08:00</updated>
+  <updated>2015-07-09T09:52:56+08:00</updated>
   <id>http://sunyazhou13.github.io//</id>
   <author>
     <name><![CDATA[sunyazhou13]]></name>
@@ -12,5 +12,240 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[第一篇 初出茅庐]]></title>
+    <link href="http://sunyazhou13.github.io//blog/2015/07/09/di-%5B%3F%5D-pian-chu-chu-mao-lu/"/>
+    <updated>2015-07-09T09:49:10+08:00</updated>
+    <id>http://sunyazhou13.github.io//blog/2015/07/09/di-[?]-pian-chu-chu-mao-lu</id>
+    <content type="html"><![CDATA[<p><code>
+http://shengmingzhiqing.com/blog/setup-octopress-with-github-pages.html/
+</code></p>
+
+<ol>
+<li>为什么是 Octopress &amp; Github Pages?</li>
+<li>准备工作
+2.1 安装 git
+2.2 安装 Ruby
+2.3 注册 Github 账号
+2.4 域名指向（可选）</li>
+<li>本地安装 Octopress</li>
+<li>将 Octopress 部署到 Github Pages
+4.1 新建库 (Repository)
+4.2 将本地部署的 Octopress 发布到 Github Pages
+4.3 使用自己的域名（可选）</li>
+<li>发布新贴</li>
+<li>为什么是 Octopress &amp; Github Pages?</li>
+</ol>
+
+
+<p>在做任何事情之前最好先问个为什么，尽管很多情况下未必有答案，但这个做法绝对有好处。用 Octopress 搭建博客，并托管到 Github Pages，撇除一些个人因素之外，我想还有以下几点原因：
+免费且独立。把 Octopress 博客系统搭建到 Github Pages 虽是免费，但不失独立性，即便 Github 全站关闭，你也将有一份本地全站备份，随时可以重新恢复。不必受托管商之气，而且还免费，如果你愿意，甚至可以自行插入广告挣钱。</p>
+
+<p>版本控制。写文章，建网站，做软件都需要修改，但有时候改完了又会后悔，如果有时光机就好了，Git 就是你的时光机。当然如果你不想了解这些看上去很唬人的 IT 名词，只是想写博客的话，请在需要的时候再研究这条的内容。</p>
+
+<p>相对其他托管到 Github 上的博客程序，Octopress 更加成熟易上手。打个比方，Jekyll 可以说是毛坯房，Hexo 和 Octopress 算是简装修，但相比 Hexo，Octopress 有更多装修范例和更多熟练的装修工人，更容易获取帮助。当然如果你只想住精装修的房子，那不得不花点钱上 WordPress 了。</p>
+
+<p>使用 Markdown。Markdown 是现在最为流行的轻量级标记语言，也是已故的天才 Aaron Swartz 留给世人最好的礼物，窃以为每个在互联网上发布文章的人都该掌握。</p>
+
+<p>按照官方的说法，Octopress 是个「为黑客设计的博客框架」，这很酷，你不觉得吗？</p>
+
+<p>如果你之前没有写过博客，打算开始搭建自己第一个博客的话，其实也不妨试试 Octopress，免费还能学到东西，何乐而不为？</p>
+
+<ol>
+<li>准备工作</li>
+</ol>
+
+
+<p>既然是为黑客设计的博客框架，安装起来肯定没有像普通应用程序那么简单，需要一些准备工作，但请相信我，并不复杂。</p>
+
+<p>2.1 安装 git
+既然要使用 Github，那么肯定首先要安装 Git，这个很简单：</p>
+
+<p>点击这里到 Git 官方网站。</p>
+
+<p>找到下图所示的下载链接，按照提示下载并安装。</p>
+
+<p>2.2 安装 Ruby
+先说句题外话，其实我是从 Ruby 语言才知道有诞生石这种说法的。安装 Ruby 稍稍有些复杂，不过你只要按照以下步骤一步一步来就好了：</p>
+
+<p>安装 HomeBrew
+HomeBrew 是一个非常有用的软件包管理系统，你可以把它想象成一个稍微抽象一点的 Mac App Store. 正如我们用 Mac App Store 来安装其他软件一样，我们这一步安装 HomeBrew 的目的是为了安装别的软件 (Ruby) 。当然 Mac App Store 和 HomeBrew 本身也是软件。</p>
+
+<p>安装 HomeBrew 非常简单，打开终端 (Terminal)，执行以下命令（所谓「执行」即「输入+回车」，下同）：</p>
+
+<p>ruby -e &ldquo;$(curl -fsSL <a href="https://raw.github.com/Homebrew/homebrew/go/install">https://raw.github.com/Homebrew/homebrew/go/install</a>)&rdquo;
+如果在执行上如命令的时候弹出需要安装 Xcode Command Line Tool 的提示，直接点击安装即可。</p>
+
+<p>安装好之后最好先执行以下命令：</p>
+
+<p>brew doctor
+此条命令用来诊断安装中出现的问题并提示修复方法，如果没有问题则会显示：</p>
+
+<p>Your system is ready to brew.
+如遇问题，则按照提示处理，如果不懂如何处理可以先试着执行后面的步骤，如果能成功，则没有太大问题，毕竟我们只是想写博客而已。当然，做任何事情之前，备份是必须的。</p>
+
+<p>使用 RVM 安装 Ruby
+执行以下命令安装 RVM，最新的稳定版 Ruby 也会随之安装：</p>
+
+<p>curl -L <a href="https://get.rvm.io">https://get.rvm.io</a> | bash -s stable &ndash;ruby
+为避免出现问题，可执行以下命令安装 Ruby 2.0.0:</p>
+
+<p>rvm install 2.0.0
+rvm use 2.0.0
+rvm rubygems latest
+可以执行 ruby &ndash;version 命令来查看现在使用的 Ruby 版本，确保正在使用的是 Ruby 2.0.0</p>
+
+<p>2.3 注册 Github 账号</p>
+
+<p>这个没什么好说的，早晚需要，去 <a href="http://github.com">http://github.com</a> 注册吧。</p>
+
+<p>2.4 域名指向（可选）</p>
+
+<p>如果你有自己的域名可用，可以在这时就配置好，毕竟解析起来需要一段时间，不如在我们搭建博客的时候让它开始，这样我们搭建完成后，基本上就可以直接用自有域名访问了。</p>
+
+<p>如果你用的是顶级域名，比如 shengmingzhiqing.com, 请创建两个 A 记录 (A Record) 分别指向 192.30.252.153 和 192.30.252.154.</p>
+
+<p>如果你使用二级域名，比如 blog.shengmingzhiqing.com, 请将该域名的 CNAME 指向 [your_username].github.io, 把其中的 [your_username]换成你自己在 Github 上的用户名。</p>
+
+<p>如果你暂时没有域名，这一步可以暂时不用管。</p>
+
+<ol>
+<li>本地安装 Octopress</li>
+</ol>
+
+
+<p>终于进入正题了。有了前面的准备工作，安装 Octopress 显得非常简单：</p>
+
+<p>首先，打开终端 (Terminal) 执行如下命令：</p>
+
+<p>1
+2
+git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+上面的代码中，第一行的作用是把 Octopress 克隆到本地磁盘，将会在你的本地~/user/yourusername 这个文件夹下生成一个名为 octopress 的文件夹。如果你不知道 yourusername 是什么，其实就是你每次打开终端时，$ 这个符号前面显示的那玩意。</p>
+
+<p>第二行的作用是进入这个新建的 octopress 文件夹。这一步可能会碰到一个「是否要信任 .rvmrc file」的问题，输入 yes.</p>
+
+<p>然后我们开始安装 Octopress 所必需的依赖项(dependencies)，执行以下命令：</p>
+
+<p>gem install bundler
+bundle install
+然后执行如下命令安装默认主题：</p>
+
+<p>rake install
+本地安装完毕。顺便说一句，所谓 rake 就是 ruby make 的缩写。</p>
+
+<p>这时你执行如下命令：</p>
+
+<p>rake preview
+然后在浏览器内输入 <a href="http://localhost:4000/%EF%BC%8C%E5%8D%B3%E5%8F%AF%E7%9C%8B%E5%88%B0%E6%88%91%E4%BB%AC%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%88%90%E7%9A%84%E5%8D%9A%E5%AE%A2%E3%80%82%E4%B9%9F%E8%AE%B8%E5%B9%B6%E4%B8%8D%E5%A5%BD%E7%9C%8B%EF%BC%8C%E4%BD%86%E5%BE%88%E4%BB%A4%E4%BA%BA%E5%BC%80%E5%BF%83%EF%BC%8C%E4%B8%8D%E6%98%AF%E4%B9%88%EF%BC%9F">http://localhost:4000/%EF%BC%8C%E5%8D%B3%E5%8F%AF%E7%9C%8B%E5%88%B0%E6%88%91%E4%BB%AC%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%88%90%E7%9A%84%E5%8D%9A%E5%AE%A2%E3%80%82%E4%B9%9F%E8%AE%B8%E5%B9%B6%E4%B8%8D%E5%A5%BD%E7%9C%8B%EF%BC%8C%E4%BD%86%E5%BE%88%E4%BB%A4%E4%BA%BA%E5%BC%80%E5%BF%83%EF%BC%8C%E4%B8%8D%E6%98%AF%E4%B9%88%EF%BC%9F</a></p>
+
+<p>注意，以上各步中如果出现权限问题（关键词 permission），无法完成（关键词 abort）的话，请在各命令前加上 sudo+空格，如有提示，请输入电脑登录密码。</p>
+
+<ol>
+<li>将 Octopress 部署到 Github Pages</li>
+</ol>
+
+
+<p>4.1 新建库 (Repository)</p>
+
+<p>用刚刚注册的 Github 账号登录，然后在点击页面右上角的加号，在弹出菜单中点击 New Repository: 如图所示</p>
+
+<p>然后会跳转到一个新建库 (Create new repository) 的页面，在Repository name一栏填 [your_username].github.io，[your_username] 是你 Github 上的用户名，请务必按照此格式填写，否则无法在 Github 上部署博客。然后点击 Create repository 按钮提交。</p>
+
+<p>如果一切顺利会出现一个页面，有一个 SSH 地址，形如 git@github.com:[your_username]/[your_username].github.io.git，下一步会用到。</p>
+
+<p>4.2 将本地部署的 Octopress 发布到 Github Pages</p>
+
+<p>打开终端 (Terminal)，执行以下命令：</p>
+
+<p>cd octopress
+rake setup_github_pages
+然后会出现一个问句，请把 4.1 步生成的 SSH 地址粘贴到这里，然后回车继续。</p>
+
+<p>执行以下命令：</p>
+
+<p>1
+2
+rake generate
+rake deploy
+第一行命令用来生成页面，第二行命令用来部署页面，可按照字面意思理解。如果理解不了，可以暂且不管。任何一步如果出现失败提示，请使用 sudo。</p>
+
+<p>如果上述内容完成，即可使用 <a href="http://">http://</a>[your_username].github.io/ 访问页面，将会出现一个和在本地预览时相同的页面。</p>
+
+<p>然后，不要忘了把源文件全部发布到 source 分支下面，再一次可以看不懂，执行以下命令：</p>
+
+<p>git add .
+git commit -m &ldquo;备注内容&rdquo;
+git push origin source
+4.3 使用自己的域名（可选）</p>
+
+<p>如果你有自己的域名，并且想指向这个新博客的话，请首先确保执行了 2.4 节中的内容。如果没有执行，可以随时执行。</p>
+
+<p>然后执行下面的命令，注意把 your-domain.com 换成你自己的域名。</p>
+
+<p>echo &lsquo;your-domain.com&rsquo; >> source/CNAME
+然后再次执行以下命令：</p>
+
+<p>rake generate
+rake deploy
+这样你就可以使用自己的域名了。域名解析需要一段时间，如果没有马上生效，请不要着急。如果长时间没有生效，请确保完整执行了 2.4 节和本节内容。</p>
+
+<ol>
+<li>发布新贴</li>
+</ol>
+
+
+<p>博客搭建好了，我们可以开始我们的第一贴了。那么怎么发布新贴呢？如果你真的想像个黑客一样写博客，我们可以继续使用我们的终端 (Terminal) 和命令行，执行以下命令：</p>
+
+<p>cd octopress
+rake new_post[&ldquo;Post Title&rdquo;]
+把其中的 Post Title 替换为你想写的文章标题。然后会有一个名为 yyyy-mm-dd-Post-Title.markdown 的文件在 octopress/source/_posts 目录下生成，其中 yyyy-mm-dd 是你当时的日期。然后执行以下命令：</p>
+
+<p>cd source/_posts/
+vim yyyy-mm-dd-Post-Title.markdown
+即可用 vim 编辑器编辑的刚才的文章了，好吧我知道你作为这篇文章的读者并不是一个能熟练使用 vim 的人，那么请在命令行输入 :q退出这个编辑器。如果你不想假装是个黑客的话，其实发布文章并不需要这么麻烦。</p>
+
+<p>我们直接打开 octopress/source/_posts 文件夹，找到刚才生成的文件，用你喜欢的 Markdown 编辑器（免费的我推荐 Mou，收费的我推荐 Byword）或者文本编辑器打开，对文章内容进行编辑。</p>
+
+<p>打开文件后，你会发现文章开头有这么一段信息:</p>
+
+<p>1
+2
+3
+4
+5
+6</p>
+
+<h2>7</h2>
+
+<p>layout: post<br/>
+title: &ldquo;Post Title&rdquo;<br/>
+date: yyyy-mm-dd hh:mm:ss<br/>
+comments: true</p>
+
+<h2>categories: &ldquo;&rdquo;  </h2>
+
+<p>这其实是这篇文章的元数据：layout 暂时不要理会；title 是这篇文章显示在最终网页上的标题；date 部分是详细的文件生成时间，如 2014-04-28 03:35:00；comment 部分表示是否允许评论，目前显示是允许，如果想关闭评论，请改为 false；categories 指这篇文章的分类目录，请在后面引号中输入，如果没有该目录，则会自动生成。请不要删除这段信息，在这段信息下面开始你的文章内容。</p>
+
+<p>这件事情给我们的启发是，以后发布文章，其实并不需要使用终端命令行生成文件。可以直接将自己写好的文章放到这个文件夹下面，当然请按照 yyyy-mm-dd-Post-Title.markdown 这样的文件格式命名，同时记得在文章前面添加元数据信息。这种做法生成的文章与上面的方法无异。如果你觉得添加元数据信息过于麻烦，推荐一个非常好用的工具：TextExpander。</p>
+
+<p>在文章写好之后，使用命令行执行（仔细观察命令，像不像 generate 和 deploy 的合体？）：</p>
+
+<p>rake gen_deploy
+同样，如果在本节中，任何命令执行失败，没有取得想要结果，请在前面加 sudo。是时候说一说 sudo 命令了，这其实是 super do 的缩写，之所以用它是因为，一般而言 Mac 上最高权限的root 账户默认是关闭的。我们自己的账户哪怕是管理员也在一些地方没有权限操作，super do 其实就是越权操作的意思，因此也往往需要输入密码，一般而言短时间内不需要输入第二次。</p>
+
+<p>这样你的第一篇日志就发布出来了，恭喜你正式开通了基于 Octopress 的独立博客。</p>
+
+<p>当然你会发现似乎文章作者不是你，界面是英文显示，整体排版效果差强人意等等问题，不着急，我们会在接下来的文章中讲解如何配置和修改 Octopress 博客。</p>
+
+<p>对于实用性知识，我的向来的态度是「精益学习」，先把最核心最当紧的问题解决了，其余问题发现一例解决一例，不断在干中学，不断版本迭代。后面讲到如何配置修改 Octopress 博客的文章就秉承这一原则，先将遇到了什么问题，然后将如何寻找解决方法。</p>
+
+<p>顺便说一句，我可能算是第一个提出「精益学习」这个概念的人吧，这个想法来自「精益创业」。</p>
+
+<p>郝海龙 2014年 4月28日   Octopress</p>
+]]></content>
+  </entry>
   
 </feed>
