@@ -5640,7 +5640,7 @@
 .article-entry pre,
 .article-entry .highlight {
   background: #2d2d2d;
-  margin: 0 -20px;
+/*margin: 0 article-padding * -1*/
   padding: 15px 20px;
   border-style: solid;
   border-color: #ddd;
@@ -5670,7 +5670,7 @@
 }
 .article-entry .highlight pre {
   border: none;
-  margin: 0;
+  margin: 10;
   padding: 0;
 }
 .article-entry .highlight table {
@@ -5955,17 +5955,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 ::selection {
-  background: #f39ca4;
+  background: rgba(37,104,163,0.2);
 }
 ::-moz-selection {
-  background: #f39ca4;
+  background: rgba(37,104,163,0.2);
 }
 a {
   text-decoration: none;
-  color: #bf1827;
+  color: #4e97d8;
 }
 a:hover {
-  color: #7b0f19;
+  color: #4e97d8;
   -o-transition: 0.5s;
   -ms-transition: 0.5s;
   -moz-transition: 0.5s;
@@ -6015,16 +6015,12 @@ em {
   font-style: italic;
 }
 blockquote {
-  margin: 1em 0;
-  padding: 2em 1.25em;
-  background: #f8f8f8;
-  border: 1px solid #eee;
-  border-left: 4px solid #999;
-  border-radius: 3px;
+  padding: 10px 20px;
+  margin: 0 0 20px;
   font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-weight: lighter;
   font-size: 1em;
-/*text-align: center; */
+  border-left: 3px solid #4e97d8;
 }
 blockquote p:last-child {
   margin-bottom: 0;
@@ -6128,7 +6124,7 @@ td:last-child {
 .time a:hover,
 .author a:hover,
 .tags a:hover {
-  color: #7b0f19;
+  color: #4e97d8;
 }
 .excerpt {
   margin: 0;
@@ -6158,7 +6154,7 @@ td:last-child {
   position: relative;
   display: inline-block;
   padding: 8px 18px 9px 18px;
-  background: #bf1827;
+  background: #4e97d8;
   border-radius: 3px;
   text-align: center;
   color: #fff;
@@ -6391,7 +6387,7 @@ hr {
 .btn,
 .navigation__item a {
   padding: 10px 20px;
-  border: 1px solid #bf1827;
+  border: 1px solid #4e97d8;
   border-radius: 20px;
   font-size: 0.9em;
   font-weight: bold;
@@ -6406,7 +6402,7 @@ hr {
   border-color: #4e97d8;
 }
 .btn-border-small {
-  border: 1px solid #bf1827;
+  border: 1px solid #4e97d8;
   border-radius: 20px;
   padding: 6px 8px;
   font-size: 0.8em;
@@ -6546,7 +6542,7 @@ i {
   color: #333;
 }
 .post-list__post-title a:hover {
-  color: #7b0f19;
+  color: #4e97d8;
 }
 .post-list__meta {
   display: block;
