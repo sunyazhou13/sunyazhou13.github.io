@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>東引瓯越 | 不断学习, 与时俱进.</title>
+    <title>Webview的NSScrollView禁用滑动功能 | 東引瓯越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="東引瓯越 | 不断学习, 与时俱进.">
+    <meta name="twitter:title" content="Webview的NSScrollView禁用滑动功能 | 東引瓯越">
     <meta name="twitter:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="東引瓯越 | 不断学习, 与时俱进.">
+    <meta property="og:title" content="Webview的NSScrollView禁用滑动功能 | 東引瓯越">
     <meta property="og:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引瓯越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou13.github.io"/>
+    <link rel="canonical" href="http://sunyazhou13.github.io/2017/02/09/Webview的NSScrollView禁用滑动功能/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -168,76 +168,100 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="archives">
+            <article class="post-container post-container--single">
 
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-09T05:37:28.000Z" class="post-list__meta--date date">2017-02-09</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-
-  
-  
-    
-    
-    <section class="archive-list__wrap">
-      <div class="archive-list__year-wrap">
-        <a href="/archives/2017" class="archive-list__year">2017</a>
-      </div>
-      <div class="archive-list">
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-01-28T05:42:34.000Z" class="archive-list__date">2017-01-28</time>
-
+</span>
     </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/01/28/2017回家过年/" title="link to post.title" class="archive-list__title">2017回家过年</a>
-  </div>
-  </div>
+    <h1 class="post-title">Webview的NSScrollView禁用滑动功能</h1>
+  </header>
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-01-18T05:44:57.000Z" class="archive-list__date">2017-01-18</time>
+  <section class="post">
+    <p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码属于<code>macOS</code>上的开发内容.</p>
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/01/18/iOS开发知识点积累/" title="link to post.title" class="archive-list__title">iOS开发知识点积累</a>
-  </div>
-  </div>
+  </section>
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-01-13T03:38:30.000Z" class="archive-list__date">2017-01-13</time>
+</article>
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/01/13/学习macOS开发的路线/" title="link to post.title" class="archive-list__title">学习macOS开发的路线</a>
-  </div>
-  </div>
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/09/如何使用git管理代码/" title="如何使用git管理代码">如何使用git管理代码</a></h2>
+                <p class="excerpt">
+                
+                全局配置git$ git config --global user.name &quot;username&quot;  $ git config --golbal user.email &quot;email@you.com&quot;
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-01-13T03:18:07.000Z" class="archive-list__date">2017-01-13</time>
+username 一般代表提交的本机用户名email@you.com 一般是邮箱地址 
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/01/13/UIViewController代码规范/" title="link to post.title" class="archive-list__title">UIViewController代码规范</a>
-  </div>
-  </div>
+创建本地
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-09T11:35:45.000Z" class="post-list__meta--date date">2017-02-09</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
+</span><a class="btn-border-small" href="/2017/02/09/如何使用git管理代码/">继续阅读</a></div>
 
-</div>
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/01/28/2017回家过年/" title="2017回家过年">2017回家过年</a></h2>
+                <p class="excerpt">
+                
+                
+
+练习了一年的小楷, 感谢老乡潘旭的帮助，我的书法有很多提升.
+
+出发当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
+高铁睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。我就是从这片黑土地走出去的年轻人, 我2
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-01-28T05:42:34.000Z" class="post-list__meta--date date">2017-01-28</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/生活/">生活</a>
+
+</span><a class="btn-border-small" href="/2017/01/28/2017回家过年/">继续阅读</a></div>
+
+            </div>
+        
+   
 </section>
 
 
-</div>
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sunyazhou13.github.io/2017/02/09/Webview的NSScrollView禁用滑动功能/" data-title="Webview的NSScrollView禁用滑动功能" data-url="http://sunyazhou13.github.io/2017/02/09/Webview的NSScrollView禁用滑动功能/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sunyazhou13"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
 
 
             <footer class="footer">

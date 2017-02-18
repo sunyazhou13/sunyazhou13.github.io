@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunyazhou13.github.io/"/>
-  <updated>2017-01-31T12:16:18.000Z</updated>
+  <updated>2017-02-18T05:31:42.000Z</updated>
   <id>http://sunyazhou13.github.io/</id>
   
   <author>
@@ -14,6 +14,234 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS语言本地化/国际化一些技巧</title>
+    <link href="http://sunyazhou13.github.io/2017/02/17/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/"/>
+    <id>http://sunyazhou13.github.io/2017/02/17/iOS语言本地化-国际化一些技巧/</id>
+    <published>2017-02-17T02:01:19.000Z</published>
+    <updated>2017-02-18T05:31:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="代码获取国际化语言数组"><a href="#代码获取国际化语言数组" class="headerlink" title="代码获取国际化语言数组  "></a>代码获取国际化语言数组  </h2><p>获取当前app使用的语言<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
+<p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *lans = @[<span class="string">@"en"</span>];</div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setObject:lans forKey:<span class="string">@"AppleLanguages"</span>];</div></pre></td></tr></table></figure>
+<h2 id="修改scheme切换启动语言"><a href="#修改scheme切换启动语言" class="headerlink" title="修改scheme切换启动语言"></a>修改scheme切换启动语言</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/Snip20170217_2.png" alt="图1"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/Snip20170217_3.png" alt="图2"></p>
+<blockquote>
+<p><code>-AppleLanguages (zh-Hans)</code> 代表简体中文<br><code>-AppleLanguages (zh-Hant)</code> 代表繁体中文<br><code>-AppleLanguages (en)</code> 代表英文<br>其它小伙伴们自己总结一下也可以 注意 <strong>空格</strong> </p>
+</blockquote>
+<h2 id="国际化取不同图片代码"><a href="#国际化取不同图片代码" class="headerlink" title="国际化取不同图片代码"></a>国际化取不同图片代码</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *imageView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">//xxx 是国际化 图片的名字 例如xxx.png </span></div><div class="line">    <span class="comment">//如果是 xxx.jpg 必须写把xxx 替换成xxx.jpg</span></div><div class="line">    <span class="built_in">NSString</span> *imageName = <span class="built_in">NSLocalizedString</span>(<span class="string">@"xxx"</span>, <span class="literal">nil</span>); </div><div class="line">    <span class="keyword">self</span>.imageView.image = [<span class="built_in">UIImage</span> imageNamed:imageName];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>下面是我写的一个<a href="https://github.com/sunyazhou13/LocalizedDemo/tree/master" target="_blank" rel="external">demo</a><br>主要完成 如下内容 </p>
+<ol>
+<li>工程名称配置plist 国际化  </li>
+<li>字符串国际化  </li>
+<li>自定义字符串国际化  </li>
+<li>图片国际化  </li>
+</ol>
+<p>参考 <a href="http://www.jianshu.com/p/88c1b65e3ddb" target="_blank" rel="external">VV木公子</a> </p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;代码获取国际化语言数组&quot;&gt;&lt;a href=&quot;#代码获取国际化语言数组&quot; class=&quot;headerlink&quot; title=&quot;代码获取国际化语言数组  &quot;&gt;&lt;/a&gt;代码获取国际化语言数组  &lt;/h2&gt;&lt;p&gt;获取当前app使用的语言&lt;br&gt;&lt;figure class=
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搭建hexo博客教程</title>
+    <link href="http://sunyazhou13.github.io/2017/02/10/%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/"/>
+    <id>http://sunyazhou13.github.io/2017/02/10/搭建hexo博客教程/</id>
+    <published>2017-02-10T02:24:25.000Z</published>
+    <updated>2017-02-18T05:31:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p><a href="http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html" target="_blank" rel="external">Jekyll迁移到Hexo搭建个人博客</a>  </p>
+<p><a href="http://www.czhzero.com/2016/06/25/hexoblog/" target="_blank" rel="external">HEXO + Github 搭建自己的博客系统</a></p>
+<p><a href="http://skx926.com/2016/01/26/build-hexo/" target="_blank" rel="external">利用Hexo和Github Pages搭建个人博客</a></p>
+</blockquote>
+<p>上边是我参考的文章<br>主要是环境比较费劲  </p>
+<pre><code>1. nodejs  
+2. npm包管理工具  
+3. hexo  
+4. nvm管理node  
+5. 本地配置重启shell又被reverse  
+6. ...其它
+</code></pre><p>多数都是参考喵神写的博客</p>
+<p>都是眼泪搭建起来的博客, 完全免费, 可以说是模仿iOS开发者的领袖喵神的blog</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Jekyll迁移到Hexo搭建个人博客&lt;/a&gt;  &lt;/
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DFS算法扫描上传文件/文件夹</title>
+    <link href="http://sunyazhou13.github.io/2017/02/10/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9/"/>
+    <id>http://sunyazhou13.github.io/2017/02/10/DFS算法扫描上传文件-文件夹/</id>
+    <published>2017-02-10T02:07:55.000Z</published>
+    <updated>2017-02-18T05:31:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="DFS需求背景"><a href="#DFS需求背景" class="headerlink" title="DFS需求背景"></a>DFS需求背景</h2><blockquote>
+<p>在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况</p>
+</blockquote>
+<pre><code>1. 如果文件里面包含子文件夹的N层嵌套
+2. 如何过滤非空文件夹
+3. 如何处理根层文件夹没有文件那么文件目录也需要创建
+</code></pre><p>举例例子<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_3.png" alt=""></p>
+<p>这种文件夹如何 <code>此文件夹为空且是叶子结点</code> 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 <code>/1/</code> 的话应该就不用创建了.</p>
+<p>还有一种情况  </p>
+<blockquote>
+<p>eg: ~/Downloads/A/B/C/ 里面有个 1.txt<br>路径是: ~/Downloads/A/B/C//A/B/C/1.txt</p>
+</blockquote>
+<p>一般如果广度优先做上传的话 Downloads、A、B、C分别要发4个http请求<br>如果深度优先发一个上传这个文件~/Downloads/A/B/C//A/B/C/1.txt就可以了，因为一般server都会做 容错处理发现父目录有没有没有就创建之类的逻辑。</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
+<p>不要害怕, 很简单<br>一般我们处理这种问题都是采用自己写的递归算法, 估计是鄙人算法不咋好没搞出来什么好的递归,最后找到了 苹果自带的递归方法</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//搞个点击事件 在这里我拿macOS上的 文件选择面板做一下测试</span></div><div class="line">- (<span class="keyword">IBAction</span>)dfsAction:(<span class="built_in">NSButton</span> *)sender</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSOpenPanel</span> *panelPath = [<span class="built_in">NSOpenPanel</span> openPanel];</div><div class="line">    [panelPath setCanChooseFiles:<span class="literal">YES</span>];</div><div class="line">    [panelPath setCanChooseDirectories:<span class="literal">YES</span>];</div><div class="line">    [panelPath setTitle:<span class="string">@"上传文件选择"</span>];</div><div class="line">    [panelPath setCanCreateDirectories:<span class="literal">YES</span>];</div><div class="line">    [panelPath setPrompt:<span class="string">@"上传"</span>];</div><div class="line">    [panelPath setMessage:<span class="string">@"这就是message"</span>];</div><div class="line">    panelPath.allowsMultipleSelection = <span class="literal">YES</span>;</div><div class="line">    [panelPath beginSheetModalForWindow:<span class="keyword">self</span>.window completionHandler:^(<span class="built_in">NSInteger</span> result) &#123;</div><div class="line">        <span class="keyword">if</span> (result == <span class="built_in">NSFileHandlingPanelOKButton</span>) &#123;</div><div class="line">            [<span class="keyword">self</span> dfsUrls:panelPath.URLs];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_1.png" alt=""></p>
+<p>然后  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 选择文件夹的目录</div><div class="line"></div><div class="line"> @param urls 所有选中的目录/文件URL</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)dfsUrls:(<span class="built_in">NSArray</span> *)urls</div><div class="line">&#123;</div><div class="line">	<span class="comment">//开一个线程在异步处理这些耗时任务</span></div><div class="line">	<span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"所有URLs%@"</span>,urls);</div><div class="line">        <span class="keyword">if</span> (urls.count == <span class="number">0</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">        </div><div class="line">        <span class="built_in">NSTimeInterval</span> currentTime = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970];</div><div class="line">        <span class="comment">//深度遍历</span></div><div class="line">        <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line">        <span class="built_in">NSMutableArray</span> *urlDirFiles = [[<span class="built_in">NSMutableArray</span> alloc] initWithCapacity:<span class="number">0</span>];</div><div class="line">        <span class="built_in">NSArray</span> *keys = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="built_in">NSURLIsDirectoryKey</span>,<span class="built_in">NSURLParentDirectoryURLKey</span>, <span class="literal">nil</span>];</div><div class="line">        <span class="built_in">NSUInteger</span> *total = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSURL</span> *localUrl <span class="keyword">in</span> urls) &#123;</div><div class="line">            <span class="built_in">NSDirectoryEnumerator</span> *enumerator = [<span class="keyword">self</span> enumeratorPathByFileManager:fileManager atURL:localUrl propertiesForKeys:keys options:<span class="number">0</span>];</div><div class="line">            </div><div class="line">            <span class="comment">//这里包含的元素是 有子文件的忽略父路径结点</span></div><div class="line">            <span class="comment">//eg: /A/1/2/ (这个就需要移除)   /A/1/2/sun.txt(保留这个文件即可）</span></div><div class="line">            <span class="keyword">for</span> (<span class="built_in">NSURL</span> *url <span class="keyword">in</span> enumerator) &#123;</div><div class="line">                total++;</div><div class="line">                <span class="built_in">NSError</span> *error;</div><div class="line">                <span class="built_in">NSNumber</span> *isDirectory = <span class="literal">nil</span>;</div><div class="line">                <span class="keyword">if</span> (![url getResourceValue:&amp;isDirectory forKey:<span class="built_in">NSURLIsDirectoryKey</span> error:&amp;error]) &#123;</div><div class="line">                    <span class="comment">// handle error</span></div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                <span class="comment">//是否为文件夹</span></div><div class="line">                <span class="keyword">if</span> ([isDirectory boolValue]) &#123;</div><div class="line">                    <span class="comment">//方案1</span></div><div class="line"><span class="comment">//                    NSDirectoryEnumerator *dirEnumerator = [self enumeratorPathByFileManager:fileManager atURL:url propertiesForKeys:@[NSURLIsDirectoryKey] options:NSDirectoryEnumerationSkipsSubdirectoryDescendants];</span></div><div class="line"><span class="comment">//                    if (dirEnumerator.allObjects.count &gt; 0) &#123;</span></div><div class="line"><span class="comment">//                        NSLog(@"文件夹内有文件,忽略此条路径 %@",[url path]);</span></div><div class="line"><span class="comment">//                    &#125; else &#123;</span></div><div class="line"><span class="comment">//                        [urlDirFiles addObject:[url path]];</span></div><div class="line"><span class="comment">//                    &#125;</span></div><div class="line">                    </div><div class="line">                    <span class="comment">//方案2</span></div><div class="line">                    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">                    <span class="built_in">NSArray</span> *listOfFiles = [fileManager contentsOfDirectoryAtPath:[url path] error:<span class="literal">nil</span>];</div><div class="line">                    <span class="keyword">if</span> (listOfFiles != <span class="literal">nil</span> &amp;&amp; listOfFiles.count == <span class="number">0</span>) &#123;</div><div class="line">                        [urlDirFiles addObject:[url path]];</div><div class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (error == <span class="literal">nil</span>)&#123;</div><div class="line">                        <span class="built_in">NSLog</span>(<span class="string">@"文件夹内有文件,忽略此条路径 %@"</span>,[url path]);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="built_in">NSLog</span>(<span class="string">@"文件遍历该层出错:%@"</span>,error);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    [urlDirFiles addObject:[url path]];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"所有可上传文件列表:\n%@"</span>,urlDirFiles);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">NSTimeInterval</span> nowTime = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"\n文件数量:%zd 遍历总数:%zd\n耗时:%.2f 秒"</span>,urlDirFiles.count,total,(nowTime - currentTime));</div><div class="line">        total = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"scan end"</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来就是最核心的代码块  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">NSDirectoryEnumerator</span> *)enumeratorPathByFileManager:(<span class="built_in">NSFileManager</span> *)fileManager</div><div class="line">                                                 atURL:(<span class="built_in">NSURL</span> *)url</div><div class="line">                                     propertiesForKeys:(<span class="keyword">nullable</span> <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *)keys</div><div class="line">                                               options:(<span class="built_in">NSDirectoryEnumerationOptions</span>)mask</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSDirectoryEnumerator</span> *enumerator = [fileManager</div><div class="line">                                         enumeratorAtURL:url</div><div class="line">                                         includingPropertiesForKeys:keys</div><div class="line">                                         options:mask</div><div class="line">                                         errorHandler:^(<span class="built_in">NSURL</span> *url, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">                                             <span class="comment">// Handle the error.</span></div><div class="line">                                             <span class="comment">// Return YES if the enumeration should continue after the error.</span></div><div class="line">                                             <span class="built_in">NSLog</span>(<span class="string">@"深度遍历出错%@"</span>,error);</div><div class="line">                                             <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">                                         &#125;];</div><div class="line">    <span class="keyword">return</span> enumerator;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>NSDirectoryEnumerator</code> 是一个路径枚举迭代器 </p>
+<blockquote>
+<p>talk is cheap, show me the result.  </p>
+</blockquote>
+<p>下面是我扫描本地<code>下载</code>目录的结果<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_4.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/%E5%9B%BE%E7%89%87%201.png" alt=""></p>
+<p>结果还是比较快的 </p>
+<p>单从数据上来讲 比广度优先节省至少7万次Http请求</p>
+<p>我怀疑是macOS对系统目录有索引或者缓存 第二次扫码速度比较快</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看，效果还可以，如果你有更好的算法来解决这种问题 欢迎@我 或者发邮件我也学习一下. </p>
+<blockquote>
+<p><a href="https://github.com/sunyazhou13/DFSDemo" target="_blank" rel="external">最终DFSdemo</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;DFS需求背景&quot;&gt;&lt;a href=&quot;#DFS需求背景&quot; class=&quot;headerlink&quot; title=&quot;DFS需求背景&quot;&gt;&lt;/a&gt;DFS需求背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何使用git管理代码</title>
+    <link href="http://sunyazhou13.github.io/2017/02/09/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/"/>
+    <id>http://sunyazhou13.github.io/2017/02/09/如何使用git管理代码/</id>
+    <published>2017-02-09T11:35:45.000Z</published>
+    <updated>2017-02-18T05:31:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>username</code> 一般代表提交的本机用户名<br><code>email@you.com</code> 一般是邮箱地址 </p>
+</blockquote>
+<h2 id="创建本地仓库进行初始化"><a href="#创建本地仓库进行初始化" class="headerlink" title="创建本地仓库进行初始化  "></a>创建本地仓库进行初始化  </h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git init</div></pre></td></tr></table></figure>
+<blockquote>
+<p>执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面</p>
+</blockquote>
+<h2 id="克隆远程版本库"><a href="#克隆远程版本库" class="headerlink" title="克隆远程版本库"></a>克隆远程版本库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git@github.com:sunyazhou13/sunyazhou13.github.io.git</div></pre></td></tr></table></figure>
+<h2 id="查看当前代码库状况"><a href="#查看当前代码库状况" class="headerlink" title="查看当前代码库状况"></a>查看当前代码库状况</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git status</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>git status</code> 命令会显示当前代码库的状况，包括添加，修改（modified），删除（deleted）</p>
+</blockquote>
+<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>指向git当前最新版本为<code>HEAD</code>，<code>HEAD^</code>表示上一版本，<code>HEAD^^</code>上上一个版本，<code>HEAD~100</code>表示往上100个版本</p>
+<h2 id="添加本地修改代码"><a href="#添加本地修改代码" class="headerlink" title="添加本地修改代码"></a>添加本地修改代码</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">//添加当前目录的所有修改</div><div class="line">$ git add .</div></pre></td></tr></table></figure>
+<blockquote>
+<p>//如果需要添加指定文件可以这样<br><code>$ git add  A B  C</code>  // 中间用空格隔开<br>//如果有些文件标红 代表未纳入git 管理 可以 <code>rm -rf xxx</code>删除该文件<br>//如果有些文件标黄 代表有修改<br>//如果有些文件标绿 代表有文件已经纳入 <code>git</code> 管理</p>
+</blockquote>
+<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git commit -am <span class="string">"[产品名称][迭代名称] 1.修改点 2.修改点xxx"</span></div></pre></td></tr></table></figure>
+<h2 id="push到git代码仓库"><a href="#push到git代码仓库" class="headerlink" title="push到git代码仓库"></a>push到<code>git</code>代码仓库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
+</blockquote>
+<h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
+<blockquote>
+<p>回到本地代码库库中，执行</p>
+</blockquote>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><p>创建分支并切换过去<br><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git branch -b 分支名</div></pre></td></tr></table></figure></p>
+<p>切换分支</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git checkout 分支名</div></pre></td></tr></table></figure>
+<blockquote>
+<p>查看远程分支 <code>git branch -r</code> r 代表remote</p>
+</blockquote>
+<p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
+<p>持续更新</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;全局配置git&quot;&gt;&lt;a href=&quot;#全局配置git&quot; class=&quot;headerlink&quot; title=&quot;全局配置git&quot;&gt;&lt;/a&gt;全局配置git&lt;/h2&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;co
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Webview的NSScrollView禁用滑动功能</title>
+    <link href="http://sunyazhou13.github.io/2017/02/09/Webview%E7%9A%84NSScrollView%E7%A6%81%E7%94%A8%E6%BB%91%E5%8A%A8%E5%8A%9F%E8%83%BD/"/>
+    <id>http://sunyazhou13.github.io/2017/02/09/Webview的NSScrollView禁用滑动功能/</id>
+    <published>2017-02-09T05:37:28.000Z</published>
+    <updated>2017-02-18T05:31:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码属于<code>macOS</code>上的开发内容.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在&lt;code&gt;webview&lt;/code&gt;的&lt;code&gt;WebFrameLoadDelegate&lt;/code&gt;代理里面实现如下代码&lt;/p&gt;
+&lt;figure class=&quot;highlight objc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;di
+    
+    </summary>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/categories/macOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>2017回家过年</title>
@@ -85,7 +313,7 @@
     <link href="http://sunyazhou13.github.io/2017/01/18/iOS%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/"/>
     <id>http://sunyazhou13.github.io/2017/01/18/iOS开发知识点积累/</id>
     <published>2017-01-18T05:44:57.000Z</published>
-    <updated>2017-01-24T09:02:04.000Z</updated>
+    <updated>2017-02-18T05:31:42.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航</p>
@@ -137,6 +365,21 @@
 <p>话说 我个人认为学习masonry只需要看看 中文翻译之后 再去看看土土哥的教程就会了。土土哥的masonry教程简直就是中文文档。写的非常好</p>
 </blockquote>
 <h2 id="Cocoapods"><a href="#Cocoapods" class="headerlink" title="Cocoapods"></a>Cocoapods</h2><p><strong><a href="http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">用CocoaPods做iOS程序的依赖管理</a></strong> 巧神的文章必看</p>
+<h2 id="博客列表"><a href="#博客列表" class="headerlink" title="博客列表"></a>博客列表</h2><table>
+<thead>
+<tr>
+<th>Blog</th>
+<th>Feed</th>
+<th>Update Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.jianshu.com/users/aa6c2a4a126c/latest_articles" target="_blank" rel="external">Realank - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/161.json" target="_blank" rel="external">jianshu</a> | 2016-05-20<br><a href="http://allluckly.cn/" target="_blank" rel="external">Bison的技术博客 – iOS开发</a> | <a href="http://allluckly.cn/feed.xml" target="_blank" rel="external">feed</a> | 2016-05-19<br><a href="http://www.jianshu.com/users/ee84d859d5f0/latest_articles" target="_blank" rel="external">YM2rr - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/152.json" target="_blank" rel="external">jianshu</a> | 2016-05-17<br><a href="http://www.jianshu.com/users/476877f2e719/latest_articles" target="_blank" rel="external">AlexPei - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/160.json" target="_blank" rel="external">jianshu</a> | 2016-05-17<br><a href="http://xiongzenghuidegithub.github.io/" target="_blank" rel="external">一个iOS菜菜的白话文记录</a> | <a href="http://xiongzenghuidegithub.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-17<br><a href="http://www.jianshu.com/users/4633193fb272/latest_articles" target="_blank" rel="external">Migi000 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/159.json" target="_blank" rel="external">jianshu</a> | 2016-05-16<br><a href="http://blog.sunnyxx.com/" target="_blank" rel="external">sunnyxx的技术博客</a> | <a href="http://blog.sunnyxx.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-14<br><a href="http://everettjf.github.io/" target="_blank" rel="external">everettjf</a> | <a href="http://everettjf.github.io/feed.xml" target="_blank" rel="external">feed</a> | 2016-05-13<br><a href="http://www.jianshu.com/users/263107bb1199/latest_articles" target="_blank" rel="external">饶志臻 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/157.json" target="_blank" rel="external">jianshu</a> | 2016-05-12<br><a href="http://blog.callmewhy.com/" target="_blank" rel="external">Why’s Blog</a> | <a href="http://blog.callmewhy.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-11<br><a href="http://www.jianshu.com/users/da3e1f68113d/latest_articles" target="_blank" rel="external">康大亮 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/158.json" target="_blank" rel="external">jianshu</a> | 2016-05-10<br><a href="http://blog.devtang.com/" target="_blank" rel="external">唐巧的技术博客</a> | <a href="http://blog.devtang.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-08<br><a href="http://yulingtianxia.com/" target="_blank" rel="external">yulingtianxia’s blog</a> | <a href="http://yulingtianxia.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-06<br><a href="http://tutuge.me/" target="_blank" rel="external">土土哥的技术Blog</a> | <a href="http://tutuge.me/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-02<br><a href="http://casatwy.com/" target="_blank" rel="external">Casa Taloyum</a> | <a href="http://casatwy.com/feeds/all.atom.xml" target="_blank" rel="external">feed</a> | 2016-04-30<br><a href="http://www.cocoawithlove.com/" target="_blank" rel="external">Cocoa with Love</a> | <a href="http://www.cocoawithlove.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-30<br><a href="https://andelf.github.io/" target="_blank" rel="external">猫·仁波切</a> | <a href="https://andelf.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2016-04-28<br><a href="http://xiangwangfeng.com/" target="_blank" rel="external">阿毛的蛋疼地</a> | <a href="http://xiangwangfeng.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-04-27<br><a href="http://www.jianshu.com/users/233c37d8a732/latest_articles" target="_blank" rel="external">HenryCheng - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/162.json" target="_blank" rel="external">jianshu</a> | 2016-04-27<br><a href="http://www.jianshu.com/users/7f2da8d4ae92/latest_articles" target="_blank" rel="external">Boy_iOS - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/165.json" target="_blank" rel="external">jianshu</a> | 2016-04-27<br><a href="http://nshipster.com/" target="_blank" rel="external">NSHipster</a> | <a href="http://nshipster.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-25<br><a href="http://www.olinone.com/" target="_blank" rel="external">庞海礁的个人空间 - https://github.com/panghaijiao</a> | <a href="http://www.olinone.com/?feed=rss2" target="_blank" rel="external">feed</a> | 2016-04-24<br><a href="http://www.jianshu.com/users/8c113f14f2e3/latest_articles" target="_blank" rel="external">韩七夏 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/151.json" target="_blank" rel="external">jianshu</a> | 2016-04-20<br><a href="http://onevcat.com/" target="_blank" rel="external">OneV’s Den</a> | <a href="http://onevcat.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-19<br><a href="http://kittenyang.com/" target="_blank" rel="external">Kitten’s 时间胶囊</a> | <a href="http://kittenyang.com/rss" target="_blank" rel="external">feed</a> | 2016-04-18<br><a href="http://blog.zhowkev.in/" target="_blank" rel="external">Kevin</a> | <a href="http://blog.zhowkev.in/rss/" target="_blank" rel="external">feed</a> | 2016-04-09<br><a href="http://geeklu.com/" target="_blank" rel="external">Luke’s Homepage   卢克</a> | <a href="http://geeklu.com/feed" target="_blank" rel="external">feed</a> | 2016-03-31<br><a href="http://www.jianshu.com/users/b82d2721ba07/latest_articles" target="_blank" rel="external">叶孤城___ - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/150.json" target="_blank" rel="external">jianshu</a> | 2016-03-25<br><a href="http://www.jianshu.com/users/789039ed7f4c/latest_articles" target="_blank" rel="external">iOS_Cqlee - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/166.json" target="_blank" rel="external">jianshu</a> | 2016-03-08<br><a href="http://blog.leichunfeng.com/" target="_blank" rel="external">雷纯锋的技术博客</a> | <a href="http://blog.leichunfeng.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-02-27<br><a href="http://iiiyu.com/" target="_blank" rel="external">萧宸宇   如果不能成为拯救世界的神，那就堕落到征服世界的魔吧。</a> | <a href="http://iiiyu.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-02-23<br><a href="http://www.jianshu.com/users/1f93e3b1f3da/latest_articles" target="_blank" rel="external">小笨狼 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/156.json" target="_blank" rel="external">jianshu</a> | 2016-02-22<br><a href="http://blog.nswebfrog.com/" target="_blank" rel="external">nswebfrog’ Homepage   nswebfrog</a> | <a href="http://blog.nswebfrog.com/feed/" target="_blank" rel="external">feed</a> | 2016-02-20<br><a href="http://blog.ibireme.com/" target="_blank" rel="external">Garan no dou   一只魔法师的工坊</a> | <a href="http://blog.ibireme.com/feed/" target="_blank" rel="external">feed</a> | 2016-01-15<br><a href="http://gracelancy.com/" target="_blank" rel="external">Lancy’s Blog</a> | <a href="http://gracelancy.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-01-05<br><a href="http://www.jianshu.com/users/1fb7af67f724/latest_articles" target="_blank" rel="external">Girl_iOS - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/167.json" target="_blank" rel="external">jianshu</a> | 2015-12-17<br><a href="http://adad184.com/" target="_blank" rel="external">里脊串的开发随笔</a> | <a href="http://adad184.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-12-04<br><a href="https://blog.cnbluebox.com/" target="_blank" rel="external">刘坤的技术博客</a> | <a href="https://blog.cnbluebox.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-11-28<br><a href="http://www.tanhao.me/" target="_blank" rel="external">老谭笔记</a> | <a href="http://www.tanhao.me/atom.xml" target="_blank" rel="external">feed</a> | 2015-11-21<br><a href="http://beyondvincent.com/" target="_blank" rel="external">破船之家</a> | <a href="http://beyondvincent.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-10-16<br><a href="http://nshipster.cn/" target="_blank" rel="external">NSHipster 中文版</a> | <a href="http://nshipster.cn/feed.xml" target="_blank" rel="external">feed</a> | 2015-10-04<br><a href="http://blog.csdn.net/lucky_06" target="_blank" rel="external">lucky_06的专栏 - 博客频道 - CSDN.NET</a> | <a href="http://blog.csdn.net/lucky_06/rss/list" target="_blank" rel="external">feed</a> | 2015-09-29<br><a href="http://wonderffee.github.io/" target="_blank" rel="external">Wonderffee’s Blog</a> | <a href="http://wonderffee.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2015-09-24<br><a href="http://www.cnblogs.com/kenshincui/" target="_blank" rel="external">KenshinCui - 博客园</a> | <a href="http://www.cnblogs.com/kenshincui/rss" target="_blank" rel="external">feed</a> | 2015-09-20<br><a href="http://imi.im/" target="_blank" rel="external">Travis.Wang</a> | <a href="http://travis.wang/rss/" target="_blank" rel="external">feed</a> | 2015-07-29<br><a href="http://www.cnblogs.com/biosli" target="_blank" rel="external">摇滚诗人 - 博客园</a> | <a href="http://www.cnblogs.com/biosli/rss" target="_blank" rel="external">feed</a> | 2015-06-03<br><a href="http://answerhuang.duapp.com/" target="_blank" rel="external">answer_huang - iOS developer，Python fans</a> | <a href="http://answerhuang.duapp.com/index.php/feed/" target="_blank" rel="external">feed</a> | 2015-04-19<br><a href="http://suenblog.duapp.com/" target="_blank" rel="external">技术哥-编程是一种思想,代码是一种人生</a> | <a href="http://suenblog.duapp.com/rss/" target="_blank" rel="external">feed</a> | 2015-02-02<br><a href="http://studentdeng.github.io/" target="_blank" rel="external">不会开机的男孩</a> | <a href="http://studentdeng.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2015-01-02<br><a href="http://imallen.com/" target="_blank" rel="external">Allen’s Memos</a> | <a href="http://imallen.com/rss/" target="_blank" rel="external">feed</a> | 2014-12-15<br><a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a> | <a href="http://msching.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2014-11-06<br><a href="http://wufawei.com/" target="_blank" rel="external">Ted’s Homepage   Ted</a> | <a href="http://wufawei.com/feed/" target="_blank" rel="external">feed</a> | 2014-11-04<br><a href="http://billwang1990.github.io/" target="_blank" rel="external">亚庆的 Blog</a> | <a href="http://billwang1990.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2014-09-29<br><a href="http://blog.csdn.net/yiyaaixuexi" target="_blank" rel="external">念茜的博客 - 博客频道 - CSDN.NET</a> | <a href="http://blog.csdn.net/yiyaaixuexi/rss/list" target="_blank" rel="external">feed</a> | 2014-06-07<br><a href="http://koofrank.com/" target="_blank" rel="external">KooFrank’s Den</a> | <a href="http://koofrank.com/rss/" target="_blank" rel="external">feed</a> | 2014-04-03 </p>
 ]]></content>
     
     <summary type="html">
@@ -208,15 +451,15 @@
     <link href="http://sunyazhou13.github.io/2017/01/13/UIViewController%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/"/>
     <id>http://sunyazhou13.github.io/2017/01/13/UIViewController代码规范/</id>
     <published>2017-01-13T03:18:07.000Z</published>
-    <updated>2017-01-16T12:17:06.000Z</updated>
+    <updated>2017-02-18T05:31:42.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UITableViewDelegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
-<h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - UITableViewDelegate 代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UITableViewDelegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
+<h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - UITableViewDelegate 代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Objective-C&quot;&gt;&lt;a href=&quot;#Objective-C&quot; class=&quot;headerlink&quot; title=&quot;Objective-C&quot;&gt;&lt;/a&gt;Objective-C&lt;/h2&gt;&lt;figure class=&quot;highlight objectivec&quot;&gt;
+      &lt;h2 id=&quot;Objective-C&quot;&gt;&lt;a href=&quot;#Objective-C&quot; class=&quot;headerlink&quot; title=&quot;Objective-C&quot;&gt;&lt;/a&gt;Objective-C&lt;/h2&gt;&lt;figure class=&quot;highlight objc&quot;&gt;&lt;table
     
     </summary>
     
