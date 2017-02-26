@@ -5,27 +5,281 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunyazhou13.github.io/"/>
-  <updated>2017-02-18T12:00:05.000Z</updated>
+  <updated>2017-02-22T09:08:05.000Z</updated>
   <id>http://sunyazhou13.github.io/</id>
   
   <author>
     <name>sunyazhou</name>
-    
+    <email>sunyazhou13@163.com</email>
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>macOS上模拟发送键盘事件</title>
+    <link href="http://sunyazhou13.github.io/2017/02/22/macOS%E4%B8%8A%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/"/>
+    <id>http://sunyazhou13.github.io/2017/02/22/macOS上模拟发送键盘事件/</id>
+    <published>2017-02-22T08:17:00.000Z</published>
+    <updated>2017-02-22T09:08:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/macOS%E4%B8%8A%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/Snip20170222_1.png" alt=""></p>
+<p>最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS <code>NSEvent</code>, macOS上模拟事件都是底层的<code>CoreGraphic</code>的<code>class</code>,下面说下实现的片断代码.</p>
+<ol>
+<li>导入<code>#import &lt;Carbon/Carbon.h&gt;</code></li>
+<li>创建<code>CGEventSourceRef</code> 事件源对象<strong>(注意它不是OC对象,声明的时候对象前边没有<code>*</code>,而且需要用<code>CFRelease()</code>释放内存)</strong>.</li>
+<li>创建<code>CGEventRef</code>使用<code>CGEventCreateKeyboardEvent</code>, 第三个参数<code>true</code>代表<code>keydown</code>就是键盘按键的按下状态,如果是<code>false</code>则代表<code>keyup</code>. 这里用了一个键盘<code>kVK_ANSI_A</code> A键作为例子</li>
+<li><code>CGEventTapLocation</code> 这个是下一个函数需要的参数 应该是键盘硬件按下的键位信息(如果搞错了欢迎指正,马上修改)  </li>
+<li><code>CGEventPost()</code>发送<code>NSEvent</code>事件 </li>
+<li>释放内存</li>
+</ol>
+<blockquote>
+<p><em>talk is cheap, show me the code –LINUS TORVALDS</em>  </p>
+</blockquote>
+<p>下面是演示代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Carbon/Carbon.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</div><div class="line">    <span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">       <span class="built_in">CGEventSourceRef</span> source = <span class="built_in">CGEventSourceCreate</span>(kCGEventSourceStatePrivate);</div><div class="line">	    <span class="built_in">CGEventRef</span> A = <span class="built_in">CGEventCreateKeyboardEvent</span>(source, kVK_ANSI_A, <span class="literal">true</span>);</div><div class="line">	    <span class="built_in">CGEventTapLocation</span> location = kCGHIDEventTap;</div><div class="line">	    <span class="comment">//发送事件</span></div><div class="line">	    <span class="built_in">CGEventPost</span>(location, A);</div><div class="line">	    <span class="built_in">CFRelease</span>(A);</div><div class="line">	    <span class="built_in">CFRelease</span>(source);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>CGEventSourceCreate()</code>里定义了三个<strong>枚举</strong></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">CF_ENUM</span>(int32_t, <span class="built_in">CGEventSourceStateID</span>) &#123;</div><div class="line">  kCGEventSourceStatePrivate = <span class="number">-1</span>,</div><div class="line">  kCGEventSourceStateCombinedSessionState = <span class="number">0</span>,</div><div class="line">  kCGEventSourceStateHIDSystemState = <span class="number">1</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>kCGEventSourceStatePrivate</code> 代表 专门的应用,如远程控制程序可以生成和跟踪事件源状态独立于其他进程。这些程序应该使用kCGEventSourceStatePrivate值在创建他们的事件源。<br><code>kCGEventSourceStateCombinedSessionState</code> 该状态表反映了所有事件源的组合状态发布到当前用户的登录会话。如果您的程序发布的事件在一个登录会话,您应该使用这个源状态当你创建一个事件源。</p>
+<p><code>kCGEventSourceStateHIDSystemState</code> 该状态表反映了 组合硬件输入源从HID系统硬件层面发送的事件源。生成的事件。 就是外接键盘或者macbook本机键盘以及一些系统定义的按键点击事件 </p>
+</blockquote>
+<p>这里我使用的是第一个恰巧它有说明<code>remote control</code></p>
+<p>上面就是今天要分享的模拟发送系统键盘事件全部逻辑, 如有错误欢迎指正, 鄙人定当咨诹善道察纳雅言.</p>
+<p><strong>附* macOS ANSI码 </strong>枚举**</p>
+<pre><code class="objc"><span class="comment">/*
+ *  Summary:
+ *    Virtual keycodes
+ *  
+ *  Discussion:
+ *    These constants are the virtual keycodes defined originally in
+ *    Inside Mac Volume V, pg. V-191. They identify physical keys on a
+ *    keyboard. Those constants with "ANSI" in the name are labeled
+ *    according to the key position on an ANSI-standard US keyboard.
+ *    For example, kVK_ANSI_A indicates the virtual keycode for the key
+ *    with the letter 'A' in the US keyboard layout. Other keyboard
+ *    layouts may have the 'A' key label on a different physical key;
+ *    in this case, pressing 'A' will generate a different virtual
+ *    keycode.
+ */</span>
+<span class="keyword">enum</span> {
+  kVK_ANSI_A                    = <span class="number">0x00</span>,
+  kVK_ANSI_S                    = <span class="number">0x01</span>,
+  kVK_ANSI_D                    = <span class="number">0x02</span>,
+  kVK_ANSI_F                    = <span class="number">0x03</span>,
+  kVK_ANSI_H                    = <span class="number">0x04</span>,
+  kVK_ANSI_G                    = <span class="number">0x05</span>,
+  kVK_ANSI_Z                    = <span class="number">0x06</span>,
+  kVK_ANSI_X                    = <span class="number">0x07</span>,
+  kVK_ANSI_C                    = <span class="number">0x08</span>,
+  kVK_ANSI_V                    = <span class="number">0x09</span>,
+  kVK_ANSI_B                    = <span class="number">0x0B</span>,
+  kVK_ANSI_Q                    = <span class="number">0x0C</span>,
+  kVK_ANSI_W                    = <span class="number">0x0D</span>,
+  kVK_ANSI_E                    = <span class="number">0x0E</span>,
+  kVK_ANSI_R                    = <span class="number">0x0F</span>,
+  kVK_ANSI_Y                    = <span class="number">0x10</span>,
+  kVK_ANSI_T                    = <span class="number">0x11</span>,
+  kVK_ANSI_1                    = <span class="number">0x12</span>,
+  kVK_ANSI_2                    = <span class="number">0x13</span>,
+  kVK_ANSI_3                    = <span class="number">0x14</span>,
+  kVK_ANSI_4                    = <span class="number">0x15</span>,
+  kVK_ANSI_6                    = <span class="number">0x16</span>,
+  kVK_ANSI_5                    = <span class="number">0x17</span>,
+  kVK_ANSI_Equal                = <span class="number">0x18</span>,
+  kVK_ANSI_9                    = <span class="number">0x19</span>,
+  kVK_ANSI_7                    = <span class="number">0x1A</span>,
+  kVK_ANSI_Minus                = <span class="number">0x1B</span>,
+  kVK_ANSI_8                    = <span class="number">0x1C</span>,
+  kVK_ANSI_0                    = <span class="number">0x1D</span>,
+  kVK_ANSI_RightBracket         = <span class="number">0x1E</span>,
+  kVK_ANSI_O                    = <span class="number">0x1F</span>,
+  kVK_ANSI_U                    = <span class="number">0x20</span>,
+  kVK_ANSI_LeftBracket          = <span class="number">0x21</span>,
+  kVK_ANSI_I                    = <span class="number">0x22</span>,
+  kVK_ANSI_P                    = <span class="number">0x23</span>,
+  kVK_ANSI_L                    = <span class="number">0x25</span>,
+  kVK_ANSI_J                    = <span class="number">0x26</span>,
+  kVK_ANSI_Quote                = <span class="number">0x27</span>,
+  kVK_ANSI_K                    = <span class="number">0x28</span>,
+  kVK_ANSI_Semicolon            = <span class="number">0x29</span>,
+  kVK_ANSI_Backslash            = <span class="number">0x2A</span>,
+  kVK_ANSI_Comma                = <span class="number">0x2B</span>,
+  kVK_ANSI_Slash                = <span class="number">0x2C</span>,
+  kVK_ANSI_N                    = <span class="number">0x2D</span>,
+  kVK_ANSI_M                    = <span class="number">0x2E</span>,
+  kVK_ANSI_Period               = <span class="number">0x2F</span>,
+  kVK_ANSI_Grave                = <span class="number">0x32</span>,
+  kVK_ANSI_KeypadDecimal        = <span class="number">0x41</span>,
+  kVK_ANSI_KeypadMultiply       = <span class="number">0x43</span>,
+  kVK_ANSI_KeypadPlus           = <span class="number">0x45</span>,
+  kVK_ANSI_KeypadClear          = <span class="number">0x47</span>,
+  kVK_ANSI_KeypadDivide         = <span class="number">0x4B</span>,
+  kVK_ANSI_KeypadEnter          = <span class="number">0x4C</span>,
+  kVK_ANSI_KeypadMinus          = <span class="number">0x4E</span>,
+  kVK_ANSI_KeypadEquals         = <span class="number">0x51</span>,
+  kVK_ANSI_Keypad0              = <span class="number">0x52</span>,
+  kVK_ANSI_Keypad1              = <span class="number">0x53</span>,
+  kVK_ANSI_Keypad2              = <span class="number">0x54</span>,
+  kVK_ANSI_Keypad3              = <span class="number">0x55</span>,
+  kVK_ANSI_Keypad4              = <span class="number">0x56</span>,
+  kVK_ANSI_Keypad5              = <span class="number">0x57</span>,
+  kVK_ANSI_Keypad6              = <span class="number">0x58</span>,
+  kVK_ANSI_Keypad7              = <span class="number">0x59</span>,
+  kVK_ANSI_Keypad8              = <span class="number">0x5B</span>,
+  kVK_ANSI_Keypad9              = <span class="number">0x5C</span>
+};
+
+<span class="comment">/* keycodes for keys that are independent of keyboard layout*/</span>
+<span class="keyword">enum</span> {
+  kVK_Return                    = <span class="number">0x24</span>,
+  kVK_Tab                       = <span class="number">0x30</span>,
+  kVK_Space                     = <span class="number">0x31</span>,
+  kVK_Delete                    = <span class="number">0x33</span>,
+  kVK_Escape                    = <span class="number">0x35</span>,
+  kVK_Command                   = <span class="number">0x37</span>,
+  kVK_Shift                     = <span class="number">0x38</span>,
+  kVK_CapsLock                  = <span class="number">0x39</span>,
+  kVK_Option                    = <span class="number">0x3A</span>,
+  kVK_Control                   = <span class="number">0x3B</span>,
+  kVK_RightCommand              = <span class="number">0x36</span>,
+  kVK_RightShift                = <span class="number">0x3C</span>,
+  kVK_RightOption               = <span class="number">0x3D</span>,
+  kVK_RightControl              = <span class="number">0x3E</span>,
+  kVK_Function                  = <span class="number">0x3F</span>,
+  kVK_F17                       = <span class="number">0x40</span>,
+  kVK_VolumeUp                  = <span class="number">0x48</span>,
+  kVK_VolumeDown                = <span class="number">0x49</span>,
+  kVK_Mute                      = <span class="number">0x4A</span>,
+  kVK_F18                       = <span class="number">0x4F</span>,
+  kVK_F19                       = <span class="number">0x50</span>,
+  kVK_F20                       = <span class="number">0x5A</span>,
+  kVK_F5                        = <span class="number">0x60</span>,
+  kVK_F6                        = <span class="number">0x61</span>,
+  kVK_F7                        = <span class="number">0x62</span>,
+  kVK_F3                        = <span class="number">0x63</span>,
+  kVK_F8                        = <span class="number">0x64</span>,
+  kVK_F9                        = <span class="number">0x65</span>,
+  kVK_F11                       = <span class="number">0x67</span>,
+  kVK_F13                       = <span class="number">0x69</span>,
+  kVK_F16                       = <span class="number">0x6A</span>,
+  kVK_F14                       = <span class="number">0x6B</span>,
+  kVK_F10                       = <span class="number">0x6D</span>,
+  kVK_F12                       = <span class="number">0x6F</span>,
+  kVK_F15                       = <span class="number">0x71</span>,
+  kVK_Help                      = <span class="number">0x72</span>,
+  kVK_Home                      = <span class="number">0x73</span>,
+  kVK_PageUp                    = <span class="number">0x74</span>,
+  kVK_ForwardDelete             = <span class="number">0x75</span>,
+  kVK_F4                        = <span class="number">0x76</span>,
+  kVK_End                       = <span class="number">0x77</span>,
+  kVK_F2                        = <span class="number">0x78</span>,
+  kVK_PageDown                  = <span class="number">0x79</span>,
+  kVK_F1                        = <span class="number">0x7A</span>,
+  kVK_LeftArrow                 = <span class="number">0x7B</span>,
+  kVK_RightArrow                = <span class="number">0x7C</span>,
+  kVK_DownArrow                 = <span class="number">0x7D</span>,
+  kVK_UpArrow                   = <span class="number">0x7E</span>
+};
+</code></pre>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/macOS%E4%B8%8A%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%
+    
+    </summary>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/categories/macOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>$(SRCROOT)和$(PROJECT_DIR)区别</title>
+    <link href="http://sunyazhou13.github.io/2017/02/21/SRCROOT%E5%92%8CPROJECT-DIR%E5%8C%BA%E5%88%AB/"/>
+    <id>http://sunyazhou13.github.io/2017/02/21/SRCROOT和PROJECT-DIR区别/</id>
+    <published>2017-02-21T08:28:00.000Z</published>
+    <updated>2017-02-21T08:30:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>$(SRCROOT)</code>代表的是项目根目录下<br><code>$(PROJECT_DIR)</code>代表的是整个项目</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;$(SRCROOT)&lt;/code&gt;代表的是项目根目录下&lt;br&gt;&lt;code&gt;$(PROJECT_DIR)&lt;/code&gt;代表的是整个项目&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用终端删除NSUserDefault的内容</title>
+    <link href="http://sunyazhou13.github.io/2017/02/20/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/"/>
+    <id>http://sunyazhou13.github.io/2017/02/20/使用终端删除NSUserDefault的内容/</id>
+    <published>2017-02-20T11:05:01.000Z</published>
+    <updated>2017-02-20T11:46:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息  </p>
+</blockquote>
+<p><code>NSUserDefaults</code>和<code>win</code>开发的注册表一样 用于存储一些标记位<br>最近开发用到的比较多是如何不运行代码的情况下清理<code>NSUserDefaults</code>信息</p>
+<p><strong>$ defaults delete + 包名</strong>  eg: com.baidu.demo </p>
+<p>下面这样会删除所有以<code>com.baidu.demo</code>为包名的文件  </p>
+<pre><code class="shell">$ defaults delete com.baidu.demo
+</code></pre>
+<blockquote>
+<p>实际的的路径(把 my app和前后剪头 换成自己的应用的包名)</p>
+</blockquote>
+<p>macOS应用非沙盒权限(如下图) <code>~/Library/Preferences/&lt;my app&gt;.plist  &lt;my app&gt;</code>  eg:QQ<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_1.png" alt="非沙盒路径"></p>
+<p>macOS应用沙盒权限(如下图)  <code>~/Library/Containers/&lt;my app&gt;/Data/Library/Preferences/&lt;my app&gt;.plist</code> eg:qq  </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_2.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>defaults 还有其它指令还可以为某个<code>key</code>设置<code>value</code> 大家可自行google  </p>
+</blockquote>
+<p>谢谢大家</p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;大家对&lt;code&gt;NSUserDefaults&lt;/code&gt;非常熟悉 今天给大家讲一下如何用终端清理&lt;code&gt;N
+    
+    </summary>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/categories/macOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou13.github.io/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou13.github.io/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS如何让二维码/条形码扫描框跟随二维码移动</title>
     <link href="http://sunyazhou13.github.io/2017/02/18/iOS%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BA%8C%E7%BB%B4%E7%A0%81-%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E6%A1%86%E8%B7%9F%E9%9A%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%A7%BB%E5%8A%A8/"/>
     <id>http://sunyazhou13.github.io/2017/02/18/iOS如何让二维码-条形码扫描框跟随二维码移动/</id>
     <published>2017-02-18T11:08:56.000Z</published>
-    <updated>2017-02-18T12:00:05.000Z</updated>
+    <updated>2017-02-20T01:01:57.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg" alt=""></p>
-<blockquote>
-<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  </p>
 </blockquote>
+<p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg" alt=""></p>
 <p>这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  </p>
 <blockquote>
 <p><a href="http://www.appcoda.com/barcode-reader-swift/" target="_blank" rel="external">Building a Barcode and QR Code Reader in Swift 3 and Xcode 8</a></p>
@@ -56,14 +310,15 @@
     }
 }}
 </code></pre>
-<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code><br>这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了</p>
+<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code><br>这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 <strong><a href="https://github.com/sunyazhou13/QRCodeReader" target="_blank" rel="external">最终项目</a></strong></p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BA%8C%E7%BB%B4%E7%A0%81-%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E6%A1%86%E8%B7%9F%E9%9A%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%A7%BB%E5%8A%A8/2017-02-18%2019_01_35loop.gif" alt="QRCode 跟踪"></p>
 <p>全文完</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-rea
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题&lt;br&gt;如何让二维码的扫描框跟随扫码到的二维码移动跟踪
     
     </summary>
     
@@ -79,7 +334,7 @@
     <link href="http://sunyazhou13.github.io/2017/02/17/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/"/>
     <id>http://sunyazhou13.github.io/2017/02/17/iOS语言本地化-国际化一些技巧/</id>
     <published>2017-02-17T02:01:19.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-17T02:33:23.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="代码获取国际化语言数组"><a href="#代码获取国际化语言数组" class="headerlink" title="代码获取国际化语言数组  "></a>代码获取国际化语言数组  </h2><p>获取当前app使用的语言<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
 <p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.  </p>
@@ -121,7 +376,7 @@
     <link href="http://sunyazhou13.github.io/2017/02/10/%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/"/>
     <id>http://sunyazhou13.github.io/2017/02/10/搭建hexo博客教程/</id>
     <published>2017-02-10T02:24:25.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-13T07:25:50.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><a href="http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html" target="_blank" rel="external">Jekyll迁移到Hexo搭建个人博客</a>  </p>
@@ -160,7 +415,7 @@
     <link href="http://sunyazhou13.github.io/2017/02/10/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9/"/>
     <id>http://sunyazhou13.github.io/2017/02/10/DFS算法扫描上传文件-文件夹/</id>
     <published>2017-02-10T02:07:55.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-13T06:53:17.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="DFS需求背景"><a href="#DFS需求背景" class="headerlink" title="DFS需求背景"></a>DFS需求背景</h2><blockquote>
 <p>在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况</p>
@@ -220,7 +475,7 @@
     <link href="http://sunyazhou13.github.io/2017/02/09/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8git%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/"/>
     <id>http://sunyazhou13.github.io/2017/02/09/如何使用git管理代码/</id>
     <published>2017-02-09T11:35:45.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-21T08:59:21.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
 <blockquote>
@@ -245,6 +500,7 @@
 <blockquote>
 <p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
 </blockquote>
+<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --set-upstream origin + 分支名</div></pre></td></tr></table></figure>
 <h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
 <blockquote>
 <p>回到本地代码库库中，执行</p>
@@ -279,7 +535,7 @@
     <link href="http://sunyazhou13.github.io/2017/02/09/Webview%E7%9A%84NSScrollView%E7%A6%81%E7%94%A8%E6%BB%91%E5%8A%A8%E5%8A%9F%E8%83%BD/"/>
     <id>http://sunyazhou13.github.io/2017/02/09/Webview的NSScrollView禁用滑动功能/</id>
     <published>2017-02-09T05:37:28.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-10T02:39:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -307,7 +563,7 @@
     <link href="http://sunyazhou13.github.io/2017/01/28/2017%E5%9B%9E%E5%AE%B6%E8%BF%87%E5%B9%B4/"/>
     <id>http://sunyazhou13.github.io/2017/01/28/2017回家过年/</id>
     <published>2017-01-28T05:42:34.000Z</published>
-    <updated>2017-01-31T12:16:18.000Z</updated>
+    <updated>2017-02-07T02:35:06.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://p1.bqimg.com/584350/7df258f2ecddcf81.jpg" alt=""></p>
 <blockquote>
@@ -372,7 +628,7 @@
     <link href="http://sunyazhou13.github.io/2017/01/18/iOS%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/"/>
     <id>http://sunyazhou13.github.io/2017/01/18/iOS开发知识点积累/</id>
     <published>2017-01-18T05:44:57.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-22T02:30:58.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航</p>
@@ -381,6 +637,7 @@
 <ul>
 <li>音频</li>
 <li>相机与照片</li>
+<li>图形图像</li>
 <li>动画</li>
 <li>UI转场</li>
 <li>ASDK(AsyncDisplayKit)</li>
@@ -389,12 +646,14 @@
 <li>架构</li>
 <li>Masonry</li>
 <li>Cocoapods</li>
+<li>文件相关</li>
 </ul>
 <h2 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h2><p><strong><a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">iOS音频播放 (一)：概述</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/08/audio-in-ios-2/" target="_blank" rel="external">iOS音频播放 (二)：AudioSession</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/09/audio-in-ios-3/" target="_blank" rel="external">iOS音频播放 (三)：AudioFileStream</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/19/audio-in-ios-4/" target="_blank" rel="external">iOS音频播放 (四)：AudioFile</a></strong><br><strong><a href="http://msching.github.io/blog/2014/08/02/audio-in-ios-5/" target="_blank" rel="external">iOS音频播放 (五)：AudioQueue</a></strong><br><strong><a href="http://msching.github.io/blog/2014/08/09/audio-in-ios-6/" target="_blank" rel="external">iOS音频播放 (六)：简单的音频播放器实现</a></strong><br><strong><a href="http://msching.github.io/blog/2014/09/07/audio-in-ios-7/" target="_blank" rel="external">iOS音频播放 (七)：播放iPod Library中的歌曲</a></strong><br><strong><a href="http://msching.github.io/blog/2014/11/06/audio-in-ios-8/" target="_blank" rel="external">iOS音频播放 (八)：NowPlayingCenter和RemoteControl</a></strong><br><strong><a href="http://msching.github.io/blog/2016/05/24/audio-in-ios-9/" target="_blank" rel="external">iOS音频播放 (九)：边播边缓存</a></strong></p>
 <blockquote>
 <p>以上内容来自<a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a> 这个哥们我有过交流，感觉底层音频技术比较透彻，适合初学者以及中级开发者研究学习和使用。</p>
 </blockquote>
-<h2 id="图形处理"><a href="#图形处理" class="headerlink" title="图形处理"></a>图形处理</h2><p><strong><a href="https://objccn.io/issue-21-1/" target="_blank" rel="external">基础知识</a></strong>一些列教程可以连续看完<br><strong><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a></strong>库<br><strong><a href="http://mp.weixin.qq.com/s/pg2vPYftkfghoQswxJFIvw" target="_blank" rel="external">iOS GPUImage源码解读（一）</a></strong></p>
+<h2 id="图形处理"><a href="#图形处理" class="headerlink" title="图形处理"></a>图形处理</h2><p><strong><a href="https://objccn.io/issue-21-1/" target="_blank" rel="external">基础知识</a></strong>一些列教程可以连续看完<br><strong><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a></strong>库<br><strong><a href="http://mp.weixin.qq.com/s/pg2vPYftkfghoQswxJFIvw" target="_blank" rel="external">iOS GPUImage源码解读（一）</a></strong><br><strong><a href="http://hawk0620.github.io/blog/2017/02/17/zpcamera-opensource-share/" target="_blank" rel="external">开源一个上架 App Store 的相机 App</a></strong></p>
+<h2 id="图形图像"><a href="#图形图像" class="headerlink" title="图形图像"></a>图形图像</h2><p><strong><a href="https://www.objccn.io/issue-21-9/" target="_blank" rel="external">基于 OpenCV 的人脸识别</a></strong><br><strong><a href="https://github.com/3tinkers/TKImageView" target="_blank" rel="external">图片编辑</a></strong></p>
 <h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p><strong><a href="http://kittenyang.com/drawablebubble/" target="_blank" rel="external">QQ中未读气泡拖拽消失的实现分析</a></strong><br><strong><a href="http://kittenyang.com/curvelineanimation/" target="_blank" rel="external">iOS 自定义下拉线条动画</a></strong><br><strong><a href="https://github.com/sunyazhou13/Animations" target="_blank" rel="external">一个库涵盖了所有iOS动画效果</a></strong><br><strong><a href="https://github.com/facebook/pop" target="_blank" rel="external">pop</a></strong></p>
 <blockquote>
 <p>学动画先从<a href="http://kittenyang.com/" target="_blank" rel="external">骑滔(Kitten)</a>的动画搞起最靠谱<br>以上是普通动画内容2篇来自Kitten<br>持续更新中</p>
@@ -424,21 +683,209 @@
 <p>话说 我个人认为学习masonry只需要看看 中文翻译之后 再去看看土土哥的教程就会了。土土哥的masonry教程简直就是中文文档。写的非常好</p>
 </blockquote>
 <h2 id="Cocoapods"><a href="#Cocoapods" class="headerlink" title="Cocoapods"></a>Cocoapods</h2><p><strong><a href="http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">用CocoaPods做iOS程序的依赖管理</a></strong> 巧神的文章必看</p>
+<h2 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h2><p><strong><a href="https://github.com/sunyazhou13/FileExplorer" target="_blank" rel="external">文件列表</a></strong><br><strong><a href="https://github.com/sunyazhou13/HYFileManager" target="_blank" rel="external">HYFileManager</a></strong>  </p>
 <h2 id="博客列表"><a href="#博客列表" class="headerlink" title="博客列表"></a>博客列表</h2><table>
 <thead>
 <tr>
-<th>Blog</th>
-<th>Feed</th>
-<th>Update Time</th>
+<th>博客地址</th>
+<th style="text-align:left">RSS地址</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td><a href="http://onevcat.com" target="_blank" rel="external">OneV’s Den</a></td>
+<td style="text-align:left"><a href="http://onevcat.com/atom.xml" target="_blank" rel="external">http://onevcat.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://beyondvincent.com" target="_blank" rel="external">破船之家</a></td>
+<td style="text-align:left"><a href="http://beyondvincent.com/atom.xml" target="_blank" rel="external">http://beyondvincent.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://nshipster.cn" target="_blank" rel="external">NSHipster</a></td>
+<td style="text-align:left"><a href="http://nshipster.cn/feed.xml" target="_blank" rel="external">http://nshipster.cn/feed.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.leezhong.com/" target="_blank" rel="external">Limboy 无网不剩</a></td>
+<td style="text-align:left"><a href="http://feeds.feedburner.com/lzyy" target="_blank" rel="external">http://feeds.feedburner.com/lzyy</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.devtang.com" target="_blank" rel="external">唐巧的技术博客</a></td>
+<td style="text-align:left"><a href="http://blog.devtang.com/atom.xml" target="_blank" rel="external">http://blog.devtang.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://ios.lextang.com" target="_blank" rel="external">Lex iOS notes</a></td>
+<td style="text-align:left"><a href="http://ios.lextang.com/rss" target="_blank" rel="external">http://ios.lextang.com/rss</a></td>
+</tr>
+<tr>
+<td><a href="http://nianxi.net" target="_blank" rel="external">念茜的博客</a></td>
+<td style="text-align:left"><a href="http://nianxi.net/feed.xml" target="_blank" rel="external">http://nianxi.net/feed.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.xcodev.com" target="_blank" rel="external">Xcode Dev</a></td>
+<td style="text-align:left"><a href="http://blog.xcodev.com/atom.xml" target="_blank" rel="external">http://blog.xcodev.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://wufawei.com/" target="_blank" rel="external">Ted’s Homepage</a></td>
+<td style="text-align:left"><a href="http://wufawei.com/feed" target="_blank" rel="external">http://wufawei.com/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.t-xx.me" target="_blank" rel="external">txx’s blog</a></td>
+<td style="text-align:left"><a href="http://blog.t-xx.me/atom.xml" target="_blank" rel="external">http://blog.t-xx.me/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://imkevin.me" target="_blank" rel="external">KEVIN BLOG</a></td>
+<td style="text-align:left"><a href="http://imkevin.me/rss" target="_blank" rel="external">http://imkevin.me/rss</a></td>
+</tr>
+<tr>
+<td><a href="http://www.xiangwangfeng.com" target="_blank" rel="external">阿毛的蛋疼地</a></td>
+<td style="text-align:left"><a href="http://www.xiangwangfeng.com/atom.xml" target="_blank" rel="external">http://www.xiangwangfeng.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://billwang1990.github.io" target="_blank" rel="external">亚庆的 Blog</a></td>
+<td style="text-align:left"><a href="http://billwang1990.github.io/atom.xml" target="_blank" rel="external">http://billwang1990.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://nonomori.farbox.com" target="_blank" rel="external">Nonomori</a></td>
+<td style="text-align:left"><a href="http://nonomori.farbox.com/feed" target="_blank" rel="external">http://nonomori.farbox.com/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://tang3w.com" target="_blank" rel="external">言无不尽</a></td>
+<td style="text-align:left"><a href="http://tang3w.com/atom.xml" target="_blank" rel="external">http://tang3w.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://wonderffee.github.io" target="_blank" rel="external">Wonderffee’s Blog</a></td>
+<td style="text-align:left"><a href="http://wonderffee.github.io/atom.xml" target="_blank" rel="external">http://wonderffee.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://imtx.me" target="_blank" rel="external">I’m TualatriX</a></td>
+<td style="text-align:left"><a href="http://imtx.me/feed/latest/" target="_blank" rel="external">http://imtx.me/feed/latest/</a></td>
+</tr>
+<tr>
+<td><a href="http://vclwei.com" target="_blank" rel="external">vclwei</a></td>
+<td style="text-align:left"><a href="http://vclwei.com/posts.rss" target="_blank" rel="external">http://vclwei.com/posts.rss</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.cocoabit.com" target="_blank" rel="external">Cocoabit</a></td>
+<td style="text-align:left"><a href="http://blog.cocoabit.com/atom.xml" target="_blank" rel="external">http://blog.cocoabit.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://nixzhu.me" target="_blank" rel="external">nixzhu on scriptogr.am</a></td>
+<td style="text-align:left"><a href="http://nixzhu.me/feed" target="_blank" rel="external">http://nixzhu.me/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://studentdeng.github.io" target="_blank" rel="external">不会开机的男孩</a></td>
+<td style="text-align:left"><a href="http://studentdeng.github.io/atom.xml" target="_blank" rel="external">http://studentdeng.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://www.taofengping.com" target="_blank" rel="external">Nico</a></td>
+<td style="text-align:left"><a href="http://www.taofengping.com/rss.xml" target="_blank" rel="external">http://www.taofengping.com/rss.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://hufeng825.github.io" target="_blank" rel="external">阿峰的技术窝窝</a></td>
+<td style="text-align:left"><a href="http://hufeng825.github.io/atom.xml" target="_blank" rel="external">http://hufeng825.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://answerhuang.duapp.com" target="_blank" rel="external">answer_huang</a></td>
+<td style="text-align:left"><a href="http://answerhuang.duapp.com/index.php/feed/" target="_blank" rel="external">http://answerhuang.duapp.com/index.php/feed/</a></td>
+</tr>
+<tr>
+<td><a href="http://webfrogs.me" target="_blank" rel="external">webfrogs</a></td>
+<td style="text-align:left"><a href="http://webfrogs.me/feed/" target="_blank" rel="external">http://webfrogs.me/feed/</a></td>
+</tr>
+<tr>
+<td><a href="http://joeyio.com" target="_blank" rel="external">代码手工艺人</a></td>
+<td style="text-align:left"><a href="http://joeyio.com/atom.xml" target="_blank" rel="external">http://joeyio.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://gracelancy.com" target="_blank" rel="external">Lancy’s Blog</a></td>
+<td style="text-align:left"><a href="http://gracelancy.com/atom.xml" target="_blank" rel="external">http://gracelancy.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://www.imallen.com" target="_blank" rel="external">I’m Allen</a></td>
+<td style="text-align:left"><a href="http://www.imallen.com/atom.xml" target="_blank" rel="external">http://www.imallen.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://imi.im/" target="_blank" rel="external">Travis’ Blog</a></td>
+<td style="text-align:left"><a href="http://imi.im/feed" target="_blank" rel="external">http://imi.im/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://wangzz.github.io/" target="_blank" rel="external">王中周的技术博客</a></td>
+<td style="text-align:left"><a href="http://wangzz.github.io/atom.xml" target="_blank" rel="external">http://wangzz.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://jiajun.org/" target="_blank" rel="external">会写代码的猪</a></td>
+<td style="text-align:left"><a href="http://gaosboy.com/feed/atom/" target="_blank" rel="external">http://gaosboy.com/feed/atom/</a></td>
+</tr>
+<tr>
+<td><a href="http://wangkewei.cnblogs.com/" target="_blank" rel="external">克伟的博客</a></td>
+<td style="text-align:left"><a href="http://feed.cnblogs.com/blog/u/23857/rss" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/23857/rss</a></td>
+</tr>
+<tr>
+<td><a href="http://cnblogs.com/biosli" target="_blank" rel="external">摇滚诗人</a></td>
+<td style="text-align:left"><a href="http://feed.cnblogs.com/blog/u/35410/rss" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/35410/rss</a></td>
+</tr>
+<tr>
+<td><a href="http://geeklu.com/" target="_blank" rel="external">Luke’s Homepage</a></td>
+<td style="text-align:left"><a href="http://geeklu.com/feed/" target="_blank" rel="external">http://geeklu.com/feed/</a></td>
+</tr>
+<tr>
+<td><a href="http://iiiyu.com/" target="_blank" rel="external">萧宸宇</a></td>
+<td style="text-align:left"><a href="http://iiiyu.com/atom.xml" target="_blank" rel="external">http://iiiyu.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://www.heyuan110.com/" target="_blank" rel="external">Yuan博客</a></td>
+<td style="text-align:left"><a href="http://www.heyuan110.com/?feed=rss2" target="_blank" rel="external">http://www.heyuan110.com/?feed=rss2</a></td>
+</tr>
+<tr>
+<td><a href="http://shiningio.com/" target="_blank" rel="external">Shining IO</a></td>
+<td style="text-align:left"><a href="http://shiningio.com/atom.xml" target="_blank" rel="external">http://shiningio.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://www.yifeiyang.net/" target="_blank" rel="external">YIFEIYANG–易飞扬的博客</a></td>
+<td style="text-align:left"><a href="http://www.yifeiyang.net/feed" target="_blank" rel="external">http://www.yifeiyang.net/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://koofrank.com/" target="_blank" rel="external">KooFrank’s Blog</a></td>
+<td style="text-align:left"><a href="http://koofrank.com/rss" target="_blank" rel="external">http://koofrank.com/rss</a></td>
+</tr>
+<tr>
+<td><a href="http://helloitworks.com" target="_blank" rel="external">hello it works</a></td>
+<td style="text-align:left"><a href="http://helloitworks.com/feed" target="_blank" rel="external">http://helloitworks.com/feed</a></td>
+</tr>
+<tr>
+<td><a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a></td>
+<td style="text-align:left"><a href="http://msching.github.io/atom.xml" target="_blank" rel="external">http://msching.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://yulingtianxia.com" target="_blank" rel="external">玉令天下的Blog</a></td>
+<td style="text-align:left"><a href="http://yulingtianxia.com/atom.xml" target="_blank" rel="external">http://yulingtianxia.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://www.hotobear.com/" target="_blank" rel="external">不掏蜂窝的熊</a></td>
+<td style="text-align:left"><a href="http://www.hotobear.com/?feed=rss2" target="_blank" rel="external">http://www.hotobear.com/?feed=rss2</a></td>
+</tr>
+<tr>
+<td><a href="https://andelf.github.io/" target="_blank" rel="external">猫·仁波切</a></td>
+<td style="text-align:left"><a href="https://andelf.github.io/atom.xml" target="_blank" rel="external">https://andelf.github.io/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://ivoryxiong.org/" target="_blank" rel="external">煲仔饭</a></td>
+<td style="text-align:left"><a href="http://ivoryxiong.org/feed.xml" target="_blank" rel="external">http://ivoryxiong.org/feed.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://adad184.com" target="_blank" rel="external">里脊串的开发随笔</a></td>
+<td style="text-align:left"><a href="http://adad184.com/atom.xml" target="_blank" rel="external">http://adad184.com/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://chun.tips/" target="_blank" rel="external">Chun Tips</a></td>
+<td style="text-align:left"><a href="http://chun.tips/atom.xml" target="_blank" rel="external">http://chun.tips/atom.xml</a></td>
+</tr>
+<tr>
+<td><a href="http://blog.callmewhy.com/" target="_blank" rel="external">Why’s blog - 汪海的实验室</a></td>
+<td style="text-align:left"><a href="http://blog.callmewhy.com/atom.xml" target="_blank" rel="external">http://blog.callmewhy.com/atom.xml</a></td>
 </tr>
 </tbody>
 </table>
-<p><a href="http://www.jianshu.com/users/aa6c2a4a126c/latest_articles" target="_blank" rel="external">Realank - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/161.json" target="_blank" rel="external">jianshu</a> | 2016-05-20<br><a href="http://allluckly.cn/" target="_blank" rel="external">Bison的技术博客 – iOS开发</a> | <a href="http://allluckly.cn/feed.xml" target="_blank" rel="external">feed</a> | 2016-05-19<br><a href="http://www.jianshu.com/users/ee84d859d5f0/latest_articles" target="_blank" rel="external">YM2rr - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/152.json" target="_blank" rel="external">jianshu</a> | 2016-05-17<br><a href="http://www.jianshu.com/users/476877f2e719/latest_articles" target="_blank" rel="external">AlexPei - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/160.json" target="_blank" rel="external">jianshu</a> | 2016-05-17<br><a href="http://xiongzenghuidegithub.github.io/" target="_blank" rel="external">一个iOS菜菜的白话文记录</a> | <a href="http://xiongzenghuidegithub.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-17<br><a href="http://www.jianshu.com/users/4633193fb272/latest_articles" target="_blank" rel="external">Migi000 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/159.json" target="_blank" rel="external">jianshu</a> | 2016-05-16<br><a href="http://blog.sunnyxx.com/" target="_blank" rel="external">sunnyxx的技术博客</a> | <a href="http://blog.sunnyxx.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-14<br><a href="http://everettjf.github.io/" target="_blank" rel="external">everettjf</a> | <a href="http://everettjf.github.io/feed.xml" target="_blank" rel="external">feed</a> | 2016-05-13<br><a href="http://www.jianshu.com/users/263107bb1199/latest_articles" target="_blank" rel="external">饶志臻 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/157.json" target="_blank" rel="external">jianshu</a> | 2016-05-12<br><a href="http://blog.callmewhy.com/" target="_blank" rel="external">Why’s Blog</a> | <a href="http://blog.callmewhy.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-11<br><a href="http://www.jianshu.com/users/da3e1f68113d/latest_articles" target="_blank" rel="external">康大亮 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/158.json" target="_blank" rel="external">jianshu</a> | 2016-05-10<br><a href="http://blog.devtang.com/" target="_blank" rel="external">唐巧的技术博客</a> | <a href="http://blog.devtang.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-08<br><a href="http://yulingtianxia.com/" target="_blank" rel="external">yulingtianxia’s blog</a> | <a href="http://yulingtianxia.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-06<br><a href="http://tutuge.me/" target="_blank" rel="external">土土哥的技术Blog</a> | <a href="http://tutuge.me/atom.xml" target="_blank" rel="external">feed</a> | 2016-05-02<br><a href="http://casatwy.com/" target="_blank" rel="external">Casa Taloyum</a> | <a href="http://casatwy.com/feeds/all.atom.xml" target="_blank" rel="external">feed</a> | 2016-04-30<br><a href="http://www.cocoawithlove.com/" target="_blank" rel="external">Cocoa with Love</a> | <a href="http://www.cocoawithlove.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-30<br><a href="https://andelf.github.io/" target="_blank" rel="external">猫·仁波切</a> | <a href="https://andelf.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2016-04-28<br><a href="http://xiangwangfeng.com/" target="_blank" rel="external">阿毛的蛋疼地</a> | <a href="http://xiangwangfeng.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-04-27<br><a href="http://www.jianshu.com/users/233c37d8a732/latest_articles" target="_blank" rel="external">HenryCheng - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/162.json" target="_blank" rel="external">jianshu</a> | 2016-04-27<br><a href="http://www.jianshu.com/users/7f2da8d4ae92/latest_articles" target="_blank" rel="external">Boy_iOS - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/165.json" target="_blank" rel="external">jianshu</a> | 2016-04-27<br><a href="http://nshipster.com/" target="_blank" rel="external">NSHipster</a> | <a href="http://nshipster.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-25<br><a href="http://www.olinone.com/" target="_blank" rel="external">庞海礁的个人空间 - https://github.com/panghaijiao</a> | <a href="http://www.olinone.com/?feed=rss2" target="_blank" rel="external">feed</a> | 2016-04-24<br><a href="http://www.jianshu.com/users/8c113f14f2e3/latest_articles" target="_blank" rel="external">韩七夏 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/151.json" target="_blank" rel="external">jianshu</a> | 2016-04-20<br><a href="http://onevcat.com/" target="_blank" rel="external">OneV’s Den</a> | <a href="http://onevcat.com/feed.xml" target="_blank" rel="external">feed</a> | 2016-04-19<br><a href="http://kittenyang.com/" target="_blank" rel="external">Kitten’s 时间胶囊</a> | <a href="http://kittenyang.com/rss" target="_blank" rel="external">feed</a> | 2016-04-18<br><a href="http://blog.zhowkev.in/" target="_blank" rel="external">Kevin</a> | <a href="http://blog.zhowkev.in/rss/" target="_blank" rel="external">feed</a> | 2016-04-09<br><a href="http://geeklu.com/" target="_blank" rel="external">Luke’s Homepage   卢克</a> | <a href="http://geeklu.com/feed" target="_blank" rel="external">feed</a> | 2016-03-31<br><a href="http://www.jianshu.com/users/b82d2721ba07/latest_articles" target="_blank" rel="external">叶孤城___ - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/150.json" target="_blank" rel="external">jianshu</a> | 2016-03-25<br><a href="http://www.jianshu.com/users/789039ed7f4c/latest_articles" target="_blank" rel="external">iOS_Cqlee - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/166.json" target="_blank" rel="external">jianshu</a> | 2016-03-08<br><a href="http://blog.leichunfeng.com/" target="_blank" rel="external">雷纯锋的技术博客</a> | <a href="http://blog.leichunfeng.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-02-27<br><a href="http://iiiyu.com/" target="_blank" rel="external">萧宸宇   如果不能成为拯救世界的神，那就堕落到征服世界的魔吧。</a> | <a href="http://iiiyu.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-02-23<br><a href="http://www.jianshu.com/users/1f93e3b1f3da/latest_articles" target="_blank" rel="external">小笨狼 - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/156.json" target="_blank" rel="external">jianshu</a> | 2016-02-22<br><a href="http://blog.nswebfrog.com/" target="_blank" rel="external">nswebfrog’ Homepage   nswebfrog</a> | <a href="http://blog.nswebfrog.com/feed/" target="_blank" rel="external">feed</a> | 2016-02-20<br><a href="http://blog.ibireme.com/" target="_blank" rel="external">Garan no dou   一只魔法师的工坊</a> | <a href="http://blog.ibireme.com/feed/" target="_blank" rel="external">feed</a> | 2016-01-15<br><a href="http://gracelancy.com/" target="_blank" rel="external">Lancy’s Blog</a> | <a href="http://gracelancy.com/atom.xml" target="_blank" rel="external">feed</a> | 2016-01-05<br><a href="http://www.jianshu.com/users/1fb7af67f724/latest_articles" target="_blank" rel="external">Girl_iOS - 简书</a> | <a href="https://everettjf.github.io/app/blogreader/spider/jianshu/167.json" target="_blank" rel="external">jianshu</a> | 2015-12-17<br><a href="http://adad184.com/" target="_blank" rel="external">里脊串的开发随笔</a> | <a href="http://adad184.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-12-04<br><a href="https://blog.cnbluebox.com/" target="_blank" rel="external">刘坤的技术博客</a> | <a href="https://blog.cnbluebox.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-11-28<br><a href="http://www.tanhao.me/" target="_blank" rel="external">老谭笔记</a> | <a href="http://www.tanhao.me/atom.xml" target="_blank" rel="external">feed</a> | 2015-11-21<br><a href="http://beyondvincent.com/" target="_blank" rel="external">破船之家</a> | <a href="http://beyondvincent.com/atom.xml" target="_blank" rel="external">feed</a> | 2015-10-16<br><a href="http://nshipster.cn/" target="_blank" rel="external">NSHipster 中文版</a> | <a href="http://nshipster.cn/feed.xml" target="_blank" rel="external">feed</a> | 2015-10-04<br><a href="http://blog.csdn.net/lucky_06" target="_blank" rel="external">lucky_06的专栏 - 博客频道 - CSDN.NET</a> | <a href="http://blog.csdn.net/lucky_06/rss/list" target="_blank" rel="external">feed</a> | 2015-09-29<br><a href="http://wonderffee.github.io/" target="_blank" rel="external">Wonderffee’s Blog</a> | <a href="http://wonderffee.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2015-09-24<br><a href="http://www.cnblogs.com/kenshincui/" target="_blank" rel="external">KenshinCui - 博客园</a> | <a href="http://www.cnblogs.com/kenshincui/rss" target="_blank" rel="external">feed</a> | 2015-09-20<br><a href="http://imi.im/" target="_blank" rel="external">Travis.Wang</a> | <a href="http://travis.wang/rss/" target="_blank" rel="external">feed</a> | 2015-07-29<br><a href="http://www.cnblogs.com/biosli" target="_blank" rel="external">摇滚诗人 - 博客园</a> | <a href="http://www.cnblogs.com/biosli/rss" target="_blank" rel="external">feed</a> | 2015-06-03<br><a href="http://answerhuang.duapp.com/" target="_blank" rel="external">answer_huang - iOS developer，Python fans</a> | <a href="http://answerhuang.duapp.com/index.php/feed/" target="_blank" rel="external">feed</a> | 2015-04-19<br><a href="http://suenblog.duapp.com/" target="_blank" rel="external">技术哥-编程是一种思想,代码是一种人生</a> | <a href="http://suenblog.duapp.com/rss/" target="_blank" rel="external">feed</a> | 2015-02-02<br><a href="http://studentdeng.github.io/" target="_blank" rel="external">不会开机的男孩</a> | <a href="http://studentdeng.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2015-01-02<br><a href="http://imallen.com/" target="_blank" rel="external">Allen’s Memos</a> | <a href="http://imallen.com/rss/" target="_blank" rel="external">feed</a> | 2014-12-15<br><a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a> | <a href="http://msching.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2014-11-06<br><a href="http://wufawei.com/" target="_blank" rel="external">Ted’s Homepage   Ted</a> | <a href="http://wufawei.com/feed/" target="_blank" rel="external">feed</a> | 2014-11-04<br><a href="http://billwang1990.github.io/" target="_blank" rel="external">亚庆的 Blog</a> | <a href="http://billwang1990.github.io/atom.xml" target="_blank" rel="external">feed</a> | 2014-09-29<br><a href="http://blog.csdn.net/yiyaaixuexi" target="_blank" rel="external">念茜的博客 - 博客频道 - CSDN.NET</a> | <a href="http://blog.csdn.net/yiyaaixuexi/rss/list" target="_blank" rel="external">feed</a> | 2014-06-07<br><a href="http://koofrank.com/" target="_blank" rel="external">KooFrank’s Den</a> | <a href="http://koofrank.com/rss/" target="_blank" rel="external">feed</a> | 2014-04-03 </p>
 ]]></content>
     
     <summary type="html">
@@ -462,7 +909,7 @@
     <link href="http://sunyazhou13.github.io/2017/01/13/%E5%AD%A6%E4%B9%A0macOS%E5%BC%80%E5%8F%91%E7%9A%84%E8%B7%AF%E7%BA%BF/"/>
     <id>http://sunyazhou13.github.io/2017/01/13/学习macOS开发的路线/</id>
     <published>2017-01-13T03:38:30.000Z</published>
-    <updated>2017-01-16T12:17:06.000Z</updated>
+    <updated>2017-01-16T01:49:24.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>开发总结</p>
@@ -510,7 +957,7 @@
     <link href="http://sunyazhou13.github.io/2017/01/13/UIViewController%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/"/>
     <id>http://sunyazhou13.github.io/2017/01/13/UIViewController代码规范/</id>
     <published>2017-01-13T03:18:07.000Z</published>
-    <updated>2017-02-18T05:31:42.000Z</updated>
+    <updated>2017-02-09T05:33:14.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UITableViewDelegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
 <h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - UITableViewDelegate 代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>

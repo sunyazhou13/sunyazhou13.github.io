@@ -150,6 +150,13 @@
   </li>
 
 
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
 
   </ul>
 </nav>
@@ -182,10 +189,10 @@
   </header>
 
   <section class="post">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg" alt=""></p>
-<blockquote>
-<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  </p>
 </blockquote>
+<p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg" alt=""></p>
 <p>这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  </p>
 <blockquote>
 <p><a href="http://www.appcoda.com/barcode-reader-swift/" target="_blank" rel="external">Building a Barcode and QR Code Reader in Swift 3 and Xcode 8</a></p>
@@ -216,7 +223,7 @@
     }
 }}
 </code></pre>
-<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code><br>这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了</p>
+<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code><br>这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 <strong><a href="https://github.com/sunyazhou13/QRCodeReader" target="_blank" rel="external">最终项目</a></strong></p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BA%8C%E7%BB%B4%E7%A0%81-%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E6%A1%86%E8%B7%9F%E9%9A%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%A7%BB%E5%8A%A8/2017-02-18%2019_01_35loop.gif" alt="QRCode 跟踪"></p>
 <p>全文完</p>
 
@@ -226,6 +233,26 @@
 
 <section class="read-more">
      
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/20/使用终端删除NSUserDefault的内容/" title="使用终端删除NSUserDefault的内容">使用终端删除NSUserDefault的内容</a></h2>
+                <p class="excerpt">
+                
+                前言
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
+
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults d
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/20/使用终端删除NSUserDefault的内容/">继续阅读</a></div>
+
+            </div>
         
 
         

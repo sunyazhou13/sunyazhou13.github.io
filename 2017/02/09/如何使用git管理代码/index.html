@@ -150,6 +150,13 @@
   </li>
 
 
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
 
   </ul>
 </nav>
@@ -205,6 +212,7 @@
 <blockquote>
 <p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
 </blockquote>
+<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --set-upstream origin + 分支名</div></pre></td></tr></table></figure>
 <h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
 <blockquote>
 <p>回到本地代码库库中，执行</p>

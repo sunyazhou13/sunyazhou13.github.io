@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>東引瓯越 | 不断学习, 与时俱进.</title>
+    <title>使用终端删除NSUserDefault的内容 | 東引瓯越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="東引瓯越 | 不断学习, 与时俱进.">
+    <meta name="twitter:title" content="使用终端删除NSUserDefault的内容 | 東引瓯越">
     <meta name="twitter:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="東引瓯越 | 不断学习, 与时俱进.">
+    <meta property="og:title" content="使用终端删除NSUserDefault的内容 | 東引瓯越">
     <meta property="og:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引瓯越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou13.github.io"/>
+    <link rel="canonical" href="http://sunyazhou13.github.io/2017/02/20/使用终端删除NSUserDefault的内容/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -175,76 +175,114 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="archives">
+            <article class="post-container post-container--single">
 
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-
-  
-  
-    
-    
-    <section class="archive-list__wrap">
-      <div class="archive-list__year-wrap">
-        <a href="/archives/2017" class="archive-list__year">2017</a>
-      </div>
-      <div class="archive-list">
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-02-22T08:17:00.000Z" class="archive-list__date">2017-02-22</time>
-
+</span>
     </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/02/22/macOS上模拟发送键盘事件/" title="link to post.title" class="archive-list__title">macOS上模拟发送键盘事件</a>
-  </div>
-  </div>
+    <h1 class="post-title">使用终端删除NSUserDefault的内容</h1>
+  </header>
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-02-20T11:05:01.000Z" class="archive-list__date">2017-02-20</time>
+  <section class="post">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息  </p>
+</blockquote>
+<p><code>NSUserDefaults</code>和<code>win</code>开发的注册表一样 用于存储一些标记位<br>最近开发用到的比较多是如何不运行代码的情况下清理<code>NSUserDefaults</code>信息</p>
+<p><strong>$ defaults delete + 包名</strong>  eg: com.baidu.demo </p>
+<p>下面这样会删除所有以<code>com.baidu.demo</code>为包名的文件  </p>
+<pre><code class="shell">$ defaults delete com.baidu.demo
+</code></pre>
+<blockquote>
+<p>实际的的路径(把 my app和前后剪头 换成自己的应用的包名)</p>
+</blockquote>
+<p>macOS应用非沙盒权限(如下图) <code>~/Library/Preferences/&lt;my app&gt;.plist  &lt;my app&gt;</code>  eg:QQ<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_1.png" alt="非沙盒路径"></p>
+<p>macOS应用沙盒权限(如下图)  <code>~/Library/Containers/&lt;my app&gt;/Data/Library/Preferences/&lt;my app&gt;.plist</code> eg:qq  </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_2.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>defaults 还有其它指令还可以为某个<code>key</code>设置<code>value</code> 大家可自行google  </p>
+</blockquote>
+<p>谢谢大家</p>
+<p>全文完</p>
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/02/20/使用终端删除NSUserDefault的内容/" title="link to post.title" class="archive-list__title">使用终端删除NSUserDefault的内容</a>
-  </div>
-  </div>
+  </section>
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-02-09T05:37:28.000Z" class="archive-list__date">2017-02-09</time>
+</article>
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/02/09/Webview的NSScrollView禁用滑动功能/" title="link to post.title" class="archive-list__title">Webview的NSScrollView禁用滑动功能</a>
-  </div>
-  </div>
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT和PROJECT-DIR区别/" title="$(SRCROOT)和$(PROJECT_DIR)区别">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
+                <p class="excerpt">
+                
+                $(SRCROOT)代表的是项目根目录下$(PROJECT_DIR)代表的是整个项目
 
-  
-  
-  
-  <div class="archive-list__item">
-    <div class="archive-list__date-wrap">
-      <time datetime="2017-01-13T03:38:30.000Z" class="archive-list__date">2017-01-13</time>
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-21T08:28:00.000Z" class="post-list__meta--date date">2017-02-21</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-    </div>
-  <div class="archive-list__title-wrap">
-  <a href="/2017/01/13/学习macOS开发的路线/" title="link to post.title" class="archive-list__title">学习macOS开发的路线</a>
-  </div>
-  </div>
+</span><a class="btn-border-small" href="/2017/02/21/SRCROOT和PROJECT-DIR区别/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/18/iOS如何让二维码-条形码扫描框跟随二维码移动/" title="iOS如何让二维码/条形码扫描框跟随二维码移动">iOS如何让二维码/条形码扫描框跟随二维码移动</a></h2>
+                <p class="excerpt">
+                
+                前言
+开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
 
 
-</div>
+这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
+
+Buildi
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/18/iOS如何让二维码-条形码扫描框跟随二维码移动/">继续阅读</a></div>
+
+            </div>
+        
+   
 </section>
 
 
-</div>
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sunyazhou13.github.io/2017/02/20/使用终端删除NSUserDefault的内容/" data-title="使用终端删除NSUserDefault的内容" data-url="http://sunyazhou13.github.io/2017/02/20/使用终端删除NSUserDefault的内容/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sunyazhou13"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
 
 
             <footer class="footer">
