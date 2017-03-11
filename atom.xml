@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunyazhou.com/"/>
-  <updated>2017-03-11T07:40:08.000Z</updated>
+  <updated>2017-03-11T07:48:15.000Z</updated>
   <id>http://sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(%E4%B8%80)%E6%B1%89%E5%AD%97%E8%AF%AD%E9%9F%B3%E6%9C%97%E8%AF%BB/"/>
     <id>http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(一)汉字语音朗读/</id>
     <published>2017-03-11T04:38:53.000Z</published>
-    <updated>2017-03-11T07:40:08.000Z</updated>
+    <updated>2017-03-11T07:48:15.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://www.informit.com/ShowCover.aspx?isbn=0321961803" alt="AVSpeechSynthesizer"></p>
 <p>前言</p>
@@ -29,9 +29,8 @@
 </blockquote>
 <p>今天给大家分享的是 iOS上如何 把汉字转换成语音朗读, 当然这个没什么技术含量(大神可以飞过).</p>
 <h2 id="AVFoundation整体架构"><a href="#AVFoundation整体架构" class="headerlink" title="AVFoundation整体架构"></a>AVFoundation整体架构</h2><p>研究这个功能之前先介绍一下<code>AV Foundation</code>整体架构</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation(%E4%B8%80" alt="iOS">%E6%B1%89%E5%AD%97%E8%AF%AD%E9%9F%B3%E6%9C%97%E8%AF%BB/frameworksBlockDiagram_2x.png)<br>这是iOS上的架构设计 (上图)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation(%E4%B8%80" alt="iOS">%E6%B1%89%E5%AD%97%E8%AF%AD%E9%9F%B3%E6%9C%97%E8%AF%BB/frameworksBlockDiagramOSX_2x.png)  </p>
-<p>这是macOS上的架构设计(上图)</p>
+<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagram_2x.png" alt="iOS"><br>这是iOS上的架构设计 (上图)  </p>
+<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagramOSX_2x.png" alt="iOS"><br>这是macOS上的架构设计(上图)</p>
 <p>看完之后我们就来用代码实现这个demo<br>首先导入<code>&lt;AVFoundation/AVFoundation.h&gt;</code></p>
 <p>这我需要使用的是<code>AVSpeechSynthesizer</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">AVSpeechSynthesizer</span> *synthesizer;</div></pre></td></tr></table></figure>
