@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Learning AV Foundation-(一)汉字语音朗读 | 東引瓯越</title>
+    <title>Learning AV Foundation一汉字语音朗读 | 東引瓯越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Learning AV Foundation-(一)汉字语音朗读 | 東引瓯越">
-    <meta name="twitter:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
+    <meta name="twitter:title" content="Learning AV Foundation一汉字语音朗读 | 東引瓯越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Learning AV Foundation-(一)汉字语音朗读 | 東引瓯越">
-    <meta property="og:description" content="iOS&amp;macOS开发者,就职于百度,欢迎和世界开发者一起交流技术技巧.  膜拜欧阳询、田英章的书法. 自幼读经史,励志成为一个以一人抵一国的人.佩服清朝大臣 李鸿章。">
+    <meta property="og:title" content="Learning AV Foundation一汉字语音朗读 | 東引瓯越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
     <meta name="author" content="sunyazhou">
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引瓯越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(一)汉字语音朗读/"/>
+    <link rel="canonical" href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation一汉字语音朗读/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -185,7 +185,7 @@
 
 </span>
     </div>
-    <h1 class="post-title">Learning AV Foundation-(一)汉字语音朗读</h1>
+    <h1 class="post-title">Learning AV Foundation一汉字语音朗读</h1>
   </header>
 
   <section class="post">
@@ -199,7 +199,7 @@
 <p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagram_2x.png" alt="iOS"><br>这是iOS上的架构设计 (上图)  </p>
 <p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagramOSX_2x.png" alt="iOS"><br>这是macOS上的架构设计(上图)</p>
 <p>看完之后我们就来用代码实现这个demo<br>首先导入<code>&lt;AVFoundation/AVFoundation.h&gt;</code></p>
-<p>这我需要使用的是<code>AVSpeechSynthesizer</code></p>
+<p>这我需要使用的是iOS上的<code>AVSpeechSynthesizer</code>,macOS上叫<code>NSSpeechSynthesizer</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">AVSpeechSynthesizer</span> *synthesizer;</div></pre></td></tr></table></figure>
 <p><code>AVSpeechSynthesizer</code> 它的功能</p>
 <ul>
@@ -230,7 +230,7 @@
 <blockquote>
 <p>总结<br>为了学习<strong><code>AVFoundation</code></strong>我先从一个简单的知识点入手,唯一觉得遗憾的是我不太确定是否这个合成器支持自定义语音朗读,这个后续研究一下,把相关学习内容填补上.</p>
 </blockquote>
-<p><strong>最终的demo:<a href="https://github.com/sunyazhou13/AVSpeechSynthesizerDemo" target="_blank" rel="external">Learning-AV-Foundation(一)汉字语音朗读</a></strong></p>
+<p><strong>最终的demo 支持iOS和macOS:<a href="https://github.com/sunyazhou13/AVSpeechSynthesizerDemo" target="_blank" rel="external">Learning-AV-Foundation(一)汉字语音朗读</a></strong></p>
 <p>参考:<br><a href="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188" target="_blank" rel="external">AV Foundation Apple 官方文档</a><br><a href="http://www.jianshu.com/p/acd57725ba4d" target="_blank" rel="external">AVSpeechSynthesizer 和 AVSpeechUtterance</a><br><a href="http://www.jianshu.com/p/a41cb018f0b5" target="_blank" rel="external">AVSpeechSynthesizer详解</a><br><a href="http://www.jianshu.com/p/cc79c45b4ccf" target="_blank" rel="external">AVFoundation</a></p>
 
   </section>
@@ -239,6 +239,24 @@
 
 <section class="read-more">
      
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/" title="Learning AV Foundation二AVAudioPlayer">Learning AV Foundation二AVAudioPlayer</a></h2>
+                <p class="excerpt">
+                
+                开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
+音频知识基础  
+音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/">继续阅读</a></div>
+
+            </div>
         
 
         
@@ -269,7 +287,7 @@
 
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(一)汉字语音朗读/" data-title="Learning AV Foundation-(一)汉字语音朗读" data-url="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(一)汉字语音朗读/"></div>
+  <div class="ds-thread" data-thread-key="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation一汉字语音朗读/" data-title="Learning AV Foundation一汉字语音朗读" data-url="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation一汉字语音朗读/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">

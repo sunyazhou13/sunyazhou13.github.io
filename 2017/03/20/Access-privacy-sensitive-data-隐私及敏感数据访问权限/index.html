@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Access privacy-sensitive data 隐私及敏感数据访问权限 | 東引瓯越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Access privacy-sensitive data 隐私及敏感数据访问权限 | 東引瓯越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Access privacy-sensitive data 隐私及敏感数据访问权限 | 東引瓯越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引瓯越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-隐私及敏感数据访问权限/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引瓯越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引瓯越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引瓯越">東引瓯越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS&macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/AsiaSun1970" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-03-20T02:54:40.000Z" class="post-list__meta--date date">2017-03-20</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Access privacy-sensitive data 隐私及敏感数据访问权限</h1>
+  </header>
+
+  <section class="post">
+    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
+<blockquote>
+<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+</blockquote>
+<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
+<p>私有数据的框架列表可是个不小的东西:  </p>
+<blockquote>
+<p>通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
+</blockquote>
+<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="external">这个大神</a></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;!-- 🖼 Photo Library --&gt;</div><div class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📷 Camera --&gt;</div><div class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎤 Microphone --&gt;</div><div class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location --&gt;</div><div class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location When In Use --&gt;</div><div class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location Always --&gt;</div><div class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📆 Calendars --&gt;</div><div class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ⏰ Reminders --&gt;</div><div class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📒 Contacts --&gt;</div><div class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏊 Motion --&gt;</div><div class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Update --&gt;</div><div class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Share --&gt;</div><div class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</div><div class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎵 Media Library --&gt;</div><div class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📱 Siri --&gt;</div><div class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏡 HomeKit --&gt;</div><div class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📻 SpeechRecognition --&gt;</div><div class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📺 VideoSubscriber --&gt;</div><div class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</div></pre></td></tr></table></figure>
+  </section>
+
+</article>
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/23/判断NSWindow是否全屏/" title="判断NSWindow是否全屏">判断NSWindow是否全屏</a></h2>
+                <p class="excerpt">
+                
+                @interface NSWindow (FullScreen)- (BOOL)mn_isFullScreen;@end@implementation NSWindow (FullScreen)- (BOOL)mn_isFullScreen&amp;#123;    return (([self style
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/23/判断NSWindow是否全屏/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/" title="Learning AV Foundation二AVAudioPlayer">Learning AV Foundation二AVAudioPlayer</a></h2>
+                <p class="excerpt">
+                
+                开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
+音频知识基础  
+音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-隐私及敏感数据访问权限/" data-title="Access privacy-sensitive data 隐私及敏感数据访问权限" data-url="http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-隐私及敏感数据访问权限/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sunyazhou13"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-91999509-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunyazhou.com/"/>
-  <updated>2017-03-19T15:05:40.000Z</updated>
+  <updated>2017-03-23T06:05:26.000Z</updated>
   <id>http://sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,73 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Learning AV Foundation(二)AVAudioPlayer</title>
-    <link href="http://sunyazhou.com/2017/03/17/Learning%20AV%20Foundation(%E4%BA%8C)AVAudioPlayer/"/>
-    <id>http://sunyazhou.com/2017/03/17/Learning AV Foundation(二)AVAudioPlayer/</id>
+    <title>判断NSWindow是否全屏</title>
+    <link href="http://sunyazhou.com/2017/03/23/%E5%88%A4%E6%96%ADNSWindow%E6%98%AF%E5%90%A6%E5%85%A8%E5%B1%8F/"/>
+    <id>http://sunyazhou.com/2017/03/23/判断NSWindow是否全屏/</id>
+    <published>2017-03-23T06:03:32.000Z</published>
+    <updated>2017-03-23T06:05:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="external">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight objc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;@interface&lt;/span
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Access privacy-sensitive data 隐私及敏感数据访问权限</title>
+    <link href="http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-%E9%9A%90%E7%A7%81%E5%8F%8A%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90/"/>
+    <id>http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-隐私及敏感数据访问权限/</id>
+    <published>2017-03-20T02:54:40.000Z</published>
+    <updated>2017-03-20T03:04:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
+<blockquote>
+<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+</blockquote>
+<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
+<p>私有数据的框架列表可是个不小的东西:  </p>
+<blockquote>
+<p>通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
+</blockquote>
+<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="external">这个大神</a></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;!-- 🖼 Photo Library --&gt;</div><div class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📷 Camera --&gt;</div><div class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎤 Microphone --&gt;</div><div class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location --&gt;</div><div class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location When In Use --&gt;</div><div class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location Always --&gt;</div><div class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📆 Calendars --&gt;</div><div class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ⏰ Reminders --&gt;</div><div class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📒 Contacts --&gt;</div><div class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏊 Motion --&gt;</div><div class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Update --&gt;</div><div class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Share --&gt;</div><div class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</div><div class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎵 Media Library --&gt;</div><div class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📱 Siri --&gt;</div><div class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏡 HomeKit --&gt;</div><div class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📻 SpeechRecognition --&gt;</div><div class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📺 VideoSubscriber --&gt;</div><div class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This app has crashed because it attempted to acce
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Learning AV Foundation二AVAudioPlayer</title>
+    <link href="http://sunyazhou.com/2017/03/17/Learning%20AV%20Foundation%E4%BA%8CAVAudioPlayer/"/>
+    <id>http://sunyazhou.com/2017/03/17/Learning AV Foundation二AVAudioPlayer/</id>
     <published>2017-03-17T02:26:06.000Z</published>
-    <updated>2017-03-19T15:05:40.000Z</updated>
+    <updated>2017-03-26T05:20:51.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
 <h2 id="音频知识基础"><a href="#音频知识基础" class="headerlink" title="音频知识基础  "></a>音频知识基础  </h2><blockquote>
@@ -65,7 +127,7 @@
 <p><img src="http://msching.github.io/images/iOS-audio/audioUnitPlay.jpg" alt=""></p>
 <p>以上内容均转自<a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">码农人生</a> 希望大神不要介意 如果有问题 我可立即清除</p>
 <h2 id="使用AVAudioPlayer之前对AudioSession简介"><a href="#使用AVAudioPlayer之前对AudioSession简介" class="headerlink" title="使用AVAudioPlayer之前对AudioSession简介"></a>使用<code>AVAudioPlayer</code>之前对AudioSession简介</h2><blockquote>
-<p><code>AVAudioSession</code>负责管理音频回话 它是个单例 在应用程序和操作系统之间负责中间人的角色 <a href="http://msching.github.io/blog/2014/07/08/audio-in-ios-2/" target="_blank" rel="external">AudioSession参考</a> </p>
+<p><code>AVAudioSession</code>负责管理音频会话 它是个单例 在应用程序和操作系统之间负责中间人的角色 <a href="http://msching.github.io/blog/2014/07/08/audio-in-ios-2/" target="_blank" rel="external">AudioSession参考</a> </p>
 </blockquote>
 <p><code>AVAudioSession</code>主要功能包括以下几点：</p>
 <ul>
@@ -75,11 +137,11 @@
 </ul>
 <p><img src="https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png" alt=""></p>
 <p><em>注：AVAudioSession iOS6以后使用 以前叫AudioSession__</em></p>
-<h2 id="如何使用AVAudioPlayer"><a href="#如何使用AVAudioPlayer" class="headerlink" title="如何使用AVAudioPlayer"></a>如何使用<code>AVAudioPlayer</code></h2><p>在我的博客里面我尽量使用code胜过千言万语<br>使用<code>AVAudioPlayer</code>之前需要在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>并且启动音频回话</p>
+<h2 id="如何使用AVAudioPlayer"><a href="#如何使用AVAudioPlayer" class="headerlink" title="如何使用AVAudioPlayer"></a>如何使用<code>AVAudioPlayer</code></h2><p>在我的博客里面我尽量使用code胜过千言万语<br>使用<code>AVAudioPlayer</code>之前需要在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>并且启动音频会话</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上边已经介绍了<code>AVAudioSession</code>  </p>
 <p>这里面说一下<code>[session setCategory:AVAudioSessionCategoryPlayback error:&amp;error]</code> 里面的<code>AVAudioSessionCategoryPlayback</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/AVAudioPlayer_category.png" alt="音频回话分类"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/AVAudioPlayer_category.png" alt="音频会话分类"></p>
 <p>这是这几种分类的列表大家可以看下</p>
 <p>记得开启后台播放<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-43-36.png" alt=""><br>或者在plist里面修改<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-44-05.png" alt="">  </p>
 <p>下面就是创建音频播放器代码</p>
@@ -111,13 +173,13 @@
 <p>意外中断音频发生的场景 例如 听歌过程中来电话或者 按住home键使用siri </p>
 <p>下面是具体方法实现</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 音频意外打断处理</div><div class="line"></div><div class="line"> @param notification 通知信息</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)handleInterruption:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *info = notification.userInfo;</div><div class="line">    <span class="built_in">AVAudioSessionInterruptionType</span> type = [info[<span class="built_in">AVAudioSessionInterruptionTypeKey</span>] unsignedIntegerValue];</div><div class="line">    <span class="keyword">if</span> (type == <span class="built_in">AVAudioSessionInterruptionTypeBegan</span>) &#123;</div><div class="line">        <span class="comment">//Handle AVAudioSessionInterruptionTypeBegan</span></div><div class="line">        [<span class="keyword">self</span> pause];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//Handle AVAudioSessionInterruptionTypeEnded</span></div><div class="line">        <span class="built_in">AVAudioSessionInterruptionOptions</span> options = [info[<span class="built_in">AVAudioSessionInterruptionTypeKey</span>] unsignedIntegerValue];</div><div class="line">        <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">        <span class="comment">//激活音频会话 允许外接音响</span></div><div class="line">        [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span></div><div class="line">                                         withOptions:<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span> error:<span class="literal">nil</span>];</div><div class="line">        [[<span class="built_in">AVAudioSession</span> sharedInstance] setActive:<span class="literal">YES</span> withOptions:<span class="built_in">AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</span> error:&amp;error];</div><div class="line">        <span class="keyword">if</span> (options == <span class="built_in">AVAudioSessionInterruptionOptionShouldResume</span>) &#123;</div><div class="line">            [<span class="keyword">self</span> play];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            [<span class="keyword">self</span> play];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="keyword">self</span>.playButton.selected = <span class="literal">YES</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (error) &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"AVAudioSessionInterruptionOptionShouldResume失败:%@"</span>,[error localizedDescription]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>先说<code>handleInterruption</code>意外情况下中断比如我按住home键使用siri<br>我会收到意外打断的通知当 type == <code>AVAudioSessionInterruptionTypeBegan</code>时 我们停止音乐播放或者暂停.<br>当type != <code>AVAudioSessionInterruptionTypeBegan</code>的时候一定是<code>AVAudioSessionInterruptionTypeEnded</code>这个时候<code>notification.userInfo</code>里面包含一个<code>AVAudioSessionInterruptionOptions</code>值来表明音频回话是否已经重新激活以及是否可以再次播放</p>
-<p><strong><em>注:这个地方遇到个坑</em></strong> 当意外中断时候有时音频回话会很不灵敏 后来发现这种情况下需要重新激活回话 如下代码:</p>
+<p>先说<code>handleInterruption</code>意外情况下中断比如我按住home键使用siri<br>我会收到意外打断的通知当 type == <code>AVAudioSessionInterruptionTypeBegan</code>时 我们停止音乐播放或者暂停.<br>当type != <code>AVAudioSessionInterruptionTypeBegan</code>的时候一定是<code>AVAudioSessionInterruptionTypeEnded</code>这个时候<code>notification.userInfo</code>里面包含一个<code>AVAudioSessionInterruptionOptions</code>值来表明音频会话是否已经重新激活以及是否可以再次播放</p>
+<p><strong><em>注:这个地方遇到个坑</em></strong> 当意外中断时候有时音频会话会很不灵敏 后来发现这种情况下需要重新激活会话 如下代码:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setActive:<span class="literal">YES</span> withOptions:<span class="built_in">AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</span> error:&amp;error];</div></pre></td></tr></table></figure>
-<p>这里<code>AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</code>是为了通知其它应用回话被我激活了 很多播放器开发者很不讲究 每次从来不用这个方法导致每次别人播放完音频 自己都收不到音频重新播放的信息 建议大家以和为贵, 写良心代码.</p>
+<p>这里<code>AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</code>是为了通知其它应用会话被我激活了 很多播放器开发者很不讲究 每次从来不用这个方法导致每次别人播放完音频 自己都收不到音频重新播放的信息 建议大家以和为贵, 写良心代码.</p>
 <p>因为我外接的小米蓝牙音响发现还是不好使 最后又补上了<code>AVAudioSessionCategoryOptionAllowBluetooth</code>这个  </p>
 <p><strong>激活音频会话 允许外接音响</strong></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span>                              withOptions:<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span> error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> withOptions:<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span> error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
 <p>就好使了</p>
 <p>下面说一下耳机插拔或者USB麦克风断开 Apple有个什么<code>Human Interface Guidelines(HIG)</code>相关定义 意思是说当硬件耳机拔出时建议 暂停播放音乐或者麦克风断开时。就是处于静音状态。是为了保密播放内容不被外界听到,不管苹果啥规定 我们都得照办 否则就得被拒。</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)hanldeRouteChange:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *info = notification.userInfo;</div><div class="line">    <span class="built_in">AVAudioSessionRouteChangeReason</span> reason = [info[<span class="built_in">AVAudioSessionRouteChangeReasonKey</span>] unsignedIntegerValue];</div><div class="line">    <span class="comment">//老设备不可用</span></div><div class="line">    <span class="keyword">if</span> (reason == <span class="built_in">AVAudioSessionRouteChangeReasonOldDeviceUnavailable</span>) &#123;</div><div class="line">        <span class="built_in">AVAudioSessionRouteDescription</span> *previousRoute = info[<span class="built_in">AVAudioSessionRouteChangePreviousRouteKey</span>];</div><div class="line">        <span class="built_in">AVAudioSessionPortDescription</span> *previousOutput = previousRoute.outputs[<span class="number">0</span>];</div><div class="line">        <span class="built_in">NSString</span> *portType = previousOutput.portType;</div><div class="line">        <span class="keyword">if</span> ([portType isEqualToString:<span class="built_in">AVAudioSessionPortHeadphones</span>]) &#123;</div><div class="line">            [<span class="keyword">self</span> stop];</div><div class="line">            <span class="keyword">self</span>.playButton.selected = <span class="literal">NO</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -161,11 +223,11 @@
   </entry>
   
   <entry>
-    <title>Learning AV Foundation(一)汉字语音朗读</title>
-    <link href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(%E4%B8%80)%E6%B1%89%E5%AD%97%E8%AF%AD%E9%9F%B3%E6%9C%97%E8%AF%BB/"/>
-    <id>http://sunyazhou.com/2017/03/11/Learning-AV-Foundation(一)汉字语音朗读/</id>
+    <title>Learning AV Foundation一汉字语音朗读</title>
+    <link href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation%E4%B8%80%E6%B1%89%E5%AD%97%E8%AF%AD%E9%9F%B3%E6%9C%97%E8%AF%BB/"/>
+    <id>http://sunyazhou.com/2017/03/11/Learning-AV-Foundation一汉字语音朗读/</id>
     <published>2017-03-11T04:38:53.000Z</published>
-    <updated>2017-03-14T12:38:47.000Z</updated>
+    <updated>2017-03-26T05:20:32.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://www.informit.com/ShowCover.aspx?isbn=0321961803" alt="AVSpeechSynthesizer"></p>
 <p>前言</p>
@@ -208,7 +270,7 @@
 <blockquote>
 <p>总结<br>为了学习<strong><code>AVFoundation</code></strong>我先从一个简单的知识点入手,唯一觉得遗憾的是我不太确定是否这个合成器支持自定义语音朗读,这个后续研究一下,把相关学习内容填补上.</p>
 </blockquote>
-<p><strong>最终的demo:<a href="https://github.com/sunyazhou13/AVSpeechSynthesizerDemo" target="_blank" rel="external">Learning-AV-Foundation(一)汉字语音朗读</a></strong></p>
+<p><strong>最终的demo 支持iOS和macOS:<a href="https://github.com/sunyazhou13/AVSpeechSynthesizerDemo" target="_blank" rel="external">Learning-AV-Foundation(一)汉字语音朗读</a></strong></p>
 <p>参考:<br><a href="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188" target="_blank" rel="external">AV Foundation Apple 官方文档</a><br><a href="http://www.jianshu.com/p/acd57725ba4d" target="_blank" rel="external">AVSpeechSynthesizer 和 AVSpeechUtterance</a><br><a href="http://www.jianshu.com/p/a41cb018f0b5" target="_blank" rel="external">AVSpeechSynthesizer详解</a><br><a href="http://www.jianshu.com/p/cc79c45b4ccf" target="_blank" rel="external">AVFoundation</a></p>
 ]]></content>
     
