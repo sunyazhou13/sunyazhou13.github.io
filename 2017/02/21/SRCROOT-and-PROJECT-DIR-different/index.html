@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>iOS语言本地化/国际化一些技巧 | 東引瓯越</title>
+    <title>$(SRCROOT)和$(PROJECT_DIR)区别 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="iOS语言本地化/国际化一些技巧 | 東引瓯越">
+    <meta name="twitter:title" content="$(SRCROOT)和$(PROJECT_DIR)区别 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="iOS语言本地化/国际化一些技巧 | 東引瓯越">
+    <meta property="og:title" content="$(SRCROOT)和$(PROJECT_DIR)区别 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -34,10 +34,10 @@
 
     <meta name="generator" content="hexo"/>
     
-    <link rel="alternate" type="application/rss+xml" title="東引瓯越" href="/atom.xml">
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou.com/2017/02/17/iOS语言本地化-国际化一些技巧/"/>
+    <link rel="canonical" href="http://sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -70,8 +70,8 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 東引瓯越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引瓯越 logo" class="panel-cover__logo logo" /></a>
-        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引瓯越">東引瓯越</a></h1>
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
         
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
@@ -179,34 +179,17 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
+      <time datetime="2017-02-21T08:28:00.000Z" class="post-list__meta--date date">2017-02-21</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">iOS语言本地化/国际化一些技巧</h1>
+    <h1 class="post-title">$(SRCROOT)和$(PROJECT_DIR)区别</h1>
   </header>
 
   <section class="post">
-    <h2 id="代码获取国际化语言数组"><a href="#代码获取国际化语言数组" class="headerlink" title="代码获取国际化语言数组  "></a>代码获取国际化语言数组  </h2><p>获取当前app使用的语言<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
-<p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *lans = @[<span class="string">@"en"</span>];</div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setObject:lans forKey:<span class="string">@"AppleLanguages"</span>];</div></pre></td></tr></table></figure>
-<h2 id="修改scheme切换启动语言"><a href="#修改scheme切换启动语言" class="headerlink" title="修改scheme切换启动语言"></a>修改scheme切换启动语言</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/Snip20170217_2.png" alt="图1"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/Snip20170217_3.png" alt="图2"></p>
-<blockquote>
-<p><code>-AppleLanguages (zh-Hans)</code> 代表简体中文<br><code>-AppleLanguages (zh-Hant)</code> 代表繁体中文<br><code>-AppleLanguages (en)</code> 代表英文<br>其它小伙伴们自己总结一下也可以 注意 <strong>空格</strong> </p>
-</blockquote>
-<h2 id="国际化取不同图片代码"><a href="#国际化取不同图片代码" class="headerlink" title="国际化取不同图片代码"></a>国际化取不同图片代码</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *imageView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">//xxx 是国际化 图片的名字 例如xxx.png </span></div><div class="line">    <span class="comment">//如果是 xxx.jpg 必须写把xxx 替换成xxx.jpg</span></div><div class="line">    <span class="built_in">NSString</span> *imageName = <span class="built_in">NSLocalizedString</span>(<span class="string">@"xxx"</span>, <span class="literal">nil</span>); </div><div class="line">    <span class="keyword">self</span>.imageView.image = [<span class="built_in">UIImage</span> imageNamed:imageName];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>下面是我写的一个<a href="https://github.com/sunyazhou13/LocalizedDemo/tree/master" target="_blank" rel="external">demo</a><br>主要完成 如下内容 </p>
-<ol>
-<li>工程名称配置plist 国际化  </li>
-<li>字符串国际化  </li>
-<li>自定义字符串国际化  </li>
-<li>图片国际化  </li>
-</ol>
-<p>参考 <a href="http://www.jianshu.com/p/88c1b65e3ddb" target="_blank" rel="external">VV木公子</a> </p>
-<p>全文完</p>
+    <p><code>$(SRCROOT)</code>代表的是项目根目录下<br><code>$(PROJECT_DIR)</code>代表的是整个项目</p>
 
   </section>
 
@@ -217,23 +200,21 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/02/18/iOS如何让二维码-条形码扫描框跟随二维码移动/" title="iOS如何让二维码/条形码扫描框跟随二维码移动">iOS如何让二维码/条形码扫描框跟随二维码移动</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/22/macOS-simulate-keyborad-NSEvent/" title="macOS上模拟发送键盘事件">macOS上模拟发送键盘事件</a></h2>
                 <p class="excerpt">
                 
-                前言
-开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
+                
+最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
 
-
-这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
-
-Buildi
+导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
+创建CGEventSou
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
+                <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/02/18/iOS如何让二维码-条形码扫描框跟随二维码移动/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/02/22/macOS-simulate-keyborad-NSEvent/">继续阅读</a></div>
 
             </div>
         
@@ -241,27 +222,21 @@ Buildi
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/02/10/搭建hexo博客教程/" title="搭建hexo博客教程">搭建hexo博客教程</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/" title="使用终端删除NSUserDefault的内容">使用终端删除NSUserDefault的内容</a></h2>
                 <p class="excerpt">
                 
-                
-Jekyll迁移到Hexo搭建个人博客  
-HEXO + Github 搭建自己的博客系统
-利用Hexo和Github Pages搭建个人博客
+                前言
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
 
-上边是我参考的文章主要是环境比较费劲  
-1. nodejs  
-2. npm包管理工具  
-3. hexo  
-4. nvm管理node  
-5. 本
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults d
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-02-10T02:24:25.000Z" class="post-list__meta--date date">2017-02-10</time>
+                <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/02/10/搭建hexo博客教程/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/">继续阅读</a></div>
 
             </div>
         
@@ -271,24 +246,19 @@ HEXO + Github 搭建自己的博客系统
 
 
 <section class="post-comments">
-  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://sunyazhou.com/2017/02/17/iOS语言本地化-国际化一些技巧/" data-title="iOS语言本地化/国际化一些技巧" data-url="http://sunyazhou.com/2017/02/17/iOS语言本地化-国际化一些技巧/"></div>
-  <!-- 多说评论框 end -->
-  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:"sunyazhou13"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "b8670c80ec2940b2a81ad3991e7790b0",
+    target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
 </section>
-
 
 
 

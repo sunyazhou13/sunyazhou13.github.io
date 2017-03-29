@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Learning AV Foundation二AVAudioPlayer | 東引甌越</title>
+    <title>Learning AV Foundation(二)AVAudioPlayer | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Learning AV Foundation二AVAudioPlayer | 東引甌越">
+    <meta name="twitter:title" content="Learning AV Foundation(二)AVAudioPlayer | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Learning AV Foundation二AVAudioPlayer | 東引甌越">
+    <meta property="og:title" content="Learning AV Foundation(二)AVAudioPlayer | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou.com/2017/03/17/Learning AV Foundation二AVAudioPlayer/"/>
+    <link rel="canonical" href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -185,11 +185,12 @@
 
 </span>
     </div>
-    <h1 class="post-title">Learning AV Foundation二AVAudioPlayer</h1>
+    <h1 class="post-title">Learning AV Foundation(二)AVAudioPlayer</h1>
   </header>
 
   <section class="post">
-    <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stock-photo-55571408.jpg" alt="AVAudioPlayer"></p>
+<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
 <h2 id="音频知识基础"><a href="#音频知识基础" class="headerlink" title="音频知识基础  "></a>音频知识基础  </h2><blockquote>
 <p>音频文件的生成过程是将声音信息<strong>采样</strong>、<strong>量化</strong>和<strong>编码</strong>产生的数字信号的过程，<strong>人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ</strong>，因此音频文件格式的最大带宽是20KHZ。根据<a href="https://zh.wikipedia.org/wiki/%E5%A5%88%E5%A5%8E%E6%96%AF%E7%89%B9%E9%A2%91%E7%8E%87" target="_blank" rel="external">奈奎斯特</a>的理论，只有采样频率高于声音信号最高频率的两倍时，才能把数字信号表示的声音还原成为原来的声音，所以音频文件的采样率一般在<strong>40~50KHZ</strong>，比如最常见的CD音质采样率<strong>44.1KHZ</strong>。 (所以一般大家都觉得CD音质是最好的.) 对声音进行采样、量化过程被称为<a href="https://zh.wikipedia.org/wiki/%E8%84%88%E8%A1%9D%E7%B7%A8%E8%99%9F%E8%AA%BF%E8%AE%8A" target="_blank" rel="external">脉冲编码调制</a>（Pulse Code Modulation），简称PCM。PCM数据是最原始的音频数据完全无损，所以PCM数据虽然音质优秀但体积庞大，为了解决这个问题先后诞生了一系列的音频格式，这些音频格式运用不同的方法对音频数据进行压缩，其中有无损压缩（ALAC、APE、FLAC）和有损压缩（MP3、AAC、OGG、WMA）两种 来源:<a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">iOS音频播放 (一)：概述</a> by <a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a></p>
 </blockquote>
@@ -241,7 +242,7 @@
 <li>协调你的app的音频播放和系统以及其他app行为（例如有电话时需要打断，电话结束时需要恢复，按下静音按钮时是否歌曲也要静音等）</li>
 </ul>
 <p><img src="https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png" alt=""></p>
-<p><em>注：AVAudioSession iOS6以后使用 以前叫AudioSession__</em></p>
+<p><em>注：AVAudioSession iOS6以后使用 以前叫AudioSession</em></p>
 <h2 id="如何使用AVAudioPlayer"><a href="#如何使用AVAudioPlayer" class="headerlink" title="如何使用AVAudioPlayer"></a>如何使用<code>AVAudioPlayer</code></h2><p>在我的博客里面我尽量使用code胜过千言万语<br>使用<code>AVAudioPlayer</code>之前需要在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>并且启动音频会话</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上边已经介绍了<code>AVAudioSession</code>  </p>
@@ -320,20 +321,19 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" title="Learning AV Foundation(二)AVAudioPlayer">Learning AV Foundation(二)AVAudioPlayer</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/20/Access-privacy-sensitive-data-private-access-permission/" title="Access privacy-sensitive data 隐私及敏感数据访问权限">Access privacy-sensitive data 隐私及敏感数据访问权限</a></h2>
                 <p class="excerpt">
                 
-                
-开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
-音频知识基础  
-音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的
+                在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：
+
+This app has crashed because it attempted to access privacy-sensitive data withou
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
+                <div class="post-list__meta"><time datetime="2017-03-20T02:54:40.000Z" class="post-list__meta--date date">2017-03-20</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/03/20/Access-privacy-sensitive-data-private-access-permission/">继续阅读</a></div>
 
             </div>
         
@@ -341,20 +341,19 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/" title="Learning AV Foundation(一)汉字语音朗读">Learning AV Foundation(一)汉字语音朗读</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/" title="Learning AV Foundation二AVAudioPlayer">Learning AV Foundation二AVAudioPlayer</a></h2>
                 <p class="excerpt">
                 
-                
-前言
-
-最近在研究AV Foundation 框架 发现有一本书叫做AV Foundation开发秘籍：实践掌握iOS &amp;amp; OS X 应用的视听处理技术然后google查了一下英文版叫Learning AV Foundation: A Hands-on Guide to Mastering
+                开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
+音频知识基础  
+音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-03-11T04:38:53.000Z" class="post-list__meta--date date">2017-03-11</time>
+                <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/">继续阅读</a></div>
 
             </div>
         

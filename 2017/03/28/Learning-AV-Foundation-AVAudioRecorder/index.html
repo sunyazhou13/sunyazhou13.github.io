@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Learning AV Foundation(三)AVAudioRecorder | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Learning AV Foundation(三)AVAudioRecorder | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Learning AV Foundation(三)AVAudioRecorder | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="http://sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS&macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/AsiaSun1970" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Learning AV Foundation(三)AVAudioRecorder</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/stock-photo-200814137.jpg" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<code>AV Foundation</code>中使用<code>AVAudioRecorder</code>类添加音频录制功能和使用<code>AVAudioPlayer</code>一样简单, 都是在<code>Audio Queue Server</code>上层构建的.同时支持<code>macOS</code>和<code>iOS</code>平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.</p>
+<h2 id="主要内容如下"><a href="#主要内容如下" class="headerlink" title="主要内容如下:"></a>主要内容如下:</h2><pre><code>如何创建AVAudioRecorder  
+    1. 音频格式
+    2. 采样率
+    3. 通道数
+创建Demo
+    1. 配置音频会话
+    2. 实现录音功能
+    3. 使用Audio Metering实现声波视觉显示
+</code></pre><p>创建<code>AVAudioRecorder</code>之前先了解一下它的方法和成员变量</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">getter</span>=isRecording) <span class="built_in">BOOL</span> recording;<span class="comment">//是否正在录音</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *settings;<span class="comment">//录音配置：采样率、音频格式、通道数...</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSURL</span> *url;<span class="comment">//录音文件存放URL</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSTimeInterval</span> currentTime;<span class="comment">//录音时长</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">getter</span>=isMeteringEnabled) <span class="built_in">BOOL</span> meteringEnabled;<span class="comment">//是否监控声波</span></div></pre></td></tr></table></figure>
+<p><code>AVAudioRecorder</code>的实例方法:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)prepareToRecord;<span class="comment">//为录音准备缓冲区</span></div><div class="line">- (<span class="built_in">BOOL</span>)record;<span class="comment">//录音开始，暂停后调用会恢复录音</span></div><div class="line">- (<span class="built_in">BOOL</span>)recordAtTime:(<span class="built_in">NSTimeInterval</span>)time;<span class="comment">//在指定时间后开始录音</span></div><div class="line">- (<span class="built_in">BOOL</span>)recordForDuration:(<span class="built_in">NSTimeInterval</span>) duration;<span class="comment">//按指定时长录音</span></div><div class="line">- (<span class="built_in">BOOL</span>)recordAtTime:(<span class="built_in">NSTimeInterval</span>)time </div><div class="line">         forDuration:(<span class="built_in">NSTimeInterval</span>)duration;<span class="comment">//上面2个的合体</span></div><div class="line">- (<span class="keyword">void</span>)pause; <span class="comment">//暂停录音</span></div><div class="line">- (<span class="keyword">void</span>)stop; <span class="comment">//停止录音</span></div><div class="line">- (<span class="built_in">BOOL</span>)deleteRecording;<span class="comment">//删除录音，必须先停止录音再删除</span></div></pre></td></tr></table></figure>
+<p><code>AVAudioRecorder</code>的代理方法:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//录音完成后调用</span></div><div class="line">- (<span class="keyword">void</span>)audioRecorderDidFinishRecording:(<span class="built_in">AVAudioRecorder</span> *)recorder </div><div class="line">                           successfully:(<span class="built_in">BOOL</span>)flag;</div><div class="line"><span class="comment">//录音编码发生错误时调用</span></div><div class="line">- (<span class="keyword">void</span>)audioRecorderEncodeErrorDidOccur:(<span class="built_in">AVAudioRecorder</span> *)recorder </div><div class="line">                                   error:(<span class="built_in">NSError</span> *)error;</div></pre></td></tr></table></figure>
+<h2 id="如何创建AVAudioRecorder"><a href="#如何创建AVAudioRecorder" class="headerlink" title="如何创建AVAudioRecorder"></a>如何创建<code>AVAudioRecorder</code></h2><p>创建<code>AVAudioRecorder</code>对象所需要的参数如下:  </p>
+<ul>
+<li>音频流录制时写入到本地的路径URL</li>
+<li><code>settings</code>录音配置：采样率、音频格式、通道数…等键值参数字典</li>
+<li>发生错误的<code>NSError</code>指针</li>
+</ul>
+<p>如下代码:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 创建录音器</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)createRecorder &#123;</div><div class="line">    <span class="built_in">NSString</span> *directory = <span class="built_in">NSTemporaryDirectory</span>();</div><div class="line">    <span class="built_in">NSString</span> *filePath = [directory stringByAppendingPathComponent:<span class="string">@"voice1.m4a"</span>];</div><div class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:filePath];</div><div class="line">    </div><div class="line">    <span class="built_in">NSDictionary</span> *setting = @&#123;<span class="built_in">AVFormatIDKey</span> : @(kAudioFormatMPEG4AAC),</div><div class="line">                              <span class="built_in">AVSampleRateKey</span>: @<span class="number">22050.0</span>f,</div><div class="line">                              <span class="built_in">AVNumberOfChannelsKey</span>: @<span class="number">1</span>&#125;;</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">self</span>.recorder = [[<span class="built_in">AVAudioRecorder</span> alloc] initWithURL:url</div><div class="line">                                                settings:setting</div><div class="line">                                                   error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.recorder) &#123;</div><div class="line">        [<span class="keyword">self</span>.recorder prepareToRecord];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Recorder Create Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的建议调用<code>[self.recorder prepareToRecord]</code>方法对录音实例进行预设就像<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>创建<code>AVAudioPlayer</code>类似.都是为了执行底层<code>Audio Queue</code>初始化的必要过程.这个<code>prepareToRecord</code>方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时</p>
+<h2 id="音频格式"><a href="#音频格式" class="headerlink" title="音频格式"></a>音频格式</h2><p><code>AVFormatIDKey</code>key指定录制格式,这里的除了<code>kAudioFormatMPEG4AAC</code>格式还有下面这些:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">CF_ENUM(AudioFormatID)</div><div class="line">&#123;</div><div class="line">    kAudioFormatLinearPCM               = 'lpcm',</div><div class="line">    kAudioFormatAC3                     = 'ac-3',</div><div class="line">    kAudioFormat60958AC3                = 'cac3',</div><div class="line">    kAudioFormatAppleIMA4               = 'ima4',</div><div class="line">    kAudioFormatMPEG4AAC                = 'aac ',</div><div class="line">    kAudioFormatMPEG4CELP               = 'celp',</div><div class="line">    kAudioFormatMPEG4HVXC               = 'hvxc',</div><div class="line">    kAudioFormatMPEG4TwinVQ             = 'twvq',</div><div class="line">    kAudioFormatMACE3                   = 'MAC3',</div><div class="line">    kAudioFormatMACE6                   = 'MAC6',</div><div class="line">    kAudioFormatULaw                    = 'ulaw',</div><div class="line">    kAudioFormatALaw                    = 'alaw',</div><div class="line">    kAudioFormatQDesign                 = 'QDMC',</div><div class="line">    kAudioFormatQDesign2                = 'QDM2',</div><div class="line">    kAudioFormatQUALCOMM                = 'Qclp',</div><div class="line">    kAudioFormatMPEGLayer1              = '.mp1',</div><div class="line">    kAudioFormatMPEGLayer2              = '.mp2',</div><div class="line">    kAudioFormatMPEGLayer3              = '.mp3',</div><div class="line">    kAudioFormatTimeCode                = 'time',</div><div class="line">    kAudioFormatMIDIStream              = 'midi',</div><div class="line">    kAudioFormatParameterValueStream    = 'apvs',</div><div class="line">    kAudioFormatAppleLossless           = 'alac',</div><div class="line">    kAudioFormatMPEG4AAC_HE             = 'aach',</div><div class="line">    kAudioFormatMPEG4AAC_LD             = 'aacl',</div><div class="line">    kAudioFormatMPEG4AAC_ELD            = 'aace',</div><div class="line">    kAudioFormatMPEG4AAC_ELD_SBR        = 'aacf',</div><div class="line">    kAudioFormatMPEG4AAC_ELD_V2         = 'aacg',    </div><div class="line">    kAudioFormatMPEG4AAC_HE_V2          = 'aacp',</div><div class="line">    kAudioFormatMPEG4AAC_Spatial        = 'aacs',</div><div class="line">    kAudioFormatAMR                     = 'samr',</div><div class="line">    kAudioFormatAMR_WB                  = 'sawb',</div><div class="line">    kAudioFormatAudible                 = 'AUDB',</div><div class="line">    kAudioFormatiLBC                    = 'ilbc',</div><div class="line">    kAudioFormatDVIIntelIMA             = 0x6D730011,</div><div class="line">    kAudioFormatMicrosoftGSM            = 0x6D730031,</div><div class="line">    kAudioFormatAES3                    = 'aes3',</div><div class="line">    kAudioFormatEnhancedAC3             = 'ec-3'</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这里的<code>kAudioFormatLinearPCM</code>会将为压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC<code>kAudioFormatMPEG4AAC</code>或者AppleIMA4<code>kAudioFormatAppleLossless</code>等格式会显著缩小文件，还能保证音频质量.</p>
+<blockquote>
+<p><em>注意:</em><br><em>指定的音频格式一定要和文件写入的URL文件类型保持一致。如果录制xxx.wav文件格式 是 Waveform Audio File Format(WAVE)的格式要求,即 低字节序、 LinePCM。 如果<code>AVFormatIDKey</code>指定的值不是<code>kAudioFormatLinearPCM</code>则会发生错误。NSError 会返回如下错误</em><br><em>The operation couldn’t be completed. (OSState error 1718449215.)</em></p>
+</blockquote>
+<h2 id="采样率"><a href="#采样率" class="headerlink" title="采样率"></a>采样率</h2><p>上边的代码里<code>AVSampleRateKey</code>用于定义录音器的采样率. <strong>采样率定义了对输入的模拟音频信号每一秒内的采样数</strong>. 如果使用<strong>低采样率</strong> 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用<strong>44.1kHz的采样率(CD质量的采样率)</strong>会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用<strong>标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz</strong> ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>说了 <strong>人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz</strong>,录音最好采用 x 2 倍的频率）</p>
+<h2 id="通道数"><a href="#通道数" class="headerlink" title="通道数"></a>通道数</h2><p><code>AVNumberOfChannelsKey</code>用于定义记录音频内容的通道数。<strong>指定默认值1 意味着使用单声道录制</strong>、<strong>设置2意味着使用立体声录制</strong>。除非使用外部硬件进行录制，否则同窗应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。</p>
+<blockquote>
+<p>以上是全面<code>AVAudioRecorder</code>的部分概念,<code>AVAudioRecorder</code>支持<strong>无限时长录制</strong>,还可以设置从<strong>未来某一时间点开始录制</strong>或<strong>指定时长录制</strong></p>
+</blockquote>
+<h1 id="下面我们来写个demo-完成上述功能"><a href="#下面我们来写个demo-完成上述功能" class="headerlink" title="下面我们来写个demo 完成上述功能"></a>下面我们来写个demo 完成上述功能</h1><h2 id="配置会话"><a href="#配置会话" class="headerlink" title="配置会话"></a>配置会话</h2><p>首先创建以一个AVAudioRecorderDemo工程iOS平台这些相信大家非常熟练了.</p>
+<p>在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>写上设置如下代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayAndRecord</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>,[error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//激活会话</span></div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>,[error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这<code>AVAudioSessionCategoryPlayAndRecord</code>是<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>说的那几种Category,我们需要<strong>录音+播放</strong>功能</p>
+<p>下一步 配置 plist文件访问权限信息 可以参考<a href="http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/" target="_blank" rel="external">Access privacy-sensitive data</a>这篇文章把访问权限需要的 信息填充上.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_2.png" alt="plist1"></p>
+<p>然后选择SourceCode<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_5.png" alt="plist2"></p>
+<p>填写上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 🎤 Microphone --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>NSMicrophoneUsageDescription<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>$(PRODUCT_NAME) microphone use<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上边这些是为了访问本地授权, 记得授权如果第一次被拒就必须让用户手动 到通用-设置里面去配置否则将永远不好使哈。如果不写这种本地授权 程序应该会 crash   </p>
+<h2 id="录音代码实现"><a href="#录音代码实现" class="headerlink" title="录音代码实现"></a>录音代码实现</h2><p>首先我们来封装一个类起名叫<code>BDRecoder</code>吧. 这里类我们让它负责所有 音频录制、暂停录制、保存录制文件等功能 并有回调函数等block.  <code>BDRecoder.h</code>看起来像下面这样, 这里后续完善的话可以加个代理 表示录制过程中意外中断或者线路切换等逻辑.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  BDRecorder.h</span></div><div class="line"><span class="comment">//  AVAudioRecorderDemo</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by sunyazhou on 2017/3/29.</span></div><div class="line"><span class="comment">//  Copyright © 2017年 Baidu, Inc. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//录音停止的回调</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^BDRecordingStopCompletionHanlder)(<span class="built_in">BOOL</span>);</div><div class="line"><span class="comment">//保存录音文件完成的回调</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^BDRecordingSaveCompletionHanlder)(<span class="built_in">BOOL</span>, <span class="keyword">id</span>);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRecorder</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 外部获取当前录制的时间</div><div class="line"> * 小时:分钟:秒  当然后续可以加微秒和毫秒哈就是格式字符串 00:03:02 这样</div><div class="line"> */</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *formattedCurrentTime;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)record; <span class="comment">//开始录音</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)pause;  <span class="comment">//暂停录音</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)stopWithCompletionHandler:(BDRecordingStopCompletionHanlder)handler;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)saveRecordingWithName:(<span class="built_in">NSString</span> *)name</div><div class="line">            completionHandler:(BDRecordingSaveCompletionHanlder)handler;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> 回放录制的文件</div><div class="line"> @param fileUrl 文件URL</div><div class="line"> @return 播放是否成功</div><div class="line"> */</div><div class="line">- (<span class="built_in">BOOL</span>)playbackURL:(<span class="built_in">NSURL</span> *)fileUrl;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>BDRecoder.m</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  BDRecorder.m</span></div><div class="line"><span class="comment">//  AVAudioRecorderDemo</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Created by sunyazhou on 2017/3/29.</span></div><div class="line"><span class="comment">//  Copyright © 2017年 Baidu, Inc. All rights reserved.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"BDRecorder.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRecorder</span> () &lt;<span class="title">AVAudioRecorderDelegate</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioPlayer</span> *player;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioRecorder</span> *recorder;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) BDRecordingStopCompletionHanlder completionHandler;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BDRecorder</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        <span class="built_in">NSString</span> *temDir = <span class="built_in">NSTemporaryDirectory</span>();</div><div class="line">        <span class="built_in">NSString</span> *filePath = [temDir stringByAppendingPathComponent:<span class="string">@"test1.caf"</span>];</div><div class="line">        <span class="built_in">NSURL</span> *fileURL = [<span class="built_in">NSURL</span> fileURLWithPath:filePath];</div><div class="line">        </div><div class="line">        <span class="built_in">NSDictionary</span> *setting = @&#123;<span class="built_in">AVFormatIDKey</span>: @(kAudioFormatAppleIMA4),</div><div class="line">                                  <span class="built_in">AVSampleRateKey</span>: @<span class="number">44100.0</span>f,</div><div class="line">                                  <span class="built_in">AVNumberOfChannelsKey</span>: @<span class="number">1</span>,</div><div class="line">                                  <span class="built_in">AVEncoderBitDepthHintKey</span>: @<span class="number">16</span>,</div><div class="line">                                  <span class="built_in">AVEncoderAudioQualityKey</span>: @(<span class="built_in">AVAudioQualityMedium</span>)</div><div class="line">                                  &#125;;</div><div class="line">        <span class="built_in">NSError</span> *error;</div><div class="line">        <span class="keyword">self</span>.recorder = [[<span class="built_in">AVAudioRecorder</span> alloc] initWithURL:fileURL settings:setting error:&amp;error];</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.recorder) &#123;</div><div class="line">            <span class="keyword">self</span>.recorder.delegate = <span class="keyword">self</span>;</div><div class="line">            [<span class="keyword">self</span>.recorder prepareToRecord];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"Create Recorder Error: %@"</span>,[error localizedDescription]);</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)record &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span>.recorder record];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)pause &#123;</div><div class="line">    [<span class="keyword">self</span>.recorder pause];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)stopWithCompletionHandler:(BDRecordingStopCompletionHanlder)handler &#123;</div><div class="line">    <span class="keyword">self</span>.completionHandler = handler;</div><div class="line">    [<span class="keyword">self</span>.recorder stop];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)saveRecordingWithName:(<span class="built_in">NSString</span> *)name</div><div class="line">            completionHandler:(BDRecordingSaveCompletionHanlder)handler &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)audioRecorderDidFinishRecording:(<span class="built_in">AVAudioRecorder</span> *)recorder</div><div class="line">                           successfully:(<span class="built_in">BOOL</span>)flag &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.completionHandler) &#123; <span class="keyword">self</span>.completionHandler(flag); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>暂时到这 明天再继续</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/23/check-NSWindow-isFullScreen/" title="判断NSWindow是否全屏">判断NSWindow是否全屏</a></h2>
+                <p class="excerpt">
+                
+                @interface NSWindow (FullScreen)- (BOOL)mn_isFullScreen;@end@implementation NSWindow (FullScreen)- (BOOL)mn_isFullScreen&amp;#123;    return (([self style
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/23/check-NSWindow-isFullScreen/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+    <script>
+    var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "b8670c80ec2940b2a81ad3991e7790b0",
+    target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+    </script>
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-91999509-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+</body>
+</html>
