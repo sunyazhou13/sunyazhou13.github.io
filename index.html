@@ -260,24 +260,6 @@ This app has crashed because it attempted to access privacy-sensitive data witho
   
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/" title="link to post.title">Learning AV Foundation二AVAudioPlayer</a></h2>
-      <p class="excerpt">
-    
-      开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
-音频知识基础  
-音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最大带宽是20KHZ。根据奈奎斯特的理论，只有采样频率高于声音信号最高频率的两倍时，才能把数字信号表示的声音还原成为原来的声音，所以音频文件的采样率一般在40~50KHZ，比如最常见的CD音质采样率44
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/17/Learning AV Foundation二AVAudioPlayer/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/" title="link to post.title">Learning AV Foundation(一)汉字语音朗读</a></h2>
       <p class="excerpt">
     
@@ -292,25 +274,6 @@ This app has crashed because it attempted to access privacy-sensitive data witho
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/11/Learning-AV-Foundation一汉字语音朗读/" title="link to post.title">Learning AV Foundation一汉字语音朗读</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-
-最近在研究AV Foundation 框架 发现有一本书叫做AV Foundation开发秘籍：实践掌握iOS &amp;amp; OS X 应用的视听处理技术然后google查了一下英文版叫Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含量 这么直译就没技术含量了。看着开发秘籍这名字不禁
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-11T04:38:53.000Z" class="post-list__meta--date date">2017-03-11</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/11/Learning-AV-Foundation一汉字语音朗读/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
@@ -374,6 +337,48 @@ $ defaults delete com.baidu.demo
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/" title="link to post.title">iOS如何让二维码/条形码扫描框跟随二维码移动</a></h2>
+      <p class="excerpt">
+    
+      前言
+开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
+
+
+这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
+
+Building a Barcode and QR Code Reader in Swift 3 and Xcode 8
+
+这里比较核心的代码如下 AVCaptureMetadataOutputObjectsDe
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/17/iOS-internationalization-language-some-skills/" title="link to post.title">iOS语言本地化/国际化一些技巧</a></h2>
+      <p class="excerpt">
+    
+      代码获取国际化语言数组  获取当前app使用的语言NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firstObject;NSLog(@&quot;模拟器语言：%@&quot;,language1);
+切换语言 en代表 英语, zh-Hans 简体中文, zh-Hant 繁体中文.  
+NSArray *lans = @[
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/17/iOS-internationalization-language-some-skills/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
