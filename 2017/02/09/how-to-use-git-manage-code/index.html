@@ -189,7 +189,8 @@
   </header>
 
   <section class="post">
-    <h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg" alt=""></p>
+<h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p><code>username</code> 一般代表提交的本机用户名<br><code>email@you.com</code> 一般是邮箱地址 </p>
 </blockquote>
@@ -223,6 +224,11 @@
 <blockquote>
 <p>查看远程分支 <code>git branch -r</code> r 代表remote</p>
 </blockquote>
+<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p><code>$ git merge br-name</code>将<code>br-name</code>分支合并到当前分支下<br>加入<code>--no-ff</code>则表示禁用Fast forward模式。即新建commit而不是切换HEAD指针来实现<br><code>$ git merge --no-ff -m &quot;merge with no-ff&quot; dev</code><br>合并分支前可以通过<code>git diff &lt;source_branch&gt; &lt;target_branch&gt;</code>来查看两者不同</p>
+<h2 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h2><p>merge分支时，如果两分支对同一地方做了不同的修改，则为冲突，冲突的文件git会生成如下内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD </div><div class="line">Creating a new branch is quick &amp; simple. </div><div class="line">======= </div><div class="line">Creating a new branch is quick AND simple. </div><div class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</div></pre></td></tr></table></figure>
+<p>解决完冲突 合并之后 记得执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git rebase --continue</div></pre></td></tr></table></figure>
 <p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
 <p>持续更新</p>
 

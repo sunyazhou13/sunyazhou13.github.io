@@ -181,6 +181,90 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/" title="link to post.title">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
+      <p class="excerpt">
+    
+      $(SRCROOT)代表的是项目根目录下$(PROJECT_DIR)代表的是整个项目
+
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-21T08:28:00.000Z" class="post-list__meta--date date">2017-02-21</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/" title="link to post.title">使用终端删除NSUserDefault的内容</a></h2>
+      <p class="excerpt">
+    
+      前言
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
+
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults delete + 包名  eg: com.baidu.demo 
+下面这样会删除所有以com.baidu.demo为包名的文件  
+$ defaults delete com.baidu.demo
+
+
+
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/" title="link to post.title">iOS如何让二维码/条形码扫描框跟随二维码移动</a></h2>
+      <p class="excerpt">
+    
+      前言
+开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
+
+
+这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
+
+Building a Barcode and QR Code Reader in Swift 3 and Xcode 8
+
+这里比较核心的代码如下 AVCaptureMetadataOutputObjectsDe
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/17/iOS-internationalization-language-some-skills/" title="link to post.title">iOS语言本地化/国际化一些技巧</a></h2>
+      <p class="excerpt">
+    
+      代码获取国际化语言数组  获取当前app使用的语言NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firstObject;NSLog(@&quot;模拟器语言：%@&quot;,language1);
+切换语言 en代表 英语, zh-Hans 简体中文, zh-Hant 繁体中文.  
+NSArray *lans = @[
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/17/iOS-internationalization-language-some-skills/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/02/10/build-hexo-blog-Tutorial/" title="link to post.title">搭建hexo博客教程</a></h2>
       <p class="excerpt">
     
@@ -240,7 +324,8 @@ eg: ~/Do
       <h2 class="post-list__post-title post-title"><a href="/2017/02/09/how-to-use-git-manage-code/" title="link to post.title">如何使用git管理代码</a></h2>
       <p class="excerpt">
     
-      全局配置git$ git config --global user.name &quot;username&quot;  $ git config --golbal user.email &quot;email@you.com&quot;
+      
+全局配置git$ git config --global user.name &quot;username&quot;  $ git config --golbal user.email &quot;email@you.com&quot;
 
 username 一般代表提交的本机用户名email@you.com 一般是邮箱地址 
 
@@ -248,7 +333,7 @@ username 一般代表提交的本机用户名email@you.com 一般是邮箱地址
 
 执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面
 
-克隆远程版本库$ git clone git@github.com:sunyazh
+克隆远程版本库$ git clone git@github.com:sunyaz
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-09T11:35:45.000Z" class="post-list__meta--date date">2017-02-09</time>
@@ -317,52 +402,6 @@ iOS技
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/13/Learning-macOS-development-shortcut/" title="link to post.title">学习macOS开发的路线</a></h2>
-      <p class="excerpt">
-    
-      
-开发总结
-
-
-
-
-学习完所有raywenderlich的macOS开发教程
-Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
-[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版必看
-
-
-以上这些必须看一遍 包括那两本epub的书籍 虽然都是英文的(我本人英语应该不算太好但也不差)看这个很easy
-博客
-
-老谭笔记 这个大牛是原新浪网盘mac端的技术开发他的每一篇文章我都看
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-13T03:38:30.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/13/Learning-macOS-development-shortcut/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/13/UIViewController-code-standard/" title="link to post.title">UIViewController代码规范</a></h2>
-      <p class="excerpt">
-    
-      Objective-C#pragma mark -#pragma mark - private methods 私有方法#pragma mark -#pragma mark - public methods 公有方法#pragma mark -#pragma mark - getters and setters 设置器和访问器#pragma mark -#pragma mark - UITableViewDelegate#pragma mark -#pragma mark - CustomDel
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-13T03:18:07.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/13/UIViewController-code-standard/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -371,6 +410,8 @@ Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
     
       <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/#blog">Prev</a>
     
+    
+      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/3/">Next</a>
     
   </nav>
 

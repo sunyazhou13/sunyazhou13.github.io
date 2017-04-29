@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Webview的NSScrollView禁用滑动功能 | 東引甌越</title>
+    <title>Xcode快捷键 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Webview的NSScrollView禁用滑动功能 | 東引甌越">
+    <meta name="twitter:title" content="Xcode快捷键 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Webview的NSScrollView禁用滑动功能 | 東引甌越">
+    <meta property="og:title" content="Xcode快捷键 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/"/>
+    <link rel="canonical" href="http://sunyazhou.com/2017/04/06/Xcode-shortcuts/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -179,19 +179,59 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-02-09T05:37:28.000Z" class="post-list__meta--date date">2017-02-09</time>
+      <time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">Webview的NSScrollView禁用滑动功能</h1>
+    <h1 class="post-title">Xcode快捷键</h1>
   </header>
 
   <section class="post">
-    <p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码属于<code>macOS</code>上的开发内容.</p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi2017-04-06%2010-48-59.png" alt="shortcuts"></p>
+<p>前言<br>    在iOS和macOS开发者中积累了一些快捷操作记录下来</p>
+<h2 id="隐藏左侧面板"><a href="#隐藏左侧面板" class="headerlink" title="隐藏左侧面板"></a>隐藏左侧面板</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2010-56-22.png" alt=""></p>
+<blockquote>
+<p><strong>command+0</strong>=显示/隐藏左侧面板</p>
+</blockquote>
+<h2 id="隐藏右侧面板"><a href="#隐藏右侧面板" class="headerlink" title="隐藏右侧面板"></a>隐藏右侧面板</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2010-55-45.png" alt=""></p>
+<blockquote>
+<p><strong>command+option+0</strong>=显示/隐藏右侧面板</p>
+</blockquote>
+<h2 id="隐藏debug区域"><a href="#隐藏debug区域" class="headerlink" title="隐藏debug区域"></a>隐藏debug区域</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-06-12.png" alt=""></p>
+<blockquote>
+<p><strong>command+shift+y</strong>=显示/隐藏底部控制等调试区域</p>
+</blockquote>
+<h2 id="跳转到代码多少行"><a href="#跳转到代码多少行" class="headerlink" title="跳转到代码多少行 "></a>跳转到代码多少行 </h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-09-08-command-line.png" alt=""></p>
+<blockquote>
+<p><strong>command + l (L)</strong>=跳转到代码多少行 注意看清是l 不是i </p>
+</blockquote>
+<h2 id="隐藏-显示函数体"><a href="#隐藏-显示函数体" class="headerlink" title="隐藏/显示函数体 "></a>隐藏/显示函数体 </h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-10-21.png" alt=""></p>
+<blockquote>
+<p><strong>command+option+⬅︎</strong>=隐藏函数 <code>⬅︎</code>代表左箭头<br><strong>command+option+➡︎</strong>=显示函数  <code>➡︎</code>代表右箭头 </p>
+</blockquote>
+<h2 id="上下移动代码行"><a href="#上下移动代码行" class="headerlink" title="上下移动代码行"></a>上下移动代码行</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-10-59.png" alt=""></p>
+<blockquote>
+<p><strong>command + option + {</strong>=向上移动代码行<br><strong>command + option + }</strong>=向下移动代码行</p>
+</blockquote>
+<h2 id="前后移动代码行"><a href="#前后移动代码行" class="headerlink" title="前后移动代码行"></a>前后移动代码行</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-11-36.png" alt=""></p>
+<blockquote>
+<p><strong>command + {</strong>=向前移动代码行<br><strong>command + }</strong>=向后移动代码行</p>
+</blockquote>
+<h2 id="全工程查找文件"><a href="#全工程查找文件" class="headerlink" title="全工程查找文件"></a>全工程查找文件</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-12-33.png" alt=""></p>
+<blockquote>
+<p><strong>command + shift + o</strong>=向前移动代码行 o大写字母</p>
+</blockquote>
+<h2 id="添加代码行注释"><a href="#添加代码行注释" class="headerlink" title="添加代码行注释"></a>添加代码行注释</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi%202017-04-06%2011-30-03.png" alt=""></p>
+<blockquote>
+<p><strong>command + option + ?</strong>=自动添加函数描述声明</p>
+</blockquote>
+<h2 id="撤销-反撤销-修改"><a href="#撤销-反撤销-修改" class="headerlink" title="撤销/反撤销 修改"></a>撤销/反撤销 修改</h2><blockquote>
+<p><strong>command + z</strong>=撤销<br><strong>command + shift + z</strong>=反撤销</p>
+</blockquote>
+<p>后续有时间会持续更新</p>
+<p>全文完 </p>
 
   </section>
 
@@ -202,22 +242,20 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/02/09/how-to-use-git-manage-code/" title="如何使用git管理代码">如何使用git管理代码</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/11/3-kindof-ability/" title="二狗经典的3种权利摘要">二狗经典的3种权利摘要</a></h2>
                 <p class="excerpt">
                 
                 
-全局配置git$ git config --global user.name &quot;username&quot;  $ git config --golbal user.email &quot;email@you.com&quot;
+出自《东北往事:黑道风云20年》某片段
 
-username 一般代表提交的本机用户名email@you.com 一般是邮箱地址 
-
-创建本
+二狗曾拜读过托夫勒著名的《权力的转移》一书，其书中阐述的内容是：暴力、金钱、知识等三种力量是构成社会权力的基石。在这三种力量中，暴力是低等权力、金钱是中等权力，而知识是高等权力。社会越进步，主宰社会的权力就越高等。　　那么，黑社会，是否也有三种力量是构成其
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-02-09T11:35:45.000Z" class="post-list__meta--date date">2017-02-09</time>
+                <div class="post-list__meta"><time datetime="2017-04-11T03:47:26.000Z" class="post-list__meta--date date">2017-04-11</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/有声小说/">有声小说</a>
 
-</span><a class="btn-border-small" href="/2017/02/09/how-to-use-git-manage-code/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/04/11/3-kindof-ability/">继续阅读</a></div>
 
             </div>
         
@@ -225,22 +263,19 @@ username 一般代表提交的本机用户名email@you.com 一般是邮箱地址
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/01/28/2017-Spring-Festival/" title="2017回家过年">2017回家过年</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/" title="Learning AV Foundation(三)AVAudioRecorder">Learning AV Foundation(三)AVAudioRecorder</a></h2>
                 <p class="excerpt">
                 
                 
-
-练习了一年的小楷, 感谢老乡潘旭的帮助，我的书法有很多提升.
-
-出发当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
-高铁睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。我就是从这片黑土地走出去的年轻人, 我2
+前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内容
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-01-28T05:42:34.000Z" class="post-list__meta--date date">2017-01-28</time>
+                <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/生活/">生活</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/01/28/2017-Spring-Festival/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/">继续阅读</a></div>
 
             </div>
         
