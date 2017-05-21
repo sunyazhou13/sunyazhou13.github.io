@@ -4,9 +4,9 @@
   <subtitle>不断学习, 与时俱进.</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://sunyazhou.com/"/>
-  <updated>2017-04-29T04:42:34.000Z</updated>
-  <id>http://sunyazhou.com/</id>
+  <link href="https://www.sunyazhou.com/"/>
+  <updated>2017-05-10T07:30:22.000Z</updated>
+  <id>https://www.sunyazhou.com/</id>
   
   <author>
     <name>sunyazhou</name>
@@ -16,11 +16,80 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</title>
+    <link href="https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/"/>
+    <id>https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/</id>
+    <published>2017-05-10T07:24:20.000Z</published>
+    <updated>2017-05-10T07:30:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"BDRowView.h"</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]</span></div><div class="line"><span class="meta">#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRowView</span> ()</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">strong</span>) <span class="built_in">NSTrackingArea</span> *trackingArea;</div><div class="line"><span class="keyword">@property</span>(<span class="keyword">assign</span>) <span class="built_in">BOOL</span> isHovering;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BDRowView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:dirtyRect];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawSelectionInRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.selectionHighlightStyle != <span class="built_in">NSTableViewSelectionHighlightStyleNone</span>) &#123;</div><div class="line">        <span class="built_in">NSRect</span> selectionRect = <span class="built_in">NSInsetRect</span>(<span class="keyword">self</span>.bounds, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        [k_SELECTED_COLOR setStroke];</div><div class="line">        [k_SELECTED_COLOR setFill];</div><div class="line">        <span class="built_in">NSBezierPath</span> *selectionPath = [<span class="built_in">NSBezierPath</span> bezierPathWithRoundedRect:selectionRect xRadius:<span class="number">0</span> yRadius:<span class="number">0</span>];</div><div class="line">        [selectionPath fill];</div><div class="line">        [selectionPath stroke];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)updateTrackingAreas</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>.trackingArea != <span class="literal">nil</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> removeTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> opts = (<span class="built_in">NSTrackingMouseEnteredAndExited</span> | <span class="built_in">NSTrackingMouseMoved</span> | <span class="built_in">NSTrackingActiveAlways</span>);</div><div class="line">    <span class="keyword">self</span>.trackingArea = [ [<span class="built_in">NSTrackingArea</span> alloc] initWithRect:[<span class="keyword">self</span> bounds]</div><div class="line">                                                      options:opts</div><div class="line">                                                        owner:<span class="keyword">self</span></div><div class="line">                                                     userInfo:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">self</span> addTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseEntered:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">YES</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">YES</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseExited:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">NO</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">NO</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="built_in">NSColor</span>*)getBackgroundColor:(<span class="built_in">BOOL</span>)isSelected</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(isSelected) &#123;</div><div class="line">        <span class="keyword">return</span> k_SELECTED_COLOR;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> k_NORMAL_COLOR;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight objc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#import &lt;span class=&quot;meta-string&quot;&gt;&quot;BDRo
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何在macOS/MAC OS X上创建替身文件</title>
+    <link href="https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/"/>
+    <id>https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/</id>
+    <published>2017-05-09T09:41:17.000Z</published>
+    <updated>2017-05-10T00:45:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg" alt=""></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
+<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><p>如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作</p>
+<p>创建软链接可以使用<code>NSFileManager</code>中的两个方法:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtPath:(<span class="built_in">NSString</span> *)path withDestinationPath:(<span class="built_in">NSString</span> *)destPath error:(<span class="built_in">NSError</span> **)error ;</div><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtURL:(<span class="built_in">NSURL</span> *)url withDestinationURL:(<span class="built_in">NSURL</span> *)destURL error:(<span class="built_in">NSError</span> **)error;</div></pre></td></tr></table></figure>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>最近在开发插件 需要把插件从工程目录 copy到 系统的插件目录<code>~/Library/Internet Plug-Ins/</code> (<a href="http://www.tanhao.me/pieces/1084.html/" target="_blank" rel="external">这里用了老谭的插件举例</a>)</p>
+<p>如下图:<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-05.png" alt=""></p>
+<p>本想把它直接copy过去, 但可能存在以后升级问题,后续判断各种版本 删除旧的版本逻辑处理比较麻烦,于是想到用替身的方式实现</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-42.png" alt=""></p>
+<p>使用这种方式创建替身:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//工程目录文件</span></div><div class="line"><span class="built_in">NSString</span> *homePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"NPAPI_Download_Plugin"</span> ofType:<span class="string">@"plugin"</span>];</div><div class="line"><span class="comment">//插件在系统的目录位置</span></div><div class="line"><span class="built_in">NSString</span> *strHome = [<span class="built_in">NSString</span> stringWithUTF8String:getenv(<span class="string">"HOME"</span>)];</div><div class="line"><span class="built_in">NSString</span> *desc = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/Library/Internet Plug-Ins/NPAPI_Download_Plugin.plugin"</span>,strHome];</div><div class="line"><span class="built_in">NSFileManager</span> *fm = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line"><span class="comment">//创建替身代码</span></div><div class="line">[fm createSymbolicLinkAtPath:desc withDestinationPath:homePath error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p><em>注意:<code>createSymbolicLinkAtPath:withDestinationPath:error:</code>方法 第一个参数<code>LinkAtPath</code>是<code>desc</code>,它是放替身文件的位置. 第二个参数<code>DestinationPath</code>是<code>homePath</code>代表本地文件的原始路径,这里用工程目录的文件是为了方便,切记不要和 copyItem方法搞混</em></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-04-11.png" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>主要涉及的一些macOS开发技巧, 希望不足之处大家多多指教.</p>
+<p>参考:<a href="http://www.tanhao.me/pieces/597.html/" target="_blank" rel="external">详解OSX(Unix)中的Hard Link与Symbolic Link(硬连接与软连接)</a></p>
+<p>全文完</p>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/s
+    
+    </summary>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>赠:即将高中毕业向往计算机科学相关专业同学的只言片语</title>
-    <link href="http://sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/"/>
-    <id>http://sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/</id>
+    <link href="https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/"/>
+    <id>https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/</id>
     <published>2017-04-29T01:15:21.000Z</published>
-    <updated>2017-04-29T04:42:34.000Z</updated>
+    <updated>2017-05-10T00:46:24.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/some-advice-for-high-school-graduate/1.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
@@ -100,7 +169,7 @@
 <p>好了 就说到这吧 我不是在打广告 如果觉得我的文章很有价值 可以请我喝瓶饮料</p>
 <p>全文完</p>
 <hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode.JPG" alt="打赏"></p>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -109,17 +178,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://sunyazhou.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://www.sunyazhou.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
   </entry>
   
   <entry>
     <title>如何在iOS/macOS系统中创建文件时创建唯一的文件名</title>
-    <link href="http://sunyazhou.com/2017/04/20/unique-filename-in-system/"/>
-    <id>http://sunyazhou.com/2017/04/20/unique-filename-in-system/</id>
+    <link href="https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/"/>
+    <id>https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/</id>
     <published>2017-04-20T08:35:42.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-24T08:08:47.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/stock-photo-167171895.jpg" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当我无数次看到大家写代码的时候总是以一个<code>时间戳+arc4random()</code>创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.</p>
@@ -157,21 +226,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>二狗经典的3种权利摘要</title>
-    <link href="http://sunyazhou.com/2017/04/11/3-kindof-ability/"/>
-    <id>http://sunyazhou.com/2017/04/11/3-kindof-ability/</id>
+    <link href="https://www.sunyazhou.com/2017/04/11/3-kindof-ability/"/>
+    <id>https://www.sunyazhou.com/2017/04/11/3-kindof-ability/</id>
     <published>2017-04-11T03:47:26.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-11T03:53:12.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>出自《东北往事:黑道风云20年》某片段</p>
@@ -191,19 +260,19 @@
     
     </summary>
     
-      <category term="生活" scheme="http://sunyazhou.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://www.sunyazhou.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="有声小说" scheme="http://sunyazhou.com/tags/%E6%9C%89%E5%A3%B0%E5%B0%8F%E8%AF%B4/"/>
+      <category term="有声小说" scheme="https://www.sunyazhou.com/tags/%E6%9C%89%E5%A3%B0%E5%B0%8F%E8%AF%B4/"/>
     
   </entry>
   
   <entry>
     <title>Xcode快捷键</title>
-    <link href="http://sunyazhou.com/2017/04/06/Xcode-shortcuts/"/>
-    <id>http://sunyazhou.com/2017/04/06/Xcode-shortcuts/</id>
+    <link href="https://www.sunyazhou.com/2017/04/06/Xcode-shortcuts/"/>
+    <id>https://www.sunyazhou.com/2017/04/06/Xcode-shortcuts/</id>
     <published>2017-04-06T02:36:30.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-06T03:45:00.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi2017-04-06%2010-48-59.png" alt="shortcuts"></p>
 <p>前言<br>    在iOS和macOS开发者中积累了一些快捷操作记录下来</p>
@@ -256,21 +325,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Learning AV Foundation(三)AVAudioRecorder</title>
-    <link href="http://sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/"/>
-    <id>http://sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/</id>
+    <link href="https://www.sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/"/>
+    <id>https://www.sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/</id>
     <published>2017-03-28T01:40:18.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-07T02:21:59.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/stock-photo-200814137.jpg" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<code>AV Foundation</code>中使用<code>AVAudioRecorder</code>类添加音频录制功能和使用<code>AVAudioPlayer</code>一样简单, 都是在<code>Audio Queue Server</code>上层构建的.同时支持<code>macOS</code>和<code>iOS</code>平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.</p>
@@ -296,14 +365,14 @@
 </ul>
 <p>如下代码:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 创建录音器</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)createRecorder &#123;</div><div class="line">    <span class="built_in">NSString</span> *directory = <span class="built_in">NSTemporaryDirectory</span>();</div><div class="line">    <span class="built_in">NSString</span> *filePath = [directory stringByAppendingPathComponent:<span class="string">@"voice1.m4a"</span>];</div><div class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:filePath];</div><div class="line">    </div><div class="line">    <span class="built_in">NSDictionary</span> *setting = @&#123;<span class="built_in">AVFormatIDKey</span> : @(kAudioFormatMPEG4AAC),</div><div class="line">                              <span class="built_in">AVSampleRateKey</span>: @<span class="number">22050.0</span>f,</div><div class="line">                              <span class="built_in">AVNumberOfChannelsKey</span>: @<span class="number">1</span>&#125;;</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">self</span>.recorder = [[<span class="built_in">AVAudioRecorder</span> alloc] initWithURL:url</div><div class="line">                                                settings:setting</div><div class="line">                                                   error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.recorder) &#123;</div><div class="line">        [<span class="keyword">self</span>.recorder prepareToRecord];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Recorder Create Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里的建议调用<code>[self.recorder prepareToRecord]</code>方法对录音实例进行预设就像<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>创建<code>AVAudioPlayer</code>类似.都是为了执行底层<code>Audio Queue</code>初始化的必要过程.这个<code>prepareToRecord</code>方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时</p>
+<p>这里的建议调用<code>[self.recorder prepareToRecord]</code>方法对录音实例进行预设就像<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" target="_blank" rel="external">上一章</a>创建<code>AVAudioPlayer</code>类似.都是为了执行底层<code>Audio Queue</code>初始化的必要过程.这个<code>prepareToRecord</code>方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时</p>
 <h2 id="音频格式"><a href="#音频格式" class="headerlink" title="音频格式"></a>音频格式</h2><p><code>AVFormatIDKey</code>key指定录制格式,这里的除了<code>kAudioFormatMPEG4AAC</code>格式还有下面这些:</p>
 <figure class="highlight"><table><tr><td class="code"><pre><div class="line">CF_ENUM(AudioFormatID)</div><div class="line">&#123;</div><div class="line">    kAudioFormatLinearPCM               = 'lpcm',</div><div class="line">    kAudioFormatAC3                     = 'ac-3',</div><div class="line">    kAudioFormat60958AC3                = 'cac3',</div><div class="line">    kAudioFormatAppleIMA4               = 'ima4',</div><div class="line">    kAudioFormatMPEG4AAC                = 'aac ',</div><div class="line">    kAudioFormatMPEG4CELP               = 'celp',</div><div class="line">    kAudioFormatMPEG4HVXC               = 'hvxc',</div><div class="line">    kAudioFormatMPEG4TwinVQ             = 'twvq',</div><div class="line">    kAudioFormatMACE3                   = 'MAC3',</div><div class="line">    kAudioFormatMACE6                   = 'MAC6',</div><div class="line">    kAudioFormatULaw                    = 'ulaw',</div><div class="line">    kAudioFormatALaw                    = 'alaw',</div><div class="line">    kAudioFormatQDesign                 = 'QDMC',</div><div class="line">    kAudioFormatQDesign2                = 'QDM2',</div><div class="line">    kAudioFormatQUALCOMM                = 'Qclp',</div><div class="line">    kAudioFormatMPEGLayer1              = '.mp1',</div><div class="line">    kAudioFormatMPEGLayer2              = '.mp2',</div><div class="line">    kAudioFormatMPEGLayer3              = '.mp3',</div><div class="line">    kAudioFormatTimeCode                = 'time',</div><div class="line">    kAudioFormatMIDIStream              = 'midi',</div><div class="line">    kAudioFormatParameterValueStream    = 'apvs',</div><div class="line">    kAudioFormatAppleLossless           = 'alac',</div><div class="line">    kAudioFormatMPEG4AAC_HE             = 'aach',</div><div class="line">    kAudioFormatMPEG4AAC_LD             = 'aacl',</div><div class="line">    kAudioFormatMPEG4AAC_ELD            = 'aace',</div><div class="line">    kAudioFormatMPEG4AAC_ELD_SBR        = 'aacf',</div><div class="line">    kAudioFormatMPEG4AAC_ELD_V2         = 'aacg',    </div><div class="line">    kAudioFormatMPEG4AAC_HE_V2          = 'aacp',</div><div class="line">    kAudioFormatMPEG4AAC_Spatial        = 'aacs',</div><div class="line">    kAudioFormatAMR                     = 'samr',</div><div class="line">    kAudioFormatAMR_WB                  = 'sawb',</div><div class="line">    kAudioFormatAudible                 = 'AUDB',</div><div class="line">    kAudioFormatiLBC                    = 'ilbc',</div><div class="line">    kAudioFormatDVIIntelIMA             = 0x6D730011,</div><div class="line">    kAudioFormatMicrosoftGSM            = 0x6D730031,</div><div class="line">    kAudioFormatAES3                    = 'aes3',</div><div class="line">    kAudioFormatEnhancedAC3             = 'ec-3'</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这里的<code>kAudioFormatLinearPCM</code>会将为压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC<code>kAudioFormatMPEG4AAC</code>或者AppleIMA4<code>kAudioFormatAppleLossless</code>等格式会显著缩小文件，还能保证音频质量.</p>
 <blockquote>
 <p><em>注意:</em><br><em>指定的音频格式一定要和文件写入的URL文件类型保持一致。如果录制xxx.wav文件格式 是 Waveform Audio File Format(WAVE)的格式要求,即 低字节序、 LinePCM。 如果<code>AVFormatIDKey</code>指定的值不是<code>kAudioFormatLinearPCM</code>则会发生错误。NSError 会返回如下错误</em><br><em>The operation couldn’t be completed. (OSState error 1718449215.)</em></p>
 </blockquote>
-<h2 id="采样率"><a href="#采样率" class="headerlink" title="采样率"></a>采样率</h2><p>上边的代码里<code>AVSampleRateKey</code>用于定义录音器的采样率. <strong>采样率定义了对输入的模拟音频信号每一秒内的采样数</strong>. 如果使用<strong>低采样率</strong> 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用<strong>44.1kHz的采样率(CD质量的采样率)</strong>会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用<strong>标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz</strong> ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>说了 <strong>人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz</strong>,录音最好采用 x 2 倍的频率）</p>
+<h2 id="采样率"><a href="#采样率" class="headerlink" title="采样率"></a>采样率</h2><p>上边的代码里<code>AVSampleRateKey</code>用于定义录音器的采样率. <strong>采样率定义了对输入的模拟音频信号每一秒内的采样数</strong>. 如果使用<strong>低采样率</strong> 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用<strong>44.1kHz的采样率(CD质量的采样率)</strong>会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用<strong>标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz</strong> ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" target="_blank" rel="external">上一章</a>说了 <strong>人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz</strong>,录音最好采用 x 2 倍的频率）</p>
 <h2 id="通道数"><a href="#通道数" class="headerlink" title="通道数"></a>通道数</h2><p><code>AVNumberOfChannelsKey</code>用于定义记录音频内容的通道数。<strong>指定默认值1 意味着使用单声道录制</strong>、<strong>设置2意味着使用立体声录制</strong>。除非使用外部硬件进行录制，否则同窗应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。</p>
 <blockquote>
 <p>以上是全面<code>AVAudioRecorder</code>的部分概念,<code>AVAudioRecorder</code>支持<strong>无限时长录制</strong>,还可以设置从<strong>未来某一时间点开始录制</strong>或<strong>指定时长录制</strong></p>
@@ -328,7 +397,7 @@
 <h1 id="下面我们来写个AVAudioRecorder的Demo-完成上述功能"><a href="#下面我们来写个AVAudioRecorder的Demo-完成上述功能" class="headerlink" title="下面我们来写个AVAudioRecorder的Demo 完成上述功能"></a>下面我们来写个<code>AVAudioRecorder</code>的Demo 完成上述功能</h1><h2 id="配置会话"><a href="#配置会话" class="headerlink" title="配置会话"></a>配置会话</h2><p>首先创建以一个AVAudioRecorderDemo工程iOS平台这些相信大家非常熟练了.</p>
 <p>在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>写上设置如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayAndRecord</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>,[error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//激活会话</span></div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>,[error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这<code>AVAudioSessionCategoryPlayAndRecord</code>是<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">上一章</a>说的那几种Category,我们需要<strong>录音+播放</strong>功能</p>
+<p>这<code>AVAudioSessionCategoryPlayAndRecord</code>是<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" target="_blank" rel="external">上一章</a>说的那几种Category,我们需要<strong>录音+播放</strong>功能</p>
 <p>下一步 配置 plist文件访问权限信息 可以参考<a href="http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/" target="_blank" rel="external">Access privacy-sensitive data</a>这篇文章把访问权限需要的 信息填充上.</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_2.png" alt="plist1"></p>
 <p>然后选择SourceCode<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_5.png" alt="plist2"></p>
@@ -401,21 +470,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>判断NSWindow是否全屏</title>
-    <link href="http://sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/"/>
-    <id>http://sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/</id>
+    <link href="https://www.sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/"/>
+    <id>https://www.sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/</id>
     <published>2017-03-23T06:03:32.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-03-23T06:05:26.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="external">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
@@ -427,21 +496,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Access privacy-sensitive data 隐私及敏感数据访问权限</title>
-    <link href="http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/"/>
-    <id>http://sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/</id>
+    <link href="https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/"/>
+    <id>https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/</id>
     <published>2017-03-20T02:54:40.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-03-20T03:04:49.000Z</updated>
     
     <content type="html"><![CDATA[<p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
 <blockquote>
@@ -463,21 +532,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Learning AV Foundation(二)AVAudioPlayer</title>
-    <link href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/"/>
-    <id>http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/</id>
+    <link href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/"/>
+    <id>https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/</id>
     <published>2017-03-17T02:26:06.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-03-29T08:51:04.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stock-photo-55571408.jpg" alt="AVAudioPlayer"></p>
 <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
@@ -609,21 +678,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Learning AV Foundation(一)汉字语音朗读</title>
-    <link href="http://sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/"/>
-    <id>http://sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/</id>
+    <link href="https://www.sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/"/>
+    <id>https://www.sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/</id>
     <published>2017-03-11T04:38:53.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-03-20T07:16:34.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://www.informit.com/ShowCover.aspx?isbn=0321961803" alt="AVSpeechSynthesizer"></p>
 <p>前言</p>
@@ -679,21 +748,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>macOS上模拟发送键盘事件</title>
-    <link href="http://sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/"/>
-    <id>http://sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/</id>
+    <link href="https://www.sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/"/>
+    <id>https://www.sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/</id>
     <published>2017-02-22T08:17:00.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-22T09:08:05.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/macOS%E4%B8%8A%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/Snip20170222_1.png" alt=""></p>
 <p>最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS <code>NSEvent</code>, macOS上模拟事件都是底层的<code>CoreGraphic</code>的<code>class</code>,下面说下实现的片断代码.</p>
@@ -863,21 +932,21 @@
     
     </summary>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>$(SRCROOT)和$(PROJECT_DIR)区别</title>
-    <link href="http://sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/"/>
-    <id>http://sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/</id>
+    <link href="https://www.sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/"/>
+    <id>https://www.sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/</id>
     <published>2017-02-21T08:28:00.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-21T08:30:54.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>$(SRCROOT)</code>代表的是项目根目录下<br><code>$(PROJECT_DIR)</code>代表的是整个项目</p>
 ]]></content>
@@ -889,21 +958,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>使用终端删除NSUserDefault的内容</title>
-    <link href="http://sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/"/>
-    <id>http://sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/</id>
+    <link href="https://www.sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/"/>
+    <id>https://www.sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/</id>
     <published>2017-02-20T11:05:01.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-20T11:46:48.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息  </p>
@@ -933,21 +1002,21 @@
     
     </summary>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>iOS如何让二维码/条形码扫描框跟随二维码移动</title>
-    <link href="http://sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/"/>
-    <id>http://sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/</id>
+    <link href="https://www.sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/"/>
+    <id>https://www.sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/</id>
     <published>2017-02-18T11:08:56.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-20T01:01:57.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  </p>
@@ -995,19 +1064,19 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>iOS语言本地化/国际化一些技巧</title>
-    <link href="http://sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/"/>
-    <id>http://sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/</id>
+    <link href="https://www.sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/"/>
+    <id>https://www.sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/</id>
     <published>2017-02-17T02:01:19.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-17T02:33:23.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="代码获取国际化语言数组"><a href="#代码获取国际化语言数组" class="headerlink" title="代码获取国际化语言数组  "></a>代码获取国际化语言数组  </h2><p>获取当前app使用的语言<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
 <p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.  </p>
@@ -1035,21 +1104,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>搭建hexo博客教程</title>
-    <link href="http://sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/"/>
-    <id>http://sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/</id>
+    <link href="https://www.sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/"/>
+    <id>https://www.sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/</id>
     <published>2017-02-10T02:24:25.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-13T07:25:50.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><a href="http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html" target="_blank" rel="external">Jekyll迁移到Hexo搭建个人博客</a>  </p>
@@ -1074,21 +1143,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>DFS算法扫描上传文件/文件夹</title>
-    <link href="http://sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/"/>
-    <id>http://sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/</id>
+    <link href="https://www.sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/"/>
+    <id>https://www.sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/</id>
     <published>2017-02-10T02:07:55.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-24T01:36:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="DFS需求背景"><a href="#DFS需求背景" class="headerlink" title="DFS需求背景"></a>DFS需求背景</h2><blockquote>
 <p>在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况</p>
@@ -1135,21 +1204,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>如何使用git管理代码</title>
-    <link href="http://sunyazhou.com/2017/02/09/how-to-use-git-manage-code/"/>
-    <id>http://sunyazhou.com/2017/02/09/how-to-use-git-manage-code/</id>
+    <link href="https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/"/>
+    <id>https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/</id>
     <published>2017-02-09T11:35:45.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
+    <updated>2017-04-17T11:12:52.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg" alt=""></p>
 <h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
@@ -1201,21 +1270,21 @@
     
     </summary>
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
   <entry>
     <title>Webview的NSScrollView禁用滑动功能</title>
-    <link href="http://sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/"/>
-    <id>http://sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/</id>
+    <link href="https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/"/>
+    <id>https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/</id>
     <published>2017-02-09T05:37:28.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
+    <updated>2017-02-10T02:39:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1229,359 +1298,12 @@
     
     </summary>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
     
     
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2017回家过年</title>
-    <link href="http://sunyazhou.com/2017/01/28/2017-Spring-Festival/"/>
-    <id>http://sunyazhou.com/2017/01/28/2017-Spring-Festival/</id>
-    <published>2017-01-28T05:42:34.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://p1.bqimg.com/584350/7df258f2ecddcf81.jpg" alt=""></p>
-<blockquote>
-<p>练习了一年的小楷, 感谢老乡<strong>潘旭</strong>的帮助，我的书法有很多提升.</p>
-</blockquote>
-<h2 id="出发"><a href="#出发" class="headerlink" title="出发"></a>出发</h2><p>当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了<br><img src="http://p1.bqimg.com/584350/035a303723a4b623.jpg" alt=""><br>这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.</p>
-<h2 id="高铁"><a href="#高铁" class="headerlink" title="高铁"></a>高铁</h2><p>睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。<br><img src="http://p1.bpimg.com/584350/5addde1fe4d65611.jpg" alt="Markdown"><br>我就是从这片黑土地走出去的年轻人, 我23年没有离开过这片黑土地，如今在京码砖好几年。买房没资格,买车没牌照,只能每天骑车我心爱的小牛M1上班。(其实我内心是崩溃的),只有雾霾陪着哥,有事没事来北京看看我和北京的土著。</p>
-<p>24岁入职百度如今已经快3年了, 想想已经很久没换工作了.工资少的可怜,想起那个每天都一门心思研究人工智能的厂长，我真想拒绝再给他打工了.</p>
-<h2 id="中转站"><a href="#中转站" class="headerlink" title="中转站"></a>中转站</h2><p>擦 车到站了 (我打算以后在这买个楼)<br><img src="http://i1.piimg.com/584350/698eb97cae2b2dea.jpg" alt="Markdown"><br>刚下火车 已经被这种熟悉的冷瞬间打透.这种冷是多么的熟悉, 我早穿上了<br><a href="https://item.taobao.com/item.htm?spm=a230r.1.14.9.pmOPas&amp;id=36777946060&amp;ns=1&amp;abbucket=15#detail" target="_blank" rel="external">林甸鞋</a>,只有熟悉东北的小伙伴才知道啥叫林甸鞋</p>
-<blockquote>
-<p>大庆市林甸县制造 的林甸鞋 俗称<strong>老头鞋</strong> 我就不上照片了,我觉得这是东北人值得骄傲的文化遗产,都可以申请世界文化遗产了,在冰城没有这鞋我估计你很难度过漫长严寒的冬天。一双鞋售价仅仅 33 元 送一双羊毛鞋垫, 说句实话这绝对是东北人的业界良心，这鞋一年都不断帮断底，一个冬天穿这鞋很暖和,不信你可以问问你身边的东北人。<br>当然不熟悉套路的估计不知道买啥牌子好, 我印象中只有 林嘉牌 双丽牌比较好 但是工厂估计早破产了,33元每双上哪挣钱去啊。想买的小伙伴或者想去东北旅游的小伙伴 建议随便买一双的就行了 都一样 反正不贵。<br><img src="http://p1.bqimg.com/584350/fb737f626882c66b.jpg" alt="Markdown"></p>
-</blockquote>
-<h2 id="小吃"><a href="#小吃" class="headerlink" title="小吃"></a>小吃</h2><p>古云人:”上车饺子下车面” 这句话说的很有哲理我特意在百度搜了一下<br>不过我还是想去吃哈尔滨的喜家德水饺<br><img src="http://p1.bqimg.com/584350/042feb2337732f5e.jpg" alt="Markdown"> </p>
-<blockquote>
-<p>trust me如果到哈尔滨必须要尝尝<strong>喜家德水饺</strong>和<strong>东方饺子王</strong><br>不去尝尝永远不知道啥叫地道的饺子, 做饺子能做到淋漓尽致也没谁了,饺子皮、大小、厚度、弧度、都有专门的计量工具, 如果把<strong>做饺子</strong>当做一个app的话,我觉得喜家德应该是 app 中的支付宝, 但是比较蛋疼的是这些传统的民族企业都不发展互联网, 不支持任何网络支付、支付宝、微信、百度钱包都用不了、我真觉的喜家德CEO应该聘请哥给他当互联网总裁、用互联网发展一下传统企业、这种封闭的经营模式我持批评的态度.这是新时代的中国、想发展必须要与时俱进、跟上时代的发展不能闭关锁国、我怀疑喜家德的 老大不太相信互联网给他带来的任何改变、这一点我必须批评一下他、要拿出李鸿章大人以一人抵一国的能力. 不断学习,与时俱进</p>
-</blockquote>
-<h2 id="冰雪大世界"><a href="#冰雪大世界" class="headerlink" title="冰雪大世界"></a>冰雪大世界</h2><p>说来惭愧在哈尔滨好几年都没去过<strong>冰雪大世界</strong>(上学时比较穷)门票在糯米上至少需要360左右/人,这绝对有点贵.</p>
-<p>参加工作以后挣钱了必须想圆了学生时代的梦想,于是 让我大姐请我去了哈哈</p>
-<p><img src="http://p1.bqimg.com/584350/d449b5d2f5debbed.jpg" alt="Markdown"></p>
-<p><img src="http://i1.piimg.com/584350/f894381b5bd3aaee.jpg" alt="Markdown"><br><img src="http://i1.piimg.com/584350/d1115c4e6d7981ab.jpg" alt="Markdown"></p>
-<blockquote>
-<p>这个世界玩的都是人的想象力,我从来没想过冰和雪能玩出什么花样,去了才知道只要有想象力和创造力 一件普通东西能这么有意思。记得一点要有车去大世界最好, 我建议租个车或者亲戚有车,不然必须坐黑车回来,这个很蛋疼,什么滴滴打车 用司机的话 <strong>“啥滴都不好使”</strong> 这个确实很无奈,大家玩完回不去很是蛋疼.政府得加大力度管制这些出租车司机.</p>
-</blockquote>
-<h2 id="美丽冰城"><a href="#美丽冰城" class="headerlink" title="美丽冰城"></a>美丽冰城</h2><p><img src="http://i1.piimg.com/584350/a9abec8d1c2c56e0.jpg" alt="Markdown"><br><img src="http://i1.piimg.com/584350/7bf35db34b720d2a.jpg" alt="Markdown"><br><img src="http://i1.piimg.com/584350/dc97959821ac8fa2.jpg" alt="Markdown"><br><img src="http://i1.piimg.com/584350/a260c895027dd64c.jpg" alt="Markdown"></p>
-<blockquote>
-<p>在哈尔滨俄罗斯的建筑随处可见, 哈站前边(前两张照片)始于1907年有个什么斯基开个茶馆, 建的楼群依然还矗立在果戈里大街附近, 没去的小伙伴可以去看看, 最后一张断壁残垣在抢救性修复中。</p>
-</blockquote>
-<h2 id="红肠"><a href="#红肠" class="headerlink" title="红肠"></a>红肠</h2><p>哈尔滨有个比较出名的东西貌似叫红肠,但是 不是本地人很难知道哪里买的才算地道 我今天可以告诉大家啥叫地道的哈尔滨红肠<br><img src="http://i1.piimg.com/584350/1736e20ba1e625f5.jpg" alt="Markdown">  </p>
-<p><img src="http://p1.bpimg.com/584350/40a9d97bdeee2b05.jpg" alt="Markdown"></p>
-<blockquote>
-<p>大家一定听过秋林红肠,都以为红肠应该是秋林牌子,其实好像叫秋林里道斯系列的食品<br>如果想买正宗的红肠我推荐2个品牌个两个地点</p>
-</blockquote>
-<ul>
-<li><p><strong>商委红肠</strong>  </p>
-<p>这个商委在 道外红旗大街514号（黑龙江工程学院对面）前店后厂,之所以这么出名是因为商委红肠全程纯手工制作,深得龙江人喜爱.很多人喜欢吃它那个专有的味道.也有很多人不喜欢它的味道嫌它大蒜放的多哈哈.反正我吃都一样没啥特别的.如果我回哈尔滨发展我一定学学红肠怎么制作的自己做的才放心哈哈. 这个红肠火爆的程度得早晨5点去排队 每天几百斤,卖没了就售罄了,尤其过节期间</p>
-</li>
-<li><p><strong>秋林里道斯红肠</strong>  </p>
-<p>这个就在上边那绿色图片的地方地下一层,看哪里排队人多就在那里买就是秋林红肠最正宗的卖点,一定不要相信任何人说秋林红肠换地方了,好几十年了都没换地方怎么可能说换就换.都是商业竞争搞得鬼把戏,岂能欺骗我这个程序猿. (东大直街319号(近秋林国际购物中心)<br>15245082279,(0451)58938888)<br>就下图这地方<br><img src="http://p1.bqimg.com/584350/b4c23a2cdd0e057b.jpg" alt="Markdown"></p>
-</li>
-</ul>
-<p>以后不要问谁哪里买红肠最好了,上边的就是最正宗的买红肠的地方了.</p>
-<h2 id="回家"><a href="#回家" class="headerlink" title="回家"></a>回家</h2><p><img src="http://p1.bpimg.com/584350/8f60e12618c08949.jpg" alt="Markdown"><br>看着家乡的夕阳,我真的快到家了-海伦市</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://p1.bqimg.com/584350/7df258f2ecddcf81.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;练习了一年的小楷, 感谢老乡&lt;strong&gt;潘旭&lt;/strong&gt;的帮助，我的书法有很多提升.&lt;/p
-    
-    </summary>
-    
-      <category term="生活记录" scheme="http://sunyazhou.com/categories/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/"/>
-    
-    
-      <category term="生活" scheme="http://sunyazhou.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS开发知识点积累</title>
-    <link href="http://sunyazhou.com/2017/01/18/iOS-development-knowledge-point-accumulate/"/>
-    <id>http://sunyazhou.com/2017/01/18/iOS-development-knowledge-point-accumulate/</id>
-    <published>2017-01-18T05:44:57.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航</p>
-</blockquote>
-<p>iOS技术分类如下</p>
-<ul>
-<li>音频</li>
-<li>相机与照片</li>
-<li>图形图像</li>
-<li>动画</li>
-<li>UI转场</li>
-<li>ASDK(AsyncDisplayKit)</li>
-<li>swift相关</li>
-<li>数学图形</li>
-<li>架构</li>
-<li>Masonry</li>
-<li>Cocoapods</li>
-<li>文件相关</li>
-</ul>
-<h2 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h2><p><strong><a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">iOS音频播放 (一)：概述</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/08/audio-in-ios-2/" target="_blank" rel="external">iOS音频播放 (二)：AudioSession</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/09/audio-in-ios-3/" target="_blank" rel="external">iOS音频播放 (三)：AudioFileStream</a></strong><br><strong><a href="http://msching.github.io/blog/2014/07/19/audio-in-ios-4/" target="_blank" rel="external">iOS音频播放 (四)：AudioFile</a></strong><br><strong><a href="http://msching.github.io/blog/2014/08/02/audio-in-ios-5/" target="_blank" rel="external">iOS音频播放 (五)：AudioQueue</a></strong><br><strong><a href="http://msching.github.io/blog/2014/08/09/audio-in-ios-6/" target="_blank" rel="external">iOS音频播放 (六)：简单的音频播放器实现</a></strong><br><strong><a href="http://msching.github.io/blog/2014/09/07/audio-in-ios-7/" target="_blank" rel="external">iOS音频播放 (七)：播放iPod Library中的歌曲</a></strong><br><strong><a href="http://msching.github.io/blog/2014/11/06/audio-in-ios-8/" target="_blank" rel="external">iOS音频播放 (八)：NowPlayingCenter和RemoteControl</a></strong><br><strong><a href="http://msching.github.io/blog/2016/05/24/audio-in-ios-9/" target="_blank" rel="external">iOS音频播放 (九)：边播边缓存</a></strong></p>
-<blockquote>
-<p>以上内容来自<a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a> 这个哥们我有过交流，感觉底层音频技术比较透彻，适合初学者以及中级开发者研究学习和使用。</p>
-</blockquote>
-<h2 id="图形处理"><a href="#图形处理" class="headerlink" title="图形处理"></a>图形处理</h2><p><strong><a href="https://objccn.io/issue-21-1/" target="_blank" rel="external">基础知识</a></strong>一些列教程可以连续看完<br><strong><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a></strong>库<br><strong><a href="http://mp.weixin.qq.com/s/pg2vPYftkfghoQswxJFIvw" target="_blank" rel="external">iOS GPUImage源码解读（一）</a></strong><br><strong><a href="http://hawk0620.github.io/blog/2017/02/17/zpcamera-opensource-share/" target="_blank" rel="external">开源一个上架 App Store 的相机 App</a></strong></p>
-<h2 id="图形图像"><a href="#图形图像" class="headerlink" title="图形图像"></a>图形图像</h2><p><strong><a href="https://www.objccn.io/issue-21-9/" target="_blank" rel="external">基于 OpenCV 的人脸识别</a></strong><br><strong><a href="https://github.com/3tinkers/TKImageView" target="_blank" rel="external">图片编辑</a></strong></p>
-<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p><strong><a href="http://kittenyang.com/drawablebubble/" target="_blank" rel="external">QQ中未读气泡拖拽消失的实现分析</a></strong><br><strong><a href="http://kittenyang.com/curvelineanimation/" target="_blank" rel="external">iOS 自定义下拉线条动画</a></strong><br><strong><a href="https://github.com/sunyazhou13/Animations" target="_blank" rel="external">一个库涵盖了所有iOS动画效果</a></strong><br><strong><a href="https://github.com/facebook/pop" target="_blank" rel="external">pop</a></strong></p>
-<blockquote>
-<p>学动画先从<a href="http://kittenyang.com/" target="_blank" rel="external">骑滔(Kitten)</a>的动画搞起最靠谱<br>以上是普通动画内容2篇来自Kitten<br>持续更新中</p>
-</blockquote>
-<h2 id="转场动画"><a href="#转场动画" class="headerlink" title="转场动画"></a>转场动画</h2><p><strong><a href="">WWDC 2013 Session笔记 - iOS7中的ViewController切换</a></strong> 喵神的这篇必看  </p>
-<p><strong><a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="external">UIPresentationController Tutorial: Getting Started</a></strong> 需要翻墙<br><em>(话说我解释一下这个词”翻墙”,翻墙名词叫科学上网,黑话叫自备梯子,因为大家一开始都用<a href="https://www.yuntipub.com/" target="_blank" rel="external">云梯VPN</a>访问国外网站,因为我国搞了个垃圾防火墙的大型局域网,虽然阻碍了世界文明和技术科技的发展但也防范了一些不健康内容，比如万一有一天你搞个车床，制造个微冲出来怎么办哈哈,所以要翻越那个防火墙就俗称翻墙)</em>  </p>
-<p><strong><a href="http://wxgbridgeq.github.io/blog/2015/08/10/custom-transition-animation/" target="_blank" rel="external">自定义控制器转场动画及下拉菜单的小Demo | AppCoda翻译系列</a></strong></p>
-<blockquote>
-<p>还有可以github搜索<strong><a href="https://github.com/search?l=Objective-C&amp;o=desc&amp;q=Transition&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93" target="_blank" rel="external">Transition</a></strong><br>很多这种转场动画不一一介绍</p>
-</blockquote>
-<h2 id="ASDK-AsyncDisplayKit"><a href="#ASDK-AsyncDisplayKit" class="headerlink" title="ASDK(AsyncDisplayKit)"></a>ASDK(AsyncDisplayKit)</h2><p><strong><a href="http://asyncdisplaykit.org/" target="_blank" rel="external">官方文档</a></strong> (需要翻墙)<br><strong><a href="https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started" target="_blank" rel="external">AsyncDisplayKit 2.0 Tutorial: Getting Started</a></strong><br><strong><a href="https://www.raywenderlich.com/124696/asyncdisplaykit-2-0-tutorial-automatic-layout" target="_blank" rel="external">AsyncDisplayKit 2.0 Tutorial: Automatic Layout</a></strong><br><strong><a href="http://awhisper.github.io/2016/05/04/AsyncDisplayKit%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/" target="_blank" rel="external">AsyncDisplayKit官方文档翻译</a></strong><br><strong><a href="http://awhisper.github.io/2016/05/06/AsyncDisplayKit%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" rel="external">AsyncDisplayKit源码分析(一)轮廓梳理</a></strong><br><strong><a href="http://awhisper.github.io/2016/12/16/AysncDisplayKit%E5%88%86%E6%9E%90-%E4%BA%8C/" target="_blank" rel="external">AsyncDisplayKit源码分析(二) 异步渲染</a></strong><br><strong><a href="http://draveness.me/asdk-rendering/" target="_blank" rel="external">使用ASDK性能调优-提升iOS界面的渲染性能</a></strong></p>
-<blockquote>
-<p>以上几篇分别来自 <strong><a href="https://www.raywenderlich.com/" target="_blank" rel="external">raywenderlich</a></strong><br>源码分析来自于 <strong><a href="http://awhisper.github.io/" target="_blank" rel="external">折腾范儿の味精
-</a></strong> 一个百度阅读团队同事的博客<br>在这里我说一下我对ASDK的看法，我视图读过源码和官方文档，我发现这个不是你想用想用就能马上用的东西，简直可以让一个初学者学习一遍 <strong>UIKit</strong> 一样集成起来倒是很简单，但是就那是那个布局就足够一个开发人员研究一阵子，用不了masonry,但是功能单一的页面需要调优可以考虑一下。</p>
-</blockquote>
-<h2 id="swift相关"><a href="#swift相关" class="headerlink" title="swift相关"></a>swift相关</h2><p><strong><a href="http://swifter.tips/" target="_blank" rel="external">喵神的网站</a></strong> 目前好像停止了更新 iOS开发领域喵神 真是神一般的存在<br><strong><a href="http://southpeak.github.io/2015/09/26/ios-techset-5/" target="_blank" rel="external">swift随机数</a></strong> 来自<strong><a href="http://southpeak.github.io/" target="_blank" rel="external">南峰子 老驴</a></strong> 一个百度前同事现在在京东金融貌似， 有过技术交流很NB的一个人.<br><strong><a href="http://www.jianshu.com/p/fc78dab5736f" target="_blank" rel="external">Swift 3必看：从使用场景了解GCD新API</a></strong> 这个哥们我没有了解过 不过很多文章写的很好希望以后有机会交流一下</p>
-<blockquote>
-<p>持续更新中更新…</p>
-</blockquote>
-<h2 id="数学图形"><a href="#数学图形" class="headerlink" title="数学图形"></a>数学图形</h2><p><strong><a href="https://jackschaedler.github.io/" target="_blank" rel="external">图形数学</a></strong> eg:傅里叶变换</p>
-<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p><strong><a href="http://casatwy.com/" target="_blank" rel="external">Casa博客</a></strong></p>
-<blockquote>
-<p>我必须评价一下这个Casa哥们,iOS架构师我唯一佩服的人,用我的话就是，这才是真正程序员心中的架构师，而不是哪些所谓的听起来很NB的架构师,我在百度个人云(你们看到的是百度网盘)工作时有个T8架构师就坐在我对面，那个架构师每天闲的我真想撅他，改iOS程序 xib的引用没去掉都不知道 最好导致线上崩溃，我其实非常想送他一句话，不管技术多NB 每天都要保持写代码，记得孔子的话：『吾尝终日而思矣，不如须臾之所学也』。<br>这个Casa的哥们让我看到了什么叫 架构工程师 和业务工程师，这是一个能真正去写架构代码然后扔给业务工程师说：按照这个搞法</p>
-</blockquote>
-<h2 id="Masonry"><a href="#Masonry" class="headerlink" title="Masonry"></a>Masonry</h2><p><strong><a href="http://tutuge.me/2015/05/23/autolayout-example-with-masonry/" target="_blank" rel="external"></a></strong><br><strong><a href="http://tutuge.me/2015/05/23/autolayout-example-with-masonry/" target="_blank" rel="external">有趣的Autolayout示例-Masonry实现</a></strong><br><strong><a href="http://tutuge.me/2015/08/08/autolayout-example-with-masonry2/" target="_blank" rel="external">有趣的Autolayout示例2-Masonry实现</a></strong><br><strong><a href="http://tutuge.me/2015/12/14/autolayout-example-with-masonry3/" target="_blank" rel="external">有趣的Autolayout示例3-Masonry实现</a></strong><br><strong><a href="http://tutuge.me/2016/08/06/autolayout-example-with-masonry4/" target="_blank" rel="external">有趣的Autolayout示例4-Masonry实现</a></strong><br><strong><a href="http://tutuge.me/2017/03/12/autolayout-example-with-masonry5/" target="_blank" rel="external">有趣的Autolayout示例5-Masonry实现</a></strong>  </p>
-<p><strong><a href="http://www.jianshu.com/p/ea74b230c70d" target="_blank" rel="external">iOS自动布局框架-Masonry详解</a></strong><br><strong><a href="http://www.ios122.com/2015/09/masonry/" target="_blank" rel="external">Masonry — 使用纯代码进行iOS应用的autolayout自适应布局</a></strong> 中文翻译</p>
-<blockquote>
-<p>话说 我个人认为学习masonry只需要看看 中文翻译之后 再去看看土土哥的教程就会了。土土哥的masonry教程简直就是中文文档。写的非常好</p>
-</blockquote>
-<h2 id="Cocoapods"><a href="#Cocoapods" class="headerlink" title="Cocoapods"></a>Cocoapods</h2><p><strong><a href="http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">用CocoaPods做iOS程序的依赖管理</a></strong> 巧神的文章必看</p>
-<h2 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h2><p><strong><a href="https://github.com/sunyazhou13/FileExplorer" target="_blank" rel="external">文件列表</a></strong><br><strong><a href="https://github.com/sunyazhou13/HYFileManager" target="_blank" rel="external">HYFileManager</a></strong>  </p>
-<h2 id="博客列表"><a href="#博客列表" class="headerlink" title="博客列表"></a>博客列表</h2><table>
-<thead>
-<tr>
-<th>博客地址</th>
-<th style="text-align:left">RSS地址</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="http://onevcat.com" target="_blank" rel="external">OneV’s Den</a></td>
-<td style="text-align:left"><a href="http://onevcat.com/atom.xml" target="_blank" rel="external">http://onevcat.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://beyondvincent.com" target="_blank" rel="external">破船之家</a></td>
-<td style="text-align:left"><a href="http://beyondvincent.com/atom.xml" target="_blank" rel="external">http://beyondvincent.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://nshipster.cn" target="_blank" rel="external">NSHipster</a></td>
-<td style="text-align:left"><a href="http://nshipster.cn/feed.xml" target="_blank" rel="external">http://nshipster.cn/feed.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.leezhong.com/" target="_blank" rel="external">Limboy 无网不剩</a></td>
-<td style="text-align:left"><a href="http://feeds.feedburner.com/lzyy" target="_blank" rel="external">http://feeds.feedburner.com/lzyy</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.devtang.com" target="_blank" rel="external">唐巧的技术博客</a></td>
-<td style="text-align:left"><a href="http://blog.devtang.com/atom.xml" target="_blank" rel="external">http://blog.devtang.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://ios.lextang.com" target="_blank" rel="external">Lex iOS notes</a></td>
-<td style="text-align:left"><a href="http://ios.lextang.com/rss" target="_blank" rel="external">http://ios.lextang.com/rss</a></td>
-</tr>
-<tr>
-<td><a href="http://nianxi.net" target="_blank" rel="external">念茜的博客</a></td>
-<td style="text-align:left"><a href="http://nianxi.net/feed.xml" target="_blank" rel="external">http://nianxi.net/feed.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.xcodev.com" target="_blank" rel="external">Xcode Dev</a></td>
-<td style="text-align:left"><a href="http://blog.xcodev.com/atom.xml" target="_blank" rel="external">http://blog.xcodev.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://wufawei.com/" target="_blank" rel="external">Ted’s Homepage</a></td>
-<td style="text-align:left"><a href="http://wufawei.com/feed" target="_blank" rel="external">http://wufawei.com/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.t-xx.me" target="_blank" rel="external">txx’s blog</a></td>
-<td style="text-align:left"><a href="http://blog.t-xx.me/atom.xml" target="_blank" rel="external">http://blog.t-xx.me/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://imkevin.me" target="_blank" rel="external">KEVIN BLOG</a></td>
-<td style="text-align:left"><a href="http://imkevin.me/rss" target="_blank" rel="external">http://imkevin.me/rss</a></td>
-</tr>
-<tr>
-<td><a href="http://www.xiangwangfeng.com" target="_blank" rel="external">阿毛的蛋疼地</a></td>
-<td style="text-align:left"><a href="http://www.xiangwangfeng.com/atom.xml" target="_blank" rel="external">http://www.xiangwangfeng.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://billwang1990.github.io" target="_blank" rel="external">亚庆的 Blog</a></td>
-<td style="text-align:left"><a href="http://billwang1990.github.io/atom.xml" target="_blank" rel="external">http://billwang1990.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://nonomori.farbox.com" target="_blank" rel="external">Nonomori</a></td>
-<td style="text-align:left"><a href="http://nonomori.farbox.com/feed" target="_blank" rel="external">http://nonomori.farbox.com/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://tang3w.com" target="_blank" rel="external">言无不尽</a></td>
-<td style="text-align:left"><a href="http://tang3w.com/atom.xml" target="_blank" rel="external">http://tang3w.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://wonderffee.github.io" target="_blank" rel="external">Wonderffee’s Blog</a></td>
-<td style="text-align:left"><a href="http://wonderffee.github.io/atom.xml" target="_blank" rel="external">http://wonderffee.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://imtx.me" target="_blank" rel="external">I’m TualatriX</a></td>
-<td style="text-align:left"><a href="http://imtx.me/feed/latest/" target="_blank" rel="external">http://imtx.me/feed/latest/</a></td>
-</tr>
-<tr>
-<td><a href="http://vclwei.com" target="_blank" rel="external">vclwei</a></td>
-<td style="text-align:left"><a href="http://vclwei.com/posts.rss" target="_blank" rel="external">http://vclwei.com/posts.rss</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.cocoabit.com" target="_blank" rel="external">Cocoabit</a></td>
-<td style="text-align:left"><a href="http://blog.cocoabit.com/atom.xml" target="_blank" rel="external">http://blog.cocoabit.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://nixzhu.me" target="_blank" rel="external">nixzhu on scriptogr.am</a></td>
-<td style="text-align:left"><a href="http://nixzhu.me/feed" target="_blank" rel="external">http://nixzhu.me/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://studentdeng.github.io" target="_blank" rel="external">不会开机的男孩</a></td>
-<td style="text-align:left"><a href="http://studentdeng.github.io/atom.xml" target="_blank" rel="external">http://studentdeng.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://www.taofengping.com" target="_blank" rel="external">Nico</a></td>
-<td style="text-align:left"><a href="http://www.taofengping.com/rss.xml" target="_blank" rel="external">http://www.taofengping.com/rss.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://hufeng825.github.io" target="_blank" rel="external">阿峰的技术窝窝</a></td>
-<td style="text-align:left"><a href="http://hufeng825.github.io/atom.xml" target="_blank" rel="external">http://hufeng825.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://answerhuang.duapp.com" target="_blank" rel="external">answer_huang</a></td>
-<td style="text-align:left"><a href="http://answerhuang.duapp.com/index.php/feed/" target="_blank" rel="external">http://answerhuang.duapp.com/index.php/feed/</a></td>
-</tr>
-<tr>
-<td><a href="http://webfrogs.me" target="_blank" rel="external">webfrogs</a></td>
-<td style="text-align:left"><a href="http://webfrogs.me/feed/" target="_blank" rel="external">http://webfrogs.me/feed/</a></td>
-</tr>
-<tr>
-<td><a href="http://joeyio.com" target="_blank" rel="external">代码手工艺人</a></td>
-<td style="text-align:left"><a href="http://joeyio.com/atom.xml" target="_blank" rel="external">http://joeyio.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://gracelancy.com" target="_blank" rel="external">Lancy’s Blog</a></td>
-<td style="text-align:left"><a href="http://gracelancy.com/atom.xml" target="_blank" rel="external">http://gracelancy.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://www.imallen.com" target="_blank" rel="external">I’m Allen</a></td>
-<td style="text-align:left"><a href="http://www.imallen.com/atom.xml" target="_blank" rel="external">http://www.imallen.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://imi.im/" target="_blank" rel="external">Travis’ Blog</a></td>
-<td style="text-align:left"><a href="http://imi.im/feed" target="_blank" rel="external">http://imi.im/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://wangzz.github.io/" target="_blank" rel="external">王中周的技术博客</a></td>
-<td style="text-align:left"><a href="http://wangzz.github.io/atom.xml" target="_blank" rel="external">http://wangzz.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://jiajun.org/" target="_blank" rel="external">会写代码的猪</a></td>
-<td style="text-align:left"><a href="http://gaosboy.com/feed/atom/" target="_blank" rel="external">http://gaosboy.com/feed/atom/</a></td>
-</tr>
-<tr>
-<td><a href="http://wangkewei.cnblogs.com/" target="_blank" rel="external">克伟的博客</a></td>
-<td style="text-align:left"><a href="http://feed.cnblogs.com/blog/u/23857/rss" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/23857/rss</a></td>
-</tr>
-<tr>
-<td><a href="http://cnblogs.com/biosli" target="_blank" rel="external">摇滚诗人</a></td>
-<td style="text-align:left"><a href="http://feed.cnblogs.com/blog/u/35410/rss" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/35410/rss</a></td>
-</tr>
-<tr>
-<td><a href="http://geeklu.com/" target="_blank" rel="external">Luke’s Homepage</a></td>
-<td style="text-align:left"><a href="http://geeklu.com/feed/" target="_blank" rel="external">http://geeklu.com/feed/</a></td>
-</tr>
-<tr>
-<td><a href="http://iiiyu.com/" target="_blank" rel="external">萧宸宇</a></td>
-<td style="text-align:left"><a href="http://iiiyu.com/atom.xml" target="_blank" rel="external">http://iiiyu.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://www.heyuan110.com/" target="_blank" rel="external">Yuan博客</a></td>
-<td style="text-align:left"><a href="http://www.heyuan110.com/?feed=rss2" target="_blank" rel="external">http://www.heyuan110.com/?feed=rss2</a></td>
-</tr>
-<tr>
-<td><a href="http://shiningio.com/" target="_blank" rel="external">Shining IO</a></td>
-<td style="text-align:left"><a href="http://shiningio.com/atom.xml" target="_blank" rel="external">http://shiningio.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://www.yifeiyang.net/" target="_blank" rel="external">YIFEIYANG–易飞扬的博客</a></td>
-<td style="text-align:left"><a href="http://www.yifeiyang.net/feed" target="_blank" rel="external">http://www.yifeiyang.net/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://koofrank.com/" target="_blank" rel="external">KooFrank’s Blog</a></td>
-<td style="text-align:left"><a href="http://koofrank.com/rss" target="_blank" rel="external">http://koofrank.com/rss</a></td>
-</tr>
-<tr>
-<td><a href="http://helloitworks.com" target="_blank" rel="external">hello it works</a></td>
-<td style="text-align:left"><a href="http://helloitworks.com/feed" target="_blank" rel="external">http://helloitworks.com/feed</a></td>
-</tr>
-<tr>
-<td><a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a></td>
-<td style="text-align:left"><a href="http://msching.github.io/atom.xml" target="_blank" rel="external">http://msching.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://yulingtianxia.com" target="_blank" rel="external">玉令天下的Blog</a></td>
-<td style="text-align:left"><a href="http://yulingtianxia.com/atom.xml" target="_blank" rel="external">http://yulingtianxia.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://www.hotobear.com/" target="_blank" rel="external">不掏蜂窝的熊</a></td>
-<td style="text-align:left"><a href="http://www.hotobear.com/?feed=rss2" target="_blank" rel="external">http://www.hotobear.com/?feed=rss2</a></td>
-</tr>
-<tr>
-<td><a href="https://andelf.github.io/" target="_blank" rel="external">猫·仁波切</a></td>
-<td style="text-align:left"><a href="https://andelf.github.io/atom.xml" target="_blank" rel="external">https://andelf.github.io/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://ivoryxiong.org/" target="_blank" rel="external">煲仔饭</a></td>
-<td style="text-align:left"><a href="http://ivoryxiong.org/feed.xml" target="_blank" rel="external">http://ivoryxiong.org/feed.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://adad184.com" target="_blank" rel="external">里脊串的开发随笔</a></td>
-<td style="text-align:left"><a href="http://adad184.com/atom.xml" target="_blank" rel="external">http://adad184.com/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://chun.tips/" target="_blank" rel="external">Chun Tips</a></td>
-<td style="text-align:left"><a href="http://chun.tips/atom.xml" target="_blank" rel="external">http://chun.tips/atom.xml</a></td>
-</tr>
-<tr>
-<td><a href="http://blog.callmewhy.com/" target="_blank" rel="external">Why’s blog - 汪海的实验室</a></td>
-<td style="text-align:left"><a href="http://blog.callmewhy.com/atom.xml" target="_blank" rel="external">http://blog.callmewhy.com/atom.xml</a></td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="http://sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="http://sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="http://sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   

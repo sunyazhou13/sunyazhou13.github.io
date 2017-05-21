@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>UIViewController代码规范 | 東引甌越</title>
+    <title>東引甌越 | 不断学习, 与时俱进.</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="UIViewController代码规范 | 東引甌越">
+    <meta name="twitter:title" content="東引甌越 | 不断学习, 与时俱进.">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="UIViewController代码规范 | 東引甌越">
+    <meta property="og:title" content="東引甌越 | 不断学习, 与时俱进.">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/01/13/UIViewController-code-standard/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -175,77 +175,44 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <article class="post-container post-container--single">
+            <div class="archives">
 
-  <header class="post-header">
-    <div class="post-meta">
-      <time datetime="2017-01-13T03:18:07.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span>
+
+  
+  
+    
+    
+    <section class="archive-list__wrap">
+      <div class="archive-list__year-wrap">
+        <a href="/archives/2017" class="archive-list__year">2017</a>
+      </div>
+      <div class="archive-list">
+  
+  
+  <div class="archive-list__item">
+    <div class="archive-list__date-wrap">
+      <time datetime="2017-01-13T03:18:07.000Z" class="archive-list__date">2017-01-13</time>
+
     </div>
-    <h1 class="post-title">UIViewController代码规范</h1>
-  </header>
-
-  <section class="post">
-    <h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UITableViewDelegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
-<h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - UITableViewDelegate 代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
-
-  </section>
-
-</article>
-
-<section class="read-more">
-     
-        
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/01/13/Learning-macOS-development-shortcut/" title="学习macOS开发的路线">学习macOS开发的路线</a></h2>
-                <p class="excerpt">
-                
-                
-开发总结
+  <div class="archive-list__title-wrap">
+  <a href="/2017/01/13/UIViewController-code-standard/" title="link to post.title" class="archive-list__title">UIViewController代码规范</a>
+  </div>
+  </div>
 
 
-
-
-学习完所有raywenderlich的macOS开发教程
-Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
-[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-01-13T03:38:30.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/13/Learning-macOS-development-shortcut/">继续阅读</a></div>
-
-            </div>
-        
-
-        
-   
+</div>
 </section>
 
 
+  <nav class="pagination" role="navigation">
+    
+      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/tags/iOS开发/page/2/">Prev</a>
+    
+    
+  </nav>
 
-<section class="post-comments">
-    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-    <script>
-    var cloudTieConfig = {
-    url: document.location.href, 
-    sourceId: "",
-    productKey: "b8670c80ec2940b2a81ad3991e7790b0",
-    target: "cloud-tie-wrapper"
-    };
-    var yunManualLoad = true;
-    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-    </script>
-</section>
-
-
+</div>
 
 
             <footer class="footer">

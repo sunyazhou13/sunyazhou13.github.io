@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>UIViewController代码规范 | 東引甌越</title>
+    <title>如何在macOS/MAC OS X上创建替身文件 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="UIViewController代码规范 | 東引甌越">
+    <meta name="twitter:title" content="如何在macOS/MAC OS X上创建替身文件 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="UIViewController代码规范 | 東引甌越">
+    <meta property="og:title" content="如何在macOS/MAC OS X上创建替身文件 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/01/13/UIViewController-code-standard/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -179,18 +179,34 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-01-13T03:18:07.000Z" class="post-list__meta--date date">2017-01-13</time>
+      <time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">UIViewController代码规范</h1>
+    <h1 class="post-title">如何在macOS/MAC OS X上创建替身文件</h1>
   </header>
 
   <section class="post">
-    <h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UITableViewDelegate</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
-<h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - life cycle 视图的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - getters and setters 设置器和访问器</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - UITableViewDelegate 代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - CustomDelegate 自定义的代理</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - private methods 私有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - public methods 公有方法</span></div><div class="line"></div><div class="line"><span class="comment">// MARK: -</span></div><div class="line"><span class="comment">// MARK: - StatisticsLog 各种页面统计Log</span></div></pre></td></tr></table></figure>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg" alt=""></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
+<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><p>如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作</p>
+<p>创建软链接可以使用<code>NSFileManager</code>中的两个方法:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtPath:(<span class="built_in">NSString</span> *)path withDestinationPath:(<span class="built_in">NSString</span> *)destPath error:(<span class="built_in">NSError</span> **)error ;</div><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtURL:(<span class="built_in">NSURL</span> *)url withDestinationURL:(<span class="built_in">NSURL</span> *)destURL error:(<span class="built_in">NSError</span> **)error;</div></pre></td></tr></table></figure>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>最近在开发插件 需要把插件从工程目录 copy到 系统的插件目录<code>~/Library/Internet Plug-Ins/</code> (<a href="http://www.tanhao.me/pieces/1084.html/" target="_blank" rel="external">这里用了老谭的插件举例</a>)</p>
+<p>如下图:<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-05.png" alt=""></p>
+<p>本想把它直接copy过去, 但可能存在以后升级问题,后续判断各种版本 删除旧的版本逻辑处理比较麻烦,于是想到用替身的方式实现</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-42.png" alt=""></p>
+<p>使用这种方式创建替身:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//工程目录文件</span></div><div class="line"><span class="built_in">NSString</span> *homePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"NPAPI_Download_Plugin"</span> ofType:<span class="string">@"plugin"</span>];</div><div class="line"><span class="comment">//插件在系统的目录位置</span></div><div class="line"><span class="built_in">NSString</span> *strHome = [<span class="built_in">NSString</span> stringWithUTF8String:getenv(<span class="string">"HOME"</span>)];</div><div class="line"><span class="built_in">NSString</span> *desc = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/Library/Internet Plug-Ins/NPAPI_Download_Plugin.plugin"</span>,strHome];</div><div class="line"><span class="built_in">NSFileManager</span> *fm = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line"><span class="comment">//创建替身代码</span></div><div class="line">[fm createSymbolicLinkAtPath:desc withDestinationPath:homePath error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p><em>注意:<code>createSymbolicLinkAtPath:withDestinationPath:error:</code>方法 第一个参数<code>LinkAtPath</code>是<code>desc</code>,它是放替身文件的位置. 第二个参数<code>DestinationPath</code>是<code>homePath</code>代表本地文件的原始路径,这里用工程目录的文件是为了方便,切记不要和 copyItem方法搞混</em></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-04-11.png" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>主要涉及的一些macOS开发技巧, 希望不足之处大家多多指教.</p>
+<p>参考:<a href="http://www.tanhao.me/pieces/597.html/" target="_blank" rel="external">详解OSX(Unix)中的Hard Link与Symbolic Link(硬连接与软连接)</a></p>
+<p>全文完</p>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 
   </section>
 
@@ -201,29 +217,39 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/01/13/Learning-macOS-development-shortcut/" title="学习macOS开发的路线">学习macOS开发的路线</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/05/10/NSTableRowView-mouse-track-color/" title="自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色">自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</a></h2>
                 <p class="excerpt">
                 
-                
-开发总结
-
-
-
-
-学习完所有raywenderlich的macOS开发教程
-Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
-[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字
+                #import &quot;BDRowView.h&quot;#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]@interface BDRowVie
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-01-13T03:38:30.000Z" class="post-list__meta--date date">2017-01-13</time>
+                <div class="post-list__meta"><time datetime="2017-05-10T07:24:20.000Z" class="post-list__meta--date date">2017-05-10</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/01/13/Learning-macOS-development-shortcut/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/05/10/NSTableRowView-mouse-track-color/">继续阅读</a></div>
 
             </div>
         
 
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="赠:即将高中毕业向往计算机科学相关专业同学的只言片语">赠:即将高中毕业向往计算机科学相关专业同学的只言片语</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前的必习之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省学习开支至少1w+以上.
+
+主要分3个方面书籍首先
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
+
+            </div>
         
    
 </section>

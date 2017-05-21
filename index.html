@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://sunyazhou.com"/>
+    <link rel="canonical" href="https://www.sunyazhou.com"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -178,6 +178,41 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/05/10/NSTableRowView-mouse-track-color/" title="link to post.title">自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</a></h2>
+      <p class="excerpt">
+    
+      #import &quot;BDRowView.h&quot;#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]@interface BDRowView ()@property(strong) NSTrackingArea *trackingArea;@property(assign) BOOL isHovering;@end@implementa
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-05-10T07:24:20.000Z" class="post-list__meta--date date">2017-05-10</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/05/10/NSTableRowView-mouse-track-color/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/" title="link to post.title">如何在macOS/MAC OS X上创建替身文件</a></h2>
+      <p class="excerpt">
+    
+      
+前言熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
+软连接如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作
+创建软链接可以使用NSFileManager中的两个
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -361,46 +396,6 @@ This app has crashed because it attempted to access privacy-sensitive data witho
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/" title="link to post.title">Learning AV Foundation(一)汉字语音朗读</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-
-最近在研究AV Foundation 框架 发现有一本书叫做AV Foundation开发秘籍：实践掌握iOS &amp;amp; OS X 应用的视听处理技术然后google查了一下英文版叫Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含量 这么直译就没技术含量了。看着开发秘籍这名字不禁
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-11T04:38:53.000Z" class="post-list__meta--date date">2017-03-11</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/22/macOS-simulate-keyborad-NSEvent/" title="link to post.title">macOS上模拟发送键盘事件</a></h2>
-      <p class="excerpt">
-    
-      
-最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
-
-导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
-创建CGEventSourceRef 事件源对象(注意它不是OC对象,声明的时候对象前边没有*,而且需要用CFRelease()释放内存).
-创建CGEventRef使用CGEventCreateKeyboardEvent,
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/22/macOS-simulate-keyborad-NSEvent/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -433,7 +428,7 @@ This app has crashed because it attempted to access privacy-sensitive data witho
         </div>
     </div>
 
-    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="/js/main.js"></script>
 
      
