@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-05-10T07:30:22.000Z</updated>
+  <updated>2017-05-19T00:09:14.000Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/"/>
     <id>https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/</id>
     <published>2017-05-10T07:24:20.000Z</published>
-    <updated>2017-05-10T07:30:22.000Z</updated>
+    <updated>2017-05-19T00:09:14.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"BDRowView.h"</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]</span></div><div class="line"><span class="meta">#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRowView</span> ()</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">strong</span>) <span class="built_in">NSTrackingArea</span> *trackingArea;</div><div class="line"><span class="keyword">@property</span>(<span class="keyword">assign</span>) <span class="built_in">BOOL</span> isHovering;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BDRowView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:dirtyRect];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawSelectionInRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.selectionHighlightStyle != <span class="built_in">NSTableViewSelectionHighlightStyleNone</span>) &#123;</div><div class="line">        <span class="built_in">NSRect</span> selectionRect = <span class="built_in">NSInsetRect</span>(<span class="keyword">self</span>.bounds, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        [k_SELECTED_COLOR setStroke];</div><div class="line">        [k_SELECTED_COLOR setFill];</div><div class="line">        <span class="built_in">NSBezierPath</span> *selectionPath = [<span class="built_in">NSBezierPath</span> bezierPathWithRoundedRect:selectionRect xRadius:<span class="number">0</span> yRadius:<span class="number">0</span>];</div><div class="line">        [selectionPath fill];</div><div class="line">        [selectionPath stroke];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)updateTrackingAreas</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>.trackingArea != <span class="literal">nil</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> removeTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> opts = (<span class="built_in">NSTrackingMouseEnteredAndExited</span> | <span class="built_in">NSTrackingMouseMoved</span> | <span class="built_in">NSTrackingActiveAlways</span>);</div><div class="line">    <span class="keyword">self</span>.trackingArea = [ [<span class="built_in">NSTrackingArea</span> alloc] initWithRect:[<span class="keyword">self</span> bounds]</div><div class="line">                                                      options:opts</div><div class="line">                                                        owner:<span class="keyword">self</span></div><div class="line">                                                     userInfo:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">self</span> addTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseEntered:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">YES</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">YES</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseExited:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">NO</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">NO</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="built_in">NSColor</span>*)getBackgroundColor:(<span class="built_in">BOOL</span>)isSelected</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(isSelected) &#123;</div><div class="line">        <span class="keyword">return</span> k_SELECTED_COLOR;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> k_NORMAL_COLOR;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <hr>
@@ -47,7 +47,7 @@
     <link href="https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/"/>
     <id>https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/</id>
     <published>2017-05-09T09:41:17.000Z</published>
-    <updated>2017-05-10T00:45:24.000Z</updated>
+    <updated>2017-05-19T00:09:14.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg" alt=""></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
@@ -89,7 +89,7 @@
     <link href="https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/"/>
     <id>https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/</id>
     <published>2017-04-29T01:15:21.000Z</published>
-    <updated>2017-05-10T00:46:24.000Z</updated>
+    <updated>2017-05-19T00:09:14.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/some-advice-for-high-school-graduate/1.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
@@ -188,7 +188,7 @@
     <link href="https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/"/>
     <id>https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/</id>
     <published>2017-04-20T08:35:42.000Z</published>
-    <updated>2017-04-24T08:08:47.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/stock-photo-167171895.jpg" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当我无数次看到大家写代码的时候总是以一个<code>时间戳+arc4random()</code>创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.</p>
@@ -240,7 +240,7 @@
     <link href="https://www.sunyazhou.com/2017/04/11/3-kindof-ability/"/>
     <id>https://www.sunyazhou.com/2017/04/11/3-kindof-ability/</id>
     <published>2017-04-11T03:47:26.000Z</published>
-    <updated>2017-04-11T03:53:12.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>出自《东北往事:黑道风云20年》某片段</p>
@@ -272,7 +272,7 @@
     <link href="https://www.sunyazhou.com/2017/04/06/Xcode-shortcuts/"/>
     <id>https://www.sunyazhou.com/2017/04/06/Xcode-shortcuts/</id>
     <published>2017-04-06T02:36:30.000Z</published>
-    <updated>2017-04-06T03:45:00.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode-shortcuts/MacHi2017-04-06%2010-48-59.png" alt="shortcuts"></p>
 <p>前言<br>    在iOS和macOS开发者中积累了一些快捷操作记录下来</p>
@@ -339,7 +339,7 @@
     <link href="https://www.sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/"/>
     <id>https://www.sunyazhou.com/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/</id>
     <published>2017-03-28T01:40:18.000Z</published>
-    <updated>2017-04-07T02:21:59.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/stock-photo-200814137.jpg" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<code>AV Foundation</code>中使用<code>AVAudioRecorder</code>类添加音频录制功能和使用<code>AVAudioPlayer</code>一样简单, 都是在<code>Audio Queue Server</code>上层构建的.同时支持<code>macOS</code>和<code>iOS</code>平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.</p>
@@ -484,7 +484,7 @@
     <link href="https://www.sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/"/>
     <id>https://www.sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/</id>
     <published>2017-03-23T06:03:32.000Z</published>
-    <updated>2017-03-23T06:05:26.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="external">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
@@ -510,7 +510,7 @@
     <link href="https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/"/>
     <id>https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/</id>
     <published>2017-03-20T02:54:40.000Z</published>
-    <updated>2017-03-20T03:04:49.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
 <blockquote>
@@ -546,7 +546,7 @@
     <link href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/"/>
     <id>https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/</id>
     <published>2017-03-17T02:26:06.000Z</published>
-    <updated>2017-03-29T08:51:04.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stock-photo-55571408.jpg" alt="AVAudioPlayer"></p>
 <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
@@ -692,7 +692,7 @@
     <link href="https://www.sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/"/>
     <id>https://www.sunyazhou.com/2017/03/11/Learning-AV-Foundation-AVSpeechSynthesizer/</id>
     <published>2017-03-11T04:38:53.000Z</published>
-    <updated>2017-03-20T07:16:34.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://www.informit.com/ShowCover.aspx?isbn=0321961803" alt="AVSpeechSynthesizer"></p>
 <p>前言</p>
@@ -762,7 +762,7 @@
     <link href="https://www.sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/"/>
     <id>https://www.sunyazhou.com/2017/02/22/macOS-simulate-keyborad-NSEvent/</id>
     <published>2017-02-22T08:17:00.000Z</published>
-    <updated>2017-02-22T09:08:05.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/macOS%E4%B8%8A%E6%A8%A1%E6%8B%9F%E5%8F%91%E9%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/Snip20170222_1.png" alt=""></p>
 <p>最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS <code>NSEvent</code>, macOS上模拟事件都是底层的<code>CoreGraphic</code>的<code>class</code>,下面说下实现的片断代码.</p>
@@ -946,7 +946,7 @@
     <link href="https://www.sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/"/>
     <id>https://www.sunyazhou.com/2017/02/21/SRCROOT-and-PROJECT-DIR-different/</id>
     <published>2017-02-21T08:28:00.000Z</published>
-    <updated>2017-02-21T08:30:54.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>$(SRCROOT)</code>代表的是项目根目录下<br><code>$(PROJECT_DIR)</code>代表的是整个项目</p>
 ]]></content>
@@ -972,7 +972,7 @@
     <link href="https://www.sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/"/>
     <id>https://www.sunyazhou.com/2017/02/20/use-terminal-delete-all-NSUserDefault-content/</id>
     <published>2017-02-20T11:05:01.000Z</published>
-    <updated>2017-02-20T11:46:48.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息  </p>
@@ -1016,7 +1016,7 @@
     <link href="https://www.sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/"/>
     <id>https://www.sunyazhou.com/2017/02/18/how-to-let-QRCodeView-bounds-tracking-ScanView-moving/</id>
     <published>2017-02-18T11:08:56.000Z</published>
-    <updated>2017-02-20T01:01:57.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  </p>
@@ -1076,7 +1076,7 @@
     <link href="https://www.sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/"/>
     <id>https://www.sunyazhou.com/2017/02/17/iOS-internationalization-language-some-skills/</id>
     <published>2017-02-17T02:01:19.000Z</published>
-    <updated>2017-02-17T02:33:23.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="代码获取国际化语言数组"><a href="#代码获取国际化语言数组" class="headerlink" title="代码获取国际化语言数组  "></a>代码获取国际化语言数组  </h2><p>获取当前app使用的语言<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
 <p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.  </p>
@@ -1118,7 +1118,7 @@
     <link href="https://www.sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/"/>
     <id>https://www.sunyazhou.com/2017/02/10/build-hexo-blog-Tutorial/</id>
     <published>2017-02-10T02:24:25.000Z</published>
-    <updated>2017-02-13T07:25:50.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><a href="http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html" target="_blank" rel="external">Jekyll迁移到Hexo搭建个人博客</a>  </p>
@@ -1157,7 +1157,7 @@
     <link href="https://www.sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/"/>
     <id>https://www.sunyazhou.com/2017/02/10/DFS-algorithm-scanning-diectory-or-files/</id>
     <published>2017-02-10T02:07:55.000Z</published>
-    <updated>2017-04-24T01:36:58.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="DFS需求背景"><a href="#DFS需求背景" class="headerlink" title="DFS需求背景"></a>DFS需求背景</h2><blockquote>
 <p>在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况</p>
@@ -1218,7 +1218,7 @@
     <link href="https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/"/>
     <id>https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/</id>
     <published>2017-02-09T11:35:45.000Z</published>
-    <updated>2017-04-17T11:12:52.000Z</updated>
+    <updated>2017-04-29T01:11:13.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg" alt=""></p>
 <h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
@@ -1284,7 +1284,7 @@
     <link href="https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/"/>
     <id>https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/</id>
     <published>2017-02-09T05:37:28.000Z</published>
-    <updated>2017-02-10T02:39:44.000Z</updated>
+    <updated>2017-03-29T23:56:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
