@@ -192,7 +192,7 @@
     <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/OpenGL-glsl-language/opengl-vbo-shader-glsl-vao-gpu.jpg" alt=""></p>
 <p>最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.</p>
 <h2 id="GLSL是什么"><a href="#GLSL是什么" class="headerlink" title="GLSL是什么?"></a>GLSL是什么?</h2><p>GLSL(OpenGL Shading Language) 作为一种着色语言是纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些C的特性等. (名词解释:着色器(Shader))  </p>
-<p><strong>GPU是多线程并行处理器</strong>，GLSL直接面向<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E6%8C%87%E4%BB%A4%E6%B5%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%B5%81" target="_blank" rel="external">单指令流多数据流(SIMD)</a>模型的多线程计算。<br>GLSL编写的着色器函数是对每个数据同时执行的。<br>每个顶点都会由顶点着色器中的算法处理，每个像素也都会由 <strong>片段着色器</strong>中的算法处理。<br>初学者在编写自己的着色器时，需要考虑到SIMD的并发特性，并用并行计算的思路来思考问题 这就是GLSL.</p>
+<p><strong>GPU是多线程并行处理器</strong>，GLSL直接面向<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E6%8C%87%E4%BB%A4%E6%B5%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%B5%81" target="_blank" rel="external">单指令流多数据流(SIMD)</a>模型的多线程计算。<br>GLSL编写的着色器函数是对每个数据同时执行的。<br>每个顶点都会由顶点着色器中的算法处理，每个像素也都会由 <strong>片段着色器(也有叫片元着色器)</strong>中的算法处理。<br>初学者在编写自己的着色器时，需要考虑到SIMD的并发特性，并用并行计算的思路来思考问题 这就是GLSL.</p>
 <p>我们最常见的用法是在 <strong>顶点着色器</strong>里生成所需要的值，然后传给 <strong>片断着色器</strong>用.</p>
 <h2 id="GLSL能做什么"><a href="#GLSL能做什么" class="headerlink" title="GLSL能做什么"></a>GLSL能做什么</h2><ul>
 <li>日以逼真的材质 – 金属，岩石，木头，油漆等</li>
