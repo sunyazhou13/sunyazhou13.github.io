@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-05-19T00:09:14.000Z</updated>
+  <updated>2017-05-30T14:23:18.000Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,140 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenGL编程语言-glsl基础</title>
+    <link href="https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/"/>
+    <id>https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/</id>
+    <published>2017-05-30T12:32:33.000Z</published>
+    <updated>2017-05-30T14:23:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/OpenGL-glsl-language/opengl-vbo-shader-glsl-vao-gpu.jpg" alt=""></p>
+<p>最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.</p>
+<h2 id="GLSL是什么"><a href="#GLSL是什么" class="headerlink" title="GLSL是什么?"></a>GLSL是什么?</h2><p>GLSL(OpenGL Shading Language) 作为一种着色语言是纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些C的特性等. (名词解释:着色器(Shader))  </p>
+<p><strong>GPU是多线程并行处理器</strong>，GLSL直接面向<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E6%8C%87%E4%BB%A4%E6%B5%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%B5%81" target="_blank" rel="external">单指令流多数据流(SIMD)</a>模型的多线程计算。<br>GLSL编写的着色器函数是对每个数据同时执行的。<br>每个顶点都会由顶点着色器中的算法处理，每个像素也都会由 <strong>片段着色器</strong>中的算法处理。<br>初学者在编写自己的着色器时，需要考虑到SIMD的并发特性，并用并行计算的思路来思考问题 这就是GLSL.</p>
+<p>我们最常见的用法是在 <strong>顶点着色器</strong>里生成所需要的值，然后传给 <strong>片断着色器</strong>用.</p>
+<h2 id="GLSL能做什么"><a href="#GLSL能做什么" class="headerlink" title="GLSL能做什么"></a>GLSL能做什么</h2><ul>
+<li>日以逼真的材质 – 金属，岩石，木头，油漆等</li>
+<li>日益逼真的光照效果 – 区域光和软阴影</li>
+<li>非现实材质 – 美术效果，钢笔画，水墨画和对插画技术的模拟</li>
+<li>针对纹理内存的新用途</li>
+<li>更少的纹理访问 </li>
+<li>图形处理 – 选择，边缘钝化遮蔽和复杂混合</li>
+<li>动画效果 – 关键帧插值，粒子系统</li>
+<li>用户可编程的反走样方法</li>
+</ul>
+<h2 id="GLSL注意"><a href="#GLSL注意" class="headerlink" title="GLSL注意"></a>GLSL注意</h2><ul>
+<li><strong>GLSL支持函数重载</strong>(就是父类定义方法,子类复写该方法叫重载)</li>
+<li><strong>GLSL不存在数据类型的自动提升(就是不支持类型自动向上转换 eg:float 转 double)，类型必须严格保持一致.</strong></li>
+<li><strong>GLSL不支持指针，字符串，字符，它基本上是一种处理数字数据的语言</strong></li>
+<li><strong>GLSL不支持联合(union)、枚举类型(enum)、结构体(stuct)位字段(&gt;&gt; or &lt;&lt; 左右移)及按位运算符(| or &amp;这种按位与)</strong>(就是干掉麻烦的C操作 让这个更单纯的处理图形数据使用)</li>
+</ul>
+<h2 id="GLSL的数据类型"><a href="#GLSL的数据类型" class="headerlink" title="GLSL的数据类型"></a>GLSL的数据类型</h2><p>GLSL有三种基本数据类型: </p>
+<ul>
+<li>float</li>
+<li>int</li>
+<li>double</li>
+<li>由float、int、double组成的array[]或者结构体  </li>
+</ul>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="number">42</span>   <span class="comment">// 十进制  </span></div><div class="line"><span class="number">042</span>  <span class="comment">// 八进制  </span></div><div class="line"><span class="number">0x2A</span> <span class="comment">// 十六进制</span></div></pre></td></tr></table></figure>
+<p><strong><strong>注意:GLSL不支持指针,GLSL把向量和矩阵作为基本数据类型</strong></strong><br><a href="http://baike.baidu.com/link?url=XKZL51jLByIFnqrj3vaZ-4cnL-AedjBKiVBcD7pEGQG26Jmb9RYl7QOrX4Mwck-mT0nNlzD8UtzXi4ueVYNGkdO1b2uARr59UAih7ulWRvO" target="_blank" rel="external">向量(vector)</a>:有起始位置有方向的线段,也称作 <strong>矢量</strong>(不要被这些名词吓到,我记得这个向量是我高二的时候数学学的东西).</p>
+<h2 id="矢量"><a href="#矢量" class="headerlink" title="矢量"></a>矢量</h2><p>矢量可以和标量甚至矩阵做加减乘除(必须遵守一定规则才可以 否则报错)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vec2,  vec3,  vec4  //包含2/3/4个浮点数的矢量(浮点型)</div><div class="line">ivec2, ivec3, ivec4 //包含2/3/4个整数的矢量(整形数 前边带i 代表integer)</div><div class="line">bvec2, bvec3, bvec4 //包含2/3/4个布尔值的矢量(bool不用解释)</div></pre></td></tr></table></figure>
+<p>上边这些是一种GLSL的数据类型, 可以简单理解为 <code>vec+数字</code> 就代表 是一个数组里面放几个元素(应该都是 vec2~vec4之间,没见过 vec5以上和vec2以下,好像这就代表几维坐标系),默认元素是float浮点类型,前边带<code>i</code>代表<code>integer</code>整形,<code>b</code>代表<code>bool</code>.</p>
+<h3 id="vec如何声明使用？"><a href="#vec如何声明使用？" class="headerlink" title="vec如何声明使用？"></a>vec如何声明使用？</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vec3 v; 	 //声明三维浮点型向量v</div><div class="line">v[1] = 3.0;  //给向量v的第二个元素赋值(数组从0开始,下标为1就是第二个元素)</div><div class="line"></div><div class="line">//下面两种等价</div><div class="line">vec3 v = vec3(0.6); //数组是连续的存储空间 相当于其它元素默认被这个0.6值填充</div><div class="line">vec3 v = vec3(0.6,0.6,0.6);</div></pre></td></tr></table></figure>
+<blockquote>
+<p><em>注意: 除了用索引方式外,还能用选择运算符的方式来使用向量.择运算符是对于向量的各个元素（最多为4个）约定俗成的名称，用一个小写拉丁字母来表示。根据向量表示对象的意义不同，可以使用以下选择运算符:</em>  </p>
+</blockquote>
+<ul>
+<li>表示顶点可以用 (x、y、z、w)  (坐标系)</li>
+<li>表示颜色可以用 (r、g、b、a)  (颜色值带透明)</li>
+<li>表示纹理坐标用 (s、t、p、q)<br>三种任选一种都一样,作用都是等效的. 也就是说，如果<code>v</code>是一个向量，那么:  </li>
+<li><code>v[0]</code></li>
+<li><code>v.x</code></li>
+<li><code>v.r</code></li>
+<li><code>v.s</code><br>都指的是向量v的第一个元素。<br>例如:</li>
+</ul>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="comment">//用构造函数的方式声明并初始化四维浮点型</span></div><div class="line"><span class="type">vec4</span> v1 = <span class="type">vec4</span>(<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>); </div><div class="line"><span class="type">vec4</span> v2;  </div><div class="line">v2.xy=v1.yz;  <span class="comment">//将v1的第二个和第三个元素复制到v2的第一个和第二个元素</span></div><div class="line">v2.z=<span class="number">2.0</span>;  	  <span class="comment">//给v2的第三个元素赋值  </span></div><div class="line">v2.xy=v1.yx;  <span class="comment">//将v1的头两个元素互换，再复制到v2的头两个元素中</span></div></pre></td></tr></table></figure>
+<h2 id="矩阵-matrix"><a href="#矩阵-matrix" class="headerlink" title="矩阵(matrix)"></a>矩阵(matrix)</h2><p>矩阵(matrix)以下类型都以mat开头</p>
+<ul>
+<li><code>mat2</code> 代表2x2的矩阵</li>
+<li><code>mat3</code> 代表3x3的矩阵</li>
+<li><code>mat4</code> 代表4x4的矩阵<br><em><strong>注意:矩阵是按列顺序组织的，先列后行</strong></em></li>
+</ul>
+<p>如下代码:</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="type">mat4</span> m;		 <span class="comment">//声明四维浮点型方阵m  </span></div><div class="line">m[<span class="number">2</span>][<span class="number">3</span>]=<span class="number">2.0</span>; <span class="comment">//给方阵的第三列、第四行元素赋值 </span></div><div class="line"></div><div class="line"><span class="comment">// 下面两种等价，初始化矩阵对角</span></div><div class="line"><span class="type">mat2</span> m = <span class="type">mat2</span>(<span class="number">1.0</span>)</div><div class="line"><span class="type">mat2</span> m = <span class="type">mat2</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<h2 id="取样器-Sampler"><a href="#取样器-Sampler" class="headerlink" title="取样器(Sampler)"></a>取样器(Sampler)</h2><p>纹理查找需要制定哪个纹理或者纹理单元将制定查找.</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="type">sampler1D</span>        <span class="comment">// 访问一个一维纹理</span></div><div class="line"><span class="type">sampler2D</span>        <span class="comment">// 访问一个二维纹理           </span></div><div class="line"><span class="type">sampler3D</span>        <span class="comment">// 访问一个三维纹理</span></div><div class="line"><span class="type">samplerCube</span>      <span class="comment">// 访问一个立方贴图纹理</span></div><div class="line"><span class="type">sampler1DShadow</span>  <span class="comment">// 访问一个带对比的一维深度纹理</span></div><div class="line"><span class="type">sampler2DShadow</span>  <span class="comment">// 访问一个带对比的二维深度纹理</span></div></pre></td></tr></table></figure>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> grass;</div><div class="line"></div><div class="line">vcc2 coord = <span class="type">vec2</span>(<span class="number">100</span>, <span class="number">100</span>);</div><div class="line"><span class="type">vec4</span> color = <span class="built_in">texture2D</span>(grass, coord);</div></pre></td></tr></table></figure>
+<p>如果一个着色器在程序里结合多个文理, 可以使用取样器数组.</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="type">int</span> tex_nums = <span class="number">4</span>;</div><div class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> textures[tex_nums];</div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; tex_nums; ++i) &#123;</div><div class="line">    <span class="type">sampler2D</span> tex = textures[i];</div><div class="line">    <span class="comment">// todo ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>这是唯一的用户能用的自定义类型  </p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line">struct light  </div><div class="line">&#123;  </div><div class="line">    <span class="type">vec3</span> position;  </div><div class="line">    <span class="type">vec3</span> color;  </div><div class="line">&#125;;  </div><div class="line"></div><div class="line">light ceiling_light;</div></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组索引是从0开始的，而且没有指针概念</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 创建一个10个元素的数组  </span></div><div class="line"><span class="type">vec4</span> <span class="keyword">points</span>[<span class="number">10</span>];  </div><div class="line"></div><div class="line"><span class="comment">// 创建一个不指定大小的数组</span></div><div class="line"><span class="type">vec4</span> <span class="keyword">points</span>[]; </div><div class="line"><span class="keyword">points</span>[<span class="number">2</span>] = <span class="type">vec4</span>(<span class="number">1.0</span>);  <span class="comment">// points现在大小为3</span></div><div class="line"><span class="keyword">points</span>[<span class="number">7</span>] = <span class="type">vec4</span>(<span class="number">2.0</span>);  <span class="comment">// points现在大小为8</span></div></pre></td></tr></table></figure>
+<h2 id="void"><a href="#void" class="headerlink" title="void"></a>void</h2><p>只能用于声明函数返回值</p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>必须明确地进行类型转换，不会自动类型提升</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="type">float</span> f = <span class="number">2.3</span>; </div><div class="line"><span class="type">bool</span> b = <span class="type">bool</span>(f); <span class="comment">// b is true</span></div></pre></td></tr></table></figure>
+<h2 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h2><p><strong>GLSL中有4个限定符（variable qualifiers）可供使用，它们限定了被标记的变量不能被更改的”范围”.</strong></p>
+<ul>
+<li><code>const</code></li>
+<li><code>attribute</code></li>
+<li><code>uniform</code></li>
+<li><code>varying</code>  </li>
+</ul>
+<p><code>const</code>: 和C++里差不多，定义不可变常量<br>表示限定的变量在编译时不可被修改.</p>
+<p><code>attribute</code>:是应用程序传给顶点着色器用的<br>不允许声明时初始化  </p>
+<p><code>attribute</code>限定符标记的是一种全局变量,该变量在顶点着色器中是只读（read-only）的，该变量被用作从OpenGL应用程序向顶点着色器中传递参数，因此该限定符仅能用于顶点着色器.  </p>
+<p><code>uniform</code>:一般是应用程序用于设定顶点着色器和片断着色器相关初始化值.不允许声明时初始化.<code>uniform</code>限定符标记的是一种全局变量,该变量对于一个图元（<code>primitive</code>）来说是不可更改的 它可以从<code>OpenGL</code>应用程序中接收传递来的参数  </p>
+<p><code>varying</code>:用于传递顶点着色器的值给片断着色器.它提供了从顶点着色器向片段着色器传递数据的方法，varying限定符可以在顶点着色器中定义变量，然后再传递给光栅化器，光栅化器对数据插值后，再将每个片段的值交给片段着色器.</p>
+<p><em><strong>注意:以上这几种限定符很重要</strong></em></p>
+<h2 id="限制性"><a href="#限制性" class="headerlink" title="限制性"></a>限制性</h2><ul>
+<li>不能在if-else中声明变量</li>
+<li>用于判断的条件必须是bool类型(if,while,for…)</li>
+<li>(?:)操作符后两个参数必须类型相同</li>
+<li>不支持switch语句  </li>
+</ul>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="type">vec4</span> toonify(<span class="keyword">in</span> <span class="type">float</span> intensify) </div><div class="line">&#123;</div><div class="line">    <span class="type">vec4</span> color;</div><div class="line">    color = <span class="type">vec4</span>(<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>)</div><div class="line">    <span class="keyword">return</span> color;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="discard"><a href="#discard" class="headerlink" title="discard"></a>discard</h2><p><code>discard</code>关键字可以避免片段更新帧缓冲区，当流控制遇到这个关键字时，正在处理的片段就会被标记为丢.</p>
+<p>如果不理解什么叫标记为丢 可以参考一下<a href="理解UIView的绘制">UIView的绘制过程</a></p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>函数名可以通过参数类型重载，但是和返回值类型无关</li>
+<li>所有参数必须完全匹配，参数不会自动</li>
+<li>函数不能被递归调用</li>
+<li>函数返回值不能是数组</li>
+</ul>
+<p>函数参数标识符  </p>
+<ul>
+<li><code>in</code>: 进复制到函数中，但不返回的参数(默认)</li>
+<li><code>out</code>: 不将参数复制到函数中，但返回参数</li>
+<li><code>inout</code>: 复制到函数中并返回 </li>
+</ul>
+<h2 id="混合操作"><a href="#混合操作" class="headerlink" title="混合操作"></a>混合操作</h2><p>通过在选择器(.)后列出各分量名，就可以选择这些分量</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><div class="line"><span class="type">vec4</span> v4;</div><div class="line">v4.rgba;    <span class="comment">// 得到vec4</span></div><div class="line">v4.rgb;     <span class="comment">// 得到vec3</span></div><div class="line">v4.b;       <span class="comment">// 得到float</span></div><div class="line">v4.xy;      <span class="comment">// 得到vec2</span></div><div class="line">v4.xgba;    <span class="comment">// 错误！分量名不是同一类</span></div><div class="line"></div><div class="line">v4.wxyz;    <span class="comment">// 打乱原有分量顺序</span></div><div class="line">v4.xxyy;    <span class="comment">// 重复分量</span></div></pre></td></tr></table></figure>
+<p>最后推荐一个GLSL编辑调试工具<a href="http://adcdownload.apple.com/Developer_Tools/Graphics_Tools_for_Xcode_7.2/Graphics_Tools_for_Xcode_7.2.dmg" target="_blank" rel="external">OpenGL Shader Builder(Graphics Tools.dmg)</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><p>由于本人记性不好使 找东西有时候总找不到 把一些 名词知识点收录出来并加以解释 方便后来的学习者学习.</p>
+<p>参考:<br><a href="http://www.cnblogs.com/luweimy/p/4208570.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">GLSL基础</a></p>
+<p><a href="http://www.jianshu.com/p/ee597b2bd399" target="_blank" rel="external">iOS开发-OpenGL ES入门教程2</a>  </p>
+<p>全文完</p>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.gi
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</title>
@@ -1271,34 +1405,6 @@
     </summary>
     
       <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Webview的NSScrollView禁用滑动功能</title>
-    <link href="https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/"/>
-    <id>https://www.sunyazhou.com/2017/02/09/howt-to-disable-WebviewNSScrollView-scroll/</id>
-    <published>2017-02-09T05:37:28.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码属于<code>macOS</code>上的开发内容.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在&lt;code&gt;webview&lt;/code&gt;的&lt;code&gt;WebFrameLoadDelegate&lt;/code&gt;代理里面实现如下代码&lt;/p&gt;
-&lt;figure class=&quot;highlight objc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;di
-    
-    </summary>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
     
     
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
