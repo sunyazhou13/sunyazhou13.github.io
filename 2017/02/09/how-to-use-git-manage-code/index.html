@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS&macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者,现就职于金山云.开发6年有余,没有为往圣续绝学深感惭愧,2017年起开始写博客记录技术知识,望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -213,7 +213,7 @@
 <blockquote>
 <p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
 </blockquote>
-<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --set-upstream origin + 分支名</div></pre></td></tr></table></figure>
+<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --<span class="built_in">set</span>-upstream origin + 分支名</div></pre></td></tr></table></figure>
 <h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
 <blockquote>
 <p>回到本地代码库库中，执行</p>
@@ -228,7 +228,7 @@
 <h2 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h2><p>merge分支时，如果两分支对同一地方做了不同的修改，则为冲突，冲突的文件git会生成如下内容</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD </div><div class="line">Creating a new branch is quick &amp; simple. </div><div class="line">======= </div><div class="line">Creating a new branch is quick AND simple. </div><div class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</div></pre></td></tr></table></figure>
 <p>解决完冲突 合并之后 记得执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git rebase --continue</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git rebase --<span class="built_in">continue</span></div></pre></td></tr></table></figure>
 <p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
 <p>持续更新</p>
 

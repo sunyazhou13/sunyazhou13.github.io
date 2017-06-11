@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-05-30T14:32:19.000Z</updated>
+  <updated>2017-06-08T13:20:55.000Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,103 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ARKit(一)ARSession</title>
+    <link href="https://www.sunyazhou.com/2017/06/06/ARKit/"/>
+    <id>https://www.sunyazhou.com/2017/06/06/ARKit/</id>
+    <published>2017-06-06T03:34:37.000Z</published>
+    <updated>2017-06-08T13:20:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
+<p>每年WWDC都发布一堆东西.今天很有震撼性发布了 增强现实<a href="https://developer.apple.com/documentation/arkit" target="_blank" rel="external">ARKit官方文档</a>,机器学习(Core ML) 。。。。等等 今天打算翻译一下Aplle的ARKit.</p>
+<h2 id="AR是啥？"><a href="#AR是啥？" class="headerlink" title="AR是啥？"></a>AR是啥？</h2><p>AR增强现实的一种视觉技术.</p>
+<h2 id="ARKit分6个部分-章节"><a href="#ARKit分6个部分-章节" class="headerlink" title="ARKit分6个部分(章节)"></a>ARKit分6个部分(章节)</h2><ol>
+<li>理解和介绍ARSession</li>
+<li>配置ARSession</li>
+<li>标准视图(Standard Views)</li>
+<li>自定义视图(Custom Views)</li>
+<li>真实世界对象和位置(Real-World Objects and Positions)</li>
+<li>相机摄像头和场景细节(Camera and Scene Details)  </li>
+</ol>
+<blockquote>
+<p>第一部分对Seeson介绍了一下<br>第二部分介绍配置<br>第三部分使用相关的<a href="https://developer.apple.com/documentation/arkit/arscnview?language=objc" target="_blank" rel="external">ARSCNView</a>和<a href="https://developer.apple.com/documentation/arkit/arskview?language=objc" target="_blank" rel="external">ARSKView</a><br>第四部分介绍自定义View<br>第五部分介绍<code>ARAnchor</code>(锚点)、<code>ARPlaneAnchor</code>(平面锚点和射世界坐标转换)、<code>ARHitTestResult</code>(真实世界的点在摄像头中处理)<br>第六部分介绍<code>ARFrame</code>(视频图片帧)、<code>ARCamera</code>(摄像头)、<code>ARLightEstimate</code>(估算场景照明的灯光等)</p>
+</blockquote>
+<p>本章介绍从ARSession开始</p>
+<h3 id="1-ARSession"><a href="#1-ARSession" class="headerlink" title="1. ARSession"></a>1. ARSession</h3><p><a href="https://developer.apple.com/documentation/arkit/arsession?language=objc" target="_blank" rel="external">ARSession</a>这是一个单例对象,用于管理 <strong>增强现实体验所需要的设备相机(摄像头)和运动处理</strong>的会话</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>一个<code>ARSession</code>对象坐标的主要过程是<code>ARKit</code>执行过程，代表您创建一个增强现实体验。这些过程包括读取数据从设备的运动传感硬件，控制设备的内置摄像头，并对捕获的相机图像进行图像分析。该会话综合所有这些结果，以建立真实世界的空间，设备栖息和虚拟空间，你模型AR内容之间的对应关系。</p>
+<p>每一个用<code>ARKit</code>构建的<code>AR体验</code>要求只能有一个单独的<code>ARSession</code>对象.如果我们用<a href="https://developer.apple.com/documentation/arkit/arscnview?language=objc" target="_blank" rel="external">ARSCNView</a>和<a href="https://developer.apple.com/documentation/arkit/arskview?language=objc" target="_blank" rel="external">ARSKView</a>简单构建<code>AR</code>体验的一部分时,这个个view对象就包含了一个<code>ARSession</code>对象. 如果我们需要为<code>AR内容</code>构建自定义渲染,我们需要自己实例化并持有<code>ARSession</code>对象.</p>
+<p>运行该会话需要如下:</p>
+<ul>
+<li>ARSessionConfiguration 对象实例</li>
+<li>或者ARWorldTrackingSessionConfiguration 实例对象</li>
+</ul>
+<p>这些类决定<code>ARKit</code>如何跟踪设备的位置和相对真实的世界的运动轨迹,从而影响你可以创建AR体验的种类</p>
+<blockquote>
+<p><code>ARWorldTrackingSessionConfiguration</code>:<code>ARSessionConfiguration</code>(继承关系)</p>
+</blockquote>
+<h3 id="配置ARSession"><a href="#配置ARSession" class="headerlink" title="配置ARSession"></a>配置ARSession</h3><p>开始运行AR <code>runWithConfiguration:options:</code>方法</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)runWithConfiguration:(ARSessionConfiguration *)configuration </div><div class="line">                     options:(ARSessionRunOptions)options;</div></pre></td></tr></table></figure>
+<p><code>ARSessionRunOptions</code> 枚举</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, ARSessionRunOptions) &#123;</div><div class="line">    ARSessionRunOptionResetTracking           = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>),</div><div class="line">    ARSessionRunOptionRemoveExistingAnchors   = (<span class="number">1</span> &lt;&lt; <span class="number">1</span>)</div><div class="line">&#125; <span class="built_in">NS_SWIFT_NAME</span>(ARSession.RunOptions);</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>ARSessionRunOptionResetTracking  不会基于上次配置信息持续 设备方向和运动轨迹</li>
+<li>ARSessionRunOptionRemoveExistingAnchors 这个会话的上次配置中被关联的任何锚点对象都会被移除</li>
+</ul>
+</blockquote>
+<h4 id="configuration配置"><a href="#configuration配置" class="headerlink" title="configuration配置"></a><code>configuration</code>配置</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) ARSessionConfiguration *configuration;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>为<code>ARSession</code>定义移动和场景轨迹行为的对象</p>
+</blockquote>
+<p><code>pause</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)pause;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>暂停会话</p>
+</blockquote>
+<h5 id="Responding-to-AR-Updates-实时响应AR更新"><a href="#Responding-to-AR-Updates-实时响应AR更新" class="headerlink" title="Responding to AR Updates(实时响应AR更新)"></a>Responding to AR Updates(实时响应AR更新)</h5><p>delegate 接收ARSession视频捕捉图片和轨迹信息,或会话状态变化</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span>&lt;ARSessionDelegate&gt; delegate;</div></pre></td></tr></table></figure>
+<p>指定代理对象回调的队列<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> delegateQueue;</div></pre></td></tr></table></figure></p>
+<h4 id="ARSessionDelegate"><a href="#ARSessionDelegate" class="headerlink" title="ARSessionDelegate"></a>ARSessionDelegate</h4><p>如果像直接和会话交互实现此协议方法使用<code>ARFrame</code>对象直接实现或者轨迹锚点对象(ARAnchor)的变化.一般实现如下协议都在我们构建一个自定义现实AR内容的view的情况下。如果你现实的内容使用了<code>SceneKit</code>或<code>SpriteKit</code>那么可以实现<code>ARSCNViewDelegate</code>代理它会提供给你相关的和这个<code>ARSessionDelegate</code>类似的信息</p>
+<p>这个<code>ARSessionDelegate</code>代理继承<code>ARSessionObserver</code>,所以可以从回调中获取会话状态发生变化的信息.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ARSessionDelegate</span> &lt;<span class="title">ARSessionObserver</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="comment">//捕获的一帧图片+AR信息</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateFrame:(ARFrame *)frame;</div><div class="line"></div><div class="line"><span class="comment">// 1个/多个锚点被添加</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didAddAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">// 会话已经调整了所有锚点</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">// 锚点已经被移出</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didRemoveAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="ARSessionObserver"><a href="#ARSessionObserver" class="headerlink" title="ARSessionObserver"></a>ARSessionObserver</h4><h5 id="Responding-to-Tracking-Quality-Changes-轨迹质量变化的回馈"><a href="#Responding-to-Tracking-Quality-Changes-轨迹质量变化的回馈" class="headerlink" title="Responding to Tracking Quality Changes(轨迹质量变化的回馈)"></a>Responding to Tracking Quality Changes(轨迹质量变化的回馈)</h5><p><code>AR session</code>状态变化</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">设备方向轨迹质量发生变化</div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session </div><div class="line">cameraDidChangeTrackingState:(ARCamera *)camera;</div></pre></td></tr></table></figure>
+<h5 id="Handling-Interruptions-处理中断"><a href="#Handling-Interruptions-处理中断" class="headerlink" title="Handling Interruptions(处理中断)"></a>Handling Interruptions(处理中断)</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//临时停止帧处理和跟踪设备的方向位置(类似音频会话的打断处理)</span></div><div class="line">- (<span class="keyword">void</span>)sessionWasInterrupted:(ARSession *)session;</div><div class="line"></div><div class="line"><span class="comment">//恢复刚才的操作</span></div><div class="line">- (<span class="keyword">void</span>)sessionInterruptionEnded:(ARSession *)session;</div></pre></td></tr></table></figure>
+<h5 id="Handling-Session-Failure-处理会话失败"><a href="#Handling-Session-Failure-处理会话失败" class="headerlink" title="Handling Session Failure(处理会话失败)"></a>Handling Session Failure(处理会话失败)</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//会话停止之后失败回调</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session </div><div class="line">didFailWithError:(<span class="built_in">NSError</span> *)error;</div></pre></td></tr></table></figure>
+<h3 id="实时AR数据-更新"><a href="#实时AR数据-更新" class="headerlink" title="实时AR数据 更新"></a>实时AR数据 更新</h3><ul>
+<li>currentFrame(ARFrame)当前帧</li>
+<li>addAnchor: 添加锚点(ARAnchor)</li>
+<li>removeAnchor:移出锚点(ARAnchor)</li>
+</ul>
+<blockquote>
+<p>ARAnchor锚点是在AR会话的轨迹上的</p>
+</blockquote>
+<h3 id="ARSession-实例方法"><a href="#ARSession-实例方法" class="headerlink" title="ARSession 实例方法"></a>ARSession 实例方法</h3><ul>
+<li>runWithConfiguration: (同上介绍不赘述)</li>
+</ul>
+<p><strong>以上是整个ARSession的介绍</strong></p>
+<p>希望后续文章给出相关demo</p>
+<p>全文完</p>
+<p><a href="https://developer.apple.com/documentation?changes=latest_minor" target="_blank" rel="external">iOS11所有改动</a></p>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.gi
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenGL编程语言-glsl基础</title>
@@ -223,11 +320,11 @@
     <link href="https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/"/>
     <id>https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/</id>
     <published>2017-04-29T01:15:21.000Z</published>
-    <updated>2017-05-19T00:09:14.000Z</updated>
+    <updated>2017-06-11T07:40:31.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/some-advice-for-high-school-graduate/1.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前的必习之章. <strong>学习好一定要坚持下去,学习不好并不代表以后没有机会</strong>, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省学习开支至少1w+以上.</p>
+<p>无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. <strong>学习好一定要坚持下去,学习不好并不代表以后没有机会</strong>, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.</p>
 </blockquote>
 <h2 id="主要分3个方面"><a href="#主要分3个方面" class="headerlink" title="主要分3个方面"></a>主要分3个方面</h2><h3 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h3><p>首先来说 书籍 大学计算机必须的基本经典书籍</p>
 <ul>
@@ -1114,7 +1211,7 @@
 <p><code>NSUserDefaults</code>和<code>win</code>开发的注册表一样 用于存储一些标记位<br>最近开发用到的比较多是如何不运行代码的情况下清理<code>NSUserDefaults</code>信息</p>
 <p><strong>$ defaults delete + 包名</strong>  eg: com.baidu.demo </p>
 <p>下面这样会删除所有以<code>com.baidu.demo</code>为包名的文件  </p>
-<pre><code class="shell">$ defaults delete com.baidu.demo
+<pre><code class="shell"><span class="meta">$</span><span class="bash"> defaults delete com.baidu.demo</span>
 </code></pre>
 <blockquote>
 <p>实际的的路径(把 my app和前后剪头 换成自己的应用的包名)</p>
@@ -1335,72 +1432,6 @@
     
       &lt;h2 id=&quot;DFS需求背景&quot;&gt;&lt;a href=&quot;#DFS需求背景&quot; class=&quot;headerlink&quot; title=&quot;DFS需求背景&quot;&gt;&lt;/a&gt;DFS需求背景&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何使用git管理代码</title>
-    <link href="https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/"/>
-    <id>https://www.sunyazhou.com/2017/02/09/how-to-use-git-manage-code/</id>
-    <published>2017-02-09T11:35:45.000Z</published>
-    <updated>2017-04-29T01:11:13.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg" alt=""></p>
-<h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --golbal user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p><code>username</code> 一般代表提交的本机用户名<br><code>email@you.com</code> 一般是邮箱地址 </p>
-</blockquote>
-<h2 id="创建本地仓库进行初始化"><a href="#创建本地仓库进行初始化" class="headerlink" title="创建本地仓库进行初始化  "></a>创建本地仓库进行初始化  </h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git init</div></pre></td></tr></table></figure>
-<blockquote>
-<p>执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面</p>
-</blockquote>
-<h2 id="克隆远程版本库"><a href="#克隆远程版本库" class="headerlink" title="克隆远程版本库"></a>克隆远程版本库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git@github.com:sunyazhou13/sunyazhou13.github.io.git</div></pre></td></tr></table></figure>
-<h2 id="查看当前代码库状况"><a href="#查看当前代码库状况" class="headerlink" title="查看当前代码库状况"></a>查看当前代码库状况</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git status</div></pre></td></tr></table></figure>
-<blockquote>
-<p><code>git status</code> 命令会显示当前代码库的状况，包括添加，修改（modified），删除（deleted）</p>
-</blockquote>
-<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>指向git当前最新版本为<code>HEAD</code>，<code>HEAD^</code>表示上一版本，<code>HEAD^^</code>上上一个版本，<code>HEAD~100</code>表示往上100个版本</p>
-<h2 id="添加本地修改代码"><a href="#添加本地修改代码" class="headerlink" title="添加本地修改代码"></a>添加本地修改代码</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">//添加当前目录的所有修改</div><div class="line">$ git add .</div></pre></td></tr></table></figure>
-<blockquote>
-<p>//如果需要添加指定文件可以这样<br><code>$ git add  A B  C</code>  // 中间用空格隔开<br>//如果有些文件标红 代表未纳入git 管理 可以 <code>rm -rf xxx</code>删除该文件<br>//如果有些文件标黄 代表有修改<br>//如果有些文件标绿 代表有文件已经纳入 <code>git</code> 管理</p>
-</blockquote>
-<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git commit -am <span class="string">"[产品名称][迭代名称] 1.修改点 2.修改点xxx"</span></div></pre></td></tr></table></figure>
-<h2 id="push到git代码仓库"><a href="#push到git代码仓库" class="headerlink" title="push到git代码仓库"></a>push到<code>git</code>代码仓库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
-<blockquote>
-<p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
-</blockquote>
-<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --set-upstream origin + 分支名</div></pre></td></tr></table></figure>
-<h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
-<blockquote>
-<p>回到本地代码库库中，执行</p>
-</blockquote>
-<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><p>创建分支并切换过去<br><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git branch -b 分支名</div></pre></td></tr></table></figure></p>
-<p>切换分支</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git checkout 分支名</div></pre></td></tr></table></figure>
-<blockquote>
-<p>查看远程分支 <code>git branch -r</code> r 代表remote</p>
-</blockquote>
-<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p><code>$ git merge br-name</code>将<code>br-name</code>分支合并到当前分支下<br>加入<code>--no-ff</code>则表示禁用Fast forward模式。即新建commit而不是切换HEAD指针来实现<br><code>$ git merge --no-ff -m &quot;merge with no-ff&quot; dev</code><br>合并分支前可以通过<code>git diff &lt;source_branch&gt; &lt;target_branch&gt;</code>来查看两者不同</p>
-<h2 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h2><p>merge分支时，如果两分支对同一地方做了不同的修改，则为冲突，冲突的文件git会生成如下内容</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD </div><div class="line">Creating a new branch is quick &amp; simple. </div><div class="line">======= </div><div class="line">Creating a new branch is quick AND simple. </div><div class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</div></pre></td></tr></table></figure>
-<p>解决完冲突 合并之后 记得执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git rebase --continue</div></pre></td></tr></table></figure>
-<p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
-<p>持续更新</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E89321
     
     </summary>
     
