@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-07-15T04:25:34.000Z</updated>
+  <updated>2017-07-16T02:02:39.000Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2017/07/13/ios11-new-skills/"/>
     <id>https://www.sunyazhou.com/2017/07/13/ios11-new-skills/</id>
     <published>2017-07-13T02:55:15.000Z</published>
-    <updated>2017-07-15T04:25:34.000Z</updated>
+    <updated>2017-07-16T02:02:39.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/what_is_news_in_ios11.png" alt=""></p>
 <h2 id="可用性检查API"><a href="#可用性检查API" class="headerlink" title="可用性检查API"></a>可用性检查API</h2><p>在swift代码中经常可以看到 某个API 适用于 iOS10.0 </p>
@@ -62,8 +62,6 @@
 </blockquote>
 <p>全文完</p>
 <p><a href="https://techblog.toutiao.com/2017/07/05/session0-2/" target="_blank" rel="external">参考</a></p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -86,11 +84,9 @@
     <link href="https://www.sunyazhou.com/2017/07/04/arc4random-color/"/>
     <id>https://www.sunyazhou.com/2017/07/04/arc4random-color/</id>
     <published>2017-07-04T09:45:28.000Z</published>
-    <updated>2017-07-15T04:25:34.000Z</updated>
+    <updated>2017-07-16T02:02:47.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> hue = ( arc4random() % <span class="number">256</span> / <span class="number">256.0</span> );  <span class="comment">//  0.0 to 1.0</span></div><div class="line">   <span class="built_in">CGFloat</span> saturation = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from white</span></div><div class="line">   <span class="built_in">CGFloat</span> brightness = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from black</span></div><div class="line">   <span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithHue:hue saturation:saturation brightness:brightness alpha:<span class="number">1</span>];</div></pre></td></tr></table></figure>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -115,11 +111,9 @@
     <link href="https://www.sunyazhou.com/2017/06/26/get-sandbox-path-ios/"/>
     <id>https://www.sunyazhou.com/2017/06/26/get-sandbox-path-ios/</id>
     <published>2017-06-26T08:44:22.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:01:48.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 获取沙盒主目录路径</span></div><div class="line"><span class="built_in">NSString</span> *homeDir = <span class="built_in">NSHomeDirectory</span>();</div><div class="line"><span class="comment">// 获取Documents目录路径</span></div><div class="line"><span class="built_in">NSString</span> *docDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取Library的目录路径</span></div><div class="line"><span class="built_in">NSString</span> *libDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line"><span class="comment">// 获取Caches目录路径</span></div><div class="line"><span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取tmp目录路径</span></div><div class="line"><span class="built_in">NSString</span> *tmpDir =  <span class="built_in">NSTemporaryDirectory</span>();</div></pre></td></tr></table></figure>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -142,7 +136,7 @@
     <link href="https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/"/>
     <id>https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/</id>
     <published>2017-06-26T02:42:47.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:00:08.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/rsa-universal-cross-platform-ios-android-php/rsa-red-logo.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先膜拜一下 RSA的作者</p>
@@ -190,8 +184,6 @@
 <p>最后我说一句 很简单的一个RSA跨平台方案 那些抄袭CSDN的文章小伙伴 少坑点人 连搜索引擎都不会放过你</p>
 <p>全文完 </p>
 <p><a href="https://www.lvtao.net/dev/android_ios_php_openssl.html" target="_blank" rel="external">参考</a></p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -216,7 +208,7 @@
     <link href="https://www.sunyazhou.com/2017/06/20/enable-static-analyer/"/>
     <id>https://www.sunyazhou.com/2017/06/20/enable-static-analyer/</id>
     <published>2017-06-20T07:07:33.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:01:54.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/static.png" alt=""></p>
 <h2 id="Clang-静态分析器"><a href="#Clang-静态分析器" class="headerlink" title="Clang 静态分析器"></a>Clang 静态分析器</h2><p>Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。</p>
@@ -229,8 +221,6 @@
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/enable-static-analyer%402x.png" alt=""></p>
 <p>全文完</p>
 <p><a href="http://mp.weixin.qq.com/s/x6XSQ_rrYCOXi2EVeiMfCg" target="_blank" rel="external">参考</a></p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -255,11 +245,9 @@
     <link href="https://www.sunyazhou.com/2017/06/16/UIView-viewFromXIB/"/>
     <id>https://www.sunyazhou.com/2017/06/16/UIView-viewFromXIB/</id>
     <published>2017-06-16T09:37:32.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T01:59:54.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">XIB</span>)</span></div><div class="line">+ (<span class="keyword">instancetype</span>)viewFromXIB;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIView</span> (<span class="title">XIB</span>)</span></div><div class="line">+ (<span class="keyword">instancetype</span>)viewFromXIB&#123;</div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSBundle</span> mainBundle] loadNibNamed:<span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span>) owner:<span class="literal">nil</span> options:<span class="literal">nil</span>].firstObject;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -282,7 +270,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/"/>
     <id>https://www.sunyazhou.com/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/</id>
     <published>2017-06-16T08:40:26.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:01:35.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png" alt=""></p>
 <p>最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码</p>
@@ -295,8 +283,6 @@
 <p>相关<code>__attribute__</code>更多用法 请参考苹果官方文档和其它博客<br>后续会持续更新更多用法</p>
 <p>全文完</p>
 <p><a href="http://www.jianshu.com/p/0237c34158f0" target="_blank" rel="external">参考</a></p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -321,7 +307,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/Xcode9-debug-via-wireless/"/>
     <id>https://www.sunyazhou.com/2017/06/16/Xcode9-debug-via-wireless/</id>
     <published>2017-06-16T03:07:46.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T01:59:30.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行</p>
 <p>看一张图<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/debug.gif" alt=""></p>
@@ -333,8 +319,6 @@
 <p><em>注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次</em><br><em>运行环境: Xcode9 beta</em><br><em>运行设备操作系统: iOS11 beta</em><br><em>Macbook+iPhone 最好在同一个局域网</em></p>
 <p>我估计苹果发布正式版本的时候这个应该比较好用了 </p>
 <p>好了 现在可以愉快的玩耍 了</p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -362,7 +346,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/"/>
     <id>https://www.sunyazhou.com/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/</id>
     <published>2017-06-16T02:11:19.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:01:01.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2009-18-10.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇讲述的<code>AVAsset</code>元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于<code>AVAsset</code>的一个属性。<code>AV Foundation</code>通过<code>AVAsset</code>封装来处理各种音频的元数据, <strong>比如从mp3文件中解析出来封面图(artwork)</strong>等。 本章的具体内容如下:</p>
@@ -495,8 +479,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
 <figure class="highlight"><table><tr><td class="code"><pre><div class="line">#import "AVMetadataItem+Additions.h"</div><div class="line"></div><div class="line">@implementation AVMetadataItem (Additions)</div><div class="line"></div><div class="line">- (NSString *)keyString &#123;</div><div class="line">    if ([self.key isKindOfClass:[NSString class]]) &#123;                        // 1</div><div class="line">        return (NSString *)self.key;</div><div class="line">    &#125;</div><div class="line">    else if ([self.key isKindOfClass:[NSNumber class]]) &#123;</div><div class="line"></div><div class="line">        UInt32 keyValue = [(NSNumber *) self.key unsignedIntValue];         // 2</div><div class="line">        </div><div class="line">        // Most, but not all, keys are 4 characters ID3v2.2 keys are</div><div class="line">        // only be 3 characters long.  Adjust the length if necessary.</div><div class="line">        </div><div class="line">        size_t length = sizeof(UInt32);                                     // 3</div><div class="line">        if ((keyValue &gt;&gt; 24) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 16) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 8) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 0) == 0) --length;</div><div class="line">        </div><div class="line">        long address = (unsigned long)&amp;keyValue;</div><div class="line">        address += (sizeof(UInt32) - length);</div><div class="line"></div><div class="line">        // keys are stored in big-endian format, swap</div><div class="line">        keyValue = CFSwapInt32BigToHost(keyValue);                          // 4</div><div class="line"></div><div class="line">        char cstring[length];                                               // 5</div><div class="line">        strncpy(cstring, (char *) address, length);</div><div class="line">        cstring[length] = '\0';</div><div class="line"></div><div class="line">        // Replace '©' with '@' to match constants in AVMetadataFormat.h</div><div class="line">        if (cstring[0] == '\xA9') &#123;                                         // 6</div><div class="line">            cstring[0] = '@';</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [NSString stringWithCString:(char *) cstring                 // 7</div><div class="line">                                  encoding:NSUTF8StringEncoding];</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        return @"&lt;&lt;unknown&gt;&gt;";</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 <p>基础篇部分讲解到这里 下一篇 会写个demo演示一下元数据的各种不同格式如何统一解析</p>
 <p>全文完</p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -521,7 +503,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/06/06/ARKit/"/>
     <id>https://www.sunyazhou.com/2017/06/06/ARKit/</id>
     <published>2017-06-06T03:34:37.000Z</published>
-    <updated>2017-06-08T13:20:55.000Z</updated>
+    <updated>2017-07-16T02:02:11.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
 <p>每年WWDC都发布一堆东西.今天很有震撼性发布了 增强现实<a href="https://developer.apple.com/documentation/arkit" target="_blank" rel="external">ARKit官方文档</a>,机器学习(Core ML) 。。。。等等 今天打算翻译一下Aplle的ARKit.</p>
@@ -594,8 +576,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
 <p>希望后续文章给出相关demo</p>
 <p>全文完</p>
 <p><a href="https://developer.apple.com/documentation?changes=latest_minor" target="_blank" rel="external">iOS11所有改动</a></p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -618,7 +598,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/"/>
     <id>https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/</id>
     <published>2017-05-30T12:32:33.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:00:17.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/OpenGL-glsl-language/opengl-vbo-shader-glsl-vao-gpu.jpg" alt=""></p>
 <p>最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.</p>
@@ -728,8 +708,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
 <p>参考:<br><a href="http://www.cnblogs.com/luweimy/p/4208570.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">GLSL基础</a></p>
 <p><a href="http://www.jianshu.com/p/ee597b2bd399" target="_blank" rel="external">iOS开发-OpenGL ES入门教程2</a>  </p>
 <p>全文完</p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -754,11 +732,9 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/"/>
     <id>https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/</id>
     <published>2017-05-10T07:24:20.000Z</published>
-    <updated>2017-05-19T00:09:14.000Z</updated>
+    <updated>2017-07-16T02:00:26.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"BDRowView.h"</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]</span></div><div class="line"><span class="meta">#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRowView</span> ()</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">strong</span>) <span class="built_in">NSTrackingArea</span> *trackingArea;</div><div class="line"><span class="keyword">@property</span>(<span class="keyword">assign</span>) <span class="built_in">BOOL</span> isHovering;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BDRowView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:dirtyRect];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawSelectionInRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.selectionHighlightStyle != <span class="built_in">NSTableViewSelectionHighlightStyleNone</span>) &#123;</div><div class="line">        <span class="built_in">NSRect</span> selectionRect = <span class="built_in">NSInsetRect</span>(<span class="keyword">self</span>.bounds, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        [k_SELECTED_COLOR setStroke];</div><div class="line">        [k_SELECTED_COLOR setFill];</div><div class="line">        <span class="built_in">NSBezierPath</span> *selectionPath = [<span class="built_in">NSBezierPath</span> bezierPathWithRoundedRect:selectionRect xRadius:<span class="number">0</span> yRadius:<span class="number">0</span>];</div><div class="line">        [selectionPath fill];</div><div class="line">        [selectionPath stroke];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)updateTrackingAreas</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>.trackingArea != <span class="literal">nil</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> removeTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> opts = (<span class="built_in">NSTrackingMouseEnteredAndExited</span> | <span class="built_in">NSTrackingMouseMoved</span> | <span class="built_in">NSTrackingActiveAlways</span>);</div><div class="line">    <span class="keyword">self</span>.trackingArea = [ [<span class="built_in">NSTrackingArea</span> alloc] initWithRect:[<span class="keyword">self</span> bounds]</div><div class="line">                                                      options:opts</div><div class="line">                                                        owner:<span class="keyword">self</span></div><div class="line">                                                     userInfo:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">self</span> addTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseEntered:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">YES</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">YES</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseExited:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">NO</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">NO</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="built_in">NSColor</span>*)getBackgroundColor:(<span class="built_in">BOOL</span>)isSelected</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(isSelected) &#123;</div><div class="line">        <span class="keyword">return</span> k_SELECTED_COLOR;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> k_NORMAL_COLOR;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -781,7 +757,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/"/>
     <id>https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/</id>
     <published>2017-05-09T09:41:17.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
+    <updated>2017-07-16T02:01:41.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg" alt=""></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
@@ -799,8 +775,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>主要涉及的一些macOS开发技巧, 希望不足之处大家多多指教.</p>
 <p>参考:<a href="http://www.tanhao.me/pieces/597.html/" target="_blank" rel="external">详解OSX(Unix)中的Hard Link与Symbolic Link(硬连接与软连接)</a></p>
 <p>全文完</p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">
@@ -825,7 +799,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/"/>
     <id>https://www.sunyazhou.com/2017/04/29/some-advice-for-high-school-graduate/</id>
     <published>2017-04-29T01:15:21.000Z</published>
-    <updated>2017-06-11T07:40:31.000Z</updated>
+    <updated>2017-07-16T02:02:31.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/some-advice-for-high-school-graduate/1.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
@@ -904,8 +878,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
 <p>是的 5k足够了 其实这才是最经济的方案 如果 手机不用买 鼠标键盘也不用买的花 也就 4k多一点 无论是毕业生还是大学生 切记要让钱花在刀刃上 东西要物尽其用 尤其是大学期间 根本不需要多好 能用就行了 参加工作 自己自足之后 想买什么就不是问题了 </p>
 <p>好了 就说到这吧 我不是在打广告 如果觉得我的文章很有价值 可以请我喝瓶饮料</p>
 <p>全文完</p>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 ]]></content>
     
     <summary type="html">

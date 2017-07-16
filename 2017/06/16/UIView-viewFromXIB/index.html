@@ -190,8 +190,6 @@
 
   <section class="post">
     <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">XIB</span>)</span></div><div class="line">+ (<span class="keyword">instancetype</span>)viewFromXIB;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIView</span> (<span class="title">XIB</span>)</span></div><div class="line">+ (<span class="keyword">instancetype</span>)viewFromXIB&#123;</div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSBundle</span> mainBundle] loadNibNamed:<span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span>) owner:<span class="literal">nil</span> options:<span class="literal">nil</span>].firstObject;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<hr>
-<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
 
   </section>
 
