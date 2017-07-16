@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>如何在Objective-C中废弃一个方法 | 東引甌越</title>
+    <title>test | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="如何在Objective-C中废弃一个方法 | 東引甌越">
+    <meta name="twitter:title" content="test | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="如何在Objective-C中废弃一个方法 | 東引甌越">
+    <meta property="og:title" content="test | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/07/16/test/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲(@sunyazhou13), 一名来自北国冰城的iOS/macOS开发者.现居帝都北京.就职于金山云. 爱好书法,开发5年有余,为往圣续绝学之路从博客开始吧!.</p>
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者.我们开发的不是代码,我们只是github的搬运工.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -179,28 +179,17 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
+      <time datetime="2017-07-16T02:45:15.000Z" class="post-list__meta--date date">2017-07-16</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">如何在Objective-C中废弃一个方法</h1>
+    <h1 class="post-title">test</h1>
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png" alt=""></p>
-<p>最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">__attribute__((deprecated(<span class="string">"此方法已弃用,请使用xxxxx:方法"</span>)));</div></pre></td></tr></table></figure>
-<h3 id="场景1"><a href="#场景1" class="headerlink" title="场景1"></a>场景1</h3><p>我想标识一个方法使用其它方式传入某个参数 </p>
-<p>例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">VideoEditorViewController</span> : <span class="title">UIViewController</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">NSURL</span> *videoPath;</div><div class="line"></div><div class="line">-(<span class="keyword">instancetype</span>)initWithUrl:(<span class="built_in">NSURL</span> *)path __attribute__((deprecated(<span class="string">"使用setVideoPath:方法传入"</span>)));</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>这样调用的时候就直接显示警告了 告诉当前方法传入URL被弃用</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/code.png" alt=""></p>
-<p>相关<code>__attribute__</code>更多用法 请参考苹果官方文档和其它博客<br>后续会持续更新更多用法</p>
-<p>全文完</p>
-<p><a href="http://www.jianshu.com/p/0237c34158f0" target="_blank" rel="external">参考</a></p>
-
+    
   </section>
 
 </article>
@@ -248,47 +237,25 @@
 <section class="read-more">
      
         
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/06/20/enable-static-analyer/" title="Xcode开启静态分析器">Xcode开启静态分析器</a></h2>
-                <p class="excerpt">
-                
-                
-Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。
-你可以在 Xcode 的 Product → Analyze 里手动运行分析器。
-分析器可以运行“
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-06-20T07:07:33.000Z" class="post-list__meta--date date">2017-06-20</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
-
-</span><a class="btn-border-small" href="/2017/06/20/enable-static-analyer/">继续阅读</a></div>
-
-            </div>
-        
 
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="Xcode9新功能 无线真机调试">Xcode9新功能 无线真机调试</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/07/13/ios11-new-skills/" title="iOS 11 新技能">iOS 11 新技能</a></h2>
                 <p class="excerpt">
                 
-                效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
-看一张图
-配置第一步 选择设备选项
-
-第二步 点勾选 via network
-
-剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
-注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次运
+                
+可用性检查API在swift代码中经常可以看到 某个API 适用于 iOS10.0 
+如下代码
+if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	//老版本API&amp;#125;
+在Xcode9 中, 编译器增加了 Obje
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
+                <div class="post-list__meta"><time datetime="2017-07-13T02:55:15.000Z" class="post-list__meta--date date">2017-07-13</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/06/16/Xcode9-debug-via-wireless/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/07/13/ios11-new-skills/">继续阅读</a></div>
 
             </div>
         
