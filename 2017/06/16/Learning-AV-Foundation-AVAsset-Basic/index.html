@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Learning AV Foundation(四)AVAsset元数据(基础篇) | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Learning AV Foundation(四)AVAsset元数据(基础篇) | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Learning AV Foundation(四)AVAsset元数据(基础篇) | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者.我们开发的不是代码,我们只是github的搬运工.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/AsiaSun1970" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-06-16T02:11:19.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Learning AV Foundation(四)AVAsset元数据(基础篇)</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2009-18-10.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇讲述的<code>AVAsset</code>元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于<code>AVAsset</code>的一个属性。<code>AV Foundation</code>通过<code>AVAsset</code>封装来处理各种音频的元数据, <strong>比如从mp3文件中解析出来封面图(artwork)</strong>等。 本章的具体内容如下:</p>
+<h3 id="理解资源含义"><a href="#理解资源含义" class="headerlink" title="理解资源含义"></a><strong>理解资源含义</strong></h3><h3 id="创建资源"><a href="#创建资源" class="headerlink" title="创建资源"></a><strong>创建资源</strong></h3><ul>
+<li>iOS Asset库</li>
+<li>iOS iPod库</li>
+<li>macOS iTunes库</li>
+</ul>
+<h3 id="异步载入"><a href="#异步载入" class="headerlink" title="异步载入"></a><strong>异步载入</strong></h3><h3 id="媒体元数据"><a href="#媒体元数据" class="headerlink" title="媒体元数据"></a><strong>媒体元数据</strong></h3><ul>
+<li>元数据格式  <ol>
+<li>QuickTime  </li>
+<li>MPEG-4音频和视频(mp4)  </li>
+<li>MP3  </li>
+</ol>
+</li>
+</ul>
+<h3 id="使用元数据"><a href="#使用元数据" class="headerlink" title="使用元数据"></a><strong>使用元数据</strong></h3><ul>
+<li>查询元数据</li>
+<li>使用<code>AVMetadataItem</code></li>
+</ul>
+<h3 id="创建MetaManager-Demo"><a href="#创建MetaManager-Demo" class="headerlink" title="创建MetaManager Demo"></a><strong>创建MetaManager Demo</strong></h3><ul>
+<li>MediaItem(相当于Model)</li>
+<li>MediaItem实现</li>
+<li>数据转换器(model to AVMetadataItem || AVMetadataItem to mode)</li>
+<li>DefaultMetadata默认转换</li>
+<li>转换Artwork(唱片的封面或者专辑图那种)</li>
+<li>转换注释</li>
+<li>转换音轨数据(track)</li>
+<li>转换唱片数据</li>
+<li>转换风格数据(genre, eg: blue蓝调, classic古典,pop流行等126种..)</li>
+<li>完成最终demo  </li>
+</ul>
+<h4 id="保存元数据"><a href="#保存元数据" class="headerlink" title="保存元数据"></a><strong>保存元数据</strong></h4><hr>
+<h3 id="理解AVAsset资源含义"><a href="#理解AVAsset资源含义" class="headerlink" title="理解AVAsset资源含义"></a><strong>理解<code>AVAsset</code>资源含义</strong></h3><p><code>AVAsset</code>是一个不可变的抽象类,定义媒体资源混合呈现方式.里面包含音视频的<strong>曲目</strong>、<strong>格式</strong>、<strong>时长</strong>, 以及<strong>元数据NSData</strong>(二进制的bytes).</p>
+<p><code>AVAsset</code>不用考虑媒体资源具有的两个范畴: </p>
+<ul>
+<li>提供对基本媒体格式的抽象层  </li>
+<li>不用考虑处理因为不同格式获取内容方式不一样</li>
+</ul>
+<p>这意味着无论是处理<code>Quick Time</code>影片、<code>MPEG-4</code>视频还是<code>MP3</code>音频，框架提供统一的接口，我们只需要理解只有资源这个概念。这样做的目的是为了<strong>开发者在面对不同格式的内容时有一个统一的处理方法。不需要care多种编码器和容器格式因为细节不同而带来的困扰</strong>. 当然获取这些其余信息可以通过其它方式实现. <code>AVAsset</code>还隐藏了资源位置(GPS定位)信息,当处理一个媒体对象时，通过URL来初始化init. URL可以是Bundle里面 也可以是沙盒的本地文件系统URL.也可以从iPod库中取到的URL。还可以是远程服务器的音频流或视频流的URL。</p>
+<p><code>AVAsset</code>属于低耦合组件方式的封装 让框架来处理那些繁重的工作, 我们就可以很方便的不用考虑文件位置的前提下获取或者载入媒体。由于不用care文件合适和文件位置等复杂的问题。<code>AVAsset</code>为开发者处理<code>timed media(时基媒体)</code>提供了一种简单统一的方式.</p>
+<p><code>AVAsset</code>本身不是媒体资源. 可以把它理解成承载<code>timed media(时基媒体)</code>的容器类。它有很多描述自身元数据的媒体组成. <code>AVAssetTrack</code>才是我们真正存储媒体资源的统一媒体类型。并对每个资源建立相应的model.  <code>AVAssetTrack</code>最常见的形式就是 音频流和视频流, 但是他还可以用于表示诸如<strong>文本</strong>、<strong>副标题</strong>、<strong>隐藏字幕</strong>等媒体类型. 如下示意图理解<code>AVAsset</code> 和 <code>AVAssetTrack</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2011-44-16.png" alt=""></p>
+<p><em><strong><code>AVAsset.tracks</code></strong></em> 如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">AVAssetTrack</span> *&gt; *tracks;</div></pre></td></tr></table></figure>
+<p> 资源曲目可通过tracks属性访问到. 该属性返回一个NSArray的数组,这个数组中的元素就是专辑包含的所有曲目. 此外，<code>AVAsset</code>还可以通过标识符、媒体类型或媒体特征等信息找到相应的曲目.这使得在未来更高级的处理中我们可以很容易获取一组需要的曲目</p>
+<h4 id="创建资源-1"><a href="#创建资源-1" class="headerlink" title="创建资源"></a><strong>创建资源</strong></h4><p>当为一个现有的媒体资源创建<code>AVAsset</code>对象时, 可以通过URL对它的进行的初始化来实现. 一般来说是一个本地文件URL, 也可以是远程的资源URL</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">    <span class="built_in">NSURL</span> *assetURL = <span class="comment">//....</span></div><div class="line">    <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL: assetURL];</div><div class="line">```    </div><div class="line"></div><div class="line">`<span class="built_in">AVAsset</span>`是个抽象类, 它不能直接被实例化. 当使用`assetWithURL:`方法创建实例时,实际上是创建了`<span class="built_in">AVAsset</span>`的子类`<span class="built_in">AVURLAsset</span>` 有时候会直接使用这个类, 因为它允许通过传递选项字典来精细调整资源的创建方式, 举个例子,比如创建 用在音频或视频编辑场景中的资源, 可能希望传递一个选项(option)的字典来告诉程序提供更精确的时长和计时等信息 例如:</div><div class="line"></div><div class="line">``` objc</div><div class="line">    <span class="built_in">NSURL</span> *assetURL = <span class="comment">//....</span></div><div class="line">    <span class="built_in">NSDictionary</span> *options = @&#123;<span class="built_in">AVURLAssetPreferPreciseDurationAndTimingKey</span>:@YES&#125;;</div><div class="line">    <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL: assetURL];</div><div class="line">```  </div><div class="line">这里传递的是希望得到稍长一点的加载事件,来获取更精确的时长及时间信息.很多常见的位置是开发时大家想创建资源对象的地方. 在iOS设备上我们希望在用户的照片库中访问视频文件, 或者在iPod库中访问歌曲. 在Mac上 我们希望从用户的iTunes库中找到媒体项. 借助iOS和macOS中的这些辅助framework我们可以使用上边的媒体资源。下面介绍一下这些要用到的framework的例子</div><div class="line"></div><div class="line"><span class="meta">##### iOS Assets库</span></div><div class="line"></div><div class="line">在iOS上拍照或者通过前置和后置相机捕捉到的音视频,它们保存在用户的照片库中.iOS提供的Assets库框架可以实现从照片库中读写的功能, 下例从用户资源库中的视频创建一个<span class="built_in">AVAsset</span>:</div><div class="line"></div><div class="line">``` objc</div><div class="line">ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];</div><div class="line">    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, <span class="built_in">BOOL</span> *stop) &#123;</div><div class="line">        <span class="comment">//Filter down to only videos</span></div><div class="line">        [group setAssetsFilter:[ALAssetsFilter allVideos]];</div><div class="line">        </div><div class="line">        <span class="comment">//Grab the first video returned</span></div><div class="line">        [group enumerateAssetsAtIndexes:[<span class="built_in">NSIndexSet</span> indexSetWithIndex:<span class="number">0</span>] options:<span class="number">0</span> usingBlock:^(ALAsset *result, <span class="built_in">NSUInteger</span> index, <span class="built_in">BOOL</span> *stop) &#123;</div><div class="line">            <span class="keyword">if</span> (result) &#123;</div><div class="line">                <span class="keyword">id</span> representation = [result defaultRepresentation];</div><div class="line">                <span class="built_in">NSURL</span> *url = [representation url];</div><div class="line">                <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:url];</div><div class="line">                <span class="comment">//创建 调用一些其它API</span></div><div class="line">            &#125;</div><div class="line">        &#125;];</div><div class="line">        </div><div class="line">    &#125; failureBlock:^(<span class="built_in">NSError</span> *error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [error localizedDescription]);</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<p>上面是如何获取保存在 相册中的视频资源(iOS10.10以后就废弃了上述方式) 获取出筛选结果的第一个视频, 库中的条目全部被建模为<code>ALAsset</code>对象, 为默认的呈现方式选用<code>ALAsset</code>类型返回一个<code>ALAssetRepresentation</code>对象,它提供了一个适用于创建<code>AVAset</code>的URL.</p>
+<h5 id="iOS-iPod库"><a href="#iOS-iPod库" class="headerlink" title="iOS iPod库"></a>iOS iPod库</h5><p>我们获取媒体的一个常见位置就是用户的iPod库. <code>MediaPlayer</code> framework 框架提供了API, 用于在iPod库中查询和获取条目. 当找到想获取的item时, 可以得到一个存储的URL并使用这个得到的URL初始化一个资源, 如下例所示:  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//艺术家</span></div><div class="line"><span class="built_in">MPMediaPropertyPredicate</span> *artistPredicate = [<span class="built_in">MPMediaPropertyPredicate</span> predicateWithValue:<span class="string">@"刘德华"</span> forProperty:<span class="built_in">MPMediaItemPropertyArtist</span>];</div><div class="line"><span class="comment">//专辑</span></div><div class="line"><span class="built_in">MPMediaPropertyPredicate</span> *albumPredicate = [<span class="built_in">MPMediaPropertyPredicate</span> predicateWithValue:<span class="string">@"真永远"</span> forProperty:<span class="built_in">MPMediaItemPropertyAlbumTitle</span>];</div><div class="line"><span class="comment">//歌曲名称</span></div><div class="line"><span class="built_in">MPMediaPropertyPredicate</span> *songPredicate = [<span class="built_in">MPMediaPropertyPredicate</span> predicateWithValue:<span class="string">@"爱你一万年"</span> forProperty:<span class="built_in">MPMediaItemPropertyTitle</span>];</div><div class="line"><span class="comment">//查询</span></div><div class="line"><span class="built_in">MPMediaQuery</span> *query = [[<span class="built_in">MPMediaQuery</span> alloc] init];</div><div class="line">[query addFilterPredicate:artistPredicate];</div><div class="line">[query addFilterPredicate:albumPredicate];</div><div class="line">[query addFilterPredicate:songPredicate];</div><div class="line"></div><div class="line"><span class="built_in">NSArray</span> *result = [query items];</div><div class="line"><span class="keyword">if</span> (result.count &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">MPMediaItem</span> *item = result[<span class="number">0</span>];</div><div class="line">    <span class="built_in">NSURL</span> *assetURL = [item valueForProperty:<span class="built_in">MPMediaItemPropertyAssetURL</span>];</div><div class="line">    <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:assetURL];</div><div class="line">    <span class="comment">// Asset 信息</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>MediaPlayer</code>framework提供了一个为<code>MPMediaPropertyPredicate</code>的类,用户帮助用户在iPod库中查找到具体内容所用的查询语句<br>上边举例一个例子: 在<code>刘德华</code>的<code>真永远</code>(真永远专辑)  唱片中查找<code>爱你一万年</code>这首歌, 执行完查询 会返回这个媒体 条目的资源URL属性(<code>MPMediaItemPropertyAssetURL</code>). 并使用这个属性创建<code>AVAsset</code></p>
+<h5 id="macOS-iTunes库"><a href="#macOS-iTunes库" class="headerlink" title="macOS iTunes库"></a>macOS iTunes库</h5><p>在 macOS(以前叫 OS X)上, iTunes是用户的媒体资源中心. 要识别这个库中的资源, 我们通常要对iTunes音乐目录中的iTunes Music Library.xml 文件进行解析, 从而得到相关数据. 不过在 Mac OS X 10.8山狮之后 有了比较简单的方法–<code>iTunesLibrary</code>framework.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">ITLibrary *library = [ITLibrary libraryWithAPIVersion:<span class="string">@"1.0"</span> error:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">NSArray</span> *items = library.allMediaItems;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *query = <span class="string">@"artist.name == '刘德华'"</span></div><div class="line">                      <span class="string">"album.title == '真永远'"</span></div><div class="line">                      <span class="string">"title == '爱你一万年'"</span>;</div><div class="line">    <span class="built_in">NSPredicate</span> *predicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:query];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> *songs = [items filteredArrayUsingPredicate:predicate];</div><div class="line">    <span class="keyword">if</span> (songs.count &gt; <span class="number">0</span>) &#123;</div><div class="line">        ITLibMediaItem *item = songs[<span class="number">0</span>];</div><div class="line">        <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:item.location];</div><div class="line">        <span class="comment">// asset info</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>iTunesLibrary</code>框架并没有像MediaPlayer框架那样给出具体的查询API. 不过开发者可使用标准的Cocoa NSPredicate(谓词)类来构建一个复杂的查询,当筛出需要的media item集合后，可使用<code>ITLibMediaItem</code>的<code>location</code>属性得到一个URL并创建<code>AVAsset</code>.</p>
+<h4 id="异步载入-1"><a href="#异步载入-1" class="headerlink" title="异步载入"></a>异步载入</h4><p><code>AVAsset</code>具有多种有用的方法和属性, 可以提供有关资源的信息, 比如时长、创建日期、元数据等.<br><code>AVAsset</code>还包含一些用于获取和使用曲目集合的方法. 不过有一点很重要, 就是当创建时资源就是对基础文件的处理, <code>AVAsset</code> 采用一种lazy load的加载方式, 提升了快速创建资源和立即载入的速度.<br><strong><em>注意<code>AVAsset</code>的属性访问是同步的,如果正在请求的属性没有预先载入,程序就会阻塞,直到它做出响应为止</em></strong>这个搞法不是很好,eg: avasset.duration 可能是个比较耗时的操作,如果使用MP3文件时没有在头文件中设置<code>TLEN</code>标签,这个标签用于定义duration值,则整个音频曲目都需要进行解析来准确的知道它的duration, 如果在主线程做这样的访问操作就会阻塞主线程,直到相关操作完成为止, APP可能会出现卡顿,导致系统监视器介入,并终止APP运行,如果解决这种问题,我们应该使用异步的 方式来查询资源属性.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">AVKeyValueStatus</span>)statusOfValueForKey:(<span class="built_in">NSString</span> *)key error:(<span class="built_in">NSError</span> * _Nullable *)outError;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)loadValuesAsynchronouslyForKeys:(<span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *)keys completionHandler:(<span class="keyword">void</span> (^)(<span class="keyword">void</span>))handler;</div></pre></td></tr></table></figure>
+<p>可以使用statusOfValueForKey:error:方法查询一个给定的属性状态,返回一个<code>AVKeyValueStatus</code>的枚举值</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <span class="built_in">AVKeyValueStatus</span> : <span class="built_in">NSInteger</span> &#123;</div><div class="line">    <span class="built_in">AVKeyValueStatusUnknown</span>,</div><div class="line">    <span class="built_in">AVKeyValueStatusLoading</span>,</div><div class="line">    <span class="built_in">AVKeyValueStatusLoaded</span>,</div><div class="line">    <span class="built_in">AVKeyValueStatusFailed</span>,</div><div class="line">    <span class="built_in">AVKeyValueStatusCancelled</span></div><div class="line">&#125; <span class="built_in">AVKeyValueStatus</span>;</div></pre></td></tr></table></figure>
+<p>用于表示当前所请求的属性的状态, 如果状态不是<code>AVKeyValueStatusLoaded</code>说明此时这个属性可能导致程序卡顿,要异步载入一个给定的属性loadValuesAsynchronouslyForKeys:completionHandler:方法,参数keys 是一个或多个<code>资源属性名</code>的数组和一个callback,当资源处于回应状态时,就会调用这个<code>completionHandler</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *assetURL = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:<span class="string">@"384551_1438267683"</span> withExtension:<span class="string">@"mov"</span>];</div><div class="line">   <span class="built_in">AVAsset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:assetURL];</div><div class="line">   <span class="comment">//异步加在 tracks property</span></div><div class="line">   <span class="built_in">NSArray</span> *keys = @[<span class="string">@"tracks"</span>];</div><div class="line">   [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^&#123;</div><div class="line">       <span class="comment">//查询tracks的属性状态</span></div><div class="line">       <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">       <span class="built_in">AVKeyValueStatus</span> status = [asset statusOfValueForKey:<span class="string">@"tracks"</span> error:&amp;error];</div><div class="line">       <span class="keyword">switch</span> (status) &#123;</div><div class="line">           <span class="keyword">case</span> <span class="built_in">AVKeyValueStatusLoaded</span>:</div><div class="line">               <span class="comment">//继续处理后续逻辑</span></div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           <span class="keyword">case</span> <span class="built_in">AVKeyValueStatusFailed</span>:</div><div class="line">               <span class="comment">//有error</span></div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           <span class="keyword">case</span> <span class="built_in">AVKeyValueStatusCancelled</span>:</div><div class="line">               <span class="comment">// 处理意外取消等情况的逻辑</span></div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           </div><div class="line">           <span class="keyword">default</span>:</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;];</div></pre></td></tr></table></figure>
+<p>这里用bundle中的<code>QuickTime</code>电影创建一个AVAsset, 并异步载入该对象的<code>tracks</code>属性.在<code>completionHandler</code> block中,我们希望通过调用资源的statusOfValueForKey:error:方法来拿出请求属性的状态,NSError用于判断资源包含错误信息. <em><em>注意:<code>completionHandler:</code>block可能在任意一个队列中调用,在对UI界面做出相应更新之前,必须先回到主线程队列,否则必被坑！！！</em></em></p>
+<blockquote>
+<p><em><em>注意:上面的demo载入了一个tracks属性,其实可以在一个吊用中请求多个属性,如果请求多个属性的时候需要注意以下两点:</em></em><br>(1) 每次调用 <code>loadValuesAsynchronouslyForKeys:completionHandler:</code>方法时只会调用一次<code>completionHandler</code>block, 调用这个callback的次数不是根据传递给这个方法的key个数决定的.<br>(2) 需要为每个请求的属性调用<code>statusOfValueForKey:error:</code>,不能假设所有属性都返回相同的状态值.</p>
+</blockquote>
+<h3 id="媒体元数据-1"><a href="#媒体元数据-1" class="headerlink" title="媒体元数据"></a><strong>媒体元数据</strong></h3><p>当创建一个媒体应用程序时,了解该媒体的组织格式非常重要, 简单的展示一堆文件名也许在文件不多的时候还能接受, 如果大规模批量的文件需要展示就比较蛋疼了, 我们真正需要的是 <em>找到一种方法对媒体进行描述,当用户可以方便的找到、识别和组织这些媒体.</em> 我们所使用的<code>AV Foundation</code>中的主要媒体格式(<em>.mp4、</em>.mp3、<em>.mov、</em>.mkv…..)都可以嵌入描述其内容的元数据.因为各种媒体格式的描述不尽相同,要搞一套通用的策略去解析各种媒体的格式文件,这要求我们对底层技术有一些了解.不过<code>AV Foundation</code>让这些变得简单,因为它使开发者不需要考虑大多数特定格式的细节; 在处理媒体元数据方面, AV Foundation`提供了一套统一的方法.</p>
+<h4 id="元数据格式"><a href="#元数据格式" class="headerlink" title="元数据格式"></a>元数据格式</h4><p>虽然存在多种格式的媒体资源,但是我们在Apple环境下遇到的媒体类型主要有4种, 分别是:<code>QuickTime(mov)</code>、<code>MPEG-4 video(mp4和m4v)</code>、<code>MPEG-4 audio(m4a)</code>和<code>MPEG-Layer Ⅲ audio(mp3)</code>. 虽然<code>AV Foundation</code>处理这些文件中嵌入的元数据时都使用一个接口, 但是理解这些不同类型资源的元数据如何存储及存储位置仍然很有价值. 这里只做概述, 但是如果深入研究这些都是必学的基础.</p>
+<ol>
+<li><p><strong>QuickTime</strong><br> <code>QuickTime</code>是苹果自己开发的一种跨平台媒体架构, 其中一部分是Quick File Format规范, 定义了 .mov文件的内部结构.<code>QuickTime</code>文件由一种称为<code>atom</code>的数据结构组成. 一般规则是这样的:<br> 一个<code>atom</code>包含了描述媒体资源的某一方面的数据, 或者嵌套包含其它<code>atom</code>,但不能两者都包含.有时候苹果自己的方法实现可能会违背这一规则.<code>atom</code>以一种复杂的树状结构组合在一起, 详细的对布局、音频样本格式、视频帧信息乃至需要呈现的元数据信息(作者,版权等)做了描述.   </p>
+<p> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/atom.jpg" alt=""><br> <em>为了能记住<code>atom</code>我把它戏称为<code>阿童木</code>哈哈-跟阿童木压根没啥关系</em>.  </p>
+<p> 了解<code>QuickTime</code>的一个好办法是用十六进制编辑器中打开一个.mov格式的文件.(常见的十六进制编辑器有Hex Fiend或Synalyze It! Pro).典型的十六进制工具会将一个真实的<code>QuickTime</code>文件的数据显示出来,但其中的结构和<code>atom</code>间的关系不是很直观能理解,推荐苹果有一个<code>Atom Inspector</code>工具.这个工具将atom结构以<code>NSOutlineView</code>(树形UI控件类似UITableView)方式显示.所以<code>atom</code>的树形瓜西会很清晰的看到,这个工具还提供一个小型的十六进制查看器,可以从中查看到<strong>实际字节布局</strong>.</p>
+<p> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/atom_inspector.png" alt=""></p>
+<p> 下载地址:<a href="http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg" target="_blank" rel="external">Atom Inspector 猛击这里</a>  貌似需要登录开发者帐号<br> 下载中心:<a href="https://developer.apple.com/download/more/" target="_blank" rel="external">苹果官方软件下载中心</a>  貌似需要登录开发者帐号 </p>
+<p> 下图就是atom格式<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/quick_time_atom_structure_new.jpeg" alt=""></p>
+<p> <em>atom格式</em></p>
+<p> <strong><code>QuickTime</code>文件最少包含三个高级的<code>atom</code></strong></p>
+<ul>
+<li><strong>用于描述文件类型和兼容类型的<code>fypy</code></strong></li>
+<li><strong>包含实际音频和视频媒体的<code>mdat</code></strong></li>
+<li><p><strong>moov atom(moo-vee) 媒体资源的所有细节做了完整描述包括原始的二进制数据</strong></p>
+<p>下图是我实际测试一个mov文件的atom<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/quick_time_atom_structure_real.jpeg" alt=""><br><em>实测</em></p>
+<p>当处理QuickTime电影时会遇到两种类型的元数据. 标准的<code>QuickTime</code>元数据由<code>Final Cut Pro X</code>这样的工具编写, 位于/moov/meta/plist中, 它的key几乎都具有com.apple.quicktime前缀. 其它类型的数据被认为是<code>QuickTime</code>用户数据, 保存在/moov/udta/中.<code>QuickTime</code>用户数据可以包含播放器需要查找的标准数据,eg: 歌曲的演唱者或版权信息, 除此之外还可以包含任何对应用程序有帮助的信息.  上述两种元数据类型在    <code>AV Foundation</code>中都是可以读写的.<br>如果想了解更多<code>QuickTime</code>细节可以查看<a href="https://developer.apple.com/library/content/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html" target="_blank" rel="external">Quick Time Format Specification</a>官方文档(400多页).<br>掌握moov atom的核心知识很重要,有助于我们更好的了解<code>AV Foundation</code>是如何使用这些数据的.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>MPEG-4 (MP4)音频和视频</strong></p>
+<p> MPEG-4 Part 14是定义MP4文件格式的规范. <code>MP4</code>直接派生自<code>QuickTime</code>文件格式,所以<code>MP4</code>文件格式与<code>QuickTime</code>文件结构很类似. 其实有时候能解析一种文件类型的工具也适用于其它文件类型.<code>MP4</code>文件也由成为<code>atom</code>的数据结构组成.技术上讲,<code>MPEG-4</code>规范将这些称为<code>boxes</code>,因为其大部分来自于<code>QuickTime</code>所以大家都还是把它成为<code>atom</code>.<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/mp4_atom_book.jpg" alt=""><br> <em>MPEG-4 atom结构</em></p>
+<p> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/mp4_atom.png" alt=""><br> <em>MPEG-4 atom结构 实测结果</em></p>
+<p> <code>MPEG-4</code>文件的元数据保存在<code>/moov/udat/meta/ilst</code>中. 对于<code>atom</code>中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知…). 可以参考<a href="https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki" target="_blank" rel="external">mp4v2库</a>文档了解更多mp4内容.</p>
+<p> <code>mp4</code>是对MPEG-4媒体的标准扩展.eg: <code>.m4v</code>、<code>.m4a</code>、<code>.m4p</code>、<code>.m4b</code>.这些变体使用的都是<code>MPEG-4</code>容器格式,也有些包含了附加的扩展功能.<br> 大家只需要记住几点:</p>
+<ul>
+<li><strong><code>M4V</code></strong> 文件是带有苹果公司针对<strong><code>FairPlay</code></strong>加密及<strong><code>AC3-audio</code></strong>扩展的<code>MPEG-4</code>视频格式</li>
+<li><strong><code>MP4</code></strong> 如果不涉及<code>FairPlay</code>加密及<code>AC3-audio</code>扩展,<code>M4V</code>就仅仅是扩展名不一样而已</li>
+<li><strong><code>M4A</code></strong> 专门针对音频,使用这种扩展名的目的是让大家知道这种格式的文件只带有音频资源</li>
+<li><strong><code>M4P</code></strong> 苹果很古老的iTunes格式,使用其<code>FairPlay</code>扩展</li>
+<li><strong><code>M4B</code></strong> 用于有声读物,同窗包含章节标签以及提供书签功能,让读者可以返回到指定位置开始阅读(类似有声小说)</li>
+</ul>
+</li>
+<li><p><strong>MP3</strong></p>
+<p> <code>MP3</code>文件和<code>MPEG-4 (.mp4)</code>、<code>QuickTime(.mov)</code>有显著区别,<code>MP3</code>不使用容器格式,而使用<strong>编码音频数据</strong>,文件开头通常包含可选元数据的结构块.<code>mp3</code>文件使用一种称为ID3v2的格式来保存关于音频内容的描述信息,包含: artist(艺术家)、演唱者、album(所属专辑)、音乐风格等.<br> <code>ID3</code>数据很easy,<code>mp3</code>前10个字节带有嵌入的元数据, 这10个字节定义了<code>ID3</code>块的头部.10个字节中的前三个字节始终为’49 44 33’(ID3,用于表示一个<code>ID3v2标签</code>,后面两个字姐用于定义主版本信息,既<code>2、3、4</code>和版本号.剩余字节用于定义标志集合及ID3快的大小.<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/ID3_header.png" alt=""><br> <em>ID3 header</em></p>
+<p> <code>ID3</code>块中剩下的数据都是用于描述不同元数据的的key-value键值对的帧.每一帧都有一个<strong>实际标签名称的10字节的头</strong>,之后的4字节表示尺寸,再之后的两个字节用来定义选项标志.</p>
+</li>
+</ol>
+<pre><code> id3 | version(2字节) | revision (剩余字节)| flag(2字节)| size(4字节) |
+
+帧剩下的字节包含了实际的元数据值.如果值是文本类型tag中的第一个字节包含了实际的元数据值.如果值是文本类型,tag中的第一个字节用来定义编码类型. eg:Ox00, 代表:`ISO-8859=1`,也支持其它类型的编码。如下图ID3结构示意图.
+__`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入.MP3格式收到专利限制.所以`AV Foundation`无法支持对MP3或ID3数据进行编码.__ 不过最近听说德国的MP3专利研究所说专利打算撤销因为`AAC`格式将有更好的效果相对于MP3而言.看看后续苹果API变动会不会增加修改MP3的数据吧.
+
+![](https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/ID3_structure.png)
+*ID3v2 结构图*
+</code></pre><blockquote>
+<p><code>AV Foundation</code>支持所有<code>ID3v2</code>标签格式的读取操作,但是<code>ID3v2</code>是要加星号的.<code>ID3v2.2</code>的布局和<code>ID3v2.3</code>及之后版本的布局不同. 需要注意:有些标签由3个字符组成,而不是4个字符, 比如一首歌曲的标注信息, 当标签为<code>ID3v2.2</code>时,是被保存到COM帧中,但当同一首歌使用<code>ID3v2.3</code>标签或更新版本的标签时,歌曲的标注信息会被保存在COMM帧中,框架定义的字符常量只适用于<code>ID3v2.3</code>及以后版本,后续demo中我们通过代码演示如何向前兼容<code>ID3v2.2</code>.</p>
+</blockquote>
+<h3 id="使用元数据-1"><a href="#使用元数据-1" class="headerlink" title="使用元数据"></a><strong>使用元数据</strong></h3><p><code>AVAsset</code>和<code>AVAssetTrack</code>可以实现查询元数据功能  </p>
+<ul>
+<li><code>AVAsset</code> 大部分情况下会使用</li>
+<li><code>AVAssetTrack</code> 获取曲目一级元数据</li>
+</ul>
+<p>读取具体资源元数据的接口可以使用<code>AVMetadataItem</code>类提供的方法访问<code>QuickTime</code>、<code>MPEG-4 atom</code>和<code>ID3</code>帧中的元数据进行访问.<br><code>AVAsset</code>和<code>AVAssetTrack</code>提供了两种方法可以获取相关元数据.但是有各自的适用范围.了解适用范围之前首先要知道 <strong>键空间</strong>(key space)的含义. <code>AV Foundation</code>使用<strong>键空间(key space)</strong>作为将相关键组合在一起的方法, 可以实现对<code>AVMetadataItem</code>实例集合的筛选.每个资源至少包含两个键空间,以便从中获取元数据.<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/keyspace.png" alt=""></p>
+<p><code>Common</code>键空间用来定义所有支持媒体类型的键, 包括: 曲名、歌手、插图信息等常见元素. 这提供了一种对所有支持的媒体格式进行一定级别的元数据标准化过程.我们可以从<code>Common</code>键空间查询 资源或者曲目的<code>commonMetadata</code>属性来获取元数据 这个属性会返回一个包含所有可用元数据的数组</p>
+<p>访问指定格式的元数据需要在资源或曲目上调用<code>metadataForFormat:</code>方法.这个方法返回一个包含所有相关元数据信息的数组.<code>AVMetadataFormat.h</code>为不同的元数据格式提供对应的字符串常量. 由于不同格式的元数据导致key value对应类型不一致,我们可以利用<br><code>availableMetadataFormats</code>(AVAsset的属性)获取到信息.如下代码:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"xxx.mp4"</span>];<span class="comment">//给个路径地址</span></div><div class="line">   <span class="comment">//创建元数据</span></div><div class="line">   <span class="built_in">AVAset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:url];</div><div class="line">   <span class="built_in">NSArray</span> *keys = @[<span class="string">@"availableMetadataFormats"</span>];</div><div class="line">   [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^&#123;</div><div class="line">       <span class="built_in">NSMutableArray</span> *metadata = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">       <span class="keyword">for</span> (<span class="built_in">NSString</span> *format <span class="keyword">in</span> asset.availableMetadataFormats)&#123;</div><div class="line">           [metadata addObjectsFromArray:[asset metadataForFormat:format]];</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       <span class="comment">//处理metadata (AVMetadataItems)</span></div><div class="line">   &#125;];</div></pre></td></tr></table></figure>
+<h3 id="查找元数据"><a href="#查找元数据" class="headerlink" title="查找元数据"></a><strong>查找元数据</strong></h3><p>当我们拿到一个包含元数据项的数组(上文中的metadata (AVMetadataItems))时,我们通常通过遍历取出里面的数据值. 元数据(AVAsset)提供一个AVMetadataItem的遍历方法, 例如我们相得到一个M4A的音频文件演奏者和唱片的元数据. 如下:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NSArray</span> *metaData = <span class="comment">//AVMetadataItems数组</span></div><div class="line">   <span class="built_in">NSString</span> *keySpace = <span class="built_in">AVMetadataKeySpaceiTunes</span>;</div><div class="line">   <span class="built_in">NSString</span> *artistKey= <span class="built_in">AVMetadataiTunesMetadataKeyArtist</span>;</div><div class="line">   <span class="built_in">NSString</span> *albumKey = <span class="built_in">AVMetadataiTunesMetadataKeyAlbum</span>;</div><div class="line">   </div><div class="line">   <span class="built_in">NSArray</span> *artistMetadata = [<span class="built_in">AVMetadataItem</span> metadataItemsFromArray:metaData withKey:artistKey keySpace:keySpace];</div><div class="line">   <span class="built_in">NSArray</span> *albumMetadata = [<span class="built_in">AVMetadataItem</span>  metadataItemsFromArray:metaData withKey:albumKey keySpace:keySpace];</div><div class="line">   </div><div class="line">   <span class="built_in">AVMetadataItem</span> *artistItem, *albumItem;</div><div class="line">   </div><div class="line">   <span class="keyword">if</span> (artistMetadata.count &gt; <span class="number">0</span>) &#123;</div><div class="line">       artistItem = artistMetadata[<span class="number">0</span>];</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="keyword">if</span> (albumMetadata.count &gt; <span class="number">0</span>) &#123;</div><div class="line">       albumItem = albumMetadata[<span class="number">0</span>];</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>这里通过下面的方法来拿出匹配key 和 keySpace的标准对象 通常情况下这个数组就只有一个实例对象</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;<span class="built_in">AVMetadataItem</span> *&gt; *)metadataItemsFromArray:(<span class="built_in">NSArray</span>&lt;<span class="built_in">AVMetadataItem</span> *&gt; *)metadataItems withKey:(<span class="keyword">id</span>)key keySpace:(<span class="built_in">AVMetadataKeySpace</span>)keySpace;</div></pre></td></tr></table></figure>
+<h3 id="使用AVMetadataItem"><a href="#使用AVMetadataItem" class="headerlink" title="使用AVMetadataItem"></a>使用AVMetadataItem</h3><p>AVMetadataItem 可以理解成它是一个 专用于元数据的 字典(key: value) 类型, 唯一的区别是 它的key 有可能是 数字(NSNumber), 它提供了 转 字符串(stringValue) 和numberValue以及 dataValue 的转换  </p>
+<p>举个例子： 如果输出的key是  145238391  …. 我觉得大家肯定不知道这代表啥意思</p>
+<p>为了解决这个问题 需要对<code>AVMetadataItem</code>进行category扩展 把这种语义不清楚的整形key换成字符串的key就好理解了 代码如下:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">#import "AVMetadataItem+Additions.h"</div><div class="line"></div><div class="line">@implementation AVMetadataItem (Additions)</div><div class="line"></div><div class="line">- (NSString *)keyString &#123;</div><div class="line">    if ([self.key isKindOfClass:[NSString class]]) &#123;                        // 1</div><div class="line">        return (NSString *)self.key;</div><div class="line">    &#125;</div><div class="line">    else if ([self.key isKindOfClass:[NSNumber class]]) &#123;</div><div class="line"></div><div class="line">        UInt32 keyValue = [(NSNumber *) self.key unsignedIntValue];         // 2</div><div class="line">        </div><div class="line">        // Most, but not all, keys are 4 characters ID3v2.2 keys are</div><div class="line">        // only be 3 characters long.  Adjust the length if necessary.</div><div class="line">        </div><div class="line">        size_t length = sizeof(UInt32);                                     // 3</div><div class="line">        if ((keyValue &gt;&gt; 24) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 16) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 8) == 0) --length;</div><div class="line">        if ((keyValue &gt;&gt; 0) == 0) --length;</div><div class="line">        </div><div class="line">        long address = (unsigned long)&amp;keyValue;</div><div class="line">        address += (sizeof(UInt32) - length);</div><div class="line"></div><div class="line">        // keys are stored in big-endian format, swap</div><div class="line">        keyValue = CFSwapInt32BigToHost(keyValue);                          // 4</div><div class="line"></div><div class="line">        char cstring[length];                                               // 5</div><div class="line">        strncpy(cstring, (char *) address, length);</div><div class="line">        cstring[length] = '\0';</div><div class="line"></div><div class="line">        // Replace '©' with '@' to match constants in AVMetadataFormat.h</div><div class="line">        if (cstring[0] == '\xA9') &#123;                                         // 6</div><div class="line">            cstring[0] = '@';</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [NSString stringWithCString:(char *) cstring                 // 7</div><div class="line">                                  encoding:NSUTF8StringEncoding];</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        return @"&lt;&lt;unknown&gt;&gt;";</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>基础篇部分讲解到这里 下一篇 会写个demo演示一下元数据的各种不同格式如何统一解析</p>
+<p>全文完</p>
+<hr>
+<p>打赏二维码<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/alipay_QRCode_small.JPG" alt="打赏"></p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="Xcode9新功能 无线真机调试">Xcode9新功能 无线真机调试</a></h2>
+                <p class="excerpt">
+                
+                效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
+看一张图
+配置第一步 选择设备选项
+
+第二步 点勾选 via network
+
+剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
+注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次运
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/Xcode9-debug-via-wireless/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/06/06/ARKit/" title="ARKit(一)ARSession">ARKit(一)ARSession</a></h2>
+                <p class="excerpt">
+                
+                前言
+每年WWDC都发布一堆东西.今天很有震撼性发布了 增强现实ARKit官方文档,机器学习(Core ML) 。。。。等等 今天打算翻译一下Aplle的ARKit.
+AR是啥？AR增强现实的一种视觉技术.
+ARKit分6个部分(章节)
+理解和介绍ARSession
+配置ARSession
+标准视图
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-06-06T03:34:37.000Z" class="post-list__meta--date date">2017-06-06</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/06/06/ARKit/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-91999509-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+</body>
+</html>

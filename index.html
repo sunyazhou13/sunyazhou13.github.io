@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者,现就职于金山云.开发6年有余,没有为往圣续绝学深感惭愧,2017年起开始写博客记录技术知识,望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者.我们开发的不是代码,我们只是github的搬运工.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -181,6 +181,188 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/07/13/ios11-new-skills/" title="link to post.title">iOS 11 新技能</a></h2>
+      <p class="excerpt">
+    
+      
+可用性检查API在swift代码中经常可以看到 某个API 适用于 iOS10.0 
+如下代码
+if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	//老版本API&amp;#125;
+在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查
+通过API_AVAILABLE宏来标注方法的可用性@interface ViewController : UIViewController- (void)x
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-07-13T02:55:15.000Z" class="post-list__meta--date date">2017-07-13</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/07/13/ios11-new-skills/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/07/04/arc4random-color/" title="link to post.title">iOS生成随机颜色代码</a></h2>
+      <p class="excerpt">
+    
+      CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0   CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white   CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-07-04T09:45:28.000Z" class="post-list__meta--date date">2017-07-04</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/07/04/arc4random-color/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/26/get-sandbox-path-ios/" title="link to post.title">iOS获取各种文件目录的路径</a></h2>
+      <p class="excerpt">
+    
+      // 获取沙盒主目录路径NSString *homeDir = NSHomeDirectory();// 获取Documents目录路径NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];// 获取Library的目录路径NSString *libDir = [NSSearchPathForDirectoriesInDoma
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-26T08:44:22.000Z" class="post-list__meta--date date">2017-06-26</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/06/26/get-sandbox-path-ios/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/26/rsa-universal-cross-platform-ios-android-php/" title="link to post.title">iOS Android Php RSA加密解密通配方案(绝对好使,拒绝不说人话的文章)</a></h2>
+      <p class="excerpt">
+    
+      
+前言先膜拜一下 RSA的作者
+
+RSA非对称加密 原理 各种。。。 请自行百度 
+弯路最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾) 
+代码实现第一步 生成公私钥对命令生成原始 RSA私钥文件 rsa_private_key.pemopenssl
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-26T02:42:47.000Z" class="post-list__meta--date date">2017-06-26</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/安全/">安全</a>
+
+</span><a class="btn-border-small" href="/2017/06/26/rsa-universal-cross-platform-ios-android-php/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/20/enable-static-analyer/" title="link to post.title">Xcode开启静态分析器</a></h2>
+      <p class="excerpt">
+    
+      
+Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。
+你可以在 Xcode 的 Product → Analyze 里手动运行分析器。
+分析器可以运行“shallow”和“deep”两种模式。后者要慢得多，但是有跨方法的控制流分析以及数据流分析，因此能发现更多问题。
+建议：开启分析器的 全部 检查（方法是在 build setting 的“Stati
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-20T07:07:33.000Z" class="post-list__meta--date date">2017-06-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/06/20/enable-static-analyer/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/UIView-viewFromXIB/" title="link to post.title">用XIB创建UIView</a></h2>
+      <p class="excerpt">
+    
+      @interface UIView (XIB)+ (instancetype)viewFromXIB;@end@implementation UIView (XIB)+ (instancetype)viewFromXIB&amp;#123;    return [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil].firstObject;&amp;#125;@end
+
+打赏二维码
+
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T09:37:32.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/UIView-viewFromXIB/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/" title="link to post.title">如何在Objective-C中废弃一个方法</a></h2>
+      <p class="excerpt">
+    
+      前言
+最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码
+__attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;)));
+场景1我想标识一个方法使用其它方式传入某个参数 
+例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了
+@interface VideoEditorViewController : UIViewController@prope
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="link to post.title">Xcode9新功能 无线真机调试</a></h2>
+      <p class="excerpt">
+    
+      效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
+看一张图
+配置第一步 选择设备选项
+
+第二步 点勾选 via network
+
+剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
+注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次运行环境: Xcode9 beta运行设备操作系统: iOS11 betaMacbook+iPhone 最好在同一个局域网
+我估计苹果发布正式版本的时候这个应该比较好用了 
+好了 现在可以愉快的玩耍 了
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/Xcode9-debug-via-wireless/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/" title="link to post.title">Learning AV Foundation(四)AVAsset元数据(基础篇)</a></h2>
+      <p class="excerpt">
+    
+      
+前言本篇讲述的AVAsset元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于AVAsset的一个属性。AV Foundation通过AVAsset封装来处理各种音频的元数据, 比如从mp3文件中解析出来封面图(artwork)等。 本章的具体内容如下:
+理解资源含义创建资源
+iOS Asset库
+iOS iPod库
+macOS iTunes库
+
+异步
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T02:11:19.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/06/06/ARKit/" title="link to post.title">ARKit(一)ARSession</a></h2>
       <p class="excerpt">
     
@@ -201,205 +383,6 @@ ARKit分6个部分(章节)
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/06/06/ARKit/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/30/OpenGL-glsl-language/" title="link to post.title">OpenGL编程语言-glsl基础</a></h2>
-      <p class="excerpt">
-    
-      前言
-最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.
-GLSL是什么?GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些C的特性等. (名词解释:着色器(Shader))  
-GPU是多线程并行处理器，GLSL直接面向单指令流多数据流(SIMD)模型的多线程计算。GLSL编写的着色器函数是对每个数据同时执行的。每个顶点都会
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-30T12:32:33.000Z" class="post-list__meta--date date">2017-05-30</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/05/30/OpenGL-glsl-language/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/10/NSTableRowView-mouse-track-color/" title="link to post.title">自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</a></h2>
-      <p class="excerpt">
-    
-      #import &quot;BDRowView.h&quot;#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]@interface BDRowView ()@property(strong) NSTrackingArea *trackingArea;@property(assign) BOOL isHovering;@end@implementa
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-10T07:24:20.000Z" class="post-list__meta--date date">2017-05-10</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/05/10/NSTableRowView-mouse-track-color/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/" title="link to post.title">如何在macOS/MAC OS X上创建替身文件</a></h2>
-      <p class="excerpt">
-    
-      
-前言熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
-软连接如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作
-创建软链接可以使用NSFileManager中的两个
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="link to post.title">赠:即将高中毕业向往计算机科学相关专业同学的只言片语</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
-
-主要分3个方面书籍首先来说 书籍 大学计算机必须的基本经典书籍
-
-C语言程序设计 谭浩强 必学
-
-清华大学计算机系列教材：数据结构（C语言版） 必学
-
-鸟哥的Linux私房菜 （基础学习篇 第三版） 必学 
-
-
-Linux
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
- &#8226; <span class="post-list__meta--tags tags">
-</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/20/unique-filename-in-system/" title="link to post.title">如何在iOS/macOS系统中创建文件时创建唯一的文件名</a></h2>
-      <p class="excerpt">
-    
-      
-前言当我无数次看到大家写代码的时候总是以一个时间戳+arc4random()创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.
-/* Create a recording file */
-    NSString *filePath = [@&quot;~/Movies/AVScreenShackRecording_XXXXXX&quot; stringByStandardizingPath];
-    char *screenRecording
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-20T08:35:42.000Z" class="post-list__meta--date date">2017-04-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/04/20/unique-filename-in-system/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/11/3-kindof-ability/" title="link to post.title">二狗经典的3种权利摘要</a></h2>
-      <p class="excerpt">
-    
-      
-出自《东北往事:黑道风云20年》某片段
-
-二狗曾拜读过托夫勒著名的《权力的转移》一书，其书中阐述的内容是：暴力、金钱、知识等三种力量是构成社会权力的基石。在这三种力量中，暴力是低等权力、金钱是中等权力，而知识是高等权力。社会越进步，主宰社会的权力就越高等。　　那么，黑社会，是否也有三种力量是构成其权力基石呢？又是哪三种力量呢？和托夫勒所叙述的三种力量异同在哪里？是否可以“借鉴”托夫勒所描述的三种力量呢？
-　　二狗认为，我国的黑社会，也有三种力量是构成其权力的基石，这三种力量分别是：暴力、金钱、
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-11T03:47:26.000Z" class="post-list__meta--date date">2017-04-11</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/有声小说/">有声小说</a>
-
-</span><a class="btn-border-small" href="/2017/04/11/3-kindof-ability/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/06/Xcode-shortcuts/" title="link to post.title">Xcode快捷键</a></h2>
-      <p class="excerpt">
-    
-      
-前言    在iOS和macOS开发者中积累了一些快捷操作记录下来
-隐藏左侧面板
-
-command+0=显示/隐藏左侧面板
-
-隐藏右侧面板
-
-command+option+0=显示/隐藏右侧面板
-
-隐藏debug区域
-
-command+shift+y=显示/隐藏底部控制等调试区域
-
-跳转到代码多少行 
-
-command + l (L)=跳转到代码多少行 注意看清是l 不是i 
-
-隐藏/显示函数体 
-
-command+option+⬅︎=隐藏函数 ⬅︎代表左箭头command+option+➡︎
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/04/06/Xcode-shortcuts/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/" title="link to post.title">Learning AV Foundation(三)AVAudioRecorder</a></h2>
-      <p class="excerpt">
-    
-      
-前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
-主要内容如下:如何创建AVAudioRecorder  
-    1. 音频格式
-    2. 采样率
-    3. 通道数
-创建Demo
-    1. 配置音频会话
-    2. 实现录音功能
-    3.
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/23/check-NSWindow-isFullScreen/" title="link to post.title">判断NSWindow是否全屏</a></h2>
-      <p class="excerpt">
-    
-      @interface NSWindow (FullScreen)- (BOOL)mn_isFullScreen;@end@implementation NSWindow (FullScreen)- (BOOL)mn_isFullScreen&amp;#123;    return (([self styleMask] &amp;amp; NSFullScreenWindowMask) == NSFullScreenWindowMask);&amp;#125;@end
-refs:How to know if a NSWi
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/23/check-NSWindow-isFullScreen/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者,现就职于金山云.开发6年有余,没有为往圣续绝学深感惭愧,2017年起开始写博客记录技术知识,望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨，我是孙亚洲, 一个来自北国冰城的iOS开发者.我们开发的不是代码,我们只是github的搬运工.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -258,18 +258,24 @@
 
 
 <section class="post-comments">
-    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-    <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-    <script>
-    var cloudTieConfig = {
-    url: document.location.href, 
-    sourceId: "",
-    productKey: "b8670c80ec2940b2a81ad3991e7790b0",
-    target: "cloud-tie-wrapper"
-    };
-    var yunManualLoad = true;
-    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-    </script>
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
 </section>
 
 
