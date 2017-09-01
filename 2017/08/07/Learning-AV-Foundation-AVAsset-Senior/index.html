@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Learning AV Foundation(四)AVAsset元数据(高级篇) | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Learning AV Foundation(四)AVAsset元数据(高级篇) | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Learning AV Foundation(四)AVAsset元数据(高级篇) | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨，我是孙亚洲(@sunyazhou13), 一名来自北国冰城的iOS/macOS开发者.现居帝都北京.就职于金山云. 爱好书法,开发5年有余,为往圣续绝学之路从博客开始吧!.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/AsiaSun1970" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-08-07T12:36:46.000Z" class="post-list__meta--date date">2017-08-07</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Learning AV Foundation(四)AVAsset元数据(高级篇)</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV-Foundation-AVAsset-Senior3.2/audio-artwork.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先上图 </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/metadata.gif" alt=""></p>
+<p>这一篇 <strong>我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化</strong></p>
+<h2 id="内容介绍"><a href="#内容介绍" class="headerlink" title="内容介绍"></a>内容介绍</h2><p>结构图<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/MetaDataModel.png" alt=""></p>
+<hr>
+<p>class 代码 </p>
+<ul>
+<li><strong>MediaItem (一个直接对外的接口)</strong></li>
+<li><strong>MetaData (元数据model)</strong></li>
+<li><strong>Genre (风格)</strong></li>
+<li><strong>AVMetadataItem+Additions</strong></li>
+<li><strong>MetadataDefines</strong></li>
+<li><strong>MetadataKit</strong></li>
+<li><strong>Converters (文件夹包含如下:)</strong><ul>
+<li><strong>MetadataConverter  (Protocol 存取 <code>AVMetadataItem</code>)</strong></li>
+<li><strong>MetadataConverterFactory</strong></li>
+<li><strong>DefaultMetadataConverter</strong></li>
+<li><strong>ArtworkMetadataConverter</strong></li>
+<li><strong>CommentMetadataConverter</strong></li>
+<li><strong>TrackMetadataConverter</strong></li>
+<li><strong>DiscMetadataConverter</strong></li>
+<li><strong>GenreMetadataConverter</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="MediaItem"><a href="#MediaItem" class="headerlink" title="MediaItem"></a>MediaItem</h3><p>这个类主要对外直接暴露接口 如下代码即可调用使用</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line">MediaItem *item = [[MediaItem alloc] initWithURL:<span class="keyword">self</span>.url];</div><div class="line">[item prepareWithCompletionHandler:^(<span class="built_in">BOOL</span> complete) &#123;</div><div class="line">    __<span class="keyword">strong</span> <span class="keyword">typeof</span>(weakSelf) strongSelf = weakSelf;</div><div class="line">    [strongSelf refreshDataByItem:item];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[item modelDescription]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>代码实现部分  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"MetaData.h"</span></span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^CompletionHandler)(<span class="built_in">BOOL</span> complete);</div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MediaItem</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *filename;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *filetype;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) MetaData *metadata;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">getter</span> = isEditable) <span class="built_in">BOOL</span> editable;</div><div class="line">- (<span class="keyword">id</span>)initWithURL:(<span class="built_in">NSURL</span> *)url;</div><div class="line"><span class="comment">/**</span></div><div class="line"> 此方法完成之后如果成功即可取metadata</div><div class="line"></div><div class="line"> @param handler 回调 block</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)prepareWithCompletionHandler:(CompletionHandler)handler;</div><div class="line">- (<span class="keyword">void</span>)saveWithCompletionHandler:(CompletionHandler)handler;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>.m</code>可参考源码 比较多就不赘述了</p>
+<p>当 block 完成时使用<br>目前支持获取元数据信息的媒体格式如下:  </p>
+<ul>
+<li>m4a</li>
+<li>mov</li>
+<li>mp4</li>
+<li>mp3</li>
+</ul>
+<blockquote>
+<p>注意:<em><strong>mp3文件是不可编辑的文件故而不能进行编辑 比如改变歌手名称之类 如果要编辑可使用其它专业软件尝试</strong></em>  </p>
+</blockquote>
+<p>我尝试了 mac 版本的 demo 编辑 文件 是 OK 的 但是在 iOS 上 我更改其它格式也没能保存成功 如果你看到有解决办法 可以留言给我或者发邮件给我 非常感谢.</p>
+<h3 id="MetaData"><a href="#MetaData" class="headerlink" title="MetaData"></a>MetaData</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">@class</span> <span class="title">Genre</span>; //风格  <span class="title">eg</span>: 蓝调、 古典 ....</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MetaData</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *artist;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *albumArtist;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *album;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *grouping;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *composer;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *comments;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>) <span class="built_in">UIImage</span> *artwork;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>) Genre *genre;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSString</span> *year;</div><div class="line"><span class="keyword">@property</span> <span class="keyword">id</span> bpm;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *trackNumber;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *trackCount;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *discNumber;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *discCount;</div><div class="line">- (<span class="keyword">void</span>)addMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item withKey:(<span class="keyword">id</span>)key;</div><div class="line">- (<span class="built_in">NSArray</span> *)metadataItems;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>看到上边的代码估计你也猜到了 这就是我们需要的 比如 mp3文件解析出来的真正 model  </p>
+<p>这里东西比较多 有些值有可能没有 请自行做好 check</p>
+<h3 id="MetadataConverter"><a href="#MetadataConverter" class="headerlink" title="MetadataConverter"></a>MetadataConverter</h3><p>这个协议是为了支持所有多媒体文件统一解析使用,比如:mp3文件和mp4文件两个是不一样的文件格式,虽然里面有很多相同的key,但是肯定数据结构是不一样的,这样就要求,搞一个统一的协议,比如输入的是一个URL返回一个 model那么为了解决key value参差不齐问题 就搞了这个协议.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">zh</span> &lt;<span class="title">NSObject</span>&gt;</span></div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> AVMetadataItem to Model 转换 用于UI显示的model</div><div class="line"></div><div class="line"> @param item AVMetadataItem</div><div class="line"> @return model</div><div class="line"> */</div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item;</div><div class="line"><span class="comment">/**</span></div><div class="line"> AVMetadataItem映射通用字段</div><div class="line"> </div><div class="line"> @param value 通过媒体元数据取出的某个key的value</div><div class="line"> @param item AVMetadataItem</div><div class="line"> @return AVMetadataItem</div><div class="line"> */</div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="MetadataConverterFactory"><a href="#MetadataConverterFactory" class="headerlink" title="MetadataConverterFactory"></a>MetadataConverterFactory</h3><p>这个类用于统一输出遵守<code>MetadataConverter</code>协议的model并且找到适当的转换器去转换响应的格式</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MetadataConverterFactory</span> : <span class="title">DefaultMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span> &lt;MetadataConverter&gt;)converterForKey:(<span class="built_in">NSString</span> *)key;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MetadataConverterFactory</span></span></div><div class="line">- (<span class="keyword">id</span> &lt;MetadataConverter&gt;)converterForKey:(<span class="built_in">NSString</span> *)key&#123;</div><div class="line">    <span class="keyword">id</span> &lt;MetadataConverter&gt; converter = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">if</span> ([key isEqualToString:MetadataKeyArtwork]) &#123;</div><div class="line">        converter = [[ArtworkMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyTrackNumber]) &#123;</div><div class="line">        converter = [[TrackMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyDiscNumber]) &#123;</div><div class="line">        converter = [[DiscMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyComments]) &#123;</div><div class="line">        converter = [[CommentMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyGenre]) &#123;</div><div class="line">        converter = [[GenreMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        converter = [[DefaultMetadataConverter alloc] init];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> converter;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="DefaultMetadataConverter"><a href="#DefaultMetadataConverter" class="headerlink" title="DefaultMetadataConverter"></a>DefaultMetadataConverter</h3><p>简单实现<code>MetadataConverter</code>协议</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DefaultMetadataConverter</span> : <span class="title">NSObject</span> &lt;<span class="title">MetadataConverter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DefaultMetadataConverter</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="keyword">return</span> item.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    metadataItem.value = value;</div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ArtworkMetadataConverter"><a href="#ArtworkMetadataConverter" class="headerlink" title="ArtworkMetadataConverter"></a>ArtworkMetadataConverter</h3><p>实现<code>MetadataConverter</code>协议 取出专辑封面</p>
+<p>此处省略 .h 文件只贴出.m ( .h里面啥也没有 大家可参考 demo)</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ArtworkMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="built_in">UIImage</span> *image = <span class="literal">nil</span>;  <span class="comment">//下面是核心代码取出图片 </span></div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSData</span> <span class="keyword">class</span>]]) &#123;                        <span class="comment">// 1</span></div><div class="line">        image = [[<span class="built_in">UIImage</span> alloc] initWithData:item.dataValue];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;             <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSDictionary</span> *dict = (<span class="built_in">NSDictionary</span> *)item.value;</div><div class="line">        image = [[<span class="built_in">UIImage</span> alloc] initWithData:dict[<span class="string">@"data"</span>]];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> image;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    </div><div class="line">    <span class="built_in">UIImage</span> *image = (<span class="built_in">UIImage</span> *)value;</div><div class="line">    metadataItem.value = <span class="built_in">UIImagePNGRepresentation</span>(image);                          <span class="comment">// 3</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里 mp3 (id3v2格式）取图片的方式可能有不一样的地方 1出判断 属于哪种格式 3处把 UIImage 转 NSData 再放回去</p>
+<p>需要注意一个地方是 返回<code>AVMetadataItem</code>的类型<br>由于<code>AV Foundation</code>无法写入 ID3元数据 所以这里使用了 <code>AVMutableMetadataItem</code>来存储封面图</p>
+<p><code>AVMutableMetadataItem</code> 是 <code>AVMetadataItem</code>的子类</p>
+<h3 id="CommentMetadataConverter-注释转换"><a href="#CommentMetadataConverter-注释转换" class="headerlink" title="CommentMetadataConverter 注释转换"></a>CommentMetadataConverter 注释转换</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CommentMetadataConverter</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *value = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSString</span> <span class="keyword">class</span>]]) &#123;                      <span class="comment">// 1</span></div><div class="line">        value = item.stringValue;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;             <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSDictionary</span> *dict = (<span class="built_in">NSDictionary</span> *) item.value;</div><div class="line">        <span class="keyword">if</span> ([dict[<span class="string">@"identifier"</span>] isEqualToString:<span class="string">@""</span>]) &#123;</div><div class="line">            value = dict[<span class="string">@"text"</span>];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];               <span class="comment">// 3</span></div><div class="line">    metadataItem.value = value;</div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ol>
+<li><code>MPEG-4</code>和<code>QuickTime</code>媒体的 value 为 <code>NSString</code>  </li>
+<li><code>MP3</code>的注释保存在一个定义<code>ID3 COMM帧</code>的<code>NSDictionary</code>中(如果处理的是<code>ID3V2.2</code>,则为<code>COM</code>),所有类型的值都保存在这个帧中. eg： iTune 在这个帧中保存音频标准化和无缝播放设置等,意味着当请求 <code>ID3</code>元数据时需要多接收多个<code>COMM帧</code>.包含实际注释内容的特定<code>COMM帧</code>被存储在一个带有空字符串标识的帧中.找到需要的条目后 通过请求<code>text</code> key 来检索出注释内容</li>
+</ol>
+<h3 id="TrackMetadataConverter-音轨数据转换"><a href="#TrackMetadataConverter-音轨数据转换" class="headerlink" title="TrackMetadataConverter 音轨数据转换"></a>TrackMetadataConverter 音轨数据转换</h3><p>音轨: 通常包含一首歌曲在整个唱片中的编号位置信息(eg: 12首歌中的第4首  4/12)等信息.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TrackMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSNumber</span> *number = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSNumber</span> *count = <span class="literal">nil</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSString</span> <span class="keyword">class</span>]]) &#123;                      <span class="comment">// 1</span></div><div class="line">        <span class="built_in">NSArray</span> *components =</div><div class="line">        [item.stringValue componentsSeparatedByString:<span class="string">@"/"</span>];</div><div class="line">        <span class="keyword">if</span> (components.count &gt; <span class="number">0</span>) &#123;</div><div class="line">            number = @([components[<span class="number">0</span>] integerValue]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (components.count &gt; <span class="number">1</span>) &#123;</div><div class="line">            count = @([components[<span class="number">1</span>] integerValue]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSData</span> <span class="keyword">class</span>]]) &#123;                   <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSData</span> *data = item.dataValue;</div><div class="line">        <span class="keyword">if</span> (data.length == <span class="number">8</span>) &#123;</div><div class="line">            uint16_t *values = (uint16_t *) [data bytes];</div><div class="line">            <span class="keyword">if</span> (values[<span class="number">1</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                number = @(<span class="built_in">CFSwapInt16BigToHost</span>(values[<span class="number">1</span>]));                <span class="comment">// 3</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (values[<span class="number">2</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                count = @(<span class="built_in">CFSwapInt16BigToHost</span>(values[<span class="number">2</span>]));                 <span class="comment">// 4</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSMutableDictionary</span> *dict = [<span class="built_in">NSMutableDictionary</span> dictionary];           <span class="comment">// 5</span></div><div class="line">    [dict setObject:number ?: [<span class="built_in">NSNull</span> null] forKey:MetadataKeyTrackNumber];</div><div class="line">    [dict setObject:count ?: [<span class="built_in">NSNull</span> null] forKey:MetadataKeyTrackCount];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dict;</div><div class="line">&#125;</div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    </div><div class="line">    <span class="built_in">NSDictionary</span> *trackData = (<span class="built_in">NSDictionary</span> *)value;</div><div class="line">    <span class="built_in">NSNumber</span> *trackNumber = trackData[MetadataKeyTrackNumber];</div><div class="line">    <span class="built_in">NSNumber</span> *trackCount = trackData[MetadataKeyTrackCount];</div><div class="line">    </div><div class="line">    uint16_t values[<span class="number">4</span>] = &#123;<span class="number">0</span>&#125;;                                                <span class="comment">// 6</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (trackNumber &amp;&amp; ![trackNumber isKindOfClass:[<span class="built_in">NSNull</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">        values[<span class="number">1</span>] = <span class="built_in">CFSwapInt16HostToBig</span>([trackNumber unsignedIntValue]);   <span class="comment">// 7</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (trackCount &amp;&amp; ![trackCount isKindOfClass:[<span class="built_in">NSNull</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">        values[<span class="number">2</span>] = <span class="built_in">CFSwapInt16HostToBig</span>([trackCount unsignedIntValue]);    <span class="comment">// 8</span></div><div class="line">    &#125;</div><div class="line">    size_t length = <span class="keyword">sizeof</span>(values);</div><div class="line">    metadataItem.value = [<span class="built_in">NSData</span> dataWithBytes:values length:length];       <span class="comment">// 9</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ol>
+<li>刚才所说 <code>mp3</code>格式已 <code>xx/xx</code> 格式的字符串标识一个歌曲 在整个唱片中的第几首 所以我们用<code>/</code>分割</li>
+<li>iTunes <code>M4A</code>文件的唱片信息保存在一个 <code>NSData</code> 中,<code>NSData</code>包含3个16位的<code>big encoding</code>数字,如果直接在控制台打印 NSData 会输出<strong><code>&lt;00000008 000a0000&gt;</code>这是4个16位的<code>big endian</code>数字数组的十六进制表现形式</strong>. 数组中第2个和第3个元素分别保存唱片编号和唱片计数值</li>
+<li>如果唱片编号 != 0, 则获取该值并使用<a href="https://developer.apple.com/documentation/corefoundation/1425282-cfswapint16bigtohost?language=objc" target="_blank" rel="external"><code>CFSwapInt16BigToHost()</code></a>函数执行<code>endian</code>转换,转换成一个<code>little endian</code> 并打包成<code>NSNumber</code></li>
+<li>同样如果音轨计数值不为0, 则获取该值并在字节上执行<code>endian</code>转换并打包成<code>NSNumber</code></li>
+<li></li>
+<li>步骤反过来换成3个<code>uint16_t</code> 保存音轨编号和计数值.</li>
+<li>如果音轨编号有效, 将字节转换为<code>big endian</code>格式并保存到数组第2个位置</li>
+<li>如果音轨计数值有效, 将字节转换为<code>big endian</code>格式并保存到数组第3个位置</li>
+<li>打成 NSData 保存将其设置为元数据项的 value</li>
+</ol>
+<h3 id="DiscMetadataConverter-唱片数据转换"><a href="#DiscMetadataConverter-唱片数据转换" class="headerlink" title="DiscMetadataConverter 唱片数据转换"></a>DiscMetadataConverter 唱片数据转换</h3><p>唱片计数信息用于表示一首歌曲所在的CD是所有唱片中的第几张 通常都是 1/1 (通常都是一个 cd 一首)</p>
+<p>上下的和音轨 非常类似了 如果是4/10就是 10首里面的第4首<br>由于唱片这玩意都过时了 你现在应该很少看到 屌丝 带着 walkman 在大街上压马路了都看不到了 </p>
+<p>但是逻辑还是在的 这里逻辑看代码吧 和 音轨 基本一模一样</p>
+<h3 id="GenreMetadataConverter-风格转换"><a href="#GenreMetadataConverter-风格转换" class="headerlink" title="GenreMetadataConverter 风格转换"></a>GenreMetadataConverter 风格转换</h3><p>数字音频使用的标准风格最初来自 MP3. ID3 规范定义了80个默认的风格类型及 另外46个 WinAmp 扩展,共计 126个风格. 不过这些都不属于正式格式. 由于 mp3风格的主导地位比较明显, iTunes 没有另造轮子,而是基本遵循 ID3 的风格分类,不过做了点小变化。<strong>iTunes 音乐风格的标号比响应的 ID3标识符大 <code>1</code> .</strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/34c39090f2a8e0ec7a09652065acdd648d5f0133/Learning-AV-Foundation-AVAsset-Senior3.2/gener.png" alt=""></p>
+<p>虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. <a href="https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/" target="_blank" rel="external">Apple’s Genre IDs Appendix</a></p>
+<p>示例代码已经包含了这些类型 虽不在赘述 请参考 demo</p>
+<h3 id="保存元数据"><a href="#保存元数据" class="headerlink" title="保存元数据"></a>保存元数据</h3><p><code>AVAsset</code>是一个不可变类型 我们不能直接修改 <code>AVAsset</code> 而是使用<code>AVAssetExportSession</code>类来导出新的资源副本以及元数据的改动.</p>
+<h4 id="使用AVAssetExportSession"><a href="#使用AVAssetExportSession" class="headerlink" title="使用AVAssetExportSession"></a>使用<code>AVAssetExportSession</code></h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)saveWithCompletionHandler:(CompletionHandler)handler &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *presetName = <span class="built_in">AVAssetExportPresetPassthrough</span>;                  <span class="comment">// 1</span></div><div class="line">    <span class="built_in">AVAssetExportSession</span> *session =</div><div class="line">    [[<span class="built_in">AVAssetExportSession</span> alloc] initWithAsset:<span class="keyword">self</span>.asset</div><div class="line">                                     presetName:presetName];</div><div class="line">    </div><div class="line">    <span class="built_in">NSURL</span> *outputURL = [<span class="keyword">self</span> tempURL];                                      <span class="comment">// 2</span></div><div class="line">    session.outputURL = outputURL;</div><div class="line">    session.outputFileType = <span class="keyword">self</span>.filetype;</div><div class="line">    session.metadata = [<span class="keyword">self</span>.metadata metadataItems];                       <span class="comment">// 3</span></div><div class="line">    </div><div class="line">    [session exportAsynchronouslyWithCompletionHandler:^&#123;</div><div class="line">        <span class="built_in">AVAssetExportSessionStatus</span> status = session.status;</div><div class="line">        <span class="built_in">BOOL</span> success = (status == <span class="built_in">AVAssetExportSessionStatusCompleted</span>);</div><div class="line">        <span class="keyword">if</span> (success) &#123;                                                      <span class="comment">// 4</span></div><div class="line">            <span class="built_in">NSURL</span> *sourceURL = <span class="keyword">self</span>.url;</div><div class="line">            <span class="built_in">NSFileManager</span> *manager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line">            [manager removeItemAtURL:sourceURL error:<span class="literal">nil</span>];</div><div class="line">            [manager moveItemAtURL:outputURL toURL:sourceURL error:<span class="literal">nil</span>];</div><div class="line">            [<span class="keyword">self</span> reset];                                                   <span class="comment">// 5</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (handler) &#123;</div><div class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">                handler(success);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"sessionError:%@"</span>,session.error);</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="built_in">NSURL</span> *)tempURL &#123;</div><div class="line">    <span class="comment">// 获取Caches目录路径</span></div><div class="line">    <span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line">    <span class="built_in">NSString</span> *tempDir = cachesDir;</div><div class="line">    <span class="built_in">NSString</span> *ext = [[<span class="keyword">self</span>.url lastPathComponent] pathExtension];</div><div class="line">    <span class="built_in">NSString</span> *tempName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"temp.%@"</span>, ext];</div><div class="line">    <span class="built_in">NSString</span> *tempPath = [tempDir stringByAppendingPathComponent:tempName];</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSURL</span> fileURLWithPath:tempPath];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: <strong><strong><code>AVAssetExportPresetPassthrough</code> 这个预设值 确实允许修改<code>MPEG-4</code>和<code>QuickTime</code>容器中的存在的元数据信息, 不过它不可以添加新的元数据,添加元数据的唯一方法是使用转码预设值, 此外不能修改 <code>ID3</code>(mp3)标签。 框架不支持写入 MP3数据.</strong></strong></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过了代码实现和解析多媒体元数据 <code>AVAsset</code>,我们也熟悉了多媒体文件的构造, ID3(MP3)格式的文件解析 arkwork 功能. 从而在后续开发过程中 提升开发效率. 最后放出 代码的 demo 请大家多多指教</p>
+<p><strong><a href="https://github.com/sunyazhou13/MetaDemo" target="_blank" rel="external">示例 demo</a></strong></p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+      </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/08/30/ARKit/" title="ARKit技术初探">ARKit技术初探</a></h2>
+                <p class="excerpt">
+                
+                前言
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.期间有任何问题请大家集思广益,多多指教. 
+主要内容
+AR技术介绍 
+ARKit工作原理及流程介绍 
+ARKit简单代码实现 
+ARKit框架所有API介绍 
+ARScnView介绍 
+ARSession介绍 
+ARCamera介
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-08-30T06:50:43.000Z" class="post-list__meta--date date">2017-08-30</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/08/30/ARKit/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/07/13/ios11-new-skills/" title="iOS 11 新技能">iOS 11 新技能</a></h2>
+                <p class="excerpt">
+                
+                
+可用性检查API在swift代码中经常可以看到 某个API 适用于 iOS10.0 
+如下代码
+if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	//老版本API&amp;#125;
+在Xcode9 中, 编译器增加了 Obje
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-07-13T02:55:15.000Z" class="post-list__meta--date date">2017-07-13</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/07/13/ios11-new-skills/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="http://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-91999509-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+</body>
+</html>

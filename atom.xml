@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-07-16T02:02:39.000Z</updated>
+  <updated>2017-09-01T16:25:40.000Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,497 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何使用Charles截获https请求</title>
+    <link href="https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/"/>
+    <id>https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/</id>
+    <published>2017-09-01T15:17:09.000Z</published>
+    <updated>2017-09-01T16:25:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png" alt=""></p>
+<p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求 </p>
+<h2 id="1-安装Charles"><a href="#1-安装Charles" class="headerlink" title="1.安装Charles"></a>1.安装Charles</h2><p><a href="https://www.charlesproxy.com/download/" target="_blank" rel="external">官网下载</a>就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 </p>
+<h2 id="2-HTTP抓包配置"><a href="#2-HTTP抓包配置" class="headerlink" title="2.HTTP抓包配置"></a>2.HTTP抓包配置</h2><h4 id="1-查看电脑IP"><a href="#1-查看电脑IP" class="headerlink" title="(1) 查看电脑IP"></a>(1) 查看电脑IP</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_mac.png" alt=""></p>
+<h4 id="2-设置手机HTTP代理"><a href="#2-设置手机HTTP代理" class="headerlink" title="(2) 设置手机HTTP代理"></a>(2) 设置手机HTTP代理</h4><p>手机连上电脑，点击“设置-&gt;无线局域网-&gt;连接的WiFi”，设置HTTP代理：<br>服务器为电脑IP地址：如192.168.1.108<br>端口：8888</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_port_iPhone.png" alt=""></p>
+<p>注意:<em>这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP</em></p>
+<p>设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_allow.png" alt=""></p>
+<p>点击<strong>Allow</strong> 就可以了</p>
+<h3 id="3-HTTPS抓包"><a href="#3-HTTPS抓包" class="headerlink" title="3. HTTPS抓包"></a>3. HTTPS抓包</h3><p>左上角菜单中 选择<code>SSL Proxying Settings</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step1.png" alt=""></p>
+<p>然后 勾选<code>Enable SSL Proxying</code> </p>
+<p>紧接着点击 <code>Add</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step2.png" alt=""></p>
+<p>再然后在</p>
+<p><code>Host</code>: 输入 <code>*</code> 代表通配所有 如果你要截获 比如 *.baidu.com那就写上</p>
+<p><code>Port</code>: 443 默认端口 填完 点击OK</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step3.png" alt=""></p>
+<p>紧接着 点击<code>Help</code> -&gt; <code>SSL Proxying</code> -&gt; 安装根证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step4.png" alt=""></p>
+<p>安装到钥匙串后 点击charles的root证书 选择 <code>使用信任</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_cer_root_mac.png" alt=""></p>
+<p>下一步 是安装手机的root证书 </p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/2017-09-01-Charles-capture-https/charles_step6.png?raw=true" alt=""></p>
+<p>这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: <a href="chls.pro/ssl">chls.pro/ssl</a></p>
+<p>此时手机一会儿就弹出这样的 提示 点击<strong>允许</strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone1.PNG" alt=""></p>
+<p>然后 安装证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone2.PNG" alt=""></p>
+<p>安装完 最后一步<strong>非常重要</strong></p>
+<p><strong>必须到 通用-&gt;关于本机-&gt;证书信任设置</strong>去信任 证书 </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone3.PNG" alt=""></p>
+<p>如果不信任 就会抓取的时候出现下图这样的问题</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_root_cer_error.png" alt=""></p>
+<blockquote>
+<p>注意:<em>iOS10.3以上版本 貌似才需要</em></p>
+</blockquote>
+<p>最后放上一张截获成功的图 (支付宝的接口)</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/result.png" alt=""></p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.gi
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="技巧" scheme="https://www.sunyazhou.com/tags/%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ARKit技术初探</title>
+    <link href="https://www.sunyazhou.com/2017/08/30/ARKit/"/>
+    <id>https://www.sunyazhou.com/2017/08/30/ARKit/</id>
+    <published>2017-08-30T06:50:43.000Z</published>
+    <updated>2017-08-31T13:17:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
+<p>本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.<br>期间有任何问题请大家集思广益,多多指教. </p>
+<h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><ul>
+<li><strong>AR技术介绍</strong> </li>
+<li><strong>ARKit工作原理及流程介绍</strong> </li>
+<li><strong>ARKit简单代码实现</strong> </li>
+<li><strong>ARKit框架所有API介绍</strong> </li>
+<li><strong>ARScnView介绍</strong> </li>
+<li><strong>ARSession介绍</strong> </li>
+<li><strong>ARCamera介绍</strong> </li>
+<li><strong>ARKit捕捉平地</strong> </li>
+<li><strong>AR代码demo实现</strong> </li>
+</ul>
+<h2 id="AR技术介绍"><a href="#AR技术介绍" class="headerlink" title="AR技术介绍"></a>AR技术介绍</h2><h4 id="AR技术简介"><a href="#AR技术简介" class="headerlink" title="AR技术简介"></a>AR技术简介</h4><ul>
+<li>增强现实技术（Augmented Reality，简称 AR），是一种实时的计算摄影机影像的位置及角度并加上相应图像、视频、3D模型的技术，这种技术的目标是在屏幕上把虚拟世界套在现实世界并进行互动</li>
+<li>AR场景实现技术要素<ol>
+<li>多媒体捕捉现实图像：如摄像头</li>
+<li>三维建模:3D立体模型</li>
+<li>传感器追踪:主要追踪现实世界动态物体的六轴变化，这六轴分别是X、Y、Z轴位移及旋转。其中位移三轴决定物体的方位和大小，旋转三轴决定物体显示的区域</li>
+<li>坐标识别及转换：3D模型显示在现实图像中不是单纯的frame坐标点，而是一个三维的矩阵坐标</li>
+<li>AR还可以与虚拟物体进行一些交互(optional)<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/447c7f0d7eed6cd1e4971d0fa19bef8401686383/ARKit/AR_Direction.png" alt=""></li>
+</ol>
+</li>
+</ul>
+<h4 id="ARKit概述及特点"><a href="#ARKit概述及特点" class="headerlink" title="ARKit概述及特点"></a>ARKit概述及特点</h4><ul>
+<li><p><code>ARKit</code> 框架(framework)提供 两种 AR 技术</p>
+<ul>
+<li><strong>基于3D 场景(<code>SceneKit</code>) 实现的增强现实</strong></li>
+<li><p><strong>基于2D 场景(<code>SpriktKit</code>) 实现的增强现实</strong>  </p>
+<blockquote>
+<p> 一般主流都是基于3D 实现,<code>ARkit</code>兼容 <code>SceneKit</code>和 <code>SpriktKit</code> (苹果推出游戏引擎)framework </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>显示AR 效果为什么依赖 <strong>3D引擎<code>SceneKit</code>和 2D 引擎<code>SpriktKit</code> 苹果的游戏引擎框架? 原因是游戏引擎才可以加载物体模型。</strong></p>
+<blockquote>
+<p> 虽然<code>ARKit</code>中的视图<strong>(<code>ARSCNView</code>)继承自<code>SCNView</code>,<code>SCNView</code>继承自<code>UIView</code></strong>,<br>但是目前<code>ARKit</code>框架本身只包含相机追踪, 不能直接加载物体模型, 所以只能依赖游戏引擎加载 ARKit (我觉得苹果是在充分利用和整合现有资源并推广自己的 framework 一石二鸟) 因为就目前我没有看到 任何<code>ARKit</code>支持 <code>Unity3D</code>或者 <code>Cocoas2D</code></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="iOS11-如何支持ARKit"><a href="#iOS11-如何支持ARKit" class="headerlink" title="iOS11 如何支持ARKit"></a>iOS11 如何支持<code>ARKit</code></h4><p>iOS11虽然推出了 <code>ARKit</code> 但不是所有 iOS11系统都支持  </p>
+<ul>
+<li>必须 CPU  A9以上(iPhone 6s 以上 还有 iPhone SE)</li>
+</ul>
+<p>开发环境</p>
+<ul>
+<li>Xcode版本:Xcode9及以上</li>
+<li>系统: iOS11及以上</li>
+<li>iOS设备：处理器A9及 以上（6S机型及以上)</li>
+<li>macOS系统: 10.12.4及以上</li>
+</ul>
+<h4 id="Xcode-自带创建模板-多数都不用"><a href="#Xcode-自带创建模板-多数都不用" class="headerlink" title="Xcode 自带创建模板(多数都不用)"></a>Xcode 自带创建模板(多数都不用)</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit-Model.png" alt=""></p>
+<p>demo 演示</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> () &lt;<span class="title">ARSCNViewDelegate</span>&gt;</span></div><div class="line"><span class="comment">//AR视图：展示3D界面</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">IBOutlet</span> ARSCNView *sceneView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="comment">//场景代理</span></div><div class="line">    <span class="keyword">self</span>.sceneView.delegate = <span class="keyword">self</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// 显示帧率</span></div><div class="line">    <span class="keyword">self</span>.sceneView.showsStatistics = <span class="literal">YES</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// 创建一个场景</span></div><div class="line">    <span class="built_in">SCNScene</span> *scene = [<span class="built_in">SCNScene</span> sceneNamed:<span class="string">@"art.scnassets/ship.scn"</span>];</div><div class="line">    </div><div class="line">    <span class="comment">// Set the scene to the view</span></div><div class="line">    <span class="keyword">self</span>.sceneView.scene = scene;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</div><div class="line">    </div><div class="line">    <span class="comment">// 世界坐标系配置</span></div><div class="line">    ARWorldTrackingSessionConfiguration *configuration = [ARWorldTrackingSessionConfiguration new];</div><div class="line">    </div><div class="line">    <span class="comment">// 运行3D 场景的 会话</span></div><div class="line">    [<span class="keyword">self</span>.sceneView.session runWithConfiguration:configuration];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">    </div><div class="line">    <span class="comment">// 暂停</span></div><div class="line">    [<span class="keyword">self</span>.sceneView.session pause];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</div><div class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</div><div class="line">    <span class="comment">// Release any cached data, images, etc that aren't in use.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - ARSCNViewDelegate</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//给当前锚点创建一个节点 (node 可以理解成 UIView)</span></div><div class="line"><span class="comment">/*</span></div><div class="line">// Override to create and configure nodes for anchors added to the view's session.</div><div class="line">- (SCNNode *)renderer:(id&lt;SCNSceneRenderer&gt;)renderer nodeForAnchor:(ARAnchor *)anchor &#123;</div><div class="line">    SCNNode *node = [SCNNode new];</div><div class="line"> </div><div class="line">    // Add geometry to the node...</div><div class="line"> </div><div class="line">    return node;</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="comment">//会话有错误</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didFailWithError:(<span class="built_in">NSError</span> *)error &#123;</div><div class="line">    <span class="comment">// Present an error message to the user</span></div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//被打断  类似音频播放的时候被打断 eg:前后台切换 来电话  siri</span></div><div class="line">- (<span class="keyword">void</span>)sessionWasInterrupted:(ARSession *)session &#123;</div><div class="line">    <span class="comment">// Inform the user that the session has been interrupted, for example, by presenting an overlay</span></div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//会话结束</span></div><div class="line">- (<span class="keyword">void</span>)sessionInterruptionEnded:(ARSession *)session &#123;</div><div class="line">    <span class="comment">// Reset tracking and/or remove existing anchors if consistent tracking is required</span></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="ARKit工作原理及流程介绍"><a href="#ARKit工作原理及流程介绍" class="headerlink" title="ARKit工作原理及流程介绍"></a>ARKit工作原理及流程介绍</h2><h3 id="主要内容-1"><a href="#主要内容-1" class="headerlink" title="主要内容"></a>主要内容</h3><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/Rendering_ARKit.png" alt=""></p>
+<p><code>ARKit</code> 并不是一个独立运行的框架 必须要配合<code>SceneKit</code>,没有<code>SceneKit</code> <code>ARKit</code>和普通相机没有任何区别</p>
+<blockquote>
+<p> <em>难点:3D坐标的矩阵转换</em>     (3D X/Y/Z, 4x4坐标) </p>
+</blockquote>
+<p>下面是一张图 ARKit 的所有.h 头文件 (没有列出派生的子类)</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARDefines%402x.png" alt=""></p>
+<ul>
+<li><p>ARKit框架中的核心类</p>
+<ul>
+<li><strong><code>ARScnView</code></strong></li>
+<li><strong><code>ARSession</code></strong></li>
+<li><strong><code>ARCamera</code></strong></li>
+</ul>
+</li>
+<li><p><code>ARKit</code>demo 示例 实现</p>
+<ul>
+<li>捕捉平面 添加物体</li>
+</ul>
+</li>
+<li><p>AR虚拟增强现实就是指在相机捕捉到的现实世界图像中显示一个虚拟的3D模型,这个过程可以分为两个步骤</p>
+<ol>
+<li>相机捕捉现实世界图像 (由ARKit 实现)  </li>
+<li>在图像中现实虚拟3D 模型(由SceneKit 实现)</li>
+</ol>
+</li>
+<li><p><code>ARKit</code>与<code>SceneKit</code>框架关系图</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_UML.png" alt=""></p>
+<ol>
+<li><code>ARSCNView</code> –&gt; <code>SCNView</code>(SceneKit.framework)–&gt;<code>UIView</code>(UIKit.framework)</li>
+<li>ARSCNView视图容器,它管理一个 <code>ARSession</code></li>
+<li>在一个完整的虚拟增强现实体验中,<code>ARKit</code>只负责把真实世界画面转变为一个3D 场景, 这个过程主要分为两个环节：<ul>
+<li>ARCamera 负责捕捉摄像头画面</li>
+<li>ARSession 负责搭建3D 场景</li>
+</ul>
+</li>
+<li><p>在一个完整的虚拟增强现实体验中,将虚拟物体展现在3D场景中是由<code>SceneKit</code>框架来完成的 </p>
+<blockquote>
+<p> 每一个虚拟的物体都是一个节点SCNNode,每一个节点构成了一个场景SCNScene,无数个场景构成了3D世界</p>
+<p>可以理解UIViewController 的[view addSubview:xxxView];</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="ARKit工作原理"><a href="#ARKit工作原理" class="headerlink" title="ARKit工作原理"></a>ARKit工作原理</h3><h4 id="ARSCNView与-ARSession关系"><a href="#ARSCNView与-ARSession关系" class="headerlink" title="ARSCNView与 ARSession关系"></a>ARSCNView与 ARSession关系</h4><p>说之前先了解一下这个<code>Session</code> 和<code>Context</code>命名以及含义</p>
+<p><code>Session</code> 直译: 会话<br><code>Context</code> 直译: 上下文</p>
+<p><em>在iOS框架中，凡是带session或者context后缀的，这种类一般自己不干活，作用一般都是两个</em>:</p>
+<ul>
+<li><strong>管理其他类，帮助他们搭建沟通桥梁，好处就是解耦</strong> </li>
+<li><strong>负责帮助我们管理复杂环境下的内存</strong></li>
+</ul>
+<p><em><code>Session</code> 和<code>Context</code>不同点</em></p>
+<ul>
+<li>session 有硬件参与的(一般与硬件打交道), eg: 摄像头捕捉 <code>ARSession</code>、音频 <code>AVAudioSession</code>, 网卡相关的<code>NSURLSession</code> …. 等等.</li>
+<li>context 一般没有硬件参与的, eg: <code>CGGraphicContext</code>、<code>EAGLContext</code> 绘图上下文, 以及自定义转场里面的那个 Context 就不详细列举了.</li>
+</ul>
+<p>回到正题, 如上所说 我们要想实现一个</p>
+<p><code>ARSCNView</code> 与<code>ARCamera</code> 之间相互协同配合<br>(<code>ARSCNView</code> 与<code>ARCamera</code> 两者之间没有直接关系)</p>
+<ul>
+<li><strong>ARSCNView —–&gt; ARCamera 或</strong>   </li>
+<li><strong>ARSCNView &lt;—– ARCamera</strong></li>
+</ul>
+<blockquote>
+<p><strong>ARSCNView里有个 ARFrame(属性 成员变量), ARFrame 里面包含 ARCamera(属性 成员变量)</strong></p>
+</blockquote>
+<p>就需要一个沟通的桥梁 进行调度配合协作完成 图像捕捉到视觉渲染的过程<strong>这个桥梁 就是 <code>ARSession</code></strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_session.png" alt=""></p>
+<p>如果想运行一个 <code>ARSession</code>会话,必须指定一个叫<code>会话追踪配置</code>的对象<code>ARConfiguration</code>,<code>ARConfiguration</code>主要目的负责追踪相机在3D 世界中的位置以及一些特征场景的捕捉,<strong>比如捕捉平面</strong>,这个类 作用很大</p>
+<ul>
+<li><code>ARConfiguration</code>是个父类,为了更好实现增强现实的效果,苹果建议我们使用派生自它的子类<code>ARWorldTrackingConfiguration</code>(这个类仅支持<code>A9</code>芯片之后的机型). </li>
+</ul>
+<p>注意: <em>原来是这个<code>ARWorldTrackingSessionConfiguration</code>现在被弃用了.</em></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARWorldTrackingConfiguration.png" alt=""></p>
+<h4 id="ARFrame-与-ARWorldTrackingConfiguration"><a href="#ARFrame-与-ARWorldTrackingConfiguration" class="headerlink" title="ARFrame 与 ARWorldTrackingConfiguration"></a>ARFrame 与 ARWorldTrackingConfiguration</h4><p><code>ARSession</code> 搭建沟通的桥梁的参与者有两个</p>
+<ol>
+<li>ARFrame</li>
+<li>ARWorldTrackingConfiguration</li>
+</ol>
+<p><code>ARWorldTrackingConfiguration</code> （3D世界追踪配置) 的作用是跟踪设备的<strong>方向、位置、检测摄像头捕捉到的内容</strong>.</p>
+<p>它的内部实现了一系列庞大的算法和调用iPhone 上必要的传感器来检测手机的 <strong>移动、旋转、平移</strong>(六轴位置方向变化) </p>
+<p>当<code>ARWorldTrackingConfiguration</code>计算出相机在3D 世界中的位置时,会把这个<strong>位置数据</strong> 交个<code>ARSession</code>去管理, 而相机的<strong>位置数据</strong>对应的类就是<code>ARFrame</code> </p>
+<blockquote>
+<p><code>ARSession</code>类一个属性叫<code>currentFrame</code> 就是 ARFrame 的实例变量</p>
+</blockquote>
+<p><code>ARCamera</code>只负责捕捉图像,不参与数据的处理. 它属于3D 场景中的一个环节,<br>每个3D Scene 都会有一个 Camera, 这个 Camera 决定了我们看到物体的视野.</p>
+<p>这三者关系如下:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/relationship_ARFrame.png" alt=""></p>
+<blockquote>
+<p><code>ARFrame</code>里面有我们需要的<code>CVPixelBufferRef</code>(capturedImage) 和 <code>ARCamera</code> 也就是我们需要的图像的原始数据</p>
+</blockquote>
+<p><strong>ARCamera在3D世界的位置</strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/coordinate.png" alt=""></p>
+<h3 id="ARKit-工作流程"><a href="#ARKit-工作流程" class="headerlink" title="ARKit 工作流程"></a>ARKit 工作流程</h3><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ar_workflow.png" alt=""> 图片来自:<a href="http://www.jianshu.com/p/0492c7122d2f" target="_blank" rel="external">坤小</a></p>
+<ol>
+<li><code>ARSCNView</code>加载场景<code>SCNScene</code></li>
+<li><code>SCNScene</code> 启动相机<code>ARCamera</code>开始捕捉场景</li>
+<li><code>ARCamera</code> 捕捉场景后 <code>ARSCNView</code>开始将场景数据给<code>ARSession</code></li>
+<li><code>ARSession</code> 通过<code>ARConfiguration</code>(或者它的派生子类) 实现场景的追踪并返回一个<code>ARFrame</code>.</li>
+<li>给<code>ARSCNView</code>的 scene 添加一个子节点(3D物体模型)</li>
+</ol>
+<blockquote>
+<p><code>ARConfiguration</code> 捕捉相机的位置的目的是<strong>能够在添加的3D 物体模型的时候计算出3D 物体模型相对于相机的真实矩阵位置</strong></p>
+</blockquote>
+<p>注意:<strong>在3D坐标系统中</strong></p>
+<ul>
+<li>世界坐标系 相当于 UIView 的 <code>Frame</code></li>
+<li>本地坐标系 相当于 UIView 的 <code>bounds</code></li>
+</ul>
+<blockquote>
+<p>坐标系的转换在 ARKit 中是比较难部分 </p>
+</blockquote>
+<h2 id="ARKit简单代码实现"><a href="#ARKit简单代码实现" class="headerlink" title="ARKit简单代码实现"></a>ARKit简单代码实现</h2><p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemo1.zip" target="_blank" rel="external">代码ARKitDemo1</a></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event&#123;</div><div class="line">    <span class="comment">//1. 使用场景加载 scn 文件</span></div><div class="line">    </div><div class="line">    <span class="built_in">SCNScene</span> *scene = [<span class="built_in">SCNScene</span> sceneNamed:<span class="string">@"Models.scnassets/vase/vase.scn"</span>];</div><div class="line">    <span class="built_in">SCNNode</span> *plantNode = scene.rootNode.childNodes[<span class="number">0</span>];</div><div class="line">    </div><div class="line">    <span class="comment">//2. 调整位置 将节点添加到当前屏幕中</span></div><div class="line">    plantNode.position = <span class="built_in">SCNVector3Make</span>(<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-1</span>);</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">//3. 将飞机节点添加到当前屏幕</span></div><div class="line">    [<span class="keyword">self</span>.arSceneView.scene.rootNode addChildNode:plantNode];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里需要补充一点 </p>
+<blockquote>
+<p>我们先抛开<code>ARSCNView</code>和 <code>UIViewController</code> 以及<code>UIView</code>的关系</p>
+</blockquote>
+<p><strong>我们只说一下<code>ARSCNView</code>,<code>scene</code>,<code>node</code>啥关系</strong></p>
+<p><code>ARSCNView</code> 是个集成自 UIView 的视图</p>
+<p><code>ARSCNView</code> 有个属性(成员变量)叫<code>scene</code> 这就相当于 VC</p>
+<p><code>scene</code>有 <code>rootNode</code> 相当于 VC 有<code>self.view</code></p>
+<p><strong>可以把<code>scene</code>理解为 VC</strong><br><strong>把<code>rootNode</code>理解为 <code>self.view</code></strong></p>
+<p>我们知道 self.view 可以添加 子 view 通过 </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.view addSubview:xxx];</div></pre></td></tr></table></figure>
+<p> 那么 node 也就有了相应的方法</p>
+ <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[scene.rootNode addChildNode:xxxNode];</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<em><strong>所有的场景有且只有一个根节点，其他所有节点都是根节点的子节点</strong></em></p>
+</blockquote>
+<h2 id="ARKit框架所有API介绍"><a href="#ARKit框架所有API介绍" class="headerlink" title="ARKit框架所有API介绍"></a>ARKit框架所有API介绍</h2><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARDefines%402x.png" alt=""></p>
+<p>还是拿上边这张图说一下 这里我们诉求剖析所有 API 从而达到大家都了解 ARKit的内容</p>
+<h4 id="ARAnchor"><a href="#ARAnchor" class="headerlink" title="ARAnchor"></a>ARAnchor</h4><p><code>ARAnchor</code>表示一个物体在3D 空间的位置和方向(ARAnchor 俗称 3D 锚点, 类似 UIKit 框架中 CALayer的 Anchor)</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARAnchor</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//锚点唯一标识</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSUUID</span> *identifier;</div><div class="line"></div><div class="line"><span class="comment">//锚点的旋转变换矩阵，定义了锚点的旋转、位置、缩放。是一个4x4的矩阵</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 transform;</div><div class="line"></div><div class="line"><span class="comment">//构造方法,一般我们无需构造。因为添加一个3D物体时ARKit会有代理告知我们物体的锚点</span></div><div class="line">- (<span class="keyword">instancetype</span>)initWithTransform:(matrix_float4x4)transform;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>ARFrame</code>表示的也是物体的位置和方向,但是<code>ARFrame</code>通常标识的是 AR 相机的<strong>位置</strong>和<strong>方向</strong>以及追踪相机的时间戳,还有捕捉到相机的图片帧(CVPixelBufferRef)</p>
+</blockquote>
+<h4 id="ARError"><a href="#ARError" class="headerlink" title="ARError"></a>ARError</h4><p><code>ARError</code> 错误描述类, eg: 设备不支持, 常驻后台的会话中断…等</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">FOUNDATION_EXTERN <span class="built_in">NSString</span> *<span class="keyword">const</span> ARErrorDomain;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ERROR_ENUM</span>(ARErrorDomain, ARErrorCode) &#123;</div><div class="line">    <span class="comment">/** Unsupported session configuration. */</span></div><div class="line">    ARErrorCodeUnsupportedConfiguration   = <span class="number">100</span>,</div><div class="line">    </div><div class="line">    <span class="comment">/** A sensor required to run the session is not available. */</span></div><div class="line">    ARErrorCodeSensorUnavailable          = <span class="number">101</span>,</div><div class="line">    </div><div class="line">    <span class="comment">/** A sensor failed to provide the required input. */</span></div><div class="line">    ARErrorCodeSensorFailed               = <span class="number">102</span>,</div><div class="line">    </div><div class="line">    <span class="comment">/** App does not have permission to use the camera. The user may change this in settings. */</span></div><div class="line">    ARErrorCodeCameraUnauthorized         = <span class="number">103</span>,</div><div class="line">    </div><div class="line">    <span class="comment">/** World tracking has encountered a fatal error. */</span></div><div class="line">    ARErrorCodeWorldTrackingFailed        = <span class="number">200</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="ARFrame"><a href="#ARFrame" class="headerlink" title="ARFrame"></a>ARFrame</h4><p><code>ARFrame</code> 主要是追踪当前的状态 eg: 图片帧, 时间戳,位置方向等参数.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARFrame</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//时间戳</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSTimeInterval</span> timestamp;</div><div class="line"></div><div class="line"><span class="comment">//图片帧</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) CVPixelBufferRef capturedImage;</div><div class="line"></div><div class="line"><span class="comment">//相机（表示这个ARFrame是哪一个相机的，iPhone7plus有两个摄像机）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) ARCamera *camera;</div><div class="line"></div><div class="line"><span class="comment">//返回当前相机捕捉到的锚点数据（当一个3D虚拟模型加入到ARKit中时，锚点值得就是这个模型在AR中的位置）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;ARAnchor *&gt; *anchors;</div><div class="line"></div><div class="line"><span class="comment">//灯光 指的是灯光强度 一般是0-2000，系统默认1000</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nullable</span>, <span class="keyword">readonly</span>) ARLightEstimate *lightEstimate;</div><div class="line"></div><div class="line"><span class="comment">//特征点（应该是捕捉平地或者人脸的，比较苹果有自带的人脸识别功能） 仅限 world 的追踪配置可用</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nullable</span>, <span class="keyword">readonly</span>) ARPointCloud *rawFeaturePoints;</div><div class="line"></div><div class="line"><span class="comment">//根据2D坐标点搜索3D模型，这个方法通常用于，当我们在手机屏幕点击某一个点的时候，可以捕捉到这一个点所在的3D模型的位置，至于为什么是一个数组非常好理解。手机屏幕一个是长方形，这是一个二维空间。而相机捕捉到的是一个由这个二维空间射出去的长方体，我们点击屏幕一个点可以理解为在这个长方体的边缘射出一条线，这一条线上可能会有多个3D物体模型</span></div><div class="line">point：<span class="number">2</span>D坐标点（手机屏幕某一点）</div><div class="line">ARHitTestResultType：捕捉类型  点还是面</div><div class="line">(<span class="built_in">NSArray</span>&lt;ARHitTestResult *&gt; *)：追踪结果数组</div><div class="line"></div><div class="line">- (<span class="built_in">NSArray</span>&lt;ARHitTestResult *&gt; *)hitTest:(<span class="built_in">CGPoint</span>)point types:(ARHitTestResultType)types;</div><div class="line"></div><div class="line"><span class="comment">//相机窗口的的坐标变换（可用于相机横竖屏的旋转适配）</span></div><div class="line">-(<span class="built_in">CGAffineTransform</span>)displayTransformWithViewportSize:(<span class="built_in">CGSize</span>)viewportSize orientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里说一下一个技巧 如果在一个类里面我们不想提供<code>init:</code>方法的话 该如何写？</p>
+<p>我们都知道<code>OC</code>里面所有的<code>class</code>都是继承 自<code>NSObject</code>,<code>NSObject</code>里面有<code>init:</code>、<code>dealloc:</code>等方法.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARAnchor</span> (<span class="title">Unavailable</span>)</span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init <span class="built_in">NS_UNAVAILABLE</span>;</div><div class="line">+ (<span class="keyword">instancetype</span>)new <span class="built_in">NS_UNAVAILABLE</span>;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里用到的技巧就是 写个 Category 并复写该方法后边标注为<code>NS_UNAVAILABLE</code></p>
+</blockquote>
+<h4 id="ARHitTestResult"><a href="#ARHitTestResult" class="headerlink" title="ARHitTestResult"></a>ARHitTestResult</h4><p><code>ARHitTestResult</code> 点击回调结果,这个类主要用于AR 技术中 <strong>现实世界与3D 场景中虚拟物体的交互.</strong> eg:在相机中移动、拖拽3D 虚拟物体,都可以通过这个类来获取 ARKit 所捕捉的结果.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, ARHitTestResultType) &#123;</div><div class="line">    <span class="comment">//点</span></div><div class="line">    ARHitTestResultTypeFeaturePoint              = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>),</div><div class="line">	<span class="comment">//水平面 y为0.    </span></div><div class="line">    ARHitTestResultTypeEstimatedHorizontalPlane  = (<span class="number">1</span> &lt;&lt; <span class="number">1</span>),</div><div class="line">    </div><div class="line">    <span class="comment">//已结存在的平面</span></div><div class="line">    ARHitTestResultTypeExistingPlane             = (<span class="number">1</span> &lt;&lt; <span class="number">3</span>),</div><div class="line">    </div><div class="line">    <span class="comment">//已结存在的锚点和平面</span></div><div class="line">    ARHitTestResultTypeExistingPlaneUsingExtent  = (<span class="number">1</span> &lt;&lt; <span class="number">4</span>),</div><div class="line">&#125; <span class="built_in">NS_SWIFT_NAME</span>(ARHitTestResult.ResultType);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARHitTestResult</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">//捕捉类型</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARHitTestResultType type;</div><div class="line"></div><div class="line"><span class="comment">//3D虚拟物体与相机的距离（单位：米）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGFloat</span> distance;</div><div class="line"></div><div class="line"><span class="comment">//本地坐标矩阵（世界坐标指的是相机为场景原点的坐标，而每一个3D物体自身有一个场景，本地坐标就是相对于这个场景的坐标）类似于frame和bounds的区别</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 localTransform;</div><div class="line"></div><div class="line"><span class="comment">//世界坐标矩阵</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 worldTransform;</div><div class="line"></div><div class="line"><span class="comment">//锚点（3D虚拟物体，在虚拟世界有一个位置，这个位置参数是SceneKit中的SCNVector3：三维矢量），而锚点anchor是这个物体在AR现实场景中的位置，是一个4x4的矩阵</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nullable</span>, <span class="keyword">readonly</span>) ARAnchor *anchor;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里需要了解一下:</p>
+<ul>
+<li><p><strong>matrix_float4x4</strong> <strong>worldTransform</strong>; 世界坐标系 <strong>以相机为场景的原点开始(0,0,0,0)</strong> 也就是以相机为圆心向外,参照这个原点 3D 物体的位置信息. 这就相当于2D 的 UIView 的 frame (绝对坐标)</p>
+</li>
+<li><p><strong>matrix_float4x4</strong>  <strong>localTransform</strong>; 本地坐标系 以一个 node 为父节点为参照,相当于距离这个父场景的坐标.</p>
+</li>
+<li><p><strong>matrix_float4x4</strong> <a href="http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/" target="_blank" rel="external">4x4 矩阵请参考这里</a> </p>
+</li>
+</ul>
+<h4 id="ARLightEstimate"><a href="#ARLightEstimate" class="headerlink" title="ARLightEstimate"></a>ARLightEstimate</h4><p><code>ARLightEstimate</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARLightEstimate</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">//环境灯光强度  范围0-2000 默认1000</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGFloat</span> ambientIntensity;</div><div class="line"></div><div class="line"><span class="comment">//环境光温度</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGFloat</span> ambientColorTemperature;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="ARPlaneAnchor"><a href="#ARPlaneAnchor" class="headerlink" title="ARPlaneAnchor"></a>ARPlaneAnchor</h4><p><code>ARPlaneAnchor</code>派生自<code>ARAnchor</code>的子类, 平面锚点.<code>ARKit</code>能自动识别平地,并且添加一个锚点到场景中,当然要想看到真实世界中的平地效果需要我们自己使用 <code>SCNNode</code>渲染一个锚点.</p>
+<blockquote>
+<p>锚点只是一个位置</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARPlaneAnchor</span> : <span class="title">ARAnchor</span></span></div><div class="line"></div><div class="line"><span class="comment">//平地类型，目前只有一个，就是水平面 </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARPlaneAnchorAlignment alignment;</div><div class="line"></div><div class="line"><span class="comment">//3轴矢量结构体，表示平地的中心点  x/y/z</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) vector_float3 center;</div><div class="line"></div><div class="line"><span class="comment">//3轴矢量结构体，表示平地的大小（宽度和高度）  x/y/z</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) vector_float3 extent;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="ARPointCloud"><a href="#ARPointCloud" class="headerlink" title="ARPointCloud"></a>ARPointCloud</h4><p><code>ARPointCloud</code> 点状渲染  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARPointCloud</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//点数</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSUInteger</span> count;</div><div class="line"></div><div class="line"><span class="comment">//每一个点的位置的集合（结构体带*表示的是结构体数组）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="keyword">const</span> vector_float3 *points;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="ARConfiguration"><a href="#ARConfiguration" class="headerlink" title="ARConfiguration"></a>ARConfiguration</h4><p><code>ARConfiguration</code> 会话追踪配置</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//追踪对其方式</span></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, ARWorldAlignment) &#123;</div><div class="line">    <span class="comment">/* 相机位置 vector (0, -1, 0) /</span></div><div class="line">    ARWorldAlignmentGravity,</div><div class="line">    /* 相机位置及方向. vector (0, -1, 0)    heading ：(0, 0, -1) */</div><div class="line">    ARWorldAlignmentGravityAndHeading,</div><div class="line">    <span class="comment">/* 相机方向. */</span></div><div class="line">    ARWorldAlignmentCamera</div><div class="line">&#125; ;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, ARPlaneDetection) &#123;</div><div class="line">    ARPlaneDetectionNone        = <span class="number">0</span>,</div><div class="line">    ARPlaneDetectionHorizontal  = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>), <span class="comment">//探测平面是水平横向</span></div><div class="line">&#125; ;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARConfiguration</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//当前设备是否支持，一般A9芯片以下设备不支持</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">class</span>, <span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">BOOL</span> isSupported;</div><div class="line"></div><div class="line"><span class="comment">//世界坐标的对齐方式 </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>) ARWorldAlignment worldAlignment;</div><div class="line"></div><div class="line"><span class="comment">//是否需要自适应灯光效果，默认是YES</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">getter</span>=isLightEstimationEnabled) <span class="built_in">BOOL</span> lightEstimationEnabled;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="comment">//世界会话追踪配置，苹果建议我们使用这个类，这个子类只有一个属性，也就是可以帮助我们追踪相机捕捉到的平地</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARWorldTrackingSessionConfiguration</span> : <span class="title">ARConfiguration</span></span></div><div class="line"></div><div class="line"><span class="comment">//探测的类型</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>) ARPlaneDetection planeDetection;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>会话配置的恩子类:ARWorldTrackingSessionConfiguration，它们在同一个API文件中</p>
+</blockquote>
+<h4 id="ARSKView"><a href="#ARSKView" class="headerlink" title="ARSKView"></a>ARSKView</h4><p><code>ARSKView</code>是2D 的 AR 视图 这个基本就不需要讲了 和 <code>ARSCNView</code>一样,就不重复介绍了</p>
+<h4 id="ARScnView-重点介绍"><a href="#ARScnView-重点介绍" class="headerlink" title="ARScnView 重点介绍"></a>ARScnView 重点介绍</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARSCNView</span> : <span class="title">SCNView</span></span></div><div class="line"></div><div class="line"><span class="comment">//代理</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>, <span class="keyword">nullable</span>) <span class="keyword">id</span>&lt;ARSCNViewDelegate&gt; delegate;</div><div class="line"></div><div class="line"><span class="comment">//AR 会话</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) ARSession *session;</div><div class="line"></div><div class="line"><span class="comment">//场景</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">SCNScene</span> *scene;</div><div class="line"></div><div class="line"><span class="comment">//是否自动适应灯光</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> automaticallyUpdatesLighting;</div><div class="line"></div><div class="line"><span class="comment">//返回对应节点的锚点，节点是一个3D虚拟物体，它的坐标是虚拟场景中的坐标，而锚点ARAnchor是ARKit中现实世界的坐标</span></div><div class="line">- (<span class="keyword">nullable</span> ARAnchor *)anchorForNode:(<span class="built_in">SCNNode</span> *)node;</div><div class="line"></div><div class="line"><span class="comment">//返回对应锚点的物体</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">SCNNode</span> *)nodeForAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line"></div><div class="line"> */</div><div class="line">- (<span class="built_in">NSArray</span>&lt;ARHitTestResult *&gt; *)hitTest:(<span class="built_in">CGPoint</span>)point types:(ARHitTestResultType)types;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>根据2D坐标点搜索3D模型，这个方法通常用于，当我们在手机屏幕点击某一个点的时候，可以捕捉到这一个点所在的3D模型的位置，至于为什么是一个数组非常好理解。手机屏幕一个是长方形，这是一个二维空间。而相机捕捉到的是一个由这个二维空间射出去的长方体，我们点击屏幕一个点可以理解为在这个长方体的边缘射出一条线，这一条线上可能会有多个3D物体模型,point：2D坐标点（手机屏幕某一点）<br>ARHitTestResultType：捕捉类型  点还是面<br>(NSArray<arhittestresult *=""> *)：追踪结果数组  详情见本章节ARHitTestResult类介绍<br>数组的结果排序是由近到远</arhittestresult></p>
+</blockquote>
+<p>代理方法</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//代理的内部实现了SCNSceneRendererDelegate：scenekit代理 和ARSessionObserver：ARSession监听（KVO机制）</span></div><div class="line"><span class="meta">#pragma mark - ARSCNViewDelegate</span></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ARSCNViewDelegate</span> &lt;<span class="title">SCNSceneRendererDelegate</span>, <span class="title">ARSessionObserver</span>&gt;</span></div><div class="line"><span class="keyword">@optional</span></div><div class="line"></div><div class="line"><span class="comment">//自定义节点的锚点</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">SCNNode</span> *)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer nodeForAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="comment">//当添加节点是会调用，我们可以通过这个代理方法得知我们添加一个虚拟物体到AR场景下的锚点（AR现实世界中的坐标）</span></div><div class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didAddNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="comment">//将要刷新节点</span></div><div class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer willUpdateNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="comment">//已经刷新节点</span></div><div class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didUpdateNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="comment">//移除节点</span></div><div class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didRemoveNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="ARSesson-重点介绍"><a href="#ARSesson-重点介绍" class="headerlink" title="ARSesson 重点介绍"></a>ARSesson 重点介绍</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/session_brige002.png" alt=""></p>
+<p><code>ARSesson</code> 是一个连接底层与 AR 视图之间的桥梁, <code>ARSCNView</code>里的所有方法都是又<code>ARSession</code>提供的</p>
+<p><strong><code>ARSesson</code>获取相机位置数据主要由两种方式</strong></p>
+<ul>
+<li>push 通过实现 Session 的代理<code>session:didUpdateFrame:</code>告知用户</li>
+<li>pull 用户想要可主动去取 <code>ARSession</code>的<code>currentFrame</code>属性</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARSession</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">//代理</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> &lt;ARSessionDelegate&gt; delegate;</div><div class="line"></div><div class="line"><span class="comment">//指定代理执行的线程（主线程不会有延迟，子线程会有延迟），不指定的话默认主线程</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nullable</span>) <span class="built_in">dispatch_queue_t</span> delegateQueue;</div><div class="line"></div><div class="line"><span class="comment">//相机当前的位置（是由会话追踪配置计算出来的）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>, <span class="keyword">readonly</span>) ARFrame *currentFrame;</div><div class="line"></div><div class="line"><span class="comment">//会话配置</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>, <span class="keyword">readonly</span>) ARConfiguration *configuration;</div><div class="line"></div><div class="line"><span class="comment">//运行会话（这行代码就是开启AR的关键所在）</span></div><div class="line">- (<span class="keyword">void</span>)runWithConfiguration:(ARConfiguration *)configuration <span class="built_in">NS_SWIFT_UNAVAILABLE</span>(<span class="string">"Use run(_:options:) instead"</span>);</div><div class="line"></div><div class="line"><span class="comment">//运行会话，只是多了一个参数ARSessionRunOptions：作用就是会话断开重连时的行为。</span></div><div class="line">- (<span class="keyword">void</span>)runWithConfiguration:(ARConfiguration *)configuration options:(ARSessionRunOptions)options <span class="built_in">NS_SWIFT_NAME</span>(run(_:options:));</div><div class="line"></div><div class="line"><span class="comment">//暂停会话</span></div><div class="line">- (<span class="keyword">void</span>)pause;</div><div class="line"></div><div class="line"><span class="comment">//添加锚点</span></div><div class="line">- (<span class="keyword">void</span>)addAnchor:(ARAnchor *)anchor <span class="built_in">NS_SWIFT_NAME</span>(add(anchor:));</div><div class="line"></div><div class="line"><span class="comment">//移除锚点</span></div><div class="line">- (<span class="keyword">void</span>)removeAnchor:(ARAnchor *)anchor <span class="built_in">NS_SWIFT_NAME</span>(remove(anchor:));</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>运行会话<strong>runWithConfiguration:options:</strong> options 是个<code>ARSessionRunOptions</code>枚举<br>这个方法的作用就是会话断开重连时的行为</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, ARSessionRunOptions) &#123;</div><div class="line">	 <span class="comment">//表示重置追踪</span></div><div class="line">    ARSessionRunOptionResetTracking           = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>),</div><div class="line">    </div><div class="line">    <span class="comment">//移除现有锚点</span></div><div class="line">    ARSessionRunOptionRemoveExistingAnchors   = (<span class="number">1</span> &lt;&lt; <span class="number">1</span>)</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>下面来看下<code>ARSession</code>的代理</p>
+<p><code>ARSession</code> 分 两种</p>
+<ul>
+<li>KVO 观察者 ARSessionObserver</li>
+<li>delegate 委托代理 ARSessionDelegate</li>
+</ul>
+<blockquote>
+<p>看到这我也很奇怪这个玩法 </p>
+</blockquote>
+<p>ARSessionObserver如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ARSessionObserver</span> &lt;<span class="title">NSObject</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@optional</span></div><div class="line"></div><div class="line"><span class="comment">//session 失败</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didFailWithError:(<span class="built_in">NSError</span> *)error;</div><div class="line"></div><div class="line"><span class="comment">//相机追踪状态发生改变</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session cameraDidChangeTrackingState:(ARCamera *)camera;</div><div class="line"></div><div class="line"><span class="comment">//session 意外断开（如果开启ARSession之后，APP退到后台就有可能导致会话断开）</span></div><div class="line">- (<span class="keyword">void</span>)sessionWasInterrupted:(ARSession *)session;</div><div class="line"></div><div class="line"><span class="comment">//session 会话断开后 恢复(短时间退到后台再进入APP会自动恢复）</span></div><div class="line">- (<span class="keyword">void</span>)sessionInterruptionEnded:(ARSession *)session;</div><div class="line"></div><div class="line"><span class="comment">//session 已经输出了一个 音频数据 `CMSampleBufferRef` </span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didOutputAudioSampleBuffer:(<span class="built_in">CMSampleBufferRef</span>)audioSampleBuffer;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>ARSessionDelegate 如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">相机位置发生改变 就是相机的位置有变动</div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateFrame:(ARFrame *)frame;</div><div class="line"></div><div class="line"><span class="comment">// 已添加锚点</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didAddAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">//刷新锚点</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">//移除锚点</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didRemoveAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>以上是 <code>ARSession</code></p>
+<h4 id="ARCamera-重点介绍"><a href="#ARCamera-重点介绍" class="headerlink" title="ARCamera 重点介绍"></a>ARCamera 重点介绍</h4><p><code>ARCamera</code>是个相机, 它是链接虚拟场景和现实场景的之间的枢纽. </p>
+<p>在<code>ARKit</code>中,它是捕捉现实图像的相机,在 SceneKit 中它是3D 虚拟世界中的相机</p>
+<blockquote>
+<p>游戏里一般第一人称3D 游戏, 英雄就是一个3D 相机, 我们电脑屏幕看到的画面就是这个相机捕捉到的画面</p>
+</blockquote>
+<p>一般情况下我们不需要自己去创建一个<code>ARCamera</code>实例, 因为每次初始化一个 <code>ARSCNView</code>的时候,它会默认为我们创建一个<code>ARCamera</code>实例,而且这个相机就是摄像头的位置,同时也是3D 世界中的原点所在 <strong>(0,0,0)</strong> </p>
+<p>至于<code>ARCamera</code> 的 api 一般我们也不用 care,<code>ARKit</code>默认会配置好.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARCamera</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//4x4矩阵表示相机位置 跟锚点类似</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 transform;</div><div class="line"></div><div class="line"><span class="comment">//相机方向（旋转）的矢量欧拉角 分别是x/y/z</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) vector_float3 eulerAngles;</div><div class="line"></div><div class="line"><span class="comment">//相机追踪状态（在下方会有枚举值介绍）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARTrackingState trackingState <span class="built_in">NS_REFINED_FOR_SWIFT</span>;</div><div class="line"></div><div class="line"><span class="comment">//追踪运动类型</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARTrackingStateReason trackingStateReason <span class="built_in">NS_REFINED_FOR_SWIFT</span>;</div><div class="line"></div><div class="line"><span class="comment">//相机曲率 3x3矩阵  </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float3x3 intrinsics;</div><div class="line"></div><div class="line"><span class="comment">//摄像头分辨率</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGSize</span> imageResolution;</div><div class="line"></div><div class="line"><span class="comment">//投影矩阵</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 projectionMatrix;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//创建相机 使用x,y,z 位置 </span></div><div class="line">- (<span class="built_in">CGPoint</span>)projectPoint:(vector_float3)point orientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation viewportSize:(<span class="built_in">CGSize</span>)viewportSize;</div><div class="line"> </div><div class="line"><span class="comment">//创建相机投影矩阵 近面距离  远面距离</span></div><div class="line">- (matrix_float4x4)projectionMatrixForOrientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation viewportSize:(<span class="built_in">CGSize</span>)viewportSize zNear:(<span class="built_in">CGFloat</span>)zNear zFar:(<span class="built_in">CGFloat</span>)zFar;</div><div class="line"></div><div class="line"><span class="comment">//创建相机投影矩阵</span></div><div class="line">- (matrix_float4x4)viewMatrixForOrientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>上边提到的远面和近面距离 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/distance.png" alt="">  可以参考这张图 摘自<a href="http://www.jianshu.com/p/bc151ff65cef" target="_blank" rel="external">投影变换</a><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/distance2.png" alt=""><br> 这属于 OpenGL的学习范畴.有兴趣可以学习一下</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//相机追踪状态枚举</span></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, ARTrackingState) &#123;</div><div class="line">	 <span class="comment">/* 不被允许 */</span></div><div class="line">    ARTrackingStateNotAvailable,</div><div class="line">    </div><div class="line">    <span class="comment">/* 最小 */</span></div><div class="line">    ARTrackingStateLimited,</div><div class="line">    </div><div class="line">    <span class="comment">/* 正常. */</span></div><div class="line">    ARTrackingStateNormal,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//追踪运动类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, ARTrackingStateReason) &#123;</div><div class="line">    <span class="comment">/* 无. */</span></div><div class="line">    ARTrackingStateReasonNone,</div><div class="line">    </div><div class="line">    <span class="comment">//初始化</span></div><div class="line">    ARTrackingStateReasonInitializing,</div><div class="line">    </div><div class="line">    <span class="comment">/* 运动. */</span></div><div class="line">    ARTrackingStateReasonExcessiveMotion,</div><div class="line">    </div><div class="line">    <span class="comment">/** 脸部捕捉. */</span></div><div class="line">    ARTrackingStateReasonInsufficientFeatures,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里面涉及到的 一个叫做<code>eulerAngles</code><a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92" target="_blank" rel="external">欧拉角</a><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/eulerAngles.png" alt=""><br>这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) </p>
+</blockquote>
+<h4 id="ARKit捕捉平地"><a href="#ARKit捕捉平地" class="headerlink" title="ARKit捕捉平地"></a>ARKit捕捉平地</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/plane_detective.gif" alt=""></p>
+<p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemoPlaneDetective.zip" target="_blank" rel="external">探测平地demo</a></p>
+<p>贴一下核心代码</p>
+<p>添加节点时候调用（当开启平地捕捉模式之后，如果捕捉到平地，ARKit会自动添加一个平地节点）</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - ARSCNViewDelegate 代理</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didAddNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor&#123;</div><div class="line">    <span class="keyword">if</span> ([anchor isMemberOfClass:[ARPlaneAnchor <span class="keyword">class</span>]]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"捕捉到平地"</span>);</div><div class="line">        <span class="comment">//添加一个3D 平面模型,ARKit 只有捕捉能力,锚点是一个空间位置,要想更加清楚的看到这个空间,我们需要给空间添加一个平地的3D模型来渲染他</span></div><div class="line">        <span class="comment">//1. 获取扑捉到的平地锚点</span></div><div class="line">        ARPlaneAnchor *planeAnchor = (ARPlaneAnchor *)anchor;</div><div class="line">        <span class="comment">//2. 创建一个3D物体模型 (系统捕捉到的平地是一个不规则大小的长方形，这里我们将其变成一个长方形，并且对平地做一次缩放）</span></div><div class="line">        <span class="comment">//创建长方形  参数:长,宽,高,圆角</span></div><div class="line">        <span class="built_in">SCNBox</span> *plane = [<span class="built_in">SCNBox</span> boxWithWidth:planeAnchor.extent.x * <span class="number">0.3</span> height:<span class="number">0</span> length:planeAnchor.extent.x * <span class="number">0.3</span> chamferRadius:<span class="number">0</span>];</div><div class="line">        <span class="comment">//3. 使用Material渲染3D模型 默认模型是白色的</span></div><div class="line">        plane.firstMaterial.diffuse.contents = [<span class="built_in">UIColor</span> cyanColor];</div><div class="line">        </div><div class="line">        <span class="comment">//4. 创建一个基于3D 物体模型的节点</span></div><div class="line">        <span class="built_in">SCNNode</span> *planeNode = [<span class="built_in">SCNNode</span> nodeWithGeometry:plane];</div><div class="line">        <span class="comment">//5. 设置节点的位置为捕捉到的平地的锚点和中心位置 SceneKit框架中节点的位置position是一个基于3D坐标系的矢量坐标SCNVector3Make</span></div><div class="line">        planeNode.position = <span class="built_in">SCNVector3Make</span>(planeAnchor.center.x, <span class="number">0</span>, planeAnchor.center.z);</div><div class="line">        </div><div class="line">        [node addChildNode:planeNode];</div><div class="line">        </div><div class="line">        <span class="comment">//6. 当捕捉到平地时，2s之后开始在平地上添加一个3D模型</span></div><div class="line">        </div><div class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="number">2</span> * <span class="built_in">NSEC_PER_SEC</span>)), dispatch_get_main_queue(), ^&#123;</div><div class="line">            <span class="comment">//1.创建一个花瓶场景</span></div><div class="line">            <span class="built_in">SCNScene</span> *scene = [<span class="built_in">SCNScene</span> sceneNamed:<span class="string">@"Models.scnassets/vase/vase.scn"</span>];</div><div class="line">            <span class="comment">//2.获取花瓶节点（一个场景会有多个节点，此处我们只写，花瓶节点则默认是场景子节点的第一个）</span></div><div class="line">            <span class="comment">//所有的场景有且只有一个根节点，其他所有节点都是根节点的子节点</span></div><div class="line">            <span class="built_in">SCNNode</span> *vaseNode = scene.rootNode.childNodes[<span class="number">0</span>];</div><div class="line">            </div><div class="line">            <span class="comment">//4.设置花瓶节点的位置为捕捉到的平地的位置，如果不设置，则默认为原点位置，也就是相机位置</span></div><div class="line">            vaseNode.position = <span class="built_in">SCNVector3Make</span>(planeAnchor.center.x, <span class="number">0</span>, planeAnchor.center.z);</div><div class="line">            </div><div class="line">            <span class="comment">//5.将花瓶节点添加到当前屏幕中</span></div><div class="line">            <span class="comment">//!!!此处一定要注意：花瓶节点是添加到代理捕捉到的节点中，而不是AR试图的根节点。因为捕捉到的平地锚点是一个本地坐标系，而不是世界坐标系</span></div><div class="line">            [node addChildNode:vaseNode];</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="AR代码demo实现"><a href="#AR代码demo实现" class="headerlink" title="AR代码demo实现"></a>AR代码demo实现</h4><p><a href="https://github.com/sunyazhou13/ARDemos" target="_blank" rel="external">所有相关的 demos 仓库</a></p>
+<p>参考文献 </p>
+<p><a href="http://metalkit.org/2017/07/29/using-arkit-with-metal.html" target="_blank" rel="external">Using ARKit with Metal</a>  </p>
+<p><a href="http://www.jianshu.com/p/c97b230fa391" target="_blank" rel="external">坤小1~10篇</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.gi
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Learning AV Foundation(四)AVAsset元数据(高级篇)</title>
+    <link href="https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/"/>
+    <id>https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/</id>
+    <published>2017-08-07T12:36:46.000Z</published>
+    <updated>2017-08-28T12:43:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV-Foundation-AVAsset-Senior3.2/audio-artwork.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先上图 </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/metadata.gif" alt=""></p>
+<p>这一篇 <strong>我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化</strong></p>
+<h2 id="内容介绍"><a href="#内容介绍" class="headerlink" title="内容介绍"></a>内容介绍</h2><p>结构图<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/MetaDataModel.png" alt=""></p>
+<hr>
+<p>class 代码 </p>
+<ul>
+<li><strong>MediaItem (一个直接对外的接口)</strong></li>
+<li><strong>MetaData (元数据model)</strong></li>
+<li><strong>Genre (风格)</strong></li>
+<li><strong>AVMetadataItem+Additions</strong></li>
+<li><strong>MetadataDefines</strong></li>
+<li><strong>MetadataKit</strong></li>
+<li><strong>Converters (文件夹包含如下:)</strong><ul>
+<li><strong>MetadataConverter  (Protocol 存取 <code>AVMetadataItem</code>)</strong></li>
+<li><strong>MetadataConverterFactory</strong></li>
+<li><strong>DefaultMetadataConverter</strong></li>
+<li><strong>ArtworkMetadataConverter</strong></li>
+<li><strong>CommentMetadataConverter</strong></li>
+<li><strong>TrackMetadataConverter</strong></li>
+<li><strong>DiscMetadataConverter</strong></li>
+<li><strong>GenreMetadataConverter</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="MediaItem"><a href="#MediaItem" class="headerlink" title="MediaItem"></a>MediaItem</h3><p>这个类主要对外直接暴露接口 如下代码即可调用使用</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line">MediaItem *item = [[MediaItem alloc] initWithURL:<span class="keyword">self</span>.url];</div><div class="line">[item prepareWithCompletionHandler:^(<span class="built_in">BOOL</span> complete) &#123;</div><div class="line">    __<span class="keyword">strong</span> <span class="keyword">typeof</span>(weakSelf) strongSelf = weakSelf;</div><div class="line">    [strongSelf refreshDataByItem:item];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[item modelDescription]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>代码实现部分  </p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"MetaData.h"</span></span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^CompletionHandler)(<span class="built_in">BOOL</span> complete);</div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MediaItem</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *filename;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *filetype;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">readonly</span>) MetaData *metadata;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>, <span class="keyword">getter</span> = isEditable) <span class="built_in">BOOL</span> editable;</div><div class="line">- (<span class="keyword">id</span>)initWithURL:(<span class="built_in">NSURL</span> *)url;</div><div class="line"><span class="comment">/**</span></div><div class="line"> 此方法完成之后如果成功即可取metadata</div><div class="line"></div><div class="line"> @param handler 回调 block</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)prepareWithCompletionHandler:(CompletionHandler)handler;</div><div class="line">- (<span class="keyword">void</span>)saveWithCompletionHandler:(CompletionHandler)handler;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>.m</code>可参考源码 比较多就不赘述了</p>
+<p>当 block 完成时使用<br>目前支持获取元数据信息的媒体格式如下:  </p>
+<ul>
+<li>m4a</li>
+<li>mov</li>
+<li>mp4</li>
+<li>mp3</li>
+</ul>
+<blockquote>
+<p>注意:<em><strong>mp3文件是不可编辑的文件故而不能进行编辑 比如改变歌手名称之类 如果要编辑可使用其它专业软件尝试</strong></em>  </p>
+</blockquote>
+<p>我尝试了 mac 版本的 demo 编辑 文件 是 OK 的 但是在 iOS 上 我更改其它格式也没能保存成功 如果你看到有解决办法 可以留言给我或者发邮件给我 非常感谢.</p>
+<h3 id="MetaData"><a href="#MetaData" class="headerlink" title="MetaData"></a>MetaData</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">@class</span> <span class="title">Genre</span>; //风格  <span class="title">eg</span>: 蓝调、 古典 ....</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MetaData</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *artist;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *albumArtist;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *album;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *grouping;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *composer;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>) <span class="built_in">NSString</span> *comments;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>) <span class="built_in">UIImage</span> *artwork;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>) Genre *genre;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSString</span> *year;</div><div class="line"><span class="keyword">@property</span> <span class="keyword">id</span> bpm;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *trackNumber;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *trackCount;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *discNumber;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSNumber</span> *discCount;</div><div class="line">- (<span class="keyword">void</span>)addMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item withKey:(<span class="keyword">id</span>)key;</div><div class="line">- (<span class="built_in">NSArray</span> *)metadataItems;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>看到上边的代码估计你也猜到了 这就是我们需要的 比如 mp3文件解析出来的真正 model  </p>
+<p>这里东西比较多 有些值有可能没有 请自行做好 check</p>
+<h3 id="MetadataConverter"><a href="#MetadataConverter" class="headerlink" title="MetadataConverter"></a>MetadataConverter</h3><p>这个协议是为了支持所有多媒体文件统一解析使用,比如:mp3文件和mp4文件两个是不一样的文件格式,虽然里面有很多相同的key,但是肯定数据结构是不一样的,这样就要求,搞一个统一的协议,比如输入的是一个URL返回一个 model那么为了解决key value参差不齐问题 就搞了这个协议.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">zh</span> &lt;<span class="title">NSObject</span>&gt;</span></div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> AVMetadataItem to Model 转换 用于UI显示的model</div><div class="line"></div><div class="line"> @param item AVMetadataItem</div><div class="line"> @return model</div><div class="line"> */</div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item;</div><div class="line"><span class="comment">/**</span></div><div class="line"> AVMetadataItem映射通用字段</div><div class="line"> </div><div class="line"> @param value 通过媒体元数据取出的某个key的value</div><div class="line"> @param item AVMetadataItem</div><div class="line"> @return AVMetadataItem</div><div class="line"> */</div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="MetadataConverterFactory"><a href="#MetadataConverterFactory" class="headerlink" title="MetadataConverterFactory"></a>MetadataConverterFactory</h3><p>这个类用于统一输出遵守<code>MetadataConverter</code>协议的model并且找到适当的转换器去转换响应的格式</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MetadataConverterFactory</span> : <span class="title">DefaultMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span> &lt;MetadataConverter&gt;)converterForKey:(<span class="built_in">NSString</span> *)key;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MetadataConverterFactory</span></span></div><div class="line">- (<span class="keyword">id</span> &lt;MetadataConverter&gt;)converterForKey:(<span class="built_in">NSString</span> *)key&#123;</div><div class="line">    <span class="keyword">id</span> &lt;MetadataConverter&gt; converter = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">if</span> ([key isEqualToString:MetadataKeyArtwork]) &#123;</div><div class="line">        converter = [[ArtworkMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyTrackNumber]) &#123;</div><div class="line">        converter = [[TrackMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyDiscNumber]) &#123;</div><div class="line">        converter = [[DiscMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyComments]) &#123;</div><div class="line">        converter = [[CommentMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([key isEqualToString:MetadataKeyGenre]) &#123;</div><div class="line">        converter = [[GenreMetadataConverter alloc] init];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        converter = [[DefaultMetadataConverter alloc] init];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> converter;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="DefaultMetadataConverter"><a href="#DefaultMetadataConverter" class="headerlink" title="DefaultMetadataConverter"></a>DefaultMetadataConverter</h3><p>简单实现<code>MetadataConverter</code>协议</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DefaultMetadataConverter</span> : <span class="title">NSObject</span> &lt;<span class="title">MetadataConverter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">DefaultMetadataConverter</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="keyword">return</span> item.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    metadataItem.value = value;</div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ArtworkMetadataConverter"><a href="#ArtworkMetadataConverter" class="headerlink" title="ArtworkMetadataConverter"></a>ArtworkMetadataConverter</h3><p>实现<code>MetadataConverter</code>协议 取出专辑封面</p>
+<p>此处省略 .h 文件只贴出.m ( .h里面啥也没有 大家可参考 demo)</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ArtworkMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="built_in">UIImage</span> *image = <span class="literal">nil</span>;  <span class="comment">//下面是核心代码取出图片 </span></div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSData</span> <span class="keyword">class</span>]]) &#123;                        <span class="comment">// 1</span></div><div class="line">        image = [[<span class="built_in">UIImage</span> alloc] initWithData:item.dataValue];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;             <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSDictionary</span> *dict = (<span class="built_in">NSDictionary</span> *)item.value;</div><div class="line">        image = [[<span class="built_in">UIImage</span> alloc] initWithData:dict[<span class="string">@"data"</span>]];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> image;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    </div><div class="line">    <span class="built_in">UIImage</span> *image = (<span class="built_in">UIImage</span> *)value;</div><div class="line">    metadataItem.value = <span class="built_in">UIImagePNGRepresentation</span>(image);                          <span class="comment">// 3</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里 mp3 (id3v2格式）取图片的方式可能有不一样的地方 1出判断 属于哪种格式 3处把 UIImage 转 NSData 再放回去</p>
+<p>需要注意一个地方是 返回<code>AVMetadataItem</code>的类型<br>由于<code>AV Foundation</code>无法写入 ID3元数据 所以这里使用了 <code>AVMutableMetadataItem</code>来存储封面图</p>
+<p><code>AVMutableMetadataItem</code> 是 <code>AVMetadataItem</code>的子类</p>
+<h3 id="CommentMetadataConverter-注释转换"><a href="#CommentMetadataConverter-注释转换" class="headerlink" title="CommentMetadataConverter 注释转换"></a>CommentMetadataConverter 注释转换</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CommentMetadataConverter</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *value = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSString</span> <span class="keyword">class</span>]]) &#123;                      <span class="comment">// 1</span></div><div class="line">        value = item.stringValue;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSDictionary</span> <span class="keyword">class</span>]]) &#123;             <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSDictionary</span> *dict = (<span class="built_in">NSDictionary</span> *) item.value;</div><div class="line">        <span class="keyword">if</span> ([dict[<span class="string">@"identifier"</span>] isEqualToString:<span class="string">@""</span>]) &#123;</div><div class="line">            value = dict[<span class="string">@"text"</span>];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];               <span class="comment">// 3</span></div><div class="line">    metadataItem.value = value;</div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ol>
+<li><code>MPEG-4</code>和<code>QuickTime</code>媒体的 value 为 <code>NSString</code>  </li>
+<li><code>MP3</code>的注释保存在一个定义<code>ID3 COMM帧</code>的<code>NSDictionary</code>中(如果处理的是<code>ID3V2.2</code>,则为<code>COM</code>),所有类型的值都保存在这个帧中. eg： iTune 在这个帧中保存音频标准化和无缝播放设置等,意味着当请求 <code>ID3</code>元数据时需要多接收多个<code>COMM帧</code>.包含实际注释内容的特定<code>COMM帧</code>被存储在一个带有空字符串标识的帧中.找到需要的条目后 通过请求<code>text</code> key 来检索出注释内容</li>
+</ol>
+<h3 id="TrackMetadataConverter-音轨数据转换"><a href="#TrackMetadataConverter-音轨数据转换" class="headerlink" title="TrackMetadataConverter 音轨数据转换"></a>TrackMetadataConverter 音轨数据转换</h3><p>音轨: 通常包含一首歌曲在整个唱片中的编号位置信息(eg: 12首歌中的第4首  4/12)等信息.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TrackMetadataConverter</span></span></div><div class="line">- (<span class="keyword">id</span>)displayValueFromMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSNumber</span> *number = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSNumber</span> *count = <span class="literal">nil</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSString</span> <span class="keyword">class</span>]]) &#123;                      <span class="comment">// 1</span></div><div class="line">        <span class="built_in">NSArray</span> *components =</div><div class="line">        [item.stringValue componentsSeparatedByString:<span class="string">@"/"</span>];</div><div class="line">        <span class="keyword">if</span> (components.count &gt; <span class="number">0</span>) &#123;</div><div class="line">            number = @([components[<span class="number">0</span>] integerValue]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (components.count &gt; <span class="number">1</span>) &#123;</div><div class="line">            count = @([components[<span class="number">1</span>] integerValue]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([item.value isKindOfClass:[<span class="built_in">NSData</span> <span class="keyword">class</span>]]) &#123;                   <span class="comment">// 2</span></div><div class="line">        <span class="built_in">NSData</span> *data = item.dataValue;</div><div class="line">        <span class="keyword">if</span> (data.length == <span class="number">8</span>) &#123;</div><div class="line">            uint16_t *values = (uint16_t *) [data bytes];</div><div class="line">            <span class="keyword">if</span> (values[<span class="number">1</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                number = @(<span class="built_in">CFSwapInt16BigToHost</span>(values[<span class="number">1</span>]));                <span class="comment">// 3</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (values[<span class="number">2</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                count = @(<span class="built_in">CFSwapInt16BigToHost</span>(values[<span class="number">2</span>]));                 <span class="comment">// 4</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSMutableDictionary</span> *dict = [<span class="built_in">NSMutableDictionary</span> dictionary];           <span class="comment">// 5</span></div><div class="line">    [dict setObject:number ?: [<span class="built_in">NSNull</span> null] forKey:MetadataKeyTrackNumber];</div><div class="line">    [dict setObject:count ?: [<span class="built_in">NSNull</span> null] forKey:MetadataKeyTrackCount];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dict;</div><div class="line">&#125;</div><div class="line">- (<span class="built_in">AVMetadataItem</span> *)metadataItemFromDisplayValue:(<span class="keyword">id</span>)value</div><div class="line">                                withMetadataItem:(<span class="built_in">AVMetadataItem</span> *)item &#123;</div><div class="line">    <span class="built_in">AVMutableMetadataItem</span> *metadataItem = [item mutableCopy];</div><div class="line">    </div><div class="line">    <span class="built_in">NSDictionary</span> *trackData = (<span class="built_in">NSDictionary</span> *)value;</div><div class="line">    <span class="built_in">NSNumber</span> *trackNumber = trackData[MetadataKeyTrackNumber];</div><div class="line">    <span class="built_in">NSNumber</span> *trackCount = trackData[MetadataKeyTrackCount];</div><div class="line">    </div><div class="line">    uint16_t values[<span class="number">4</span>] = &#123;<span class="number">0</span>&#125;;                                                <span class="comment">// 6</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (trackNumber &amp;&amp; ![trackNumber isKindOfClass:[<span class="built_in">NSNull</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">        values[<span class="number">1</span>] = <span class="built_in">CFSwapInt16HostToBig</span>([trackNumber unsignedIntValue]);   <span class="comment">// 7</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (trackCount &amp;&amp; ![trackCount isKindOfClass:[<span class="built_in">NSNull</span> <span class="keyword">class</span>]]) &#123;</div><div class="line">        values[<span class="number">2</span>] = <span class="built_in">CFSwapInt16HostToBig</span>([trackCount unsignedIntValue]);    <span class="comment">// 8</span></div><div class="line">    &#125;</div><div class="line">    size_t length = <span class="keyword">sizeof</span>(values);</div><div class="line">    metadataItem.value = [<span class="built_in">NSData</span> dataWithBytes:values length:length];       <span class="comment">// 9</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> metadataItem;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ol>
+<li>刚才所说 <code>mp3</code>格式已 <code>xx/xx</code> 格式的字符串标识一个歌曲 在整个唱片中的第几首 所以我们用<code>/</code>分割</li>
+<li>iTunes <code>M4A</code>文件的唱片信息保存在一个 <code>NSData</code> 中,<code>NSData</code>包含3个16位的<code>big encoding</code>数字,如果直接在控制台打印 NSData 会输出<strong><code>&lt;00000008 000a0000&gt;</code>这是4个16位的<code>big endian</code>数字数组的十六进制表现形式</strong>. 数组中第2个和第3个元素分别保存唱片编号和唱片计数值</li>
+<li>如果唱片编号 != 0, 则获取该值并使用<a href="https://developer.apple.com/documentation/corefoundation/1425282-cfswapint16bigtohost?language=objc" target="_blank" rel="external"><code>CFSwapInt16BigToHost()</code></a>函数执行<code>endian</code>转换,转换成一个<code>little endian</code> 并打包成<code>NSNumber</code></li>
+<li>同样如果音轨计数值不为0, 则获取该值并在字节上执行<code>endian</code>转换并打包成<code>NSNumber</code></li>
+<li></li>
+<li>步骤反过来换成3个<code>uint16_t</code> 保存音轨编号和计数值.</li>
+<li>如果音轨编号有效, 将字节转换为<code>big endian</code>格式并保存到数组第2个位置</li>
+<li>如果音轨计数值有效, 将字节转换为<code>big endian</code>格式并保存到数组第3个位置</li>
+<li>打成 NSData 保存将其设置为元数据项的 value</li>
+</ol>
+<h3 id="DiscMetadataConverter-唱片数据转换"><a href="#DiscMetadataConverter-唱片数据转换" class="headerlink" title="DiscMetadataConverter 唱片数据转换"></a>DiscMetadataConverter 唱片数据转换</h3><p>唱片计数信息用于表示一首歌曲所在的CD是所有唱片中的第几张 通常都是 1/1 (通常都是一个 cd 一首)</p>
+<p>上下的和音轨 非常类似了 如果是4/10就是 10首里面的第4首<br>由于唱片这玩意都过时了 你现在应该很少看到 屌丝 带着 walkman 在大街上压马路了都看不到了 </p>
+<p>但是逻辑还是在的 这里逻辑看代码吧 和 音轨 基本一模一样</p>
+<h3 id="GenreMetadataConverter-风格转换"><a href="#GenreMetadataConverter-风格转换" class="headerlink" title="GenreMetadataConverter 风格转换"></a>GenreMetadataConverter 风格转换</h3><p>数字音频使用的标准风格最初来自 MP3. ID3 规范定义了80个默认的风格类型及 另外46个 WinAmp 扩展,共计 126个风格. 不过这些都不属于正式格式. 由于 mp3风格的主导地位比较明显, iTunes 没有另造轮子,而是基本遵循 ID3 的风格分类,不过做了点小变化。<strong>iTunes 音乐风格的标号比响应的 ID3标识符大 <code>1</code> .</strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/34c39090f2a8e0ec7a09652065acdd648d5f0133/Learning-AV-Foundation-AVAsset-Senior3.2/gener.png" alt=""></p>
+<p>虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. <a href="https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/" target="_blank" rel="external">Apple’s Genre IDs Appendix</a></p>
+<p>示例代码已经包含了这些类型 虽不在赘述 请参考 demo</p>
+<h3 id="保存元数据"><a href="#保存元数据" class="headerlink" title="保存元数据"></a>保存元数据</h3><p><code>AVAsset</code>是一个不可变类型 我们不能直接修改 <code>AVAsset</code> 而是使用<code>AVAssetExportSession</code>类来导出新的资源副本以及元数据的改动.</p>
+<h4 id="使用AVAssetExportSession"><a href="#使用AVAssetExportSession" class="headerlink" title="使用AVAssetExportSession"></a>使用<code>AVAssetExportSession</code></h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)saveWithCompletionHandler:(CompletionHandler)handler &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *presetName = <span class="built_in">AVAssetExportPresetPassthrough</span>;                  <span class="comment">// 1</span></div><div class="line">    <span class="built_in">AVAssetExportSession</span> *session =</div><div class="line">    [[<span class="built_in">AVAssetExportSession</span> alloc] initWithAsset:<span class="keyword">self</span>.asset</div><div class="line">                                     presetName:presetName];</div><div class="line">    </div><div class="line">    <span class="built_in">NSURL</span> *outputURL = [<span class="keyword">self</span> tempURL];                                      <span class="comment">// 2</span></div><div class="line">    session.outputURL = outputURL;</div><div class="line">    session.outputFileType = <span class="keyword">self</span>.filetype;</div><div class="line">    session.metadata = [<span class="keyword">self</span>.metadata metadataItems];                       <span class="comment">// 3</span></div><div class="line">    </div><div class="line">    [session exportAsynchronouslyWithCompletionHandler:^&#123;</div><div class="line">        <span class="built_in">AVAssetExportSessionStatus</span> status = session.status;</div><div class="line">        <span class="built_in">BOOL</span> success = (status == <span class="built_in">AVAssetExportSessionStatusCompleted</span>);</div><div class="line">        <span class="keyword">if</span> (success) &#123;                                                      <span class="comment">// 4</span></div><div class="line">            <span class="built_in">NSURL</span> *sourceURL = <span class="keyword">self</span>.url;</div><div class="line">            <span class="built_in">NSFileManager</span> *manager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line">            [manager removeItemAtURL:sourceURL error:<span class="literal">nil</span>];</div><div class="line">            [manager moveItemAtURL:outputURL toURL:sourceURL error:<span class="literal">nil</span>];</div><div class="line">            [<span class="keyword">self</span> reset];                                                   <span class="comment">// 5</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (handler) &#123;</div><div class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">                handler(success);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"sessionError:%@"</span>,session.error);</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="built_in">NSURL</span> *)tempURL &#123;</div><div class="line">    <span class="comment">// 获取Caches目录路径</span></div><div class="line">    <span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line">    <span class="built_in">NSString</span> *tempDir = cachesDir;</div><div class="line">    <span class="built_in">NSString</span> *ext = [[<span class="keyword">self</span>.url lastPathComponent] pathExtension];</div><div class="line">    <span class="built_in">NSString</span> *tempName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"temp.%@"</span>, ext];</div><div class="line">    <span class="built_in">NSString</span> *tempPath = [tempDir stringByAppendingPathComponent:tempName];</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSURL</span> fileURLWithPath:tempPath];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: <strong><strong><code>AVAssetExportPresetPassthrough</code> 这个预设值 确实允许修改<code>MPEG-4</code>和<code>QuickTime</code>容器中的存在的元数据信息, 不过它不可以添加新的元数据,添加元数据的唯一方法是使用转码预设值, 此外不能修改 <code>ID3</code>(mp3)标签。 框架不支持写入 MP3数据.</strong></strong></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过了代码实现和解析多媒体元数据 <code>AVAsset</code>,我们也熟悉了多媒体文件的构造, ID3(MP3)格式的文件解析 arkwork 功能. 从而在后续开发过程中 提升开发效率. 最后放出 代码的 demo 请大家多多指教</p>
+<p><strong><a href="https://github.com/sunyazhou13/MetaDemo" target="_blank" rel="external">示例 demo</a></strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="Learning AV Foundation" scheme="https://www.sunyazhou.com/tags/Learning-AV-Foundation/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS 11 新技能</title>
@@ -132,11 +623,11 @@
   </entry>
   
   <entry>
-    <title>iOS Android Php RSA加密解密通配方案(绝对好使,拒绝不说人话的文章)</title>
+    <title>iOS Android Php RSA加密解密通配方案</title>
     <link href="https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/"/>
     <id>https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/</id>
     <published>2017-06-26T02:42:47.000Z</published>
-    <updated>2017-07-16T02:00:08.000Z</updated>
+    <updated>2017-08-28T12:43:20.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/rsa-universal-cross-platform-ios-android-php/rsa-red-logo.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先膜拜一下 RSA的作者</p>
@@ -470,101 +961,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="Learning AV Foundation" scheme="https://www.sunyazhou.com/tags/Learning-AV-Foundation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ARKit(一)ARSession</title>
-    <link href="https://www.sunyazhou.com/2017/06/06/ARKit/"/>
-    <id>https://www.sunyazhou.com/2017/06/06/ARKit/</id>
-    <published>2017-06-06T03:34:37.000Z</published>
-    <updated>2017-07-16T02:02:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
-<p>每年WWDC都发布一堆东西.今天很有震撼性发布了 增强现实<a href="https://developer.apple.com/documentation/arkit" target="_blank" rel="external">ARKit官方文档</a>,机器学习(Core ML) 。。。。等等 今天打算翻译一下Aplle的ARKit.</p>
-<h2 id="AR是啥？"><a href="#AR是啥？" class="headerlink" title="AR是啥？"></a>AR是啥？</h2><p>AR增强现实的一种视觉技术.</p>
-<h2 id="ARKit分6个部分-章节"><a href="#ARKit分6个部分-章节" class="headerlink" title="ARKit分6个部分(章节)"></a>ARKit分6个部分(章节)</h2><ol>
-<li>理解和介绍ARSession</li>
-<li>配置ARSession</li>
-<li>标准视图(Standard Views)</li>
-<li>自定义视图(Custom Views)</li>
-<li>真实世界对象和位置(Real-World Objects and Positions)</li>
-<li>相机摄像头和场景细节(Camera and Scene Details)  </li>
-</ol>
-<blockquote>
-<p>第一部分对Seeson介绍了一下<br>第二部分介绍配置<br>第三部分使用相关的<a href="https://developer.apple.com/documentation/arkit/arscnview?language=objc" target="_blank" rel="external">ARSCNView</a>和<a href="https://developer.apple.com/documentation/arkit/arskview?language=objc" target="_blank" rel="external">ARSKView</a><br>第四部分介绍自定义View<br>第五部分介绍<code>ARAnchor</code>(锚点)、<code>ARPlaneAnchor</code>(平面锚点和射世界坐标转换)、<code>ARHitTestResult</code>(真实世界的点在摄像头中处理)<br>第六部分介绍<code>ARFrame</code>(视频图片帧)、<code>ARCamera</code>(摄像头)、<code>ARLightEstimate</code>(估算场景照明的灯光等)</p>
-</blockquote>
-<p>本章介绍从ARSession开始</p>
-<h3 id="1-ARSession"><a href="#1-ARSession" class="headerlink" title="1. ARSession"></a>1. ARSession</h3><p><a href="https://developer.apple.com/documentation/arkit/arsession?language=objc" target="_blank" rel="external">ARSession</a>这是一个单例对象,用于管理 <strong>增强现实体验所需要的设备相机(摄像头)和运动处理</strong>的会话</p>
-<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>一个<code>ARSession</code>对象坐标的主要过程是<code>ARKit</code>执行过程，代表您创建一个增强现实体验。这些过程包括读取数据从设备的运动传感硬件，控制设备的内置摄像头，并对捕获的相机图像进行图像分析。该会话综合所有这些结果，以建立真实世界的空间，设备栖息和虚拟空间，你模型AR内容之间的对应关系。</p>
-<p>每一个用<code>ARKit</code>构建的<code>AR体验</code>要求只能有一个单独的<code>ARSession</code>对象.如果我们用<a href="https://developer.apple.com/documentation/arkit/arscnview?language=objc" target="_blank" rel="external">ARSCNView</a>和<a href="https://developer.apple.com/documentation/arkit/arskview?language=objc" target="_blank" rel="external">ARSKView</a>简单构建<code>AR</code>体验的一部分时,这个个view对象就包含了一个<code>ARSession</code>对象. 如果我们需要为<code>AR内容</code>构建自定义渲染,我们需要自己实例化并持有<code>ARSession</code>对象.</p>
-<p>运行该会话需要如下:</p>
-<ul>
-<li>ARSessionConfiguration 对象实例</li>
-<li>或者ARWorldTrackingSessionConfiguration 实例对象</li>
-</ul>
-<p>这些类决定<code>ARKit</code>如何跟踪设备的位置和相对真实的世界的运动轨迹,从而影响你可以创建AR体验的种类</p>
-<blockquote>
-<p><code>ARWorldTrackingSessionConfiguration</code>:<code>ARSessionConfiguration</code>(继承关系)</p>
-</blockquote>
-<h3 id="配置ARSession"><a href="#配置ARSession" class="headerlink" title="配置ARSession"></a>配置ARSession</h3><p>开始运行AR <code>runWithConfiguration:options:</code>方法</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)runWithConfiguration:(ARSessionConfiguration *)configuration </div><div class="line">                     options:(ARSessionRunOptions)options;</div></pre></td></tr></table></figure>
-<p><code>ARSessionRunOptions</code> 枚举</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, ARSessionRunOptions) &#123;</div><div class="line">    ARSessionRunOptionResetTracking           = (<span class="number">1</span> &lt;&lt; <span class="number">0</span>),</div><div class="line">    ARSessionRunOptionRemoveExistingAnchors   = (<span class="number">1</span> &lt;&lt; <span class="number">1</span>)</div><div class="line">&#125; <span class="built_in">NS_SWIFT_NAME</span>(ARSession.RunOptions);</div></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>ARSessionRunOptionResetTracking  不会基于上次配置信息持续 设备方向和运动轨迹</li>
-<li>ARSessionRunOptionRemoveExistingAnchors 这个会话的上次配置中被关联的任何锚点对象都会被移除</li>
-</ul>
-</blockquote>
-<h4 id="configuration配置"><a href="#configuration配置" class="headerlink" title="configuration配置"></a><code>configuration</code>配置</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) ARSessionConfiguration *configuration;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>为<code>ARSession</code>定义移动和场景轨迹行为的对象</p>
-</blockquote>
-<p><code>pause</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)pause;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>暂停会话</p>
-</blockquote>
-<h5 id="Responding-to-AR-Updates-实时响应AR更新"><a href="#Responding-to-AR-Updates-实时响应AR更新" class="headerlink" title="Responding to AR Updates(实时响应AR更新)"></a>Responding to AR Updates(实时响应AR更新)</h5><p>delegate 接收ARSession视频捕捉图片和轨迹信息,或会话状态变化</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span>&lt;ARSessionDelegate&gt; delegate;</div></pre></td></tr></table></figure>
-<p>指定代理对象回调的队列<br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">dispatch_queue_t</span> delegateQueue;</div></pre></td></tr></table></figure></p>
-<h4 id="ARSessionDelegate"><a href="#ARSessionDelegate" class="headerlink" title="ARSessionDelegate"></a>ARSessionDelegate</h4><p>如果像直接和会话交互实现此协议方法使用<code>ARFrame</code>对象直接实现或者轨迹锚点对象(ARAnchor)的变化.一般实现如下协议都在我们构建一个自定义现实AR内容的view的情况下。如果你现实的内容使用了<code>SceneKit</code>或<code>SpriteKit</code>那么可以实现<code>ARSCNViewDelegate</code>代理它会提供给你相关的和这个<code>ARSessionDelegate</code>类似的信息</p>
-<p>这个<code>ARSessionDelegate</code>代理继承<code>ARSessionObserver</code>,所以可以从回调中获取会话状态发生变化的信息.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ARSessionDelegate</span> &lt;<span class="title">ARSessionObserver</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="comment">//捕获的一帧图片+AR信息</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateFrame:(ARFrame *)frame;</div><div class="line"></div><div class="line"><span class="comment">// 1个/多个锚点被添加</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didAddAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">// 会话已经调整了所有锚点</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didUpdateAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="comment">// 锚点已经被移出</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didRemoveAnchors:(<span class="built_in">NSArray</span>&lt;ARAnchor*&gt;*)anchors;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<h4 id="ARSessionObserver"><a href="#ARSessionObserver" class="headerlink" title="ARSessionObserver"></a>ARSessionObserver</h4><h5 id="Responding-to-Tracking-Quality-Changes-轨迹质量变化的回馈"><a href="#Responding-to-Tracking-Quality-Changes-轨迹质量变化的回馈" class="headerlink" title="Responding to Tracking Quality Changes(轨迹质量变化的回馈)"></a>Responding to Tracking Quality Changes(轨迹质量变化的回馈)</h5><p><code>AR session</code>状态变化</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">设备方向轨迹质量发生变化</div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session </div><div class="line">cameraDidChangeTrackingState:(ARCamera *)camera;</div></pre></td></tr></table></figure>
-<h5 id="Handling-Interruptions-处理中断"><a href="#Handling-Interruptions-处理中断" class="headerlink" title="Handling Interruptions(处理中断)"></a>Handling Interruptions(处理中断)</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//临时停止帧处理和跟踪设备的方向位置(类似音频会话的打断处理)</span></div><div class="line">- (<span class="keyword">void</span>)sessionWasInterrupted:(ARSession *)session;</div><div class="line"></div><div class="line"><span class="comment">//恢复刚才的操作</span></div><div class="line">- (<span class="keyword">void</span>)sessionInterruptionEnded:(ARSession *)session;</div></pre></td></tr></table></figure>
-<h5 id="Handling-Session-Failure-处理会话失败"><a href="#Handling-Session-Failure-处理会话失败" class="headerlink" title="Handling Session Failure(处理会话失败)"></a>Handling Session Failure(处理会话失败)</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//会话停止之后失败回调</span></div><div class="line">- (<span class="keyword">void</span>)session:(ARSession *)session </div><div class="line">didFailWithError:(<span class="built_in">NSError</span> *)error;</div></pre></td></tr></table></figure>
-<h3 id="实时AR数据-更新"><a href="#实时AR数据-更新" class="headerlink" title="实时AR数据 更新"></a>实时AR数据 更新</h3><ul>
-<li>currentFrame(ARFrame)当前帧</li>
-<li>addAnchor: 添加锚点(ARAnchor)</li>
-<li>removeAnchor:移出锚点(ARAnchor)</li>
-</ul>
-<blockquote>
-<p>ARAnchor锚点是在AR会话的轨迹上的</p>
-</blockquote>
-<h3 id="ARSession-实例方法"><a href="#ARSession-实例方法" class="headerlink" title="ARSession 实例方法"></a>ARSession 实例方法</h3><ul>
-<li>runWithConfiguration: (同上介绍不赘述)</li>
-</ul>
-<p><strong>以上是整个ARSession的介绍</strong></p>
-<p>希望后续文章给出相关demo</p>
-<p>全文完</p>
-<p><a href="https://developer.apple.com/documentation?changes=latest_minor" target="_blank" rel="external">iOS11所有改动</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.gi
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
@@ -1187,190 +1583,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Access privacy-sensitive data 隐私及敏感数据访问权限</title>
-    <link href="https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/"/>
-    <id>https://www.sunyazhou.com/2017/03/20/Access-privacy-sensitive-data-private-access-permission/</id>
-    <published>2017-03-20T02:54:40.000Z</published>
-    <updated>2017-03-29T23:56:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
-<blockquote>
-<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
-</blockquote>
-<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
-<p>私有数据的框架列表可是个不小的东西:  </p>
-<blockquote>
-<p>通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
-</blockquote>
-<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="external">这个大神</a></p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;!-- 🖼 Photo Library --&gt;</div><div class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📷 Camera --&gt;</div><div class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎤 Microphone --&gt;</div><div class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location --&gt;</div><div class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location When In Use --&gt;</div><div class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📍 Location Always --&gt;</div><div class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📆 Calendars --&gt;</div><div class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ⏰ Reminders --&gt;</div><div class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📒 Contacts --&gt;</div><div class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏊 Motion --&gt;</div><div class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Update --&gt;</div><div class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 💊 Health Share --&gt;</div><div class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</div><div class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🎵 Media Library --&gt;</div><div class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📱 Siri --&gt;</div><div class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 🏡 HomeKit --&gt;</div><div class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📻 SpeechRecognition --&gt;</div><div class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</div><div class="line"></div><div class="line">&lt;!-- 📺 VideoSubscriber --&gt;</div><div class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This app has crashed because it attempted to acce
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Learning AV Foundation(二)AVAudioPlayer</title>
-    <link href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/"/>
-    <id>https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/</id>
-    <published>2017-03-17T02:26:06.000Z</published>
-    <updated>2017-07-01T23:38:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stock-photo-55571408.jpg" alt="AVAudioPlayer"></p>
-<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章<br>本期的内容是<code>AVAudioPlayer</code></p>
-<h2 id="音频知识基础"><a href="#音频知识基础" class="headerlink" title="音频知识基础  "></a>音频知识基础  </h2><blockquote>
-<p>音频文件的生成过程是将声音信息<strong>采样</strong>、<strong>量化</strong>和<strong>编码</strong>产生的数字信号的过程，<strong>人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ</strong>，因此音频文件格式的最大带宽是20KHZ。根据<a href="https://zh.wikipedia.org/wiki/%E5%A5%88%E5%A5%8E%E6%96%AF%E7%89%B9%E9%A2%91%E7%8E%87" target="_blank" rel="external">奈奎斯特</a>的理论，只有采样频率高于声音信号最高频率的两倍时，才能把数字信号表示的声音还原成为原来的声音，所以音频文件的采样率一般在<strong>40~50KHZ</strong>，比如最常见的CD音质采样率<strong>44.1KHZ</strong>。 (所以一般大家都觉得CD音质是最好的.) 对声音进行采样、量化过程被称为<a href="https://zh.wikipedia.org/wiki/%E8%84%88%E8%A1%9D%E7%B7%A8%E8%99%9F%E8%AA%BF%E8%AE%8A" target="_blank" rel="external">脉冲编码调制</a>（Pulse Code Modulation），简称PCM。PCM数据是最原始的音频数据完全无损，所以PCM数据虽然音质优秀但体积庞大，为了解决这个问题先后诞生了一系列的音频格式，这些音频格式运用不同的方法对音频数据进行压缩，其中有无损压缩（ALAC、APE、FLAC）和有损压缩（MP3、AAC、OGG、WMA）两种 来源:<a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">iOS音频播放 (一)：概述</a> by <a href="http://msching.github.io/" target="_blank" rel="external">码农人生</a></p>
-</blockquote>
-<p>–</p>
-<p>我觉得程寅大牛的处理音频说的很明白<br>大神列出一个经典的音频播放流程（以MP3为例）</p>
-<ol>
-<li>读取MP3文件</li>
-<li>解析采样率、码率、时长等信息，分离MP3中的音频帧</li>
-<li>对分离出来的音频帧解码得到PCM数据</li>
-<li>对PCM数据进行音效处理（均衡器、混响器等，非必须）</li>
-<li>把PCM数据解码成音频信号</li>
-<li>把音频信号交给硬件播放</li>
-<li>重复1-6步直到播放完成</li>
-</ol>
-<p>在iOS系统中apple对上述的流程进行了封装并提供了不同层次的接口<br><img src="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.png" alt="">  </p>
-<blockquote>
-<p>这是CoreAudio的接口层次  </p>
-</blockquote>
-<p>下面对其中的中高层接口进行功能说明：</p>
-<ul>
-<li>Audio File Services：读写音频数据，可以完成播放流程中的第2步；</li>
-<li>Audio File Stream Services：对音频进行解码，可以完成播放流程中的第2步；</li>
-<li>Audio Converter services：音频数据转换，可以完成播放流程中的第3步；</li>
-<li>Audio Processing Graph Services：音效处理模块，可以完成播放流程中的第4步；</li>
-<li>Audio Unit Services：播放音频数据：可以完成播放流程中的第5步、第6步；</li>
-<li>Extended Audio File Services：Audio File Services和Audio   </li>
-<li>Converter services的结合体；</li>
-<li>AVAudioPlayer/AVPlayer(AVFoundation)：高级接口，可以完成整个音频播放的过程（包括本地文件和网络流播放，第4步除外）；</li>
-<li>Audio Queue Services：高级接口，可以进行录音和播放，可以完成播放流程中的第3、5、6步；</li>
-<li>OpenAL：用于游戏音频播放，暂不讨论</li>
-</ul>
-<p>可以看到apple提供的接口类型非常丰富，可以满足各种类别类需求：  </p>
-<ul>
-<li><p>如果你只是想实现音频的播放，没有其他需求AVFoundation会很好的满足你的需求。它的接口使用简单、不用关心其中的细节；</p>
-</li>
-<li><p>如果你的app需要对音频进行流播放并且同时存储，那么AudioFileStreamer加AudioQueue能够帮到你，你可以先把音频数据下载到本地，一边下载一边用NSFileHandler等接口读取本地音频文件并交给AudioFileStreamer或者AudioFile解析分离音频帧，分离出来的音频帧可以送给AudioQueue进行解码和播放。如果是本地文件直接读取文件解析即可。（这两个都是比较直接的做法，这类需求也可以用AVFoundation+本地server的方式实现，AVAudioPlayer会把请求发送给本地server，由本地server转发出去，获取数据后在本地server中存储并转送给AVAudioPlayer。另一个比较trick的做法是先把音频下载到文件中，在下载到一定量的数据后把文件路径给AVAudioPlayer播放，当然这种做法在音频seek后就回有问题了。）</p>
-</li>
-<li>如果你正在开发一个专业的音乐播放软件，需要对音频施加音效（均衡器、混响器），那么除了数据的读取和解析以外还需要用到AudioConverter来把音频数据转换成PCM数据，再由AudioUnit+AUGraph来进行音效处理和播放（但目前多数带音效的app都是自己开发音效模块来坐PCM数据的处理，这部分功能自行开发在自定义性和扩展性上会比较强一些。PCM数据通过音效器处理完成后就可以使用AudioUnit播放了，当然AudioQueue也支持直接使对PCM数据进行播放。）。下图描述的就是使用AudioFile + AudioConverter + AudioUnit进行音频播放的流程</li>
-</ul>
-<p><img src="http://msching.github.io/images/iOS-audio/audioUnitPlay.jpg" alt=""></p>
-<p>以上内容均转自<a href="http://msching.github.io/blog/2014/07/07/audio-in-ios/" target="_blank" rel="external">码农人生</a> 希望大神不要介意 如果有问题 我可立即清除</p>
-<h2 id="使用AVAudioPlayer之前对AudioSession简介"><a href="#使用AVAudioPlayer之前对AudioSession简介" class="headerlink" title="使用AVAudioPlayer之前对AudioSession简介"></a>使用<code>AVAudioPlayer</code>之前对AudioSession简介</h2><blockquote>
-<p><code>AVAudioSession</code>负责管理音频会话 它是个单例 在应用程序和操作系统之间负责中间人的角色 <a href="http://msching.github.io/blog/2014/07/08/audio-in-ios-2/" target="_blank" rel="external">AudioSession参考</a> </p>
-</blockquote>
-<p><code>AVAudioSession</code>主要功能包括以下几点：</p>
-<ul>
-<li>app是如何使用的音频服务 播放 还是录制 之类的</li>
-<li>控制协调app输入输出设备（比如 麦克风，耳机、手机外放比如蓝牙连接一个外置音响 或airplay）</li>
-<li>协调你的app的音频播放和系统以及其他app行为（例如有电话时需要打断，电话结束时需要恢复，按下静音按钮时是否歌曲也要静音等）</li>
-</ul>
-<p><img src="https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png" alt=""></p>
-<p><em>注：AVAudioSession iOS6以后使用 以前叫AudioSession</em></p>
-<h2 id="如何使用AVAudioPlayer"><a href="#如何使用AVAudioPlayer" class="headerlink" title="如何使用AVAudioPlayer"></a>如何使用<code>AVAudioPlayer</code></h2><p>在我的博客里面我尽量使用code胜过千言万语<br>使用<code>AVAudioPlayer</code>之前需要在<code>AppDelegate</code>里面导入<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code><br>并且启动音频会话</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上边已经介绍了<code>AVAudioSession</code>  </p>
-<p>这里面说一下<code>[session setCategory:AVAudioSessionCategoryPlayback error:&amp;error]</code> 里面的<code>AVAudioSessionCategoryPlayback</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/AVAudioPlayer_category.png" alt="音频会话分类"></p>
-<p>这是这几种分类的列表大家可以看下</p>
-<p>记得开启后台播放<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-43-36.png" alt=""><br>或者在plist里面修改<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-44-05.png" alt="">  </p>
-<p>下面就是创建音频播放器代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;Masonry/Masonry.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"THControlKnob.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"THPlayButton.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="comment">//三个控制推子</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THOrangeControlKnob *panKnob;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THOrangeControlKnob *volumnKnob;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THGreenControlKnob *rateKnob;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THPlayButton *playButton;</div><div class="line"></div><div class="line"><span class="comment">//音乐播放器</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioPlayer</span> *musicPlayer;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">getter</span> = isPlaying) <span class="built_in">BOOL</span> playing; <span class="comment">//播放状态</span></div><div class="line"></div><div class="line"><span class="comment">//无关代码</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *LeftRightRoundDec;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *voiceDec;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *rateDec;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *trackDescrption;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>导入几个第三方控件的类用于音乐播放</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2021-22-43.png" alt=""></p>
-<p>这上边的三个旋钮就是导入的开源库</p>
-<p>下面创建播放器<code>AVAudioPlayer</code><br>创建时需要一个<code>NSURL</code>代表要播放的文件路径 这里简单从bundle中拖了一首歌进去了</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - 创建AVAudioPlayer与播放状态控制</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> 创建音乐播放器</div><div class="line"> </div><div class="line"> @param fileName 文件名</div><div class="line"> @param fileExtension 文件扩展名</div><div class="line"> @return 播放器实例</div><div class="line"> */</div><div class="line">- (<span class="built_in">AVAudioPlayer</span> *)createPlayForFile:(<span class="built_in">NSString</span> *)fileName</div><div class="line">                       withExtension:(<span class="built_in">NSString</span> *)fileExtension&#123;</div><div class="line">    <span class="built_in">NSURL</span> *url = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:fileName withExtension:fileExtension];</div><div class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">AVAudioPlayer</span> *audioPlayer = [[<span class="built_in">AVAudioPlayer</span> alloc] initWithContentsOfURL:url error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (audioPlayer) &#123;</div><div class="line">        audioPlayer.numberOfLoops = <span class="number">-1</span>; <span class="comment">//-1无限循环</span></div><div class="line">        audioPlayer.enableRate = <span class="literal">YES</span>; <span class="comment">//启动倍速控制</span></div><div class="line">        [audioPlayer prepareToPlay];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Error creating player: %@"</span>,[error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> audioPlayer;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>numberOfLoops</code> = -1; 代表本首歌 无限循环 其它常数代表循环次数<br><code>enableRate</code> 代表是否启用倍速调节 0.5x 1.0x 2.0x 等倍速 1.0代表正常速度</p>
-<p>这里说一下<code>[audioPlayer prepareToPlay]</code><br><strong>调用这个函数是为了取得需要的音频硬件并预加载<code>Audio Queue</code>的缓冲区.</strong> 当然也可以不调用这个方法直接调用 <code>[audioPlayer play]</code>，但当  <strong>调用<code>play</code>方法时也会隐性激活</strong>,调用<code>prepareToPlay</code>是为了减少 创建播放器时预设加载和听到声音输出之间的延时 </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithNibName:(<span class="built_in">NSString</span> *)nibNameOrNil bundle:(<span class="built_in">NSBundle</span> *)nibBundleOrNil &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithNibName:nibNameOrNil bundle:nibBundleOrNil];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.musicPlayer == <span class="literal">nil</span>) &#123;</div><div class="line">            <span class="keyword">self</span>.musicPlayer = [<span class="keyword">self</span> createPlayForFile:<span class="string">@"384551_1438267683"</span> withExtension:<span class="string">@"mp3"</span>];</div><div class="line">        &#125;</div><div class="line">        [<span class="keyword">self</span> setupNotifications];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)awakeFromNib&#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.musicPlayer == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.musicPlayer = [<span class="keyword">self</span> createPlayForFile:<span class="string">@"384551_1438267683"</span> withExtension:<span class="string">@"mp3"</span>];</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span> setupNotifications];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>在<code>initWithNibName</code>或<code>awakeFromNib</code>时候调用一下创建播放器的代码<br>这个<code>[self setupNotifications];</code>后面说  </p>
-</blockquote>
-<p>先添加一些常见的方法封装 比如 <strong>播放、暂停、停止</strong><br><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)play &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.musicPlayer == <span class="literal">nil</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">self</span>.playing) &#123;</div><div class="line">        <span class="built_in">NSTimeInterval</span> delayTime = [<span class="keyword">self</span>.musicPlayer deviceCurrentTime] + <span class="number">0.01</span>;</div><div class="line">        [<span class="keyword">self</span>.musicPlayer playAtTime:delayTime];</div><div class="line">        <span class="keyword">self</span>.playing = <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.trackDescrption.text = [<span class="keyword">self</span>.musicPlayer.url absoluteString];</div><div class="line">    [<span class="keyword">self</span> configNowPlayingInfoCenter]; <span class="comment">//配置后台播放的页面信息</span></div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)stop &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.musicPlayer == <span class="literal">nil</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.playing) &#123;</div><div class="line">        [<span class="keyword">self</span>.musicPlayer stop];</div><div class="line">        <span class="keyword">self</span>.musicPlayer.currentTime = <span class="number">0.0</span>f;</div><div class="line">        <span class="keyword">self</span>.playing = <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)pause &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.musicPlayer == <span class="literal">nil</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.playing) &#123;</div><div class="line">        [<span class="keyword">self</span>.musicPlayer pause];</div><div class="line">        <span class="keyword">self</span>.playing = <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里看到<code>[self.musicPlayer deviceCurrentTime] + 0.01</code> 加了 -0.01的延时, 是为了以后大家做播放器的时候 有可能暂停或者歌曲切换时 有可能 向前向后做片段衔接, 也是为了使用 <code>playAtTime</code>去播放 指定位置的音乐用于 意外暂停或者播放上次播放的配置信息使用 这里看到我写了一个<br><code>[self configNowPlayingInfoCenter];</code>配置后台播放的页面信息<br>这个主要用于播放音乐在后台时 锁屏显示的屏幕信息  请看下面代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置锁屏状态，显示的歌曲信息</span></div><div class="line">-(<span class="keyword">void</span>)configNowPlayingInfoCenter&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">NSClassFromString</span>(<span class="string">@"MPNowPlayingInfoCenter"</span>)) &#123;</div><div class="line">        <span class="built_in">NSMutableDictionary</span> *dict = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</div><div class="line">        </div><div class="line">        <span class="comment">//歌曲名称</span></div><div class="line">        [dict setObject:<span class="string">@"歌曲名称"</span> forKey:<span class="built_in">MPMediaItemPropertyTitle</span>];</div><div class="line">        </div><div class="line">        <span class="comment">//演唱者</span></div><div class="line">        [dict setObject:<span class="string">@"演唱者"</span> forKey:<span class="built_in">MPMediaItemPropertyArtist</span>];</div><div class="line">        </div><div class="line">        <span class="comment">//专辑名</span></div><div class="line">        [dict setObject:<span class="string">@"专辑名"</span> forKey:<span class="built_in">MPMediaItemPropertyAlbumTitle</span>];</div><div class="line">        </div><div class="line">        <span class="comment">//专辑缩略图</span></div><div class="line">        <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"sunyazhou"</span>];</div><div class="line">        <span class="built_in">MPMediaItemArtwork</span> *artwork = [[<span class="built_in">MPMediaItemArtwork</span> alloc] initWithImage:image];</div><div class="line">        [dict setObject:artwork forKey:<span class="built_in">MPMediaItemPropertyArtwork</span>];</div><div class="line">        </div><div class="line">        <span class="comment">//音乐剩余时长</span></div><div class="line">        [dict setObject:@<span class="number">20</span> forKey:<span class="built_in">MPMediaItemPropertyPlaybackDuration</span>];</div><div class="line">        </div><div class="line">        <span class="comment">//音乐当前播放时间 在计时器中修改</span></div><div class="line">       <span class="comment">// [dict setObject:[NSNumber numberWithDouble:100.0] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];</span></div><div class="line">        </div><div class="line">        <span class="comment">//设置锁屏状态下屏幕显示播放音乐信息</span></div><div class="line">        [[<span class="built_in">MPNowPlayingInfoCenter</span> defaultCenter] setNowPlayingInfo:dict];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果需要在计时器中不断刷新锁屏状态下的播放进度条请写如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//计时器修改进度</span></div><div class="line">- (<span class="keyword">void</span>)changeProgress:(<span class="built_in">NSTimer</span> *)sender&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>.player)&#123;</div><div class="line">        <span class="comment">//当前播放时间</span></div><div class="line">        <span class="built_in">NSMutableDictionary</span> *dict = [<span class="built_in">NSMutableDictionary</span> dictionaryWithDictionary:[[<span class="built_in">MPNowPlayingInfoCenter</span> defaultCenter] nowPlayingInfo]];</div><div class="line">        [dict setObject:[<span class="built_in">NSNumber</span> numberWithDouble:<span class="keyword">self</span>.player.currentTime] forKey:<span class="built_in">MPNowPlayingInfoPropertyElapsedPlaybackTime</span>]; <span class="comment">//音乐当前已经过时间</span></div><div class="line">        [[<span class="built_in">MPNowPlayingInfoCenter</span> defaultCenter] setNowPlayingInfo:dict];</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>参考<a href="http://www.iliunian.com/2831.html" target="_blank" rel="external">IOS后台运行 之 后台播放音乐</a> </p>
-</blockquote>
-<p>下面我们来介绍一下<br><code>[self setupNotifications];</code>注册监听 音频意外中断和耳机拔出时要暂停音乐播放<br>实现代码如下</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 播放的通知处理</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)setupNotifications &#123;</div><div class="line">    <span class="built_in">NSNotificationCenter</span> *nsnc = [<span class="built_in">NSNotificationCenter</span> defaultCenter];</div><div class="line">    </div><div class="line">    <span class="comment">//添加意外中断音频播放的通知</span></div><div class="line">    [nsnc addObserver:<span class="keyword">self</span></div><div class="line">             selector:<span class="keyword">@selector</span>(handleInterruption:)</div><div class="line">                 name:<span class="built_in">AVAudioSessionInterruptionNotification</span></div><div class="line">               object:[<span class="built_in">AVAudioSession</span> sharedInstance]];</div><div class="line">    </div><div class="line">    <span class="comment">//添加线路变化通知</span></div><div class="line">    [nsnc addObserver:<span class="keyword">self</span></div><div class="line">             selector:<span class="keyword">@selector</span>(hanldeRouteChange:)</div><div class="line">                 name:<span class="built_in">AVAudioSessionRouteChangeNotification</span></div><div class="line">               object:[<span class="built_in">AVAudioSession</span> sharedInstance]];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><em>注：记得在delloc里面<code>[[NSNotificationCenter defaultCenter] removeObserver:self]</code></em></p>
-<p>意外中断音频发生的场景 例如 听歌过程中来电话或者 按住home键使用siri </p>
-<p>下面是具体方法实现</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 音频意外打断处理</div><div class="line"></div><div class="line"> @param notification 通知信息</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)handleInterruption:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *info = notification.userInfo;</div><div class="line">    <span class="built_in">AVAudioSessionInterruptionType</span> type = [info[<span class="built_in">AVAudioSessionInterruptionTypeKey</span>] unsignedIntegerValue];</div><div class="line">    <span class="keyword">if</span> (type == <span class="built_in">AVAudioSessionInterruptionTypeBegan</span>) &#123;</div><div class="line">        <span class="comment">//Handle AVAudioSessionInterruptionTypeBegan</span></div><div class="line">        [<span class="keyword">self</span> pause];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//Handle AVAudioSessionInterruptionTypeEnded</span></div><div class="line">        <span class="built_in">AVAudioSessionInterruptionOptions</span> options = [info[<span class="built_in">AVAudioSessionInterruptionTypeKey</span>] unsignedIntegerValue];</div><div class="line">        <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">        <span class="comment">//激活音频会话 允许外接音响</span></div><div class="line">        [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span></div><div class="line">                                         withOptions:<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span> error:<span class="literal">nil</span>];</div><div class="line">        [[<span class="built_in">AVAudioSession</span> sharedInstance] setActive:<span class="literal">YES</span> withOptions:<span class="built_in">AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</span> error:&amp;error];</div><div class="line">        <span class="keyword">if</span> (options == <span class="built_in">AVAudioSessionInterruptionOptionShouldResume</span>) &#123;</div><div class="line">            [<span class="keyword">self</span> play];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            [<span class="keyword">self</span> play];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="keyword">self</span>.playButton.selected = <span class="literal">YES</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (error) &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"AVAudioSessionInterruptionOptionShouldResume失败:%@"</span>,[error localizedDescription]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>先说<code>handleInterruption</code>意外情况下中断比如我按住home键使用siri<br>我会收到意外打断的通知当 type == <code>AVAudioSessionInterruptionTypeBegan</code>时 我们停止音乐播放或者暂停.<br>当type != <code>AVAudioSessionInterruptionTypeBegan</code>的时候一定是<code>AVAudioSessionInterruptionTypeEnded</code>这个时候<code>notification.userInfo</code>里面包含一个<code>AVAudioSessionInterruptionOptions</code>值来表明音频会话是否已经重新激活以及是否可以再次播放</p>
-<p><strong><em>注:这个地方遇到个坑</em></strong> 当意外中断时候有时音频会话会很不灵敏 后来发现这种情况下需要重新激活会话 如下代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setActive:<span class="literal">YES</span> withOptions:<span class="built_in">AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</span> error:&amp;error];</div></pre></td></tr></table></figure>
-<p>这里<code>AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</code>是为了通知其它应用会话被我激活了 很多播放器开发者很不讲究 每次从来不用这个方法导致每次别人播放完音频 自己都收不到音频重新播放的信息 建议大家以和为贵, 写良心代码.</p>
-<p>因为我外接的小米蓝牙音响发现还是不好使 最后又补上了<code>AVAudioSessionCategoryOptionAllowBluetooth</code>这个  </p>
-<p><strong>激活音频会话 允许外接音响</strong></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> withOptions:<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span> error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<p>就好使了</p>
-<p>下面说一下耳机插拔或者USB麦克风断开 Apple有个什么<code>Human Interface Guidelines(HIG)</code>相关定义 意思是说当硬件耳机拔出时建议 暂停播放音乐或者麦克风断开时。就是处于静音状态。是为了保密播放内容不被外界听到,不管苹果啥规定 我们都得照办 否则就得被拒。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)hanldeRouteChange:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *info = notification.userInfo;</div><div class="line">    <span class="built_in">AVAudioSessionRouteChangeReason</span> reason = [info[<span class="built_in">AVAudioSessionRouteChangeReasonKey</span>] unsignedIntegerValue];</div><div class="line">    <span class="comment">//老设备不可用</span></div><div class="line">    <span class="keyword">if</span> (reason == <span class="built_in">AVAudioSessionRouteChangeReasonOldDeviceUnavailable</span>) &#123;</div><div class="line">        <span class="built_in">AVAudioSessionRouteDescription</span> *previousRoute = info[<span class="built_in">AVAudioSessionRouteChangePreviousRouteKey</span>];</div><div class="line">        <span class="built_in">AVAudioSessionPortDescription</span> *previousOutput = previousRoute.outputs[<span class="number">0</span>];</div><div class="line">        <span class="built_in">NSString</span> *portType = previousOutput.portType;</div><div class="line">        <span class="keyword">if</span> ([portType isEqualToString:<span class="built_in">AVAudioSessionPortHeadphones</span>]) &#123;</div><div class="line">            [<span class="keyword">self</span> stop];</div><div class="line">            <span class="keyword">self</span>.playButton.selected = <span class="literal">NO</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这需要用<code>AVAudioSessionRouteChangeReasonKey</code>取出线路切换的原因<code>AVAudioSessionRouteChangeReason</code> 原因有这么多</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">AVAudioSessionRouteChangeReason</span>)</div><div class="line">&#123;</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonUnknown</span> = <span class="number">0</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonNewDeviceAvailable</span> = <span class="number">1</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonOldDeviceUnavailable</span> = <span class="number">2</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonCategoryChange</span> = <span class="number">3</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonOverride</span> = <span class="number">4</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonWakeFromSleep</span> = <span class="number">6</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory</span> = <span class="number">7</span>,</div><div class="line">	<span class="built_in">AVAudioSessionRouteChangeReasonRouteConfigurationChange</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">7</span>_0) = <span class="number">8</span></div><div class="line">&#125; <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0);</div></pre></td></tr></table></figure>
-<p>我们需要这个<code>AVAudioSessionRouteChangeReasonOldDeviceUnavailable</code> 判断是否是旧设备<br>通过<code>AVAudioSessionRouteChangePreviousRouteKey</code>拿出</p>
-<p><code>AVAudioSessionRouteDescription</code>描述信息<br><code>previousRoute</code> 在通过<br><code>previousRoute.outputs[0]</code>拿出<code>AVAudioSessionPortDescription</code></p>
-<p>拿出<code>NSString *portType = previousOutput.portType</code></p>
-<p>如果<code>[portType isEqualToString:AVAudioSessionPortHeadphones]</code></p>
-<p>如果是耳机<code>AVAudioSessionPortHeadphones</code>则暂停播放</p>
-<p>以上就是中断和线路切换的一些代码逻辑</p>
-<p>下面我介绍一些好玩的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/IMG_2090.PNG" alt=""></p>
-<p>前面说的一些后台设置信息显示的内容就是上图所示 在锁屏的时候显示</p>
-<p>但是大家一定很奇怪的是怎么实现接收 <strong>锁屏状态下 点击 上一曲 暂停/播放 下一曲等操作</strong></p>
-<p>需要在AppDelegate里面写上</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">AVAudioSession</span> *session = [<span class="built_in">AVAudioSession</span> sharedInstance];</div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="keyword">if</span> (![session setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Category Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![session setActive:<span class="literal">YES</span> error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Activation Error: %@"</span>, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [[<span class="built_in">UIApplication</span> sharedApplication] beginReceivingRemoteControlEvents];</div><div class="line">    [<span class="keyword">self</span> becomeFirstResponder];</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这<code>[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];</code><br>行代码 以及调用自己为 <code>[self becomeFirstResponder];</code>第一响应者 这样写是为了应用响应音频播放 后台切换或者中断的时候更灵敏.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)canBecomeFirstResponder &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后 写上如下代码 处理<strong>锁屏状态下 点击 上一曲 暂停/播放 下一曲等操作</strong></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)remoteControlReceivedWithEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">    <span class="keyword">if</span> (event.type == <span class="built_in">UIEventTypeRemoteControl</span>) &#123;</div><div class="line">        <span class="keyword">switch</span> (event.subtype) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPlay</span>:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"暂停播放"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPause</span>:</div><div class="line">                </div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"继续播放"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlNextTrack</span>:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"下一曲"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="built_in">UIEventSubtypeRemoteControlPreviousTrack</span>:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"上一曲"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>剩余逻辑大家自己填充吧我就不介绍了. </p>
-<p>好了AVAudioPlayer就到这吧！有啥疑问大家可以评论留言都能看到或者指正我的错误。我会及时改正.</p>
-<p>全文完</p>
-<p><strong>文章的最终<a href="https://github.com/sunyazhou13/AVAudioPlayerDemo" target="_blank" rel="external">demo</a></strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stoc
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="Learning AV Foundation" scheme="https://www.sunyazhou.com/tags/Learning-AV-Foundation/"/>
     
   </entry>
   
