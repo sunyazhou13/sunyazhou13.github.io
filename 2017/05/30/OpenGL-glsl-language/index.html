@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲(@sunyazhou13), 一名来自北国冰城的iOS/macOS开发者.现居帝都北京.就职于金山云. 爱好书法,开发5年有余,为往圣续绝学之路从博客开始吧!.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发6年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -86,6 +86,8 @@
               <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
             </ul>
           </nav>
@@ -265,9 +267,12 @@
 </ul>
 <p><code>const</code>: 和C++里差不多，定义不可变常量<br>表示限定的变量在编译时不可被修改.</p>
 <p><code>attribute</code>:是应用程序传给顶点着色器用的<br>不允许声明时初始化  </p>
-<p><code>attribute</code>限定符标记的是一种全局变量,该变量在顶点着色器中是只读（read-only）的，该变量被用作从OpenGL应用程序向顶点着色器中传递参数，因此该限定符仅能用于顶点着色器.  </p>
+<p><code>attribute</code>限定符标记的是一种全局变量,该变量在顶点着色器中是只读（read-only）的，该变量被用作从OpenGL应用程序向顶点着色器中传递参数，因此该限定符仅能用于顶点着色器. </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">attribute变量是只能在vertex shader中使用的变量</div><div class="line">它不能在fragment shader中声明attribute变量，</div><div class="line">也不能被fragment shader中使用）</div><div class="line">在application中，一般用函数glBindAttribLocation（）来绑定每个attribute变量的位置，然后用函数</div><div class="line">glVertexAttribPointer（）为每个attribute变量赋值。</div><div class="line">以下是例子：</div><div class="line">uniform mat4 u_matViewProjection;</div><div class="line">attribute vec4 a_position;</div><div class="line">attribute vec2 a_texCoord0;</div><div class="line">varying vec2 v_texCoord;</div><div class="line">void main(void)</div><div class="line">&#123;</div><div class="line">  gl_Position = u_matViewProjection * a_position;</div><div class="line">  v_texCoord = a_texCoord0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>uniform</code>:一般是应用程序用于设定顶点着色器和片断着色器相关初始化值.不允许声明时初始化.<code>uniform</code>限定符标记的是一种全局变量,该变量对于一个图元（<code>primitive</code>）来说是不可更改的 它可以从<code>OpenGL</code>应用程序中接收传递来的参数  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">uniform变量 外部程序传递给shader的变量.</div><div class="line">函数glUniform**（）函数赋值的.</div><div class="line">shader 中是只读变量,不能被 shader 修改.</div><div class="line">uniform变量一般用来表示：变换矩阵，材质，光照参数和颜色等信息。</div><div class="line">uniform mat4 viewProjMatrix; //投影+视图矩阵</div><div class="line">uniform mat4 viewMatrix;        //视图矩阵</div><div class="line">uniform vec3 lightPosition;     //光源位置</div></pre></td></tr></table></figure>
 <p><code>varying</code>:用于传递顶点着色器的值给片断着色器.它提供了从顶点着色器向片段着色器传递数据的方法，varying限定符可以在顶点着色器中定义变量，然后再传递给光栅化器，光栅化器对数据插值后，再将每个片段的值交给片段着色器.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">varying变量是vertex和fragment shader之间做数据传递用的。</div><div class="line">一般vertex shader修改varying变量的值，</div><div class="line">然后fragment shader使用该varying变量的值。</div><div class="line">因此varying变量在vertex和fragment shader二者之间的声</div><div class="line">明必须是一致的。</div><div class="line">application不能使用此变量。</div><div class="line">以下是例子：</div><div class="line">// Vertex shaderuniform </div><div class="line">mat4 u_matViewProjection;</div><div class="line">attribute vec4 a_position;</div><div class="line">attribute vec2 a_texCoord0;</div><div class="line">varying vec2 v_texCoord; // Varying in vertex shader</div><div class="line">void main(void)</div><div class="line">&#123;  </div><div class="line">  gl_Position = u_matViewProjection * a_position;</div><div class="line">  v_texCoord = a_texCoord0;</div><div class="line">&#125;</div><div class="line">// Fragment shaderprecision </div><div class="line">mediump float;</div><div class="line">varying vec2 v_texCoord; // Varying in fragment shader</div><div class="line">uniform sampler2D s_baseMap;</div><div class="line">uniform sampler2D s_lightMap;</div><div class="line">void main()</div><div class="line">&#123;</div><div class="line">  vec4 baseColor;</div><div class="line">  vec4 lightColor;</div><div class="line">  baseColor = texture2D(s_baseMap, v_texCoord);</div><div class="line">  lightColor = texture2D(s_lightMap, v_texCoord);</div><div class="line">  gl_FragColor = baseColor * (lightColor + 0.25);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><em><strong>注意:以上这几种限定符很重要</strong></em></p>
 <h2 id="限制性"><a href="#限制性" class="headerlink" title="限制性"></a>限制性</h2><ul>
 <li>不能在if-else中声明变量</li>
@@ -312,7 +317,7 @@
            欣赏此文？求鼓励，求支持！
         </span>
         <br>
-      </div>  
+    </div>  
     <div id="donate_guide" class="donate_bar center hidden" >
         <!-- 方式一： 
             ![](/img/Alipay.jpg)
@@ -338,6 +343,7 @@
         }
     </script>
 </div>
+
 <! -- 添加捐赠图标 -->
 
 

@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨，我是孙亚洲(@sunyazhou13), 一名来自北国冰城的iOS/macOS开发者.现居帝都北京.就职于金山云. 爱好书法,开发5年有余,为往圣续绝学之路从博客开始吧!.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发6年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -86,6 +86,8 @@
               <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
             </ul>
           </nav>
@@ -199,7 +201,7 @@
 <p>这种文件夹如何 <code>此文件夹为空且是叶子结点</code> 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 <code>/1/</code> 的话应该就不用创建了.</p>
 <p>还有一种情况  </p>
 <blockquote>
-<p>eg: ~/Downloads/A/B/C/ 里面有个 1.txt<br>路径是: ~/Downloads/A/B/C//A/B/C/1.txt</p>
+<p>eg: ~/Downloads/A/B/C/ 里面有个 1.txt<br>路径是: ~/Downloads/A/B/C/1.txt</p>
 </blockquote>
 <p>一般如果广度优先做上传的话 Downloads、A、B、C分别要发4个http请求<br>如果深度优先发一个上传这个文件~/Downloads/A/B/C//A/B/C/1.txt就可以了，因为一般server都会做 容错处理发现父目录有没有没有就创建之类的逻辑。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
@@ -240,7 +242,7 @@
            欣赏此文？求鼓励，求支持！
         </span>
         <br>
-      </div>  
+    </div>  
     <div id="donate_guide" class="donate_bar center hidden" >
         <!-- 方式一： 
             ![](/img/Alipay.jpg)
@@ -266,6 +268,7 @@
         }
     </script>
 </div>
+
 <! -- 添加捐赠图标 -->
 
 
