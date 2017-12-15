@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发6年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -99,7 +99,7 @@
   <!-- Weibo-->
   
   <li class="navigation__item">
-    <a href="http://weibo.com/AsiaSun1970" title="我的微博" target="_blank">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
       <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
@@ -180,6 +180,27 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/22/macOS-simulate-keyborad-NSEvent/" title="link to post.title">macOS上模拟发送键盘事件</a></h2>
+      <p class="excerpt">
+    
+      
+最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
+
+导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
+创建CGEventSourceRef 事件源对象(注意它不是OC对象,声明的时候对象前边没有*,而且需要用CFRelease()释放内存).
+创建CGEventRef使用CGEventCreateKeyboardEvent,
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/22/macOS-simulate-keyborad-NSEvent/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -384,25 +405,6 @@ username 一般代表提交的本机用户名email@you.com 一般是邮箱地址
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/18/iOS-development-knowledge-point-accumulate/" title="link to post.title">iOS开发知识点积累</a></h2>
-      <p class="excerpt">
-    
-      
-搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航
-
-iOS技
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-18T05:44:57.000Z" class="post-list__meta--date date">2017-01-18</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/18/iOS-development-knowledge-point-accumulate/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -422,7 +424,7 @@ iOS技
 
             <footer class="footer">
     <span class="footer__copyright">
-        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
     </span>
     <span class="footer__copyright">
         基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
@@ -430,7 +432,7 @@ iOS技
     <span class="footer__copyright">
         &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
         使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
-        修改自<a href="http://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
     </span>
 </footer>
 
@@ -440,28 +442,6 @@ iOS技
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="/js/main.js"></script>
 
-     
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-91999509-1', 'auto');
-	ga('send', 'pageview');
-</script>
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-
+    
 </body>
 </html>
