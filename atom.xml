@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-11-25T08:21:09.464Z</updated>
+  <updated>2017-12-15T11:23:13.467Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,145 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>UICollectionViewCell添加KVO</title>
+    <link href="https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/"/>
+    <id>https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/</id>
+    <published>2017-12-15T09:05:10.000Z</published>
+    <updated>2017-12-15T11:23:13.467Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是<strong>如何正确的给一个<code>UICollectionViewCell</code>添加<code>KVO</code>监听</strong>.</p>
+<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>由于目前在开发<a href="https://github.com/ksvc/KSYMediaEditorKit_iOS" target="_blank" rel="external">短视频</a>相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式开发代码,比如最低级的<code>MVC</code>模式,最直白的<code>Objective-C</code>(老实说我都烦透了 OC 这种超级长看着都难受的编程语言,早想用 swift 来玩一把了),所以在开发的技术选型和代码编写过程中都是达到小白最低的理解能力的开发模式,但有时候不得不面对在<em>小白能理解</em>和<em>功能的高级实现</em>之间做妥协.最近开发遇到个问题,如下:</p>
+<blockquote>
+<p>PM 有个需求 要实现在一个屏幕内多个 cell 上随意切换 录制视图并且能随意点击取消,再加上录制完成的视频如果不在选中状态就显示封面,如果在选中状态就继续预览,如果没有录制完的视频并且不在预览的 CELL要显示添加功能.</p>
+</blockquote>
+<p>听完这个需求是不是都晕了,我们来看张我实现完成的图.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/record_demo.gif" alt=""></p>
+<ol>
+<li>录制完的视频取出封面</li>
+<li>正在预览的随时准备录制</li>
+<li>随意能切换 cell 不影响录制视图</li>
+<li>未录制的并且没有已录制完视频文件的 cell 显示 添加按钮</li>
+</ol>
+<p>第一眼看着没啥技术含量都 UI 是吧</p>
+<p>好我们来玩点有技术含量的</p>
+<h4 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h4><p>如果使用传统MVC 模式的话<code>Cell</code>上边显示数据,那<code>model</code>里面是不是要放一个<code>record</code>的实例对象 告诉它 啥时候开始啥时候结束,当然你有更好的方式我就不说了我其实也知道.</p>
+<h4 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h4><p>取出封面很简单让 cell里面存储一下录制完的 URL 就可以了,然后每次调用 UICollectonView 的 <code>reload:</code>方法</p>
+<h4 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h4><p>我们实现录制视图的方式是放在 cell 的一个 subview 上, 正在录制的视图如果 reload 的话 应该会瞬间没了.就算吭哧吭哧实现完开始录制、暂停录制、恢复录制、结束录制… 这活我觉得问题和隐患应该非常多.别想了 不能这么玩</p>
+<h4 id="问题4"><a href="#问题4" class="headerlink" title="问题4"></a>问题4</h4><p>cell的选中和非选中问题,你有没有发现 如果正在录制的 cell 上的 view 是选中的有个红色的框代表当前属于 焦点状态.<br>那录制完成呢.是不是需要重新 reload cell 告诉它当前谁 选中 谁取消,如果点击的是同一个 cell 还要取反操作.如果正在预览是不是再次选中说明要停止预览显示加号或者封面图,想着想着你发现这玩意是个状态机.必须要想好 model 构造,要让model 的参数足够多去控制当前 cell 的选中状态、非选中状态、预览状态、非预览状态、录制状态、非录制状态、录完状态、停止录制状态… 想着想着 太麻烦了 于是我整理出一个状态机的表格 如下:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Cell Status</th>
+<th style="text-align:center">当前cell显示内容</th>
+<th style="text-align:center">其它 cell 显示内容</th>
+<th style="text-align:center">点击当前</th>
+<th style="text-align:center">点击其它选中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">无预览状态</td>
+<td style="text-align:center">显示加号/封面图</td>
+<td style="text-align:center">显示加号/或者封面</td>
+<td style="text-align:center">开始预览</td>
+<td style="text-align:center">切换预览视图</td>
+</tr>
+<tr>
+<td style="text-align:center">正在预览状态</td>
+<td style="text-align:center">预览视频</td>
+<td style="text-align:center">显示加号/或者封面</td>
+<td style="text-align:center">显示加号/或者封面</td>
+<td style="text-align:center">切换预览视图</td>
+</tr>
+<tr>
+<td style="text-align:center">正在录制状态</td>
+<td style="text-align:center">预览视频/播放视频</td>
+<td style="text-align:center">(显示加号或播放视频)/(显示加号或预览视频)</td>
+<td style="text-align:center">无操作(上锁)</td>
+<td style="text-align:center">无操作(上锁)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><em>这些不重要,有这个印象就行了不用仔细看</em></p>
+</blockquote>
+<p>并不是我把问题复杂化,是 PM 的需求太复杂.不得不完整列出所有状态,精简,再精简,让小白开发者也能看懂的 SDK 才是好 SDK.</p>
+<p>其实 其它的问题还有好多 我就不列出来了,好 现在我们来依次解决问题</p>
+<p><strong>其实,综合上述信息来看,归根结底的原因是,实现这个录制随意切换功能等等的交互并不适用于<code>MVC</code>这种传统的玩法.<br>更像是一个<code>MVVM</code>的搞法</strong>,于是我想到了 MVVM 里面的精髓所在.要用<strong>数据驱动视图</strong>.</p>
+<p>上面的4个主要问题不就是因为 model 的状态修改了要通知 cell 变化嘛.那我们使用 model 的状态来控制</p>
+<blockquote>
+<p>注意:<em>如果使用 MVVM 的玩法就不要再去调用 collectionview 的 reload:方法了</em></p>
+</blockquote>
+<p>目前开发实现<code>MVVM</code>的方式主流两种</p>
+<ul>
+<li>RAC</li>
+<li>KVO</li>
+</ul>
+<p>显然<code>RAC</code>太大并不适用于我们 demo,用 KVO 搞一把.(代码有删减)</p>
+<h4 id="第一步定义-model"><a href="#第一步定义-model" class="headerlink" title="第一步定义 model"></a>第一步定义 model</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^CompletionHandler)(<span class="built_in">UIImage</span> * image); <span class="comment">//取出 Image 给 Cell 显示的回调</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>,KSYMultiCanvasModelStatus)&#123;</div><div class="line">    KSYMultiCanvasModelStatusNOPreview = <span class="number">0</span>,<span class="comment">//无预览状态</span></div><div class="line">    KSYMultiCanvasModelStatusINPreview = <span class="number">1</span>,<span class="comment">//正在预览状态</span></div><div class="line">    KSYMultiCanvasModelStatusRecording = <span class="number">2</span> <span class="comment">//正在录制状态</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasModel</span> : <span class="title">NSObject</span> </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSURL</span>  *videoURL; <span class="comment">//存放录制完视频 URL</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span>   isSelected;<span class="comment">//是否是选中</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) KSYMultiCanvasModelStatus modelStatus; <span class="comment">//重要!!!:模型状态用它控制 cell 显示</span></div><div class="line">- (<span class="keyword">void</span>)gengrateImageBySize:(<span class="built_in">CGSize</span>)size</div><div class="line">          completionHandler:(CompletionHandler)handler;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasModel</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">AVAssetImageGenerator</span> *imageGenerator;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYCanvasModel</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)gengrateImageBySize:(<span class="built_in">CGSize</span>)size</div><div class="line">          completionHandler:(CompletionHandler)handler&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.videoURL == <span class="literal">nil</span>) &#123; handler(<span class="literal">nil</span>); &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">AVURLAsset</span> *asset = [<span class="built_in">AVURLAsset</span> assetWithURL:<span class="keyword">self</span>.videoURL];</div><div class="line">    <span class="keyword">self</span>.imageGenerator = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">self</span>.imageGenerator = [<span class="built_in">AVAssetImageGenerator</span> assetImageGeneratorWithAsset:asset];</div><div class="line">    <span class="keyword">self</span>.imageGenerator.maximumSize = size;</div><div class="line">    </div><div class="line">    <span class="built_in">NSError</span> *error=<span class="literal">nil</span>;</div><div class="line">    <span class="built_in">CMTime</span> time= kCMTimeZero;<span class="comment">//CMTime是表示电影时间信息的结构体，第一个参数表示是视频第几秒，第二个参数表示每秒帧数.(如果要活的某一秒的第几帧可以使用CMTimeMake方法)</span></div><div class="line">    <span class="built_in">CMTime</span> actualTime;</div><div class="line">    <span class="built_in">CGImageRef</span> cgImage= [<span class="keyword">self</span>.imageGenerator copyCGImageAtTime:time actualTime:&amp;actualTime error:&amp;error];</div><div class="line">    <span class="keyword">if</span>(error)&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"截取视频缩略图时发生错误，错误信息：%@"</span>,error.localizedDescription);</div><div class="line">        handler(<span class="literal">nil</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CMTimeShow</span>(actualTime);</div><div class="line">    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithCGImage:cgImage];<span class="comment">//转化为UIImage</span></div><div class="line">    <span class="built_in">CGImageRelease</span>(cgImage);</div><div class="line">    handler(image);</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>ok model 大概是这样 .m 文件主要是从视频中取封面图</p>
+<h4 id="第二步定义-cell"><a href="#第二步定义-cell" class="headerlink" title="第二步定义 cell"></a>第二步定义 cell</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"KSYCanvasModel.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *KSYModelKVOStatusContext;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForModelStatus = <span class="string">@"modelStatus"</span>;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForIsSelected = <span class="string">@"isSelected"</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span> : <span class="title">UICollectionViewCell</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIView</span> *canvasImageView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *addImageView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *boundsView;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) KSYCanvasModel *model;</div><div class="line"></div><div class="line"><span class="comment">//注册和移除观察接口</span></div><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context;</div><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath </div><div class="line">               context:(<span class="keyword">void</span> *)context;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span>()</span></div><div class="line"><span class="comment">// 使用 ObservableKeys 保存 keyPath 观察状态，避免重复注册和重复移除（重复移除会导致 crash）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *observableKeySets;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYCanvasCell</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">    </div><div class="line">    <span class="comment">//千万别把 KOV 监听写在这里</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//.,,此处省略了不太相关的代码</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.observableKeySets == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.observableKeySets = [<span class="built_in">NSMutableSet</span> set];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.observableKeySets addObject:keyPath];</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model addObserver:observer</div><div class="line">                 forKeyPath:keyPath</div><div class="line">                    options:options</div><div class="line">                    context:context];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">               context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model removeObserver:observer</div><div class="line">                    forKeyPath:keyPath</div><div class="line">                       context:context];</div><div class="line">    [<span class="keyword">self</span>.observableKeySets removeObject:keyPath];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">                      ofObject:(<span class="keyword">id</span>)object</div><div class="line">                        change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change</div><div class="line">                       context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([KSYKeyPathForModelStatus isEqualToString:keyPath]) &#123;</div><div class="line">        KSYMultiCanvasModelStatus modelStatus = [[change objectForKey:<span class="built_in">NSKeyValueChangeNewKey</span>] integerValue];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"当前状态:%zd"</span>,modelStatus);</div><div class="line">		 <span class="comment">//拿到模型状态然后做适当的处理</span></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>([KSYKeyPathForIsSelected isEqualToString:keyPath])&#123;</div><div class="line">        <span class="comment">//处理是否显示边框</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里要在.h 里面复写 下面这俩个方法 因为要再 ViewController 里面拿到 cell 调用这个方法</p>
+</blockquote>
+<ul>
+<li><code>addObserver:forKeyPath:options:context:</code> 这个方法是系统方法需要复写并对外暴露接口</li>
+<li><code>removeObserver:forKeyPath:context:</code> 这个方法是系统方法需要复写并对外暴露接口</li>
+</ul>
+<p>这里定义了一个上下文对象用于找到识别这个在 cell的监听还有两个要监听的属性(KSYCanvasCell.h 顶部)</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *KSYModelKVOStatusContext;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForModelStatus = <span class="string">@"modelStatus"</span>;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForIsSelected = <span class="string">@"isSelected"</span>;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<strong>为了防止 cell 重复注册导致复用的时候崩溃,这里用<code>NSMutableSet</code>让 model 的观察者只注册一次</strong></p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span>()</span></div><div class="line"><span class="comment">// 使用 ObservableKeys 保存 keyPath 观察状态，避免重复注册和重复移除（重复移除会导致 crash）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *observableKeySets;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>添加的时候做一次check</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.observableKeySets == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.observableKeySets = [<span class="built_in">NSMutableSet</span> set];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.observableKeySets addObject:keyPath];</div><div class="line">    </div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>移除的时候要做一次 check</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">               context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model removeObserver:observer</div><div class="line">                    forKeyPath:keyPath</div><div class="line">                       context:context];</div><div class="line">    [<span class="keyword">self</span>.observableKeySets removeObject:keyPath];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ok cell 大概是这个意思</p>
+<h4 id="第三步在-ViewController里面-适当的位置-注册-移除监听-并在ViewController控制器的生命周期内也做好相关监听的移除和添加"><a href="#第三步在-ViewController里面-适当的位置-注册-移除监听-并在ViewController控制器的生命周期内也做好相关监听的移除和添加" class="headerlink" title="第三步在 ViewController里面 适当的位置 注册/移除监听 并在ViewController控制器的生命周期内也做好相关监听的移除和添加"></a>第三步在 ViewController里面 适当的位置 注册/移除监听 并在ViewController控制器的生命周期内也做好相关监听的移除和添加</h4><p>这里我们需要实现<code>UICollectionViewDelegate</code>的代理协议来调用 cell 的添加 cell 和移除 cell</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView willDisplayCell:(<span class="built_in">UICollectionViewCell</span> *)cell forItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *canvasCell = (KSYCanvasCell *)cell;</div><div class="line">    [canvasCell addObserver:canvasCell</div><div class="line">                 forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                    options:<span class="built_in">NSKeyValueObservingOptionNew</span></div><div class="line">                    context:&amp;KSYModelKVOStatusContext];</div><div class="line">    [canvasCell addObserver:canvasCell</div><div class="line">                 forKeyPath:KSYKeyPathForIsSelected</div><div class="line">                    options:<span class="built_in">NSKeyValueObservingOptionNew</span></div><div class="line">                    context:&amp;KSYModelKVOStatusContext];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didEndDisplayingCell:(<span class="built_in">UICollectionViewCell</span> *)cell forItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *canvasCell = (KSYCanvasCell *)cell;</div><div class="line">    <span class="comment">//状态变化</span></div><div class="line">    [canvasCell removeObserver:canvasCell</div><div class="line">                    forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                       context:&amp;KSYModelKVOStatusContext];</div><div class="line">    <span class="comment">//选中变化</span></div><div class="line">    [canvasCell removeObserver:canvasCell</div><div class="line">                    forKeyPath:KSYKeyPathForIsSelected</div><div class="line">                       context:&amp;KSYModelKVOStatusContext];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你是不是会问为啥写这 </p>
+<p>我来告诉我我遇到的一个坑</p>
+<p>如果你在 下面的方法里写注册 后果不堪设想,因为 cell 是复用的,每次复写 KVO 都是在创建新的对象</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (__kindof <span class="built_in">UICollectionViewCell</span> *)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView cellForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[KSYCanvasCell className] forIndexPath:indexPath];</div><div class="line">    cell.model = [<span class="keyword">self</span>.models objectAtIndex:indexPath.row];</div><div class="line">    <span class="comment">//如果写在这里</span></div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>KVO的实现原理很简单,就是把这个对象的监听属性在底层复写一下,监听两个值之间的变化.KVO 原理相关的就不多废话了,这都是家常便饭了</p>
+<p>我一开始写在了 cell 的 awakeFromNib: 因为都是 cell 拖拽的控件,但是麻烦真是接踵而至,各种崩溃</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">	 <span class="comment">//别写在这里    </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你不信邪可以试试.</p>
+<p>最后我们在控制器的适当位置修改 model 的状态这样就做到了实时更新 cell</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didSelectItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    <span class="comment">//------------处理点击-----------</span></div><div class="line">    KSYCanvasModel *lastModel = [<span class="keyword">self</span>.models objectAtIndex:<span class="keyword">self</span>.lastSelectedIndexPath.row];</div><div class="line">    KSYCanvasModel *selectedModel = [<span class="keyword">self</span>.models objectAtIndex:indexPath.row];</div><div class="line">    <span class="built_in">BOOL</span> clickSameCell = (<span class="keyword">self</span>.lastSelectedIndexPath == indexPath);</div><div class="line">    <span class="keyword">if</span> (clickSameCell) &#123;</div><div class="line">        <span class="comment">//选择同一个cell</span></div><div class="line">        selectedModel.isSelected = !selectedModel.isSelected;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        lastModel.isSelected = <span class="literal">NO</span>;</div><div class="line">        selectedModel.isSelected = <span class="literal">YES</span>;   </div><div class="line">    &#125;</div><div class="line">    selectedModel.modelStatus = KSYMultiCanvasModelStatusRecording; <span class="comment">//这就会出发 cell的 KVO 了</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后别忘了在ViewController的生命周期添加和移出观察者</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">    [<span class="keyword">self</span>.canvasCollectionView.visibleCells enumerateObjectsUsingBlock:^(KSYCanvasCell *cell, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        [cell removeObserver:cell</div><div class="line">                  forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                     context:&amp;KSYModelKVOStatusContext];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样的实现过程就 解决了 上边提到的 问题 1、2、3、4</p>
+<p>这也是最精简的实现方式,以小白的开发视角 来看也需要熟悉一点 MVVM 了.这都是成了 iOS 最标配了.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>再开发过程中无论遇到什么样的问题,有可能它很简单,也有可能它很麻烦.仔细研究一下一定会有更好的方式来实现.有时候一个解决一个问题可能需要想好几天,但是实现只需要几分钟.</p>
+<p>demo我就不写了 可以参考<a href="https://github.com/ksvc/KSYMediaEditorKit_iOS" target="_blank" rel="external">我们的短视频 demo</a> multicanvas target</p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>适配iPhone X</title>
     <link href="https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/"/>
     <id>https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/</id>
     <published>2017-11-03T03:44:44.000Z</published>
-    <updated>2017-11-25T08:21:09.464Z</updated>
+    <updated>2017-11-24T10:55:37.752Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,<br>相信拿到 iPhone X的感觉是下面这样的:</p>
@@ -245,7 +379,7 @@
     <link href="https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/"/>
     <id>https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/</id>
     <published>2017-10-31T03:32:17.000Z</published>
-    <updated>2017-10-31T12:55:31.166Z</updated>
+    <updated>2017-10-31T06:55:18.657Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="external">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
 <blockquote>
@@ -320,7 +454,7 @@
     <link href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/"/>
     <id>https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/</id>
     <published>2017-10-25T08:10:35.000Z</published>
-    <updated>2017-10-31T12:55:31.166Z</updated>
+    <updated>2017-10-25T08:37:17.311Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="external">喵神发表了一篇博文 关于 Swift Error 的分类</a>  </p>
@@ -368,7 +502,7 @@
     <link href="https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/"/>
     <id>https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/</id>
     <published>2017-10-16T05:00:30.000Z</published>
-    <updated>2017-11-25T08:21:09.463Z</updated>
+    <updated>2017-11-01T01:31:52.247Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
@@ -479,7 +613,7 @@
     <link href="https://www.sunyazhou.com/2017/09/30/20170930DeviceCheck/"/>
     <id>https://www.sunyazhou.com/2017/09/30/20170930DeviceCheck/</id>
     <published>2017-09-30T01:45:25.000Z</published>
-    <updated>2017-10-09T14:42:28.420Z</updated>
+    <updated>2017-09-30T03:25:11.652Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dd5e142392f5ea3756cb8877e134b5334e659738/20170930DeviceCheck/DeviceCheck.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS11 苹果改动了一个比较引开发者关注的亮点</p>
@@ -624,7 +758,7 @@
     <link href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/"/>
     <id>https://www.sunyazhou.com/2017/09/29/20170929markdown-table/</id>
     <published>2017-09-29T10:01:08.000Z</published>
-    <updated>2017-10-09T14:42:28.419Z</updated>
+    <updated>2017-10-26T01:55:10.230Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20170929markdown-table/table.png" alt=""></p>
 <p>以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格</p>
@@ -718,7 +852,7 @@
     <link href="https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/"/>
     <id>https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/</id>
     <published>2017-09-01T15:17:09.000Z</published>
-    <updated>2017-09-01T16:25:40.000Z</updated>
+    <updated>2017-09-04T01:17:59.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png" alt=""></p>
 <p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求 </p>
@@ -785,7 +919,7 @@
     <link href="https://www.sunyazhou.com/2017/08/30/ARKit/"/>
     <id>https://www.sunyazhou.com/2017/08/30/ARKit/</id>
     <published>2017-08-30T06:50:43.000Z</published>
-    <updated>2017-08-31T13:17:32.000Z</updated>
+    <updated>2017-08-30T07:26:24.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
 <p>本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.<br>期间有任何问题请大家集思广益,多多指教. </p>
@@ -1093,7 +1227,7 @@
     <link href="https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/"/>
     <id>https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/</id>
     <published>2017-08-07T12:36:46.000Z</published>
-    <updated>2017-08-28T12:43:20.000Z</updated>
+    <updated>2017-08-08T01:29:17.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV-Foundation-AVAsset-Senior3.2/audio-artwork.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先上图 </p>
@@ -1209,7 +1343,7 @@
     <link href="https://www.sunyazhou.com/2017/07/13/ios11-new-skills/"/>
     <id>https://www.sunyazhou.com/2017/07/13/ios11-new-skills/</id>
     <published>2017-07-13T02:55:15.000Z</published>
-    <updated>2017-07-16T02:02:39.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/what_is_news_in_ios11.png" alt=""></p>
 <h2 id="可用性检查API"><a href="#可用性检查API" class="headerlink" title="可用性检查API"></a>可用性检查API</h2><p>在swift代码中经常可以看到 某个API 适用于 iOS10.0 </p>
@@ -1273,7 +1407,7 @@
     <link href="https://www.sunyazhou.com/2017/07/04/arc4random-color/"/>
     <id>https://www.sunyazhou.com/2017/07/04/arc4random-color/</id>
     <published>2017-07-04T09:45:28.000Z</published>
-    <updated>2017-07-16T02:02:47.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> hue = ( arc4random() % <span class="number">256</span> / <span class="number">256.0</span> );  <span class="comment">//  0.0 to 1.0</span></div><div class="line">   <span class="built_in">CGFloat</span> saturation = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from white</span></div><div class="line">   <span class="built_in">CGFloat</span> brightness = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from black</span></div><div class="line">   <span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithHue:hue saturation:saturation brightness:brightness alpha:<span class="number">1</span>];</div></pre></td></tr></table></figure>
 ]]></content>
@@ -1300,7 +1434,7 @@
     <link href="https://www.sunyazhou.com/2017/06/26/get-sandbox-path-ios/"/>
     <id>https://www.sunyazhou.com/2017/06/26/get-sandbox-path-ios/</id>
     <published>2017-06-26T08:44:22.000Z</published>
-    <updated>2017-07-16T02:01:48.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 获取沙盒主目录路径</span></div><div class="line"><span class="built_in">NSString</span> *homeDir = <span class="built_in">NSHomeDirectory</span>();</div><div class="line"><span class="comment">// 获取Documents目录路径</span></div><div class="line"><span class="built_in">NSString</span> *docDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取Library的目录路径</span></div><div class="line"><span class="built_in">NSString</span> *libDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line"><span class="comment">// 获取Caches目录路径</span></div><div class="line"><span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取tmp目录路径</span></div><div class="line"><span class="built_in">NSString</span> *tmpDir =  <span class="built_in">NSTemporaryDirectory</span>();</div></pre></td></tr></table></figure>
 ]]></content>
@@ -1325,7 +1459,7 @@
     <link href="https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/"/>
     <id>https://www.sunyazhou.com/2017/06/26/rsa-universal-cross-platform-ios-android-php/</id>
     <published>2017-06-26T02:42:47.000Z</published>
-    <updated>2017-08-28T12:43:20.000Z</updated>
+    <updated>2017-08-28T11:45:25.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/rsa-universal-cross-platform-ios-android-php/rsa-red-logo.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先膜拜一下 RSA的作者</p>
@@ -1397,7 +1531,7 @@
     <link href="https://www.sunyazhou.com/2017/06/20/enable-static-analyer/"/>
     <id>https://www.sunyazhou.com/2017/06/20/enable-static-analyer/</id>
     <published>2017-06-20T07:07:33.000Z</published>
-    <updated>2017-09-09T00:04:13.000Z</updated>
+    <updated>2017-09-07T09:08:46.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/static.png" alt=""></p>
 <h2 id="Clang-静态分析器"><a href="#Clang-静态分析器" class="headerlink" title="Clang 静态分析器"></a>Clang 静态分析器</h2><p>Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。</p>
@@ -1434,7 +1568,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/"/>
     <id>https://www.sunyazhou.com/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/</id>
     <published>2017-06-16T08:40:26.000Z</published>
-    <updated>2017-07-16T02:01:35.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png" alt=""></p>
 <p>最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码</p>
@@ -1471,7 +1605,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/Xcode9-debug-via-wireless/"/>
     <id>https://www.sunyazhou.com/2017/06/16/Xcode9-debug-via-wireless/</id>
     <published>2017-06-16T03:07:46.000Z</published>
-    <updated>2017-07-16T01:59:30.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行</p>
 <p>看一张图<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/debug.gif" alt=""></p>
@@ -1510,7 +1644,7 @@
     <link href="https://www.sunyazhou.com/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/"/>
     <id>https://www.sunyazhou.com/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/</id>
     <published>2017-06-16T02:11:19.000Z</published>
-    <updated>2017-11-25T08:21:09.465Z</updated>
+    <updated>2017-11-01T08:49:42.579Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2009-18-10.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇讲述的<code>AVAsset</code>元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于<code>AVAsset</code>的一个属性。<code>AV Foundation</code>通过<code>AVAsset</code>封装来处理各种音频的元数据, <strong>比如从mp3文件中解析出来封面图(artwork)</strong>等。 本章的具体内容如下:</p>
@@ -1678,7 +1812,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/"/>
     <id>https://www.sunyazhou.com/2017/05/30/OpenGL-glsl-language/</id>
     <published>2017-05-30T12:32:33.000Z</published>
-    <updated>2017-11-25T08:21:09.466Z</updated>
+    <updated>2017-11-21T02:24:48.478Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/OpenGL-glsl-language/opengl-vbo-shader-glsl-vao-gpu.jpg" alt=""></p>
 <p>最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.</p>
@@ -1815,7 +1949,7 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
     <link href="https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/"/>
     <id>https://www.sunyazhou.com/2017/05/10/NSTableRowView-mouse-track-color/</id>
     <published>2017-05-10T07:24:20.000Z</published>
-    <updated>2017-07-16T02:00:26.000Z</updated>
+    <updated>2017-07-17T01:47:06.000Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"BDRowView.h"</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]</span></div><div class="line"><span class="meta">#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">BDRowView</span> ()</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">strong</span>) <span class="built_in">NSTrackingArea</span> *trackingArea;</div><div class="line"><span class="keyword">@property</span>(<span class="keyword">assign</span>) <span class="built_in">BOOL</span> isHovering;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">BDRowView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    [<span class="keyword">super</span> drawRect:dirtyRect];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)drawSelectionInRect:(<span class="built_in">NSRect</span>)dirtyRect &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.selectionHighlightStyle != <span class="built_in">NSTableViewSelectionHighlightStyleNone</span>) &#123;</div><div class="line">        <span class="built_in">NSRect</span> selectionRect = <span class="built_in">NSInsetRect</span>(<span class="keyword">self</span>.bounds, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        [k_SELECTED_COLOR setStroke];</div><div class="line">        [k_SELECTED_COLOR setFill];</div><div class="line">        <span class="built_in">NSBezierPath</span> *selectionPath = [<span class="built_in">NSBezierPath</span> bezierPathWithRoundedRect:selectionRect xRadius:<span class="number">0</span> yRadius:<span class="number">0</span>];</div><div class="line">        [selectionPath fill];</div><div class="line">        [selectionPath stroke];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)updateTrackingAreas</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>.trackingArea != <span class="literal">nil</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> removeTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> opts = (<span class="built_in">NSTrackingMouseEnteredAndExited</span> | <span class="built_in">NSTrackingMouseMoved</span> | <span class="built_in">NSTrackingActiveAlways</span>);</div><div class="line">    <span class="keyword">self</span>.trackingArea = [ [<span class="built_in">NSTrackingArea</span> alloc] initWithRect:[<span class="keyword">self</span> bounds]</div><div class="line">                                                      options:opts</div><div class="line">                                                        owner:<span class="keyword">self</span></div><div class="line">                                                     userInfo:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">self</span> addTrackingArea:<span class="keyword">self</span>.trackingArea];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseEntered:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">YES</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">YES</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)mouseExited:(<span class="built_in">NSEvent</span> *)theEvent &#123;</div><div class="line">    <span class="keyword">self</span>.isHovering = <span class="literal">NO</span>;</div><div class="line">    [<span class="keyword">self</span> setBackgroundColor:[<span class="keyword">self</span> getBackgroundColor:<span class="literal">NO</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="built_in">NSColor</span>*)getBackgroundColor:(<span class="built_in">BOOL</span>)isSelected</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(isSelected) &#123;</div><div class="line">        <span class="keyword">return</span> k_SELECTED_COLOR;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> k_NORMAL_COLOR;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 ]]></content>
@@ -1832,48 +1966,6 @@ __`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何在macOS/MAC OS X上创建替身文件</title>
-    <link href="https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/"/>
-    <id>https://www.sunyazhou.com/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/</id>
-    <published>2017-05-09T09:41:17.000Z</published>
-    <updated>2017-07-16T02:01:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg" alt=""></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
-<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><p>如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作</p>
-<p>创建软链接可以使用<code>NSFileManager</code>中的两个方法:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtPath:(<span class="built_in">NSString</span> *)path withDestinationPath:(<span class="built_in">NSString</span> *)destPath error:(<span class="built_in">NSError</span> **)error ;</div><div class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtURL:(<span class="built_in">NSURL</span> *)url withDestinationURL:(<span class="built_in">NSURL</span> *)destURL error:(<span class="built_in">NSError</span> **)error;</div></pre></td></tr></table></figure>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>最近在开发插件 需要把插件从工程目录 copy到 系统的插件目录<code>~/Library/Internet Plug-Ins/</code> (<a href="http://www.tanhao.me/pieces/1084.html/" target="_blank" rel="external">这里用了老谭的插件举例</a>)</p>
-<p>如下图:<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-05.png" alt=""></p>
-<p>本想把它直接copy过去, 但可能存在以后升级问题,后续判断各种版本 删除旧的版本逻辑处理比较麻烦,于是想到用替身的方式实现</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-42.png" alt=""></p>
-<p>使用这种方式创建替身:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//工程目录文件</span></div><div class="line"><span class="built_in">NSString</span> *homePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"NPAPI_Download_Plugin"</span> ofType:<span class="string">@"plugin"</span>];</div><div class="line"><span class="comment">//插件在系统的目录位置</span></div><div class="line"><span class="built_in">NSString</span> *strHome = [<span class="built_in">NSString</span> stringWithUTF8String:getenv(<span class="string">"HOME"</span>)];</div><div class="line"><span class="built_in">NSString</span> *desc = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/Library/Internet Plug-Ins/NPAPI_Download_Plugin.plugin"</span>,strHome];</div><div class="line"><span class="built_in">NSFileManager</span> *fm = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line"><span class="comment">//创建替身代码</span></div><div class="line">[fm createSymbolicLinkAtPath:desc withDestinationPath:homePath error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<p><em>注意:<code>createSymbolicLinkAtPath:withDestinationPath:error:</code>方法 第一个参数<code>LinkAtPath</code>是<code>desc</code>,它是放替身文件的位置. 第二个参数<code>DestinationPath</code>是<code>homePath</code>代表本地文件的原始路径,这里用工程目录的文件是为了方便,切记不要和 copyItem方法搞混</em></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-04-11.png" alt=""></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>主要涉及的一些macOS开发技巧, 希望不足之处大家多多指教.</p>
-<p>参考:<a href="http://www.tanhao.me/pieces/597.html/" target="_blank" rel="external">详解OSX(Unix)中的Hard Link与Symbolic Link(硬连接与软连接)</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/s
-    
-    </summary>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/categories/macOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="如何" scheme="https://www.sunyazhou.com/tags/%E5%A6%82%E4%BD%95/"/>
     
   </entry>
   
