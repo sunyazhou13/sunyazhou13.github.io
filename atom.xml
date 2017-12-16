@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2017-12-15T12:29:48.463Z</updated>
+  <updated>2017-12-16T11:00:18.710Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/"/>
     <id>https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/</id>
     <published>2017-12-15T09:05:10.000Z</published>
-    <updated>2017-12-15T12:29:48.463Z</updated>
+    <updated>2017-12-16T11:00:18.710Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是<strong>如何正确的给一个<code>UICollectionViewCell</code>添加<code>KVO</code>监听</strong>.</p>
@@ -129,7 +129,7 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">    [<span class="keyword">self</span>.canvasCollectionView.visibleCells enumerateObjectsUsingBlock:^(KSYCanvasCell *cell, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        [cell removeObserver:cell</div><div class="line">                  forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                     context:&amp;KSYModelKVOStatusContext];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样的实现过程就 解决了 上边提到的 问题 1、2、3、4</p>
 <p>这也是最精简的实现方式,以小白的开发视角 来看也需要熟悉一点 MVVM 了.这都是成了 iOS 最标配了.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>再开发过程中无论遇到什么样的问题,有可能它很简单,也有可能它很麻烦.仔细研究一下一定会有更好的方式来实现.有时候一个解决一个问题可能需要想好几天,但是实现只需要几分钟.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这种偏向MVVM模式开发的方式 我个人觉得还是不错的,虽然现在各种MVVM格式早已经烂大街了,但只要想起来,用起来,能用简单直白的方式解决问题,它就是好的开发设计模式.当然本章也主要讲了一些技巧而已,不足之处还请各位指正.</p>
 <p>demo我就不写了 可以参考<a href="https://github.com/ksvc/KSYMediaEditorKit_iOS" target="_blank" rel="external">我们的短视频 demo</a> multicanvas target</p>
 <p>全文完</p>
 ]]></content>
@@ -849,8 +849,8 @@
   
   <entry>
     <title>如何使用Charles截获https请求</title>
-    <link href="https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/"/>
-    <id>https://www.sunyazhou.com/2017/09/01/2017-09-01-Charles-capture-https/</id>
+    <link href="https://www.sunyazhou.com/2017/09/01/20170901Charles-capture-https/"/>
+    <id>https://www.sunyazhou.com/2017/09/01/20170901Charles-capture-https/</id>
     <published>2017-09-01T15:17:09.000Z</published>
     <updated>2017-09-01T16:25:40.000Z</updated>
     
