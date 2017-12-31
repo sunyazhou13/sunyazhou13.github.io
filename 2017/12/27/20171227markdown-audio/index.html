@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越</title>
+    <title>Markdown中插入音频文件 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越">
+    <meta name="twitter:title" content="Markdown中插入音频文件 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越">
+    <meta property="og:title" content="Markdown中插入音频文件 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/12/27/20171227markdown-audio/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,43 +181,40 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-04-20T08:35:42.000Z" class="post-list__meta--date date">2017-04-20</time>
+      <time datetime="2017-12-27T04:04:07.000Z" class="post-list__meta--date date">2017-12-27</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">如何在iOS/macOS系统中创建文件时创建唯一的文件名</h1>
+    <h1 class="post-title">Markdown中插入音频文件</h1>
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/stock-photo-167171895.jpg" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当我无数次看到大家写代码的时候总是以一个<code>时间戳+arc4random()</code>创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.</p>
-<pre><code class="objc"><span class="comment">/* Create a recording file */</span>
-    <span class="built_in">NSString</span> *filePath = [<span class="string">@"~/Movies/AVScreenShackRecording_XXXXXX"</span> stringByStandardizingPath];
-    <span class="keyword">char</span> *screenRecordingFileName = strdup([filePath fileSystemRepresentation]);
-    <span class="keyword">if</span> (screenRecordingFileName)
-    {
-        <span class="keyword">int</span> fileDescriptor = mkstemp(screenRecordingFileName);
-        <span class="keyword">if</span> (fileDescriptor != <span class="number">-1</span>)
-        {
-            <span class="built_in">NSString</span> *filenameStr = [[<span class="built_in">NSFileManager</span> defaultManager] stringWithFileSystemRepresentation:screenRecordingFileName length:strlen(screenRecordingFileName)];
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
+<h2 id="markdown插入音乐"><a href="#markdown插入音乐" class="headerlink" title="markdown插入音乐"></a>markdown插入音乐</h2><p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
+<ul>
+<li><code>div</code>用于控制格式，若无则默认为居左</li>
+<li><code>frameborder</code>用于规定是否显示框架周围的边框，1为是，0为否</li>
+<li><code>marginwidth</code>及<code>marginheight</code>表示距离边缘的像素大小</li>
+<li><code>width</code>及<code>height</code>表示播放条的长度和宽度</li>
+<li><code>src</code>为播放链接，可以在如网易云音乐的<code>生成外链播放器</code>获取该链接，同时也获得以下代码，并可以自行更改；也可将音频链接改为视频链接，从而播放视频</li>
+</ul>
+<blockquote>
+<p>值得注意的是，音频和视频在默认情况下是会自动循环播放的，可以修改链接的值进行修改<br>在<code>src</code>域中，<code>auto</code>值表示是否自动播放，当值为<code>1</code>时为自动播放，<code>0</code>则不是<br>在<code>src</code>域中，有些链接会附有<code>height</code>或<code>width</code>值，其表示表示播放框的基本宽高，可以更换其值以获得想要的播放框大小，此时可以不用填写外部的<code>width</code>及<code>height</code>.</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">life</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">400</span> <span class="attr">height</span>=<span class="string">140</span> <span class="attr">src</span>=<span class="string">"https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<div align="life"><br><iframe frameborder="no" marginwidth="0" marginheight="0" width="400" height="140" src="https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66"></iframe><br></div>
 
-            <span class="built_in">NSLog</span>(<span class="string">@"唯一的文件名:%@"</span>,filenameStr);
 
-        }
-        remove(screenRecordingFileName);
-        free(screenRecordingFileName);
-    }
-</code></pre>
-<p>使用前<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-01.png" alt=""></p>
-<p>过程中<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-23.png" alt=""></p>
-<p>完成之后<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-56.png" alt=""></p>
-<p><em><strong>切记文件后缀需要 加上 <code>XXXXXX</code></strong></em> 几个<code>X</code>就代表几位<code>数字+字母</code>混合<br><em>注意</em>:最好是6个X或者6个以上 <a href="http://man7.org/linux/man-pages/man3/mkstemp.3.html" target="_blank" rel="external">参考Linux</a></p>
-<p>主要的是要明白下面这两个函数</p>
-<p><a href="http://baike.baidu.com/item/strdup/5522525" target="_blank" rel="external">strdup()用于c语言中常用的一种字符串拷贝</a></p>
-<p><a href="http://baike.baidu.com/link?url=wFhfkOVXafm15-4vGfxEQiQynIG7BG2yYAurwzS4uHKmby2C2lfhiO2T6WAqbdc3nOP9mEOVTMaBqxOc2eZps7_JIAsIWI0p11pEIl7Vku_" target="_blank" rel="external">mkstemp()函数在系统中以唯一的文件名创建一个文件并打开</a></p>
-<p>OK 希望大家有收获</p>
+<h2 id="接口说明"><a href="#接口说明" class="headerlink" title="接口说明"></a>接口说明</h2><p>这里面可以看到 用了 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66</div></pre></td></tr></table></figure>
+<p>这个接口的<code>id=34341360</code>是从这里获取的</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio1.png" alt=""></p>
+<p>找到<code>复制链接</code>,然后用浏览器打开.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio2.png" alt=""></p>
+<p>后边的 <code>id=34341360</code>就是我们要的 <code>id</code> 然后接口替换就可以了</p>
+<p>更多技巧可参考以前写的一篇文章<br><a href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/">markdown折叠</a><br><a href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/">markdown 表格</a></p>
 <p>全文完</p>
 
   </section>
@@ -270,21 +267,21 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="向往计算机科学相关专业的必学经典">向往计算机科学相关专业的必学经典</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/31/20171230Final-Summary/" title="2017年终总结">2017年终总结</a></h2>
                 <p class="excerpt">
                 
                 
 前言
-无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
+时间像车轮一样在飞转历史像江河一样在流淌整整走过了365个风雨历程2017年过的如此不寻常一度春夏秋冬 一度雨雪风霜一度翻山越 一度起伏延宕  
 
-主要分3个方面
-书籍
-
+又一年过去了,我也得墨守成规的按时交出我的年终总结了,为了不标新立异,我必须尽量不废话.(talk is cheap, show me the 
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
+                <div class="post-list__meta"><time datetime="2017-12-31T02:46:20.000Z" class="post-list__meta--date date">2017-12-31</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
+  <a class="tag-link" href="/tags/生活/">生活</a>
+
+</span><a class="btn-border-small" href="/2017/12/31/20171230Final-Summary/">继续阅读</a></div>
 
             </div>
         
@@ -292,20 +289,21 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/11/3-kindof-ability/" title="二狗经典的3种权利摘要">二狗经典的3种权利摘要</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/19/20171219AudioPan/" title="音频声像Pan值电平左右声道平衡">音频声像Pan值电平左右声道平衡</a></h2>
                 <p class="excerpt">
                 
                 
-出自《东北往事:黑道风云20年》某片段
+前言最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
+开篇最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.下面是 UI 演示.
 
-二狗曾拜读过托夫勒著名的《权力的转移》一书，其书中阐述的内容是：暴力、金钱、知识等三种力量是构成社会权力的基石。在这三种力量中，暴力是低等权力、金钱是中等权力，而知识是高等权力。社会越进步，主宰社会的权力就越高等。　　那么，黑社会，是否也有三种力量是构成其
+这里其实修改的类似 AVAudioPlayer里面的pan值
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-11T03:47:26.000Z" class="post-list__meta--date date">2017-04-11</time>
+                <div class="post-list__meta"><time datetime="2017-12-19T03:40:13.000Z" class="post-list__meta--date date">2017-12-19</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/有声小说/">有声小说</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/04/11/3-kindof-ability/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/12/19/20171219AudioPan/">继续阅读</a></div>
 
             </div>
         

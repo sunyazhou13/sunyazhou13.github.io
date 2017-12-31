@@ -183,6 +183,89 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/09/01/20170901Charles-capture-https/" title="link to post.title">如何使用Charles截获https请求</a></h2>
+      <p class="excerpt">
+    
+      前言
+如何使用charles在iOS设备上截获https的请求 
+1.安装Charles官网下载就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 
+2.HTTP抓包配置(1) 查看电脑IP
+(2) 设置手机HTTP代理手机连上电脑，点击“设置-&amp;gt;无线局域网-&amp;gt;连接的WiFi”，设置HTTP代理：服务器为电脑IP地址：如192.168.1.108端口：8888
+
+注意:这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-09-01T15:17:09.000Z" class="post-list__meta--date date">2017-09-01</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/09/01/20170901Charles-capture-https/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/08/30/ARKit/" title="link to post.title">ARKit技术初探</a></h2>
+      <p class="excerpt">
+    
+      前言
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.期间有任何问题请大家集思广益,多多指教. 
+主要内容
+AR技术介绍 
+ARKit工作原理及流程介绍 
+ARKit简单代码实现 
+ARKit框架所有API介绍 
+ARScnView介绍 
+ARSession介绍 
+ARCamera介绍 
+ARKit捕捉平地 
+AR代码demo实现 
+
+AR技术介绍AR技术简介
+增强现实技术（Augmented Reality，简称 AR），是一种实时的计算摄影机影像的位置及角度并加上相应图像、视
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-08-30T06:50:43.000Z" class="post-list__meta--date date">2017-08-30</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/08/30/ARKit/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/" title="link to post.title">Learning AV Foundation(四)AVAsset元数据(高级篇)</a></h2>
+      <p class="excerpt">
+    
+      
+前言先上图 
+
+这一篇 我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化
+内容介绍结构图
+
+class 代码 
+
+MediaItem (一个直接对外的接口)
+MetaData (元数据model)
+Genre (风格)
+AVMetadataItem+Additions
+MetadataDefines
+MetadataKit
+Converters (文件夹包含如下:)
+MetadataConverter  (Protocol 存取 AVM
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-08-07T12:36:46.000Z" class="post-list__meta--date date">2017-08-07</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/07/13/ios11-new-skills/" title="link to post.title">iOS 11 新技能</a></h2>
       <p class="excerpt">
     
@@ -318,64 +401,6 @@ __attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;))
   <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
 
 </span><a class="btn-border-small" href="/2017/06/16/Xcode9-debug-via-wireless/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/" title="link to post.title">Learning AV Foundation(四)AVAsset元数据(基础篇)</a></h2>
-      <p class="excerpt">
-    
-      
-前言本篇讲述的AVAsset元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于AVAsset的一个属性。AV Foundation通过AVAsset封装来处理各种音频的元数据, 比如从mp3文件中解析出来封面图(artwork)等。 本章的具体内容如下:
-理解资源含义创建资源
-iOS Asset库
-iOS iPod库
-macOS iTunes库
-
-异步
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-16T02:11:19.000Z" class="post-list__meta--date date">2017-06-16</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/06/16/Learning-AV-Foundation-AVAsset-Basic/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/30/OpenGL-glsl-language/" title="link to post.title">OpenGL编程语言-glsl基础</a></h2>
-      <p class="excerpt">
-    
-      前言
-最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.
-GLSL是什么?GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些C的特性等. (名词解释:着色器(Shader))  
-GPU是多线程并行处理器，GLSL直接面向单指令流多数据流(SIMD)模型的多线程计算。GLSL编写的着色器函数是对每个数据同时执行的。每个顶点都会
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-30T12:32:33.000Z" class="post-list__meta--date date">2017-05-30</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/OpenGL-ES/">OpenGL ES</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/05/30/OpenGL-glsl-language/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/10/NSTableRowView-mouse-track-color/" title="link to post.title">自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</a></h2>
-      <p class="excerpt">
-    
-      #import &quot;BDRowView.h&quot;#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]@interface BDRowView ()@property(strong) NSTrackingArea *trackingArea;@property(assign) BOOL isHovering;@end@implementa
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-10T07:24:20.000Z" class="post-list__meta--date date">2017-05-10</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/05/10/NSTableRowView-mouse-track-color/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

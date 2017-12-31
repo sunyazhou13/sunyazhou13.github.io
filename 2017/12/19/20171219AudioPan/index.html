@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越</title>
+    <title>音频声像Pan值电平左右声道平衡 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越">
+    <meta name="twitter:title" content="音频声像Pan值电平左右声道平衡 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="如何在iOS/macOS系统中创建文件时创建唯一的文件名 | 東引甌越">
+    <meta property="og:title" content="音频声像Pan值电平左右声道平衡 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/04/20/unique-filename-in-system/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/12/19/20171219AudioPan/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,43 +181,40 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-04-20T08:35:42.000Z" class="post-list__meta--date date">2017-04-20</time>
+      <time datetime="2017-12-19T03:40:13.000Z" class="post-list__meta--date date">2017-12-19</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">如何在iOS/macOS系统中创建文件时创建唯一的文件名</h1>
+    <h1 class="post-title">音频声像Pan值电平左右声道平衡</h1>
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/stock-photo-167171895.jpg" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当我无数次看到大家写代码的时候总是以一个<code>时间戳+arc4random()</code>创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.</p>
-<pre><code class="objc"><span class="comment">/* Create a recording file */</span>
-    <span class="built_in">NSString</span> *filePath = [<span class="string">@"~/Movies/AVScreenShackRecording_XXXXXX"</span> stringByStandardizingPath];
-    <span class="keyword">char</span> *screenRecordingFileName = strdup([filePath fileSystemRepresentation]);
-    <span class="keyword">if</span> (screenRecordingFileName)
-    {
-        <span class="keyword">int</span> fileDescriptor = mkstemp(screenRecordingFileName);
-        <span class="keyword">if</span> (fileDescriptor != <span class="number">-1</span>)
-        {
-            <span class="built_in">NSString</span> *filenameStr = [[<span class="built_in">NSFileManager</span> defaultManager] stringWithFileSystemRepresentation:screenRecordingFileName length:strlen(screenRecordingFileName)];
-
-            <span class="built_in">NSLog</span>(<span class="string">@"唯一的文件名:%@"</span>,filenameStr);
-
-        }
-        remove(screenRecordingFileName);
-        free(screenRecordingFileName);
-    }
-</code></pre>
-<p>使用前<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-01.png" alt=""></p>
-<p>过程中<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-23.png" alt=""></p>
-<p>完成之后<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-56.png" alt=""></p>
-<p><em><strong>切记文件后缀需要 加上 <code>XXXXXX</code></strong></em> 几个<code>X</code>就代表几位<code>数字+字母</code>混合<br><em>注意</em>:最好是6个X或者6个以上 <a href="http://man7.org/linux/man-pages/man3/mkstemp.3.html" target="_blank" rel="external">参考Linux</a></p>
-<p>主要的是要明白下面这两个函数</p>
-<p><a href="http://baike.baidu.com/item/strdup/5522525" target="_blank" rel="external">strdup()用于c语言中常用的一种字符串拷贝</a></p>
-<p><a href="http://baike.baidu.com/link?url=wFhfkOVXafm15-4vGfxEQiQynIG7BG2yYAurwzS4uHKmby2C2lfhiO2T6WAqbdc3nOP9mEOVTMaBqxOc2eZps7_JIAsIWI0p11pEIl7Vku_" target="_blank" rel="external">mkstemp()函数在系统中以唯一的文件名创建一个文件并打开</a></p>
-<p>OK 希望大家有收获</p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio-pan.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.</p>
+<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.<br>下面是 UI 演示.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio_pan_demo.gif" alt=""></p>
+<p>这里其实修改的类似 <code>AVAudioPlayer</code>里面的<code>pan</code>值修改</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan_audio_api.png" alt=""></p>
+<p>我在以前的文章也有一篇提到过这个<a href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">pan 值</a></p>
+<p>可能大家不理解为啥 这个 API 起名叫<code>pan</code></p>
+<p>在声学领域这个东西有专门的名字叫 <code>声像</code>.</p>
+<p><a href="http://underwaysoft.com/writing/books/dsp-develop.html#%E7%BA%BF%E6%80%A7%E5%A3%B0%E5%83%8F%EF%BC%88&lt;span class=cnBracket&gt;Pan&lt;/span&gt;%EF%BC%89" target="_blank" rel="external">这篇文章</a>介绍了一些我们对声学知识的简单介绍,虽然不知道作者是谁,但是作者应该是非常专业的声学开发者.</p>
+<p>其实按照我们平常的理解应该是这样去实现这个 pan 值的修改</p>
+<p>左声道音量给右声道声音的补偿 或者右侧声道给左侧声道的补偿,通过滑块的 value 来决定两边谁加多少减多少,但是大家的思路是对的,但是做法是不正确的,因为 两边的音量放在中间必须是1.0,也就是说 range 在 <code>-1 ~ 1</code>之间. 如果按照这个滑动方式回导致滑动过大. </p>
+<p>带着这个问题我的同事找到了一个公式 来计算 这个值</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan-algorithm.png" alt=""></p>
+<ul>
+<li><code>pan</code>就是我们的滑块的<code>value</code></li>
+<li><code>Vl</code> 代表左侧音量</li>
+<li><code>Vr</code> 代表右侧音量</li>
+</ul>
+<p>根据这个公式我们有如下 代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, KSYMCChannelType) &#123;</div><div class="line">    KSYMCChannelTypeLeft = <span class="number">0</span>,</div><div class="line">    KSYMCChannelTypeRight = <span class="number">1</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYMultiCanvasHelper</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calculateVolume:(KSYMCChannelType)type</div><div class="line">                  panValue:(<span class="built_in">CGFloat</span>)pan</div><div class="line">                    volume:(<span class="built_in">CGFloat</span>)volume;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYMultiCanvasHelper</span></span></div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calculateVolume:(KSYMCChannelType)type</div><div class="line">                  panValue:(<span class="built_in">CGFloat</span>)pan</div><div class="line">                    volume:(<span class="built_in">CGFloat</span>)volume&#123;</div><div class="line">    <span class="keyword">if</span> (type == KSYMCChannelTypeLeft) &#123;</div><div class="line">        <span class="built_in">CGFloat</span> leftVolumn = sqrt(<span class="number">2</span>) * cos((<span class="number">1</span> + pan)*M_PI_4) *volume;</div><div class="line">        <span class="keyword">return</span> leftVolumn;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == KSYMCChannelTypeRight) &#123;</div><div class="line">        <span class="built_in">CGFloat</span> rightVolumn = sqrt(<span class="number">2</span>) * sin((<span class="number">1</span> + pan)*M_PI_4) *volume;</div><div class="line">        <span class="keyword">return</span> rightVolumn;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里的计算还是比较准确的.</p>
+<p>经过测试 左侧 音量 为 0 时 右侧音量应该是 1.41左右</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过上述测试音频的 pan 值修改 如果自行开发还是比较好搞得,只是鄙人对音频的知识积累的太少了.这篇文章看起来虽然没什么技术含量,全当知识的点滴积累吧. 至于为啥 是 <code>M_PI_4</code>还请专研一下文章的扩展链接,因为要把一个线性的操作转换成一个圆型方便数学的计算,以及 <strong>声像</strong>和<strong>声向</strong>的区别.</p>
 <p>全文完</p>
 
   </section>
@@ -270,21 +267,18 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="向往计算机科学相关专业的必学经典">向往计算机科学相关专业的必学经典</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/27/20171227markdown-audio/" title="Markdown中插入音频文件">Markdown中插入音频文件</a></h2>
                 <p class="excerpt">
                 
-                
-前言
-无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
-
-主要分3个方面
-书籍
-
+                前言喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.
+markdown插入音乐markdown其实就是 一种html的转换语法,其实内部也同时支持直接写html标签, 如果不了解各种标签请点击w3cschool查看各种 API 的用
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
+                <div class="post-list__meta"><time datetime="2017-12-27T04:04:07.000Z" class="post-list__meta--date date">2017-12-27</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/12/27/20171227markdown-audio/">继续阅读</a></div>
 
             </div>
         
@@ -292,20 +286,19 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/11/3-kindof-ability/" title="二狗经典的3种权利摘要">二狗经典的3种权利摘要</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/15/20171215cell-add-kvo/" title="UICollectionViewCell添加KVO">UICollectionViewCell添加KVO</a></h2>
                 <p class="excerpt">
                 
                 
-出自《东北往事:黑道风云20年》某片段
-
-二狗曾拜读过托夫勒著名的《权力的转移》一书，其书中阐述的内容是：暴力、金钱、知识等三种力量是构成社会权力的基石。在这三种力量中，暴力是低等权力、金钱是中等权力，而知识是高等权力。社会越进步，主宰社会的权力就越高等。　　那么，黑社会，是否也有三种力量是构成其
+前言都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是如何正确的给一个UICollectionViewCell添加KVO监听.
+开篇由于目前在开发短视频相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式开发
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-11T03:47:26.000Z" class="post-list__meta--date date">2017-04-11</time>
+                <div class="post-list__meta"><time datetime="2017-12-15T09:05:10.000Z" class="post-list__meta--date date">2017-12-15</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/有声小说/">有声小说</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/04/11/3-kindof-ability/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/12/15/20171215cell-add-kvo/">继续阅读</a></div>
 
             </div>
         
