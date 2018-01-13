@@ -183,6 +183,49 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/03/29/Access-privacy-sensitive-data-private-access-permission/" title="link to post.title">隐私及敏感数据访问权限(Access privacy-sensitive data)</a></h2>
+      <p class="excerpt">
+    
+      在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：
+
+This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a st
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/29/Access-privacy-sensitive-data-private-access-permission/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/" title="link to post.title">Learning AV Foundation(三)AVAudioRecorder</a></h2>
+      <p class="excerpt">
+    
+      
+前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内容如下:如何创建AVAudioRecorder  
+    1. 音频格式
+    2. 采样率
+    3. 通道数
+创建Demo
+    1. 配置音频会话
+    2. 实现录音功能
+    3.
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/03/23/check-NSWindow-isFullScreen/" title="link to post.title">判断NSWindow是否全屏</a></h2>
       <p class="excerpt">
     
@@ -341,61 +384,6 @@ NSArray *lans = @[
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/10/build-hexo-blog-Tutorial/" title="link to post.title">搭建hexo博客教程</a></h2>
-      <p class="excerpt">
-    
-      
-Jekyll迁移到Hexo搭建个人博客  
-HEXO + Github 搭建自己的博客系统
-利用Hexo和Github Pages搭建个人博客
-
-1 初级功能github pages  配置 大家自行google吧 真的很简单
-上边是我参考的文章主要是环境比较费劲  
-1. nodejs  
-2. npm包管理工具  
-3. hexo  
-4. nvm管理node  
-5. 本地配置重启shell又被reverse  
-6. ...其它
-2 高级功能部分打赏 自行 搜索简书吧 很多 主题不太一
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-10T02:24:25.000Z" class="post-list__meta--date date">2017-02-10</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/10/build-hexo-blog-Tutorial/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/10/DFS-algorithm-scanning-diectory-or-files/" title="link to post.title">DFS算法扫描上传文件/文件夹</a></h2>
-      <p class="excerpt">
-    
-      DFS需求背景
-在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况
-
-1. 如果文件里面包含子文件夹的N层嵌套
-2. 如何过滤非空文件夹
-3. 如何处理根层文件夹没有文件那么文件目录也需要创建
-举例例子
-这种文件夹如何 此文件夹为空且是叶子结点 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 /1/ 的话应该就不用创建了.
-还有一种情况  
-
-eg: ~/Do
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-10T02:07:55.000Z" class="post-list__meta--date date">2017-02-10</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/10/DFS-algorithm-scanning-diectory-or-files/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -421,7 +409,7 @@ eg: ~/Do
         基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
     </span>
     <span class="footer__copyright">
-        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
         使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
         修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
     </span>

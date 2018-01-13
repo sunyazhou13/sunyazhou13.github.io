@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>使用Python操作数据库 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="使用Python操作数据库 | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="使用Python操作数据库 | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-01-13T14:27:18.000Z" class="post-list__meta--date date">2018-01-13</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/python/">python</a>, <a class="tag-link" href="/tags/web开发/">web开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">使用Python操作数据库</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了实现<code>不斷學習 與時俱進</code>周末把大部分时间放在了学习<code>Python</code>上.<br>在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客.</p>
+<p>我是在<code>study.163.com</code>的这个<a href="http://study.163.com/course/courseMain.htm?courseId=1003520028" target="_blank" rel="external">《全栈数据工程师养成攻略》</a>课程中学习的,推荐大家学习一下.</p>
+<h2 id="本篇主要内容"><a href="#本篇主要内容" class="headerlink" title="本篇主要内容"></a>本篇主要内容</h2><p>主要分为三个大部分</p>
+<ol>
+<li>搭建<code>Web</code>环境</li>
+<li>数据库MySQL的使用方法</li>
+<li>使用Python操作MySQL</li>
+</ol>
+<h3 id="搭建Web环境"><a href="#搭建Web环境" class="headerlink" title="搭建Web环境"></a>搭建<code>Web</code>环境</h3><ul>
+<li>Web环境: Apache、Nginx…</li>
+<li>Web服务启动中相关配置.</li>
+</ul>
+<h4 id="Web环境-Apache、Nginx…"><a href="#Web环境-Apache、Nginx…" class="headerlink" title="Web环境: Apache、Nginx…"></a>Web环境: Apache、Nginx…</h4><p>两个平台的相关的下载</p>
+<p><a href="https://www.mamp.info/en/" target="_blank" rel="external">MAMP</a>: Mac, Apache, MySQL, PHP </p>
+<blockquote>
+<p>Mac, Apache, MySQL, PHP 缩写<code>MAMP</code></p>
+</blockquote>
+<p><a href="https://www.mamp.info/en/" target="_blank" rel="external">WAMP</a>: Windows, Apache, MySQL, PHP </p>
+<blockquote>
+<p>Windows, Apache, MySQL, PHP 缩写<code>WAMP</code></p>
+</blockquote>
+<p>当然还有linux版本这里就不做多介绍了</p>
+<p>总之需要安装这个软件进行环境配置的搭建.</p>
+<p>我这里用<code>MAMP</code>举例说明一下</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp1.png" alt=""></p>
+<p>打开之后<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp2.png" alt=""></p>
+<h4 id="Web服务启动中相关配置"><a href="#Web服务启动中相关配置" class="headerlink" title="Web服务启动中相关配置"></a>Web服务启动中相关配置</h4><p>开启<code>Apatch Server</code>和<code>MySQL Server</code>服务(右上角).<br>然后点击<code>Perferences</code>,进行本地端口配置.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp3.png" alt=""></p>
+<p>这里有两种默认配置(红色框选部分) </p>
+<p>如果把服务开启的话那么打开浏览器输入:<code>localhost:8888</code>就可以看到相关的效果</p>
+<blockquote>
+<p>localhost == 127.0.0.1</p>
+</blockquote>
+<p><code>8888</code>是服务的端口</p>
+<p>下面这张图可以选择文件根目录<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp4.png" alt=""></p>
+<p>什么意思呢?</p>
+<p>就是你把网页的相关文件放到 这个文件夹的话<br>就会在浏览器上直接浏览.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp2.png" alt=""></p>
+<p>这张图中间的<code>Open Start Page</code>. </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql1.png" alt=""></p>
+<p>进入到数据库配置相关</p>
+<p>配置数据库名称<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql2.png" alt=""></p>
+<p>输入表名</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql3.png" alt=""></p>
+<p>配置数据库表<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql4.png" alt=""></p>
+<p>配置完右侧完成</p>
+<h3 id="数据库MySQL的使用方法"><a href="#数据库MySQL的使用方法" class="headerlink" title="数据库MySQL的使用方法"></a>数据库MySQL的使用方法</h3><ul>
+<li>基本概念</li>
+<li>终端配置Python MySQL</li>
+<li>Navicat 数据的导出导入</li>
+<li>个人的习惯搞法</li>
+</ul>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><code>CURD</code>操作:</p>
+<ul>
+<li><code>C</code> Create</li>
+<li><code>R</code> Read</li>
+<li><code>U</code> Update</li>
+<li><code>D</code> Delete</li>
+</ul>
+<p>这就是数据库相关知识中 <code>增``删``改``查</code></p>
+<h4 id="终端配置Python-MySQL"><a href="#终端配置Python-MySQL" class="headerlink" title="终端配置Python MySQL"></a>终端配置Python MySQL</h4><p>在终端中使用如下指令安装MySQL环境</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">pip install MySQL-python</div></pre></td></tr></table></figure>
+<p>我安装的时候出错了</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/pip_install_mysql-python.png" alt=""></p>
+<p>最后执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">brew install mysql-python</div></pre></td></tr></table></figure>
+<p>然后再去执行<code>pip install MySQL-python</code></p>
+<p>如何测试是否成功</p>
+<p>在shell中输入<code>python</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/pythonshell1.png" alt=""></p>
+<p>执行</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> MySQLdb</div></pre></td></tr></table></figure>
+<p>如果没有错误就是OK的.</p>
+<h4 id="Navicat-数据的导出导入"><a href="#Navicat-数据的导出导入" class="headerlink" title="Navicat 数据的导出导入"></a>Navicat 数据的导出导入</h4><p>这个数据库可视化操作软件大家自行下载吧<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat1.png" alt=""></p>
+<p>打开之后点击左上角点击新建connect 选择MySQL<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat2.png" alt=""></p>
+<p>接着配置数据库的信息<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat3.png" alt=""></p>
+<p>这里的名称就是<strong>数据库名称</strong><br><code>host</code>地方本地,如果是远程的话,填写<code>ip</code>或者<code>url</code><br><code>port</code>前面我们设置了<code>8889</code><br>账号和密码输入<code>root</code>(前面图里面已经看到了账号密码都是一样的)</p>
+<p>下面就是连接数据库</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat4.png" alt=""></p>
+<p>下面这张图就是</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat5.png" alt=""></p>
+<p><strong>数据库导出和导入,当然也可以导出导入数据表.</strong></p>
+<h4 id="个人的习惯搞法"><a href="#个人的习惯搞法" class="headerlink" title="个人的习惯搞法"></a>个人的习惯搞法</h4><ul>
+<li>使用<code>phpmyadmin</code>新建数据库和数据表</li>
+<li>使用<code>python</code>插入、读取、更新、修改数据</li>
+<li>使用<code>Navicat</code>导出数据库</li>
+<li>使用<code>phpmyadmin</code>导入数据库 </li>
+</ul>
+<p>最后deloy(部署)到线上,这样就可以避免各种错误操作数据库的问题</p>
+<h3 id="使用Python操作MySQL"><a href="#使用Python操作MySQL" class="headerlink" title="使用Python操作MySQL"></a>使用Python操作MySQL</h3><p>这个没啥就是coding部分,使用之前把点击<a href="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180113Python-MySQL/douban_movie_clean.txt" target="_blank" rel="external">这里下载</a>这个文本文件</p>
+<p>我们用<code>sublime text</code>新建一个<code>text.py</code>文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding:utf8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> MySQLdb.cursors</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/Pythoncode1.png" alt=""></p>
+<blockquote>
+<p>注意:_test.py最好和douban_movie<em>clean.txt保持在同一个目录这样就不用写路径了</em></p>
+</blockquote>
+<p>接着创建数据库连接</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"></div><div class="line">db = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, passwd=<span class="string">'root'</span>, db=<span class="string">'douban'</span>, port=<span class="number">8889</span>, charset=<span class="string">'utf8'</span>, cursorclass=MySQLdb.cursors.DictCursor) //<span class="number">1</span></div><div class="line">db.autocommit(<span class="keyword">True</span>) //<span class="number">2</span></div><div class="line">cursor = db.cursor() //<span class="number">3</span></div><div class="line"></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>,<span class="string">'r'</span>) //<span class="number">4</span></div><div class="line"></div><div class="line">fr.close() //<span class="number">4</span></div><div class="line"></div><div class="line">cursor.close() //<span class="number">3</span></div><div class="line">db.close() //<span class="number">1</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意 <code>db</code>记得用完关闭,<code>cursor</code>也要记得关闭, <code>fr</code>是文件的读写 和数据库没啥关系也需要记得用完关闭</p>
+</blockquote>
+<p>下面解释一下什么意思</p>
+<ol>
+<li><code>db</code>创建输入库实例,输入参数 <code>host</code>(这里用的是127.0.0.1也可以换成localhost)、<code>passwd</code>、<code>db</code>、<code>port</code>、<code>charset</code>、<code>cursorclass</code>.</li>
+<li>自动改完提交完成更新数据库</li>
+<li>通过<code>db</code>实例拿到一个连接<code>cursor</code> 每次都通过<code>cursor.execute()</code>执行增删改查操作sql语句</li>
+<li>读取本地的文本文件</li>
+</ol>
+<p>大概就是这个意思</p>
+<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Create</span></div><div class="line"><span class="comment"># 读取数据</span></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>, <span class="string">'r'</span>)</div><div class="line"></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fr:</div><div class="line">	count += <span class="number">1</span></div><div class="line">	<span class="comment"># count表示当前处理到第几行了</span></div><div class="line">	<span class="keyword">print</span> count</div><div class="line">	<span class="comment"># 跳过表头</span></div><div class="line">	<span class="keyword">if</span> count == <span class="number">1</span>:</div><div class="line">		<span class="keyword">continue</span></div><div class="line"></div><div class="line">	<span class="comment"># strip()函数可以去掉字符串两端的空白符</span></div><div class="line">	<span class="comment"># split()函数按照给定的分割符将字符串分割为列表</span></div><div class="line">	line = line.strip().split(<span class="string">'^'</span>)</div><div class="line">	<span class="comment"># 插入数据，注意对齐字段</span></div><div class="line">	<span class="comment"># execute()函数第一个参数为要执行的SQL命令</span></div><div class="line">	<span class="comment"># 这里用字符串格式化的方法生成一个模板</span></div><div class="line">	<span class="comment"># %s表示一个占位符</span></div><div class="line">	<span class="comment"># 第二个参数为需要格式化的参数，传入到模板中</span></div><div class="line">	cursor.execute(<span class="string">"insert into movie(title, url, rate, length, description) values(%s, %s, %s, %s, %s)"</span>, [line[<span class="number">1</span>], line[<span class="number">2</span>], line[<span class="number">4</span>], line[<span class="number">-3</span>], line[<span class="number">-1</span>]])</div><div class="line"></div><div class="line"><span class="comment"># 关闭读文件</span></div><div class="line">fr.close()</div></pre></td></tr></table></figure>
+<p>通过我们拿到的<code>cursor</code>连接实例来执行<code>cursor.execute()</code>函数进行<code>sql</code>的插入操作.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/Pythoncode2.png" alt=""></p>
+<p>来看下结果<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sqlresult.png" alt=""></p>
+<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h4><p>更新数据 比如我想把id=1的记录更新一下<code>title</code>字段和<code>length</code>长度</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Update</span></div><div class="line">cursor.execute(<span class="string">"update movie set title=%s, length=%s where id=1"</span>, [<span class="string">'孙亚洲'</span>, <span class="number">999</span>])</div></pre></td></tr></table></figure>
+<h4 id="读取数据-1"><a href="#读取数据-1" class="headerlink" title="读取数据"></a>读取数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Read</span></div><div class="line">cursor.execute(<span class="string">"select title, length from movie where id=1"</span>)</div><div class="line">movies = cursor.fetchone()</div></pre></td></tr></table></figure>
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Delete</span></div><div class="line">cursor.execute(<span class="string">"delete from movie where id=%s"</span>,[<span class="number">2</span>])</div></pre></td></tr></table></figure>
+<hr>
+<p>下面看下完成的代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding:utf8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> MySQLdb.cursors</div><div class="line"></div><div class="line">db = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, passwd=<span class="string">'root'</span>, db=<span class="string">'douban'</span>, port=<span class="number">8889</span>, charset=<span class="string">'utf8'</span>, cursorclass=MySQLdb.cursors.DictCursor)</div><div class="line">db.autocommit(<span class="keyword">True</span>)</div><div class="line">cursor = db.cursor()</div><div class="line"></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>,<span class="string">'r'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Create</span></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fr:</div><div class="line">	count += <span class="number">1</span></div><div class="line">	<span class="keyword">print</span> count</div><div class="line">	<span class="keyword">if</span> count == <span class="number">1</span>:</div><div class="line">		<span class="keyword">continue</span></div><div class="line">	line = line.strip().split(<span class="string">'^'</span>)</div><div class="line">	cursor.execute(<span class="string">"insert into movie(title, url, rate, length, description) values(%s, %s, %s, %s, %s)"</span>, [line[<span class="number">1</span>], line[<span class="number">2</span>], line[<span class="number">4</span>], line[<span class="number">-3</span>], line[<span class="number">-1</span>]])</div><div class="line">fr.close()</div><div class="line"></div><div class="line"><span class="comment"># Update</span></div><div class="line">cursor.execute(<span class="string">"update movie set title=%s, length=%s where id=1"</span>, [<span class="string">'孙亚洲'</span>, <span class="number">999</span>])</div><div class="line"></div><div class="line"><span class="comment"># Read</span></div><div class="line">cursor.execute(<span class="string">"select title, length from movie where id=1"</span>)</div><div class="line">movies = cursor.fetchone()</div><div class="line"></div><div class="line"><span class="keyword">print</span> len(movies)</div><div class="line"><span class="comment"># print movies[0]</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Delete</span></div><div class="line"></div><div class="line">cursor.execute(<span class="string">"delete from movie where id=%s"</span>,[<span class="number">2</span>])</div><div class="line"></div><div class="line"></div><div class="line">cursor.close()</div><div class="line">db.close()</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过学习<code>python</code>操作数据库很有收获,想起了大学李月辉老师教我怎么用java连接数据库.</p>
+<p>关于更多的SQL语句<br>参考<a href="http://www.runoob.com/sql/sql-tutorial.html" target="_blank" rel="external">SQL 教程</a></p>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/01/12/20180112AVAudioSession-Category/" title="AVAudioSession-Category各种姿势">AVAudioSession-Category各种姿势</a></h2>
+                <p class="excerpt">
+                
+                
+前言2018新年第一篇, 梳理AVAudioSession的Category,解决音频开发中的各种播放被打断或者首次启动时无声音的问题
+开篇由于iOS系统的特殊性,所有App共用一个AVAudioSession所以这个会话是个单例对象.(macOS是支持同时播放多路音频文件)
+当遇到插拔耳机,接电
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-01-12T02:32:18.000Z" class="post-list__meta--date date">2018-01-12</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/01/12/20180112AVAudioSession-Category/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

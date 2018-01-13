@@ -183,6 +183,73 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/09/30/20170930DeviceCheck/" title="link to post.title">DeviceCheck</a></h2>
+      <p class="excerpt">
+    
+      
+前言iOS11 苹果改动了一个比较引开发者关注的亮点
+UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除
+这个问题在微博上已经争论好几天
+iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都有啥
+#import &amp;lt;DeviceCheck/DeviceCheck.h&amp;gt;NS_ASSUME_NONNULL_BEGINAPI_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(wa
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-09-30T01:45:25.000Z" class="post-list__meta--date date">2017-09-30</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/09/30/20170930DeviceCheck/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/09/29/20170929markdown-table/" title="link to post.title">Markdown插入表格语法</a></h2>
+      <p class="excerpt">
+    
+      前言
+以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格
+demo:
+
+普通样式
+
+| 一个普通标题 | 一个普通标题 | 一个普通标题 || ------| ------ | ------ || 短文本 | 中等文本 | 稍微长一点的文本 || 稍微长一点的文本 | 短文本 | 中等文本 |
+现实效果是这样的
+
+
+
+一个普通标题
+一个普通标题
+一个普通标题
+
+
+
+
+短文本
+中等文本
+稍微长一点的文本
+
+
+稍微长一点的文本
+短文本
+中等文本
+
+
+
+对齐
+| 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-09-29T10:01:08.000Z" class="post-list__meta--date date">2017-09-29</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/09/29/20170929markdown-table/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/09/01/20170901Charles-capture-https/" title="link to post.title">如何使用Charles截获https请求</a></h2>
       <p class="excerpt">
     
@@ -358,52 +425,6 @@ Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有�
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/" title="link to post.title">如何在Objective-C中废弃一个方法</a></h2>
-      <p class="excerpt">
-    
-      前言
-最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码
-__attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;)));
-场景1我想标识一个方法使用其它方式传入某个参数 
-例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了
-@interface VideoEditorViewController : UIViewController@prope
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
-
-</span><a class="btn-border-small" href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="link to post.title">Xcode9新功能 无线真机调试</a></h2>
-      <p class="excerpt">
-    
-      效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
-看一张图
-配置第一步 选择设备选项
-
-第二步 点勾选 via network
-
-剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
-注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次运行环境: Xcode9 beta运行设备操作系统: iOS11 betaMacbook+iPhone 最好在同一个局域网
-我估计苹果发布正式版本的时候这个应该比较好用了 
-好了 现在可以愉快的玩耍 了
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
-
-</span><a class="btn-border-small" href="/2017/06/16/Xcode9-debug-via-wireless/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -429,7 +450,7 @@ __attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;))
         基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
     </span>
     <span class="footer__copyright">
-        &copy; 2017 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
         使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
         修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
     </span>
