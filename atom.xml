@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-01-13T16:49:11.531Z</updated>
+  <updated>2018-01-13T16:52:11.367Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/"/>
     <id>https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/</id>
     <published>2018-01-13T14:27:18.000Z</published>
-    <updated>2018-01-13T16:49:11.531Z</updated>
+    <updated>2018-01-13T16:52:11.367Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了实现<code>不斷學習 與時俱進</code>周末把大部分时间放在了学习<code>Python</code>上.<br>在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客.</p>
 <p>我是在<code>study.163.com</code>的这个<a href="http://study.163.com/course/courseMain.htm?courseId=1003520028" target="_blank" rel="external">《全栈数据工程师养成攻略》</a>课程中学习的,推荐大家学习一下.</p>
@@ -142,7 +142,7 @@
 <hr>
 <p>下面看下完成的代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding:utf8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> MySQLdb.cursors</div><div class="line"></div><div class="line">db = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, passwd=<span class="string">'root'</span>, db=<span class="string">'douban'</span>, port=<span class="number">8889</span>, charset=<span class="string">'utf8'</span>, cursorclass=MySQLdb.cursors.DictCursor)</div><div class="line">db.autocommit(<span class="keyword">True</span>)</div><div class="line">cursor = db.cursor()</div><div class="line"></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>,<span class="string">'r'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Create</span></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fr:</div><div class="line">	count += <span class="number">1</span></div><div class="line">	<span class="keyword">print</span> count</div><div class="line">	<span class="keyword">if</span> count == <span class="number">1</span>:</div><div class="line">		<span class="keyword">continue</span></div><div class="line">	line = line.strip().split(<span class="string">'^'</span>)</div><div class="line">	cursor.execute(<span class="string">"insert into movie(title, url, rate, length, description) values(%s, %s, %s, %s, %s)"</span>, [line[<span class="number">1</span>], line[<span class="number">2</span>], line[<span class="number">4</span>], line[<span class="number">-3</span>], line[<span class="number">-1</span>]])</div><div class="line">fr.close()</div><div class="line"></div><div class="line"><span class="comment"># Update</span></div><div class="line">cursor.execute(<span class="string">"update movie set title=%s, length=%s where id=1"</span>, [<span class="string">'孙亚洲'</span>, <span class="number">999</span>])</div><div class="line"></div><div class="line"><span class="comment"># Read</span></div><div class="line">cursor.execute(<span class="string">"select title, length from movie where id=1"</span>)</div><div class="line">movies = cursor.fetchone()</div><div class="line"></div><div class="line"><span class="keyword">print</span> len(movies)</div><div class="line"><span class="comment"># print movies[0]</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Delete</span></div><div class="line"></div><div class="line">cursor.execute(<span class="string">"delete from movie where id=%s"</span>,[<span class="number">2</span>])</div><div class="line"></div><div class="line"></div><div class="line">cursor.close()</div><div class="line">db.close()</div></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过学习<code>python</code>操作数据库很有收获,想起了大学李月辉老师教我怎么用java连接数据库.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过学习<code>python</code>操作数据库很有收获,想起了大学李月辉老师教我怎么用java连接数据库.<br>在工作中我们可能会遇到一大堆数据如何插入到数据等问题,通过学习了本章内容可以很容易的处理批量数据.</p>
 <p>关于更多的SQL语句<br>参考<a href="http://www.runoob.com/sql/sql-tutorial.html" target="_blank" rel="external">SQL 教程</a></p>
 <p>全文完</p>
 ]]></content>
