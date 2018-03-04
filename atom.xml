@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-03-04T08:58:45.484Z</updated>
+  <updated>2018-03-04T09:01:31.784Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/"/>
     <id>https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/</id>
     <published>2018-03-04T08:56:06.000Z</published>
-    <updated>2018-03-04T08:58:45.484Z</updated>
+    <updated>2018-03-04T09:01:31.784Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久没有写Learning AV Foundation相关的文章了,言归正传<br>本篇介绍一下简单的视频播放</p>
 <p>了解视频播放之前我们来看戏<code>AVPlayer</code>需要的一些组件模型</p>
@@ -115,7 +115,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">MPVolumeView *volumeView = [[MPVolumeView alloc] init];</div><div class="line">   volumeView.showsVolumeSlider = NO;</div><div class="line">   [volumeView sizeToFit];</div><div class="line">   [transportView addSubview:volumeView];</div></pre></td></tr></table></figure>
 <p>当AirPlay可用时,而且WIFI 网络启用时才会显示线路选择按钮.这两个条件只有一个不满足, MPVolumeView 就会自动隐藏按钮.</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本章讲述了 如何使用AVPlayer以及AVPlayerItem 的一些属性 监听播放进度回调,取 字幕等等.</p>
-<p><a href="https://github.com/sunyazhou13/Learning-AV-Foundation-Demos/tree/master/Learning%20AV%20Foundation(%E4%BA%94" target="_blank" rel="external">详细demo请参考</a>%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91/VideoPlayerDemo)</p>
+<p><a href="https://github.com/sunyazhou13/Learning-AV-Foundation-Demos" target="_blank" rel="external">详细demo请参考</a></p>
 ]]></content>
     
     <summary type="html">
