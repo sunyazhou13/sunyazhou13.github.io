@@ -87,6 +87,8 @@
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
             
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
               <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
             </ul>
@@ -180,6 +182,38 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/07/04/arc4random-color/" title="link to post.title">iOS生成随机颜色代码</a></h2>
+      <p class="excerpt">
+    
+      CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0   CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white   CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-07-04T09:45:28.000Z" class="post-list__meta--date date">2017-07-04</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/07/04/arc4random-color/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/26/get-sandbox-path-ios/" title="link to post.title">iOS获取各种文件目录的路径</a></h2>
+      <p class="excerpt">
+    
+      // 获取沙盒主目录路径NSString *homeDir = NSHomeDirectory();// 获取Documents目录路径NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];// 获取Library的目录路径NSString *libDir = [NSSearchPathForDirectoriesInDoma
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-26T08:44:22.000Z" class="post-list__meta--date date">2017-06-26</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/06/26/get-sandbox-path-ios/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -342,55 +376,6 @@ GPU是多线程并行处理器，GLSL直接面向单指令流多数据流(SIMD)�
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
 
 </span><a class="btn-border-small" href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="link to post.title">向往计算机科学相关专业的必学经典</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
-
-主要分3个方面
-书籍
-技法
-装备
-
-书籍首先来说 书籍 大学计算机必须的基本经典书籍
-
-C语言程序设计 谭浩强 必学
-
-清华大学计算机系列教材：数据结构（C语言版） 必学
-
-鸟哥的Linux私房菜 （基础学习篇 第三版） 
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
- &#8226; <span class="post-list__meta--tags tags">
-</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/20/unique-filename-in-system/" title="link to post.title">如何在iOS/macOS系统中创建文件时创建唯一的文件名</a></h2>
-      <p class="excerpt">
-    
-      
-前言当我无数次看到大家写代码的时候总是以一个时间戳+arc4random()创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.
-/* Create a recording file */
-    NSString *filePath = [@&quot;~/Movies/AVScreenShackRecording_XXXXXX&quot; stringByStandardizingPath];
-    char *screenRecording
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-20T08:35:42.000Z" class="post-list__meta--date date">2017-04-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/04/20/unique-filename-in-system/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

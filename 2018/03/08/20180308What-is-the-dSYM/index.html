@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>什么是符号表? | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="什么是符号表? | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="什么是符号表? | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/08/20180308What-is-the-dSYM/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">什么是符号表?</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
+<h2 id="本周主要内容如下"><a href="#本周主要内容如下" class="headerlink" title="本周主要内容如下"></a>本周主要内容如下</h2><ul>
+<li>什么是符号表？</li>
+<li>为什么要配置符号表？</li>
+<li>dSYM文件？</li>
+</ul>
+<h3 id="什么是符号表？"><a href="#什么是符号表？" class="headerlink" title="什么是符号表？"></a>什么是符号表？</h3><p>符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：</p>
+<p><code>&lt;起始地址&gt;</code> <code>&lt;结束地址&gt;</code> <code>&lt;函数&gt;</code> [<code>&lt;文件名&gt;</code>:<code>&lt;行号&gt;</code>]  </p>
+<h3 id="为什么要配置符号表？"><a href="#为什么要配置符号表？" class="headerlink" title="为什么要配置符号表？"></a>为什么要配置符号表？</h3><p>为了能快速并准确地定位用户APP发生<code>Crash</code>的代码<code>位置</code>，我们可以使用符号表对APP发生<code>Crash</code>的程序<code>堆栈</code>进行<code>解析</code>和<code>还原</code>。</p>
+<p>举一个例子：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f84e46105c453408a030c50d802695917bf5ea4c/20180308What-is-the-dSYM/stack_symbol.png" alt=""></p>
+<p>上图是我们通过符号表来解析出来崩溃堆栈的调用</p>
+<h3 id="什么是dSYM文件？"><a href="#什么是dSYM文件？" class="headerlink" title="什么是dSYM文件？"></a>什么是dSYM文件？</h3><p>iOS平台中，<code>dSYM</code>文件是指具有调试信息的目标文件，文件名通常为： <code>com.公司名.dSYM</code>。如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/test_dSYM.png" alt=""></p>
+<p>一般都是和Xcode 工程名的 aget一样的名字</p>
+<blockquote>
+<p>为了方便找回Crash对应的dSYM文件和还原堆栈，建议每次构建或者发布APP版本的时候，备份好dSYM文件</p>
+</blockquote>
+<h4 id="如何定位dSYM文件？"><a href="#如何定位dSYM文件？" class="headerlink" title="如何定位dSYM文件？"></a>如何定位dSYM文件？</h4><p>一般情况下，项目编译完<code>dSYM</code>文件跟<code>app</code>文件在同一个目录下，下面以<code>XCode</code>作为IDE详细说明定位<code>dSYM</code>文件</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dSYM1%402x.png" alt=""></p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180308What-is-the-dSYM/dSYM2@2x.png?raw=true" alt=""></p>
+<blockquote>
+<p>这里用 release 模式做的测试 </p>
+</blockquote>
+<p>我们看到 和工程 <code>target</code>一样的名称的 <code>.dSYM</code>.</p>
+<h4 id="XCode编译后没有生成dSYM文件"><a href="#XCode编译后没有生成dSYM文件" class="headerlink" title="XCode编译后没有生成dSYM文件?"></a>XCode编译后没有生成dSYM文件?</h4><p>XCode在 <code>Release</code>编译环境下默认会生成<code>dSYM</code>文件，而<code>Debug</code>编译环境下默认不会生成</p>
+<p>如果要在<code>Debug</code>对应的<code>Xcode</code>配置如下:</p>
+<p><code>XCode -&gt; Build Settings -&gt; Code Generation -&gt; Generate Debug Symbols -&gt; Yes</code><br><code>XCode -&gt; Build Settings -&gt; Build Option -&gt; Debug Information Format -&gt; DWARF with dSYM File</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym3%402x.png" alt=""><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym4%402x.png" alt=""></p>
+<h4 id="开启Bitcode之后需要注意哪些问题"><a href="#开启Bitcode之后需要注意哪些问题" class="headerlink" title="开启Bitcode之后需要注意哪些问题?"></a>开启Bitcode之后需要注意哪些问题?</h4><ul>
+<li>在点<code>Upload to App Store</code>上传到<code>App Store</code>服务器的时候需要声明符号文件(<code>dSYM</code>文件)的生成:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3d0ace06f1a780aa3691cc55af98d2403a7cfce1/20180308What-is-the-dSYM/dsym5.jpg" alt=""></p>
+<ul>
+<li>在配置符号表文件之前，需要从App Store中把该版本对应的dSYM文件下载回本地,然后用符号表工具生成和上传符号表文件。</li>
+</ul>
+<p>这里找回<code>ipa</code>版本对应的dSYM文件有两种方式</p>
+<ol>
+<li><p>通过Xcode的归档文件找回dSYM,打开<code>Xcode</code> 顶部菜单栏 -&gt; <code>Window</code> -&gt; <code>Organizer</code> 窗口,如下图:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-2.jpg" alt=""><br> 打开 <code>Xcode</code> 顶部菜单栏，选择<code>Archive</code> 标签:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-3.jpg" alt=""><br> 找到发布的归档包，右键点击对应归档包，选择<code>Show in Finder</code>操作:<br> <img src="https://bugly.qq.com/docs/img/symbol-ios/BitcodedSYM-4.jpg?v=20180119105842" alt=""><br> 右键选择定位到的归档文件，选择显示包内容操作:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-5.jpg" alt=""><br> 选择<code>dSYMs</code>目录，目录内即为下载到的 <code>dSYM</code> 文件:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-6.jpg" alt=""></p>
+</li>
+<li><p>通过<a href="https://itunesconnect.apple.com/" target="_blank" rel="external">iTunes Connect</a>找回</p>
+<p> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/757ac10eb4448e952a1f9b42d71073de424da159/20180308What-is-the-dSYM/itunes_connect%402x.png" alt=""></p>
+<p> 在“所有构件版本（All Builds）”中选择某一个版本，点“下载<code>dSYM</code>（Download dSYM）”下载dSYM文件.</p>
+</li>
+</ol>
+<blockquote>
+<p>注意:<em>一个<code>Archiver</code>与<code>dSYM</code>文件一一对应,搞错了容易翻译不出来来源码的调用</em></p>
+</blockquote>
+<p>参考如下:</p>
+<p><a href="https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1" target="_blank" rel="external">Bugly iOS 符号表配置</a><br><a href="https://techblog.toutiao.com/2017/07/05/session413/" target="_blank" rel="external">App 启动时间：过去，现在和未来</a></p>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="计算机图形渲染的流程">计算机图形渲染的流程</a></h2>
+                <p class="excerpt">
+                
+                
+前言今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
+计算机图形渲染的流程计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

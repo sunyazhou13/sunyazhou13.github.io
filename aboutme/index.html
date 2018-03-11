@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>关于 | 東引甌越</title>
+    <title>一个队列中孤独的线程 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="关于 | 東引甌越">
+    <meta name="twitter:title" content="一个队列中孤独的线程 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="关于 | 東引甌越">
+    <meta property="og:title" content="一个队列中孤独的线程 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -86,6 +86,8 @@
               <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
             
               <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
@@ -180,25 +182,33 @@
             <article class="post-container post-container--single">
 
   <header class="post-header">
-    <h1 class="post-title">关于</h1>
+    <h1 class="post-title">一个队列中孤独的线程</h1>
   </header>
 
   <section class="post">
     <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/IMG_0238.JPG" alt=""></p>
-<p><a href="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/dongyinouyue.JPG" target="_blank" rel="external"><code>東引甌越</code></a>这个名字的由来是我有一次去江西省南昌市(古称<code>豫章</code>),途径滕王阁,滕王阁的正东方悬挂的一块金字匾额,上书”東引甌越”欧阳询的欧楷,遒劲有力,方正不阿,我是一个十分喜欢书法的iOS developer.记得高中的时候学过一篇古文叫《滕王阁序》- 王勃.   </p>
-<p>有诗云:”滕王高阁临江渚,珮玉鸣鸾罢歌舞”. 以我当时的学习能力和理解力来讲.真就当饭吃了,没太在意凡此种种之俗文.当时我认为这语文课本的文章简直就是共产党给当代人洗脑的简体中文,用来控制现代人不去推翻无产阶级的工具, 经过大学+工作这么多年来的经验实践证明来看,当时我装B了. 一个学识不够渊博的人岂能有大作为.</p>
-<p>我是一个东北人,来自祖国的北国冰城北部绥化市海伦市,毕业于哈尔滨某所不出名的大学,目前工作于金山云(金山的第24298号程序员),在很长的一段时间以来,都从事iOS方面的应用开发,也搞过一段mac开发,之前在百度搞过百度网盘,百度Hi,当然这也是我所有技能中最为擅长的一个领域.</p>
-<hr>
-<p>搭建这个博客可谓填坑无数,血泪交加,最终才得以成功搭建博客.  </p>
-<p>START<br>2014年了解相关博客支持和git…FAILED. </p>
-<p>RETRY<br>2015年在大神(我的小伙伴宇光)<a href="http://studentdeng.github.io/" target="_blank" rel="external">不会开机的男孩</a>的帮助下尝试搭建配置github pages…FAILED.  </p>
-<p>RETRY<br>2016年末又在宇光的帮助下搭建…成功.  </p>
-<p>RUNNING<br>2017年初开始熟悉hexo…发表各种文章.</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们的一生像一个操作系统中的进程,我们的日常活动就相当于一个进程中的线程,通过操作系统时间片不断轮转调度让我们进行,运行在自己的队列<code>com.sunyazhou.self.queue.serial</code>中.所以我总结以往自己的读书经历为<code>一个孤独的线程</code>.因为自己接收事物态度总是串行执行,学习<code>英语</code>、<code>数学</code>、<code>各种...</code>.</p>
+<p>我是孙亚洲,来自祖国的北国冰城北部绥化市海伦市第二良种场<br>全球坐标(<code>北纬47.6006645</code>,<code>东经127.1908803</code>)数据来自<a href="http://www.google.cn/maps/dir/47.6006924,127.1910261/47.6006899,127.1910375/@47.5994633,127.1937428,824m/data=!3m1!1e3?hl=zh-CN" target="_blank" rel="external">谷歌地图</a>,毕业于哈尔滨某所不出名的大学,目前工作于金山云(金山的第24298号程序员),在很长的一段时间以来,都从事iOS方面的应用开发,也搞过一段mac开发,之前在<code>百度</code>搞过<code>百度网盘</code>,<code>百度Hi</code>,当然这也是我所有技能中最为擅长的一个领域.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/hometomn.png" alt="第二良种场"></p>
+<p><a href="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/dongyinouyue.JPG" target="_blank" rel="external"><code>東引甌越</code></a>这个名字的由来是我有一次去江西省南昌市(古称<code>豫章</code>),途径滕王阁,滕王阁的正东方悬挂的一块金字匾额,上书”東引甌越”,遒劲有力,方正不阿,我是一个十分喜欢书法的iOS developer.记得高中的时候学过一篇古文叫《滕王阁序》- 王勃.   </p>
+<p>有诗云:”滕王高阁临江渚,珮玉鸣鸾罢歌舞”, 当身临其境的时候发现自己的才疏学浅是多么的可怜.</p>
+<h2 id="文学"><a href="#文学" class="headerlink" title="文学"></a>文学</h2><p>欣赏一下曾国藩的书法</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b3ece06c87179f4223d35647a33533852d1797c9/aboutme/about_read_books.jpg" alt=""></p>
+<blockquote>
+<p><strong>盖士人读书，第一要有志，第二要有识，第三要有恒。有志则<code>不甘为下流</code>；有识则知学问无尽，不敢以一得自足，如河伯之观海，如井蛙之窥天，皆无识者也；有恒则断无不成之事。此三者缺一不可。</strong> </p>
+</blockquote>
+<p><strong>做人要<code>不甘为下流</code>,<code>不甘于人下</code>. 读书是为了活的有成就感,不是为了金钱.</strong></p>
+<h2 id="博客搭建历程"><a href="#博客搭建历程" class="headerlink" title="博客搭建历程"></a>博客搭建历程</h2><p>搭建这个博客可谓填坑无数,血泪交加,最终才得以成功搭建博客.  </p>
+<p>start<br>2014年了解相关博客支持和git…FAILED. </p>
+<p>retry…<br>2015年在大神(我的小伙伴宇光)<a href="http://studentdeng.github.io/" target="_blank" rel="external">不会开机的男孩</a>的帮助下尝试搭建配置github pages…FAILED.  </p>
+<p>retry…<br>2016年末又在宇光的帮助下搭建…成功.  </p>
+<p>success running<br>2017年初开始熟悉hexo…发表各种文章.</p>
 <p>写博客是因为经历一个搜索和存储知识的『内存堆栈』、『引用』、『关键字索引』等过程.因为我的大脑一开始像内存栈一样,从空栈到栈溢出,后来用堆存储知识,发现堆也溢出.再后来用引用标签存储iOS开发相关的文章、教程、搞法、技巧、实践代码等等,搞得我的浏览器标签一排一排的看着好像中毒了似的.再再后来我只记住几个关键字去google搜索相关文章.有时候有些人发文章搞着搞着就删了,导致我实在找不到了.加上自己也有些技术的积累和技巧的分享.于是打算搞博客记录下来.和各位开发大神相比我的技术简直相差的太远太远.所以我更应该多写写记录一下自己成长过程中的点点滴滴.即便我的种种观点充满太多狭隘的理论和稚嫩的论证,也要知今是而昨非的做下去.否则我会因虚度年华而悔恨,也会因碌碌无为而羞耻.</p>
-<hr>
-<p>在创建这个博客之前一直在简书,CSDN上打酱油.博客可以让我更加沉静,不趋于浮躁的专注于自己的领域,提升逼格是它顺带的结果.有时候会分享技术和生活相关的文章,当然我也不对它的品质太过于苛求.毕竟我也要花时间在工作上为了很好的生活下去.</p>
-<p>联系我:导航位置各种联系方式,选一个即可.</p>
-<hr>
+<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>在创建这个博客之前一直在简书,CSDN上打酱油.博客可以让我更加沉静,不趋于浮躁的专注于自己的领域,提升逼格是它顺带的结果.有时候会分享技术和生活相关的文章,当然我也不对它的品质太过于苛求.毕竟我也要花时间在工作上为了很好的生活下去.</p>
+<h2 id="成就"><a href="#成就" class="headerlink" title="成就"></a>成就</h2><p>没啥成就…惭愧惭愧</p>
+<h1 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h1><blockquote>
+<p>sunyazhou13@gmail.com</p>
+</blockquote>
 
   </section>
 </article>

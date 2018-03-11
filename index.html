@@ -87,6 +87,8 @@
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
             
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
               <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
             </ul>
@@ -180,6 +182,50 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308What-is-the-dSYM/" title="link to post.title">什么是符号表?</a></h2>
+      <p class="excerpt">
+    
+      
+前言iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+什么是符号表？
+为什么要配置符号表？
+dSYM文件？
+
+什么是符号表？符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
+&amp;lt;起始地址&amp;gt; &amp;lt;结束地址&amp;gt; &amp;lt;函数&amp;gt; [&amp;lt;文件名&amp;gt;:&amp;lt;
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308What-is-the-dSYM/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="link to post.title">计算机图形渲染的流程</a></h2>
+      <p class="excerpt">
+    
+      
+前言今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
+计算机图形渲染的流程计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单解释了这一个流水线过程。计算机绘图需要一个输入绘图数据，这个数据可以是用户指定的，也可以是操作系统决定的，也可以是混合的。这些数据是分组的。
+
+座标生成：当绘图数据送入座标生成系统后，流水线就会对其进
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -376,60 +422,6 @@ marginwidth及margi
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/12/15/20171215cell-add-kvo/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/11/03/20171103iPhone-X-Adaptor/" title="link to post.title">适配iPhone X</a></h2>
-      <p class="excerpt">
-    
-      
-前言最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,相信拿到 iPhone X的感觉是下面这样的:
-
-本篇主要内容分为:
-
-iPhone X尺寸参数
-UI适配
-极端情况处理
-实践案例
-总结
-
-1.iPhone X尺寸参数1.1 首先 来围观一下模拟器的 iPhone X的外观
-下面这点先记住这很重要:格式UIEdgeInsetsMake(上, 左,下,右);  
-
-iPhone X竖屏时:占满整个屏幕的控制器的view的safeAreaInsets是（44，0，3
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-11-03T03:44:44.000Z" class="post-list__meta--date date">2017-11-03</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/11/03/20171103iPhone-X-Adaptor/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031Elegant-present-transition/" title="link to post.title">论一个优雅的模态转场的自我修养</a></h2>
-      <p class="excerpt">
-    
-      前言在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
-
-swift 点这里下载demoObjective-C 点击这里直达demo
-
-
-需求背景转场对目前的 iOS 来讲已经不能再熟悉了 但想找个靠谱点的带遮盖的转场 没找到几个靠谱的
-不是这个问题不行就那个问题不能满足 
-
-根据Raywenderrich的
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/10/31/20171031Elegant-present-transition/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>计算机图形渲染的流程 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="计算机图形渲染的流程 | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="计算机图形渲染的流程 | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">计算机图形渲染的流程</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/%20Ivan-Sutherland.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.</p>
+<h2 id="计算机图形渲染的流程"><a href="#计算机图形渲染的流程" class="headerlink" title="计算机图形渲染的流程"></a>计算机图形渲染的流程</h2><p>计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单解释了这一个流水线过程。计算机绘图需要一个输入绘图数据，这个数据可以是用户指定的，也可以是操作系统决定的，也可以是混合的。这些数据是分组的。</p>
+<ul>
+<li>座标生成：当绘图数据送入座标生成系统后，流水线就会对其进行座标分派，图1右上的线框图抽象描述了这个过程。</li>
+<li>着色指定：当座标系统生成出带座标的绘图数据后就需要送入着色器，着色器指定了这些线框的填充颜色或纹理。</li>
+<li>渲染：着色器将绘图数据加上着色数据后就被送入渲染器，渲染器根据绘图数据描述，将像素填充到描述的线框组里并送入帧缓存，然后然后送入显示器，显示器获取到帧缓存的数据后再根据数据的描述来绘图到屏幕上。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/render1.png" alt=""></p>
+<h2 id="像素与点（point）与点（dot）"><a href="#像素与点（point）与点（dot）" class="headerlink" title="像素与点（point）与点（dot）"></a>像素与点（point）与点（dot）</h2><p>像素与点（point），点（dot）这三个单位很容易令人混淆，原因在于它们在很多场合上是可以互换的。但是本文需要区分这两者的概念。</p>
+<p>像素指的是一种数据结构，这个数据结构包含了RGB三个数据，分别对应的是红色，绿色，蓝色。我们说一张计算机生成的位图时，我们会说这图是多少像素x多少像素，例如800x600像素。值得注意的是，像素没有一个固定的尺寸单位，它只是一个抽象概念。</p>
+<p>点（dot）指的是显示器屏幕的点或打印的点，是具体指代的事物。我们想说的DPI即dot per inch，每英寸多少个点。一般来说1个点对应一个像素，常见的打印尺寸是72DPI，即每英寸72点，也就是包含72个像素的数据。当像素被计算机输出成点投射都屏幕或纸面上时，它才具备了尺寸的概念，即点（dot）。</p>
+<p>点（point）指的是座标点，是一个数据结构，包含了两个数据（或三个）X和Y(和Z)座标。绘图数据里是包含了这个座标数据的。对于没有使用HiDPI的操作系统来说，一个座标点对应一个像素。</p>
+<h2 id="点（point）不一定等于像素"><a href="#点（point）不一定等于像素" class="headerlink" title="点（point）不一定等于像素"></a>点（point）不一定等于像素</h2><p>一般来说，点（dot）与像素是可以互换指代的，而且我们在Retina的概念被提出前一直这样使用它们。但是，现在这两个概念必须要区分出来。像素只是一个描述RGB的数据结构，它没有任何尺寸单位，它更不是一个矩形。当像素被输出到屏幕或纸张上时，我们应该用点来指代这种含有颜色，有尺寸的具体事物。</p>
+<p>普通的显示屏幕或打印机，我们会说屏幕上的一个点（dot）是由一个像素（RGB数据）组成的，打印后的点是由一个像素经过色彩转换（CMYK数据）组成的。</p>
+<p>对于打印机来说，一般的DPI是72。也就是指我们在显示器屏幕上看到720x720像素的位图，在打印出来后的面积是10x10英寸，但是屏幕上的位图面积并不会跟打印出来的面积一致。因为屏幕上的一个点与打印的点的尺寸不一样。</p>
+<p>PPI指的是每英寸多少像素，与DPI有一定概念上的区别。PPI一般指的是屏幕的点密度，DPI指的是打印点的密度。PPI不是固定的，不同屏幕尺寸结合不同的分辨率会有不同的PPI，但是DPI则是相对固定在72。</p>
+<p>HiDPI是苹果的一项绘图技术，结合这种技术，计算机座标系统上的一个点（point）不再对应一个像素，一般来说会是一个座标点对应四个像素，而一个像素对应屏幕的一个物理点（dot）。</p>
+<p>由于像素是一组色彩数据，所以绘图数据在经过着色器后才包含了它。举个例子，绘图数据在送入着色器前是描述一个100x100的矩形，经过着色器指定色彩属性后会被送入一个HiDPI系统，这个系统将200x200个像素的数据添加到绘图数据里。在经过渲染器后，相当于将200x200个像素填充进100x100这个矩形线框。</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/render2.png" alt=""></p>
+<h2 id="帧缓存与显示器屏幕"><a href="#帧缓存与显示器屏幕" class="headerlink" title="帧缓存与显示器屏幕"></a>帧缓存与显示器屏幕</h2><p>帧缓存是储存计算机渲染后的图形数据的，这些数据包括座标，像素，分辨率等等。。简单来说就是描述图象的数据，当这些描述数据送入显示器后，显示器就知道怎么绘图了。</p>
+<p>一般来说的屏幕分辨率指的是渲染器生产出来的像素数据排列，例如1280x800像素。值得注意的是这个屏幕分辨率与显示器屏幕的物理点排列没关系的。屏幕分辨率是可设置的，显示器的物理点排列是固定的。例如帧缓存里的分辨率是1280x800像素，但是显示器屏幕是1920x1200点排列的，那么显示器会怎么将帧缓存里的数据呈现到屏幕上呢？答案是通过自适应放缩，是经过显示器内部芯片来转换的。</p>
+<p>13寸的RMBP在分辨率设置里是这样描述的，看起来像1280x800像素，看起来像1440x900像素。我们需要这样理解，1280x800像素是相对于旧款不带Retina的机器，也就是绘图数据送入着色器前的座标系统与渲染后的座标是1:1对应的参考值。实际上在经过渲染后，它的实际像素是2560x1600，也就是帧缓存里是数据是2560x1600像素。同样地看起来1440x900像素实际渲染后的像素是2880x1800。由于13寸的屏幕实际点排列是2560x1600，所以帧缓存2880x1800像素在输出到屏幕后会被自适应缩放掉。</p>
+<h2 id="DPI与Retina"><a href="#DPI与Retina" class="headerlink" title="DPI与Retina"></a>DPI与Retina</h2><p>操作系统标准的桌面打印DPI是72，但是随着HiDPI技术和高PPI屏幕出现后，这个标准也许会有一定的变化。我们在Retina的OS X下用Photoshop新建一个文件时默认的DPI指定在144上了，这是标准转变的一个信号。</p>
+<p>在没有使用类似HiDPI技术的操作系统上，屏幕分辨率对应的打印DPI是72。使用HiDPI的Retina机器的打印DPI是144，用以保证在统一尺下具有更多的点密度。这点对于印前工作非常重要。</p>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308What-is-the-dSYM/" title="什么是符号表?">什么是符号表?</a></h2>
+                <p class="excerpt">
+                
+                
+前言iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+什么是符号表？
+为什么要配置符号表？
+dSYM文
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308What-is-the-dSYM/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/04/Learning-AV-Foundation-Playing-Video/" title="Learning AV Foundation(五)播放视频">Learning AV Foundation(五)播放视频</a></h2>
+                <p class="excerpt">
+                
+                
+前言很久没有写Learning AV Foundation相关的文章了,言归正传本篇介绍一下简单的视频播放
+了解视频播放之前我们来看戏AVPlayer需要的一些组件模型
+
+AVPlayerAVPlayer是一个用来播放基于基于时间的视听媒体的控制对象,支持播放:
+
+本地 媒体文件
+异步下载 媒体文
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-04T08:56:06.000Z" class="post-list__meta--date date">2018-03-04</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/04/Learning-AV-Foundation-Playing-Video/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

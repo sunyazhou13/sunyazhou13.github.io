@@ -87,6 +87,8 @@
             
               <li class="navigation__item"><a href="/archives">归档</a></li>
             
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
               <li class="navigation__item"><a href="/aboutme">关于</a></li>
             
             </ul>
@@ -180,6 +182,55 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/04/29/some-advice-for-high-school-graduate/" title="link to post.title">向往计算机科学相关专业的必学经典</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
+
+主要分3个方面
+书籍
+技法
+装备
+
+书籍首先来说 书籍 大学计算机必须的基本经典书籍
+
+C语言程序设计 谭浩强 必学
+
+清华大学计算机系列教材：数据结构（C语言版） 必学
+
+鸟哥的Linux私房菜 （基础学习篇 第三版） 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-04-29T01:15:21.000Z" class="post-list__meta--date date">2017-04-29</time>
+ &#8226; <span class="post-list__meta--tags tags">
+</span><a class="btn-border-small" href="/2017/04/29/some-advice-for-high-school-graduate/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/04/20/unique-filename-in-system/" title="link to post.title">如何在iOS/macOS系统中创建文件时创建唯一的文件名</a></h2>
+      <p class="excerpt">
+    
+      
+前言当我无数次看到大家写代码的时候总是以一个时间戳+arc4random()创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.
+/* Create a recording file */
+    NSString *filePath = [@&quot;~/Movies/AVScreenShackRecording_XXXXXX&quot; stringByStandardizingPath];
+    char *screenRecording
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-04-20T08:35:42.000Z" class="post-list__meta--date date">2017-04-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/04/20/unique-filename-in-system/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -353,48 +404,6 @@ refs:How to know if a NSWi
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/02/22/macOS-simulate-keyborad-NSEvent/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/" title="link to post.title">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
-      <p class="excerpt">
-    
-      $(SRCROOT)代表的是项目根目录下$(PROJECT_DIR)代表的是整个项目
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-21T08:28:00.000Z" class="post-list__meta--date date">2017-02-21</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/" title="link to post.title">使用终端删除NSUserDefault的内容</a></h2>
-      <p class="excerpt">
-    
-      前言
-大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
-
-NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
-$ defaults delete + 包名  eg: com.baidu.demo 
-下面这样会删除所有以com.baidu.demo为包名的文件  
-$ defaults delete com.baidu.demo
-
-
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/20/use-terminal-delete-all-NSUserDefault-content/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
