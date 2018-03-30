@@ -185,6 +185,27 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/07/13/ios11-new-skills/" title="link to post.title">iOS 11 新技能</a></h2>
+      <p class="excerpt">
+    
+      
+可用性检查API在swift代码中经常可以看到 某个API 适用于 iOS10.0 
+如下代码
+if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	//老版本API&amp;#125;
+在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查
+通过API_AVAILABLE宏来标注方法的可用性@interface ViewController : UIViewController- (void)x
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-07-13T02:55:15.000Z" class="post-list__meta--date date">2017-07-13</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/07/13/ios11-new-skills/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/07/04/arc4random-color/" title="link to post.title">iOS生成随机颜色代码</a></h2>
       <p class="excerpt">
     
@@ -357,25 +378,6 @@ GPU是多线程并行处理器，GLSL直接面向单指令流多数据流(SIMD)�
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/05/10/NSTableRowView-mouse-track-color/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/" title="link to post.title">如何在macOS/MAC OS X上创建替身文件</a></h2>
-      <p class="excerpt">
-    
-      
-前言熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
-软连接如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作
-创建软链接可以使用NSFileManager中的两个
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
-
-</span><a class="btn-border-small" href="/2017/05/09/how-to-create-symbolicLink-on-macos-in-code/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

@@ -185,6 +185,27 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/22/macOS-simulate-keyborad-NSEvent/" title="link to post.title">macOS上模拟发送键盘事件</a></h2>
+      <p class="excerpt">
+    
+      
+最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
+
+导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
+创建CGEventSourceRef 事件源对象(注意它不是OC对象,声明的时候对象前边没有*,而且需要用CFRelease()释放内存).
+创建CGEventRef使用CGEventCreateKeyboardEvent,
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/22/macOS-simulate-keyborad-NSEvent/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/" title="link to post.title">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
       <p class="excerpt">
     
@@ -383,25 +404,6 @@ username 一般代表提交的本机用户名email@you.com 一般是邮箱地址
   <a class="tag-link" href="/tags/生活/">生活</a>
 
 </span><a class="btn-border-small" href="/2017/01/28/2017-Spring-Festival/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/18/iOS-development-knowledge-point-accumulate/" title="link to post.title">iOS开发知识点积累</a></h2>
-      <p class="excerpt">
-    
-      
-搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航
-
-iOS技
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-18T05:44:57.000Z" class="post-list__meta--date date">2017-01-18</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/18/iOS-development-knowledge-point-accumulate/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
