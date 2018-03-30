@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>孤独的线程 | 東引甌越</title>
+    <title>Swift 4 中的数组技巧 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="孤独的线程 | 東引甌越">
+    <meta name="twitter:title" content="Swift 4 中的数组技巧 | 東引甌越">
     <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="孤独的线程 | 東引甌越">
+    <meta property="og:title" content="Swift 4 中的数组技巧 | 東引甌越">
     <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/aboutme/index.html"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/14/20180314Swft4-Array-skills/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -182,36 +182,120 @@
             <article class="post-container post-container--single">
 
   <header class="post-header">
-    <h1 class="post-title">孤独的线程</h1>
+    <div class="post-meta">
+      <time datetime="2018-03-14T02:17:56.000Z" class="post-list__meta--date date">2018-03-14</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Swift 4 中的数组技巧</h1>
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/IMG_0238.JPG" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们的一生像一个操作系统中的进程,我们的日常活动就相当于一个进程中的线程,通过操作系统时间片不断轮转调度让我们进行,运行在自己的队列<code>com.sunyazhou.self.queue.serial</code>中.所以我总结以往自己的读书经历为<code>一个孤独的线程</code>.因为自己接收事物态度总是串行执行,学习<code>英语</code>、<code>数学</code>、<code>各种...</code>.</p>
-<p>我是孙亚洲,来自祖国的北国冰城北部绥化市海伦市第二良种场<br>全球坐标(<code>北纬47.6006645</code>,<code>东经127.1908803</code>)数据来自<a href="http://www.google.cn/maps/dir/47.6006924,127.1910261/47.6006899,127.1910375/@47.5994633,127.1937428,824m/data=!3m1!1e3?hl=zh-CN" target="_blank" rel="external">谷歌地图</a>,毕业于哈尔滨某所不出名的大学,目前工作于金山云(金山的第24298号程序员),在很长的一段时间以来,都从事iOS方面的应用开发,也搞过一段mac开发,之前在<code>百度</code>搞过<code>百度网盘</code>,<code>百度Hi</code>,当然这也是我所有技能中最为擅长的一个领域.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/hometomn.png" alt="第二良种场"></p>
-<p><a href="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/aboutme/dongyinouyue.JPG" target="_blank" rel="external"><code>東引甌越</code></a>这个名字的由来是我有一次去江西省南昌市(古称<code>豫章</code>),途径滕王阁,滕王阁的正东方悬挂的一块金字匾额,上书”東引甌越”,遒劲有力,方正不阿,我是一个十分喜欢书法的iOS developer.记得高中的时候学过一篇古文叫《滕王阁序》- 王勃.   </p>
-<p>有诗云:”滕王高阁临江渚,珮玉鸣鸾罢歌舞”, 当身临其境的时候发现自己的才疏学浅是多么的可怜.</p>
-<h2 id="文学"><a href="#文学" class="headerlink" title="文学"></a>文学</h2><h4 id="书法"><a href="#书法" class="headerlink" title="书法"></a>书法</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b3ece06c87179f4223d35647a33533852d1797c9/aboutme/about_read_books.jpg" alt=""></p>
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
+<p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
+<h2 id="Swift-4-0-中的可变数组技巧"><a href="#Swift-4-0-中的可变数组技巧" class="headerlink" title="Swift 4.0 中的可变数组技巧"></a>Swift 4.0 中的可变数组技巧</h2><p>我们可用 Xcode 创建playground 来进行练习</p>
+<p><strong>首先创建个数组</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</div></pre></td></tr></table></figure>
+<p><strong>for in 循环遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3 4 5 6</div></pre></td></tr></table></figure>
+<p><strong>想要扣除第一个元素剩余的元素进行迭代遍历呢？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>()&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">2 3 4 5 6</div></pre></td></tr></table></figure>
 <blockquote>
-<p><strong>人还得需要用实力去赢得别人的尊重.</strong></p>
+<p>dropFirst() 函数参数是可以添加数值的  for x in array.dropFirst(3) 打印:4 5 6.</p>
 </blockquote>
-<h2 id="博客搭建历程"><a href="#博客搭建历程" class="headerlink" title="博客搭建历程"></a>博客搭建历程</h2><p>搭建这个博客可谓填坑无数,血泪交加,最终才得以成功搭建博客.  </p>
-<p>start<br>2014年了解相关博客支持和git…FAILED. </p>
-<p>retry…<br>2015年在大神(我的小伙伴宇光)<a href="http://studentdeng.github.io/" target="_blank" rel="external">不会开机的男孩</a>的帮助下尝试搭建配置github pages…FAILED.  </p>
-<p>retry…<br>2016年末又在宇光的帮助下搭建…成功.  </p>
-<p>success running<br>2017年初开始熟悉hexo…发表各种文章.</p>
-<p>写博客是因为经历一个搜索和存储知识的『内存堆栈』、『引用』、『关键字索引』等过程.因为我的大脑一开始像内存栈一样,从空栈到栈溢出,后来用堆存储知识,发现堆也溢出.再后来用引用标签存储iOS开发相关的文章、教程、搞法、技巧、实践代码等等,搞得我的浏览器标签一排一排的看着好像中毒了似的.再再后来我只记住几个关键字去google搜索相关文章.有时候有些人发文章搞着搞着就删了,导致我实在找不到了.加上自己也有些技术的积累和技巧的分享.于是打算搞博客记录下来.和各位开发大神相比我的技术简直相差的太远太远.所以我更应该多写写记录一下自己成长过程中的点点滴滴.即便我的种种观点充满太多狭隘的理论和稚嫩的论证,也要知今是而昨非的做下去.否则我会因虚度年华而悔恨,也会因碌碌无为而羞耻.</p>
-<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>在创建这个博客之前一直在简书,CSDN上打酱油.博客可以让我更加沉静,不趋于浮躁的专注于自己的领域,提升逼格是它顺带的结果.有时候会分享技术和生活相关的文章,当然我也不对它的品质太过于苛求.毕竟我也要花时间在工作上为了很好的生活下去.</p>
-<h1 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h1><blockquote>
-<p>sunyazhou13@gmail.com</p>
+<p>有 <code>first</code> 的地方基本就有<code>last</code></p>
+<p><strong>想要扣除最后 3 个元素以外的元素进行遍历？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">3</span>)&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3</div></pre></td></tr></table></figure>
+<p><strong>带下标和数组元素遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> (num, element) <span class="keyword">in</span> array.enumerated() &#123;</div><div class="line">    <span class="built_in">print</span>(num, element)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印 左边下标 右边元素</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">0 1</div><div class="line">1 2</div><div class="line">2 3</div><div class="line">3 4</div><div class="line">4 5</div><div class="line">5 6</div></pre></td></tr></table></figure>
+<blockquote>
+<p>左边下标 右边元素</p>
 </blockquote>
+<p>全文完</p>
 
   </section>
+
 </article>
 
-<!-- 添加打赏功能 只在文章详情中显示-->
 
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308What-is-the-dSYM/" title="什么是符号表?">什么是符号表?</a></h2>
+                <p class="excerpt">
+                
+                
+前言iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+什么是符号表？
+为什么要配置符号表？
+dSYM文
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308What-is-the-dSYM/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
 
 
 
@@ -235,7 +319,6 @@
     </div>
     <!-- City版安装代码已完成 -->
 </section>
-
 
 
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-03-11T23:32:10.416Z</updated>
+  <updated>2018-03-14T03:25:51.315Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,64 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Swift 4 中的数组技巧</title>
+    <link href="https://www.sunyazhou.com/2018/03/14/20180314Swft4-Array-skills/"/>
+    <id>https://www.sunyazhou.com/2018/03/14/20180314Swft4-Array-skills/</id>
+    <published>2018-03-14T02:17:56.000Z</published>
+    <updated>2018-03-14T03:25:51.315Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
+<p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
+<h2 id="Swift-4-0-中的可变数组技巧"><a href="#Swift-4-0-中的可变数组技巧" class="headerlink" title="Swift 4.0 中的可变数组技巧"></a>Swift 4.0 中的可变数组技巧</h2><p>我们可用 Xcode 创建playground 来进行练习</p>
+<p><strong>首先创建个数组</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</div></pre></td></tr></table></figure>
+<p><strong>for in 循环遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3 4 5 6</div></pre></td></tr></table></figure>
+<p><strong>想要扣除第一个元素剩余的元素进行迭代遍历呢？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>()&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">2 3 4 5 6</div></pre></td></tr></table></figure>
+<blockquote>
+<p>dropFirst() 函数参数是可以添加数值的  for x in array.dropFirst(3) 打印:4 5 6.</p>
+</blockquote>
+<p>有 <code>first</code> 的地方基本就有<code>last</code></p>
+<p><strong>想要扣除最后 3 个元素以外的元素进行遍历？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">3</span>)&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3</div></pre></td></tr></table></figure>
+<p><strong>带下标和数组元素遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> (num, element) <span class="keyword">in</span> array.enumerated() &#123;</div><div class="line">    <span class="built_in">print</span>(num, element)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印 左边下标 右边元素</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">0 1</div><div class="line">1 2</div><div class="line">2 3</div><div class="line">3 4</div><div class="line">4 5</div><div class="line">5 6</div></pre></td></tr></table></figure>
+<blockquote>
+<p>左边下标 右边元素</p>
+</blockquote>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;年前买了本&lt;a href=&quot;https://objccn.io/products/advanced-swift/&quot; target=&quot;_bla
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>什么是符号表?</title>
     <link href="https://www.sunyazhou.com/2018/03/08/20180308What-is-the-dSYM/"/>
     <id>https://www.sunyazhou.com/2018/03/08/20180308What-is-the-dSYM/</id>
     <published>2018-03-08T03:14:12.000Z</published>
-    <updated>2018-03-11T23:32:10.416Z</updated>
+    <updated>2018-03-08T04:41:11.479Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
@@ -96,7 +149,7 @@
     <link href="https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/"/>
     <id>https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/</id>
     <published>2018-03-05T04:11:41.000Z</published>
-    <updated>2018-03-05T13:00:41.729Z</updated>
+    <updated>2018-03-05T05:37:25.385Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/%20Ivan-Sutherland.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.</p>
@@ -146,7 +199,7 @@
     <link href="https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/"/>
     <id>https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/</id>
     <published>2018-03-04T08:56:06.000Z</published>
-    <updated>2018-03-04T09:11:32.527Z</updated>
+    <updated>2018-03-05T01:08:19.498Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/5k-airplay.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久没有写Learning AV Foundation相关的文章了,言归正传<br>本篇介绍一下简单的视频播放</p>
@@ -267,7 +320,7 @@
     <link href="https://www.sunyazhou.com/2018/02/04/20180204Word-Embeding/"/>
     <id>https://www.sunyazhou.com/2018/02/04/20180204Word-Embeding/</id>
     <published>2018-02-04T04:24:30.000Z</published>
-    <updated>2018-02-04T04:44:07.807Z</updated>
+    <updated>2018-02-12T02:23:00.960Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180204Word-Embeding/wordembeding.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习过程中记录一下python代码</p>
@@ -294,7 +347,7 @@
     <link href="https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/"/>
     <id>https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/</id>
     <published>2018-01-13T14:27:18.000Z</published>
-    <updated>2018-02-04T04:23:36.640Z</updated>
+    <updated>2018-01-15T02:14:51.469Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mysql-python.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了实现<code>不斷學習 與時俱進</code>周末把大部分时间放在了学习<code>Python</code>上.<br>在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客.</p>
@@ -442,7 +495,7 @@
     <link href="https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/"/>
     <id>https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/</id>
     <published>2018-01-12T02:32:18.000Z</published>
-    <updated>2018-01-13T14:24:50.905Z</updated>
+    <updated>2018-01-12T08:19:46.716Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180112AVAudioSession-Category/ASPG_intro_2x.png" alt="AVAudioSession"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2018新年第一篇, 梳理<code>AVAudioSession</code>的<code>Category</code>,解决音频开发中的各种播放被打断或者首次启动时无声音的问题</p>
@@ -808,7 +861,7 @@
     <link href="https://www.sunyazhou.com/2017/12/31/20171230Final-Summary/"/>
     <id>https://www.sunyazhou.com/2017/12/31/20171230Final-Summary/</id>
     <published>2017-12-31T02:46:20.000Z</published>
-    <updated>2018-03-11T23:32:10.416Z</updated>
+    <updated>2018-03-08T02:28:41.376Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171230Final-Summary/2017FinalSummart1.jpeg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
@@ -1175,7 +1228,7 @@
     <link href="https://www.sunyazhou.com/2017/12/27/20171227markdown-audio/"/>
     <id>https://www.sunyazhou.com/2017/12/27/20171227markdown-audio/</id>
     <published>2017-12-27T04:04:07.000Z</published>
-    <updated>2017-12-30T04:13:29.152Z</updated>
+    <updated>2017-12-29T01:24:04.184Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
 <h2 id="markdown插入音乐"><a href="#markdown插入音乐" class="headerlink" title="markdown插入音乐"></a>markdown插入音乐</h2><p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
@@ -1223,7 +1276,7 @@
     <link href="https://www.sunyazhou.com/2017/12/19/20171219AudioPan/"/>
     <id>https://www.sunyazhou.com/2017/12/19/20171219AudioPan/</id>
     <published>2017-12-19T03:40:13.000Z</published>
-    <updated>2017-12-24T07:20:12.406Z</updated>
+    <updated>2017-12-20T01:06:27.928Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio-pan.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.</p>
@@ -1273,7 +1326,7 @@
     <link href="https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/"/>
     <id>https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/</id>
     <published>2017-12-15T09:05:10.000Z</published>
-    <updated>2017-12-16T11:00:18.710Z</updated>
+    <updated>2017-12-18T12:03:44.108Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是<strong>如何正确的给一个<code>UICollectionViewCell</code>添加<code>KVO</code>监听</strong>.</p>
@@ -1407,7 +1460,7 @@
     <link href="https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/"/>
     <id>https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/</id>
     <published>2017-11-03T03:44:44.000Z</published>
-    <updated>2017-11-25T08:21:09.464Z</updated>
+    <updated>2017-11-24T10:55:37.752Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,<br>相信拿到 iPhone X的感觉是下面这样的:</p>
@@ -1632,7 +1685,7 @@
     <link href="https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/"/>
     <id>https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/</id>
     <published>2017-10-31T03:32:17.000Z</published>
-    <updated>2017-10-31T12:55:31.166Z</updated>
+    <updated>2017-10-31T06:55:18.657Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="external">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
 <blockquote>
@@ -1707,7 +1760,7 @@
     <link href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/"/>
     <id>https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/</id>
     <published>2017-10-25T08:10:35.000Z</published>
-    <updated>2017-10-31T12:55:31.166Z</updated>
+    <updated>2017-10-25T08:37:17.311Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
 <p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="external">喵神发表了一篇博文 关于 Swift Error 的分类</a>  </p>
@@ -1755,7 +1808,7 @@
     <link href="https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/"/>
     <id>https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/</id>
     <published>2017-10-16T05:00:30.000Z</published>
-    <updated>2017-11-25T08:21:09.463Z</updated>
+    <updated>2017-11-01T01:31:52.247Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
@@ -1866,7 +1919,7 @@
     <link href="https://www.sunyazhou.com/2017/09/30/20170930DeviceCheck/"/>
     <id>https://www.sunyazhou.com/2017/09/30/20170930DeviceCheck/</id>
     <published>2017-09-30T01:45:25.000Z</published>
-    <updated>2017-10-09T14:42:28.420Z</updated>
+    <updated>2017-09-30T03:25:11.652Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dd5e142392f5ea3756cb8877e134b5334e659738/20170930DeviceCheck/DeviceCheck.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS11 苹果改动了一个比较引开发者关注的亮点</p>
@@ -2011,7 +2064,7 @@
     <link href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/"/>
     <id>https://www.sunyazhou.com/2017/09/29/20170929markdown-table/</id>
     <published>2017-09-29T10:01:08.000Z</published>
-    <updated>2017-10-09T14:42:28.419Z</updated>
+    <updated>2017-10-26T01:55:10.230Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20170929markdown-table/table.png" alt=""></p>
 <p>以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格</p>
@@ -2105,7 +2158,7 @@
     <link href="https://www.sunyazhou.com/2017/09/01/20170901Charles-capture-https/"/>
     <id>https://www.sunyazhou.com/2017/09/01/20170901Charles-capture-https/</id>
     <published>2017-09-01T15:17:09.000Z</published>
-    <updated>2017-09-01T16:25:40.000Z</updated>
+    <updated>2017-12-18T12:03:44.107Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png" alt=""></p>
 <p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求 </p>
@@ -2172,7 +2225,7 @@
     <link href="https://www.sunyazhou.com/2017/08/30/ARKit/"/>
     <id>https://www.sunyazhou.com/2017/08/30/ARKit/</id>
     <published>2017-08-30T06:50:43.000Z</published>
-    <updated>2017-08-31T13:17:32.000Z</updated>
+    <updated>2017-08-30T07:26:24.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png" alt=""></p>
 <p>本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.<br>期间有任何问题请大家集思广益,多多指教. </p>
@@ -2480,7 +2533,7 @@
     <link href="https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/"/>
     <id>https://www.sunyazhou.com/2017/08/07/Learning-AV-Foundation-AVAsset-Senior/</id>
     <published>2017-08-07T12:36:46.000Z</published>
-    <updated>2017-08-28T12:43:20.000Z</updated>
+    <updated>2017-08-08T01:29:17.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV-Foundation-AVAsset-Senior3.2/audio-artwork.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先上图 </p>
@@ -2588,70 +2641,6 @@
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="Learning AV Foundation" scheme="https://www.sunyazhou.com/tags/Learning-AV-Foundation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 11 新技能</title>
-    <link href="https://www.sunyazhou.com/2017/07/13/ios11-new-skills/"/>
-    <id>https://www.sunyazhou.com/2017/07/13/ios11-new-skills/</id>
-    <published>2017-07-13T02:55:15.000Z</published>
-    <updated>2017-07-16T02:02:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/what_is_news_in_ios11.png" alt=""></p>
-<h2 id="可用性检查API"><a href="#可用性检查API" class="headerlink" title="可用性检查API"></a>可用性检查API</h2><p>在swift代码中经常可以看到 某个API 适用于 iOS10.0 </p>
-<p>如下代码</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="meta">@available</span>(iOS <span class="number">11</span>, *)) &#123;</div><div class="line">	<span class="comment">//iOS 11可用 </span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//老版本API</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查</p>
-<h5 id="通过API-AVAILABLE宏来标注方法的可用性"><a href="#通过API-AVAILABLE宏来标注方法的可用性" class="headerlink" title="通过API_AVAILABLE宏来标注方法的可用性"></a>通过<code>API_AVAILABLE</code>宏来标注方法的可用性</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> : <span class="title">UIViewController</span></span></div><div class="line">- (<span class="keyword">void</span>)xxxMethodA API_AVAILABLE(ios(<span class="number">11.0</span>));</div><div class="line">- (<span class="keyword">void</span>)xxxMethodB API_AVAILABLE(ios(<span class="number">8.0</span>), macos(<span class="number">10.10</span>), watchos(<span class="number">2.0</span>), tvos(<span class="number">9.0</span>));</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>切记 <code>macos</code>、<code>ios</code>、<code>watchos</code>、<code>tvos</code>都是小写</p>
-</blockquote>
-<p>通过这种写法进行可用性判断, 编辑器就不会产生警告了, 并且在<code>运行时</code>就根据iOS系统版本执行相应代码.</p>
-<h5 id="通过API-AVAILABLE宏来标注整个class的可用性"><a href="#通过API-AVAILABLE宏来标注整个class的可用性" class="headerlink" title="通过API_AVAILABLE宏来标注整个class的可用性"></a>通过<code>API_AVAILABLE</code>宏来标注整个<code>class</code>的可用性</h5><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">API_AVAILABLE(ios(<span class="number">11.0</span>))</div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">A</span> : <span class="title">NSObject</span></span></div><div class="line">- (<span class="keyword">void</span>)xxxMothod;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>看了大家会发现 这个 都是用于OC的代码 那C/C++ 有吗? 必须有</p>
-<h5 id="C-C-代码-可以使用"><a href="#C-C-代码-可以使用" class="headerlink" title="C/C++ 代码 可以使用 ``"></a>C/C++ 代码 可以使用 ``</h5><p>判断是否可用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> (__builtin_available(iOS <span class="number">11</span>, macOS <span class="number">10.13</span>, *)) &#123;</div><div class="line">     xxxxFunc();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">//导入头文件</div><div class="line">#include &lt;os/availability.h&gt; </div><div class="line"></div><div class="line">//可用性判断用于 声明函数 </div><div class="line">void myFunctionForiOS11OrNewer(int i) API_AVAILABLE(ios(11.0), macos(10.13));  </div><div class="line"></div><div class="line">//可用性判断 用于类 XXXClassA</div><div class="line">class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;</div></pre></td></tr></table></figure>
-<p>默认 <code>API_AVAILABLE()</code> 只能用于 <code>iOS 11</code> / <code>tvOS 11</code> / <code>macOS 10.13</code> / <code>watchOS 4</code> 以上的 API 生效</p>
-<p>如果就工程想使用这种llvm新版特性的话 需要修改 <code>buid setting</code>里面的 <code>Unguarded availability</code>  如下图:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/availability%402x.png" alt=""></p>
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>前面的文章我又讲过<a href="http://www.sunyazhou.com/2017/06/20/enable-static-analyer/">静态分析</a></p>
-<p>这里说一下变化</p>
-<h3 id="NSNumber-CFNumberRed-静态分析-延时"><a href="#NSNumber-CFNumberRed-静态分析-延时" class="headerlink" title="NSNumber/CFNumberRed 静态分析 延时"></a>NSNumber/CFNumberRed 静态分析 延时</h3><p>当我们错误的判断 NSNumber时  静态分析 则给出了提示 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/error.png" alt=""></p>
-<p>在Xcode9 中可以直接把这种倍忽视 的问题改成 当错误处理</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/static.png" alt=""></p>
-<h2 id="开启-LTO-并设置为-Incremental-模式"><a href="#开启-LTO-并设置为-Incremental-模式" class="headerlink" title="开启 LTO 并设置为 Incremental 模式"></a>开启 LTO 并设置为 Incremental 模式</h2><p>链接时优化（以下简称 <code>LTO</code>）是 LLVM 的一项优化特性，其主要原理是:</p>
-<p><em>利用对象文件经过一些优化得到的中间格式在链接阶段再进行深度优化，包含代码逻辑层面的分析，去除实际未用到的函数、变量、甚至局部代码片段，继而减小安装包大小，同时提高了运行时的效率。</em></p>
-<p>对于 LTO，Xcode 9 做出的改进主要是在进一步优化了编译速度。 苹果演示的例子是以某个大型 C++ 工程为参考，对于一次完整链接，Xcode 9 比 Xcode 8 提升了 35%；对于一次增量链接，Xcode 9 比 Xcode 8 提升了近 60%。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/lto1.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/lto2.png" alt=""></p>
-<p>开启LTO</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/LTO.png" alt=""></p>
-<p>据说对包大小和运行时速度有 10% 左右的优化</p>
-<h2 id="GCD-统一队列标识"><a href="#GCD-统一队列标识" class="headerlink" title="GCD 统一队列标识"></a>GCD 统一队列标识</h2><p>统一队列标识是指我们在工程中散落在各处的创建队列，如果队列标识是一样的，他们在内核中会被 bind 在一起，其效率可以提高 30%。Apple 没有告诉我们其内核是怎么做到的，它提供了这样的建议，如果一类操作重要性程度或其他属性接近，亦或开发者希望散落在工程各处的代码可以放在同一个队列里去控制，那么我们在创建队列的时候就可以指定一个共同的标识符。 然后系统在内核中会把这些标识相同的队列 bind 到一起来管理</p>
-<p>如下代码 如果app里面都使用同一个字符串 的话 效率可以提高30%</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"com.sunyazhou.demo.queue"</span>, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">   <span class="built_in">dispatch_async</span>(queue, ^&#123;</div><div class="line">      <span class="comment">//异步执行代码写在这里</span></div><div class="line">   &#125;);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>老实说 工程里面 避免不了文件上传下载 或者耗时任务处理  如果 整体搞成一个queue显然 不太符合业务需求 如果尽量保持 一个标识的Queue的话 也只能根据 业务分类来做到  可以有机会尝试一下</p>
-</blockquote>
-<p>全文完</p>
-<p><a href="https://techblog.toutiao.com/2017/07/05/session0-2/" target="_blank" rel="external">参考</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/what_is_news_in_ios11.png&quot; a
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
