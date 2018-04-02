@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-04-02T13:27:26.047Z</updated>
+  <updated>2018-04-02T13:33:54.186Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="https://www.sunyazhou.com/2018/04/02/20180402RunLoop/"/>
     <id>https://www.sunyazhou.com/2018/04/02/20180402RunLoop/</id>
     <published>2018-04-02T06:16:34.000Z</published>
-    <updated>2018-04-02T13:27:26.047Z</updated>
+    <updated>2018-04-02T13:33:54.186Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>RunLoop</code> 是 <code>iOS</code> 和 <code>OSX</code> 开发中非常基础的一个概念，这篇文章将从<code>CFRunLoop</code>的源码入手，介绍 <code>RunLoop</code> 的概念以及底层实现原理。之后会介绍一下在 <code>iOS</code> 中，苹果是如何利用<code>RunLoop</code>实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0fa4569bca7b3a2d5c1ee360f47ac1dd213ecbac/20180402RunLoop/runloop6.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>RunLoop</code> 是 <code>iOS</code> 和 <code>OSX</code> 开发中非常基础的一个概念，这篇文章将从<code>CFRunLoop</code>的源码入手，介绍 <code>RunLoop</code> 的概念以及底层实现原理。之后会介绍一下在 <code>iOS</code> 中，苹果是如何利用<code>RunLoop</code>实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
 <h2 id="本文内容"><a href="#本文内容" class="headerlink" title="本文内容"></a>本文内容</h2><ul>
 <li>RunLoop 的概念</li>
 <li>RunLoop 与线程的关系</li>
@@ -180,7 +181,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;code&gt;RunLoop&lt;/code&gt; 是 &lt;code&gt;iOS&lt;/code&gt; 和 &lt;code&gt;OSX&lt;/code&gt; 开发中非常基础的一个概
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0fa4569bca7b3a2d5c1ee360f47ac1dd213ecbac/20180402Run
     
     </summary>
     
