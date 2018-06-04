@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Swift中的随机数 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Swift中的随机数 | 東引甌越">
+    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Swift中的随机数 | 東引甌越">
+    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/06/01/20180601Random/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-06-01T09:30:56.000Z" class="post-list__meta--date date">2018-06-01</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Swift中的随机数</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d91bef0915eb510aeb874e05ccf21df897d2d03d/20180601Random/powered-by-Swift-random-numbers.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天儿童节,写一篇<code>随机数</code>技术文章纪念<code>留守儿童(资深)</code>的童年.</p>
+<h2 id="swift中的随机数使用"><a href="#swift中的随机数使用" class="headerlink" title="swift中的随机数使用"></a>swift中的随机数使用</h2><p>在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章</p>
+<h2 id="整型随机数"><a href="#整型随机数" class="headerlink" title="整型随机数"></a>整型随机数</h2><p>首先是这个arc4random()</p>
+<blockquote>
+<p><code>arc4random()</code>使用了<code>arc4</code>密码加密的<code>key</code> <code>stream</code>生成器，产生一个<code>[0, 2^32)</code>区间的随机数(注意是左闭右开区间)。这个函数的返回类型是<code>UInt32</code></p>
+<p>提示: <em><code>[</code>和<code>]</code> 分别代表左右闭区间</em>,<br><em><code>(</code>和<code>)</code>代表左右开区间</em><br>也就是<code>中括号</code> -&gt; 代表 闭区间, 闭区间代表包含.<br>小括号 -&gt; 代表开区间, 开区间代表不包含.<br>所以以下看到</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random()   <span class="comment">//"4058056034"</span></div></pre></td></tr></table></figure>
+<p>如果我们想生成一个<strong>指定范围内</strong>的整型随机数，则可以使用<code>arc4random()</code> <code>%</code> <code>upper_bound</code>的方式，其中<code>upper_bound</code>指定的是上边界，如下代码:</p>
+<p>求一个10以内的随机数</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random() % <span class="number">10</span>  <span class="comment">// 0~9 注意没有10哈</span></div></pre></td></tr></table></figure>
+<p>不过使用这种方法，在<code>upper_bound</code>不是<code>2</code>的幂次方时，会产生一个所谓<code>Modulo bias</code>(模偏差)的问题。</p>
+<p>可以使用<code>arc4random_uniform()</code>，它接受一个<code>UInt32</code>类型的参数，<strong>指定随机数区间的上边界</strong><code>upper_bound</code>，该函数生成的随机数范围是[0, upper_bound)，如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random_uniform(<span class="number">10</span>)		<span class="comment">// 5</span></div></pre></td></tr></table></figure>
+<p>那问题来了？我想指定区间随机 比如: <code>[10, 200)</code>.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> maxNum: <span class="type">UInt32</span> = <span class="number">200</span></div><div class="line"><span class="keyword">let</span> minNum: <span class="type">UInt32</span> = <span class="number">10</span></div><div class="line">arc4random_uniform(maxNum - minNum) + minNum   <span class="comment">// 153</span></div></pre></td></tr></table></figure>
+<p>可以看到上述结果 是 <code>153</code>.</p>
+<p>swift也可以用C函数中的随机 eg: random() 或者 rand(),但是这些有下面缺点:</p>
+<ul>
+<li>这两个函数都需要初始种子，通常是以当前时间来确定,属于伪随机.</li>
+<li>这两个函数的上限在<code>RAND_MAX=0X7fffffff</code>(2147483647)，是<code>arc4random</code>的一半.</li>
+<li><code>rand()</code>函数以有规律的低位循环方式实现，更容易预测</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><div class="line">srand(UInt32(time(nil)))  <span class="comment">// 种子,random对应的是srandom</span></div><div class="line">rand()				      <span class="comment">// 1,314,695,483</span></div><div class="line">rand() % <span class="number">10</span>	   			  <span class="comment">// 8</span></div></pre></td></tr></table></figure>
+<h2 id="64位整型随机数"><a href="#64位整型随机数" class="headerlink" title="64位整型随机数"></a>64位整型随机数</h2><p>我们发现这些函数主要都是针对<code>32</code>位整型数来操作的.如果需要生成一个<code>64</code>位的整型随机数呢?</p>
+<p>可以使用如下代码:</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">arc4random</span> &lt;T: ExpressibleByIntegerLiteral&gt; <span class="params">(type: T.<span class="keyword">Type</span>)</span></span> -&gt; <span class="type">T</span> &#123;</div><div class="line">    <span class="keyword">var</span> r: <span class="type">T</span> = <span class="number">0</span></div><div class="line">    arc4random_buf(&amp;r, <span class="type">MemoryLayout</span>&lt;<span class="type">T</span>&gt;.size)</div><div class="line">    <span class="keyword">return</span> r</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以像下面这样调用 </p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>) <span class="comment">//8021765689869396105</span></div><div class="line">arc4random(type: <span class="type">UInt32</span>.<span class="keyword">self</span>) <span class="comment">//1293034028</span></div><div class="line">arc4random(type: <span class="type">UInt16</span>.<span class="keyword">self</span>) <span class="comment">//29059</span></div><div class="line">arc4random(type: <span class="type">UInt8</span>.<span class="keyword">self</span>)  <span class="comment">//183</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>swift 4 语法</p>
+</blockquote>
+<p>这个函数中使用了<code>arc4random_buf()</code>来生成随机数。</p>
+<p>这个函数使用ARC4加密的随机数来填充该函数第二个参数指定的长度的缓存区域。因此，如果我们传入的是sizeof(UInt64)，该函数便会生成一个随机数来填充8个字节的区域，并返回给r。那么64位的随机数生成方法便可以如下实现：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UInt64</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">(lower: UInt64 = <span class="built_in">min</span>, upper: UInt64 = <span class="built_in">max</span>)</span></span> -&gt; <span class="type">UInt64</span> &#123;</div><div class="line">        <span class="keyword">var</span> m: <span class="type">UInt64</span></div><div class="line">        <span class="keyword">let</span> u = upper - lower</div><div class="line">        <span class="keyword">var</span> r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        <span class="keyword">if</span> u &gt; <span class="type">UInt64</span>(<span class="type">Int64</span>.<span class="built_in">max</span>) &#123;</div><div class="line">            m = <span class="number">1</span> + ~u</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            m = ((<span class="built_in">max</span> - (u * <span class="number">2</span>)) + <span class="number">1</span>) % u</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> r &lt; m &#123;</div><div class="line">            r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> (r % u) + lower</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们来试用一下：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="type">UInt64</span>.random()      <span class="comment">//9223372036854775807</span></div></pre></td></tr></table></figure>
+<h2 id="浮点型随机数"><a href="#浮点型随机数" class="headerlink" title="浮点型随机数"></a>浮点型随机数</h2><p>如果需要一个浮点值的随机数，则可以使用drand48函数，这个函数产生一个[0.0, 1.0]区间中的浮点数。这个函数的返回值是Double类型。其使用如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">srand48(<span class="type">Int</span>(time(<span class="literal">nil</span>)))</div><div class="line">drand48()  <span class="comment">//0.4643666202473504</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:需要先调用srand48()生成种子</p>
+</blockquote>
+<h2 id="示例实践"><a href="#示例实践" class="headerlink" title="示例实践"></a>示例实践</h2><p>如何生成一个0~9 这几个数组做个随机排序,实现类似银行类动态键盘的功能</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>]</div><div class="line">arr.<span class="built_in">sort</span> &#123; (s1, s2) -&gt; <span class="type">Bool</span> <span class="keyword">in</span></div><div class="line">    arc4random() &lt; arc4random()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(arr)</div></pre></td></tr></table></figure>
+<p>在闭包中，随机生成两个数，比较它们之间的大小，来确定数组的排序.注意不需要重新赋值了在swift4上.</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>随机数相关的知识容易忘记,特此记录一些技巧,争取每个月发布两篇文章.</p>
+<p><a href="http://southpeak.github.io/2015/09/26/ios-techset-5/" target="_blank" rel="external">参考</a></p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/" title="UIView不同方向的导角">UIView不同方向的导角</a></h2>
+                <p class="excerpt">
+                
+                
+前言开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
+这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
+通常导角self.view.cornerRadius = 20.0self.view.clipToB
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

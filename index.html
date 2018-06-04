@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -182,6 +182,94 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/06/01/20180601Random/" title="link to post.title">Swift中的随机数</a></h2>
+      <p class="excerpt">
+    
+      
+前言今天儿童节,写一篇随机数技术文章纪念留守儿童(资深)的童年.
+swift中的随机数使用在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章
+整型随机数首先是这个arc4random()
+
+arc4random()使用了arc4密码加密的key stream生成器，产生一个[0, 2^32)区间的随机数(注意是左闭右开区间)。这个函数的返回类型是UInt32
+提示: [和] 分别代表左右闭区间,(和)代表左右开区间也就是中括号 -&amp;gt; 代表 闭区间, 闭区间代表包含.小括号 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-06-01T09:30:56.000Z" class="post-list__meta--date date">2018-06-01</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/06/01/20180601Random/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/" title="link to post.title">UIView不同方向的导角</a></h2>
+      <p class="excerpt">
+    
+      
+前言开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
+这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
+通常导角self.view.cornerRadius = 20.0self.view.clipToBounds = true
+这两行代码是全方向导角
+如果像要搞成不同方向的话可以用iOS11 新的API和 iOS11以前的CAShapeLayer画贝赛尔曲线来解决
+首先我们要创建一个UIView
+c
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/" title="link to post.title">手动管理UIViewController的生命周期</a></h2>
+      <p class="excerpt">
+    
+      前言话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头条等.这篇文章回味一下古老的手动控制视图控制器的生命周期的API.
+UIViewController我们在使用addChildViewController:的时候会遇到个问题.如何手动控制被添加控制器的生命周期.
+如下代码
+self.vc1 = [[VC1ViewController alloc
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-05-08T04:01:27.000Z" class="post-list__meta--date date">2018-05-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/07/20180507AudioUnit/" title="link to post.title">AudioUnit</a></h2>
+      <p class="excerpt">
+    
+      
+前言声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果….
+今天带领大家深入了解和学习一下这些音效.
+实现iOS变声的背景声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声. 
+下图是AVAudioSession的工作流
+大家常用的变声方案有很多:
+
+FFMpeg提供内部效果器 eg:EQ均衡器  
+AVFoundation底层的Audio Unit eg: 混
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/07/20180507AudioUnit/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -321,112 +409,6 @@ UI层业务逻辑层持久层+网络层
   <a class="tag-link" href="/tags/python开发/">python开发</a>
 
 </span><a class="btn-border-small" href="/2018/02/04/20180204Word-Embeding/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/01/13/20180113Python-MySQL/" title="link to post.title">使用Python操作MySQL数据库</a></h2>
-      <p class="excerpt">
-    
-      
-前言为了实现不斷學習 與時俱進周末把大部分时间放在了学习Python上.在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客.
-我是在study.163.com的这个《全栈数据工程师养成攻略》课程中学习的,推荐大家学习一下.
-本篇主要内容主要分为三个大部分
-
-搭建Web环境
-数据库MySQL的使用方法
-使用Python操作MySQL
-
-搭建Web环境
-Web环境: Apache、Nginx…
-Web服务启动中相关配置.
-
-Web环境: Apache、N
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-01-13T14:27:18.000Z" class="post-list__meta--date date">2018-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/python/">python</a>, <a class="tag-link" href="/tags/web开发/">web开发</a>
-
-</span><a class="btn-border-small" href="/2018/01/13/20180113Python-MySQL/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/01/12/20180112AVAudioSession-Category/" title="link to post.title">AVAudioSession-Category各种姿势</a></h2>
-      <p class="excerpt">
-    
-      
-前言2018新年第一篇, 梳理AVAudioSession的Category,解决音频开发中的各种播放被打断或者首次启动时无声音的问题
-开篇由于iOS系统的特殊性,所有App共用一个AVAudioSession所以这个会话是个单例对象.(macOS是支持同时播放多路音频文件)
-当遇到插拔耳机,接电话,调起 siri,等等,就出现音频会话被系统时间打断等行为表现:
-
-是进行录音还是播放？
-当系统静音键按下时该如何表现？
-是从扬声器还是从听筒里面播放声音？
-插拔耳机后如何表现？
-来电话/闹钟响了后
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-01-12T02:32:18.000Z" class="post-list__meta--date date">2018-01-12</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/01/12/20180112AVAudioSession-Category/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/31/20171230Final-Summary/" title="link to post.title">2017年终总结</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-时间像车轮一样在飞转历史像江河一样在流淌整整走过了365个风雨历程2017年过的如此不寻常一度春夏秋冬 一度雨雪风霜一度翻山越岭 一度起伏延宕  
-
-又一年过去了,我也得墨守成规的按时交出我的年终总结了,为了不标新立异,我必须尽量不废话.(talk is cheap, show me the code!)
-2017回顾这一年的重点事件主要如下:
-
-技术
-买房
-工作
-书法 
-读书
-运动
-驾照
-
-技术这一年让我唯一有些许成就感的事情莫过于我搭建了自己的技术博客,能在这里记录我的技术成长和生活
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-31T02:46:20.000Z" class="post-list__meta--date date">2017-12-31</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/生活/">生活</a>
-
-</span><a class="btn-border-small" href="/2017/12/31/20171230Final-Summary/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/27/20171227markdown-audio/" title="link to post.title">Markdown中插入音频文件</a></h2>
-      <p class="excerpt">
-    
-      前言喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.
-markdown插入音乐markdown其实就是 一种html的转换语法,其实内部也同时支持直接写html标签, 如果不了解各种标签请点击w3cschool查看各种 API 的用法,此时要用到的标签为iframe，代码如下所示，其中
-
-div用于控制格式，若无则默认为居左
-frameborder用于规定是否显示框架周围的边框，1为是，0为否
-marginwidth及margi
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-27T04:04:07.000Z" class="post-list__meta--date date">2017-12-27</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/27/20171227markdown-audio/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
