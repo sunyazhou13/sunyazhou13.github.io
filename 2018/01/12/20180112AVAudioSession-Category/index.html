@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AVAudioSession-Category各种姿势 | 東引甌越">
-    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="AVAudioSession-Category各种姿势 | 東引甌越">
-    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
     <meta name="author" content="sunyazhou">
@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -172,7 +172,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -230,7 +230,7 @@
 <p>当然，也可以通过<code>otherAudioPlaying</code>变量来提前判断当前是否有其他App在播放音频。</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Current Category:%@"</span>, [<span class="built_in">AVAudioSession</span> sharedInstance].category); <span class="comment">//返回当前 category</span></div></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">Current Category:AVAudioSessionCategorySoloAmbien</div></pre></td></tr></table></figure>
-<h3 id="七大Category"><a href="#七大Category" class="headerlink" title="七大Category"></a>七大Category</h3><p>下面介绍一下<code>AVAudioSession</code>非常重要的七中<code>Category</code>.</p>
+<h3 id="七大Category"><a href="#七大Category" class="headerlink" title="七大Category"></a>七大Category</h3><p>下面介绍一下<code>AVAudioSession</code>非常重要的七种<code>Category</code>.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -- Values for the category property --</span></div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryAmbient</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategorySoloAmbient</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryPlayback</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryRecord</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryPlayAndRecord</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryAudioProcessing</span> <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">3</span>_0, <span class="number">10</span>_0) __TVOS_PROHIBITED __WATCHOS_PROHIBITED;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryMultiRoute</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0);</div></pre></td></tr></table></figure>
 <p><code>AVAudioSession</code>将使用音频的场景分成七大类，通过设置<code>Session</code>为不同的类别，可以控制：</p>
 <ul>
@@ -308,7 +308,7 @@
 </li>
 <li><p><em><code>AVAudioSessionCategoryRecord</code>:有了播放器，肯定要录音机，比如微信语音的录制，就要用到这个类别，既然要安静的录音，肯定不希望有QQ音乐了，所以其他播放声音会中断。想想微信语音的场景，就知道什么时候用他了.</em></p>
 </li>
-<li><p><em><code>AVAudioSessionCategorySoloAmbient</code>:也是只用于播放,但是和”AVAudioSessionCategoryAmbient”不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了.</em></p>
+<li><p><em><code>AVAudioSessionCategorySoloAmbient</code>:也是只用于播放,但是和<code>AVAudioSessionCategoryAmbient</code>不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了.</em></p>
 </li>
 </ul>
 <p>了解了这七大类别，我们就可以根据自己的需要进行对应类别的设置了：</p>
@@ -457,13 +457,30 @@
 </table>
 <p>每个模式有其适用的类别，所以，并不是有“七七 四十九”种组合。如果当前处于的类别下没有这个模式，那么是设置不成功的。  </p>
 <p>设置完Category后可以通过如下代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *availableModes;</div><div class="line">``` </div><div class="line">这个属性,查看其支持哪些属性，做合法性校验。</div><div class="line"></div><div class="line"></div><div class="line">下面说一下具体应用场景</div><div class="line"></div><div class="line">* _`<span class="built_in">AVAudioSessionModeDefault</span>`： 每种类别默认的就是这个模式，所有要想还原的话，就设置成这个模式。_</div><div class="line"></div><div class="line">* -`<span class="built_in">AVAudioSessionModeVoiceChat</span>`：主要用于VoIP场景，此时系统会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集。此时有个副作用，他会设置类别的选项为`<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span>`从而支持蓝牙耳机。_</div><div class="line"></div><div class="line">* _`<span class="built_in">AVAudioSessionModeVideoChat</span>` ： 主要用于视频通话，比如QQ视频、FaceTime。时系统也会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集并且会设置类别的选项为<span class="string">"AVAudioSessionCategoryOptionAllowBluetooth"</span> 和 <span class="string">"AVAudioSessionCategoryOptionDefaultToSpeaker"</span>。_</div><div class="line"></div><div class="line">* _`<span class="built_in">AVAudioSessionModeGameChat</span>` ： 适用于游戏App的采集和播放，比如“GKVoiceChat”对象，一般不需要手动设置._</div><div class="line"></div><div class="line">&gt; 另外几种和音频APP关系不大，一般我们只需要关注VoIP或者视频通话即可。</div><div class="line"></div><div class="line"></div><div class="line">通过调用：</div><div class="line"></div><div class="line">``` objc</div><div class="line">- (<span class="built_in">BOOL</span>)setMode:(<span class="built_in">NSString</span> *)mode error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *availableModes;</div></pre></td></tr></table></figure>
+<p>这个属性,查看其支持哪些属性，做合法性校验。</p>
+<p>下面说一下具体应用场景:</p>
+<ul>
+<li><p><strong><code>AVAudioSessionModeDefault</code>： 每种类别默认的就是这个模式，所有要想还原的话，就设置成这个模式。</strong></p>
+</li>
+<li><p><strong><code>AVAudioSessionModeVoiceChat</code>：主要用于VoIP场景，此时系统会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集。此时有个副作用，他会设置类别的选项为<code>AVAudioSessionCategoryOptionAllowBluetooth</code>从而支持蓝牙耳机。</strong></p>
+</li>
+<li><p><strong><code>AVAudioSessionModeVideoChat</code> ： 主要用于视频通话，比如QQ视频、FaceTime。时系统也会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集并且会设置类别的选项为<code>AVAudioSessionCategoryOptionAllowBluetooth</code>和<code>AVAudioSessionCategoryOptionDefaultToSpeaker</code>。</strong></p>
+</li>
+<li><p><strong><code>AVAudioSessionModeGameChat</code> ： 适用于游戏App的采集和播放，比如“GKVoiceChat”对象，一般不需要手动设置.</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>另外几种和音频APP关系不大，一般我们只需要关注VoIP或者视频通话即可。</p>
+</blockquote>
+<p>通过调用：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)setMode:(<span class="built_in">NSString</span> *)mode error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
 <p>可以在设置<code>Category</code>之后再设置模式。</p>
 <p>当然，这些模式只是<code>CoreAduio</code>总结的，不一定完全满足要求，对于具体的模式，在<code>iOS10</code>中还是可以微调的。  </p>
 <p>通过接口:  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category mode:(<span class="built_in">NSString</span> *)mode options:(<span class="built_in">AVAudioSessionCategoryOptions</span>)options error:(<span class="built_in">NSError</span> **)outError;</div><div class="line">-</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category mode:(<span class="built_in">NSString</span> *)mode options:(<span class="built_in">AVAudioSessionCategoryOptions</span>)options error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
 <p>但是在<code>iOS9</code>及以下就只能在<code>Category</code>上调了，其实本质是一样的，可以认为是个API语法糖，接口封装.</p>
-<h3 id="系统中断响应"><a href="#系统中断响应" class="headerlink" title="系统中断响应"></a>系统中断响应</h3><p>上面说的这些<code>Categor、</code>Option<code>以及</code>Mode`都是对自己作为播放主体时的表现，但是假设，现在正在播放着，突然来电话了、闹钟响了或者你在后台放歌但是用户启动其他App用上面的方法影响的时候，我们的App该如何表现呢？最常用的场景当然是先暂停，待恢复的时候再继续。那我们的App要如何感知到这个终端以及何时恢复呢？</p>
+<h3 id="系统中断响应"><a href="#系统中断响应" class="headerlink" title="系统中断响应"></a>系统中断响应</h3><p>上面说的这些<code>Categorg</code>、<code>Option</code>以及<code>Mode</code>都是对自己作为播放主体时的表现，但是假设，现在正在播放着，突然来电话了、闹钟响了或者你在后台放歌但是用户启动其他App用上面的方法影响的时候，我们的App该如何表现呢？最常用的场景当然是先暂停，待恢复的时候再继续。那我们的App要如何感知到这个终端以及何时恢复呢？</p>
 <p><code>AVAudioSession</code>提供了多种<code>Notifications</code>来进行此类状况的通知。其中将来电话、闹铃响等都归结为一般性的中断</p>
 <p>用<code>AVAudioSessionInterruptionNotification</code>来通知。其回调回来的<code>userInfo</code>主要包含两个键：</p>
 <ul>

@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="深入理解RunLoop | 東引甌越">
-    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="深入理解RunLoop | 東引甌越">
-    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
     <meta name="author" content="sunyazhou">
@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS/macOS开发者.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -172,7 +172,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -345,7 +345,7 @@
 <p>其中前两类操作可以通过各种方法扔到后台线程执行，而最后一类操作只能在主线程完成，并且有时后面的操作需要依赖前面操作的结果 （例如<code>TextView</code>创建时可能需要提前计算出文本的大小）。<code>ASDK</code> 所做的，就是尽量将能放入后台的任务放入后台，不能的则尽量推迟 (例如视图的创建、属性的调整)。</p>
 <p>为此，<code>ASDK</code> 创建了一个名为 <code>ASDisplayNode</code> 的对象，并在内部封装了 <code>UIView</code>/<code>CALayer</code>，它具有和 <code>UIView</code>/<code>CALayer</code> 相似的属性，例如 <code>frame</code>、<code>backgroundColor</code>等。所有这些属性都可以在后台线程更改，开发者可以只通过 <code>Node</code> 来操作其内部的 <code>UIView</code>/<code>CALayer</code>，这样就可以将排版和绘制放入了后台线程。但是无论怎么操作，这些属性总需要在某个时刻同步到主线程的 <code>UIView</code>/<code>CALayer</code> 去。</p>
 <p><code>ASDK</code> 仿照 <code>QuartzCore</code>/<code>UIKit</code> 框架的模式，实现了一套类似的界面更新的机制：即在主线程的 <code>RunLoop</code> 中添加一个 <code>Observer</code>，监听了 <code>kCFRunLoopBeforeWaiting</code> 和 <code>kCFRunLoopExit</code> 事件，在收到回调时，遍历所有之前放入队列的待处理的任务，然后一一执行。<br>具体的代码可以看这里：<a href="https://github.com/facebook/AsyncDisplayKit/blob/master/AsyncDisplayKit%2FDetails%2FTransactions%2F_ASAsyncTransactionGroup.m" target="_blank" rel="external">_ASAsyncTransactionGroup</a>。</p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>我最近在面试,总有人问我<code>RunLoop</code> 让我描述一下,七拐八绕的问这个东西,我只能说某些公司的一面 面试官 我每次都在帮你整理你问的问题到底是啥,有些面试官甚至连自己要问的问题都不是很清晰就上来问,对于面试者而言是及其不尊重面者的.所以我回来找了一堆RunLoop相关的文章参考.</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p><code>RunLoop</code> 需要深入理解</p>
 <p>全文完</p>
 <p><a href="https://blog.ibireme.com/2015/05/18/runloop/#base" target="_blank" rel="external">参考</a></p>
 
@@ -396,6 +396,25 @@
 
 <section class="read-more">
      
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/05/07/20180507AudioUnit/" title="AudioUnit">AudioUnit</a></h2>
+                <p class="excerpt">
+                
+                
+前言声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果….
+今天带领大家深入了解和学习一下这些音效.
+实现iOS变声的背景声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/07/20180507AudioUnit/">继续阅读</a></div>
+
+            </div>
         
 
         

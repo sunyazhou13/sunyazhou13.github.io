@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Taptic Engine振动反馈 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Taptic Engine振动反馈 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Taptic Engine振动反馈 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-08-13T06:28:04.000Z" class="post-list__meta--date date">2018-08-13</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Taptic Engine振动反馈</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813TapticEngineFeedback/taptic_engine.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。</p>
+<p>Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 Force Touch 以及 3D Touch，不同的屏幕操作，可以感受到不同的振动触觉效果，带来更好的用户体验</p>
+<h1 id="触觉振动体验"><a href="#触觉振动体验" class="headerlink" title="触觉振动体验"></a>触觉振动体验</h1><h2 id="振动代码-旧方案"><a href="#振动代码-旧方案" class="headerlink" title="振动代码(旧方案)"></a>振动代码(旧方案)</h2><p>调用这行代码虽然可以振动 但是它属于长振动</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</div></pre></td></tr></table></figure>
+<h2 id="振动代码-新方案"><a href="#振动代码-新方案" class="headerlink" title="振动代码(新方案)"></a>振动代码(新方案)</h2><p>iOS10 引入了一种新的、产生触觉反馈的方式， 帮助用户认识到不同的震动反馈有不同的含义 。这个功能的核心就是由 UIFeedbackGenerator 提供。</p>
+<p><code>UIFeedbackGenerator</code> 可以帮助你实现 <code>haptic feedback</code>。它的要求是：</p>
+<ul>
+<li>支持 Taptic Engine 机型 (iPhone 7 以及 iPhone 7 Plus).</li>
+<li>app 需要在前台运行</li>
+<li>系统 Taptic setting 需要开启</li>
+</ul>
+<blockquote>
+<p>下图开启 声音与触感<br>手机 – 设置 – 声音与触感 – 系统触感反馈(打开)<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8bed46d914016aaeb13aa7bac8d7b4c9e287dba/20180813TapticEngineFeedback/setting.png" alt=""></p>
+</blockquote>
+<h3 id="调用相关振动代码实现振动功能"><a href="#调用相关振动代码实现振动功能" class="headerlink" title="调用相关振动代码实现振动功能"></a>调用相关振动代码实现振动功能</h3><p><code>UIFeedbackGenerator</code> 子类有:</p>
+<ul>
+<li>UIImpactFeedbackGenerator</li>
+<li>UISelectionFeedbackGenerator</li>
+<li>UINotificationFeedbackGenerator</li>
+</ul>
+<h4 id="UIImpactFeedbackGenerator振动"><a href="#UIImpactFeedbackGenerator振动" class="headerlink" title="UIImpactFeedbackGenerator振动"></a>UIImpactFeedbackGenerator振动</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIImpactFeedbackGenerator</span> *generator = [[<span class="built_in">UIImpactFeedbackGenerator</span> alloc] initWithStyle: <span class="built_in">UIImpactFeedbackStyleLight</span>];</div><div class="line">[generator impactOccurred];</div></pre></td></tr></table></figure>
+<p>振动style有三种枚举</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIImpactFeedbackStyle</span>) &#123;</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleLight</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleMedium</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleHeavy</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>基本每次振动相当于创建一个实例调用一次方法就行了,如果觉得性能更好的设计可以搞成成员变量</p>
+</blockquote>
+<p>反馈结果</p>
+<table>
+<thead>
+<tr>
+<th>UIImpactFeedbackGenerator</th>
+<th>UIImpactFeedbackStyleLight</th>
+<th>UIImpactFeedbackStyleMedium</th>
+<th>UIImpactFeedbackStyleHeavy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPhone 7（iOS 10）及以上机型</td>
+<td>微弱短振</td>
+<td>中等短振</td>
+<td>明显短振</td>
+</tr>
+<tr>
+<td>iPhone 6s Puls（iOS 9）</td>
+<td>长振</td>
+<td>长振</td>
+<td>长振</td>
+</tr>
+<tr>
+<td>iPhone 6（iOS 10）</td>
+<td>无振动</td>
+<td>无振动</td>
+<td>无振动</td>
+</tr>
+</tbody>
+</table>
+<h4 id="UISelectionFeedbackGenerator振动"><a href="#UISelectionFeedbackGenerator振动" class="headerlink" title="UISelectionFeedbackGenerator振动"></a>UISelectionFeedbackGenerator振动</h4><p>这里我试图搞成成员变量模拟手势拖拽 振动</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UISelectionFeedbackGenerator</span> *feedbackGesGenerator;</div></pre></td></tr></table></figure>
+<p>事件相应</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)gestrueHandle:(<span class="built_in">UIGestureRecognizer</span> *)sender &#123;</div><div class="line">    <span class="keyword">switch</span> (sender.state) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateBegan</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Instantiate a new generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = [[<span class="built_in">UISelectionFeedbackGenerator</span> alloc] init];</div><div class="line">            </div><div class="line">            <span class="comment">// Prepare the generator when the gesture begins.</span></div><div class="line">            [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateChanged</span>: &#123;</div><div class="line">            </div><div class="line">            <span class="comment">// Check to see if the selection has changed...</span></div><div class="line">           </div><div class="line">                <span class="comment">// Trigger selection feedback.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator selectionChanged];</div><div class="line">                </div><div class="line">                <span class="comment">// Keep the generator in a prepared state.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateCancelled</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateEnded</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateFailed</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Release the current generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = <span class="literal">nil</span>;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Do nothing.</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: <strong>这里调用了一下<code>[self.feedbackGesGenerator prepare]</code>方法让振动引擎准备就绪,方便下次快速启动</strong>这个方法是父类的方法</p>
+</blockquote>
+<h4 id="UINotificationFeedbackGenerator振动"><a href="#UINotificationFeedbackGenerator振动" class="headerlink" title="UINotificationFeedbackGenerator振动"></a>UINotificationFeedbackGenerator振动</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UINotificationFeedbackGenerator</span> *notifiFeedBack = [[<span class="built_in">UINotificationFeedbackGenerator</span> alloc] init];</div><div class="line">    [notifiFeedBack notificationOccurred:<span class="built_in">UINotificationFeedbackTypeWarning</span>];</div></pre></td></tr></table></figure>
+<p>同样<code>UINotificationFeedbackType</code>也是三种枚举</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UINotificationFeedbackType</span>) &#123;</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeSuccess</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeWarning</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeError</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>几种不同的振动API 可以视情况而使用, 比较常用的是 <code>UIImpactFeedbackGenerator</code>, 当然也可以随意使用注意操作系统判断检查。</p>
+<p>例如:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">10.0</span>, *)) &#123;</div><div class="line">	<span class="comment">//写相关振动代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/08/17/20180817CPU-thread-debug/" title="iOS中CPU线程调试高级技巧">iOS中CPU线程调试高级技巧</a></h2>
+                <p class="excerpt">
+                
+                前言最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿…
+为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-08-17T09:19:23.000Z" class="post-list__meta--date date">2018-08-17</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/08/17/20180817CPU-thread-debug/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/07/23/20180723ToolBar-Blur/" title="利用UIToolBar做高斯模糊背景">利用UIToolBar做高斯模糊背景</a></h2>
+                <p class="excerpt">
+                
+                
+- (UIView *)containerBackgroundView &amp;#123;    if (!_containerBackgroundView) &amp;#123;        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRe
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-07-23T10:22:05.000Z" class="post-list__meta--date date">2018-07-23</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/07/23/20180723ToolBar-Blur/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

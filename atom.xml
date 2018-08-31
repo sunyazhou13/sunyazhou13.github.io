@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-06-01T12:02:57.245Z</updated>
+  <updated>2018-08-17T11:14:59.642Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,600 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS中CPU线程调试高级技巧</title>
+    <link href="https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/"/>
+    <id>https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/</id>
+    <published>2018-08-17T09:19:23.000Z</published>
+    <updated>2018-08-17T11:14:59.642Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿…</p>
+<p>为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.</p>
+<h1 id="Talk-is-cheap-show-me-the-code"><a href="#Talk-is-cheap-show-me-the-code" class="headerlink" title="Talk is cheap show me the code"></a>Talk is cheap show me the code</h1><p>我们的实现思路是找到动态库的首地址调用从此入手用相关指令恢复</p>
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ul>
+<li>build setting中开启符号表</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6db967f376eddf5c04bda7db38be27b07f2d48bc/20180817CPU-thread-debug/enable_dysm.png" alt=""></p>
+<h2 id="1-导入头文件"><a href="#1-导入头文件" class="headerlink" title="1.导入头文件"></a>1.导入头文件</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p>这是mac os的可执行文件的动态链接库头文件 内部内建函数有几个我们需要用到</p>
+<h2 id="2-复制下面代码到你的相关调用的地方"><a href="#2-复制下面代码到你的相关调用的地方" class="headerlink" title="2.复制下面代码到你的相关调用的地方"></a>2.复制下面代码到你的相关调用的地方</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//1</span></div><div class="line">uint32_t count = _dyld_image_count();</div><div class="line">DDLogInfo(<span class="string">@"Dyld image count %d"</span>, count);</div><div class="line"><span class="comment">//2</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">    <span class="keyword">char</span> *image_name = (<span class="keyword">char</span> *)_dyld_get_image_name(i);</div><div class="line">    <span class="comment">//3</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> mach_header *mh = _dyld_get_image_header(i);</div><div class="line">    intptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);</div><div class="line">    <span class="comment">//4</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Image name %s at address 0x%llx and ASLR slide 0x%lx.\n"</span>,</div><div class="line">              image_name, (mach_vm_address_t)mh, vmaddr_slide);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我解释一下以上代码  </p>
+<ul>
+<li>1.拿出当前镜像数量  </li>
+<li>2.遍历镜像  </li>
+<li>3.获取镜像首地址  </li>
+<li>4.打印  </li>
+</ul>
+<p>然后运行你的程序</p>
+<p>然后看下控制台 过滤一下 ASLR我们log中的键入内容</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/consolo_debug.png" alt=""></p>
+<p>然后 点击 工程中的Product </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/products.png" alt=""></p>
+<p>右键 show in finder</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/product_dir.png" alt=""></p>
+<p>下一步骤 打开终端 cd 到这这个目录(可以打开终端 输入 cd 空格 拖拽那个文件夹)</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/dir_final.png" alt=""></p>
+<p>然后 <code>pwd</code>一下 看看</p>
+<h2 id="3-控制台搜索相关我们打印log的代码"><a href="#3-控制台搜索相关我们打印log的代码" class="headerlink" title="3.控制台搜索相关我们打印log的代码"></a>3.控制台搜索相关我们打印log的代码</h2><p>找到我们第一条首地址</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/536c82a196f36b0b4634d6825ee3e297d66e3830/20180817CPU-thread-debug/importent.png" alt=""></p>
+<blockquote>
+<p>注意:<strong>这一步非常重要 如果不好使,请重试几次.</strong></p>
+</blockquote>
+<h4 id="拿出main函数的首地址-ASLR中搜搜的-首地址然后复制-回到终端中输入"><a href="#拿出main函数的首地址-ASLR中搜搜的-首地址然后复制-回到终端中输入" class="headerlink" title="拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 回到终端中输入"></a>拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 <strong>回到终端中输入</strong></h4><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif -l  0x1006b8000</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<strong>这里是符号表路径</strong>,如果不知道在哪里找到请google一下.</p>
+</blockquote>
+<p>我们来测试一下 好不好使</p>
+<p>首先在控制台顶部的面板点击</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/breakpoint1.png" alt=""></p>
+<p>然后 在 consolo中输入 <code>bt</code> </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main.png" alt=""></p>
+<p>如果看到 如下内容说明已经成功.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main_result.png" alt=""></p>
+<h2 id="4-真机运行-找出未知线程"><a href="#4-真机运行-找出未知线程" class="headerlink" title="4.真机运行 找出未知线程"></a>4.真机运行 找出未知线程</h2><p>首先点击Xcode工程中的Profile运行<code>instruments</code>,我这里是运行工程之后 Xcode9.4可以无缝转换到<code>instruments</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments0.png" alt=""></p>
+<p>我们找到相关线程 没有名称也不知道对象叫什么 就一个十六进制地址</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments2.png" alt=""></p>
+<p>我们随便找个地址 在终端中输入 </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments3.png" alt=""></p>
+<p>好了 如果有问题 请删除product和符号表重新编译</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>CPU调试的过程非常麻烦,而且中间过程的代码多数都是C++的调用,主要是线程消耗的开销,中有很多收获希望大家多多指教.</p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿…&lt;/p&gt;
+&lt;p&gt;为了定位这个问题我们花费了至少 3天的时间 一点一
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Taptic Engine振动反馈</title>
+    <link href="https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/"/>
+    <id>https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/</id>
+    <published>2018-08-13T06:28:04.000Z</published>
+    <updated>2018-08-13T07:34:57.192Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813TapticEngineFeedback/taptic_engine.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。</p>
+<p>Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 Force Touch 以及 3D Touch，不同的屏幕操作，可以感受到不同的振动触觉效果，带来更好的用户体验</p>
+<h1 id="触觉振动体验"><a href="#触觉振动体验" class="headerlink" title="触觉振动体验"></a>触觉振动体验</h1><h2 id="振动代码-旧方案"><a href="#振动代码-旧方案" class="headerlink" title="振动代码(旧方案)"></a>振动代码(旧方案)</h2><p>调用这行代码虽然可以振动 但是它属于长振动</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</div></pre></td></tr></table></figure>
+<h2 id="振动代码-新方案"><a href="#振动代码-新方案" class="headerlink" title="振动代码(新方案)"></a>振动代码(新方案)</h2><p>iOS10 引入了一种新的、产生触觉反馈的方式， 帮助用户认识到不同的震动反馈有不同的含义 。这个功能的核心就是由 UIFeedbackGenerator 提供。</p>
+<p><code>UIFeedbackGenerator</code> 可以帮助你实现 <code>haptic feedback</code>。它的要求是：</p>
+<ul>
+<li>支持 Taptic Engine 机型 (iPhone 7 以及 iPhone 7 Plus).</li>
+<li>app 需要在前台运行</li>
+<li>系统 Taptic setting 需要开启</li>
+</ul>
+<blockquote>
+<p>下图开启 声音与触感<br>手机 – 设置 – 声音与触感 – 系统触感反馈(打开)<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8bed46d914016aaeb13aa7bac8d7b4c9e287dba/20180813TapticEngineFeedback/setting.png" alt=""></p>
+</blockquote>
+<h3 id="调用相关振动代码实现振动功能"><a href="#调用相关振动代码实现振动功能" class="headerlink" title="调用相关振动代码实现振动功能"></a>调用相关振动代码实现振动功能</h3><p><code>UIFeedbackGenerator</code> 子类有:</p>
+<ul>
+<li>UIImpactFeedbackGenerator</li>
+<li>UISelectionFeedbackGenerator</li>
+<li>UINotificationFeedbackGenerator</li>
+</ul>
+<h4 id="UIImpactFeedbackGenerator振动"><a href="#UIImpactFeedbackGenerator振动" class="headerlink" title="UIImpactFeedbackGenerator振动"></a>UIImpactFeedbackGenerator振动</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIImpactFeedbackGenerator</span> *generator = [[<span class="built_in">UIImpactFeedbackGenerator</span> alloc] initWithStyle: <span class="built_in">UIImpactFeedbackStyleLight</span>];</div><div class="line">[generator impactOccurred];</div></pre></td></tr></table></figure>
+<p>振动style有三种枚举</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIImpactFeedbackStyle</span>) &#123;</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleLight</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleMedium</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleHeavy</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>基本每次振动相当于创建一个实例调用一次方法就行了,如果觉得性能更好的设计可以搞成成员变量</p>
+</blockquote>
+<p>反馈结果</p>
+<table>
+<thead>
+<tr>
+<th>UIImpactFeedbackGenerator</th>
+<th>UIImpactFeedbackStyleLight</th>
+<th>UIImpactFeedbackStyleMedium</th>
+<th>UIImpactFeedbackStyleHeavy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPhone 7（iOS 10）及以上机型</td>
+<td>微弱短振</td>
+<td>中等短振</td>
+<td>明显短振</td>
+</tr>
+<tr>
+<td>iPhone 6s Puls（iOS 9）</td>
+<td>长振</td>
+<td>长振</td>
+<td>长振</td>
+</tr>
+<tr>
+<td>iPhone 6（iOS 10）</td>
+<td>无振动</td>
+<td>无振动</td>
+<td>无振动</td>
+</tr>
+</tbody>
+</table>
+<h4 id="UISelectionFeedbackGenerator振动"><a href="#UISelectionFeedbackGenerator振动" class="headerlink" title="UISelectionFeedbackGenerator振动"></a>UISelectionFeedbackGenerator振动</h4><p>这里我试图搞成成员变量模拟手势拖拽 振动</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UISelectionFeedbackGenerator</span> *feedbackGesGenerator;</div></pre></td></tr></table></figure>
+<p>事件相应</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)gestrueHandle:(<span class="built_in">UIGestureRecognizer</span> *)sender &#123;</div><div class="line">    <span class="keyword">switch</span> (sender.state) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateBegan</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Instantiate a new generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = [[<span class="built_in">UISelectionFeedbackGenerator</span> alloc] init];</div><div class="line">            </div><div class="line">            <span class="comment">// Prepare the generator when the gesture begins.</span></div><div class="line">            [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateChanged</span>: &#123;</div><div class="line">            </div><div class="line">            <span class="comment">// Check to see if the selection has changed...</span></div><div class="line">           </div><div class="line">                <span class="comment">// Trigger selection feedback.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator selectionChanged];</div><div class="line">                </div><div class="line">                <span class="comment">// Keep the generator in a prepared state.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateCancelled</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateEnded</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateFailed</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Release the current generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = <span class="literal">nil</span>;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Do nothing.</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: <strong>这里调用了一下<code>[self.feedbackGesGenerator prepare]</code>方法让振动引擎准备就绪,方便下次快速启动</strong>这个方法是父类的方法</p>
+</blockquote>
+<h4 id="UINotificationFeedbackGenerator振动"><a href="#UINotificationFeedbackGenerator振动" class="headerlink" title="UINotificationFeedbackGenerator振动"></a>UINotificationFeedbackGenerator振动</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UINotificationFeedbackGenerator</span> *notifiFeedBack = [[<span class="built_in">UINotificationFeedbackGenerator</span> alloc] init];</div><div class="line">    [notifiFeedBack notificationOccurred:<span class="built_in">UINotificationFeedbackTypeWarning</span>];</div></pre></td></tr></table></figure>
+<p>同样<code>UINotificationFeedbackType</code>也是三种枚举</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UINotificationFeedbackType</span>) &#123;</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeSuccess</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeWarning</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeError</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>几种不同的振动API 可以视情况而使用, 比较常用的是 <code>UIImpactFeedbackGenerator</code>, 当然也可以随意使用注意操作系统判断检查。</p>
+<p>例如:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">10.0</span>, *)) &#123;</div><div class="line">	<span class="comment">//写相关振动代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813Tap
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用UIToolBar做高斯模糊背景</title>
+    <link href="https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/"/>
+    <id>https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/</id>
+    <published>2018-07-23T10:22:05.000Z</published>
+    <updated>2018-07-25T03:15:08.313Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif" alt=""></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIView</span> *)containerBackgroundView &#123;</div><div class="line">    <span class="keyword">if</span> (!_containerBackgroundView) &#123;</div><div class="line">        <span class="built_in">UIToolbar</span> *toolBar = [[<span class="built_in">UIToolbar</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">        toolBar.barStyle = <span class="built_in">UIBarStyleBlack</span>;</div><div class="line">        toolBar.clipsToBounds = <span class="literal">YES</span>;</div><div class="line">        _containerBackgroundView = toolBar;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _containerBackgroundView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以使用<code>UIBlurEffect</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIBlurEffect</span> *blurEffect = [<span class="built_in">UIBlurEffect</span> effectWithStyle:<span class="built_in">UIBlurEffectStyleLight</span>];</div><div class="line"><span class="built_in">UIVisualEffectView</span> *blurView = [[<span class="built_in">UIVisualEffectView</span> alloc] initWithEffect:blurEffect];</div><div class="line">blurView.frame = myView.bounds;</div><div class="line">[myView addSubview:blurView];</div></pre></td></tr></table></figure>
+<p>UIBlurEffectStyle </p>
+<ul>
+<li><p>UIBlurEffectStyleExtraLight,//额外亮度，（高亮风格）</p>
+</li>
+<li><p>UIBlurEffectStyleLight,//亮风格</p>
+</li>
+<li><p>UIBlurEffectStyleDark//暗风格</p>
+</li>
+</ul>
+<blockquote>
+<p>UIBlurEffect 不能调节模糊半径</p>
+</blockquote>
+<p>如果要调整模糊半径</p>
+<p>可以对图片进行高斯模糊</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">-(<span class="built_in">UIImage</span> *)convertToBlurImage:(<span class="built_in">UIImage</span> *)image&#123;</div><div class="line">    <span class="built_in">CIFilter</span> *gaussianBlurFilter = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIGaussianBlur"</span>];</div><div class="line">    [gaussianBlurFilter setDefaults];</div><div class="line">    <span class="built_in">CIImage</span> *inputImage = [<span class="built_in">CIImage</span> imageWithCGImage:[image <span class="built_in">CGImage</span>]];</div><div class="line">    [gaussianBlurFilter setValue:inputImage forKey:kCIInputImageKey];</div><div class="line">    [gaussianBlurFilter setValue:@<span class="number">5</span> forKey:kCIInputRadiusKey];</div><div class="line">    <span class="built_in">CIImage</span> *outputImage = [gaussianBlurFilter outputImage];</div><div class="line">    <span class="built_in">CIContext</span> *context   = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">CGImageRef</span> cgimg     = [context createCGImage:outputImage fromRect:[inputImage extent]];  <span class="comment">// note, use input image extent if you want it the same size, the output image extent is larger</span></div><div class="line">    <span class="built_in">UIImage</span> *convertedImage = [<span class="built_in">UIImage</span> imageWithCGImage:cgimg];</div><div class="line">    <span class="keyword">return</span> convertedImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>核心代码是<code>[gaussianBlurFilter setValue:@5 forKey:kCIInputRadiusKey]</code>;</p>
+<p>但是我测试100也没啥问题 没有测试出最大值</p>
+<p>以上是几种高斯模糊的相关代码 </p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723Too
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 终端 Bash 常用快捷键介绍及经验</title>
+    <link href="https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/"/>
+    <id>https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/</id>
+    <published>2018-07-18T01:29:39.000Z</published>
+    <updated>2018-07-18T01:46:46.024Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png" alt=""></p>
+<h1 id="bash及其特性"><a href="#bash及其特性" class="headerlink" title="bash及其特性"></a>bash及其特性</h1><ul>
+<li><a href="http://cn.linux.vbird.org/linux_basic/0320bash.php" target="_blank" rel="external">bash</a>实质上是一个可执行程序，一个用户的工作环境。</li>
+<li>在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。</li>
+<li>可以使用pstree命令查看当前shell下的子shell个数。</li>
+</ul>
+<h3 id="1-最重要的自动补全"><a href="#1-最重要的自动补全" class="headerlink" title="1. 最重要的自动补全"></a>1. 最重要的自动补全</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tab</td>
+<td>自动补全</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-编辑跳转"><a href="#2-编辑跳转" class="headerlink" title="2. 编辑跳转"></a>2. 编辑跳转</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ctrl + A</td>
+<td>跳转到当前行首</td>
+</tr>
+<tr>
+<td>Ctrl + E</td>
+<td>跳转到当前行末</td>
+</tr>
+<tr>
+<td>Alt + F</td>
+<td>将光标在当前行上向后移动一个单词</td>
+</tr>
+<tr>
+<td>Alt + B</td>
+<td>将光标在当前行上向前移动一个单词</td>
+</tr>
+<tr>
+<td>Ctrl + W</td>
+<td>删除当前光标前的一个单词</td>
+</tr>
+<tr>
+<td>Ctrl + K</td>
+<td>删除当前光标后的内容</td>
+</tr>
+<tr>
+<td>Ctrl + U</td>
+<td>清除整行</td>
+</tr>
+<tr>
+<td>Ctrl + L</td>
+<td>清屏，类似于 clear 命令</td>
+</tr>
+<tr>
+<td>Ctrl + H</td>
+<td>退格，类似于 backspace 键</td>
+</tr>
+<tr>
+<td>Ctrl + T</td>
+<td>将当前光标前的两个字符互换位置</td>
+</tr>
+<tr>
+<td>Esc + T</td>
+<td>将当前光标前的两个单词互换位置</td>
+</tr>
+</tbody>
+</table>
+<p><code>Ctrl + W</code> 和 <code>Ctrl + U</code> 相当常用。拼写错是很常见的事。</p>
+<p><code>Ctrl + L</code> 也不用多说。</p>
+<h3 id="3-进程相关"><a href="#3-进程相关" class="headerlink" title="3. 进程相关"></a>3. 进程相关</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ctrl + C</td>
+<td>终止当前进程</td>
+</tr>
+<tr>
+<td>Ctrl + Z</td>
+<td>将当前进程在后台挂起</td>
+</tr>
+<tr>
+<td>Ctrl + D</td>
+<td>退出当前 Shell，类似于 exit 命令</td>
+</tr>
+</tbody>
+</table>
+<p><code>Ctrl + C</code> 是向当前运行的进程发送 SIGINT 信号，终止进程。</p>
+<blockquote>
+<p>SIGINT - This signal is the same as pressing ctrl-c. On some systems, “delete” + “break” sends the same signal to the process. The process is interrupted and stopped. However, the process can ignore this signal.</p>
+</blockquote>
+<p><code>Ctrl + Z</code> 并不结束进程，而是挂起在后台。之后仍然可以通过 <code>fg</code>命令恢复。对应的信号是 SIGTSTP。</p>
+<h3 id="3-搜索使用过的命令（特别推荐）"><a href="#3-搜索使用过的命令（特别推荐）" class="headerlink" title="3. 搜索使用过的命令（特别推荐）"></a>3. 搜索使用过的命令（特别推荐）</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ctrl + R</td>
+<td>用于搜索之前使用过的命令</td>
+</tr>
+</tbody>
+</table>
+<p>我经常用 <code>history</code> 查看历史命令，其实已经有现成的快捷键可以用。</p>
+<p>按下 <code>Ctrl + R</code> 之后，输入查询的关键字，如果不符合，可以继续按 <code>Ctrl + R</code> 进行遍历。</p>
+<p>这个命令其实也是通过 <code>history</code> 记录来查询的。如果不喜欢这种方式，可以直接 <code>history | grep xxx</code> 也是不错的。</p>
+<p><a href="https://www.linuxidc.com/Linux/2017-11/148262.htm" target="_blank" rel="external">参考 Linux公社</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这些命令对工作效率提升很显著,需要反复学习牢记,文章最后推荐大家关注<code>Linux公社</code>这个具有历史人文精神的Linux社区, 它让我学到不少东西.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Lin
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Objective-C中使用正则去除非数字字母汉字</title>
+    <link href="https://www.sunyazhou.com/2018/06/25/20180625FilterString/"/>
+    <id>https://www.sunyazhou.com/2018/06/25/20180625FilterString/</id>
+    <published>2018-06-25T10:35:17.000Z</published>
+    <updated>2018-06-25T10:55:19.466Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0c00202bcba36a3821f799a16e006f467c33a9fc/20180625FilterString/RegularExpressDemo.gif" alt=""></p>
+<p>带着这个疑问开始今天的文章</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>创建个demo 代码如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UITextField</span> *input;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.input.delegate = <span class="keyword">self</span>;</div><div class="line">    [<span class="keyword">self</span>.input addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(textChange:) forControlEvents:<span class="built_in">UIControlEventEditingChanged</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//当文本内容改变时调用</span></div><div class="line">- (<span class="keyword">void</span>)textChange:(<span class="built_in">UITextField</span> *)textField</div><div class="line">&#123;</div><div class="line">    <span class="comment">//这里调用相关方法过滤字符串显示出来</span></div><div class="line">    <span class="keyword">self</span>.label.text = <span class="comment">//...;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在网上找了一圈大多都是使用谓词去判断时候包含,没有几个给出相应的处理字符串.</p>
+<p>我找到了3种 处理字符串的方式</p>
+<ul>
+<li>方案1 使用谓词过滤</li>
+<li>方案2 使用正则过滤增加寻找的字符串长度</li>
+<li>方案3 使用正则精简过滤字符串</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">方案<span class="number">1</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString1:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"^[a-zA-Z0-9\u4e00-\u9fa5]+"</span>;</div><div class="line">    <span class="built_in">NSPredicate</span> *pred = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"SELF MATCHES %@"</span>, regex];</div><div class="line">    <span class="built_in">NSMutableString</span> * retStr = [<span class="built_in">NSMutableString</span> string];</div><div class="line">    <span class="keyword">for</span>(<span class="built_in">NSInteger</span> i=<span class="number">0</span>; i&lt; [str length];i++)&#123;</div><div class="line">        <span class="built_in">NSRange</span> range = <span class="built_in">NSMakeRange</span>(i, <span class="number">1</span>);</div><div class="line">        <span class="built_in">NSString</span> *character = [str substringWithRange:range];</div><div class="line">        <span class="keyword">if</span>([pred evaluateWithObject:character])</div><div class="line">        &#123;</div><div class="line">            [retStr appendString:character];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> retStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这种方式虽然能实现 但是代码略显冗长,不过能就解决问题</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//方案2</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString2:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"[^a-zA-Z0-9\u4e00-\u9fa5]"</span>;</div><div class="line">    <span class="built_in">NSMutableString</span> *mstr = [<span class="built_in">NSMutableString</span> stringWithFormat:<span class="string">@"%@"</span>, str];</div><div class="line">    <span class="built_in">NSUInteger</span> i = [mstr replaceOccurrencesOfString:regex withString:<span class="string">@""</span> options:<span class="built_in">NSRegularExpressionSearch</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, mstr.length)];</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@-长度:%zd"</span>,mstr,i];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>同样的方法使用正则<code>replaceOccurrencesOfString:withString:options:range:</code>方法替换字符串</p>
+</blockquote>
+<p>下面我们精简到2行代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//方案3</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString3:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"[^a-zA-Z0-9\u4e00-\u9fa5]"</span>;</div><div class="line">    <span class="keyword">return</span> [str stringByReplacingOccurrencesOfString:regex withString:<span class="string">@""</span> options:<span class="built_in">NSRegularExpressionSearch</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, str.length)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>最终方案3 得到的预期结果还是不错,推荐使用</p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>有些问题都是在工作中遇到,希望记录下来一起分享和学习.</p>
+<p>全完完</p>
+<p><a href="https://github.com/sunyazhou13/RegularExpressDemo" target="_blank" rel="external">Demo在这里</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubuserc
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用NSAttributeString实现不同颜色大小显示</title>
+    <link href="https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/"/>
+    <id>https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/</id>
+    <published>2018-06-15T02:10:58.000Z</published>
+    <updated>2018-06-16T02:06:53.940Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近开发需求遇到一个比较简单但又棘手的问题.先看需求</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b20f325385e063624b16aa726df0077209327fb0/20180615NSAttributeString/NSAttributeString1.png" alt=""></p>
+<p>一个<code>UILabel</code>显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：</p>
+<p>必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串</p>
+<p>比如:  <code>2分14秒</code> or <code>2min14secs</code></p>
+<p>也就是给我们的是一个  <code>&quot;2分14秒&quot;</code>字符串 我们需要匹配range来修改或者替换. 带着这个疑问开始今天的文章?</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>孔圣贤有云:”举一隅不以三隅反，则不复也。”  </p>
+<blockquote>
+<p>出自《论语·第七章·述而篇》</p>
+</blockquote>
+<p>为了不愧对圣贤对我的期待我把 这个问题定位升级成 4个等级</p>
+<ul>
+<li>Level 1  最优解,时间复杂度最低,效率最高</li>
+<li>Level 2  非最优解,时间复杂度最低,效率高</li>
+<li>Level 3  都一般</li>
+<li>Level 4  简单粗暴</li>
+</ul>
+<p>我想到了以下至少两种方法</p>
+<ol>
+<li>通过计算出来的时间  eg: <code>分</code> <code>秒</code>   字符串 range去国际化处理完的字符串去匹配修改</li>
+<li>用正则匹配数字</li>
+<li>用谓词匹配数字</li>
+<li>level4太业余了不敢想向一个工作好几年的开发者还写出这么打脸的代码</li>
+</ol>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>在工程中拖拽了一个label</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"> </div><div class="line"> 	<span class="comment">//调用</span></div><div class="line">    <span class="built_in">NSAttributedString</span> *resultTime = [<span class="keyword">self</span> formattedCurrentTime:<span class="number">133</span>];</div><div class="line">    <span class="keyword">self</span>.label.attributedText = resultTime;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方案1-字符串range匹配"><a href="#方案1-字符串range匹配" class="headerlink" title="方案1: 字符串range匹配"></a>方案1: 字符串range匹配</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSRange</span> minRange, secRange;</div><div class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">        minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;</div><div class="line">    [attributeStr addAttributes:timeAttrs range:minRange];</div><div class="line">    [attributeStr addAttributes:timeAttrs range:secRange];    </div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看下显示结果</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18f973e4bf79ada776e8bbe9fb845a66375100d1/20180615NSAttributeString/first_arrtributestring.png" alt=""></p>
+<blockquote>
+<p>是不是看上去很好</p>
+</blockquote>
+<p>但我认为这并不完美,这种搞法虽然简单直接,但是过于依赖<code>minStr</code>和<code>secStr</code>的原始range,基于iOS9之后提供的API计算<code>range</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">    minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<em>API平台区分</em></p>
+</blockquote>
+<p>但是这么实现有个Bug 当遇到同样字符串的时候就会匹配错位, 如图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ce8515d36cdf420cbe900bc3e4e73c3cfbda7ef6/20180615NSAttributeString/%08NSAttributeString_bug.png" alt=""></p>
+<p>错误的原因显然大家都了解</p>
+<p>字符串 “0” 的range相同了,但就解决这个问题而言,简单判断一下range然后截取字符串向后跳跃length继续截取获取能实现,但这显然很啰嗦,万一有一天 你遇到的是 “<code>0小时0分12秒</code>“这种字符串那该如何写呢？</p>
+<p>是不是要递归的遍历一遍然后挨个取<code>Range</code> 做属性修改?</p>
+<p>这样的结果显然不但代码啰嗦 实现起来成本还是比较高的,对代码阅读性都有很大影响(写得好的代码除外哈). </p>
+<h5 id="那怎么不啰嗦呢"><a href="#那怎么不啰嗦呢" class="headerlink" title="那怎么不啰嗦呢?"></a>那怎么不啰嗦呢?</h5><p>有一种搞法就是 用两个不同的字符占位.然后 国际化完成之后取Range,再然后替换文字,搞法虽然low点,但是时间复杂度降低了不少,还是可以考虑的.代码我就不写了 我怕小伙伴review代码的时候会虐我.继续往下看</p>
+<p><strong>评级: Level 2</strong></p>
+<p>那如何不依赖range解决这种问题呢？</p>
+<h3 id="方案2-正则匹配"><a href="#方案2-正则匹配" class="headerlink" title="方案2: 正则匹配"></a>方案2: 正则匹配</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;    </div><div class="line">    <span class="comment">/** 方案2 **/</span></div><div class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSRegularExpression</span> *reg = [<span class="built_in">NSRegularExpression</span> regularExpressionWithPattern:<span class="string">@"[0-9]+"</span> options:<span class="built_in">NSRegularExpressionCaseInsensitive</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="built_in">NSArray</span> *matches = [reg matchesInString:localizedFormatString options:<span class="built_in">NSMatchingReportCompletion</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, localizedFormatString.length)];</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSTextCheckingResult</span> *match <span class="keyword">in</span> matches) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; match.numberOfRanges; i++) &#123;</div><div class="line">                <span class="built_in">NSRange</span> range = [match rangeAtIndex:i];</div><div class="line">                <span class="keyword">if</span> (range.location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">                    [attributeStr addAttributes:timeAttrs range:range];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看下显示结果</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/85f7a4f8f09e10c1603968555d86a0128c98696f/20180615NSAttributeString/second_attributestring.png" alt=""></p>
+<p>完美实现</p>
+<blockquote>
+<p>这种方案缺点就是,时间复杂度高了一些,需要每次正则遍历<br>有点是扩展性好一点,万一有一天PM又提了需求要做成 <code>A1</code> <code>B2</code> <code>C3</code> <code>XXX#话题</code>这种，那一定会出坑</p>
+</blockquote>
+<p>但我第一次这么实现被小伙伴嘲笑很业余.确实很业余,但它能避免方案1中的bug.而且相当精确.</p>
+<p><strong>评级: Level 2</strong></p>
+<h3 id="方案3-谓词匹配"><a href="#方案3-谓词匹配" class="headerlink" title="方案3: 谓词匹配"></a>方案3: 谓词匹配</h3><p>这种搞法我没尝试,估计会比 方案1和方案2都快一些和简单直接一些,时间太紧张算了,期待评论轻喷吧！</p>
+<h3 id="方案4-简单粗暴"><a href="#方案4-简单粗暴" class="headerlink" title="方案4: 简单粗暴"></a>方案4: 简单粗暴</h3><p>就搞 4个label. 我都想象到了被实习生嘲讽+打脸的搞法发生在一个工作好几年开发者身上是多么惨痛的画面. 放弃这种low的搞法</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最终解决问题的方案还是方案2:正则匹配比较靠谱,而且一劳永逸</p>
+<p>本篇主要蛋疼的问题是 国际化后的字符串返回结果后,对返回的结果进行加工处理.</p>
+<p>没有做到Level 1级的做法很是遗憾,愧对圣贤. 希望小伙伴多提提建议.</p>
+<p><a href="https://github.com/sunyazhou13/NSAttributeStringDemo" target="_blank" rel="external">Demo</a>在这里找到</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>格式化时间的代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回时间格式 HH:mm:ss</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSString</span> *)formattedCurrentTime &#123;</div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)<span class="keyword">self</span>.recorder.currentTime;</div><div class="line">    <span class="built_in">NSInteger</span> hours = (time / <span class="number">3600</span>);</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *format = <span class="string">@"%02i:%02i:%02i"</span>;</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:format, hours, minutes, seconds];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png&quot; alt=&quot;
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swift4.2中的随机数</title>
+    <link href="https://www.sunyazhou.com/2018/06/08/20180608Swift-Random2/"/>
+    <id>https://www.sunyazhou.com/2018/06/08/20180608Swift-Random2/</id>
+    <published>2018-06-08T01:18:03.000Z</published>
+    <updated>2018-06-08T06:19:16.306Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dac725ebc1b0f7a6a6c99265f76153b5bfb6d09d/20180608Swift-Random2/whatisnewinswift.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学习.特此新发一篇新的随机数文章以彰其咎.</p>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><ul>
+<li>Xcode10或者更高版本 </li>
+<li>Swift4.2</li>
+<li>使用Xcode中的Playground</li>
+</ul>
+<h2 id="生成随机数"><a href="#生成随机数" class="headerlink" title="生成随机数"></a>生成随机数</h2><p>在上一篇中我们大部分时间都在围绕<a href="https://man.openbsd.org/arc4random.3" target="_blank" rel="external">arcrandom()</a>函数来介绍随机数.当然也有它的一些变种.eg：arc4random_uniform(),rand(),random().但无论如何这些函数多数都是系统级函数。</p>
+<p>在swift4.2中 所有的 数字类型(就是普通数据类型中代表数字的)都有一个静态方法<code>random(in:)</code>,这个方法将接收一个范围(Range)或者开闭范围,返回一个无序的随机数(a uniform distribution). 这些随机函数将会包含在swift的标准库中,如果跨平台的话标准库函数都是一致的,不像上面介绍的系统随机函数.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="type">Int</span>.random(<span class="keyword">in</span>: <span class="number">1</span>...<span class="number">1000</span>) <span class="comment">//→ 580</span></div><div class="line"><span class="type">Double</span>.random(<span class="keyword">in</span>: <span class="number">0</span>..&lt;<span class="number">1</span>) <span class="comment">//→ 0.3211009027224093</span></div><div class="line"><span class="type">UInt32</span>.random(<span class="keyword">in</span>: <span class="number">0xD800</span>...<span class="number">0xDFFF</span>) <span class="comment">//→ 56324</span></div></pre></td></tr></table></figure>
+<h3 id="模偏差-Modulo-bias"><a href="#模偏差-Modulo-bias" class="headerlink" title="模偏差(Modulo bias)"></a>模偏差(Modulo bias)</h3><p>以下代码演示了我们常用的取模 方式随机</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Wrong! ❌</span></div><div class="line"><span class="keyword">let</span> between0And5 = <span class="type">UInt8</span>.random() % <span class="number">6</span></div></pre></td></tr></table></figure>
+<p>这种随机数 有可能不够均匀分布,这种非均匀分布的方式就叫<a href="https://www.quora.com/What-is-modulo-bias" target="_blank" rel="external"><code>模偏差</code></a>.</p>
+<p>那如何解决这种莫偏差的问题呢?</p>
+<p>在swift中就是用我上边介绍的方法.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Correct ✅</span></div><div class="line"><span class="keyword">let</span> between0And5 = <span class="type">UInt8</span>.random(<span class="keyword">in</span>: <span class="number">0</span>..&lt;<span class="number">6</span>) <span class="comment">// → 5</span></div></pre></td></tr></table></figure>
+<p>如果我们需要随机一个<code>数字数据类型</code>全范围的随机数的话可以使用 <code>.min ... .max</code>来进行范围随机. 如下代码:</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> between0And255 = <span class="type">UInt8</span>.random(<span class="keyword">in</span>: .<span class="built_in">min</span> ... .<span class="built_in">max</span>) <span class="comment">// → 190</span></div></pre></td></tr></table></figure>
+<h3 id="Bool值随机"><a href="#Bool值随机" class="headerlink" title="Bool值随机"></a>Bool值随机</h3><p>虽然这种类型完全可以用 %2 ==0 或者 %2==0 来解决,但是swift还是很负责任的帮我们做到了这一点, 举个<code>抛硬币</code>场景的随机例子:</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">coinToss</span><span class="params">(<span class="built_in">count</span> tossCount: Int)</span></span> -&gt; (heads: <span class="type">Int</span>, tails: <span class="type">Int</span>) &#123;</div><div class="line">    <span class="keyword">var</span> result = (heads: <span class="number">0</span>, tails: <span class="number">0</span>)</div><div class="line">    <span class="keyword">for</span> <span class="number">_</span> <span class="keyword">in</span> <span class="number">0</span>..&lt;tossCount &#123;</div><div class="line">        <span class="keyword">let</span> toss = <span class="type">Bool</span>.random()</div><div class="line">        <span class="keyword">if</span> toss &#123;</div><div class="line">            result.heads += <span class="number">1</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            result.tails += <span class="number">1</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> (heads, tails) = coinToss(<span class="built_in">count</span>: <span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="comment">// → (heads 54, tails 46)</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>heads → 人头面<br>tails → 背面</p>
+</blockquote>
+<h3 id="容器类型的元素随机-Random-collection-elements"><a href="#容器类型的元素随机-Random-collection-elements" class="headerlink" title="容器类型的元素随机(Random collection elements)"></a>容器类型的元素随机(Random collection elements)</h3><p>首先大家可以<a href="https://developer.apple.com/documentation/swift/collection" target="_blank" rel="external"><code>Collection</code></a>理解成一个集成<code>NSObject</code>的类实现了容器协议的类型.eg: 数组，字典等等。。。。</p>
+<p>这些<code>Collection</code> 类型都有一个<code>randomElement()</code>方法(可以看下上一篇文章末尾介绍的10个字符串的数).这个函数返回一个<code>Optional</code>可选类型.因为<code>Collection</code>可能为空.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> emptyRange = <span class="number">10</span>..&lt;<span class="number">10</span></div><div class="line">emptyRange.isEmpty <span class="comment">// → true</span></div><div class="line">emptyRange.randomElement() <span class="comment">// → nil</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到元素随机为nil</p>
+</blockquote>
+<p>我们举个上一节的例子还测试一下</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>]</div><div class="line"><span class="keyword">let</span> randomElement = arr.randomElement()!  <span class="comment">// → "8"</span></div></pre></td></tr></table></figure>
+<p>举个字符串emotion表情的demo</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> emotions = <span class="string">"😀😂😊😍🤪😎😩😭😡"</span></div><div class="line"><span class="keyword">let</span> randomEmotion = emotions.randomElement()! <span class="comment">// → "😡"</span></div></pre></td></tr></table></figure>
+<h3 id="Shuffling-集合随机排列-洗牌算法"><a href="#Shuffling-集合随机排列-洗牌算法" class="headerlink" title="Shuffling 集合随机排列(洗牌算法)"></a>Shuffling 集合随机排列(洗牌算法)</h3><p>使用<a href="https://developer.apple.com/documentation/swift/sequence/2996816-shuffled" target="_blank" rel="external">shuffled()</a>方法去随机排列一个序列或容易.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">(<span class="number">1</span>...<span class="number">20</span>).shuffled() </div><div class="line"><span class="comment">// → numbers is now [16, 9, 2, 18, 5, 13, 8, 11, 17, 3, 6, 1, 14, 7, 10, 15, 20, 19, 12, 4]</span></div></pre></td></tr></table></figure>
+<p>以上实现了一个类似洗牌算法的排序 1~20 之间的数 注意：左右都是闭区间(闭区间包含本身) 因为这里用的是<code>...</code>,不理解大家可以查找一下swift相关区间标识的知识.</p>
+<h2 id="随机数生成的协议（Random-number-generators）"><a href="#随机数生成的协议（Random-number-generators）" class="headerlink" title="随机数生成的协议（Random number generators）"></a>随机数生成的协议（Random number generators）</h2><p><code>Random number generators</code>简称<code>RNG</code>,以下简称<code>RNG</code>.</p>
+<h3 id="默认的RNG"><a href="#默认的RNG" class="headerlink" title="默认的RNG"></a>默认的RNG</h3><p>以上介绍的使用方法都是被定义在swift的标准库中的方法. 叫<a href="https://forums.swift.org/t/se-0202-amendment-proposal-rename-random-to-defaultrandomnumbergenerator/12942" target="_blank" rel="external">Random.default</a></p>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0202-random-unification.md" target="_blank" rel="external">SE-0202</a> 讨论了这种默认随机的一些问题</p>
+<p>我在这里简要一下</p>
+<blockquote>
+<p>The aspiration is that this RNG should be cryptographically secure, provide reasonable performance, and should be thread safe. If a vendor is unable to provide these goals, they should document it clearly. … if an RNG on a platform has the possibility of failing, then it must fail [i.e. trap] when it is unable to complete its operation.<br>大概意思就是 高性能,高安全性,线程安全…. </p>
+</blockquote>
+<h3 id="自定义RNGs"><a href="#自定义RNGs" class="headerlink" title="自定义RNGs"></a>自定义RNGs</h3><p>对于大多数简单的用例，缺省的RNG应该是正确的选择。但是，如果您的代码对随机数生成器有特殊的要求，比如特定的算法或用可重复的种子初始化RNG的能力，那么您就可以通过采用随机数生成器协议来实现自己的RNG。协议只有一个要求:<code>next()</code>方法，该方法产生<code>8个新的字节随机数</code>:</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">RandomNumberGenerator</span> </span>&#123;</div><div class="line">    <span class="comment">/// Returns a value from a uniform, independent</span></div><div class="line">    <span class="comment">/// distribution of binary data.</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">next</span><span class="params">()</span></span> -&gt; <span class="type">UInt64</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:协议需要统一的分布。其思想是，需要具有非均匀分布的随机值的用户可以在第二步将期望的分布应用到均匀分布随机性序列里。<br>就是如果想按照自己的方法随机需要吧next()函数写上,写好泛型函数规则就行了.</p>
+</blockquote>
+<h3 id="使用自定义随机RNG"><a href="#使用自定义随机RNG" class="headerlink" title="使用自定义随机RNG"></a>使用自定义随机RNG</h3><p>所有用于生成随机值的标准库api都提供了允许用户传入自定义随机数生成器的方法重载。例如，Int类型有以下两种方法:</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Int</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">(<span class="keyword">in</span> range: Range&lt;Int&gt;)</span></span> -&gt; <span class="type">Int</span> &#123; ... &#125;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span>&lt;T&gt;<span class="params">(<span class="keyword">in</span> range: Range&lt;Int&gt;,</span></span></div><div class="line">        using generator: <span class="keyword">inout</span> T) -&gt; <span class="type">Int</span></div><div class="line">        <span class="keyword">where</span> <span class="type">T</span>: <span class="type">RandomNumberGenerator</span> &#123; ... &#125;</div><div class="line">    <span class="comment">// The overloads that take a ClosedRange are not shown</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个<code>generator</code>参数需要总是传入<a href="https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545" target="_blank" rel="external"><code>inout</code></a>,因为在产生新的随机性时，RNGs通常会改变它们的状态。</p>
+<p>下面看下我们怎么调用自定义随机, 我们需要创建一个可变的并且满足inout的要求的方法.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> mersenneTwister = <span class="type">MersenneTwisterRNG</span>(...) <span class="comment">// assume this exists</span></div><div class="line"><span class="type">Int</span>.random(<span class="keyword">in</span>: <span class="number">10</span>..&lt;<span class="number">20</span>, using: &amp;mersenneTwister)</div></pre></td></tr></table></figure>
+<h3 id="在自有类型中生成随机值"><a href="#在自有类型中生成随机值" class="headerlink" title="在自有类型中生成随机值"></a>在自有类型中生成随机值</h3><p>通过上面我们了解到</p>
+<p>自定义随机协议需要满足两个标准库模式的步骤:</p>
+<ul>
+<li>提供静态随机方法<code>random() -&gt; Self</code> 这个方法使用默认的RNG,如果我们规范随机范围的时候这个函数能补充额外参数.以便于我们规范随机的range.  </li>
+<li>提供第二个方法<code>random&lt;T: RandomNumberGenerator&gt;(using generator: inout T) -&gt; Self</code>这个是生成默认随机数的核心方法.</li>
+</ul>
+<p>举个扑克游戏中的枚举例子, 这里面我们可以充分利用<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0194-derived-collection-of-enum-cases.md" target="_blank" rel="external"><code>Swift4.2</code></a>中的<a href="https://developer.apple.com/documentation/swift/caseiterable" target="_blank" rel="external">allCase</a>属性.</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Suit</span>: <span class="title">String</span>, <span class="title">CaseIterable</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> diamonds = <span class="string">"♦"</span></div><div class="line">    <span class="keyword">case</span> clubs = <span class="string">"♣"</span></div><div class="line">    <span class="keyword">case</span> hearts = <span class="string">"♥"</span></div><div class="line">    <span class="keyword">case</span> spades = <span class="string">"♠"</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">()</span></span> -&gt; <span class="type">Suit</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Suit</span>.random(using: &amp;<span class="type">Random</span>.<span class="keyword">default</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span>&lt;T: RandomNumberGenerator&gt;</span></div><div class="line">        <span class="params">(using generator: <span class="keyword">inout</span> T)</span> -&gt; <span class="type">Suit</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// Force-unwrap can't fail as long as the</span></div><div class="line">        <span class="comment">// enum has at least one case.</span></div><div class="line">        <span class="keyword">return</span> allCases.randomElement(using: &amp;generator)!</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> randomSuit = <span class="type">Suit</span>.random() <span class="comment">// → clubs</span></div><div class="line">randomSuit.rawValue <span class="comment">// → "♠"</span></div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇补充了新版Swift4.2中对标准库中的随机函数支持,也介绍了洗牌函数默认随机均匀排列,希望小伙伴们看完有所收获,有问题还请多多指教</p>
+<p>全文完</p>
+<p><a href="https://oleb.net/blog/2018/06/random-numbers-in-swift/" target="_blank" rel="external">参考</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dac725ebc1b0f7a6a6c99265f76153b5bfb6d09d/20180608Swi
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Swift中的随机数</title>
@@ -1140,7 +1734,7 @@
     <link href="https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/"/>
     <id>https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/</id>
     <published>2018-01-12T02:32:18.000Z</published>
-    <updated>2018-06-04T08:44:05.530Z</updated>
+    <updated>2018-06-26T10:51:18.128Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180112AVAudioSession-Category/ASPG_intro_2x.png" alt="AVAudioSession"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2018新年第一篇, 梳理<code>AVAudioSession</code>的<code>Category</code>,解决音频开发中的各种播放被打断或者首次启动时无声音的问题</p>
@@ -1257,7 +1851,7 @@
 </li>
 <li><p><em><code>AVAudioSessionCategoryRecord</code>:有了播放器，肯定要录音机，比如微信语音的录制，就要用到这个类别，既然要安静的录音，肯定不希望有QQ音乐了，所以其他播放声音会中断。想想微信语音的场景，就知道什么时候用他了.</em></p>
 </li>
-<li><p><em><code>AVAudioSessionCategorySoloAmbient</code>:也是只用于播放,但是和”AVAudioSessionCategoryAmbient”不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了.</em></p>
+<li><p><em><code>AVAudioSessionCategorySoloAmbient</code>:也是只用于播放,但是和<code>AVAudioSessionCategoryAmbient</code>不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了.</em></p>
 </li>
 </ul>
 <p>了解了这七大类别，我们就可以根据自己的需要进行对应类别的设置了：</p>
@@ -1429,7 +2023,7 @@
 <p>通过接口:  </p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category mode:(<span class="built_in">NSString</span> *)mode options:(<span class="built_in">AVAudioSessionCategoryOptions</span>)options error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
 <p>但是在<code>iOS9</code>及以下就只能在<code>Category</code>上调了，其实本质是一样的，可以认为是个API语法糖，接口封装.</p>
-<h3 id="系统中断响应"><a href="#系统中断响应" class="headerlink" title="系统中断响应"></a>系统中断响应</h3><p>上面说的这些<code>Categor、</code>Option<code>以及</code>Mode`都是对自己作为播放主体时的表现，但是假设，现在正在播放着，突然来电话了、闹钟响了或者你在后台放歌但是用户启动其他App用上面的方法影响的时候，我们的App该如何表现呢？最常用的场景当然是先暂停，待恢复的时候再继续。那我们的App要如何感知到这个终端以及何时恢复呢？</p>
+<h3 id="系统中断响应"><a href="#系统中断响应" class="headerlink" title="系统中断响应"></a>系统中断响应</h3><p>上面说的这些<code>Categorg</code>、<code>Option</code>以及<code>Mode</code>都是对自己作为播放主体时的表现，但是假设，现在正在播放着，突然来电话了、闹钟响了或者你在后台放歌但是用户启动其他App用上面的方法影响的时候，我们的App该如何表现呢？最常用的场景当然是先暂停，待恢复的时候再继续。那我们的App要如何感知到这个终端以及何时恢复呢？</p>
 <p><code>AVAudioSession</code>提供了多种<code>Notifications</code>来进行此类状况的通知。其中将来电话、闹铃响等都归结为一般性的中断</p>
 <p>用<code>AVAudioSessionInterruptionNotification</code>来通知。其回调回来的<code>userInfo</code>主要包含两个键：</p>
 <ul>
@@ -1882,697 +2476,6 @@
     
     
       <category term="生活" scheme="https://www.sunyazhou.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown中插入音频文件</title>
-    <link href="https://www.sunyazhou.com/2017/12/27/20171227markdown-audio/"/>
-    <id>https://www.sunyazhou.com/2017/12/27/20171227markdown-audio/</id>
-    <published>2017-12-27T04:04:07.000Z</published>
-    <updated>2017-12-30T04:13:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
-<h2 id="markdown插入音乐"><a href="#markdown插入音乐" class="headerlink" title="markdown插入音乐"></a>markdown插入音乐</h2><p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
-<ul>
-<li><code>div</code>用于控制格式，若无则默认为居左</li>
-<li><code>frameborder</code>用于规定是否显示框架周围的边框，1为是，0为否</li>
-<li><code>marginwidth</code>及<code>marginheight</code>表示距离边缘的像素大小</li>
-<li><code>width</code>及<code>height</code>表示播放条的长度和宽度</li>
-<li><code>src</code>为播放链接，可以在如网易云音乐的<code>生成外链播放器</code>获取该链接，同时也获得以下代码，并可以自行更改；也可将音频链接改为视频链接，从而播放视频</li>
-</ul>
-<blockquote>
-<p>值得注意的是，音频和视频在默认情况下是会自动循环播放的，可以修改链接的值进行修改<br>在<code>src</code>域中，<code>auto</code>值表示是否自动播放，当值为<code>1</code>时为自动播放，<code>0</code>则不是<br>在<code>src</code>域中，有些链接会附有<code>height</code>或<code>width</code>值，其表示表示播放框的基本宽高，可以更换其值以获得想要的播放框大小，此时可以不用填写外部的<code>width</code>及<code>height</code>.</p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">life</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">400</span> <span class="attr">height</span>=<span class="string">140</span> <span class="attr">src</span>=<span class="string">"https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<div align="life"><br><iframe frameborder="no" marginwidth="0" marginheight="0" width="400" height="140" src="https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66"></iframe><br></div>
-
-
-<h2 id="接口说明"><a href="#接口说明" class="headerlink" title="接口说明"></a>接口说明</h2><p>这里面可以看到 用了 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66</div></pre></td></tr></table></figure>
-<p>这个接口的<code>id=34341360</code>是从这里获取的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio1.png" alt=""></p>
-<p>找到<code>复制链接</code>,然后用浏览器打开.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio2.png" alt=""></p>
-<p>后边的 <code>id=34341360</code>就是我们要的 <code>id</code> 然后接口替换就可以了</p>
-<p>更多技巧可参考以前写的一篇文章<br><a href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/">markdown折叠</a><br><a href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/">markdown 表格</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.&lt;/p&gt;
-&lt;h2 id=
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>音频声像Pan值电平左右声道平衡</title>
-    <link href="https://www.sunyazhou.com/2017/12/19/20171219AudioPan/"/>
-    <id>https://www.sunyazhou.com/2017/12/19/20171219AudioPan/</id>
-    <published>2017-12-19T03:40:13.000Z</published>
-    <updated>2017-12-24T07:20:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio-pan.jpg" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.</p>
-<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.<br>下面是 UI 演示.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio_pan_demo.gif" alt=""></p>
-<p>这里其实修改的类似 <code>AVAudioPlayer</code>里面的<code>pan</code>值修改</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan_audio_api.png" alt=""></p>
-<p>我在以前的文章也有一篇提到过这个<a href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">pan 值</a></p>
-<p>可能大家不理解为啥 这个 API 起名叫<code>pan</code></p>
-<p>在声学领域这个东西有专门的名字叫 <code>声像</code>.</p>
-<p><a href="http://underwaysoft.com/writing/books/dsp-develop.html#%E7%BA%BF%E6%80%A7%E5%A3%B0%E5%83%8F%EF%BC%88&lt;span class=cnBracket&gt;Pan&lt;/span&gt;%EF%BC%89" target="_blank" rel="external">这篇文章</a>介绍了一些我们对声学知识的简单介绍,虽然不知道作者是谁,但是作者应该是非常专业的声学开发者.</p>
-<p>其实按照我们平常的理解应该是这样去实现这个 pan 值的修改</p>
-<p>左声道音量给右声道声音的补偿 或者右侧声道给左侧声道的补偿,通过滑块的 value 来决定两边谁加多少减多少,但是大家的思路是对的,但是做法是不正确的,因为 两边的音量放在中间必须是1.0,也就是说 range 在 <code>-1 ~ 1</code>之间. 如果按照这个滑动方式回导致滑动过大. </p>
-<p>带着这个问题我的同事找到了一个公式 来计算 这个值</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan-algorithm.png" alt=""></p>
-<ul>
-<li><code>pan</code>就是我们的滑块的<code>value</code></li>
-<li><code>Vl</code> 代表左侧音量</li>
-<li><code>Vr</code> 代表右侧音量</li>
-</ul>
-<p>根据这个公式我们有如下 代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, KSYMCChannelType) &#123;</div><div class="line">    KSYMCChannelTypeLeft = <span class="number">0</span>,</div><div class="line">    KSYMCChannelTypeRight = <span class="number">1</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYMultiCanvasHelper</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calculateVolume:(KSYMCChannelType)type</div><div class="line">                  panValue:(<span class="built_in">CGFloat</span>)pan</div><div class="line">                    volume:(<span class="built_in">CGFloat</span>)volume;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYMultiCanvasHelper</span></span></div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calculateVolume:(KSYMCChannelType)type</div><div class="line">                  panValue:(<span class="built_in">CGFloat</span>)pan</div><div class="line">                    volume:(<span class="built_in">CGFloat</span>)volume&#123;</div><div class="line">    <span class="keyword">if</span> (type == KSYMCChannelTypeLeft) &#123;</div><div class="line">        <span class="built_in">CGFloat</span> leftVolumn = sqrt(<span class="number">2</span>) * cos((<span class="number">1</span> + pan)*M_PI_4) *volume;</div><div class="line">        <span class="keyword">return</span> leftVolumn;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == KSYMCChannelTypeRight) &#123;</div><div class="line">        <span class="built_in">CGFloat</span> rightVolumn = sqrt(<span class="number">2</span>) * sin((<span class="number">1</span> + pan)*M_PI_4) *volume;</div><div class="line">        <span class="keyword">return</span> rightVolumn;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>这里的计算还是比较准确的.</p>
-<p>经过测试 左侧 音量 为 0 时 右侧音量应该是 1.41左右</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过上述测试音频的 pan 值修改 如果自行开发还是比较好搞得,只是鄙人对音频的知识积累的太少了.这篇文章看起来虽然没什么技术含量,全当知识的点滴积累吧. 至于为啥 是 <code>M_PI_4</code>还请专研一下文章的扩展链接,因为要把一个线性的操作转换成一个圆型方便数学的计算,以及 <strong>声像</strong>和<strong>声向</strong>的区别.</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio-pan.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UICollectionViewCell添加KVO</title>
-    <link href="https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/"/>
-    <id>https://www.sunyazhou.com/2017/12/15/20171215cell-add-kvo/</id>
-    <published>2017-12-15T09:05:10.000Z</published>
-    <updated>2017-12-16T11:00:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是<strong>如何正确的给一个<code>UICollectionViewCell</code>添加<code>KVO</code>监听</strong>.</p>
-<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>由于目前在开发<a href="https://github.com/ksvc/KSYMediaEditorKit_iOS" target="_blank" rel="external">短视频</a>相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式开发代码,比如最低级的<code>MVC</code>模式,最直白的<code>Objective-C</code>(老实说我都烦透了 OC 这种超级长看着都难受的编程语言,早想用 swift 来玩一把了),所以在开发的技术选型和代码编写过程中都是达到小白最低的理解能力的开发模式,但有时候不得不面对在<em>小白能理解</em>和<em>功能的高级实现</em>之间做妥协.最近开发遇到个问题,如下:</p>
-<blockquote>
-<p>PM 有个需求 要实现在一个屏幕内多个 cell 上随意切换 录制视图并且能随意点击取消,再加上录制完成的视频如果不在选中状态就显示封面,如果在选中状态就继续预览,如果没有录制完的视频并且不在预览的 CELL要显示添加功能.</p>
-</blockquote>
-<p>听完这个需求是不是都晕了,我们来看张我实现完成的图.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/record_demo.gif" alt=""></p>
-<ol>
-<li>录制完的视频取出封面</li>
-<li>正在预览的随时准备录制</li>
-<li>随意能切换 cell 不影响录制视图</li>
-<li>未录制的并且没有已录制完视频文件的 cell 显示 添加按钮</li>
-</ol>
-<p>第一眼看着没啥技术含量都 UI 是吧</p>
-<p>好我们来玩点有技术含量的</p>
-<h4 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h4><p>如果使用传统MVC 模式的话<code>Cell</code>上边显示数据,那<code>model</code>里面是不是要放一个<code>record</code>的实例对象 告诉它 啥时候开始啥时候结束,当然你有更好的方式我就不说了我其实也知道.</p>
-<h4 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h4><p>取出封面很简单让 cell里面存储一下录制完的 URL 就可以了,然后每次调用 UICollectonView 的 <code>reload:</code>方法</p>
-<h4 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h4><p>我们实现录制视图的方式是放在 cell 的一个 subview 上, 正在录制的视图如果 reload 的话 应该会瞬间没了.就算吭哧吭哧实现完开始录制、暂停录制、恢复录制、结束录制… 这活我觉得问题和隐患应该非常多.别想了 不能这么玩</p>
-<h4 id="问题4"><a href="#问题4" class="headerlink" title="问题4"></a>问题4</h4><p>cell的选中和非选中问题,你有没有发现 如果正在录制的 cell 上的 view 是选中的有个红色的框代表当前属于 焦点状态.<br>那录制完成呢.是不是需要重新 reload cell 告诉它当前谁 选中 谁取消,如果点击的是同一个 cell 还要取反操作.如果正在预览是不是再次选中说明要停止预览显示加号或者封面图,想着想着你发现这玩意是个状态机.必须要想好 model 构造,要让model 的参数足够多去控制当前 cell 的选中状态、非选中状态、预览状态、非预览状态、录制状态、非录制状态、录完状态、停止录制状态… 想着想着 太麻烦了 于是我整理出一个状态机的表格 如下:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Cell Status</th>
-<th style="text-align:center">当前cell显示内容</th>
-<th style="text-align:center">其它 cell 显示内容</th>
-<th style="text-align:center">点击当前</th>
-<th style="text-align:center">点击其它选中</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">无预览状态</td>
-<td style="text-align:center">显示加号/封面图</td>
-<td style="text-align:center">显示加号/或者封面</td>
-<td style="text-align:center">开始预览</td>
-<td style="text-align:center">切换预览视图</td>
-</tr>
-<tr>
-<td style="text-align:center">正在预览状态</td>
-<td style="text-align:center">预览视频</td>
-<td style="text-align:center">显示加号/或者封面</td>
-<td style="text-align:center">显示加号/或者封面</td>
-<td style="text-align:center">切换预览视图</td>
-</tr>
-<tr>
-<td style="text-align:center">正在录制状态</td>
-<td style="text-align:center">预览视频/播放视频</td>
-<td style="text-align:center">(显示加号或播放视频)/(显示加号或预览视频)</td>
-<td style="text-align:center">无操作(上锁)</td>
-<td style="text-align:center">无操作(上锁)</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><em>这些不重要,有这个印象就行了不用仔细看</em></p>
-</blockquote>
-<p>并不是我把问题复杂化,是 PM 的需求太复杂.不得不完整列出所有状态,精简,再精简,让小白开发者也能看懂的 SDK 才是好 SDK.</p>
-<p>其实 其它的问题还有好多 我就不列出来了,好 现在我们来依次解决问题</p>
-<p><strong>其实,综合上述信息来看,归根结底的原因是,实现这个录制随意切换功能等等的交互并不适用于<code>MVC</code>这种传统的玩法.<br>更像是一个<code>MVVM</code>的搞法</strong>,于是我想到了 MVVM 里面的精髓所在.要用<strong>数据驱动视图</strong>.</p>
-<p>上面的4个主要问题不就是因为 model 的状态修改了要通知 cell 变化嘛.那我们使用 model 的状态来控制</p>
-<blockquote>
-<p>注意:<em>如果使用 MVVM 的玩法就不要再去调用 collectionview 的 reload:方法了</em></p>
-</blockquote>
-<p>目前开发实现<code>MVVM</code>的方式主流两种</p>
-<ul>
-<li>RAC</li>
-<li>KVO</li>
-</ul>
-<p>显然<code>RAC</code>太大并不适用于我们 demo,用 KVO 搞一把.(代码有删减)</p>
-<h4 id="第一步定义-model"><a href="#第一步定义-model" class="headerlink" title="第一步定义 model"></a>第一步定义 model</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^CompletionHandler)(<span class="built_in">UIImage</span> * image); <span class="comment">//取出 Image 给 Cell 显示的回调</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>,KSYMultiCanvasModelStatus)&#123;</div><div class="line">    KSYMultiCanvasModelStatusNOPreview = <span class="number">0</span>,<span class="comment">//无预览状态</span></div><div class="line">    KSYMultiCanvasModelStatusINPreview = <span class="number">1</span>,<span class="comment">//正在预览状态</span></div><div class="line">    KSYMultiCanvasModelStatusRecording = <span class="number">2</span> <span class="comment">//正在录制状态</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasModel</span> : <span class="title">NSObject</span> </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSURL</span>  *videoURL; <span class="comment">//存放录制完视频 URL</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">BOOL</span>   isSelected;<span class="comment">//是否是选中</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) KSYMultiCanvasModelStatus modelStatus; <span class="comment">//重要!!!:模型状态用它控制 cell 显示</span></div><div class="line">- (<span class="keyword">void</span>)gengrateImageBySize:(<span class="built_in">CGSize</span>)size</div><div class="line">          completionHandler:(CompletionHandler)handler;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasModel</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">AVAssetImageGenerator</span> *imageGenerator;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYCanvasModel</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)gengrateImageBySize:(<span class="built_in">CGSize</span>)size</div><div class="line">          completionHandler:(CompletionHandler)handler&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.videoURL == <span class="literal">nil</span>) &#123; handler(<span class="literal">nil</span>); &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">AVURLAsset</span> *asset = [<span class="built_in">AVURLAsset</span> assetWithURL:<span class="keyword">self</span>.videoURL];</div><div class="line">    <span class="keyword">self</span>.imageGenerator = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">self</span>.imageGenerator = [<span class="built_in">AVAssetImageGenerator</span> assetImageGeneratorWithAsset:asset];</div><div class="line">    <span class="keyword">self</span>.imageGenerator.maximumSize = size;</div><div class="line">    </div><div class="line">    <span class="built_in">NSError</span> *error=<span class="literal">nil</span>;</div><div class="line">    <span class="built_in">CMTime</span> time= kCMTimeZero;<span class="comment">//CMTime是表示电影时间信息的结构体，第一个参数表示是视频第几秒，第二个参数表示每秒帧数.(如果要活的某一秒的第几帧可以使用CMTimeMake方法)</span></div><div class="line">    <span class="built_in">CMTime</span> actualTime;</div><div class="line">    <span class="built_in">CGImageRef</span> cgImage= [<span class="keyword">self</span>.imageGenerator copyCGImageAtTime:time actualTime:&amp;actualTime error:&amp;error];</div><div class="line">    <span class="keyword">if</span>(error)&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"截取视频缩略图时发生错误，错误信息：%@"</span>,error.localizedDescription);</div><div class="line">        handler(<span class="literal">nil</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CMTimeShow</span>(actualTime);</div><div class="line">    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithCGImage:cgImage];<span class="comment">//转化为UIImage</span></div><div class="line">    <span class="built_in">CGImageRelease</span>(cgImage);</div><div class="line">    handler(image);</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>ok model 大概是这样 .m 文件主要是从视频中取封面图</p>
-<h4 id="第二步定义-cell"><a href="#第二步定义-cell" class="headerlink" title="第二步定义 cell"></a>第二步定义 cell</h4><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"KSYCanvasModel.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *KSYModelKVOStatusContext;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForModelStatus = <span class="string">@"modelStatus"</span>;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForIsSelected = <span class="string">@"isSelected"</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span> : <span class="title">UICollectionViewCell</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIView</span> *canvasImageView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *addImageView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *boundsView;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) KSYCanvasModel *model;</div><div class="line"></div><div class="line"><span class="comment">//注册和移除观察接口</span></div><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context;</div><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath </div><div class="line">               context:(<span class="keyword">void</span> *)context;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span>()</span></div><div class="line"><span class="comment">// 使用 ObservableKeys 保存 keyPath 观察状态，避免重复注册和重复移除（重复移除会导致 crash）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *observableKeySets;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">KSYCanvasCell</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">    </div><div class="line">    <span class="comment">//千万别把 KOV 监听写在这里</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//.,,此处省略了不太相关的代码</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.observableKeySets == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.observableKeySets = [<span class="built_in">NSMutableSet</span> set];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.observableKeySets addObject:keyPath];</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model addObserver:observer</div><div class="line">                 forKeyPath:keyPath</div><div class="line">                    options:options</div><div class="line">                    context:context];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">               context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model removeObserver:observer</div><div class="line">                    forKeyPath:keyPath</div><div class="line">                       context:context];</div><div class="line">    [<span class="keyword">self</span>.observableKeySets removeObject:keyPath];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">                      ofObject:(<span class="keyword">id</span>)object</div><div class="line">                        change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change</div><div class="line">                       context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([KSYKeyPathForModelStatus isEqualToString:keyPath]) &#123;</div><div class="line">        KSYMultiCanvasModelStatus modelStatus = [[change objectForKey:<span class="built_in">NSKeyValueChangeNewKey</span>] integerValue];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"当前状态:%zd"</span>,modelStatus);</div><div class="line">		 <span class="comment">//拿到模型状态然后做适当的处理</span></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>([KSYKeyPathForIsSelected isEqualToString:keyPath])&#123;</div><div class="line">        <span class="comment">//处理是否显示边框</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>这里要在.h 里面复写 下面这俩个方法 因为要再 ViewController 里面拿到 cell 调用这个方法</p>
-</blockquote>
-<ul>
-<li><code>addObserver:forKeyPath:options:context:</code> 这个方法是系统方法需要复写并对外暴露接口</li>
-<li><code>removeObserver:forKeyPath:context:</code> 这个方法是系统方法需要复写并对外暴露接口</li>
-</ul>
-<p>这里定义了一个上下文对象用于找到识别这个在 cell的监听还有两个要监听的属性(KSYCanvasCell.h 顶部)</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *KSYModelKVOStatusContext;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForModelStatus = <span class="string">@"modelStatus"</span>;</div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *KSYKeyPathForIsSelected = <span class="string">@"isSelected"</span>;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意:<strong>为了防止 cell 重复注册导致复用的时候崩溃,这里用<code>NSMutableSet</code>让 model 的观察者只注册一次</strong></p>
-</blockquote>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">KSYCanvasCell</span>()</span></div><div class="line"><span class="comment">// 使用 ObservableKeys 保存 keyPath 观察状态，避免重复注册和重复移除（重复移除会导致 crash）</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableSet</span> *observableKeySets;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>添加的时候做一次check</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)addObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">         forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">            options:(<span class="built_in">NSKeyValueObservingOptions</span>)options</div><div class="line">            context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.observableKeySets == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.observableKeySets = [<span class="built_in">NSMutableSet</span> set];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.observableKeySets addObject:keyPath];</div><div class="line">    </div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>移除的时候要做一次 check</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</div><div class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</div><div class="line">               context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span>.observableKeySets containsObject:keyPath]) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.model removeObserver:observer</div><div class="line">                    forKeyPath:keyPath</div><div class="line">                       context:context];</div><div class="line">    [<span class="keyword">self</span>.observableKeySets removeObject:keyPath];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ok cell 大概是这个意思</p>
-<h4 id="第三步在-ViewController里面-适当的位置-注册-移除监听-并在ViewController控制器的生命周期内也做好相关监听的移除和添加"><a href="#第三步在-ViewController里面-适当的位置-注册-移除监听-并在ViewController控制器的生命周期内也做好相关监听的移除和添加" class="headerlink" title="第三步在 ViewController里面 适当的位置 注册/移除监听 并在ViewController控制器的生命周期内也做好相关监听的移除和添加"></a>第三步在 ViewController里面 适当的位置 注册/移除监听 并在ViewController控制器的生命周期内也做好相关监听的移除和添加</h4><p>这里我们需要实现<code>UICollectionViewDelegate</code>的代理协议来调用 cell 的添加 cell 和移除 cell</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView willDisplayCell:(<span class="built_in">UICollectionViewCell</span> *)cell forItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *canvasCell = (KSYCanvasCell *)cell;</div><div class="line">    [canvasCell addObserver:canvasCell</div><div class="line">                 forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                    options:<span class="built_in">NSKeyValueObservingOptionNew</span></div><div class="line">                    context:&amp;KSYModelKVOStatusContext];</div><div class="line">    [canvasCell addObserver:canvasCell</div><div class="line">                 forKeyPath:KSYKeyPathForIsSelected</div><div class="line">                    options:<span class="built_in">NSKeyValueObservingOptionNew</span></div><div class="line">                    context:&amp;KSYModelKVOStatusContext];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didEndDisplayingCell:(<span class="built_in">UICollectionViewCell</span> *)cell forItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *canvasCell = (KSYCanvasCell *)cell;</div><div class="line">    <span class="comment">//状态变化</span></div><div class="line">    [canvasCell removeObserver:canvasCell</div><div class="line">                    forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                       context:&amp;KSYModelKVOStatusContext];</div><div class="line">    <span class="comment">//选中变化</span></div><div class="line">    [canvasCell removeObserver:canvasCell</div><div class="line">                    forKeyPath:KSYKeyPathForIsSelected</div><div class="line">                       context:&amp;KSYModelKVOStatusContext];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>你是不是会问为啥写这 </p>
-<p>我来告诉我我遇到的一个坑</p>
-<p>如果你在 下面的方法里写注册 后果不堪设想,因为 cell 是复用的,每次复写 KVO 都是在创建新的对象</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (__kindof <span class="built_in">UICollectionViewCell</span> *)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView cellForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    KSYCanvasCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[KSYCanvasCell className] forIndexPath:indexPath];</div><div class="line">    cell.model = [<span class="keyword">self</span>.models objectAtIndex:indexPath.row];</div><div class="line">    <span class="comment">//如果写在这里</span></div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>KVO的实现原理很简单,就是把这个对象的监听属性在底层复写一下,监听两个值之间的变化.KVO 原理相关的就不多废话了,这都是家常便饭了</p>
-<p>我一开始写在了 cell 的 awakeFromNib: 因为都是 cell 拖拽的控件,但是麻烦真是接踵而至,各种崩溃</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">	 <span class="comment">//别写在这里    </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果你不信邪可以试试.</p>
-<p>最后我们在控制器的适当位置修改 model 的状态这样就做到了实时更新 cell</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didSelectItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    <span class="comment">//------------处理点击-----------</span></div><div class="line">    KSYCanvasModel *lastModel = [<span class="keyword">self</span>.models objectAtIndex:<span class="keyword">self</span>.lastSelectedIndexPath.row];</div><div class="line">    KSYCanvasModel *selectedModel = [<span class="keyword">self</span>.models objectAtIndex:indexPath.row];</div><div class="line">    <span class="built_in">BOOL</span> clickSameCell = (<span class="keyword">self</span>.lastSelectedIndexPath == indexPath);</div><div class="line">    <span class="keyword">if</span> (clickSameCell) &#123;</div><div class="line">        <span class="comment">//选择同一个cell</span></div><div class="line">        selectedModel.isSelected = !selectedModel.isSelected;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        lastModel.isSelected = <span class="literal">NO</span>;</div><div class="line">        selectedModel.isSelected = <span class="literal">YES</span>;   </div><div class="line">    &#125;</div><div class="line">    selectedModel.modelStatus = KSYMultiCanvasModelStatusRecording; <span class="comment">//这就会出发 cell的 KVO 了</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>最后别忘了在ViewController的生命周期添加和移出观察者</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">    [<span class="keyword">self</span>.canvasCollectionView.visibleCells enumerateObjectsUsingBlock:^(KSYCanvasCell *cell, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> * _Nonnull stop) &#123;</div><div class="line">        [cell removeObserver:cell</div><div class="line">                  forKeyPath:KSYKeyPathForModelStatus</div><div class="line">                     context:&amp;KSYModelKVOStatusContext];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样的实现过程就 解决了 上边提到的 问题 1、2、3、4</p>
-<p>这也是最精简的实现方式,以小白的开发视角 来看也需要熟悉一点 MVVM 了.这都是成了 iOS 最标配了.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这种偏向MVVM模式开发的方式 我个人觉得还是不错的,虽然现在各种MVVM格式早已经烂大街了,但只要想起来,用起来,能用简单直白的方式解决问题,它就是好的开发设计模式.当然本章也主要讲了一些技巧而已,不足之处还请各位指正.</p>
-<p>demo我就不写了 可以参考<a href="https://github.com/ksvc/KSYMediaEditorKit_iOS" target="_blank" rel="external">我们的短视频 demo</a> multicanvas target</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171215cell-add-kvo/UICollectionViewCell.png
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>适配iPhone X</title>
-    <link href="https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/"/>
-    <id>https://www.sunyazhou.com/2017/11/03/20171103iPhone-X-Adaptor/</id>
-    <published>2017-11-03T03:44:44.000Z</published>
-    <updated>2017-11-25T08:21:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,<br>相信拿到 iPhone X的感觉是下面这样的:</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll1y5jyygj22io1w0hdt.jpg" alt=""></p>
-<p>本篇主要内容分为:</p>
-<ul>
-<li>iPhone X尺寸参数</li>
-<li>UI适配</li>
-<li>极端情况处理</li>
-<li>实践案例</li>
-<li>总结</li>
-</ul>
-<h3 id="1-iPhone-X尺寸参数"><a href="#1-iPhone-X尺寸参数" class="headerlink" title="1.iPhone X尺寸参数"></a>1.iPhone X尺寸参数</h3><h4 id="1-1-首先-来围观一下模拟器的-iPhone-X的外观"><a href="#1-1-首先-来围观一下模拟器的-iPhone-X的外观" class="headerlink" title="1.1 首先 来围观一下模拟器的 iPhone X的外观"></a>1.1 首先 来围观一下模拟器的 iPhone X的外观</h4><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6d0zx4sj20m80c1t9p.jpg" alt="safeArea"></p>
-<p>下面这点先记住这很重要:格式UIEdgeInsetsMake(上, 左,下,右);  </p>
-<blockquote>
-<p>iPhone X竖屏时:占满整个屏幕的控制器的view的safeAreaInsets是（44，0，34，0）<br>iPhone X横屏时:是（0，44，21，44），inset后的区域正好是safeAreaLayoutGuide区域</p>
-</blockquote>
-<p>safeAreaInsets是相对于屏幕的物理边界计算的偏移量,通俗一点就是</p>
-<blockquote>
-<p>横屏: 距离顶部(物理屏幕顶边)偏移44，距离左侧偏移0，距离底部偏移34,距离右边偏移0(从右向左偏移别搞错了).<br>竖屏: 距离顶部(物理屏幕顶边)偏移0，距离左侧偏移44，<strong>距离底部偏移21</strong>(注意横屏底部有home 虚拟键),<strong>距离右边偏移44</strong>(同样注意不是竖屏的30了). </p>
-</blockquote>
-<p>进过测试发现,Margins 区域 有10个像素点就是上边 的 40 - 30 = 10的作用区间(我的理解应该是为了压力触摸屏的事件响应范围)，还有特别留意一下横屏的时候 顶部和底部的区别,顶部为0, 底部要保留21的 pts(points)来显示 home 虚拟键,<strong>记得获取屏幕宽度或者高度的时候要做好减去 21 的准备.</strong></p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3kxabqkj20c10nojru.jpg" alt="穿黑色外套略显优雅"><br><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3pg1izmj20af0n6mxf.jpg" alt="不穿外套略显尴尬"></p>
-<h4 id="1-2-实际场景"><a href="#1-2-实际场景" class="headerlink" title="1.2 实际场景"></a>1.2 实际场景</h4><p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3xqtuydj21w02iokjl.jpg" alt="实际测试中的刘海样式"></p>
-<blockquote>
-<p>看到苹果[射击湿]的扁平化凹陷齐刘海设计的我现在就像在乔布斯坟头上坟烧纸一样,眼神里带有少许悲伤.</p>
-</blockquote>
-<h4 id="1-3-工业化图纸尺寸"><a href="#1-3-工业化图纸尺寸" class="headerlink" title="1.3 工业化图纸尺寸"></a>1.3 工业化图纸尺寸</h4><p>说重点不废话</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4dy8bmrj20yg0icq5y.jpg" alt="iPhone X顶部尺寸图纸"></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">参数</th>
-<th style="text-align:center">size 尺寸</th>
-<th style="text-align:center">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">屏幕宽高</td>
-<td style="text-align:center">375 x 812</td>
-<td style="text-align:center">pt(point)</td>
-</tr>
-<tr>
-<td style="text-align:center">屏幕宽高比</td>
-<td style="text-align:center">9:19.5</td>
-<td style="text-align:center">而不是普通的 9:16 了</td>
-</tr>
-<tr>
-<td style="text-align:center">整体屏幕高度</td>
-<td style="text-align:center">比<code>iPhone 6/7/8&#39;s</code>高了<code>145</code>pt</td>
-<td style="text-align:center">pt(point)</td>
-</tr>
-<tr>
-<td style="text-align:center">状态栏高度(status bar)</td>
-<td style="text-align:center">44</td>
-<td style="text-align:center">比原来高出了<code>24</code>pt(并且空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域)</td>
-</tr>
-<tr>
-<td style="text-align:center">传感器区域(sensor housing)</td>
-<td style="text-align:center">30</td>
-<td style="text-align:center">单位 pt,就是被挡住的那个 Face ID传感器区域</td>
-</tr>
-<tr>
-<td style="text-align:center">状态栏+导航栏高度(Navigation Bar)</td>
-<td style="text-align:center">88 或 (带 title 样式的 140)</td>
-<td style="text-align:center">pt(point)</td>
-</tr>
-<tr>
-<td style="text-align:center">底部 Toolbar</td>
-<td style="text-align:center">83</td>
-<td style="text-align:center">不在是原来的 44 pt(point),如果横屏 Toolbar 高度 53</td>
-</tr>
-<tr>
-<td style="text-align:center">retina像素倍数</td>
-<td style="text-align:center">3x</td>
-<td style="text-align:center">3倍屏</td>
-</tr>
-<tr>
-<td style="text-align:center">pixels像素</td>
-<td style="text-align:center">1125 x 2436</td>
-<td style="text-align:center">和 iPhone各种Plus版本一直</td>
-</tr>
-<tr>
-<td style="text-align:center">iPhone X 安全区</td>
-<td style="text-align:center">frame 为(0, 44, 375, 734)</td>
-<td style="text-align:center">对比iPhone6/6s安全区frame 为(0, 0, 375, 667)</td>
-</tr>
-<tr>
-<td style="text-align:center">layout margins</td>
-<td style="text-align:center">纵向 20,横向64 )</td>
-<td style="text-align:center">横向 margins 底部有那个 home 键范围</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>注意: <em>别搞错了status bar和FaceID传感器区域范围,因为状态栏(status bar)和传感器区域(sensor housing)之间还是有点间隙的 间隙是 6 pt</em><br><em>status bar空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域.而且我们不能改变 出现比如定位的图标、通话、和其他后台任务的图标的小大</em><br><em>这里说的pt(point)是开发人员的计算屏幕一倍的像素单位,不是视觉提供素材的pixel像素</em></p>
-</blockquote>
-<h3 id="2-UI适配"><a href="#2-UI适配" class="headerlink" title="2. UI适配"></a>2. UI适配</h3><p>ok 看完各种尺寸 我们来说一下 UI 适配工作</p>
-<h4 id="2-1-工作分工"><a href="#2-1-工作分工" class="headerlink" title="2.1 工作分工:"></a>2.1 工作分工:</h4><ul>
-<li>UI(视觉设计师)的素材提供 </li>
-<li>RD(研发工程师)的UI相关适配</li>
-</ul>
-<h5 id="2-1-1-设计和开发同学需要考虑适配的范围有"><a href="#2-1-1-设计和开发同学需要考虑适配的范围有" class="headerlink" title="2.1.1 设计和开发同学需要考虑适配的范围有"></a>2.1.1 设计和开发同学需要考虑适配的范围有</h5><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4xm1k21j206f0dwdgm.jpg" alt=""></p>
-<ol>
-<li>传感器区域(sensor housing), 就是那个顶部<code>Face ID</code>的遮盖区域(大家常说的刘海儿).  </li>
-<li>底部<code>Home键</code> 标识的触发区域,就是那个底部的横条(home indicator).  </li>
-<li>圆角 四个定点的圆角问题.  </li>
-</ol>
-<p>三倍(3x)屏的图标素材问题</p>
-<ul>
-<li>建议使用<code>PDF</code>格式或者矢量图;</li>
-<li>使用<code>@2x</code>或者<code>@3x</code>图</li>
-<li>如果没有使用<code>LaunchScreen.storyboard</code>作为应用启动的话 <code>3x</code>图用不了.</li>
-</ul>
-<h5 id="2-1-2-研发的工作范围"><a href="#2-1-2-研发的工作范围" class="headerlink" title="2.1.2 研发的工作范围"></a>2.1.2 研发的工作范围</h5><ol>
-<li>适配 UI 的导航栏和状态栏</li>
-<li>适配safeArea范围</li>
-</ol>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll5z16qs5j20ep056434.jpg" alt="短视频录制顶部按钮适配前"></p>
-<p>我们的搞法是把导航栏隐藏掉然后填写上按钮,但是当 iPhone X出来的时候就不行了因为会出现被刘海盖住,其实主要的原因是我们用的 Masonry 自动布局的 edge 超过了安全区范围</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll689p471g206h07aju1.gif" alt=""></p>
-<p>我们的搞法是放置一个 View,并且让他的 edge 在 iOS11上 等于安全区范围.</p>
-<p>那么我们为啥要这么搞呢?</p>
-<ol>
-<li>我们需要适配 iPhone X 的 safeArea 并且兼容 iOS8</li>
-<li>后续处理事件 按钮、手势 都用这个 view 搞.</li>
-</ol>
-<p>对基于这两点我们选择这种搞法.</p>
-<p>代码实现如下:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">       [<span class="keyword">self</span>.canRotateView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.top.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideTop);</div><div class="line">           make.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideBottom);</div><div class="line">           make.left.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideLeft);</div><div class="line">           make.right.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideRight);</div><div class="line">       &#125;];</div><div class="line">   &#125; <span class="keyword">else</span> &#123;</div><div class="line">   	[<span class="keyword">self</span>.safeAreaView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.edges.equalTo(<span class="keyword">self</span>.view);</div><div class="line">       &#125;];	</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>下面是完成之后的效果图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_launch.PNG" alt="Launch"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_config.PNG" alt="config"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_record.PNG" alt="record"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_edit.PNG" alt="edit"></p>
-<h3 id="3-极端情况处理"><a href="#3-极端情况处理" class="headerlink" title="3. 极端情况处理"></a>3. 极端情况处理</h3><h4 id="极端情况1-如果有些-app-使用的手势-是从下往上滑动的话"><a href="#极端情况1-如果有些-app-使用的手势-是从下往上滑动的话" class="headerlink" title="极端情况1:如果有些 app 使用的手势 是从下往上滑动的话"></a>极端情况1:如果有些 app 使用的手势 是从下往上滑动的话</h4><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6sir2s3j206n0dxjsi.jpg" alt="手势从下往上滑动"></p>
-<p>这样就会造成在 iPhone X上 滑动和 home 虚拟按键冲突的问题,那如果出现这种问题如何解决呢？</p>
-<p>我们需要 需要开启 <a href="https://developer.apple.com/documentation/uikit/uiviewcontroller/2887512-preferredscreenedgesdeferringsys" target="_blank" rel="external"><code>edge protect</code></a>, 这是控制器的方法.</p>
-<p>在 UIViewController 里面返回 要触摸返回键的范围</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">preferredScreenEdgesDeferringSystemGestures</span><span class="params">()</span></span> -&gt; <span class="type">UIRectEdge</span></div></pre></td></tr></table></figure>
-<p>objc 版本</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIRectEdge</span>)preferredScreenEdgesDeferringSystemGestures&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">UIRectEdgeAll</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样的话 用户 滑动一次 手势响应, 如果 滑动两次 才会触发<code>home indicator</code>.</p>
-<h4 id="极端情况2-如何隐藏底部-home-条"><a href="#极端情况2-如何隐藏底部-home-条" class="headerlink" title="极端情况2:如何隐藏底部 home 条?"></a>极端情况2:如何隐藏底部 home 条?</h4><p>那个底部的横条如何 隐藏掉呢?</p>
-<p>其实这是一种被动的视图响应体验,<a href="https://developer.apple.com/documentation/uikit/uiviewcontroller/2887510-prefershomeindicatorautohidden" target="_blank" rel="external"> auto-hiding</a>, 返回这个<code>UIViewController</code>的 <code>bool</code>的值,这样的话 如果用户没有触发底部的<code>home 条</code>(home indicator)几秒,<code>home 条</code>(home indicator)会淡出不做响应.</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">prefersHomeIndicatorAutoHidden</span><span class="params">()</span></span> -&gt; <span class="type">Bool</span></div></pre></td></tr></table></figure>
-<p>Objective-C 版本</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)prefersHomeIndicatorAutoHidden&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="实践案例"><a href="#实践案例" class="headerlink" title="实践案例"></a>实践案例</h3><h4 id="实践案例1-safeArea-在-iOS11上开启之后-在低版本-怎么处理"><a href="#实践案例1-safeArea-在-iOS11上开启之后-在低版本-怎么处理" class="headerlink" title="实践案例1:safeArea 在 iOS11上开启之后 在低版本 怎么处理?"></a>实践案例1:safeArea 在 iOS11上开启之后 在低版本 怎么处理?</h4><blockquote>
-<p>经过测试 在<code>iOS9</code>之前就是用不了<code>safeArea</code>必须<code>iOS9 or later</code><br>如果兼容 iOS 8.0的建议去掉<code>safeArea</code>否则报错</p>
-</blockquote>
-<p>解决的方式:参考我们的短视频适配 使用一个背景 View 来做支撑并且使它的 edge 边缘处于<code>safeArea</code>范围内并使用如下代码做 iOS11前的安全区</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> ( <span class="built_in">NS_AVAILABEL</span>(iOS <span class="number">11.0</span>)) &#123;</div><div class="line">	<span class="comment">//iOS11 支持安全区域范围</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//iOS11之前不支持安全区范围</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="实践案例1-Masonryedge-不能等于-safeAreaGuide"><a href="#实践案例1-Masonryedge-不能等于-safeAreaGuide" class="headerlink" title="实践案例1:Masonryedge 不能等于 safeAreaGuide?"></a>实践案例1:<code>Masonry</code>edge 不能等于 safeAreaGuide?</h4><p>因为我们的代码基本都是 xib 拖拽控件，使用 masonry 自动布局</p>
-<p>如果对一个 view 让它的上、左、下、右 4个边缘等于父视图的话我们经常写下面 代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.xxxView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.edges.equalTo(<span class="keyword">self</span>.view);</div><div class="line">   &#125;];</div></pre></td></tr></table></figure>
-<p>但是为支持 safeArea,<code>Masonry</code>库提供了<code>safeAreaGuide</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">[<span class="keyword">self</span>.safeAreaView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">       make.edges.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuide);</div><div class="line">  	 &#125;];</div></pre></td></tr></table></figure>
-<p>但是经过我验证 这样写会触发<code>Masonry</code>库 bug 导致 crash</p>
-<p>看下边的例子:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement</span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.right.bottom.equalTo(<span class="keyword">self</span>.view);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>但我要是改成 iOS11</p>
-<p>这个写法就会不支持  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement  </span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.right.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuide);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>必须改成 </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement</span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideLeft);</div><div class="line">    make.right.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideRight);</div><div class="line">    make.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideBottom);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<blockquote>
-<p>正确写法</p>
-</blockquote>
-<p>我也不知道到底是这个库的作者没搞明白为啥费劲挨个上下左右都这么搞，还是他喜欢这样写冗余代码,总之现在这种搞法是最正确的.</p>
-<blockquote>
-<p>这个已经给 Masonry 库提了 issue 近期应该会修复</p>
-</blockquote>
-<h4 id="实践案例3-安全区域-safeArea-的坐标-frame"><a href="#实践案例3-安全区域-safeArea-的坐标-frame" class="headerlink" title="实践案例3: 安全区域 safeArea 的坐标(frame)"></a>实践案例3: 安全区域 safeArea 的坐标(frame)</h4><p>如果有一种需求需要计算 iPhone 的 安全区域 范围 宽高等于多少？如下代码可以得到正确的 范围</p>
-<p><code>@available(iOS 11.0, *)</code></p>
-<p><code>NSString * safeAreaRect = NSStringFromCGRect(self.view.safeAreaLayoutGuide.layoutFrame);</code></p>
-<blockquote>
-<p>下面代码请在 ViewController 里面测试</p>
-</blockquote>
-<p>我测试了 安全局frame 区别</p>
-<ul>
-<li>iPhone X 安全区 (0, 44, 375, 734).</li>
-<li>iPhone 6s 安全区 (0, 0, 375, 667).</li>
-</ul>
-<blockquote>
-<p>高了 734 - 667 = 67 </p>
-</blockquote>
-<p>如果是视频录制 会导致视频比例不对</p>
-<p>解决办法: 推荐 安全区顶部到底部 高度的宽度比值 等于标准的 3:4 或者 9:16</p>
-<h4 id="实践案例4-适配-iPhone-X常用的宏"><a href="#实践案例4-适配-iPhone-X常用的宏" class="headerlink" title="实践案例4: 适配 iPhone X常用的宏"></a>实践案例4: 适配 iPhone X常用的宏</h4><p>其实我个人不推荐用宏 鉴于它短时间内 能解决问题 我不得不列举一些</p>
-<p>先看问题</p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1a49j20yg05u0tp.jpg" alt="状态栏白色"><br><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd18zlj20np06sq3w.jpg" alt="导航栏太紧"></p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1ipxj20od0ae40k.jpg" alt="适配完"></p>
-<p>出现这种问题是由于</p>
-<blockquote>
-<p>iOS 11上面废除了scrollView的<code>automaticallyAdjustsScrollViewInsets</code>这个属性的使用.使用UIScrollView’s <code>contentInsetAdjustmentBehavior</code>来替代，<a href="https://www.lee1994.com/guan-yu-iphone/" target="_blank" rel="external">详细介绍</a></p>
-</blockquote>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">    <span class="keyword">self</span>.collectionView.contentInsetAdjustmentBehavior = <span class="built_in">UIApplicationBackgroundFetchIntervalNever</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">self</span>.automaticallyAdjustsScrollViewInsets = <span class="literal">false</span>;</div><div class="line">    <span class="comment">// Fallback on earlier versions</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>为了省事 可以使用这个宏</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#define AdjustsScrollViewInsetNever(controller,view) if(@available(iOS 11.0, *)) &#123;view.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;&#125; else if([controller isKindOfClass:[UIViewController class]]) &#123;controller.automaticallyAdjustsScrollViewInsets = false;&#125;</span></div></pre></td></tr></table></figure>
-<p>高度系数宏 812.0 是iPhoneX的高度尺寸</p>
-<pre><code class="objc"><span class="meta">#define kHeightCoefficient (kScreenHeight == 812.0 ? 667.0/667.0 : kScreenHeight/667.0)</span>
-</code></pre>
-<p>好 适配到此为止.</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>上述是测试短视频 SDK 开发过程中适配 iPhone X 的 一些 case,由于偏于多媒体方向,并不涉及到例如 网络层 如果适配 iPhone X等一些短视频开发过程中并没有遇到的特定问题,可能还有一些遗漏部分,如果发现我会及时更新.</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论一个优雅的模态转场的自我修养</title>
-    <link href="https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/"/>
-    <id>https://www.sunyazhou.com/2017/10/31/20171031Elegant-present-transition/</id>
-    <published>2017-10-31T03:32:17.000Z</published>
-    <updated>2017-10-31T12:55:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="external">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
-<blockquote>
-<p>swift 点这里下载<a href="https://koenig-media.raywenderlich.com/uploads/2016/08/Medal_Count_Completed.zip" target="_blank" rel="external">demo</a><br>Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPresentation" target="_blank" rel="external">demo</a></p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fd8747d4c220c683f587db45126037b080e5c380/20171031Elegant-present-transition/Elegant-present-transition.gif" alt=""></p>
-<h3 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h3><p>转场对目前的 iOS 来讲已经不能再熟悉了 但想找个靠谱点的带遮盖的转场 没找到几个靠谱的</p>
-<p>不是这个问题不行就那个问题不能满足 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171031Elegant-present-transition/demo1.png" alt=""></p>
-<p>根据<code>Raywenderrich</code>的教程 我翻译成了 OC 版本 并加了一些小改动 </p>
-<h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h3><ul>
-<li>导入头文件</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"SlideInPresentationManager.h"</span></span></div></pre></td></tr></table></figure>
-<ul>
-<li>声明属性</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SlideInPresentationManager *slideInTransitioningDelegate;</div></pre></td></tr></table></figure>
-<ul>
-<li>弹出模态控制器的时候如下代码</li>
-</ul>
-<pre><code class="objc">- (<span class="keyword">IBAction</span>)presentAction:(<span class="built_in">UIButton</span> *)sender {
-    PresentationDirection direction;
-    <span class="keyword">if</span> (sender.tag == <span class="number">100</span>) {
-        <span class="built_in">NSLog</span>(<span class="string">@"左侧弹出模态转场"</span>);
-        direction = PresentationDirectionLeft;
-    } <span class="keyword">else</span> <span class="keyword">if</span> (sender.tag == <span class="number">101</span>) {
-        <span class="built_in">NSLog</span>(<span class="string">@"上弹出模态转场"</span>);
-        direction = PresentationDirectionTop;
-    } <span class="keyword">else</span> <span class="keyword">if</span> (sender.tag == <span class="number">102</span>) {
-        <span class="built_in">NSLog</span>(<span class="string">@"右弹出模态转场"</span>);
-        direction = PresentationDirectionRight;
-    } <span class="keyword">else</span> {
-        <span class="built_in">NSLog</span>(<span class="string">@"下弹出模态转场"</span>);
-        direction = PresentationDirectionBottom;
-    }
-
-    <span class="keyword">self</span>.slideInTransitioningDelegate = <span class="literal">nil</span>;
-    <span class="comment">//控制现实遮盖的视图转场(core 代码)</span>
-    <span class="keyword">self</span>.slideInTransitioningDelegate = [[SlideInPresentationManager alloc] init];
-    <span class="keyword">self</span>.slideInTransitioningDelegate.direction = direction;
-    <span class="keyword">self</span>.slideInTransitioningDelegate.disableCompactHeight = <span class="literal">NO</span>;
-    <span class="keyword">self</span>.slideInTransitioningDelegate.sliderRate = <span class="number">1.0</span>/<span class="number">3.0</span>;
-
-    <span class="comment">//创建控制器实例</span>
-    PresentController *presentVC = [[PresentController alloc] initWithNibName:<span class="string">@"PresentController"</span> bundle:[<span class="built_in">NSBundle</span> mainBundle]];
-    presentVC.transitioningDelegate = <span class="keyword">self</span>.slideInTransitioningDelegate;
-    presentVC.modalPresentationStyle = <span class="built_in">UIModalPresentationCustom</span>;
-    [<span class="keyword">self</span> presentViewController:presentVC animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];
-}
-</code></pre>
-<p>剩下的就可以愉快的玩耍了 </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考&lt;a href=&quot;https://www.ray
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>markdown嵌入折叠标签</title>
-    <link href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/"/>
-    <id>https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/</id>
-    <published>2017-10-25T08:10:35.000Z</published>
-    <updated>2017-10-31T12:55:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="external">喵神发表了一篇博文 关于 Swift Error 的分类</a>  </p>
-</blockquote>
-<p>每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.</p>
-<p>当我仔细看喵神博客的时候发现 原来<code>markdown</code>支持很多<code>html</code>标签的小技巧</p>
-<p>比如:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_skill1.gif" alt="喵神文章中的"></p>
-<p>第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_question.png" alt="与喵神对话"></p>
-<p><a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="external">简单的 summary tag 而已..</a></p>
-<p>于是我测试了一下代码</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>点击时的区域标题<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> - 测试 测试测试<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> 测试二 测试三 。。。。。 .<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>下面我们来玩一下试试</p>
-<details><br>  <summary>这是孙先生的博客 点击查看更多内容.</summary><br>  <p> 666666 昨天程序员节 是不是被 PM 虐了 QA 提个很多 bug 不想 fix.</p><br>  <p> 昨天一不小心驾照考下来了 耗时2个月 快不快。。。。.</p><br></details>
-
-
-
-<p>OK 上边就是我们用到的几行代码 很简单直接嵌入 markdown 编辑器里面就马上出效果</p>
-<p>感谢<a href="https://onevcat.com/" target="_blank" rel="external">喵神的指导</a></p>
-<p>更多标签相关 可参考<a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="external">w3schools</a></p>
-<p>全文完 </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时&lt;a href=&quot;https://onevcat.com/
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="技巧" scheme="https://www.sunyazhou.com/tags/%E6%8A%80%E5%B7%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>理解UIView的绘制</title>
-    <link href="https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/"/>
-    <id>https://www.sunyazhou.com/2017/10/16/20171016UIView-Rendering/</id>
-    <published>2017-10-16T05:00:30.000Z</published>
-    <updated>2017-11-25T08:21:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
-<h3 id="理解-UIView-的绘制-UIView-是如何显示到-Screen-上的"><a href="#理解-UIView-的绘制-UIView-是如何显示到-Screen-上的" class="headerlink" title="理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?"></a>理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?</h3><p>首先要从<code>Runloop</code>开始说,iOS 的<code>MainRunloop</code> 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:</p>
-<ul>
-<li><code>view</code>的缓冲区创建</li>
-<li><code>view</code>内容的绘制(如果重写了 drawRect)  </li>
-</ul>
-<p>这些 <code>CPU</code>的工作.</p>
-<p>然后将这个缓冲区交给<code>GPU</code>渲染, 这个过程又包含:</p>
-<ul>
-<li>多个<code>view</code>的拼接(compositing)</li>
-<li>纹理的渲染(Texture)等.</li>
-</ul>
-<p>最终现实在屏幕上.因此,如果在16.7ms 内完不成这些操作, eg: CPU做了太多的工作, 或者<code>view</code>层次过于多,图片过于大,导致<code>GPU</code>压力太大,就会导致”卡”的现象,也就是 <strong>丢帧</strong>,<strong>掉帧</strong>.</p>
-<p>苹果官方给出的最佳帧率是:<strong>60fps</strong>(60Hz),也就是一帧不丢, 当然这是理想中的绝佳体验.</p>
-<h3 id="这个60fps该怎么理解呢？"><a href="#这个60fps该怎么理解呢？" class="headerlink" title="这个60fps该怎么理解呢？"></a>这个<code>60fps</code>该怎么理解呢？</h3><p>一般来说如果帧率达到 <code>25+fps</code>(fps &gt;= 25帧以上,不是25加别看错),人眼就基本感觉不到卡顿了,因此,如果你能让你的 iOS 程序<strong>稳定</strong>保持在<code>30fps</code>已经很不错了, 注释,是”稳定”在30fps,而不是, <code>10fps</code>,<code>40fps</code>,<code>20fps</code>这样的跳动,如果帧频不稳就会有卡的感觉,<code>60fps</code>真的很难达到, 尤其是在 iPhone 4/4s等 32bit 位机上,不过现在苹果已经全面放弃32位,支持最低64位会好很多.</p>
-<p>总的来说, UIView从绘制到Render的过程有如下几步：</p>
-<ul>
-<li>每一个<code>UIView</code>都有一个<code>layer</code></li>
-<li>每一个<code>layer</code>都有个<code>content</code>,这个<code>content</code>指向的是一块缓存,叫做<strong><code>backing store</code></strong>.  </li>
-</ul>
-<p><code>UIView</code>的绘制和渲染是两个过程:</p>
-<ul>
-<li>当<code>UIView</code>被绘制时,CPU执行<code>drawRect</code>，通过<code>context</code>将数据写入<strong><code>backing store</code></strong>  </li>
-<li>当<strong><code>backing store</code></strong>写完后，通过render server交给GPU去渲染，将backing store中的bitmap数据显示在屏幕上.</li>
-</ul>
-<p>上面提到的从<code>CPU</code>到<code>GPU</code>的过程可用下图表示:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CPU_to_GPU.001.png" alt=""></p>
-<p>下面具体来讨论下这个过程</p>
-<ul>
-<li>CPU bound:</li>
-</ul>
-<p>假设我们创建一个 UILabel</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UILabel</span>* label = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">50</span>, <span class="number">300</span>, <span class="number">14</span>)];</div><div class="line">label.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">label.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>f];</div><div class="line">label.text = <span class="string">@"test"</span>;</div><div class="line">[<span class="keyword">self</span>.view addSubview:label];</div></pre></td></tr></table></figure>
-<p>这个时候不会发生任何操作, 由于 UILabel 重写了<code>drawRect</code>方法,因此,这个 <code>View</code>会被 <code>marked as &quot;dirty&quot;</code>:</p>
-<p>类似这个样子:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/179212e7ed967e07c602dbe7eef101c4c5eb7b16/20171016UIView-Rendering/drawRect.png" alt=""></p>
-<p>然后一个新的<code>Runloop</code>到来，上面说道在这个<code>Runloop</code>中需要将界面渲染上去，对于<code>UIKit</code>的渲染，Apple用的是它的<code>Core Animation</code>。<br>做法是在Runloop开始的时候调用：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">CATransaction</span> begin]</div></pre></td></tr></table></figure>
-<p>在<code>Runloop</code>结束的时候调用  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">[<span class="built_in">CATransaction</span> commit]</div></pre></td></tr></table></figure>
-<p>在<code>begin</code>和<code>commit</code>之间做的事情是将<code>view</code>增加到<code>view hierarchy</code>中，这个时候也不会发生任何绘制的操作。<br>当<code>[CATransaction commit]</code>执行完后，<code>CPU</code>开始绘制这个<code>view</code>:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CATransaction_commit.png" alt="CPU绘制图"></p>
-<p>首先<code>CPU</code>会为<code>layer</code>分配一块内存用来绘制<code>bitmap</code>，叫做<strong><code>backing store</code></strong><br>创建指向这块<code>bitmap</code>缓冲区的指针，叫做<code>CGContextRef</code><br>通过<code>Core Graphic</code>的<code>api</code>，也叫<code>Quartz2D</code>，绘制<code>bitmap</code><br>将<code>layer</code>的<code>content</code>指向生成的<code>bitmap</code><br>清空<code>dirty flag</code>标记<br>这样<code>CPU</code>的绘制基本上就完成了.<br>通过<code>time profiler</code>可以完整的看到个过程：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"></div><div class="line">Running Time Self Symbol Name</div><div class="line">2.0ms 1.2% 0.0 +[CATransaction flush]</div><div class="line">2.0ms 1.2% 0.0 CA::Transaction::commit()</div><div class="line">2.0ms 1.2% 0.0 CA::Context::commit_transaction(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::layout_and_display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display()</div><div class="line">1.0ms 0.6% 0.0 -[CALayer _display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_()</div><div class="line">1.0ms 0.6% 0.0 CABackingStoreUpdate_</div><div class="line">1.0ms 0.6% 0.0 backing_callback(CGContext*, void*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer drawInContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UIView(CALayerDelegate) drawLayer:inContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawRect:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawTextInRect:]</div></pre></td></tr></table></figure>
-<p>假如某个时刻修改了<code>label</code>的<code>text</code>:  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.text = <span class="string">@"hello world"</span>;</div></pre></td></tr></table></figure>
-<p>由于内容变了,<code>layer</code>的<code>content</code>的<code>bitmap</code>的尺寸也要变化，因此这个时候当新的<code>Runloop</code>到来时，<code>CPU</code>要为<code>layer</code>重新创建一个<code>backing store</code>，重新绘制<code>bitmap</code>.<br><code>CPU</code>这一块最耗时的地方往往在<code>Core Graphic</code>的绘制上，关于<code>Core Graphic</code>的性能优化是另一个话题了，又会牵扯到很多东西，就不在这里讨论了.</p>
-<p>GPU bound：</p>
-<p><code>CPU</code>完成了它的任务：将<code>view</code>变成了<code>bitmap</code>，然后就是<code>GPU</code>的工作了，<code>GPU</code>处理的单位是<code>Texture</code>.<br>基本上我们控制<code>GPU</code>都是通过<code>OpenGL</code>来完成的，但是从<code>bitmap</code>到<code>Texture</code>之间需要一座桥梁，<code>Core Animation</code>正好充当了这个角色：<br><code>Core Animation</code>对<code>OpenGL</code>的<code>api</code>有一层封装，当我们要渲染的<code>layer</code>已经有了<code>bitmap content</code>的时候，这个<code>content</code>一般来说是一个<code>CGImageRef</code>，<code>CoreAnimation</code>会创建一个<code>OpenGL</code>的<code>Texture</code>并将<code>CGImageRef（bitmap）</code>和这个<code>Texture</code>绑定，通过<code>TextureID</code>来标识。<br>这个对应关系建立起来之后，剩下的任务就是<code>GPU</code>如何将<code>Texture</code>渲染到屏幕上了。<br><code>GPU</code>大致的工作模式如下：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8f92ec74bfc31508293f5a6cadcd68ac703eb1a0/20171016UIView-Rendering/GPU_work.png" alt=""></p>
-<p>整个过程也就是一件事：</p>
-<p><code>CPU</code>将准备好的<code>bitmap</code>放到<code>RAM</code>里，<code>GPU</code>去搬这快内存到<code>VRAM</code>中处理。<br>而这个过程<code>GPU</code>所能承受的极限大概在16.7ms完成一帧的处理，所以最开始提到的60fps其实就是GPU能处理的最高频率.<br>因此，<code>GPU</code>的挑战有两个：</p>
-<ul>
-<li>将数据从<code>RAM</code>搬到<code>VRAM</code>中</li>
-<li>将<code>Texture</code>渲染到屏幕上    </li>
-</ul>
-<p>这两个中瓶颈基本在第二点上。渲染<code>Texture</code>基本要处理这么几个问题：</p>
-<ul>
-<li>Compositing:</li>
-</ul>
-<p><code>Compositing</code>是指将多个纹理拼到一起的过程，对应<code>UIKit</code>，是指处理多个<code>view</code>合到一起的情况，如:  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.view addsubview : subview]。</div></pre></td></tr></table></figure>
-<p>如果<code>view</code>之间没有叠加，那么<code>GPU</code>只需要做普通渲染即可.<br>如果多个<code>view</code>之间有叠加部分，<code>GPU</code>需要做<code>blending</code>.  </p>
-<p>加入两个<code>view</code>大小相同，一个叠加在另一个上面，那么计算公式如下：</p>
-<p><code>R</code> = <code>S</code>+<code>D</code>*(<code>1</code>-<code>Sa</code>)  </p>
-<blockquote>
-<p><code>R</code>: 为最终的像素值<br><code>S</code>: 代表 上面的Texture（Top Texture）<br><code>D</code>: 代表下面的Texture(lower Texture)  </p>
-</blockquote>
-<p>其中<code>S</code>,<code>D</code>都已经<code>pre-multiplied</code>各自的<code>alpha</code>值。<br><code>Sa</code>代表<code>Texture</code>的<code>alpha</code>值。  </p>
-<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>1</code>，即不透明。那么它会遮住下层的<code>Texture</code>.<br>即,<code>R</code> = <code>S</code>。是合理的。  </p>
-<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>0.5</code>，<br><code>S</code>为<code>(1,0,0)</code>，乘以<code>alpha</code>后为<code>(0.5,0,0）</code>。<br><code>D</code>为<code>(0，0，1)</code>。<br>得到的<code>R</code>为<code>（0.5，0，0.5）</code>。  </p>
-<p>基本上每个像素点都需要这么计算一次。  </p>
-<p>因此，<code>view</code>的层级很复杂，或者<code>view</code>都是半透明的（<code>alpha</code>值不为<code>1</code>）都会带来<code>GPU</code>额外的计算工作。</p>
-<ul>
-<li>Size</li>
-</ul>
-<p>这个问题，主要是处理<code>image</code>带来的，假如内存里有一张<code>400x400</code>的图片，要放到<code>100x100</code>的<code>imageview</code>里，如果不做任何处理，直接丢进去，问题就大了，这意味着，<code>GPU</code>需要对大图进行缩放到小的区域显示，需要做像素点的<code>sampling</code>，这种<code>smapling</code>的代价很高，又需要兼顾<code>pixel alignment</code>。  计算量会飙升。  </p>
-<ul>
-<li>Offscreen Rendering And Mask</li>
-</ul>
-<p>如果我们对<code>layer</code>做这样的操作：  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div></pre></td></tr></table></figure>
-<p>会产生<code>offscreen rendering</code>,它带来的最大的问题是，当渲染这样的<code>layer</code>的时候，需要额外开辟内存，绘制好<code>radius，mask</code>，然后再将绘制好的<code>bitmap</code>重新赋值给<code>layer</code>。<br>因此继续性能的考虑，<code>Quartz</code>提供了优化的<code>api</code>：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div><div class="line">label.layer.shouldRasterize = <span class="literal">YES</span>;</div><div class="line">label.layer.rasterizationScale = label.layer.contentsScale;</div></pre></td></tr></table></figure>
-<p>简单的说，这是一种<code>cache</code>机制。<br>同样<code>GPU</code>的性能也可以通过<code>instrument</code>去衡量：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e3fad5583fdd4fd52b11a8fe44a9528b95f8ac1b/20171016UIView-Rendering/rendering_result.png" alt=""></p>
-<p>红色代表<code>GPU</code>需要做额外的工作来渲染<code>View</code>，绿色代表<code>GPU</code>无需做额外的工作来处理<code>bitmap</code>。</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   

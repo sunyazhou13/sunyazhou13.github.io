@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>使用NSAttributeString实现不同颜色大小显示 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="使用NSAttributeString实现不同颜色大小显示 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="使用NSAttributeString实现不同颜色大小显示 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-06-15T02:10:58.000Z" class="post-list__meta--date date">2018-06-15</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">使用NSAttributeString实现不同颜色大小显示</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近开发需求遇到一个比较简单但又棘手的问题.先看需求</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b20f325385e063624b16aa726df0077209327fb0/20180615NSAttributeString/NSAttributeString1.png" alt=""></p>
+<p>一个<code>UILabel</code>显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：</p>
+<p>必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串</p>
+<p>比如:  <code>2分14秒</code> or <code>2min14secs</code></p>
+<p>也就是给我们的是一个  <code>&quot;2分14秒&quot;</code>字符串 我们需要匹配range来修改或者替换. 带着这个疑问开始今天的文章?</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>孔圣贤有云:”举一隅不以三隅反，则不复也。”  </p>
+<blockquote>
+<p>出自《论语·第七章·述而篇》</p>
+</blockquote>
+<p>为了不愧对圣贤对我的期待我把 这个问题定位升级成 4个等级</p>
+<ul>
+<li>Level 1  最优解,时间复杂度最低,效率最高</li>
+<li>Level 2  非最优解,时间复杂度最低,效率高</li>
+<li>Level 3  都一般</li>
+<li>Level 4  简单粗暴</li>
+</ul>
+<p>我想到了以下至少两种方法</p>
+<ol>
+<li>通过计算出来的时间  eg: <code>分</code> <code>秒</code>   字符串 range去国际化处理完的字符串去匹配修改</li>
+<li>用正则匹配数字</li>
+<li>用谓词匹配数字</li>
+<li>level4太业余了不敢想向一个工作好几年的开发者还写出这么打脸的代码</li>
+</ol>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>在工程中拖拽了一个label</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"> </div><div class="line"> 	<span class="comment">//调用</span></div><div class="line">    <span class="built_in">NSAttributedString</span> *resultTime = [<span class="keyword">self</span> formattedCurrentTime:<span class="number">133</span>];</div><div class="line">    <span class="keyword">self</span>.label.attributedText = resultTime;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方案1-字符串range匹配"><a href="#方案1-字符串range匹配" class="headerlink" title="方案1: 字符串range匹配"></a>方案1: 字符串range匹配</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSRange</span> minRange, secRange;</div><div class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">        minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;</div><div class="line">    [attributeStr addAttributes:timeAttrs range:minRange];</div><div class="line">    [attributeStr addAttributes:timeAttrs range:secRange];    </div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看下显示结果</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18f973e4bf79ada776e8bbe9fb845a66375100d1/20180615NSAttributeString/first_arrtributestring.png" alt=""></p>
+<blockquote>
+<p>是不是看上去很好</p>
+</blockquote>
+<p>但我认为这并不完美,这种搞法虽然简单直接,但是过于依赖<code>minStr</code>和<code>secStr</code>的原始range,基于iOS9之后提供的API计算<code>range</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">    minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<em>API平台区分</em></p>
+</blockquote>
+<p>但是这么实现有个Bug 当遇到同样字符串的时候就会匹配错位, 如图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ce8515d36cdf420cbe900bc3e4e73c3cfbda7ef6/20180615NSAttributeString/%08NSAttributeString_bug.png" alt=""></p>
+<p>错误的原因显然大家都了解</p>
+<p>字符串 “0” 的range相同了,但就解决这个问题而言,简单判断一下range然后截取字符串向后跳跃length继续截取获取能实现,但这显然很啰嗦,万一有一天 你遇到的是 “<code>0小时0分12秒</code>“这种字符串那该如何写呢？</p>
+<p>是不是要递归的遍历一遍然后挨个取<code>Range</code> 做属性修改?</p>
+<p>这样的结果显然不但代码啰嗦 实现起来成本还是比较高的,对代码阅读性都有很大影响(写得好的代码除外哈). </p>
+<h5 id="那怎么不啰嗦呢"><a href="#那怎么不啰嗦呢" class="headerlink" title="那怎么不啰嗦呢?"></a>那怎么不啰嗦呢?</h5><p>有一种搞法就是 用两个不同的字符占位.然后 国际化完成之后取Range,再然后替换文字,搞法虽然low点,但是时间复杂度降低了不少,还是可以考虑的.代码我就不写了 我怕小伙伴review代码的时候会虐我.继续往下看</p>
+<p><strong>评级: Level 2</strong></p>
+<p>那如何不依赖range解决这种问题呢？</p>
+<h3 id="方案2-正则匹配"><a href="#方案2-正则匹配" class="headerlink" title="方案2: 正则匹配"></a>方案2: 正则匹配</h3><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;    </div><div class="line">    <span class="comment">/** 方案2 **/</span></div><div class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSRegularExpression</span> *reg = [<span class="built_in">NSRegularExpression</span> regularExpressionWithPattern:<span class="string">@"[0-9]+"</span> options:<span class="built_in">NSRegularExpressionCaseInsensitive</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="built_in">NSArray</span> *matches = [reg matchesInString:localizedFormatString options:<span class="built_in">NSMatchingReportCompletion</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, localizedFormatString.length)];</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSTextCheckingResult</span> *match <span class="keyword">in</span> matches) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; match.numberOfRanges; i++) &#123;</div><div class="line">                <span class="built_in">NSRange</span> range = [match rangeAtIndex:i];</div><div class="line">                <span class="keyword">if</span> (range.location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">                    [attributeStr addAttributes:timeAttrs range:range];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看下显示结果</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/85f7a4f8f09e10c1603968555d86a0128c98696f/20180615NSAttributeString/second_attributestring.png" alt=""></p>
+<p>完美实现</p>
+<blockquote>
+<p>这种方案缺点就是,时间复杂度高了一些,需要每次正则遍历<br>有点是扩展性好一点,万一有一天PM又提了需求要做成 <code>A1</code> <code>B2</code> <code>C3</code> <code>XXX#话题</code>这种，那一定会出坑</p>
+</blockquote>
+<p>但我第一次这么实现被小伙伴嘲笑很业余.确实很业余,但它能避免方案1中的bug.而且相当精确.</p>
+<p><strong>评级: Level 2</strong></p>
+<h3 id="方案3-谓词匹配"><a href="#方案3-谓词匹配" class="headerlink" title="方案3: 谓词匹配"></a>方案3: 谓词匹配</h3><p>这种搞法我没尝试,估计会比 方案1和方案2都快一些和简单直接一些,时间太紧张算了,期待评论轻喷吧！</p>
+<h3 id="方案4-简单粗暴"><a href="#方案4-简单粗暴" class="headerlink" title="方案4: 简单粗暴"></a>方案4: 简单粗暴</h3><p>就搞 4个label. 我都想象到了被实习生嘲讽+打脸的搞法发生在一个工作好几年开发者身上是多么惨痛的画面. 放弃这种low的搞法</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最终解决问题的方案还是方案2:正则匹配比较靠谱,而且一劳永逸</p>
+<p>本篇主要蛋疼的问题是 国际化后的字符串返回结果后,对返回的结果进行加工处理.</p>
+<p>没有做到Level 1级的做法很是遗憾,愧对圣贤. 希望小伙伴多提提建议.</p>
+<p><a href="https://github.com/sunyazhou13/NSAttributeStringDemo" target="_blank" rel="external">Demo</a>在这里找到</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>格式化时间的代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回时间格式 HH:mm:ss</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSString</span> *)formattedCurrentTime &#123;</div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)<span class="keyword">self</span>.recorder.currentTime;</div><div class="line">    <span class="built_in">NSInteger</span> hours = (time / <span class="number">3600</span>);</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *format = <span class="string">@"%02i:%02i:%02i"</span>;</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:format, hours, minutes, seconds];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/06/25/20180625FilterString/" title="Objective-C中使用正则去除非数字字母汉字">Objective-C中使用正则去除非数字字母汉字</a></h2>
+                <p class="excerpt">
+                
+                前言今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
+
+带着这个疑问开始今天的文章
+准备工作创建个demo 代码如下
+@interface ViewController ()@property (weak, nonatomic) IBOutlet UITextField *input;@p
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-06-25T10:35:17.000Z" class="post-list__meta--date date">2018-06-25</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/06/25/20180625FilterString/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/06/08/20180608Swift-Random2/" title="Swift4.2中的随机数">Swift4.2中的随机数</a></h2>
+                <p class="excerpt">
+                
+                
+前言在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学习.特此新发一篇新的随机数文章以彰其咎.
+开发环境
+Xcode10或者更高版本 
+Swift4
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-06-08T01:18:03.000Z" class="post-list__meta--date date">2018-06-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/06/08/20180608Swift-Random2/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>

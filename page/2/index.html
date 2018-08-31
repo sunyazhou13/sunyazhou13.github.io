@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="東引甌越 | 不断学习, 与时俱进.">
-    <meta name="twitter:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="東引甌越 | 不断学习, 与时俱进.">
-    <meta property="og:description" content="嗨，我是孙亚洲, 一个来自北国冰城的iOS&amp;macOS开发者,就职于百度,爱好书法。开发5年有余,没有为往圣续绝学深感惭愧，今2017年开始写博客, 望诸位同仁多多指教.">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
     <meta name="author" content="sunyazhou">
@@ -76,7 +76,7 @@
         <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,今2017年开始写博客.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -172,7 +172,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -182,6 +182,171 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/07/20180507AudioUnit/" title="link to post.title">AudioUnit</a></h2>
+      <p class="excerpt">
+    
+      
+前言声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果….
+今天带领大家深入了解和学习一下这些音效.
+实现iOS变声的背景声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声. 
+下图是AVAudioSession的工作流
+大家常用的变声方案有很多:
+
+FFMpeg提供内部效果器 eg:EQ均衡器  
+AVFoundation底层的Audio Unit eg: 混
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/07/20180507AudioUnit/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/04/02/20180402RunLoop/" title="link to post.title">深入理解RunLoop</a></h2>
+      <p class="excerpt">
+    
+      
+前言RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
+本文内容
+RunLoop 的概念
+RunLoop 与线程的关系
+RunLoop 对外的接口
+RunLoop 的 Mode
+RunLoop 的内部逻辑
+RunLoop 的底层实现
+苹果用 RunLoop 实现的功能
+Autore
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-04-02T06:16:34.000Z" class="post-list__meta--date date">2018-04-02</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/04/02/20180402RunLoop/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/14/20180314Swft4-Array-skills/" title="link to post.title">Swift 4 中的数组技巧</a></h2>
+      <p class="excerpt">
+    
+      前言年前买了本Swift 进阶(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错
+当我从头来学习数组的时候发现好多函数真的太有用了
+Swift 4.0 中的可变数组技巧我们可用 Xcode 创建playground 来进行练习
+首先创建个数组
+let array = NSMutableArray(array: [1, 2, 3, 4 , 5, 6])
+for in 循环遍历
+for x in arr
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-14T02:17:56.000Z" class="post-list__meta--date date">2018-03-14</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/14/20180314Swft4-Array-skills/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308What-is-the-dSYM/" title="link to post.title">什么是符号表?</a></h2>
+      <p class="excerpt">
+    
+      
+前言iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+什么是符号表？
+为什么要配置符号表？
+dSYM文件？
+
+什么是符号表？符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
+&amp;lt;起始地址&amp;gt; &amp;lt;结束地址&amp;gt; &amp;lt;函数&amp;gt; [&amp;lt;文件名&amp;gt;:&amp;lt;
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308What-is-the-dSYM/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="link to post.title">计算机图形渲染的流程</a></h2>
+      <p class="excerpt">
+    
+      
+前言今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
+计算机图形渲染的流程计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单解释了这一个流水线过程。计算机绘图需要一个输入绘图数据，这个数据可以是用户指定的，也可以是操作系统决定的，也可以是混合的。这些数据是分组的。
+
+座标生成：当绘图数据送入座标生成系统后，流水线就会对其进
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/04/Learning-AV-Foundation-Playing-Video/" title="link to post.title">Learning AV Foundation(五)播放视频</a></h2>
+      <p class="excerpt">
+    
+      
+前言很久没有写Learning AV Foundation相关的文章了,言归正传本篇介绍一下简单的视频播放
+了解视频播放之前我们来看戏AVPlayer需要的一些组件模型
+
+AVPlayerAVPlayer是一个用来播放基于基于时间的视听媒体的控制对象,支持播放:
+
+本地 媒体文件
+异步下载 媒体文件
+HTTP Live Streaming协议的流媒体 文件
+
+AVPlayer 是个 逻辑层组件
+(应用可以分为如下几层)
+
+UI层业务逻辑层持久层+网络层  
+
+如果播放MP3或AAC等音频文件,
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-04T08:56:06.000Z" class="post-list__meta--date date">2018-03-04</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/04/Learning-AV-Foundation-Playing-Video/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/02/04/20180204Word-Embeding/" title="link to post.title">NLP分词WordEmbeding</a></h2>
+      <p class="excerpt">
+    
+      
+前言学习过程中记录一下python代码
+#!/usr/bin/env python# coding:utf8import sysreload(sys)sys.setdefaultencoding(&#39;utf8&#39;)# 加载包from gensim.models import Word2Vecfrom gensim.models.word2vec import LineSentence# 训练模型# sentences = LineSentence(&#39;wiki.zh.word.text&#39;)# siz
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-02-04T04:24:30.000Z" class="post-list__meta--date date">2018-02-04</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/python开发/">python开发</a>
+
+</span><a class="btn-border-small" href="/2018/02/04/20180204Word-Embeding/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -265,177 +430,6 @@ Web环境: Apache、N
   <a class="tag-link" href="/tags/生活/">生活</a>
 
 </span><a class="btn-border-small" href="/2017/12/31/20171230Final-Summary/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/27/20171227markdown-audio/" title="link to post.title">Markdown中插入音频文件</a></h2>
-      <p class="excerpt">
-    
-      前言喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.
-markdown插入音乐markdown其实就是 一种html的转换语法,其实内部也同时支持直接写html标签, 如果不了解各种标签请点击w3cschool查看各种 API 的用法,此时要用到的标签为iframe，代码如下所示，其中
-
-div用于控制格式，若无则默认为居左
-frameborder用于规定是否显示框架周围的边框，1为是，0为否
-marginwidth及margi
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-27T04:04:07.000Z" class="post-list__meta--date date">2017-12-27</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/27/20171227markdown-audio/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/19/20171219AudioPan/" title="link to post.title">音频声像Pan值电平左右声道平衡</a></h2>
-      <p class="excerpt">
-    
-      
-前言最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
-开篇最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.下面是 UI 演示.
-
-这里其实修改的类似 AVAudioPlayer里面的pan值修改
-
-我在以前的文章也有一篇提到过这个pan 值
-可能大家不理解为啥 这个 API 起名叫pan
-在声学领域这个东西有专门的名字叫 声像.
-这篇文章介绍了一些我们对声学知识的简单介绍,虽然不知道作者
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-19T03:40:13.000Z" class="post-list__meta--date date">2017-12-19</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/19/20171219AudioPan/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/15/20171215cell-add-kvo/" title="link to post.title">UICollectionViewCell添加KVO</a></h2>
-      <p class="excerpt">
-    
-      
-前言都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是如何正确的给一个UICollectionViewCell添加KVO监听.
-开篇由于目前在开发短视频相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式开发代码,比如最低级的MVC模式,最直白的Objective-C(老实说我都烦透了 OC 这种超级长看着都难受的编程语言,早想用 swift 来玩一把了),所以在开发的技术选型和代码编写过程中都是达到小白
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-15T09:05:10.000Z" class="post-list__meta--date date">2017-12-15</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/15/20171215cell-add-kvo/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/11/03/20171103iPhone-X-Adaptor/" title="link to post.title">适配iPhone X</a></h2>
-      <p class="excerpt">
-    
-      
-前言最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,相信拿到 iPhone X的感觉是下面这样的:
-
-本篇主要内容分为:
-
-iPhone X尺寸参数
-UI适配
-极端情况处理
-实践案例
-总结
-
-1.iPhone X尺寸参数1.1 首先 来围观一下模拟器的 iPhone X的外观
-下面这点先记住这很重要:格式UIEdgeInsetsMake(上, 左,下,右);  
-
-iPhone X竖屏时:占满整个屏幕的控制器的view的safeAreaInsets是（44，0，3
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-11-03T03:44:44.000Z" class="post-list__meta--date date">2017-11-03</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/11/03/20171103iPhone-X-Adaptor/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031Elegant-present-transition/" title="link to post.title">论一个优雅的模态转场的自我修养</a></h2>
-      <p class="excerpt">
-    
-      前言在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
-
-swift 点这里下载demoObjective-C 点击这里直达demo
-
-
-需求背景转场对目前的 iOS 来讲已经不能再熟悉了 但想找个靠谱点的带遮盖的转场 没找到几个靠谱的
-不是这个问题不行就那个问题不能满足 
-
-根据Raywenderrich的
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/10/31/20171031Elegant-present-transition/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/10/25/20171025markdown-skill/" title="link to post.title">markdown嵌入折叠标签</a></h2>
-      <p class="excerpt">
-    
-      前言
-这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时喵神发表了一篇博文 关于 Swift Error 的分类  
-
-每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.
-当我仔细看喵神博客的时候发现 原来markdown支持很多html标签的小技巧
-比如:
-
-第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神
-
-简单的 summary tag 而已..
-于是我测试了一下代码
-&amp;lt;details&amp;gt;  &amp;lt;su
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
-
-</span><a class="btn-border-small" href="/2017/10/25/20171025markdown-skill/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/10/16/20171016UIView-Rendering/" title="link to post.title">理解UIView的绘制</a></h2>
-      <p class="excerpt">
-    
-      
-前言最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
-理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:
-
-view的缓冲区创建
-view内容的绘制(如果重写了 drawRect)  
-
-这些 CPU的工作.
-然后将这个缓冲区交给GPU渲染, 这个过程又包含:
-
-多个view的拼接
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/10/16/20171016UIView-Rendering/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS中CPU线程调试高级技巧 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS中CPU线程调试高级技巧 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS中CPU线程调试高级技巧 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+
+    
+<script type="text/javascript">
+	var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?36adfbed8b30cd669f1457e388071878";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-08-17T09:19:23.000Z" class="post-list__meta--date date">2018-08-17</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">iOS中CPU线程调试高级技巧</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿…</p>
+<p>为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.</p>
+<h1 id="Talk-is-cheap-show-me-the-code"><a href="#Talk-is-cheap-show-me-the-code" class="headerlink" title="Talk is cheap show me the code"></a>Talk is cheap show me the code</h1><p>我们的实现思路是找到动态库的首地址调用从此入手用相关指令恢复</p>
+<h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><ul>
+<li>build setting中开启符号表</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6db967f376eddf5c04bda7db38be27b07f2d48bc/20180817CPU-thread-debug/enable_dysm.png" alt=""></p>
+<h2 id="1-导入头文件"><a href="#1-导入头文件" class="headerlink" title="1.导入头文件"></a>1.导入头文件</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p>这是mac os的可执行文件的动态链接库头文件 内部内建函数有几个我们需要用到</p>
+<h2 id="2-复制下面代码到你的相关调用的地方"><a href="#2-复制下面代码到你的相关调用的地方" class="headerlink" title="2.复制下面代码到你的相关调用的地方"></a>2.复制下面代码到你的相关调用的地方</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//1</span></div><div class="line">uint32_t count = _dyld_image_count();</div><div class="line">DDLogInfo(<span class="string">@"Dyld image count %d"</span>, count);</div><div class="line"><span class="comment">//2</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">    <span class="keyword">char</span> *image_name = (<span class="keyword">char</span> *)_dyld_get_image_name(i);</div><div class="line">    <span class="comment">//3</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> mach_header *mh = _dyld_get_image_header(i);</div><div class="line">    intptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);</div><div class="line">    <span class="comment">//4</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Image name %s at address 0x%llx and ASLR slide 0x%lx.\n"</span>,</div><div class="line">              image_name, (mach_vm_address_t)mh, vmaddr_slide);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我解释一下以上代码  </p>
+<ul>
+<li>1.拿出当前镜像数量  </li>
+<li>2.遍历镜像  </li>
+<li>3.获取镜像首地址  </li>
+<li>4.打印  </li>
+</ul>
+<p>然后运行你的程序</p>
+<p>然后看下控制台 过滤一下 ASLR我们log中的键入内容</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/consolo_debug.png" alt=""></p>
+<p>然后 点击 工程中的Product </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/products.png" alt=""></p>
+<p>右键 show in finder</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/product_dir.png" alt=""></p>
+<p>下一步骤 打开终端 cd 到这这个目录(可以打开终端 输入 cd 空格 拖拽那个文件夹)</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/dir_final.png" alt=""></p>
+<p>然后 <code>pwd</code>一下 看看</p>
+<h2 id="3-控制台搜索相关我们打印log的代码"><a href="#3-控制台搜索相关我们打印log的代码" class="headerlink" title="3.控制台搜索相关我们打印log的代码"></a>3.控制台搜索相关我们打印log的代码</h2><p>找到我们第一条首地址</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/536c82a196f36b0b4634d6825ee3e297d66e3830/20180817CPU-thread-debug/importent.png" alt=""></p>
+<blockquote>
+<p>注意:<strong>这一步非常重要 如果不好使,请重试几次.</strong></p>
+</blockquote>
+<h4 id="拿出main函数的首地址-ASLR中搜搜的-首地址然后复制-回到终端中输入"><a href="#拿出main函数的首地址-ASLR中搜搜的-首地址然后复制-回到终端中输入" class="headerlink" title="拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 回到终端中输入"></a>拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 <strong>回到终端中输入</strong></h4><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif -l  0x1006b8000</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<strong>这里是符号表路径</strong>,如果不知道在哪里找到请google一下.</p>
+</blockquote>
+<p>我们来测试一下 好不好使</p>
+<p>首先在控制台顶部的面板点击</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/breakpoint1.png" alt=""></p>
+<p>然后 在 consolo中输入 <code>bt</code> </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main.png" alt=""></p>
+<p>如果看到 如下内容说明已经成功.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main_result.png" alt=""></p>
+<h2 id="4-真机运行-找出未知线程"><a href="#4-真机运行-找出未知线程" class="headerlink" title="4.真机运行 找出未知线程"></a>4.真机运行 找出未知线程</h2><p>首先点击Xcode工程中的Profile运行<code>instruments</code>,我这里是运行工程之后 Xcode9.4可以无缝转换到<code>instruments</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments0.png" alt=""></p>
+<p>我们找到相关线程 没有名称也不知道对象叫什么 就一个十六进制地址</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments2.png" alt=""></p>
+<p>我们随便找个地址 在终端中输入 </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments3.png" alt=""></p>
+<p>好了 如果有问题 请删除product和符号表重新编译</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>CPU调试的过程非常麻烦,而且中间过程的代码多数都是C++的调用,主要是线程消耗的开销,中有很多收获希望大家多多指教.</p>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/08/13/20180813TapticEngineFeedback/" title="Taptic Engine振动反馈">Taptic Engine振动反馈</a></h2>
+                <p class="excerpt">
+                
+                
+前言Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。
+Taptic Engine 振动模块为 Apple Watch 以及 
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-08-13T06:28:04.000Z" class="post-list__meta--date date">2018-08-13</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/08/13/20180813TapticEngineFeedback/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+       <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f7dcd94f5b16e7d7771d638fad2b14e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+    
+</body>
+</html>
