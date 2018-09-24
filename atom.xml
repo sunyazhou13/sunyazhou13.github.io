@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2018-09-02T04:20:37.405Z</updated>
+  <updated>2018-09-20T02:13:00.934Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,136 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>iOS扩大UIButton的点击的响应范围</title>
+    <link href="https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/"/>
+    <id>https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/</id>
+    <published>2018-09-20T01:40:06.000Z</published>
+    <updated>2018-09-20T02:13:00.934Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开发过程中经常遇到<code>UIButton</code>点击区域太小 又不想 改动按钮的大小.</p>
+<p>今天的文章和大家分享一下解决这种问题的代码</p>
+<h1 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h1><ul>
+<li>子类话UIButton 复写 它的<code>hitTest:</code>方法</li>
+<li>子类话UIButton 复写 point:inside:withEvent: 方法</li>
+</ul>
+<h2 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span><span class="params">(<span class="number">_</span> point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">	<span class="keyword">let</span> biggerButtonFrame = theButton.frame.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>) <span class="comment">// 1	</span></div><div class="line">	<span class="keyword">if</span> biggerButtonFrame.<span class="built_in">contains</span>(point) &#123; <span class="comment">// 2</span></div><div class="line">		<span class="keyword">return</span> theButton <span class="comment">// 3</span></div><div class="line">	&#125;		</div><div class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.hitTest(point, with: event) <span class="comment">// 4</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><ol>
+<li>让theButton的 x 扩大 30, y 扩大 30 (正数为缩小 负数为放大. 然后宽高 分别是2 <em> 30和 2 </em> 30)</li>
+</ol>
+</li>
+<li><ol>
+<li>判断点击的位置是否在放大完的frame内.</li>
+</ol>
+</li>
+<li><ol>
+<li>如果是 就返回button</li>
+</ol>
+</li>
+<li><ol>
+<li>不是的话让事件继续传递</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>注意:<em>这里没判断 theButton.alpha == 0 和 theButton.userInterface.. ==  YES 还有它是否可见之类的,请自行判断</em></p>
+</blockquote>
+<h2 id="第二种方式"><a href="#第二种方式" class="headerlink" title="第二种方式"></a>第二种方式</h2><p>复写UIView的point:方法</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">point</span><span class="params">(inside point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">	<span class="keyword">let</span> biggerFrame = bounds.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> biggerFrame.<span class="built_in">contains</span>(point)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OC的版本是这样</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">	<span class="comment">//这里写上 </span></div><div class="line">	</div><div class="line">	<span class="built_in">CGRectInset</span>(&lt;<span class="meta">#CGRect rect#&gt;, <span class="meta-string">&lt;#CGFloat dx#&gt;</span>, <span class="meta-string">&lt;#CGFloat dy#&gt;</span>)</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是 第二种方式 其实 是 hitTest:方法调用之前UIView的判断,它判断当前点击的point是否在这个UIView上.</p>
+<p>不过 还是推荐第一种方式</p>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><p>其实 最核心的代码是</p>
+<p>CGRectInset(&lt;#CGRect rect#&gt;, &lt;#CGFloat dx#&gt;, &lt;#CGFloat dy#&gt;)</p>
+<blockquote>
+<p>CGRect CGRectOffset(CGRect rect, CGFloat dx, CGFloat dy)是以rect为中心，根据dx和dy来实现缩小。</p>
+</blockquote>
+<p>如果dx 和 dy是负数 则放大 ,正数则缩小</p>
+<p>但是大家可能很疑惑 那宽度和高度怎么 缩小放大</p>
+<p>首先: 我们明确 这个API的含义 只要传入正数 它就缩放 那么 宽高也会适当前传入的dx和dy来决定 缩放比</p>
+<p>因为是中心点缩放 所以宽高 <strong>要 X 2</strong>,因为有两侧嘛,左侧缩小30右侧也需要缩小30,上部和底部是一样的.</p>
+<p>大家可自行查阅google看下</p>
+<p><a href="https://rolandleth.com/increasing-the-tap-area-of-a-uibutton" target="_blank" rel="external">参考Increasing the tap area of a UIButton</a><br><a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="external">参考 iOS触摸事件全家桶</a></p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;开发过程中经常遇到&lt;code&gt;UIButton&lt;/code&gt;点击区域太小 又不想 改动按钮的大小.&lt;/p&gt;
+&lt;p&gt;今天的文章和大家分享一下解
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS键盘动画细节</title>
+    <link href="https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/"/>
+    <id>https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/</id>
+    <published>2018-09-18T01:49:58.000Z</published>
+    <updated>2018-09-18T03:48:25.329Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918KeyboardAnimation/keyboard1.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程</p>
+<p>上图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/23780124887263a4f9a87f094f061bbd564129c3/20180918KeyboardAnimation/keyboardAnimation.gif" alt=""></p>
+<h1 id="动画细节代码"><a href="#动画细节代码" class="headerlink" title="动画细节代码"></a>动画细节代码</h1><p>细节核心主要是通知中的一些key</p>
+<ul>
+<li>动画时长</li>
+<li>动画的出现方式</li>
+</ul>
+<p>…</p>
+<p>下面的通知是接收 键盘将要出现的通知<code>UIKeyboardWillShowNotification</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></div><div class="line">                                             selector:<span class="keyword">@selector</span>(didReceiveKeyboardShowNotification:)</div><div class="line">                                                 name:<span class="built_in">UIKeyboardWillShowNotification</span></div><div class="line">                                               object:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>然后是实现的核心代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didReceiveKeyboardShowNotification:(<span class="built_in">NSNotification</span> *)noti &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *userInfo = noti.userInfo;</div><div class="line">    <span class="built_in">NSTimeInterval</span> animationDuration;</div><div class="line">    <span class="built_in">UIViewAnimationCurve</span> animationCurve;</div><div class="line">    <span class="built_in">CGRect</span> keyboardFrame;</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] getValue:&amp;animationCurve];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] getValue:&amp;animationDuration];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] getValue:&amp;keyboardFrame];</div><div class="line">    </div><div class="line">    <span class="built_in">UIViewAnimationOptions</span> animationOptions = animationCurve &lt;&lt; <span class="number">16</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.bottomConstrains.offset = -<span class="built_in">CGRectGetHeight</span>(keyboardFrame);</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:animationDuration delay:<span class="number">0.</span> options:animationOptions animations:^&#123;</div><div class="line">        [<span class="keyword">self</span>.view setNeedsUpdateConstraints];</div><div class="line">        [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>self.bottomConstrains.offset = -CGRectGetHeight(keyboardFrame); 是我写的约束 详细请参考demo</p>
+</blockquote>
+<p>键盘消失也是一样的 <code>UIKeyboardWillHideNotification</code> 接收这个key</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></div><div class="line">                                             selector:<span class="keyword">@selector</span>(didReceiveKeyboardHideNotification:)</div><div class="line">                                                 name:<span class="built_in">UIKeyboardWillHideNotification</span></div><div class="line">                                               object:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>消失的时候 把约束偏移量设置<code>0</code>即可</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didReceiveKeyboardHideNotification:(<span class="built_in">NSNotification</span> *)noti &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *userInfo = noti.userInfo;</div><div class="line">    <span class="built_in">NSTimeInterval</span> animationDuration;</div><div class="line">    <span class="built_in">UIViewAnimationCurve</span> animationCurve;</div><div class="line">    <span class="built_in">CGRect</span> keyboardFrame;</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] getValue:&amp;animationCurve];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] getValue:&amp;animationDuration];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] getValue:&amp;keyboardFrame];</div><div class="line">    </div><div class="line">    <span class="built_in">UIViewAnimationOptions</span> animationOptions = animationCurve &lt;&lt; <span class="number">16</span>;</div><div class="line">    <span class="keyword">self</span>.bottomConstrains.offset = <span class="number">0</span>;</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:animationDuration delay:<span class="number">0.</span> options:animationOptions animations:^&#123;</div><div class="line">        [<span class="keyword">self</span>.view setNeedsUpdateConstraints];</div><div class="line">        [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>self.bottomConstrains.offset = 0; //设置偏移量会原来位置</p>
+</blockquote>
+<p>利用Masonry做的动画</p>
+<p>最后 别忘记移除通知</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>键盘弹出这个微小的细节 很容易被大家忽视,写这篇文章是为了记录知识和技巧,希望各位多多指教</p>
+<p><a href="https://github.com/sunyazhou13/KeyboardAnimation" target="_blank" rel="external">Demo点击这里下载</a></p>
+<p>全文完</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918Key
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>船与灯塔</title>
     <link href="https://www.sunyazhou.com/2018/09/02/20180902Beacon/"/>
     <id>https://www.sunyazhou.com/2018/09/02/20180902Beacon/</id>
     <published>2018-09-02T04:12:51.000Z</published>
-    <updated>2018-09-02T04:20:37.405Z</updated>
+    <updated>2018-09-18T01:46:43.660Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180902Beacon/beacon.jpg" alt=""></p>
 <p>荷兰🇳🇱被称为”海上马车夫”，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。</p>
@@ -61,7 +186,7 @@
     <link href="https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/"/>
     <id>https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/</id>
     <published>2018-08-17T09:19:23.000Z</published>
-    <updated>2018-08-31T00:29:32.840Z</updated>
+    <updated>2018-08-17T11:14:59.642Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿…</p>
 <p>为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.</p>
@@ -138,7 +263,7 @@
     <link href="https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/"/>
     <id>https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/</id>
     <published>2018-08-13T06:28:04.000Z</published>
-    <updated>2018-08-31T00:29:32.839Z</updated>
+    <updated>2018-08-13T07:34:57.192Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813TapticEngineFeedback/taptic_engine.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。</p>
@@ -232,7 +357,7 @@
     <link href="https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/"/>
     <id>https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/</id>
     <published>2018-07-23T10:22:05.000Z</published>
-    <updated>2018-08-04T06:34:54.028Z</updated>
+    <updated>2018-07-25T03:15:08.313Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif" alt=""></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIView</span> *)containerBackgroundView &#123;</div><div class="line">    <span class="keyword">if</span> (!_containerBackgroundView) &#123;</div><div class="line">        <span class="built_in">UIToolbar</span> *toolBar = [[<span class="built_in">UIToolbar</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">        toolBar.barStyle = <span class="built_in">UIBarStyleBlack</span>;</div><div class="line">        toolBar.clipsToBounds = <span class="literal">YES</span>;</div><div class="line">        _containerBackgroundView = toolBar;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _containerBackgroundView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -279,7 +404,7 @@
     <link href="https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/"/>
     <id>https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/</id>
     <published>2018-07-18T01:29:39.000Z</published>
-    <updated>2018-08-04T06:34:54.028Z</updated>
+    <updated>2018-07-18T01:46:46.024Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png" alt=""></p>
 <h1 id="bash及其特性"><a href="#bash及其特性" class="headerlink" title="bash及其特性"></a>bash及其特性</h1><ul>
@@ -425,7 +550,7 @@
     <link href="https://www.sunyazhou.com/2018/06/25/20180625FilterString/"/>
     <id>https://www.sunyazhou.com/2018/06/25/20180625FilterString/</id>
     <published>2018-06-25T10:35:17.000Z</published>
-    <updated>2018-06-26T13:48:16.801Z</updated>
+    <updated>2018-06-25T10:55:19.466Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0c00202bcba36a3821f799a16e006f467c33a9fc/20180625FilterString/RegularExpressDemo.gif" alt=""></p>
@@ -478,7 +603,7 @@
     <link href="https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/"/>
     <id>https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/</id>
     <published>2018-06-15T02:10:58.000Z</published>
-    <updated>2018-06-17T08:28:16.706Z</updated>
+    <updated>2018-06-16T02:06:53.940Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近开发需求遇到一个比较简单但又棘手的问题.先看需求</p>
@@ -567,7 +692,7 @@
     <link href="https://www.sunyazhou.com/2018/06/08/20180608Swift-Random2/"/>
     <id>https://www.sunyazhou.com/2018/06/08/20180608Swift-Random2/</id>
     <published>2018-06-08T01:18:03.000Z</published>
-    <updated>2018-06-17T08:28:16.706Z</updated>
+    <updated>2018-06-08T06:19:16.306Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dac725ebc1b0f7a6a6c99265f76153b5bfb6d09d/20180608Swift-Random2/whatisnewinswift.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学习.特此新发一篇新的随机数文章以彰其咎.</p>
@@ -655,7 +780,7 @@
     <link href="https://www.sunyazhou.com/2018/06/01/20180601Random/"/>
     <id>https://www.sunyazhou.com/2018/06/01/20180601Random/</id>
     <published>2018-06-01T09:30:56.000Z</published>
-    <updated>2018-06-02T02:27:26.213Z</updated>
+    <updated>2018-06-01T12:02:57.245Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d91bef0915eb510aeb874e05ccf21df897d2d03d/20180601Random/powered-by-Swift-random-numbers.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天儿童节,写一篇<code>随机数</code>技术文章纪念<code>留守儿童(资深)</code>的童年.</p>
@@ -727,7 +852,7 @@
     <link href="https://www.sunyazhou.com/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/"/>
     <id>https://www.sunyazhou.com/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/</id>
     <published>2018-05-15T01:58:00.000Z</published>
-    <updated>2018-05-26T04:12:27.329Z</updated>
+    <updated>2018-05-15T02:55:50.911Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/1f076ce5865fc9f8d5acf7f1d808c6da04972014/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/WX20180515-104917%402x.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。</p>
@@ -781,7 +906,7 @@
     <link href="https://www.sunyazhou.com/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/"/>
     <id>https://www.sunyazhou.com/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/</id>
     <published>2018-05-08T04:01:27.000Z</published>
-    <updated>2018-05-26T04:12:27.329Z</updated>
+    <updated>2018-05-08T06:29:41.861Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头条等.这篇文章回味一下古老的手动控制视图控制器的生命周期的API.</p>
 <h1 id="UIViewController"><a href="#UIViewController" class="headerlink" title="UIViewController"></a>UIViewController</h1><p>我们在使用<code>addChildViewController:</code>的时候会遇到个问题.如何手动控制被添加控制器的生命周期.</p>
@@ -828,7 +953,7 @@
     <link href="https://www.sunyazhou.com/2018/05/07/20180507AudioUnit/"/>
     <id>https://www.sunyazhou.com/2018/05/07/20180507AudioUnit/</id>
     <published>2018-05-07T06:59:41.000Z</published>
-    <updated>2018-05-26T04:12:27.328Z</updated>
+    <updated>2018-05-10T02:34:43.626Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180430AudioEffectImplement/au_host_app1.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>声音的渲染在iOS平台上回直接使用<code>AudioUnit</code>的API来完成.用来实现一些类似<code>大叔</code>,<code>KTV</code>,<code>耳返等效果</code>….</p>
@@ -1121,7 +1246,7 @@
     <link href="https://www.sunyazhou.com/2018/04/02/20180402RunLoop/"/>
     <id>https://www.sunyazhou.com/2018/04/02/20180402RunLoop/</id>
     <published>2018-04-02T06:16:34.000Z</published>
-    <updated>2018-05-26T04:12:27.328Z</updated>
+    <updated>2018-05-07T07:06:41.933Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0fa4569bca7b3a2d5c1ee360f47ac1dd213ecbac/20180402RunLoop/runloop6.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>RunLoop</code> 是 <code>iOS</code> 和 <code>OSX</code> 开发中非常基础的一个概念，这篇文章将从<code>CFRunLoop</code>的源码入手，介绍 <code>RunLoop</code> 的概念以及底层实现原理。之后会介绍一下在 <code>iOS</code> 中，苹果是如何利用<code>RunLoop</code>实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。</p>
@@ -1300,7 +1425,7 @@
     <link href="https://www.sunyazhou.com/2018/03/14/20180314Swft4-Array-skills/"/>
     <id>https://www.sunyazhou.com/2018/03/14/20180314Swft4-Array-skills/</id>
     <published>2018-03-14T02:17:56.000Z</published>
-    <updated>2018-03-14T12:52:15.120Z</updated>
+    <updated>2018-03-14T12:52:15.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
 <p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
@@ -1353,7 +1478,7 @@
     <link href="https://www.sunyazhou.com/2018/03/08/20180308What-is-the-dSYM/"/>
     <id>https://www.sunyazhou.com/2018/03/08/20180308What-is-the-dSYM/</id>
     <published>2018-03-08T03:14:12.000Z</published>
-    <updated>2018-03-11T23:32:10.416Z</updated>
+    <updated>2018-03-11T23:32:10.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
@@ -1429,7 +1554,7 @@
     <link href="https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/"/>
     <id>https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/</id>
     <published>2018-03-05T04:11:41.000Z</published>
-    <updated>2018-03-05T13:00:41.729Z</updated>
+    <updated>2018-03-05T13:00:41.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/%20Ivan-Sutherland.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.</p>
@@ -1479,7 +1604,7 @@
     <link href="https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/"/>
     <id>https://www.sunyazhou.com/2018/03/04/Learning-AV-Foundation-Playing-Video/</id>
     <published>2018-03-04T08:56:06.000Z</published>
-    <updated>2018-03-04T09:11:32.527Z</updated>
+    <updated>2018-03-04T09:11:32.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/5k-airplay.jpg" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久没有写Learning AV Foundation相关的文章了,言归正传<br>本篇介绍一下简单的视频播放</p>
@@ -1600,7 +1725,7 @@
     <link href="https://www.sunyazhou.com/2018/02/04/20180204Word-Embeding/"/>
     <id>https://www.sunyazhou.com/2018/02/04/20180204Word-Embeding/</id>
     <published>2018-02-04T04:24:30.000Z</published>
-    <updated>2018-02-04T04:44:07.807Z</updated>
+    <updated>2018-02-04T04:44:07.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180204Word-Embeding/wordembeding.png" alt=""></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习过程中记录一下python代码</p>
@@ -1619,537 +1744,6 @@
     
     
       <category term="python开发" scheme="https://www.sunyazhou.com/tags/python%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Python操作MySQL数据库</title>
-    <link href="https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/"/>
-    <id>https://www.sunyazhou.com/2018/01/13/20180113Python-MySQL/</id>
-    <published>2018-01-13T14:27:18.000Z</published>
-    <updated>2018-02-04T04:23:36.640Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mysql-python.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了实现<code>不斷學習 與時俱進</code>周末把大部分时间放在了学习<code>Python</code>上.<br>在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客.</p>
-<p>我是在<code>study.163.com</code>的这个<a href="http://study.163.com/course/courseMain.htm?courseId=1003520028" target="_blank" rel="external">《全栈数据工程师养成攻略》</a>课程中学习的,推荐大家学习一下.</p>
-<h2 id="本篇主要内容"><a href="#本篇主要内容" class="headerlink" title="本篇主要内容"></a>本篇主要内容</h2><p>主要分为三个大部分</p>
-<ol>
-<li>搭建<code>Web</code>环境</li>
-<li>数据库MySQL的使用方法</li>
-<li>使用Python操作MySQL</li>
-</ol>
-<h3 id="搭建Web环境"><a href="#搭建Web环境" class="headerlink" title="搭建Web环境"></a>搭建<code>Web</code>环境</h3><ul>
-<li>Web环境: Apache、Nginx…</li>
-<li>Web服务启动中相关配置.</li>
-</ul>
-<h4 id="Web环境-Apache、Nginx…"><a href="#Web环境-Apache、Nginx…" class="headerlink" title="Web环境: Apache、Nginx…"></a>Web环境: Apache、Nginx…</h4><p>两个平台的相关的下载</p>
-<p><a href="https://www.mamp.info/en/" target="_blank" rel="external">MAMP</a>: Mac, Apache, MySQL, PHP </p>
-<blockquote>
-<p>Mac, Apache, MySQL, PHP 缩写<code>MAMP</code></p>
-</blockquote>
-<p><a href="https://www.mamp.info/en/" target="_blank" rel="external">WAMP</a>: Windows, Apache, MySQL, PHP </p>
-<blockquote>
-<p>Windows, Apache, MySQL, PHP 缩写<code>WAMP</code></p>
-</blockquote>
-<p>当然还有linux版本这里就不做多介绍了</p>
-<p>总之需要安装这个软件进行环境配置的搭建.</p>
-<p>我这里用<code>MAMP</code>举例说明一下</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp1.png" alt=""></p>
-<p>打开之后<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp2.png" alt=""></p>
-<h4 id="Web服务启动中相关配置"><a href="#Web服务启动中相关配置" class="headerlink" title="Web服务启动中相关配置"></a>Web服务启动中相关配置</h4><p>开启<code>Apatch Server</code>和<code>MySQL Server</code>服务(右上角).<br>然后点击<code>Perferences</code>,进行本地端口配置.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp3.png" alt=""></p>
-<p>这里有两种默认配置(红色框选部分) </p>
-<p>如果把服务开启的话那么打开浏览器输入:<code>localhost:8888</code>就可以看到相关的效果</p>
-<blockquote>
-<p>localhost == 127.0.0.1</p>
-</blockquote>
-<p><code>8888</code>是服务的端口</p>
-<p>下面这张图可以选择文件根目录<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp4.png" alt=""></p>
-<p>什么意思呢?</p>
-<p>就是你把网页的相关文件放到 这个文件夹的话<br>就会在浏览器上直接浏览.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mamp2.png" alt=""></p>
-<p>这张图中间的<code>Open Start Page</code>. </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql1.png" alt=""></p>
-<p>进入到数据库配置相关</p>
-<p>配置数据库名称<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql2.png" alt=""></p>
-<p>输入表名</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql3.png" alt=""></p>
-<p>配置数据库表<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sql4.png" alt=""></p>
-<p>配置完右侧完成</p>
-<h3 id="数据库MySQL的使用方法"><a href="#数据库MySQL的使用方法" class="headerlink" title="数据库MySQL的使用方法"></a>数据库MySQL的使用方法</h3><ul>
-<li>基本概念</li>
-<li>终端配置Python MySQL</li>
-<li>Navicat 数据的导出导入</li>
-<li>个人的习惯搞法</li>
-</ul>
-<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><code>CURD</code>操作:</p>
-<ul>
-<li><code>C</code> Create</li>
-<li><code>R</code> Read</li>
-<li><code>U</code> Update</li>
-<li><code>D</code> Delete</li>
-</ul>
-<p>这就是数据库相关知识中 <code>增``删``改``查</code></p>
-<h4 id="终端配置Python-MySQL"><a href="#终端配置Python-MySQL" class="headerlink" title="终端配置Python MySQL"></a>终端配置Python MySQL</h4><p>在终端中使用如下指令安装MySQL环境</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">pip install MySQL-python</div></pre></td></tr></table></figure>
-<p>我安装的时候出错了</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/pip_install_mysql-python.png" alt=""></p>
-<p>最后执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">brew install mysql-python</div></pre></td></tr></table></figure>
-<p>然后再去执行<code>pip install MySQL-python</code></p>
-<p>如何测试是否成功</p>
-<p>在shell中输入<code>python</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/pythonshell1.png" alt=""></p>
-<p>执行</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> MySQLdb</div></pre></td></tr></table></figure>
-<p>如果没有错误就是OK的.</p>
-<h4 id="Navicat-数据的导出导入"><a href="#Navicat-数据的导出导入" class="headerlink" title="Navicat 数据的导出导入"></a>Navicat 数据的导出导入</h4><p>这个数据库可视化操作软件大家自行下载吧<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat1.png" alt=""></p>
-<p>打开之后点击左上角点击新建connect 选择MySQL<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat2.png" alt=""></p>
-<p>接着配置数据库的信息<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat3.png" alt=""></p>
-<p>这里的名称就是<strong>数据库名称</strong><br><code>host</code>地方本地,如果是远程的话,填写<code>ip</code>或者<code>url</code><br><code>port</code>前面我们设置了<code>8889</code><br>账号和密码输入<code>root</code>(前面图里面已经看到了账号密码都是一样的)</p>
-<p>下面就是连接数据库</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat4.png" alt=""></p>
-<p>下面这张图就是</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/navicat5.png" alt=""></p>
-<p><strong>数据库导出和导入,当然也可以导出导入数据表.</strong></p>
-<h4 id="个人的习惯搞法"><a href="#个人的习惯搞法" class="headerlink" title="个人的习惯搞法"></a>个人的习惯搞法</h4><ul>
-<li>使用<code>phpmyadmin</code>新建数据库和数据表</li>
-<li>使用<code>python</code>插入、读取、更新、修改数据</li>
-<li>使用<code>Navicat</code>导出数据库</li>
-<li>使用<code>phpmyadmin</code>导入数据库 </li>
-</ul>
-<p>最后deloy(部署)到线上,这样就可以避免各种错误操作数据库的问题</p>
-<h3 id="使用Python操作MySQL"><a href="#使用Python操作MySQL" class="headerlink" title="使用Python操作MySQL"></a>使用Python操作MySQL</h3><p>这个没啥就是coding部分,使用之前把点击<a href="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180113Python-MySQL/douban_movie_clean.txt" target="_blank" rel="external">这里下载</a>这个文本文件</p>
-<p>我们用<code>sublime text</code>新建一个<code>text.py</code>文件</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding:utf8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> MySQLdb.cursors</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/Pythoncode1.png" alt=""></p>
-<blockquote>
-<p>注意:_test.py最好和douban_movie<em>clean.txt保持在同一个目录这样就不用写路径了</em></p>
-</blockquote>
-<p>接着创建数据库连接</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"></div><div class="line">db = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, passwd=<span class="string">'root'</span>, db=<span class="string">'douban'</span>, port=<span class="number">8889</span>, charset=<span class="string">'utf8'</span>, cursorclass=MySQLdb.cursors.DictCursor) //<span class="number">1</span></div><div class="line">db.autocommit(<span class="keyword">True</span>) //<span class="number">2</span></div><div class="line">cursor = db.cursor() //<span class="number">3</span></div><div class="line"></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>,<span class="string">'r'</span>) //<span class="number">4</span></div><div class="line"></div><div class="line">fr.close() //<span class="number">4</span></div><div class="line"></div><div class="line">cursor.close() //<span class="number">3</span></div><div class="line">db.close() //<span class="number">1</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意 <code>db</code>记得用完关闭,<code>cursor</code>也要记得关闭, <code>fr</code>是文件的读写 和数据库没啥关系也需要记得用完关闭</p>
-</blockquote>
-<p>下面解释一下什么意思</p>
-<ol>
-<li><code>db</code>创建输入库实例,输入参数 <code>host</code>(这里用的是127.0.0.1也可以换成localhost)、<code>passwd</code>、<code>db</code>、<code>port</code>、<code>charset</code>、<code>cursorclass</code>.</li>
-<li>自动改完提交完成更新数据库</li>
-<li>通过<code>db</code>实例拿到一个连接<code>cursor</code> 每次都通过<code>cursor.execute()</code>执行增删改查操作sql语句</li>
-<li>读取本地的文本文件</li>
-</ol>
-<p>大概就是这个意思</p>
-<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Create</span></div><div class="line"><span class="comment"># 读取数据</span></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>, <span class="string">'r'</span>)</div><div class="line"></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fr:</div><div class="line">	count += <span class="number">1</span></div><div class="line">	<span class="comment"># count表示当前处理到第几行了</span></div><div class="line">	<span class="keyword">print</span> count</div><div class="line">	<span class="comment"># 跳过表头</span></div><div class="line">	<span class="keyword">if</span> count == <span class="number">1</span>:</div><div class="line">		<span class="keyword">continue</span></div><div class="line"></div><div class="line">	<span class="comment"># strip()函数可以去掉字符串两端的空白符</span></div><div class="line">	<span class="comment"># split()函数按照给定的分割符将字符串分割为列表</span></div><div class="line">	line = line.strip().split(<span class="string">'^'</span>)</div><div class="line">	<span class="comment"># 插入数据，注意对齐字段</span></div><div class="line">	<span class="comment"># execute()函数第一个参数为要执行的SQL命令</span></div><div class="line">	<span class="comment"># 这里用字符串格式化的方法生成一个模板</span></div><div class="line">	<span class="comment"># %s表示一个占位符</span></div><div class="line">	<span class="comment"># 第二个参数为需要格式化的参数，传入到模板中</span></div><div class="line">	cursor.execute(<span class="string">"insert into movie(title, url, rate, length, description) values(%s, %s, %s, %s, %s)"</span>, [line[<span class="number">1</span>], line[<span class="number">2</span>], line[<span class="number">4</span>], line[<span class="number">-3</span>], line[<span class="number">-1</span>]])</div><div class="line"></div><div class="line"><span class="comment"># 关闭读文件</span></div><div class="line">fr.close()</div></pre></td></tr></table></figure>
-<p>通过我们拿到的<code>cursor</code>连接实例来执行<code>cursor.execute()</code>函数进行<code>sql</code>的插入操作.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/Pythoncode2.png" alt=""></p>
-<p>来看下结果<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/sqlresult.png" alt=""></p>
-<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h4><p>更新数据 比如我想把id=1的记录更新一下<code>title</code>字段和<code>length</code>长度</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Update</span></div><div class="line">cursor.execute(<span class="string">"update movie set title=%s, length=%s where id=1"</span>, [<span class="string">'孙亚洲'</span>, <span class="number">999</span>])</div></pre></td></tr></table></figure>
-<h4 id="读取数据-1"><a href="#读取数据-1" class="headerlink" title="读取数据"></a>读取数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Read</span></div><div class="line">cursor.execute(<span class="string">"select title, length from movie where id=1"</span>)</div><div class="line">movies = cursor.fetchone()</div></pre></td></tr></table></figure>
-<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Delete</span></div><div class="line">cursor.execute(<span class="string">"delete from movie where id=%s"</span>,[<span class="number">2</span>])</div></pre></td></tr></table></figure>
-<hr>
-<p>下面看下完成的代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># coding:utf8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> MySQLdb.cursors</div><div class="line"></div><div class="line">db = MySQLdb.connect(host=<span class="string">'127.0.0.1'</span>, user=<span class="string">'root'</span>, passwd=<span class="string">'root'</span>, db=<span class="string">'douban'</span>, port=<span class="number">8889</span>, charset=<span class="string">'utf8'</span>, cursorclass=MySQLdb.cursors.DictCursor)</div><div class="line">db.autocommit(<span class="keyword">True</span>)</div><div class="line">cursor = db.cursor()</div><div class="line"></div><div class="line">fr = open(<span class="string">'douban_movie_clean.txt'</span>,<span class="string">'r'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Create</span></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fr:</div><div class="line">	count += <span class="number">1</span></div><div class="line">	<span class="keyword">print</span> count</div><div class="line">	<span class="keyword">if</span> count == <span class="number">1</span>:</div><div class="line">		<span class="keyword">continue</span></div><div class="line">	line = line.strip().split(<span class="string">'^'</span>)</div><div class="line">	cursor.execute(<span class="string">"insert into movie(title, url, rate, length, description) values(%s, %s, %s, %s, %s)"</span>, [line[<span class="number">1</span>], line[<span class="number">2</span>], line[<span class="number">4</span>], line[<span class="number">-3</span>], line[<span class="number">-1</span>]])</div><div class="line">fr.close()</div><div class="line"></div><div class="line"><span class="comment"># Update</span></div><div class="line">cursor.execute(<span class="string">"update movie set title=%s, length=%s where id=1"</span>, [<span class="string">'孙亚洲'</span>, <span class="number">999</span>])</div><div class="line"></div><div class="line"><span class="comment"># Read</span></div><div class="line">cursor.execute(<span class="string">"select title, length from movie where id=1"</span>)</div><div class="line">movies = cursor.fetchone()</div><div class="line"></div><div class="line"><span class="keyword">print</span> len(movies)</div><div class="line"><span class="comment"># print movies[0]</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Delete</span></div><div class="line"></div><div class="line">cursor.execute(<span class="string">"delete from movie where id=%s"</span>,[<span class="number">2</span>])</div><div class="line"></div><div class="line"></div><div class="line">cursor.close()</div><div class="line">db.close()</div></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过学习<code>python</code>操作数据库很有收获,想起了大学李月辉老师教我怎么用java连接数据库.<br>在工作中我们可能会遇到一大堆数据如何插入到数据等问题,通过学习了本章内容可以很容易的处理批量数据.</p>
-<p>关于更多的SQL语句<br>参考<a href="http://www.runoob.com/sql/sql-tutorial.html" target="_blank" rel="external">SQL 教程</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180113Python-MySQL/mysql-python.png&quot; alt=&quot;&quot;
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="web开发" scheme="https://www.sunyazhou.com/tags/web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="python" scheme="https://www.sunyazhou.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AVAudioSession-Category各种姿势</title>
-    <link href="https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/"/>
-    <id>https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/</id>
-    <published>2018-01-12T02:32:18.000Z</published>
-    <updated>2018-06-26T13:48:16.801Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180112AVAudioSession-Category/ASPG_intro_2x.png" alt="AVAudioSession"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2018新年第一篇, 梳理<code>AVAudioSession</code>的<code>Category</code>,解决音频开发中的各种播放被打断或者首次启动时无声音的问题</p>
-<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>由于<code>iOS</code>系统的特殊性,所有<code>App</code>共用一个<code>AVAudioSession</code>所以这个会话是个单例对象.(<code>macOS</code>是支持同时播放多路音频文件)</p>
-<p>当遇到<code>插拔耳机</code>,<code>接电话</code>,<code>调起 siri</code>,等等,就出现音频会话被系统时间打断等行为表现:</p>
-<ul>
-<li>是进行录音还是播放？</li>
-<li>当系统静音键按下时该如何表现？</li>
-<li>是从扬声器还是从听筒里面播放声音？</li>
-<li>插拔耳机后如何表现？</li>
-<li>来电话/闹钟响了后如何表现？</li>
-<li>其他音频App启动后如何表现？</li>
-</ul>
-<h3 id="Session默认行为"><a href="#Session默认行为" class="headerlink" title="Session默认行为"></a>Session默认行为</h3><ul>
-<li>可以进行播放，但是不能进行录制。</li>
-<li>当用户将手机上的静音拨片拨到“静音”状态时，此时如果正在播放音频，那么播放内容会被静音。</li>
-<li>当用户按了手机的锁屏键或者手机自动锁屏了，此时如果正在播放音频，那么播放会静音并被暂停。</li>
-<li>如果你的App在开始播放的时候，此时QQ音乐等其他App正在播放，那么其他播放器会被静音并暂停。</li>
-</ul>
-<p><code>AVAudioSession</code>默认的行为相当于设置了<code>Category</code>为<code>AVAudioSessionCategorySoloAmbient</code></p>
-<p>示例代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)configSession&#123;	</div><div class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategorySoloAmbient</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,error);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="AVAudioSession"><a href="#AVAudioSession" class="headerlink" title="AVAudioSession"></a>AVAudioSession</h3><p>上边说了 这个类是个单例</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">AVAudioSession</span> *)sharedInstance;</div></pre></td></tr></table></figure>
-<p>通过上边方法获得单例</p>
-<p>虽然系统会在App启动的时候，激活这个唯一的<code>AVAudioSession</code>，但是最好还是在自己用的时候再次进行激活：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (BOOL)setActive:(BOOL)active error:(NSError * _Nullable *)outError;</div></pre></td></tr></table></figure>
-<p>通过设置<code>active</code>为<code>YES</code>激活<code>Session</code>，设置为<code>NO</code>解除<code>Session</code>的激活状态。<code>BOOL</code>返回值表示是否成功，如果失败的话可以通过<code>NSError</code>的<code>error.localizedDescription</code>查看出错原因。</p>
-<blockquote>
-<p>因为<code>AVAudioSession</code>会影响其他<code>App</code>的表现，当自己<code>App</code>的<code>Session</code>被激活，其他<code>App</code>的就会被解除激活.</p>
-</blockquote>
-<p><strong>如何要让自己的<code>Session</code>解除激活后恢复其他<code>App Session</code>的激活状态呢?</strong></p>
-<p>此时可以使用：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (BOOL)setActive:(BOOL)active withOptions:(AVAudioSessionSetActiveOptions)options error:(NSError * _Nullable *)outError;</div></pre></td></tr></table></figure>
-<p><strong>这里的<code>options</code>传入<code>AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</code>即可.</strong></p>
-<p>当然，也可以通过<code>otherAudioPlaying</code>变量来提前判断当前是否有其他App在播放音频。</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Current Category:%@"</span>, [<span class="built_in">AVAudioSession</span> sharedInstance].category); <span class="comment">//返回当前 category</span></div></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">Current Category:AVAudioSessionCategorySoloAmbien</div></pre></td></tr></table></figure>
-<h3 id="七大Category"><a href="#七大Category" class="headerlink" title="七大Category"></a>七大Category</h3><p>下面介绍一下<code>AVAudioSession</code>非常重要的七种<code>Category</code>.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -- Values for the category property --</span></div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryAmbient</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategorySoloAmbient</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryPlayback</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryRecord</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryPlayAndRecord</span>;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryAudioProcessing</span> <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">3</span>_0, <span class="number">10</span>_0) __TVOS_PROHIBITED __WATCHOS_PROHIBITED;</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionCategoryMultiRoute</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0);</div></pre></td></tr></table></figure>
-<p><code>AVAudioSession</code>将使用音频的场景分成七大类，通过设置<code>Session</code>为不同的类别，可以控制：</p>
-<ul>
-<li>当App激活Session的时候，是否会打断其他不支持混音的App声音</li>
-<li>当用户触发手机上的“静音”键时或者锁屏时，是否相应静音</li>
-<li>当前状态是否支持录音</li>
-<li>当前状态是否支持播放</li>
-<li>每个App启动时都会设置成上面说的默认状态，即其他App会被中断同时相应“静音”键的播放模式。通过下表可以细分每个类别的支持情况：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">类别</th>
-<th style="text-align:center">当按“静音”或者锁屏是是否静音</th>
-<th style="text-align:center">是否引起不支持混音的App中断</th>
-<th style="text-align:center">是否支持录音和播放</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryAmbient</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">只支持播放</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryAudioProcessing</td>
-<td style="text-align:center">N/A</td>
-<td style="text-align:center">都不支持</td>
-<td style="text-align:center">N/A</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryMultiRoute</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">既可以录音也可以播放</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">默认不引起</td>
-<td style="text-align:center">既可以录音也可以播放</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryPlayback</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">默认引起</td>
-<td style="text-align:center">只用于播放</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategoryRecord</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">只用于录音</td>
-</tr>
-<tr>
-<td style="text-align:center">AVAudioSessionCategorySoloAmbient</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">只用于播放</td>
-</tr>
-</tbody>
-</table>
-<p>可以看到，其实默认的就是<code>AVAudioSessionCategorySoloAmbient</code>类别.<br>从表中我们可以总结如下：  </p>
-<ul>
-<li><p><em><code>AVAudioSessionCategoryAmbient</code>:只用于播放音乐时，并且可以和QQ音乐同时播放，比如玩游戏的时候还想听QQ音乐的歌，那么把游戏播放背景音就设置成这种类别。同时，当用户锁屏或者静音时也会随着静音，这种类别基本使用所有App的背景场景。</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryAudioProcessing</code>:主要用于音频格式处理，一般可以配合AudioUnit进行使用.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryMultiRoute</code>:想象一个DJ用的App，手机连着HDMI到扬声器播放当前的音乐，然后耳机里面播放下一曲，这种常人不理解的场景，这个类别可以支持多个设备输入输出.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryPlayAndRecord</code>: 如果既想播放又想录制该用什么模式呢？比如VoIP，打电话这种场景，PlayAndRecord就是专门为这样的场景设计的.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryPlayback</code>:如果锁屏了还想听声音怎么办？用这个类别，比如App本身就是播放器，同时当App播放时，其他类似QQ音乐就不能播放了。所以这种类别一般用于播放器类App.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryRecord</code>:有了播放器，肯定要录音机，比如微信语音的录制，就要用到这个类别，既然要安静的录音，肯定不希望有QQ音乐了，所以其他播放声音会中断。想想微信语音的场景，就知道什么时候用他了.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategorySoloAmbient</code>:也是只用于播放,但是和<code>AVAudioSessionCategoryAmbient</code>不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了.</em></p>
-</li>
-</ul>
-<p>了解了这七大类别，我们就可以根据自己的需要进行对应类别的设置了：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
-<p>传入对应的列表枚举即可。如果返回<code>NO</code>可以通过<code>NSError</code>的<code>error.localizedDescription</code>查看原因.</p>
-<p>可以通过:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *availableCategories;</div></pre></td></tr></table></figure>
-<p>属性,查看当前设备支持哪些类别,然后再进行设置,从而保证传入参数的合法,减少错误的可能.</p>
-<p>比如使用如下代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"Current Category:%@"</span>, [<span class="built_in">AVAudioSession</span> sharedInstance].category);</div><div class="line">   <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">   [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error];</div><div class="line">   <span class="keyword">if</span> (<span class="literal">nil</span> != error) &#123;</div><div class="line">       <span class="built_in">NSLog</span>(<span class="string">@"set Option error %@"</span>, error.localizedDescription);</div><div class="line">   &#125;</div><div class="line">   <span class="built_in">NSLog</span>(<span class="string">@"Current Category:%@"</span>, [<span class="built_in">AVAudioSession</span> sharedInstance].category);</div></pre></td></tr></table></figure>
-<p>此时在播放音乐的时候，再去按下静音键，会发现，音乐还在继续播放，不会被静音。</p>
-<h3 id="类别的选项-Category-Options"><a href="#类别的选项-Category-Options" class="headerlink" title="类别的选项(Category Options)"></a>类别的选项(Category Options)</h3><p>上面介绍的这个七大类别，可以认为是设定了七种主场景，而这七类肯定是不能满足开发者所有的需求的。<code>CoreAudio</code>提供的方法是，<strong>首先定下七种的一种基调,然后在进行微调.<code>CoreAudio</code>为每种<code>Category</code>都提供了些许选项来进行微调.</strong></p>
-<p>在设置完类别后，可以通过:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">readonly</span>) <span class="built_in">AVAudioSessionCategoryOptions</span> categoryOptions;</div></pre></td></tr></table></figure>
-<p>属性,查看当前类别设置了哪些选项,注意这里的返回值是<code>AVAudioSessionCategoryOptions</code>,<strong>实际是多个<code>options</code>的<code>|</code>运算</strong>.<br>默认情况下是<code>0</code>.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">AVAudioSessionCategoryOptions</span>)</div><div class="line">&#123;</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionMixWithOthers</span>			= <span class="number">0x1</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionDuckOthers</span>				= <span class="number">0x2</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionAllowBluetooth</span>	__TVOS_PROHIBITED __WATCHOS_PROHIBITED		= <span class="number">0x4</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionDefaultToSpeaker</span> __TVOS_PROHIBITED __WATCHOS_PROHIBITED		= <span class="number">0x8</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">9</span>_0) = <span class="number">0x11</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionAllowBluetoothA2DP</span> API_AVAILABLE(ios(<span class="number">10.0</span>), watchos(<span class="number">3.0</span>), tvos(<span class="number">10.0</span>)) = <span class="number">0x20</span>,</div><div class="line">	<span class="built_in">AVAudioSessionCategoryOptionAllowAirPlay</span> API_AVAILABLE(ios(<span class="number">10.0</span>), tvos(<span class="number">10.0</span>)) __WATCHOS_PROHIBITED = <span class="number">0x40</span>,</div><div class="line">&#125; <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0);</div></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">适用类别</th>
-<th style="text-align:center">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionMixWithOthers</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord, AVAudioSessionCategoryPlayback, and AVAudioSessionCategoryMultiRoute</td>
-<td style="text-align:center">是否可以和其他后台App进行混音</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionDuckOthers</td>
-<td style="text-align:left">AVAudioSessionCategoryAmbient, AVAudioSessionCategoryPlayAndRecord, AVAudioSessionCategoryPlayback, and AVAudioSessionCategoryMultiRoute</td>
-<td style="text-align:center">是否压低其他App声音</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionAllowBluetooth</td>
-<td style="text-align:left">AVAudioSessionCategoryRecord and AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">是否支持蓝牙耳机</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionDefaultToSpeaker</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">是否默认用免提声音</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>目前主要的选项有这几种，都有对应的使用场景，除此之外，还有iOS9之后新增加的一些</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">适用类别</th>
-<th style="text-align:center">作用</th>
-<th style="text-align:left">最低适用系统</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers</td>
-<td style="text-align:left">–</td>
-<td style="text-align:center">–</td>
-<td style="text-align:left">iOS 9</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionAllowBluetoothA2DP</td>
-<td style="text-align:left">–</td>
-<td style="text-align:center">–</td>
-<td style="text-align:left">iOS 10</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionCategoryOptionAllowAirPlay</td>
-<td style="text-align:left">–</td>
-<td style="text-align:center">支持蓝牙A2DP耳机和AirPlay</td>
-<td style="text-align:left">iOS 10</td>
-</tr>
-</tbody>
-</table>
-<p>下面介绍一下每个子场景选项的作用:</p>
-<ul>
-<li><p><em><code>AVAudioSessionCategoryOptionMixWithOthers</code>:如果确实用的<code>AVAudioSessionCategoryPlayback</code>实现的一个背景音，可是，又想和QQ音乐并存，那么可以在<code>AVAudioSessionCategoryPlayback</code>类别下在设置这个选项，就可以实现共存了.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryOptionDuckOthers</code>：在实时通话的场景，比如QQ音乐，当进行视频通话的时候，会发现QQ音乐自动声音降低了，此时就是通过设置这个选项来对其他音乐App进行了压制.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryOptionAllowBluetooth</code>：如果要支持蓝牙耳机电话，则需要设置这个选项.</em></p>
-</li>
-<li><p><em><code>AVAudioSessionCategoryOptionDefaultToSpeaker</code>： 如果在VoIP模式下，希望默认打开免提功能，需要设置这个选项.</em></p>
-</li>
-</ul>
-<p>通过接口:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category withOptions:(<span class="built_in">AVAudioSessionCategoryOptions</span>)options error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
-<p>来对当前的类别进行选项(options)的设置.</p>
-<p>实例代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)xxxMethod&#123;</div><div class="line">    [[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> withOptions:<span class="built_in">AVAudioSessionCategoryOptionMixWithOthers</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (<span class="literal">nil</span> != error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"set Option error %@"</span>, error.localizedDescription);</div><div class="line">    &#125;</div><div class="line">    options = [[<span class="built_in">AVAudioSession</span> sharedInstance] categoryOptions];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Category[%@] has %lu options"</span>,  [<span class="built_in">AVAudioSession</span> sharedInstance].category, options);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>此时，如果打开QQ音乐播放器，然后再开始进行播放，会发现，QQ和我们的实例都在播放，并且进行了自动混音。</p>
-<h3 id="七大模式"><a href="#七大模式" class="headerlink" title="七大模式"></a>七大模式</h3><p>通过上面的<code>七大类别</code>:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -- Values for the mode property --</span></div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeDefault</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">5</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeVoiceChat</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">5</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeGameChat</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">5</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeVideoRecording</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">5</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeMeasurement</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">5</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeMoviePlayback</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeVideoChat</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0);</div><div class="line"></div><div class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVAudioSessionModeSpokenAudio</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">9</span>_0);</div></pre></td></tr></table></figure>
-<p>我们基本覆盖了常用的<strong>主场景</strong>，在每个主场景中可以通过<code>Option</code>进行<strong>微调</strong>。为此<code>CoreAudio</code>提供了七大比较常见微调后的子场景。叫做<code>各个类别的模式</code>.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">模式Mode</th>
-<th style="text-align:left">适用的类别</th>
-<th style="text-align:center">场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">AVAudioSessionModeDefault</td>
-<td style="text-align:left">所有类别</td>
-<td style="text-align:center">默认的模式</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeVoiceChat</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">VoIP</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeGameChat</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">游戏录制，由GKVoiceChat自动设置，无需手动调用</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeVideoRecording</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord AVAudioSessionCategoryRecord</td>
-<td style="text-align:center">录制视频时</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeMoviePlayback</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayback</td>
-<td style="text-align:center">视频播放</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeMeasurement</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord AVAudioSessionCategoryRecord AVAudioSessionCategoryPlayback</td>
-<td style="text-align:center">最小系统</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionModeVideoChat</td>
-<td style="text-align:left">AVAudioSessionCategoryPlayAndRecord</td>
-<td style="text-align:center">视频通话</td>
-</tr>
-</tbody>
-</table>
-<p>每个模式有其适用的类别，所以，并不是有“七七 四十九”种组合。如果当前处于的类别下没有这个模式，那么是设置不成功的。  </p>
-<p>设置完Category后可以通过如下代码:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *availableModes;</div></pre></td></tr></table></figure>
-<p>这个属性,查看其支持哪些属性，做合法性校验。</p>
-<p>下面说一下具体应用场景:</p>
-<ul>
-<li><p><strong><code>AVAudioSessionModeDefault</code>： 每种类别默认的就是这个模式，所有要想还原的话，就设置成这个模式。</strong></p>
-</li>
-<li><p><strong><code>AVAudioSessionModeVoiceChat</code>：主要用于VoIP场景，此时系统会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集。此时有个副作用，他会设置类别的选项为<code>AVAudioSessionCategoryOptionAllowBluetooth</code>从而支持蓝牙耳机。</strong></p>
-</li>
-<li><p><strong><code>AVAudioSessionModeVideoChat</code> ： 主要用于视频通话，比如QQ视频、FaceTime。时系统也会选择最佳的输入设备，比如插上耳机就使用耳机上的麦克风进行采集并且会设置类别的选项为<code>AVAudioSessionCategoryOptionAllowBluetooth</code>和<code>AVAudioSessionCategoryOptionDefaultToSpeaker</code>。</strong></p>
-</li>
-<li><p><strong><code>AVAudioSessionModeGameChat</code> ： 适用于游戏App的采集和播放，比如“GKVoiceChat”对象，一般不需要手动设置.</strong></p>
-</li>
-</ul>
-<blockquote>
-<p>另外几种和音频APP关系不大，一般我们只需要关注VoIP或者视频通话即可。</p>
-</blockquote>
-<p>通过调用：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)setMode:(<span class="built_in">NSString</span> *)mode error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
-<p>可以在设置<code>Category</code>之后再设置模式。</p>
-<p>当然，这些模式只是<code>CoreAduio</code>总结的，不一定完全满足要求，对于具体的模式，在<code>iOS10</code>中还是可以微调的。  </p>
-<p>通过接口:  </p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)setCategory:(<span class="built_in">NSString</span> *)category mode:(<span class="built_in">NSString</span> *)mode options:(<span class="built_in">AVAudioSessionCategoryOptions</span>)options error:(<span class="built_in">NSError</span> **)outError;</div></pre></td></tr></table></figure>
-<p>但是在<code>iOS9</code>及以下就只能在<code>Category</code>上调了，其实本质是一样的，可以认为是个API语法糖，接口封装.</p>
-<h3 id="系统中断响应"><a href="#系统中断响应" class="headerlink" title="系统中断响应"></a>系统中断响应</h3><p>上面说的这些<code>Categorg</code>、<code>Option</code>以及<code>Mode</code>都是对自己作为播放主体时的表现，但是假设，现在正在播放着，突然来电话了、闹钟响了或者你在后台放歌但是用户启动其他App用上面的方法影响的时候，我们的App该如何表现呢？最常用的场景当然是先暂停，待恢复的时候再继续。那我们的App要如何感知到这个终端以及何时恢复呢？</p>
-<p><code>AVAudioSession</code>提供了多种<code>Notifications</code>来进行此类状况的通知。其中将来电话、闹铃响等都归结为一般性的中断</p>
-<p>用<code>AVAudioSessionInterruptionNotification</code>来通知。其回调回来的<code>userInfo</code>主要包含两个键：</p>
-<ul>
-<li><p><em><code>AVAudioSessionInterruptionTypeKey</code>： 取值为<code>AVAudioSessionInterruptionTypeBegan</code>表示中断开始，我们应该暂停播放和采集，取值为<code>AVAudioSessionInterruptionTypeEnded</code>表示中断结束，我们可以继续播放和采集。</em></p>
-</li>
-<li><p><em><code>AVAudioSessionInterruptionOptionKey</code>： 当前只有一种值<code>AVAudioSessionInterruptionOptionShouldResume</code>表示此时也应该恢复继续播放和采集。</em></p>
-</li>
-</ul>
-<p><strong>而将其他<code>App</code>占据<code>AudioSession</code>的时候用<code>AVAudioSessionSilenceSecondaryAudioHintNotification</code>来进行通知。其回调回来的</strong><code>userInfo</code>键为:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">AVAudioSessionSilenceSecondaryAudioHintTypeKey</span></div></pre></td></tr></table></figure>
-<p>可能包含的值:</p>
-<ul>
-<li><p><code>AVAudioSessionSilenceSecondaryAudioHintTypeBegin</code>： 表示其他<code>App</code>开始占据<code>Session</code>.</p>
-</li>
-<li><p><code>AVAudioSessionSilenceSecondaryAudioHintTypeEnd</code>: 表示其他<code>App</code>开始释放<code>Session</code>.</p>
-</li>
-</ul>
-<h3 id="外设改变"><a href="#外设改变" class="headerlink" title="外设改变"></a>外设改变</h3><p>除了其他<code>App</code>和系统服务，会对我们的<code>App</code>产生影响以外，用户的手也会对我们产生影响。默认情况下，<code>AudioSession</code>会在<code>App</code>启动时选择一个最优的输出方案，比如插入耳机的时候，就用耳机。但是这个过程中，用户可能拔出耳机，我们App要如何感知这样的情况呢？</p>
-<p>同样<code>AVAudioSession</code>也是通过<code>Notifications</code>来进行此类状况的通知。</p>
-<p>假设有这样的App<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9d2068989e1b3da5c3b2afaa85fd24d07010cceb/20180112AVAudioSession-Category/route_change.png" alt=""></p>
-<p>最开始在录音时，用户插入和拔出耳机我们都停止录音，这里通过<code>Notification</code>来通知有新设备了，或者设备被退出了，然后我们控制停止录音。或者在播放时，当耳机被拔出出时，<code>Notification</code>给了通知，我们先暂停音乐播放，待耳机插回时，在继续播放。</p>
-<p>在<code>NSNotificationCenter</code>中对<code>AVAudioSessionRouteChangeNotification</code>进行注册。在其<code>userInfo</code>中有键：</p>
-<ul>
-<li><code>AVAudioSessionRouteChangeReasonKey</code> : 表示改变的原因</li>
-<li><code>AVAudioSessionSilenceSecondaryAudioHintTypeKey</code>： 和上面的中断意义意义一样。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">枚举值</th>
-<th style="text-align:center">意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonUnknown</td>
-<td style="text-align:center">未知原因</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonNewDeviceAvailable</td>
-<td style="text-align:center">有新设备可用</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonOldDeviceUnavailable</td>
-<td style="text-align:center">老设备不可用</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonCategoryChange</td>
-<td style="text-align:center">类别改变了</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonOverride</td>
-<td style="text-align:center">App重置了输出设置</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonWakeFromSleep</td>
-<td style="text-align:center">从睡眠状态呼醒</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory</td>
-<td style="text-align:center">当前Category下没有合适的设备</td>
-</tr>
-<tr>
-<td style="text-align:left">AVAudioSessionRouteChangeReasonRouteConfigurationChange</td>
-<td style="text-align:center">Rotuer的配置改变了</td>
-</tr>
-</tbody>
-</table>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>AVAudioSession</code>构建了一个音频使用生命周期的上下文。当前状态是否可以录音、对其他App有怎样的影响、是否响应系统的静音键、如何感知来电话了等都可以通过它来实现。尤为重要的是<code>AVAudioSession</code>不仅可以和<code>AVFoundation</code>中的<code>AVAudioPlyaer</code>/<code>AVAudioRecorder</code>配合，其他录音/播放工具比如<code>AudioUnit</code>、<code>AudioQueueService</code>也都需要他进行录音、静音等上下文配合。</p>
-<p><a href="https://www.jianshu.com/p/3e0a399380df" target="_blank" rel="external">参考</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180112AVAudioSession-Category/ASPG_intro_2x
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   

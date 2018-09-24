@@ -286,26 +286,25 @@ if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	
 
 
 
-<section class="post-comments">
-       <!-- 来必力City版安装代码 -->
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
-      <script type="text/javascript">
-       (function(d, s) {
-           var j, e = d.getElementsByTagName(s)[0];
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
 
-           if (typeof LivereTower === 'function') { return; }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
 
-           j = d.createElement(s);
-           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-           j.async = true;
-
-           e.parentNode.insertBefore(j, e);
-       })(document, 'script');
-      </script>
-    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-    </div>
-    <!-- City版安装代码已完成 -->
-</section>
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Tue Jul 04 2017 17:45:28 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
 
 
 

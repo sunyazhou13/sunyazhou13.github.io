@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>判断NSWindow是否全屏 | 東引甌越</title>
+    <title>iOS扩大UIButton的点击的响应范围 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="判断NSWindow是否全屏 | 東引甌越">
+    <meta name="twitter:title" content="iOS扩大UIButton的点击的响应范围 | 東引甌越">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="判断NSWindow是否全屏 | 東引甌越">
+    <meta property="og:title" content="iOS扩大UIButton的点击的响应范围 | 東引甌越">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/03/23/check-NSWindow-isFullScreen/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -183,18 +183,62 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
+      <time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">判断NSWindow是否全屏</h1>
+    <h1 class="post-title">iOS扩大UIButton的点击的响应范围</h1>
   </header>
 
   <section class="post">
-    <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="external">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开发过程中经常遇到<code>UIButton</code>点击区域太小 又不想 改动按钮的大小.</p>
+<p>今天的文章和大家分享一下解决这种问题的代码</p>
+<h1 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h1><ul>
+<li>子类话UIButton 复写 它的<code>hitTest:</code>方法</li>
+<li>子类话UIButton 复写 point:inside:withEvent: 方法</li>
+</ul>
+<h2 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span><span class="params">(<span class="number">_</span> point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">	<span class="keyword">let</span> biggerButtonFrame = theButton.frame.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>) <span class="comment">// 1	</span></div><div class="line">	<span class="keyword">if</span> biggerButtonFrame.<span class="built_in">contains</span>(point) &#123; <span class="comment">// 2</span></div><div class="line">		<span class="keyword">return</span> theButton <span class="comment">// 3</span></div><div class="line">	&#125;		</div><div class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.hitTest(point, with: event) <span class="comment">// 4</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><ol>
+<li>让theButton的 x 扩大 30, y 扩大 30 (正数为缩小 负数为放大. 然后宽高 分别是2 <em> 30和 2 </em> 30)</li>
+</ol>
+</li>
+<li><ol>
+<li>判断点击的位置是否在放大完的frame内.</li>
+</ol>
+</li>
+<li><ol>
+<li>如果是 就返回button</li>
+</ol>
+</li>
+<li><ol>
+<li>不是的话让事件继续传递</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>注意:<em>这里没判断 theButton.alpha == 0 和 theButton.userInterface.. ==  YES 还有它是否可见之类的,请自行判断</em></p>
+</blockquote>
+<h2 id="第二种方式"><a href="#第二种方式" class="headerlink" title="第二种方式"></a>第二种方式</h2><p>复写UIView的point:方法</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">point</span><span class="params">(inside point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">	<span class="keyword">let</span> biggerFrame = bounds.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> biggerFrame.<span class="built_in">contains</span>(point)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OC的版本是这样</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">	<span class="comment">//这里写上 </span></div><div class="line">	</div><div class="line">	<span class="built_in">CGRectInset</span>(&lt;<span class="meta">#CGRect rect#&gt;, <span class="meta-string">&lt;#CGFloat dx#&gt;</span>, <span class="meta-string">&lt;#CGFloat dy#&gt;</span>)</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是 第二种方式 其实 是 hitTest:方法调用之前UIView的判断,它判断当前点击的point是否在这个UIView上.</p>
+<p>不过 还是推荐第一种方式</p>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><p>其实 最核心的代码是</p>
+<p>CGRectInset(&lt;#CGRect rect#&gt;, &lt;#CGFloat dx#&gt;, &lt;#CGFloat dy#&gt;)</p>
+<blockquote>
+<p>CGRect CGRectOffset(CGRect rect, CGFloat dx, CGFloat dy)是以rect为中心，根据dx和dy来实现缩小。</p>
+</blockquote>
+<p>如果dx 和 dy是负数 则放大 ,正数则缩小</p>
+<p>但是大家可能很疑惑 那宽度和高度怎么 缩小放大</p>
+<p>首先: 我们明确 这个API的含义 只要传入正数 它就缩放 那么 宽高也会适当前传入的dx和dy来决定 缩放比</p>
+<p>因为是中心点缩放 所以宽高 <strong>要 X 2</strong>,因为有两侧嘛,左侧缩小30右侧也需要缩小30,上部和底部是一样的.</p>
+<p>大家可自行查阅google看下</p>
+<p><a href="https://rolandleth.com/increasing-the-tap-area-of-a-uibutton" target="_blank" rel="external">参考Increasing the tap area of a UIButton</a><br><a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="external">参考 iOS触摸事件全家桶</a></p>
+<p>全文完</p>
 
   </section>
 
@@ -244,42 +288,32 @@
 <section class="read-more">
      
         
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/" title="Learning AV Foundation(三)AVAudioRecorder">Learning AV Foundation(三)AVAudioRecorder</a></h2>
-                <p class="excerpt">
-                
-                
-前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
-主要内容
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/28/Learning-AV-Foundation-AVAudioRecorder/">继续阅读</a></div>
-
-            </div>
-        
 
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" title="Learning AV Foundation(二)AVAudioPlayer">Learning AV Foundation(二)AVAudioPlayer</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/09/18/20180918KeyboardAnimation/" title="iOS键盘动画细节">iOS键盘动画细节</a></h2>
                 <p class="excerpt">
                 
                 
-开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
-音频知识基础  
-音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的
+前言很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程
+上图
+
+动画细节代码细节核心主要是通知中的一些key
+
+动画时长
+动画的出现方式
+
+…
+下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotification
+[[NSNotification
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
+                <div class="post-list__meta"><time datetime="2018-09-18T01:49:58.000Z" class="post-list__meta--date date">2018-09-18</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2018/09/18/20180918KeyboardAnimation/">继续阅读</a></div>
 
             </div>
         
@@ -301,7 +335,7 @@
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Thu Mar 23 2017 14:03:32 GMT+0800',
+      id: 'Thu Sep 20 2018 09:40:06 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 

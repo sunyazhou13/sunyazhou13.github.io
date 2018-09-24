@@ -185,6 +185,55 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/09/20/20180920IncreasingTapAreaOfButton/" title="link to post.title">iOS扩大UIButton的点击的响应范围</a></h2>
+      <p class="excerpt">
+    
+      前言开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
+今天的文章和大家分享一下解决这种问题的代码
+实现思路
+子类话UIButton 复写 它的hitTest:方法
+子类话UIButton 复写 point:inside:withEvent: 方法
+
+第一种方式override func hitTest(_ point: CGPoint, with event: UIEvent?) -&amp;gt; UIView? &amp;#123;	let biggerButtonFrame = t
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/09/20/20180920IncreasingTapAreaOfButton/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/09/18/20180918KeyboardAnimation/" title="link to post.title">iOS键盘动画细节</a></h2>
+      <p class="excerpt">
+    
+      
+前言很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程
+上图
+
+动画细节代码细节核心主要是通知中的一些key
+
+动画时长
+动画的出现方式
+
+…
+下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotification
+[[NSNotificationCenter defaultCenter] addObserver:self                                             selector:@selecto
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-09-18T01:49:58.000Z" class="post-list__meta--date date">2018-09-18</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/09/18/20180918KeyboardAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2018/09/02/20180902Beacon/" title="link to post.title">船与灯塔</a></h2>
       <p class="excerpt">
     
@@ -373,51 +422,6 @@ Swift4.2
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2018/06/08/20180608Swift-Random2/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/01/20180601Random/" title="link to post.title">Swift中的随机数</a></h2>
-      <p class="excerpt">
-    
-      
-前言今天儿童节,写一篇随机数技术文章纪念留守儿童(资深)的童年.
-swift中的随机数使用在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章
-整型随机数首先是这个arc4random()
-
-arc4random()使用了arc4密码加密的key stream生成器，产生一个[0, 2^32)区间的随机数(注意是左闭右开区间)。这个函数的返回类型是UInt32
-提示: [和] 分别代表左右闭区间,(和)代表左右开区间也就是中括号 -&amp;gt; 代表 闭区间, 闭区间代表包含.小括号 
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-01T09:30:56.000Z" class="post-list__meta--date date">2018-06-01</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/06/01/20180601Random/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/" title="link to post.title">UIView不同方向的导角</a></h2>
-      <p class="excerpt">
-    
-      
-前言开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
-这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
-通常导角self.view.cornerRadius = 20.0self.view.clipToBounds = true
-这两行代码是全方向导角
-如果像要搞成不同方向的话可以用iOS11 新的API和 iOS11以前的CAShapeLayer画贝赛尔曲线来解决
-首先我们要创建一个UIView
-c
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

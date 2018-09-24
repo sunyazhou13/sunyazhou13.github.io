@@ -261,6 +261,33 @@
 <section class="read-more">
      
         
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/09/18/20180918KeyboardAnimation/" title="iOS键盘动画细节">iOS键盘动画细节</a></h2>
+                <p class="excerpt">
+                
+                
+前言很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程
+上图
+
+动画细节代码细节核心主要是通知中的一些key
+
+动画时长
+动画的出现方式
+
+…
+下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotification
+[[NSNotification
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-09-18T01:49:58.000Z" class="post-list__meta--date date">2018-09-18</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/09/18/20180918KeyboardAnimation/">继续阅读</a></div>
+
+            </div>
+        
 
         
             <div class="read-more-item">
@@ -285,26 +312,25 @@
 
 
 
-<section class="post-comments">
-       <!-- 来必力City版安装代码 -->
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTU0NS82MTEz">
-      <script type="text/javascript">
-       (function(d, s) {
-           var j, e = d.getElementsByTagName(s)[0];
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
 
-           if (typeof LivereTower === 'function') { return; }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
 
-           j = d.createElement(s);
-           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-           j.async = true;
-
-           e.parentNode.insertBefore(j, e);
-       })(document, 'script');
-      </script>
-    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-    </div>
-    <!-- City版安装代码已完成 -->
-</section>
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Sun Sep 02 2018 12:12:51 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
 
 
 
