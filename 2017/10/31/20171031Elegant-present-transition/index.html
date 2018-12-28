@@ -339,8 +339,8 @@ UI适配
 
   <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
   <script type="text/javascript">
 
   if(true){
@@ -390,7 +390,19 @@ UI适配
 
     
 
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
 </script>
 
 

@@ -228,6 +228,15 @@
 <p>下面是常用的 git 别名</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">git config --global alias.ll <span class="string">"log --graph --all --pretty=format:'%Cred%h %Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit --date=relative"</span> </div><div class="line">git config --global alias.co checkout </div><div class="line">git config --global alias.br branch </div><div class="line">git config --global alias.ci commit </div><div class="line">git config --global alias.st status </div><div class="line">git config --global alias.last <span class="string">'log -1 HEAD'</span> </div><div class="line">git config --global alias.df diff</div><div class="line">git config --global alias.co checkout</div></pre></td></tr></table></figure>
 <p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
+<p>批量删除 本地分支</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">git branch | grep &apos;branchName&apos; |xargs git branch -D</div></pre></td></tr></table></figure>
+<p>这个是通过 shell 管道命令来实现的批量删除分支的功能。<br><strong>grep</strong>是对<strong>git branch</strong>的输出结果进行匹配，匹配值为<strong>branchName</strong>。<br><strong>xargs</strong>的作用是将参数列表转换成小块分段传递给其他命令。<br>所以这个命令的意思就是<br>从分支列表中匹配到指定的分支，然后一个一个（分成小块）传递给删除分支的命令，最后进行删除。<br>从而达到批量删除分支的目的</p>
+<p>例如:我想删除本地 以 5.8.开头的分支 我可以这样写</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"></div><div class="line">git branch | grep <span class="string">'5.8.*'</span> |xargs git branch -D</div></pre></td></tr></table></figure>
+<p>通过通配符即可</p>
+<blockquote>
+<p>2018年9月30日更新</p>
+</blockquote>
 <p>持续更新</p>
 
   </section>
@@ -327,8 +336,8 @@
 
   <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
   <script type="text/javascript">
 
   if(true){
@@ -378,7 +387,19 @@
 
     
 
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
 </script>
 
 

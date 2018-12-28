@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS抖音的上下滑实现 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS抖音的上下滑实现 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS抖音的上下滑实现 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/11/06/20181106AwemeTopBottomScrollDemo/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-11-06T09:55:09.000Z" class="post-list__meta--date date">2018-11-06</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span>
+    </div>
+    <h1 class="post-title">iOS抖音的上下滑实现</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d2b991b6d10e643c8e4c619cc913bbbaea19a534/20181106AwemeTopBottomScrollDemo/AwemeDemo1.gif" alt=""></p>
+<h1 id="技术实现原理"><a href="#技术实现原理" class="headerlink" title="技术实现原理"></a>技术实现原理</h1><ul>
+<li>UITableView </li>
+</ul>
+<p>其实就是一个UITableView改变上下显示范围. talk is cheap show me the code</p>
+<p>我说话不绕弯子,代码如下 实现起来非常简单</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">_tableView = [[<span class="built_in">UITableView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, -SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT * <span class="number">5</span>)];</div><div class="line">_tableView.contentInset = <span class="built_in">UIEdgeInsetsMake</span>(SCREEN_HEIGHT, <span class="number">0</span>, SCREEN_HEIGHT * <span class="number">3</span>, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<ol>
+<li>初始化的时候,TableView放在屏幕外边.</li>
+<li>contentInset 显示内容的内边距, 以此是 <code>上</code>, <code>左</code>, <code>下</code>,  <code>右</code>, 上边距 距离整好屏幕高度,底部 是 顶部边距(屏幕高度的 3倍) 方便滑动, 左右分别顶到两边 搞定.</li>
+</ol>
+<p>我画个图演示一下.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/748bbcbbc7ef5e60d1b6844ab26b73d7debc06ca/20181106AwemeTopBottomScrollDemo/AwemeDemo2.png" alt=""></p>
+<p>看到这张图 大家也许 已经明白了，最核心的地方是控制 TableView的上下边距,上边距留够一个屏幕高度,下边距留够下滑3屏左右的缓冲.</p>
+<h1 id="说一下用到的技巧"><a href="#说一下用到的技巧" class="headerlink" title="说一下用到的技巧"></a>说一下用到的技巧</h1><p>创建tableView很简单 如果理解不了 可以下载文章末尾demo</p>
+<p>有个小技巧是 如何做到 上下滑动 能够完整的 滑动到对应位置 整好 占满屏幕类似 开启了UIScrollView的 <code>pagingEnabled</code>.</p>
+<h2 id="实现滑动的代理方法"><a href="#实现滑动的代理方法" class="headerlink" title="实现滑动的代理方法"></a>实现滑动的代理方法</h2><p>首先需要声明一个当前滑动页码的成员变量</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span>  currentIndex;</div></pre></td></tr></table></figure>
+<p>然后滑动代理停止的时候  判断一下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - ScrollView delegate</span></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView willDecelerate:(<span class="built_in">BOOL</span>)decelerate&#123;</div><div class="line">    <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">        <span class="built_in">CGPoint</span> translatedPoint = [scrollView.panGestureRecognizer translationInView:scrollView];</div><div class="line">        <span class="comment">//UITableView禁止响应其他滑动手势</span></div><div class="line">        scrollView.panGestureRecognizer.enabled = <span class="literal">NO</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(translatedPoint.y &lt; <span class="number">-50</span> &amp;&amp; <span class="keyword">self</span>.currentIndex &lt; (kDataSourceCount - <span class="number">1</span>)) &#123;</div><div class="line">            <span class="keyword">self</span>.currentIndex ++;   <span class="comment">//向下滑动索引递增</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(translatedPoint.y &gt; <span class="number">50</span> &amp;&amp; <span class="keyword">self</span>.currentIndex &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">self</span>.currentIndex --;   <span class="comment">//向上滑动索引递减</span></div><div class="line">        &#125;</div><div class="line">        [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.15</span></div><div class="line">                              delay:<span class="number">0.0</span></div><div class="line">                            options:<span class="built_in">UIViewAnimationOptionCurveEaseOut</span> animations:^&#123;</div><div class="line">                                <span class="comment">//UITableView滑动到指定cell</span></div><div class="line">                                [<span class="keyword">self</span>.tableView scrollToRowAtIndexPath:[<span class="built_in">NSIndexPath</span> indexPathForRow:<span class="keyword">self</span>.currentIndex inSection:<span class="number">0</span>] atScrollPosition:<span class="built_in">UITableViewScrollPositionTop</span> animated:<span class="literal">NO</span>];</div><div class="line">                            &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">                                <span class="comment">//UITableView可以响应其他滑动手势</span></div><div class="line">                                scrollView.panGestureRecognizer.enabled = <span class="literal">YES</span>;</div><div class="line">                            &#125;];</div><div class="line">        </div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的 <code>50</code> 实际上是你能允许滑动的最大触发区间.可以自己下载demo玩一下就知道了. </p>
+</blockquote>
+<p>基于滑动区间 做 加减 当前页码控制.然后 做个简单的UIView动画.</p>
+<blockquote>
+<p>注意: 开始动画的时候最好不要相应pan手势,结束动画的时候再恢复回去,这样可以避免一些不必要的收拾滑动引起的问题.</p>
+</blockquote>
+<h3 id="为什么要滑动页码self-currentIndex"><a href="#为什么要滑动页码self-currentIndex" class="headerlink" title="为什么要滑动页码self.currentIndex"></a>为什么要滑动页码<code>self.currentIndex</code></h3><p>因为我们要用KVO 来实现 页面变动驱动滑动的动画</p>
+<p>在 viewDidLoad:方法中 我们有个setupView:方法中 有下段代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span> addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"currentIndex"</span> options:<span class="built_in">NSKeyValueObservingOptionInitial</span>|<span class="built_in">NSKeyValueObservingOptionNew</span> context:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p><strong>是的我们要自己监听自己的成员变量去搞些事情</strong>.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//观察currentIndex变化</span></div><div class="line">-(<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context &#123;</div><div class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"currentIndex"</span>]) &#123;</div><div class="line">        <span class="comment">//获取当前显示的cell</span></div><div class="line">        AwemeListCell *cell = [<span class="keyword">self</span>.tableView cellForRowAtIndexPath:[<span class="built_in">NSIndexPath</span> indexPathForRow:_currentIndex inSection:<span class="number">0</span>]];</div><div class="line">        __<span class="keyword">weak</span> <span class="keyword">typeof</span> (cell) wcell = cell;</div><div class="line">        __<span class="keyword">weak</span> <span class="keyword">typeof</span> (<span class="keyword">self</span>) wself = <span class="keyword">self</span>;</div><div class="line">        <span class="comment">//用cell控制相关视频播放</span></div><div class="line">        </div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> [<span class="keyword">super</span> observeValueForKeyPath:keyPath ofObject:object change:change context:context];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>demo中有这段代码 其实是为了以后 cell上方palyerView的时候 控制相应暂停或者停止 或者其他操作的行为. 这里后期我们完善</p>
+</blockquote>
+<h3 id="点击状态栏滑动到顶部"><a href="#点击状态栏滑动到顶部" class="headerlink" title="点击状态栏滑动到顶部"></a>点击状态栏滑动到顶部</h3><p>我们如何监听状态栏的事件?</p>
+<p>我们当然可以设置TableView自动滑动到顶部.但是 我们怎么拦截下来这个事件去把我们 相关页码 <strong>置<code>0</code></strong></p>
+<p>为什么置0呢?看下 下面这张图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ab61f58501e90d17c3dcc2af351eba13694a71ce/20181106AwemeTopBottomScrollDemo/AwemeDemo3_error.gif" alt=""></p>
+<p>虽然我们能实现 自动滑动TableView到顶部 但是 我们拦截不到顶部状态栏点击的事件,在这个事件调用的地方 把当前页码置<code>0</code>.</p>
+<h4 id="监听点击状态栏事件"><a href="#监听点击状态栏事件" class="headerlink" title="监听点击状态栏事件"></a>监听点击状态栏事件</h4><p>这里使用的是在AppDelegate 中 复写 touchesBagan:方法</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">    [<span class="keyword">super</span> touchesBegan:touches withEvent:event];</div><div class="line">    </div><div class="line">    <span class="comment">//当触摸状态栏的时候发送触摸通知 这样控制器就收到了点击事件</span></div><div class="line">    <span class="built_in">CGPoint</span> touchLocation = [[[event allTouches] anyObject] locationInView:<span class="keyword">self</span>.window];</div><div class="line">    <span class="built_in">CGRect</span> statusBarFrame = [<span class="built_in">UIApplication</span> sharedApplication].statusBarFrame;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">CGRectContainsPoint</span>(statusBarFrame, touchLocation)) &#123;</div><div class="line">        [[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:StatusBarTouchBeginNotification object:<span class="literal">nil</span>];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这里我们判断点击区域是否在状态栏范围内,是的话我们发送通知.</p>
+<p>在我们用到TableView的VC里面注册这个通知,然后 置<code>0</code>.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等</span></div><div class="line">- (<span class="keyword">void</span>)statusBarTouchBegin &#123;</div><div class="line">    _currentIndex = <span class="number">0</span>; <span class="comment">//KVO</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里我们置<code>0</code>处理.</p>
+<blockquote>
+<p>这里处理的方式简单粗暴,你有更好的实现方式可以底部评论,非常感谢.</p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上是简单实现了抖音的上下滑,demo在下方, 下一期给大家演示更多细节,如果可能的话,最终搞出个视频放cell上 实现整个上下滑控制过程视频暂停 播放 停止等等,因为如果完整的实现抖音,需要很长的代码量,为了让大家一起学习,我把每个细节拆成一小节.单独写成文章讨论和学习.</p>
+<p><a href="https://github.com/sunyazhou13/AwemeDemo" target="_blank" rel="external">抖音上下滑Demo</a></p>
+<p>参考开源</p>
+<p><a href="https://github.com/sshiqiao/douyin-ios-objectc" target="_blank" rel="external">抖音个人主页</a></p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/11/08/20181108AwemeAlbumAnimation/" title="iOS抖音右下角专辑动画">iOS抖音右下角专辑动画</a></h2>
+                <p class="excerpt">
+                
+                前言前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画
+上图看下
+
+再看下抖音的
+
+具体实现思路首先需要3涨素材 这个在demo中就可以找到哈
+在文章底部demo中有
+
+ContrainerView
+Background Layer 
+Album (UIImageView
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-11-08T03:52:06.000Z" class="post-list__meta--date date">2018-11-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/08/20181108AwemeAlbumAnimation/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/10/29/20181029LabelDanceAnimation/" title="iOS数字倍数动画">iOS数字倍数动画</a></h2>
+                <p class="excerpt">
+                
+                前言写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画 
+
+实现思路上代码 看比较清晰
+// 数字跳动动画- (void)labelDanceAnimation:(NSTimeInterval)duration &amp;#123;    //透明度    CABasicAnimation *opac
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-10-29T10:13:15.000Z" class="post-list__meta--date date">2018-10-29</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/10/29/20181029LabelDanceAnimation/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Tue Nov 06 2018 17:55:09 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+</body>
+</html>
