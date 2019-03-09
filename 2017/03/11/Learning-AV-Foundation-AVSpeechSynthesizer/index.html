@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,16 +191,26 @@
   </header>
 
   <section class="post">
-    <p><img src="http://www.informit.com/ShowCover.aspx?isbn=0321961803" alt="AVSpeechSynthesizer"></p>
+    <figure>
+<embed src="http://www.informit.com/ShowCover.aspx?isbn=0321961803"><figcaption>AVSpeechSynthesizer</figcaption>
+</figure>
 <p>前言</p>
 <blockquote>
-<p>最近在研究<code>AV Foundation</code> 框架 发现有一本书叫做<br><a href="http://item.jd.com/11742630.html" target="_blank" rel="external">AV Foundation开发秘籍：实践掌握iOS &amp; OS X 应用的视听处理技术</a><br>然后google查了一下英文版叫<br><a href="http://www.informit.com/store/learning-av-foundation-a-hands-on-guide-to-mastering-9780321961808" target="_blank" rel="external">Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework</a><br>看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含量 这么直译就没技术含量了。看着开发秘籍这名字不禁想起大学时那些书 从开发到入门… 21天学会xxx… 开发指南… 开发秘籍… 我大学读的都是<code>假书</code></p>
+<p>最近在研究<code>AV Foundation</code> 框架 发现有一本书叫做<br>
+<a href="http://item.jd.com/11742630.html" target="_blank" rel="external">AV Foundation开发秘籍：实践掌握iOS &amp; OS X 应用的视听处理技术</a><br>
+然后google查了一下英文版叫<br>
+<a href="http://www.informit.com/store/learning-av-foundation-a-hands-on-guide-to-mastering-9780321961808" target="_blank" rel="external">Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework</a><br>
+看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含量 这么直译就没技术含量了。看着开发秘籍这名字不禁想起大学时那些书 从开发到入门... 21天学会xxx... 开发指南... 开发秘籍... 我大学读的都是<code>假书</code></p>
 </blockquote>
 <p>今天给大家分享的是 iOS上如何 把汉字转换成语音朗读, 当然这个没什么技术含量(大神可以飞过).</p>
-<h2 id="AVFoundation整体架构"><a href="#AVFoundation整体架构" class="headerlink" title="AVFoundation整体架构"></a>AVFoundation整体架构</h2><p>研究这个功能之前先介绍一下<code>AV Foundation</code>整体架构</p>
-<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagram_2x.png" alt="iOS"><br>这是iOS上的架构设计 (上图)  </p>
-<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagramOSX_2x.png" alt="iOS"><br>这是macOS上的架构设计(上图)</p>
-<p>看完之后我们就来用代码实现这个demo<br>首先导入<code>&lt;AVFoundation/AVFoundation.h&gt;</code></p>
+<h2 id="avfoundation整体架构">AVFoundation整体架构</h2>
+<p>研究这个功能之前先介绍一下<code>AV Foundation</code>整体架构</p>
+<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagram_2x.png" alt="iOS"><br>
+这是iOS上的架构设计 (上图)</p>
+<p><img src="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Art/frameworksBlockDiagramOSX_2x.png" alt="iOS"><br>
+这是macOS上的架构设计(上图)</p>
+<p>看完之后我们就来用代码实现这个demo<br>
+首先导入<code>&lt;AVFoundation/AVFoundation.h&gt;</code></p>
 <p>这我需要使用的是iOS上的<code>AVSpeechSynthesizer</code>,macOS上叫<code>NSSpeechSynthesizer</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">AVSpeechSynthesizer</span> *synthesizer;</div></pre></td></tr></table></figure>
 <p><code>AVSpeechSynthesizer</code> 它的功能</p>
@@ -207,31 +219,33 @@
 </ul>
 <p>初始化</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">    <span class="comment">//创建语音合成器</span></div><div class="line">    <span class="keyword">self</span>.synthesizer = [[<span class="built_in">AVSpeechSynthesizer</span> alloc] init];</div><div class="line">    <span class="keyword">self</span>.synthesizer.delegate = <span class="keyword">self</span>;</div><div class="line">    <span class="comment">//播放的国家的语言</span></div><div class="line">    <span class="keyword">self</span>.voices = @[[<span class="built_in">AVSpeechSynthesisVoice</span> voiceWithLanguage:<span class="string">@"zh-CN"</span>],[<span class="built_in">AVSpeechSynthesisVoice</span> voiceWithLanguage:<span class="string">@"en-US"</span>]</div><div class="line">                    ];</div><div class="line">    <span class="keyword">self</span>.speechStrings = [[<span class="built_in">NSMutableArray</span> alloc] init];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里的<code>[AVSpeechSynthesisVoice voiceWithLanguage:@&quot;zh-CN&quot;]</code><br>设置的是简体中文语音 文章末尾会列出所有语音播放信息不用担心写错.</p>
+<p>这里的<code>[AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"]</code> 设置的是简体中文语音 文章末尾会列出所有语音播放信息不用担心写错.</p>
 <p><code>AVSpeechSynthesizer</code>的delegate方法如下 主要是对语音播放状态的监听</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">AVSpeechSynthesizerDelegate</span> &lt;<span class="title">NSObject</span>&gt;</span></div><div class="line"><span class="comment">// 代理方法</span></div><div class="line"><span class="keyword">@optional</span></div><div class="line"><span class="comment">// 开始播放 语音单元</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer didStartSpeechUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="comment">// 完成播放 语音单元</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer didFinishSpeechUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="comment">// 暂停播放 语音单元</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer didPauseSpeechUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="comment">// 继续播放 语音单元</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer didContinueSpeechUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="comment">// 取消播放 语音单元</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer didCancelSpeechUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="comment">// 这里 指的是 又来监听 播放 字符范围</span></div><div class="line">- (<span class="keyword">void</span>)speechSynthesizer:(<span class="built_in">AVSpeechSynthesizer</span> *)synthesizer willSpeakRangeOfSpeechString:(<span class="built_in">NSRange</span>)characterRange utterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p><strong>这里的<code>AVSpeechSynthesizer</code>主要的方法有</strong>  </p>
+<p><strong>这里的<code>AVSpeechSynthesizer</code>主要的方法有</strong></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/* 添加 播放话语 到 播放语音 队列, 可以设置utterance的属性来控制播放 */</span></div><div class="line">- (<span class="keyword">void</span>)speakUtterance:(<span class="built_in">AVSpeechUtterance</span> *)utterance;</div><div class="line"></div><div class="line"><span class="comment">// 对于 stopSpeakingAtBoundary: 语音单元的操作, 如果中断, 会清空队列</span></div><div class="line"><span class="comment">// 中断</span></div><div class="line">- (<span class="built_in">BOOL</span>)stopSpeakingAtBoundary:(<span class="built_in">AVSpeechBoundary</span>)boundary;</div><div class="line"><span class="comment">// 暂停</span></div><div class="line">- (<span class="built_in">BOOL</span>)pauseSpeakingAtBoundary:(<span class="built_in">AVSpeechBoundary</span>)boundary;</div><div class="line"><span class="comment">// 继续</span></div><div class="line">- (<span class="built_in">BOOL</span>)continueSpeaking;</div></pre></td></tr></table></figure>
 <blockquote>
-<p>这里我们用的<code>speakUtterance</code>方法来播放文字<br>speakUtterance:(AVSpeechUtterance *)utterance  </p>
-<ol>
-<li><code>AVSpeechUtterance</code>是对文字朗读的封装</li>
-<li>被播放的语音文字, 可以理解为一段需要播放的文字<br>这里我们设置<code>AVSpeechUtterance</code>朗读播放的信息  </li>
-</ol>
+<p>这里我们用的<code>speakUtterance</code>方法来播放文字 speakUtterance:(AVSpeechUtterance *)utterance<br>
+1. <code>AVSpeechUtterance</code>是对文字朗读的封装 2. 被播放的语音文字, 可以理解为一段需要播放的文字<br>
+这里我们设置<code>AVSpeechUtterance</code>朗读播放的信息</p>
 </blockquote>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//播放语音</span></div><div class="line"><span class="built_in">NSArray</span> *speechStringsArray = [<span class="keyword">self</span> buildSpeechStrings]; <span class="comment">//buildSpeechStrings播放字符串的数组</span></div><div class="line">   <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; speechStringsArray.count; i++) &#123;</div><div class="line">       <span class="comment">//创建AVSpeechUtterance 对象 用于播放的语音文字</span></div><div class="line">       <span class="built_in">AVSpeechUtterance</span> *utterance = [[<span class="built_in">AVSpeechUtterance</span> alloc] initWithString:speechStringsArray[i]];</div><div class="line">       <span class="comment">//设置使用哪一个国家的语言播放</span></div><div class="line">       utterance.voice = <span class="keyword">self</span>.voices[<span class="number">0</span>];</div><div class="line">       <span class="comment">//本段文字播放时的 语速, 应介于AVSpeechUtteranceMinimumSpeechRate 和 AVSpeechUtteranceMaximumSpeechRate 之间</span></div><div class="line">       utterance.rate = <span class="number">0.5</span>;</div><div class="line">       <span class="comment">//在播放特定语句时改变声音的声调, 一般取值介于0.5(底音调)~2.0(高音调)之间</span></div><div class="line">       utterance.pitchMultiplier = <span class="number">0.8</span>f;</div><div class="line">       <span class="comment">//声音大小, 0.0 ~ 1.0 之间</span></div><div class="line">       utterance.volume = <span class="number">1.0</span>f;</div><div class="line">       <span class="comment">//播放后的延迟, 就是本次文字播放完之后的停顿时间, 默认是0</span></div><div class="line">       utterance.preUtteranceDelay = <span class="number">0</span>;</div><div class="line">       <span class="comment">//播放前的延迟, 就是本次文字播放前停顿的时间, 然后播放本段文字, 默认是0</span></div><div class="line">       utterance.postUtteranceDelay = <span class="number">0.1</span>f;</div><div class="line">       [<span class="keyword">self</span>.synthesizer speakUtterance:utterance];</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <p><code>AVSpeechUtterance</code>的属性如下</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 设置使用哪一个国家的语言播放</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>, <span class="keyword">nullable</span>) <span class="built_in">AVSpeechSynthesisVoice</span> *voice;</div><div class="line"><span class="comment">// 获取当前需要播放的文字, 只读属性</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSString</span> *speechString;</div><div class="line"><span class="comment">// 获取当前需要播放的文字 - 富文本, 只读属性, iOS10以后可用</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSAttributedString</span> *attributedSpeechString;</div><div class="line"><span class="comment">// 本段文字播放时的 语速, 应介于AVSpeechUtteranceMinimumSpeechRate 和 AVSpeechUtteranceMaximumSpeechRate 之间</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="keyword">float</span> rate;           </div><div class="line"><span class="comment">// 在播放特定语句时改变声音的声调, 一般取值介于0.5(底音调)~2.0(高音调)之间</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="keyword">float</span> pitchMultiplier; </div><div class="line"><span class="comment">// 声音大小, 0.0 ~ 1.0 之间</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="keyword">float</span> volume;</div><div class="line"><span class="comment">// 播放后的延迟, 就是本次文字播放完之后的停顿时间, 默认是0</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">NSTimeInterval</span> preUtteranceDelay; </div><div class="line"><span class="comment">// 播放前的延迟, 就是本次文字播放前停顿的时间, 然后播放本段文字, 默认是0</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">NSTimeInterval</span> postUtteranceDelay;</div></pre></td></tr></table></figure>
-<p><code>AVSpeechUtterance</code>的方法如下  </p>
-<p>以下全部都是初始化方法, 分为 类方法 和 对象方法, 富文本的初始化方法要在iOS10以后才可以用  </p>
+<p><code>AVSpeechUtterance</code>的方法如下</p>
+<p>以下全部都是初始化方法, 分为 类方法 和 对象方法, 富文本的初始化方法要在iOS10以后才可以用</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="keyword">instancetype</span>)speechUtteranceWithString:(<span class="built_in">NSString</span> *)string;</div><div class="line">+ (<span class="keyword">instancetype</span>)speechUtteranceWithAttributedString:(<span class="built_in">NSAttributedString</span> *)string <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">10</span>_0);</div><div class="line">- (<span class="keyword">instancetype</span>)initWithString:(<span class="built_in">NSString</span> *)string;</div><div class="line">- (<span class="keyword">instancetype</span>)initWithAttributedString:(<span class="built_in">NSAttributedString</span> *)string</div></pre></td></tr></table></figure>
-<p>可以使用<strong><code>[AVSpeechSynthesisVoice speechVoices]</code></strong>代码打印出支持朗读语言的国家  </p>
+<p>可以使用__<code>[AVSpeechSynthesisVoice speechVoices]</code>__代码打印出支持朗读语言的国家</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">ar-SA  沙特阿拉伯（阿拉伯文）</div><div class="line"></div><div class="line">en-ZA, 南非（英文）</div><div class="line"></div><div class="line">nl-BE, 比利时（荷兰文）</div><div class="line"></div><div class="line">en-AU, 澳大利亚（英文）</div><div class="line"></div><div class="line">th-TH, 泰国（泰文）</div><div class="line"></div><div class="line">de-DE, 德国（德文）</div><div class="line"></div><div class="line">en-US, 美国（英文）</div><div class="line"></div><div class="line">pt-BR, 巴西（葡萄牙文）</div><div class="line"></div><div class="line">pl-PL, 波兰（波兰文）</div><div class="line"></div><div class="line">en-IE, 爱尔兰（英文）</div><div class="line"></div><div class="line">el-GR, 希腊（希腊文）</div><div class="line"></div><div class="line">id-ID, 印度尼西亚（印度尼西亚文）</div><div class="line"></div><div class="line">sv-SE, 瑞典（瑞典文）</div><div class="line"></div><div class="line">tr-TR, 土耳其（土耳其文）</div><div class="line"></div><div class="line">pt-PT, 葡萄牙（葡萄牙文）</div><div class="line"></div><div class="line">ja-JP, 日本（日文）</div><div class="line"></div><div class="line">ko-KR, 南朝鲜（朝鲜文）</div><div class="line"></div><div class="line">hu-HU, 匈牙利（匈牙利文）</div><div class="line"></div><div class="line">cs-CZ, 捷克共和国（捷克文）</div><div class="line"></div><div class="line">da-DK, 丹麦（丹麦文）</div><div class="line"></div><div class="line">es-MX, 墨西哥（西班牙文）</div><div class="line"></div><div class="line">fr-CA, 加拿大（法文）</div><div class="line"></div><div class="line">nl-NL, 荷兰（荷兰文）</div><div class="line"></div><div class="line">fi-FI, 芬兰（芬兰文）</div><div class="line"></div><div class="line">es-ES, 西班牙（西班牙文）</div><div class="line"></div><div class="line">it-IT, 意大利（意大利文）</div><div class="line"></div><div class="line">he-IL, 以色列（希伯莱文，阿拉伯文）</div><div class="line"></div><div class="line">no-NO, 挪威（挪威文）</div><div class="line"></div><div class="line">ro-RO, 罗马尼亚（罗马尼亚文）</div><div class="line"></div><div class="line">zh-HK, 香港（中文）</div><div class="line"></div><div class="line">zh-TW, 台湾（中文）</div><div class="line"></div><div class="line">sk-SK, 斯洛伐克（斯洛伐克文）</div><div class="line"></div><div class="line">zh-CN, 中国（中文）</div><div class="line"></div><div class="line">ru-RU, 俄罗斯（俄文）</div><div class="line"></div><div class="line">en-GB, 英国（英文）</div><div class="line"></div><div class="line">fr-FR, 法国（法文）</div><div class="line"></div><div class="line">hi-IN  印度（印度文）</div></pre></td></tr></table></figure>
 <blockquote>
-<p>总结<br>为了学习<strong><code>AVFoundation</code></strong>我先从一个简单的知识点入手,唯一觉得遗憾的是我不太确定是否这个合成器支持自定义语音朗读,这个后续研究一下,把相关学习内容填补上.</p>
+<p>总结 为了学习__<code>AVFoundation</code>__我先从一个简单的知识点入手,唯一觉得遗憾的是我不太确定是否这个合成器支持自定义语音朗读,这个后续研究一下,把相关学习内容填补上.</p>
 </blockquote>
 <p><strong>最终的demo 支持iOS和macOS:<a href="https://github.com/sunyazhou13/AVSpeechSynthesizerDemo" target="_blank" rel="external">Learning-AV-Foundation(一)汉字语音朗读</a></strong></p>
-<p>参考:<br><a href="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188" target="_blank" rel="external">AV Foundation Apple 官方文档</a><br><a href="http://www.jianshu.com/p/acd57725ba4d" target="_blank" rel="external">AVSpeechSynthesizer 和 AVSpeechUtterance</a><br><a href="http://www.jianshu.com/p/a41cb018f0b5" target="_blank" rel="external">AVSpeechSynthesizer详解</a><br><a href="http://www.jianshu.com/p/cc79c45b4ccf" target="_blank" rel="external">AVFoundation</a></p>
+<p>参考:<br>
+<a href="https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188" target="_blank" rel="external">AV Foundation Apple 官方文档</a><br>
+<a href="http://www.jianshu.com/p/acd57725ba4d" target="_blank" rel="external">AVSpeechSynthesizer 和 AVSpeechUtterance</a><br>
+<a href="http://www.jianshu.com/p/a41cb018f0b5" target="_blank" rel="external">AVSpeechSynthesizer详解</a><br>
+<a href="http://www.jianshu.com/p/cc79c45b4ccf" target="_blank" rel="external">AVFoundation</a></p>
 
   </section>
 
@@ -287,9 +301,13 @@
                 <p class="excerpt">
                 
                 
-开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
-音频知识基础  
-音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的
+AVAudioPlayer
+
+开篇
+最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章 本期的内容是AVAudioPlayer
+音频知识基础
+
+音频文件的生成过程是将声音信息__采样__、__量化__和__编码__产生的数字信号的过程，人耳所能听到的声音，最低的频率是
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
@@ -396,5 +414,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

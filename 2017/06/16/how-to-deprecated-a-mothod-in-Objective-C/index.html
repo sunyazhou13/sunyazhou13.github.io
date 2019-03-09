@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,15 +191,17 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png"></p>
 <p>最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">__attribute__((deprecated(<span class="string">"此方法已弃用,请使用xxxxx:方法"</span>)));</div></pre></td></tr></table></figure>
-<h3 id="场景1"><a href="#场景1" class="headerlink" title="场景1"></a>场景1</h3><p>我想标识一个方法使用其它方式传入某个参数 </p>
+<h3 id="场景1">场景1</h3>
+<p>我想标识一个方法使用其它方式传入某个参数</p>
 <p>例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">VideoEditorViewController</span> : <span class="title">UIViewController</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">NSURL</span> *videoPath;</div><div class="line"></div><div class="line">-(<span class="keyword">instancetype</span>)initWithUrl:(<span class="built_in">NSURL</span> *)path __attribute__((deprecated(<span class="string">"使用setVideoPath:方法传入"</span>)));</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>这样调用的时候就直接显示警告了 告诉当前方法传入URL被弃用</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/code.png" alt=""></p>
-<p>相关<code>__attribute__</code>更多用法 请参考苹果官方文档和其它博客<br>后续会持续更新更多用法</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/code.png"></p>
+<p>相关<code>__attribute__</code>更多用法 请参考苹果官方文档和其它博客 后续会持续更新更多用法</p>
 <p>全文完</p>
 <p><a href="http://www.jianshu.com/p/0237c34158f0" target="_blank" rel="external">参考</a></p>
 
@@ -255,9 +259,10 @@
                 <p class="excerpt">
                 
                 
-Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。
+Clang 静态分析器
+Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。
 你可以在 Xcode 的 Product → Analyze 里手动运行分析器。
-分析器可以运行“
+分析器可以运行
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-20T07:07:33.000Z" class="post-list__meta--date date">2017-06-20</time>
@@ -275,14 +280,17 @@ Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有�
                 <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="Xcode9新功能 无线真机调试">Xcode9新功能 无线真机调试</a></h2>
                 <p class="excerpt">
                 
-                效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
+                效果
+今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
 看一张图
-配置第一步 选择设备选项
+
+配置
+第一步 选择设备选项
 
 第二步 点勾选 via network
 
 剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
-注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次运
+注意:第一次运行的时候比较慢 可以通过数据线插上先运行一
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
@@ -367,5 +375,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

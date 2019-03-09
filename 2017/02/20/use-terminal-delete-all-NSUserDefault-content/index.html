@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,22 +191,23 @@
   </header>
 
   <section class="post">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息  </p>
+    <h2 id="前言">前言</h2>
+<blockquote>
+<p>大家对<code>NSUserDefaults</code>非常熟悉 今天给大家讲一下如何用终端清理<code>NSUserDefaults</code>的信息</p>
 </blockquote>
-<p><code>NSUserDefaults</code>和<code>win</code>开发的注册表一样 用于存储一些标记位<br>最近开发用到的比较多是如何不运行代码的情况下清理<code>NSUserDefaults</code>信息</p>
-<p><strong>$ defaults delete + 包名</strong>  eg: com.baidu.demo </p>
-<p>下面这样会删除所有以<code>com.baidu.demo</code>为包名的文件  </p>
-<pre><code class="shell"><span class="meta">$</span><span class="bash"> defaults delete com.baidu.demo</span>
-</code></pre>
+<p><code>NSUserDefaults</code>和<code>win</code>开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理<code>NSUserDefaults</code>信息</p>
+<p><strong>$ defaults delete + 包名</strong> eg: com.baidu.demo</p>
+<p>下面这样会删除所有以<code>com.baidu.demo</code>为包名的文件</p>
+<pre class="shell"><code>$ defaults delete com.baidu.demo</code></pre>
 <blockquote>
 <p>实际的的路径(把 my app和前后剪头 换成自己的应用的包名)</p>
 </blockquote>
-<p>macOS应用非沙盒权限(如下图) <code>~/Library/Preferences/&lt;my app&gt;.plist  &lt;my app&gt;</code>  eg:QQ<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_1.png" alt="非沙盒路径"></p>
-<p>macOS应用沙盒权限(如下图)  <code>~/Library/Containers/&lt;my app&gt;/Data/Library/Preferences/&lt;my app&gt;.plist</code> eg:qq  </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_2.png" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>defaults 还有其它指令还可以为某个<code>key</code>设置<code>value</code> 大家可自行google  </p>
+<p>macOS应用非沙盒权限(如下图) <code>~/Library/Preferences/&lt;my app&gt;.plist  &lt;my app&gt;</code> eg:QQ <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_1.png" alt="非沙盒路径"></p>
+<p>macOS应用沙盒权限(如下图) <code>~/Library/Containers/&lt;my app&gt;/Data/Library/Preferences/&lt;my app&gt;.plist</code> eg:qq</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E4%BD%BF%E7%94%A8%E7%BB%88%E7%AB%AF%E5%88%A0%E9%99%A4NSUserDefault%E7%9A%84%E5%86%85%E5%AE%B9/Snip20170220_2.png"></p>
+<h2 id="总结">总结</h2>
+<blockquote>
+<p>defaults 还有其它指令还可以为某个<code>key</code>设置<code>value</code> 大家可自行google</p>
 </blockquote>
 <p>谢谢大家</p>
 <p>全文完</p>
@@ -262,7 +265,8 @@
                 <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/" title="$(SRCROOT)和$(PROJECT_DIR)区别">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
                 <p class="excerpt">
                 
-                $(SRCROOT)代表的是项目根目录下$(PROJECT_DIR)代表的是整个项目
+                $(SRCROOT)代表的是项目根目录下
+$(PROJECT_DIR)代表的是整个项目
 
                 &hellip;
                 </p>
@@ -282,12 +286,12 @@
                 <p class="excerpt">
                 
                 前言
-开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
+
+开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题 如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？
 
 
-这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
-
-Buildi
+这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码
+&amp;gt; Buil
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
@@ -372,5 +376,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

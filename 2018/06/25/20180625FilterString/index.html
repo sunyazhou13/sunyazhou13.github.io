@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,10 +191,12 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0c00202bcba36a3821f799a16e006f467c33a9fc/20180625FilterString/RegularExpressDemo.gif" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0c00202bcba36a3821f799a16e006f467c33a9fc/20180625FilterString/RegularExpressDemo.gif"></p>
 <p>带着这个疑问开始今天的文章</p>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>创建个demo 代码如下</p>
+<h1 id="准备工作">准备工作</h1>
+<p>创建个demo 代码如下</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UITextField</span> *input;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.input.delegate = <span class="keyword">self</span>;</div><div class="line">    [<span class="keyword">self</span>.input addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(textChange:) forControlEvents:<span class="built_in">UIControlEventEditingChanged</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//当文本内容改变时调用</span></div><div class="line">- (<span class="keyword">void</span>)textChange:(<span class="built_in">UITextField</span> *)textField</div><div class="line">&#123;</div><div class="line">    <span class="comment">//这里调用相关方法过滤字符串显示出来</span></div><div class="line">    <span class="keyword">self</span>.label.text = <span class="comment">//...;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在网上找了一圈大多都是使用谓词去判断时候包含,没有几个给出相应的处理字符串.</p>
 <p>我找到了3种 处理字符串的方式</p>
@@ -214,7 +218,8 @@
 <blockquote>
 <p>最终方案3 得到的预期结果还是不错,推荐使用</p>
 </blockquote>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>有些问题都是在工作中遇到,希望记录下来一起分享和学习.</p>
+<h1 id="总结">总结</h1>
+<p>有些问题都是在工作中遇到,希望记录下来一起分享和学习.</p>
 <p>全完完</p>
 <p><a href="https://github.com/sunyazhou13/RegularExpressDemo" target="_blank" rel="external">Demo在这里</a></p>
 
@@ -273,6 +278,7 @@
                 
                 
 bash及其特性
+
 bash实质上是一个可执行程序，一个用户的工作环境。
 在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。
 可以使用pstree命令查看当前shell下的子shell个数。
@@ -280,8 +286,8 @@ bash实质上是一个可执行程序，一个用户的工作环境。
 1. 最重要的自动补全
 
 
+
 命令
-解
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-07-18T01:29:39.000Z" class="post-list__meta--date date">2018-07-18</time>
@@ -299,12 +305,12 @@ bash实质上是一个可执行程序，一个用户的工作环境。
                 <h2 class="post-list__post-title post-title"><a href="/2018/06/15/20180615NSAttributeString/" title="使用NSAttributeString实现不同颜色大小显示">使用NSAttributeString实现不同颜色大小显示</a></h2>
                 <p class="excerpt">
                 
-                
-前言最近开发需求遇到一个比较简单但又棘手的问题.先看需求
+                 # 前言
+最近开发需求遇到一个比较简单但又棘手的问题.先看需求
 
 一个UILabel显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：
 必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串
-比如:  2分14秒 or 2min14
+比如: 2分14秒 or 2min
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-06-15T02:10:58.000Z" class="post-list__meta--date date">2018-06-15</time>
@@ -389,5 +395,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

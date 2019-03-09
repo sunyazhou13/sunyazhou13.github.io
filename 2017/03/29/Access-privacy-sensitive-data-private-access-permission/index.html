@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,15 +191,10 @@
   </header>
 
   <section class="post">
-    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：</p>
-<blockquote>
-<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
-</blockquote>
+    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
 <p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
-<p>私有数据的框架列表可是个不小的东西:  </p>
-<blockquote>
-<p>通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
-</blockquote>
+<p>私有数据的框架列表可是个不小的东西:<br>
+&gt; 通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
 <p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="external">这个大神</a></p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">&lt;!-- 📷 Camera --&gt;</div><div class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;用于拍照捕捉视频内容,及拍摄短视频时访问相机&lt;/string&gt;</div><div class="line">&lt;!-- 🎤 Microphone --&gt;</div><div class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;用于拍摄短视频时访问麦克风收录视频声音&lt;/string&gt;</div><div class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</div><div class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</div><div class="line">&lt;!-- 🖼 Photo Library --&gt;</div><div class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</div><div class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</div></pre></td></tr></table></figure>
 <p>以上是常用的并且通过 App Store 审核的文本</p>
@@ -261,20 +258,23 @@
                 <p class="excerpt">
                 
                 
-前言    在iOS和macOS开发者中积累了一些快捷操作记录下来
+shortcuts
+
+前言 在iOS和macOS开发者中积累了一些快捷操作记录下来
 隐藏左侧面板
+
 
 command+0=显示/隐藏左侧面板
 
 隐藏右侧面板
 
+
 command+option+0=显示/隐藏右侧面板
 
 隐藏debug区域
 
-command+shift+y=显示/隐藏底部控制等调试区域
 
-跳转到代码多少
+command+shift+y=显示/隐藏底部控制等调试
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
@@ -293,8 +293,9 @@ command+shift+y=显示/隐藏底部控制等调试区域
                 <p class="excerpt">
                 
                 
-前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
-主要内容
+前言
+在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
@@ -379,5 +380,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

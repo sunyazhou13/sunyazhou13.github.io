@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,57 +191,73 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
-<h2 id="本周主要内容如下"><a href="#本周主要内容如下" class="headerlink" title="本周主要内容如下"></a>本周主要内容如下</h2><ul>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
+<h2 id="本周主要内容如下">本周主要内容如下</h2>
+<ul>
 <li>什么是符号表？</li>
 <li>为什么要配置符号表？</li>
 <li>dSYM文件？</li>
 </ul>
-<h3 id="什么是符号表？"><a href="#什么是符号表？" class="headerlink" title="什么是符号表？"></a>什么是符号表？</h3><p>符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：</p>
-<p><code>&lt;起始地址&gt;</code> <code>&lt;结束地址&gt;</code> <code>&lt;函数&gt;</code> [<code>&lt;文件名&gt;</code>:<code>&lt;行号&gt;</code>]  </p>
-<h3 id="为什么要配置符号表？"><a href="#为什么要配置符号表？" class="headerlink" title="为什么要配置符号表？"></a>为什么要配置符号表？</h3><p>为了能快速并准确地定位用户APP发生<code>Crash</code>的代码<code>位置</code>，我们可以使用符号表对APP发生<code>Crash</code>的程序<code>堆栈</code>进行<code>解析</code>和<code>还原</code>。</p>
+<h3 id="什么是符号表">什么是符号表？</h3>
+<p>符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：</p>
+<p><code>&lt;起始地址&gt;</code> <code>&lt;结束地址&gt;</code> <code>&lt;函数&gt;</code> [<code>&lt;文件名&gt;</code>:<code>&lt;行号&gt;</code>]</p>
+<h3 id="为什么要配置符号表">为什么要配置符号表？</h3>
+<p>为了能快速并准确地定位用户APP发生<code>Crash</code>的代码<code>位置</code>，我们可以使用符号表对APP发生<code>Crash</code>的程序<code>堆栈</code>进行<code>解析</code>和<code>还原</code>。</p>
 <p>举一个例子：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f84e46105c453408a030c50d802695917bf5ea4c/20180308What-is-the-dSYM/stack_symbol.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f84e46105c453408a030c50d802695917bf5ea4c/20180308What-is-the-dSYM/stack_symbol.png"></p>
 <p>上图是我们通过符号表来解析出来崩溃堆栈的调用</p>
-<h3 id="什么是dSYM文件？"><a href="#什么是dSYM文件？" class="headerlink" title="什么是dSYM文件？"></a>什么是dSYM文件？</h3><p>iOS平台中，<code>dSYM</code>文件是指具有调试信息的目标文件，文件名通常为： <code>com.公司名.dSYM</code>。如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/test_dSYM.png" alt=""></p>
+<h3 id="什么是dsym文件">什么是dSYM文件？</h3>
+<p>iOS平台中，<code>dSYM</code>文件是指具有调试信息的目标文件，文件名通常为： <code>com.公司名.dSYM</code>。如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/test_dSYM.png"></p>
 <p>一般都是和Xcode 工程名的 aget一样的名字</p>
 <blockquote>
 <p>为了方便找回Crash对应的dSYM文件和还原堆栈，建议每次构建或者发布APP版本的时候，备份好dSYM文件</p>
 </blockquote>
-<h4 id="如何定位dSYM文件？"><a href="#如何定位dSYM文件？" class="headerlink" title="如何定位dSYM文件？"></a>如何定位dSYM文件？</h4><p>一般情况下，项目编译完<code>dSYM</code>文件跟<code>app</code>文件在同一个目录下，下面以<code>XCode</code>作为IDE详细说明定位<code>dSYM</code>文件</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dSYM1%402x.png" alt=""></p>
-<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180308What-is-the-dSYM/dSYM2@2x.png?raw=true" alt=""></p>
+<h4 id="如何定位dsym文件">如何定位dSYM文件？</h4>
+<p>一般情况下，项目编译完<code>dSYM</code>文件跟<code>app</code>文件在同一个目录下，下面以<code>XCode</code>作为IDE详细说明定位<code>dSYM</code>文件</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dSYM1%402x.png"></p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180308What-is-the-dSYM/dSYM2@2x.png?raw=true"></p>
 <blockquote>
-<p>这里用 release 模式做的测试 </p>
+<p>这里用 release 模式做的测试</p>
 </blockquote>
 <p>我们看到 和工程 <code>target</code>一样的名称的 <code>.dSYM</code>.</p>
-<h4 id="XCode编译后没有生成dSYM文件"><a href="#XCode编译后没有生成dSYM文件" class="headerlink" title="XCode编译后没有生成dSYM文件?"></a>XCode编译后没有生成dSYM文件?</h4><p>XCode在 <code>Release</code>编译环境下默认会生成<code>dSYM</code>文件，而<code>Debug</code>编译环境下默认不会生成</p>
+<h4 id="xcode编译后没有生成dsym文件">XCode编译后没有生成dSYM文件?</h4>
+<p>XCode在 <code>Release</code>编译环境下默认会生成<code>dSYM</code>文件，而<code>Debug</code>编译环境下默认不会生成</p>
 <p>如果要在<code>Debug</code>对应的<code>Xcode</code>配置如下:</p>
-<p><code>XCode -&gt; Build Settings -&gt; Code Generation -&gt; Generate Debug Symbols -&gt; Yes</code><br><code>XCode -&gt; Build Settings -&gt; Build Option -&gt; Debug Information Format -&gt; DWARF with dSYM File</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym3%402x.png" alt=""><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym4%402x.png" alt=""></p>
-<h4 id="开启Bitcode之后需要注意哪些问题"><a href="#开启Bitcode之后需要注意哪些问题" class="headerlink" title="开启Bitcode之后需要注意哪些问题?"></a>开启Bitcode之后需要注意哪些问题?</h4><ul>
+<p><code>XCode -&gt; Build Settings -&gt; Code Generation -&gt; Generate Debug Symbols -&gt; Yes</code><br>
+<code>XCode -&gt; Build Settings -&gt; Build Option -&gt; Debug Information Format -&gt; DWARF with dSYM File</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym3%402x.png"><br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym4%402x.png"></p>
+<h4 id="开启bitcode之后需要注意哪些问题">开启Bitcode之后需要注意哪些问题?</h4>
+<ul>
 <li>在点<code>Upload to App Store</code>上传到<code>App Store</code>服务器的时候需要声明符号文件(<code>dSYM</code>文件)的生成:</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3d0ace06f1a780aa3691cc55af98d2403a7cfce1/20180308What-is-the-dSYM/dsym5.jpg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3d0ace06f1a780aa3691cc55af98d2403a7cfce1/20180308What-is-the-dSYM/dsym5.jpg"></p>
 <ul>
 <li>在配置符号表文件之前，需要从App Store中把该版本对应的dSYM文件下载回本地,然后用符号表工具生成和上传符号表文件。</li>
 </ul>
 <p>这里找回<code>ipa</code>版本对应的dSYM文件有两种方式</p>
-<ol>
-<li><p>通过Xcode的归档文件找回dSYM,打开<code>Xcode</code> 顶部菜单栏 -&gt; <code>Window</code> -&gt; <code>Organizer</code> 窗口,如下图:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-2.jpg" alt=""><br> 打开 <code>Xcode</code> 顶部菜单栏，选择<code>Archive</code> 标签:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-3.jpg" alt=""><br> 找到发布的归档包，右键点击对应归档包，选择<code>Show in Finder</code>操作:<br> <img src="https://bugly.qq.com/docs/img/symbol-ios/BitcodedSYM-4.jpg?v=20180119105842" alt=""><br> 右键选择定位到的归档文件，选择显示包内容操作:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-5.jpg" alt=""><br> 选择<code>dSYMs</code>目录，目录内即为下载到的 <code>dSYM</code> 文件:<br> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-6.jpg" alt=""></p>
-</li>
+<ol type="1">
+<li><p>通过Xcode的归档文件找回dSYM,打开<code>Xcode</code> 顶部菜单栏 -&gt; <code>Window</code> -&gt; <code>Organizer</code> 窗口,如下图: <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-2.jpg"><br>
+打开 <code>Xcode</code> 顶部菜单栏，选择<code>Archive</code> 标签:<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-3.jpg"><br>
+找到发布的归档包，右键点击对应归档包，选择<code>Show in Finder</code>操作:<br>
+<img src="https://bugly.qq.com/docs/img/symbol-ios/BitcodedSYM-4.jpg?v=20180119105842"> 右键选择定位到的归档文件，选择显示包内容操作:<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-5.jpg"><br>
+选择<code>dSYMs</code>目录，目录内即为下载到的 <code>dSYM</code> 文件:<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-6.jpg"></p></li>
 <li><p>通过<a href="https://itunesconnect.apple.com/" target="_blank" rel="external">iTunes Connect</a>找回</p>
-<p> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/757ac10eb4448e952a1f9b42d71073de424da159/20180308What-is-the-dSYM/itunes_connect%402x.png" alt=""></p>
-<p> 在“所有构件版本（All Builds）”中选择某一个版本，点“下载<code>dSYM</code>（Download dSYM）”下载dSYM文件.</p>
-</li>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/757ac10eb4448e952a1f9b42d71073de424da159/20180308What-is-the-dSYM/itunes_connect%402x.png"></p>
+<p>在“所有构件版本（All Builds）”中选择某一个版本，点“下载<code>dSYM</code>（Download dSYM）”下载dSYM文件.</p></li>
 </ol>
 <blockquote>
 <p>注意:<em>一个<code>Archiver</code>与<code>dSYM</code>文件一一对应,搞错了容易翻译不出来来源码的调用</em></p>
 </blockquote>
 <p>参考如下:</p>
-<p><a href="https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1" target="_blank" rel="external">Bugly iOS 符号表配置</a><br><a href="https://techblog.toutiao.com/2017/07/05/session413/" target="_blank" rel="external">App 启动时间：过去，现在和未来</a></p>
+<p><a href="https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1" target="_blank" rel="external">Bugly iOS 符号表配置</a><br>
+<a href="https://techblog.toutiao.com/2017/07/05/session413/" target="_blank" rel="external">App 启动时间：过去，现在和未来</a></p>
 <p>全文完</p>
 
   </section>
@@ -295,9 +313,11 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/03/14/20180314Swft4-Array-skills/" title="Swift 4 中的数组技巧">Swift 4 中的数组技巧</a></h2>
                 <p class="excerpt">
                 
-                前言年前买了本Swift 进阶(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错
+                前言
+年前买了本Swift 进阶(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错
 当我从头来学习数组的时候发现好多函数真的太有用了
-Swift 4.0 中的可变数组技巧我们可用 Xcode 创建play
+Swift 4.0 中的可变数组技巧
+我们可用 Xcode 创建pl
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-03-14T02:17:56.000Z" class="post-list__meta--date date">2018-03-14</time>
@@ -316,8 +336,10 @@ Swift 4.0 中的可变数组技巧我们可用 Xcode 创建play
                 <p class="excerpt">
                 
                 
-前言今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
-计算机图形渲染的流程计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单
+前言
+今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
+计算机图形渲染的流程
+计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
@@ -402,5 +424,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

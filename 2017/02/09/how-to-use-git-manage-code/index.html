@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,43 +191,61 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg" alt=""></p>
-<h2 id="全局配置git"><a href="#全局配置git" class="headerlink" title="全局配置git"></a>全局配置git</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --global user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-use-git-manage-code/A7BB8518D944E893213CFB627.jpg"></p>
+<h2 id="全局配置git">全局配置git</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"username"</span>  </div><div class="line">$ git config --global user.email <span class="string">"email@you.com"</span></div></pre></td></tr></table></figure>
 <blockquote>
-<p><code>username</code> 一般代表提交的本机用户名<br><code>email@you.com</code> 一般是邮箱地址 </p>
+<p><code>username</code> 一般代表提交的本机用户名<br>
+<code>email@you.com</code> 一般是邮箱地址</p>
 </blockquote>
-<h2 id="创建本地仓库进行初始化"><a href="#创建本地仓库进行初始化" class="headerlink" title="创建本地仓库进行初始化  "></a>创建本地仓库进行初始化  </h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git init</div></pre></td></tr></table></figure>
+<h2 id="创建本地仓库进行初始化">创建本地仓库进行初始化</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git init</div></pre></td></tr></table></figure>
 <blockquote>
 <p>执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面</p>
 </blockquote>
-<h2 id="克隆远程版本库"><a href="#克隆远程版本库" class="headerlink" title="克隆远程版本库"></a>克隆远程版本库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git@github.com:sunyazhou13/sunyazhou13.github.io.git</div></pre></td></tr></table></figure>
-<h2 id="查看当前代码库状况"><a href="#查看当前代码库状况" class="headerlink" title="查看当前代码库状况"></a>查看当前代码库状况</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git status</div></pre></td></tr></table></figure>
+<h2 id="克隆远程版本库">克隆远程版本库</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git@github.com:sunyazhou13/sunyazhou13.github.io.git</div></pre></td></tr></table></figure>
+<h2 id="查看当前代码库状况">查看当前代码库状况</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git status</div></pre></td></tr></table></figure>
 <blockquote>
 <p><code>git status</code> 命令会显示当前代码库的状况，包括添加，修改（modified），删除（deleted）</p>
 </blockquote>
-<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>指向git当前最新版本为<code>HEAD</code>，<code>HEAD^</code>表示上一版本，<code>HEAD^^</code>上上一个版本，<code>HEAD~100</code>表示往上100个版本</p>
-<h2 id="添加本地修改代码"><a href="#添加本地修改代码" class="headerlink" title="添加本地修改代码"></a>添加本地修改代码</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">//添加当前目录的所有修改</div><div class="line">$ git add .</div></pre></td></tr></table></figure>
+<h2 id="版本管理">版本管理</h2>
+<p>指向git当前最新版本为<code>HEAD</code>，<code>HEAD^</code>表示上一版本，<code>HEAD^^</code>上上一个版本，<code>HEAD~100</code>表示往上100个版本</p>
+<h2 id="添加本地修改代码">添加本地修改代码</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">//添加当前目录的所有修改</div><div class="line">$ git add .</div></pre></td></tr></table></figure>
 <blockquote>
-<p>//如果需要添加指定文件可以这样<br><code>$ git add  A B  C</code>  // 中间用空格隔开<br>//如果有些文件标红 代表未纳入git 管理 可以 <code>rm -rf xxx</code>删除该文件<br>//如果有些文件标黄 代表有修改<br>//如果有些文件标绿 代表有文件已经纳入 <code>git</code> 管理</p>
+<p>//如果需要添加指定文件可以这样<br>
+<code>$ git add  A B  C</code> // 中间用空格隔开<br>
+//如果有些文件标红 代表未纳入git 管理 可以 <code>rm -rf xxx</code>删除该文件<br>
+//如果有些文件标黄 代表有修改<br>
+//如果有些文件标绿 代表有文件已经纳入 <code>git</code> 管理</p>
 </blockquote>
-<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git commit -am <span class="string">"[产品名称][迭代名称] 1.修改点 2.修改点xxx"</span></div></pre></td></tr></table></figure>
-<h2 id="push到git代码仓库"><a href="#push到git代码仓库" class="headerlink" title="push到git代码仓库"></a>push到<code>git</code>代码仓库</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
+<h2 id="提交">提交</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git commit -am <span class="string">"[产品名称][迭代名称] 1.修改点 2.修改点xxx"</span></div></pre></td></tr></table></figure>
+<h2 id="push到git代码仓库">push到<code>git</code>代码仓库</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
 <blockquote>
 <p>如果是第一次提交 使用 <code>git push -u origin master</code></p>
 </blockquote>
-<h2 id="push-的时候进行代码追踪"><a href="#push-的时候进行代码追踪" class="headerlink" title="push 的时候进行代码追踪"></a>push 的时候进行代码追踪</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --<span class="built_in">set</span>-upstream origin + 分支名</div></pre></td></tr></table></figure>
-<h2 id="如果提交被废弃"><a href="#如果提交被废弃" class="headerlink" title="如果提交被废弃"></a>如果提交被废弃</h2><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
+<h2 id="push-的时候进行代码追踪">push 的时候进行代码追踪</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git push --<span class="built_in">set</span>-upstream origin + 分支名</div></pre></td></tr></table></figure>
+<h2 id="如果提交被废弃">如果提交被废弃</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git fetch origin master</div><div class="line">$ git reset --soft origin/master</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"some comments"</span></div><div class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/master</div></pre></td></tr></table></figure>
 <blockquote>
 <p>回到本地代码库库中，执行</p>
 </blockquote>
-<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><p>创建分支并切换过去<br><figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git branch -b 分支名</div></pre></td></tr></table></figure></p>
+<h2 id="分支管理">分支管理</h2>
+<p>创建分支并切换过去 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git branch -b 分支名</div></pre></td></tr></table></figure></p>
 <p>切换分支</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git checkout 分支名</div></pre></td></tr></table></figure>
 <blockquote>
 <p>查看远程分支 <code>git branch -r</code> r 代表remote</p>
 </blockquote>
-<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p><code>$ git merge br-name</code>将<code>br-name</code>分支合并到当前分支下<br>加入<code>--no-ff</code>则表示禁用Fast forward模式。即新建commit而不是切换HEAD指针来实现<br><code>$ git merge --no-ff -m &quot;merge with no-ff&quot; dev</code><br>合并分支前可以通过<code>git diff &lt;source_branch&gt; &lt;target_branch&gt;</code>来查看两者不同</p>
-<h2 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h2><p>merge分支时，如果两分支对同一地方做了不同的修改，则为冲突，冲突的文件git会生成如下内容</p>
+<h2 id="合并分支">合并分支</h2>
+<p><code>$ git merge br-name</code>将<code>br-name</code>分支合并到当前分支下 加入<code>--no-ff</code>则表示禁用Fast forward模式。即新建commit而不是切换HEAD指针来实现 <code>$ git merge --no-ff -m "merge with no-ff" dev</code> 合并分支前可以通过<code>git diff &lt;source_branch&gt; &lt;target_branch&gt;</code>来查看两者不同</p>
+<h2 id="合并冲突">合并冲突</h2>
+<p>merge分支时，如果两分支对同一地方做了不同的修改，则为冲突，冲突的文件git会生成如下内容</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD </div><div class="line">Creating a new branch is quick &amp; simple. </div><div class="line">======= </div><div class="line">Creating a new branch is quick AND simple. </div><div class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</div></pre></td></tr></table></figure>
 <p>解决完冲突 合并之后 记得执行</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ git rebase --<span class="built_in">continue</span></div></pre></td></tr></table></figure>
@@ -239,7 +259,7 @@
 <p><a href="https://www.zybuluo.com/ValenW/note/364756" target="_blank" rel="external">详细资料参考</a></p>
 <p>批量删除 本地分支</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">git branch | grep &apos;branchName&apos; |xargs git branch -D</div></pre></td></tr></table></figure>
-<p>这个是通过 shell 管道命令来实现的批量删除分支的功能。<br><strong>grep</strong>是对<strong>git branch</strong>的输出结果进行匹配，匹配值为<strong>branchName</strong>。<br><strong>xargs</strong>的作用是将参数列表转换成小块分段传递给其他命令。<br>所以这个命令的意思就是<br>从分支列表中匹配到指定的分支，然后一个一个（分成小块）传递给删除分支的命令，最后进行删除。<br>从而达到批量删除分支的目的</p>
+<p>这个是通过 shell 管道命令来实现的批量删除分支的功能。 <strong>grep</strong>是对<strong>git branch</strong>的输出结果进行匹配，匹配值为<strong>branchName</strong>。 <strong>xargs</strong>的作用是将参数列表转换成小块分段传递给其他命令。 所以这个命令的意思就是 从分支列表中匹配到指定的分支，然后一个一个（分成小块）传递给删除分支的命令，最后进行删除。 从而达到批量删除分支的目的</p>
 <p>例如:我想删除本地 以 5.8.开头的分支 我可以这样写</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"></div><div class="line">git branch | grep <span class="string">'5.8.*'</span> |xargs git branch -D</div></pre></td></tr></table></figure>
 <p>通过通配符即可</p>
@@ -302,13 +322,14 @@
                 <p class="excerpt">
                 
                 DFS需求背景
+
 在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况
 
 1. 如果文件里面包含子文件夹的N层嵌套
 2. 如何过滤非空文件夹
 3. 如何处理根层文件夹没有文件那么文件目录也需要创建
-举例例子
-这种文件夹如何 此文件夹为空且是叶子结点 走上传逻辑(就是发个 http
+举例例子 
+这种文件夹如何 此文件夹为空且是叶子结点 走上传逻辑(就是发个 ht
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-02-10T02:07:55.000Z" class="post-list__meta--date date">2017-02-10</time>
@@ -412,5 +433,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

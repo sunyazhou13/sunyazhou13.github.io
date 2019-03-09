@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -184,9 +186,10 @@
       <h2 class="post-list__post-title post-title"><a href="/2017/02/17/iOS-internationalization-language-some-skills/" title="link to post.title">iOS语言本地化/国际化一些技巧</a></h2>
       <p class="excerpt">
     
-      代码获取国际化语言数组  获取当前app使用的语言NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firstObject;NSLog(@&quot;模拟器语言：%@&quot;,language1);
-切换语言 en代表 英语, zh-Hans 简体中文, zh-Hant 繁体中文.  
-NSArray *lans = @[
+      代码获取国际化语言数组
+获取当前app使用的语言 NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firstObject;NSLog(@&quot;模拟器语言：%@&quot;,language1);
+切换语言 en代表 英语, zh-Hans 简体中文, zh-Hant 繁体中文.
+NSArray *lans = @[@&quot;
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
@@ -203,19 +206,26 @@ NSArray *lans = @[
       <p class="excerpt">
     
       
-Jekyll迁移到Hexo搭建个人博客  
+Jekyll迁移到Hexo搭建个人博客
+
+
 HEXO + Github 搭建自己的博客系统
+
+
 利用Hexo和Github Pages搭建个人博客
 
-1 初级功能github pages  配置 大家自行google吧 真的很简单
-上边是我参考的文章主要是环境比较费劲  
-1. nodejs  
-2. npm包管理工具  
-3. hexo  
-4. nvm管理node  
-5. 本地配置重启shell又被reverse  
+1 初级功能
+github pages 配置 大家自行google吧 真的很简单
+上边是我参考的文章
+主要是环境比较费劲
+1. nodejs
+2. npm包管理工具
+3. hexo
+4. nvm管理node
+5. 本地配置重启shell又被reverse
 6. ...其它
-2 高级功能部分打赏 自行 搜索简书吧 很多 主题不太一
+2 高级功能部分
+打赏 自行 搜索简书吧 很多 主题不太一样 套路都是一样
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-10T02:24:25.000Z" class="post-list__meta--date date">2017-02-10</time>
@@ -232,16 +242,16 @@ HEXO + Github 搭建自己的博客系统
       <p class="excerpt">
     
       DFS需求背景
+
 在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况
 
 1. 如果文件里面包含子文件夹的N层嵌套
 2. 如何过滤非空文件夹
 3. 如何处理根层文件夹没有文件那么文件目录也需要创建
-举例例子
+举例例子 
 这种文件夹如何 此文件夹为空且是叶子结点 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 /1/ 的话应该就不用创建了.
-还有一种情况  
-
-eg: ~/Do
+还有一种情况
+&amp;gt; eg: 
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-10T02:07:55.000Z" class="post-list__meta--date date">2017-02-10</time>
@@ -258,15 +268,19 @@ eg: ~/Do
       <p class="excerpt">
     
       
-全局配置git$ git config --global user.name &quot;username&quot;  $ git config --global user.email &quot;email@you.com&quot;
+全局配置git
+$ git config --global user.name &quot;username&quot;  $ git config --global user.email &quot;email@you.com&quot;
 
-username 一般代表提交的本机用户名email@you.com 一般是邮箱地址 
+username 一般代表提交的本机用户名
+email@you.com 一般是邮箱地址
 
-创建本地仓库进行初始化  $ git init
+创建本地仓库进行初始化
+$ git init
 
 执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面
 
-克隆远程版本库$ git clone git@github.com:sunyaz
+克隆远程版本库
+$ git clone git@github.com:sunya
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-09T11:35:45.000Z" class="post-list__meta--date date">2017-02-09</time>
@@ -299,13 +313,12 @@ username 一般代表提交的本机用户名email@you.com 一般是邮箱地址
       <h2 class="post-list__post-title post-title"><a href="/2017/01/28/2017-Spring-Festival/" title="link to post.title">2017回家过年</a></h2>
       <p class="excerpt">
     
-      
-
-练习了一年的小楷, 感谢老乡潘旭的帮助，我的书法有很多提升.
-
-出发当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
-高铁睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。我就是从这片黑土地走出去的年轻人, 我23年没有离开过这片黑土地，如今在京码砖好几年。买房没资格,买车没牌照,只能每天骑车我心爱的小牛M1上班。(其实我内心是崩溃的),只有雾霾陪着哥,有事没事来北京看看我和北京的土著。
-24岁入职百度如今已
+       &amp;gt; 练习了一年的小楷, 感谢老乡潘旭的帮助，我的书法有很多提升.
+出发
+当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了  这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
+高铁
+睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。  我就是从这片黑土地走出去的年轻人, 我23年没有离开过这片黑土地，如今在京码砖好几年。买房没资格,买车没牌照,只能每天骑车我心爱的小牛M1上班。(其实我内心是崩溃的),只有雾霾陪着哥,有事没事来北京看看我和北京的土著。
+2
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-01-28T05:42:34.000Z" class="post-list__meta--date date">2017-01-28</time>
@@ -344,17 +357,17 @@ iOS技
 开发总结
 
 
+macOS icon
 
 
-学习完所有raywenderlich的macOS开发教程
-Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
-[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版必看
+
+学习完所有__raywenderlich__的__macOS__开发教程
+__Cocoa Programming for OS X (5th Edition)__必看(英文版没有中文)
+__[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版__必看
 
 
 以上这些必须看一遍 包括那两本epub的书籍 虽然都是英文的(我本人英语应该不算太好但也不差)看这个很easy
-博客
-
-老谭笔记 这个大牛是原新浪网盘mac端的技术开发他的每一篇文章我都看
+博客 &amp;gt; 老谭
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-01-13T03:38:30.000Z" class="post-list__meta--date date">2017-01-13</time>
@@ -370,7 +383,8 @@ Cocoa Programming for OS X (5th Edition)必看(英文版没有中文)
       <h2 class="post-list__post-title post-title"><a href="/2017/01/13/UIViewController-code-standard/" title="link to post.title">UIViewController代码规范</a></h2>
       <p class="excerpt">
     
-      Objective-C#pragma mark -#pragma mark - private methods 私有方法#pragma mark -#pragma mark - public methods 公有方法#pragma mark -#pragma mark - override methods 复写方法#pragma mark -#pragma mark - getters and setters 设置器和访问器#pragma mark -#pragma mark - UITable
+      Objective-C
+#pragma mark -#pragma mark - private methods 私有方法#pragma mark -#pragma mark - public methods 公有方法#pragma mark -#pragma mark - override methods 复写方法#pragma mark -#pragma mark - getters and setters 设置器和访问器#pragma mark -#pragma mark - UITabl
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-01-13T03:18:07.000Z" class="post-list__meta--date date">2017-01-13</time>
@@ -442,5 +456,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

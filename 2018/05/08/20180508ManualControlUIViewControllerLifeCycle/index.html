@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,25 +191,29 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头条等.这篇文章回味一下古老的手动控制视图控制器的生命周期的API.</p>
-<h1 id="UIViewController"><a href="#UIViewController" class="headerlink" title="UIViewController"></a>UIViewController</h1><p>我们在使用<code>addChildViewController:</code>的时候会遇到个问题.如何手动控制被添加控制器的生命周期.</p>
+    <h1 id="前言">前言</h1>
+<p>话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头条等.这篇文章回味一下古老的手动控制视图控制器的生命周期的API.</p>
+<h1 id="uiviewcontroller">UIViewController</h1>
+<p>我们在使用<code>addChildViewController:</code>的时候会遇到个问题.如何手动控制被添加控制器的生命周期.</p>
 <p>如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">self</span>.vc1 = [[VC1ViewController alloc] init]; <span class="comment">//子控制器</span></div><div class="line"><span class="keyword">self</span>.vc2 = [[VC2ViewController alloc] init]; <span class="comment">//子控制器</span></div><div class="line">    </div><div class="line">[<span class="keyword">self</span> addChildViewController:<span class="keyword">self</span>.vc1]; <span class="comment">//添加到父控制器中</span></div><div class="line">[<span class="keyword">self</span>.view addSubview:<span class="keyword">self</span>.vc1.view];   <span class="comment">//把子控制器的 view 添加到父控制器的 view 上面</span></div><div class="line"><span class="keyword">self</span>.vc1.view.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>); <span class="comment">//设置 frame</span></div><div class="line">[<span class="keyword">self</span>.vc1 didMoveToParentViewController:<span class="keyword">self</span>];<span class="comment">//子控制器被通知有了一个父控制器</span></div><div class="line"></div><div class="line"></div><div class="line">    </div><div class="line">[<span class="keyword">self</span> addChildViewController:<span class="keyword">self</span>.vc2];</div><div class="line">[<span class="keyword">self</span>.view addSubview:<span class="keyword">self</span>.vc2.view];</div><div class="line"><span class="keyword">self</span>.vc2.view.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>);</div><div class="line">[<span class="keyword">self</span>.vc2 didMoveToParentViewController:<span class="keyword">self</span>];<span class="comment">//子控制器被通知有了一个父控制器</span></div></pre></td></tr></table></figure>
 <p>如果是移除的话使用如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//移除一个 childViewController</span></div><div class="line">[<span class="keyword">self</span>.vc1 willMoveToParentViewController:<span class="literal">nil</span>];<span class="comment">//子控制器被通知即将解除父子关系</span></div><div class="line">[<span class="keyword">self</span>.vc1.view removeFromSuperview];<span class="comment">//把子控制器的 view 从到父控制器的 view 上面移除</span></div><div class="line">[<span class="keyword">self</span>.vc1 removeFromParentViewController];<span class="comment">//真正的解除关系,会自己调用 [self.vc1 didMoveToParentViewController:nil]</span></div></pre></td></tr></table></figure>
-<p>当我们添加child到父控制器的时候<br>它的</p>
+<p>当我们添加child到父控制器的时候 它的</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated&#123;</div><div class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated&#123;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidDisappear:(<span class="built_in">BOOL</span>)animated&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidDisappear:animated];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这些放系统内部会自动帮我们调用</p>
-<h4 id="手动管理child-ViewController-的生命周期方法"><a href="#手动管理child-ViewController-的生命周期方法" class="headerlink" title="手动管理child ViewController 的生命周期方法"></a>手动管理child ViewController 的生命周期方法</h4><p>需要在父ViewController里面复写如下方法 并返回<code>NO</code></p>
+<h4 id="手动管理child-viewcontroller-的生命周期方法">手动管理child ViewController 的生命周期方法</h4>
+<p>需要在父ViewController里面复写如下方法 并返回<code>NO</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)shouldAutomaticallyForwardAppearanceMethods&#123;</div><div class="line">    <span class="comment">//手动管理子VC的生命周期</span></div><div class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>不过我们需要注意的是，不能手动调用 viewWillAppear、viewDidAppear等等这些方法，而应该调用：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)beginAppearanceTransition:(<span class="built_in">BOOL</span>)isAppearing animated:(<span class="built_in">BOOL</span>)animated;</div><div class="line">- (<span class="keyword">void</span>)endAppearanceTransition;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>注意:<em><strong>用这两个方法来间接触发子控制器的生命周期，并且它们需要成对使用</strong></em></p>
 </blockquote>
-<p><code>isAppearing</code> 设置为 <code>YES</code> : 触发 <code>viewWillAppear:</code>;  </p>
+<p><code>isAppearing</code> 设置为 <code>YES</code> : 触发 <code>viewWillAppear:</code>;</p>
 <p><code>isAppearing</code> 设置为 <code>NO</code> : 触发 <code>viewWillDisappear:</code>;</p>
-<p><code>endAppearanceTransition</code>方法会基于我们传入的<code>isAppearing</code><br>来调用<code>viewDidAppear:</code>以及<code>viewDidDisappear:</code>方法</p>
+<p><code>endAppearanceTransition</code>方法会基于我们传入的<code>isAppearing</code><br>
+来调用<code>viewDidAppear:</code>以及<code>viewDidDisappear:</code>方法</p>
 <p>为了测试我写一段代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)click:(<span class="built_in">UIButton</span> *)sender &#123;</div><div class="line">    sender.selected = !sender.selected;</div><div class="line">    <span class="keyword">if</span> (sender.selected) &#123;</div><div class="line">        [<span class="keyword">self</span>.vc1 beginAppearanceTransition:<span class="literal">NO</span> animated:<span class="literal">YES</span>];  <span class="comment">//调用vc1的 viewWillDisappear:</span></div><div class="line">        [<span class="keyword">self</span>.vc2 beginAppearanceTransition:<span class="literal">YES</span> animated:<span class="literal">YES</span>];  <span class="comment">//调用vc2的 viewWillAppear:</span></div><div class="line">        [<span class="keyword">self</span>.vc1 endAppearanceTransition]; <span class="comment">//调用vc1的viewDidDisappear: </span></div><div class="line">        [<span class="keyword">self</span>.vc2 endAppearanceTransition]; <span class="comment">//调用vc2的viewDidAppear:</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        [<span class="keyword">self</span>.vc1 beginAppearanceTransition:<span class="literal">YES</span> animated:<span class="literal">YES</span>];</div><div class="line">        [<span class="keyword">self</span>.vc2 beginAppearanceTransition:<span class="literal">NO</span> animated:<span class="literal">YES</span>];</div><div class="line">        [<span class="keyword">self</span>.vc1 endAppearanceTransition];</div><div class="line">        [<span class="keyword">self</span>.vc2 endAppearanceTransition];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><a href="https://github.com/sunyazhou13/VCLifeCycle" target="_blank" rel="external">Demo</a></p>
@@ -267,9 +273,11 @@
                 <p class="excerpt">
                 
                 
-前言开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
+前言
+开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
 这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
-通常导角self.view.cornerRadius = 20.0self.view.clipToB
+通常导角
+self.view.cornerRadius = 20.0self.view.clipT
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
@@ -288,9 +296,11 @@
                 <p class="excerpt">
                 
                 
-前言声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果….
+前言
+声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果....
 今天带领大家深入了解和学习一下这些音效.
-实现iOS变声的背景声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实
+实现iOS变声的背景
+声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
@@ -375,5 +385,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

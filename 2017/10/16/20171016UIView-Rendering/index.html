@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,12 +191,16 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
-<h3 id="理解-UIView-的绘制-UIView-是如何显示到-Screen-上的"><a href="#理解-UIView-的绘制-UIView-是如何显示到-Screen-上的" class="headerlink" title="理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?"></a>理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?</h3><p>首先要从<code>Runloop</code>开始说,iOS 的<code>MainRunloop</code> 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:</p>
+    <figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"><figcaption>UIView渲染</figcaption>
+</figure>
+<h1 id="前言">前言</h1>
+<p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
+<h3 id="理解-uiview-的绘制-uiview-是如何显示到-screen-上的">理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?</h3>
+<p>首先要从<code>Runloop</code>开始说,iOS 的<code>MainRunloop</code> 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:</p>
 <ul>
 <li><code>view</code>的缓冲区创建</li>
-<li><code>view</code>内容的绘制(如果重写了 drawRect)  </li>
+<li><code>view</code>内容的绘制(如果重写了 drawRect)</li>
 </ul>
 <p>这些 <code>CPU</code>的工作.</p>
 <p>然后将这个缓冲区交给<code>GPU</code>渲染, 这个过程又包含:</p>
@@ -202,80 +208,105 @@
 <li>多个<code>view</code>的拼接(compositing)</li>
 <li>纹理的渲染(Texture)等.</li>
 </ul>
-<p>最终现实在屏幕上.因此,如果在16.7ms 内完不成这些操作, eg: CPU做了太多的工作, 或者<code>view</code>层次过于多,图片过于大,导致<code>GPU</code>压力太大,就会导致”卡”的现象,也就是 <strong>丢帧</strong>,<strong>掉帧</strong>.</p>
+<p>最终现实在屏幕上.因此,如果在16.7ms 内完不成这些操作, eg: CPU做了太多的工作, 或者<code>view</code>层次过于多,图片过于大,导致<code>GPU</code>压力太大,就会导致"卡"的现象,也就是 <strong>丢帧</strong>,<strong>掉帧</strong>.</p>
 <p>苹果官方给出的最佳帧率是:<strong>60fps</strong>(60Hz),也就是一帧不丢, 当然这是理想中的绝佳体验.</p>
-<h3 id="这个60fps该怎么理解呢？"><a href="#这个60fps该怎么理解呢？" class="headerlink" title="这个60fps该怎么理解呢？"></a>这个<code>60fps</code>该怎么理解呢？</h3><p>一般来说如果帧率达到 <code>25+fps</code>(fps &gt;= 25帧以上,不是25加别看错),人眼就基本感觉不到卡顿了,因此,如果你能让你的 iOS 程序<strong>稳定</strong>保持在<code>30fps</code>已经很不错了, 注释,是”稳定”在30fps,而不是, <code>10fps</code>,<code>40fps</code>,<code>20fps</code>这样的跳动,如果帧频不稳就会有卡的感觉,<code>60fps</code>真的很难达到, 尤其是在 iPhone 4/4s等 32bit 位机上,不过现在苹果已经全面放弃32位,支持最低64位会好很多.</p>
+<h3 id="这个60fps该怎么理解呢">这个<code>60fps</code>该怎么理解呢？</h3>
+<p>一般来说如果帧率达到 <code>25+fps</code>(fps &gt;= 25帧以上,不是25加别看错),人眼就基本感觉不到卡顿了,因此,如果你能让你的 iOS 程序__稳定__保持在<code>30fps</code>已经很不错了, 注释,是"稳定"在30fps,而不是, <code>10fps</code>,<code>40fps</code>,<code>20fps</code>这样的跳动,如果帧频不稳就会有卡的感觉,<code>60fps</code>真的很难达到, 尤其是在 iPhone 4/4s等 32bit 位机上,不过现在苹果已经全面放弃32位,支持最低64位会好很多.</p>
 <p>总的来说, UIView从绘制到Render的过程有如下几步：</p>
 <ul>
 <li>每一个<code>UIView</code>都有一个<code>layer</code></li>
-<li>每一个<code>layer</code>都有个<code>content</code>,这个<code>content</code>指向的是一块缓存,叫做<strong><code>backing store</code></strong>.  </li>
+<li>每一个<code>layer</code>都有个<code>content</code>,这个<code>content</code>指向的是一块缓存,叫做__<code>backing store</code>__.</li>
 </ul>
 <p><code>UIView</code>的绘制和渲染是两个过程:</p>
 <ul>
-<li>当<code>UIView</code>被绘制时,CPU执行<code>drawRect</code>，通过<code>context</code>将数据写入<strong><code>backing store</code></strong>  </li>
-<li>当<strong><code>backing store</code></strong>写完后，通过render server交给GPU去渲染，将backing store中的bitmap数据显示在屏幕上.</li>
+<li>当<code>UIView</code>被绘制时,CPU执行<code>drawRect</code>，通过<code>context</code>将数据写入__<code>backing store</code>__<br>
+</li>
+<li>当__<code>backing store</code>__写完后，通过render server交给GPU去渲染，将backing store中的bitmap数据显示在屏幕上.</li>
 </ul>
 <p>上面提到的从<code>CPU</code>到<code>GPU</code>的过程可用下图表示:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CPU_to_GPU.001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CPU_to_GPU.001.png"></p>
 <p>下面具体来讨论下这个过程</p>
 <ul>
 <li>CPU bound:</li>
 </ul>
 <p>假设我们创建一个 UILabel</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UILabel</span>* label = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">50</span>, <span class="number">300</span>, <span class="number">14</span>)];</div><div class="line">label.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">label.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>f];</div><div class="line">label.text = <span class="string">@"test"</span>;</div><div class="line">[<span class="keyword">self</span>.view addSubview:label];</div></pre></td></tr></table></figure>
-<p>这个时候不会发生任何操作, 由于 UILabel 重写了<code>drawRect</code>方法,因此,这个 <code>View</code>会被 <code>marked as &quot;dirty&quot;</code>:</p>
+<p>这个时候不会发生任何操作, 由于 UILabel 重写了<code>drawRect</code>方法,因此,这个 <code>View</code>会被 <code>marked as "dirty"</code>:</p>
 <p>类似这个样子:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/179212e7ed967e07c602dbe7eef101c4c5eb7b16/20171016UIView-Rendering/drawRect.png" alt=""></p>
-<p>然后一个新的<code>Runloop</code>到来，上面说道在这个<code>Runloop</code>中需要将界面渲染上去，对于<code>UIKit</code>的渲染，Apple用的是它的<code>Core Animation</code>。<br>做法是在Runloop开始的时候调用：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/179212e7ed967e07c602dbe7eef101c4c5eb7b16/20171016UIView-Rendering/drawRect.png"></p>
+<p>然后一个新的<code>Runloop</code>到来，上面说道在这个<code>Runloop</code>中需要将界面渲染上去，对于<code>UIKit</code>的渲染，Apple用的是它的<code>Core Animation</code>。 做法是在Runloop开始的时候调用：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">CATransaction</span> begin]</div></pre></td></tr></table></figure>
-<p>在<code>Runloop</code>结束的时候调用  </p>
+<p>在<code>Runloop</code>结束的时候调用</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">[<span class="built_in">CATransaction</span> commit]</div></pre></td></tr></table></figure>
-<p>在<code>begin</code>和<code>commit</code>之间做的事情是将<code>view</code>增加到<code>view hierarchy</code>中，这个时候也不会发生任何绘制的操作。<br>当<code>[CATransaction commit]</code>执行完后，<code>CPU</code>开始绘制这个<code>view</code>:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CATransaction_commit.png" alt="CPU绘制图"></p>
-<p>首先<code>CPU</code>会为<code>layer</code>分配一块内存用来绘制<code>bitmap</code>，叫做<strong><code>backing store</code></strong><br>创建指向这块<code>bitmap</code>缓冲区的指针，叫做<code>CGContextRef</code><br>通过<code>Core Graphic</code>的<code>api</code>，也叫<code>Quartz2D</code>，绘制<code>bitmap</code><br>将<code>layer</code>的<code>content</code>指向生成的<code>bitmap</code><br>清空<code>dirty flag</code>标记<br>这样<code>CPU</code>的绘制基本上就完成了.<br>通过<code>time profiler</code>可以完整的看到个过程：  </p>
+<p>在<code>begin</code>和<code>commit</code>之间做的事情是将<code>view</code>增加到<code>view hierarchy</code>中，这个时候也不会发生任何绘制的操作。 当<code>[CATransaction commit]</code>执行完后，<code>CPU</code>开始绘制这个<code>view</code>:</p>
+<figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CATransaction_commit.png" alt="CPU绘制图"><figcaption>CPU绘制图</figcaption>
+</figure>
+<p>首先<code>CPU</code>会为<code>layer</code>分配一块内存用来绘制<code>bitmap</code>，叫做__<code>backing store</code>__<br>
+创建指向这块<code>bitmap</code>缓冲区的指针，叫做<code>CGContextRef</code><br>
+通过<code>Core Graphic</code>的<code>api</code>，也叫<code>Quartz2D</code>，绘制<code>bitmap</code><br>
+将<code>layer</code>的<code>content</code>指向生成的<code>bitmap</code><br>
+清空<code>dirty flag</code>标记<br>
+这样<code>CPU</code>的绘制基本上就完成了.<br>
+通过<code>time profiler</code>可以完整的看到个过程：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"></div><div class="line">Running Time Self Symbol Name</div><div class="line">2.0ms 1.2% 0.0 +[CATransaction flush]</div><div class="line">2.0ms 1.2% 0.0 CA::Transaction::commit()</div><div class="line">2.0ms 1.2% 0.0 CA::Context::commit_transaction(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::layout_and_display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display()</div><div class="line">1.0ms 0.6% 0.0 -[CALayer _display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_()</div><div class="line">1.0ms 0.6% 0.0 CABackingStoreUpdate_</div><div class="line">1.0ms 0.6% 0.0 backing_callback(CGContext*, void*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer drawInContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UIView(CALayerDelegate) drawLayer:inContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawRect:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawTextInRect:]</div></pre></td></tr></table></figure>
-<p>假如某个时刻修改了<code>label</code>的<code>text</code>:  </p>
+<p>假如某个时刻修改了<code>label</code>的<code>text</code>:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.text = <span class="string">@"hello world"</span>;</div></pre></td></tr></table></figure>
-<p>由于内容变了,<code>layer</code>的<code>content</code>的<code>bitmap</code>的尺寸也要变化，因此这个时候当新的<code>Runloop</code>到来时，<code>CPU</code>要为<code>layer</code>重新创建一个<code>backing store</code>，重新绘制<code>bitmap</code>.<br><code>CPU</code>这一块最耗时的地方往往在<code>Core Graphic</code>的绘制上，关于<code>Core Graphic</code>的性能优化是另一个话题了，又会牵扯到很多东西，就不在这里讨论了.</p>
+<p>由于内容变了,<code>layer</code>的<code>content</code>的<code>bitmap</code>的尺寸也要变化，因此这个时候当新的<code>Runloop</code>到来时，<code>CPU</code>要为<code>layer</code>重新创建一个<code>backing store</code>，重新绘制<code>bitmap</code>.<br>
+<code>CPU</code>这一块最耗时的地方往往在<code>Core Graphic</code>的绘制上，关于<code>Core Graphic</code>的性能优化是另一个话题了，又会牵扯到很多东西，就不在这里讨论了.</p>
 <p>GPU bound：</p>
-<p><code>CPU</code>完成了它的任务：将<code>view</code>变成了<code>bitmap</code>，然后就是<code>GPU</code>的工作了，<code>GPU</code>处理的单位是<code>Texture</code>.<br>基本上我们控制<code>GPU</code>都是通过<code>OpenGL</code>来完成的，但是从<code>bitmap</code>到<code>Texture</code>之间需要一座桥梁，<code>Core Animation</code>正好充当了这个角色：<br><code>Core Animation</code>对<code>OpenGL</code>的<code>api</code>有一层封装，当我们要渲染的<code>layer</code>已经有了<code>bitmap content</code>的时候，这个<code>content</code>一般来说是一个<code>CGImageRef</code>，<code>CoreAnimation</code>会创建一个<code>OpenGL</code>的<code>Texture</code>并将<code>CGImageRef（bitmap）</code>和这个<code>Texture</code>绑定，通过<code>TextureID</code>来标识。<br>这个对应关系建立起来之后，剩下的任务就是<code>GPU</code>如何将<code>Texture</code>渲染到屏幕上了。<br><code>GPU</code>大致的工作模式如下：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8f92ec74bfc31508293f5a6cadcd68ac703eb1a0/20171016UIView-Rendering/GPU_work.png" alt=""></p>
+<p><code>CPU</code>完成了它的任务：将<code>view</code>变成了<code>bitmap</code>，然后就是<code>GPU</code>的工作了，<code>GPU</code>处理的单位是<code>Texture</code>.<br>
+基本上我们控制<code>GPU</code>都是通过<code>OpenGL</code>来完成的，但是从<code>bitmap</code>到<code>Texture</code>之间需要一座桥梁，<code>Core Animation</code>正好充当了这个角色：<br>
+<code>Core Animation</code>对<code>OpenGL</code>的<code>api</code>有一层封装，当我们要渲染的<code>layer</code>已经有了<code>bitmap content</code>的时候，这个<code>content</code>一般来说是一个<code>CGImageRef</code>，<code>CoreAnimation</code>会创建一个<code>OpenGL</code>的<code>Texture</code>并将<code>CGImageRef（bitmap）</code>和这个<code>Texture</code>绑定，通过<code>TextureID</code>来标识。<br>
+这个对应关系建立起来之后，剩下的任务就是<code>GPU</code>如何将<code>Texture</code>渲染到屏幕上了。 <code>GPU</code>大致的工作模式如下：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8f92ec74bfc31508293f5a6cadcd68ac703eb1a0/20171016UIView-Rendering/GPU_work.png"></p>
 <p>整个过程也就是一件事：</p>
-<p><code>CPU</code>将准备好的<code>bitmap</code>放到<code>RAM</code>里，<code>GPU</code>去搬这快内存到<code>VRAM</code>中处理。<br>而这个过程<code>GPU</code>所能承受的极限大概在16.7ms完成一帧的处理，所以最开始提到的60fps其实就是GPU能处理的最高频率.<br>因此，<code>GPU</code>的挑战有两个：</p>
+<p><code>CPU</code>将准备好的<code>bitmap</code>放到<code>RAM</code>里，<code>GPU</code>去搬这快内存到<code>VRAM</code>中处理。 而这个过程<code>GPU</code>所能承受的极限大概在16.7ms完成一帧的处理，所以最开始提到的60fps其实就是GPU能处理的最高频率.<br>
+因此，<code>GPU</code>的挑战有两个：</p>
 <ul>
 <li>将数据从<code>RAM</code>搬到<code>VRAM</code>中</li>
-<li>将<code>Texture</code>渲染到屏幕上    </li>
+<li>将<code>Texture</code>渲染到屏幕上</li>
 </ul>
 <p>这两个中瓶颈基本在第二点上。渲染<code>Texture</code>基本要处理这么几个问题：</p>
 <ul>
 <li>Compositing:</li>
 </ul>
-<p><code>Compositing</code>是指将多个纹理拼到一起的过程，对应<code>UIKit</code>，是指处理多个<code>view</code>合到一起的情况，如:  </p>
+<p><code>Compositing</code>是指将多个纹理拼到一起的过程，对应<code>UIKit</code>，是指处理多个<code>view</code>合到一起的情况，如:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.view addsubview : subview]。</div></pre></td></tr></table></figure>
-<p>如果<code>view</code>之间没有叠加，那么<code>GPU</code>只需要做普通渲染即可.<br>如果多个<code>view</code>之间有叠加部分，<code>GPU</code>需要做<code>blending</code>.  </p>
+<p>如果<code>view</code>之间没有叠加，那么<code>GPU</code>只需要做普通渲染即可.<br>
+如果多个<code>view</code>之间有叠加部分，<code>GPU</code>需要做<code>blending</code>.</p>
 <p>加入两个<code>view</code>大小相同，一个叠加在另一个上面，那么计算公式如下：</p>
-<p><code>R</code> = <code>S</code>+<code>D</code>*(<code>1</code>-<code>Sa</code>)  </p>
+<p><code>R</code> = <code>S</code>+<code>D</code>*(<code>1</code>-<code>Sa</code>)</p>
 <blockquote>
-<p><code>R</code>: 为最终的像素值<br><code>S</code>: 代表 上面的Texture（Top Texture）<br><code>D</code>: 代表下面的Texture(lower Texture)  </p>
+<p><code>R</code>: 为最终的像素值<br>
+<code>S</code>: 代表 上面的Texture（Top Texture）<br>
+<code>D</code>: 代表下面的Texture(lower Texture)</p>
 </blockquote>
-<p>其中<code>S</code>,<code>D</code>都已经<code>pre-multiplied</code>各自的<code>alpha</code>值。<br><code>Sa</code>代表<code>Texture</code>的<code>alpha</code>值。  </p>
-<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>1</code>，即不透明。那么它会遮住下层的<code>Texture</code>.<br>即,<code>R</code> = <code>S</code>。是合理的。  </p>
-<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>0.5</code>，<br><code>S</code>为<code>(1,0,0)</code>，乘以<code>alpha</code>后为<code>(0.5,0,0）</code>。<br><code>D</code>为<code>(0，0，1)</code>。<br>得到的<code>R</code>为<code>（0.5，0，0.5）</code>。  </p>
-<p>基本上每个像素点都需要这么计算一次。  </p>
+<p>其中<code>S</code>,<code>D</code>都已经<code>pre-multiplied</code>各自的<code>alpha</code>值。<br>
+<code>Sa</code>代表<code>Texture</code>的<code>alpha</code>值。</p>
+<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>1</code>，即不透明。那么它会遮住下层的<code>Texture</code>.<br>
+即,<code>R</code> = <code>S</code>。是合理的。</p>
+<p>假如<code>Top Texture</code>（上层<code>view</code>）的<code>alpha</code>值为<code>0.5</code>，<br>
+<code>S</code>为<code>(1,0,0)</code>，乘以<code>alpha</code>后为<code>(0.5,0,0）</code>。<br>
+<code>D</code>为<code>(0，0，1)</code>。<br>
+得到的<code>R</code>为<code>（0.5，0，0.5）</code>。</p>
+<p>基本上每个像素点都需要这么计算一次。</p>
 <p>因此，<code>view</code>的层级很复杂，或者<code>view</code>都是半透明的（<code>alpha</code>值不为<code>1</code>）都会带来<code>GPU</code>额外的计算工作。</p>
 <ul>
 <li>Size</li>
 </ul>
-<p>这个问题，主要是处理<code>image</code>带来的，假如内存里有一张<code>400x400</code>的图片，要放到<code>100x100</code>的<code>imageview</code>里，如果不做任何处理，直接丢进去，问题就大了，这意味着，<code>GPU</code>需要对大图进行缩放到小的区域显示，需要做像素点的<code>sampling</code>，这种<code>smapling</code>的代价很高，又需要兼顾<code>pixel alignment</code>。  计算量会飙升。  </p>
+<p>这个问题，主要是处理<code>image</code>带来的，假如内存里有一张<code>400x400</code>的图片，要放到<code>100x100</code>的<code>imageview</code>里，如果不做任何处理，直接丢进去，问题就大了，这意味着，<code>GPU</code>需要对大图进行缩放到小的区域显示，需要做像素点的<code>sampling</code>，这种<code>smapling</code>的代价很高，又需要兼顾<code>pixel alignment</code>。 计算量会飙升。</p>
 <ul>
 <li>Offscreen Rendering And Mask</li>
 </ul>
-<p>如果我们对<code>layer</code>做这样的操作：  </p>
+<p>如果我们对<code>layer</code>做这样的操作：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div></pre></td></tr></table></figure>
-<p>会产生<code>offscreen rendering</code>,它带来的最大的问题是，当渲染这样的<code>layer</code>的时候，需要额外开辟内存，绘制好<code>radius，mask</code>，然后再将绘制好的<code>bitmap</code>重新赋值给<code>layer</code>。<br>因此继续性能的考虑，<code>Quartz</code>提供了优化的<code>api</code>：</p>
+<p>会产生<code>offscreen rendering</code>,它带来的最大的问题是，当渲染这样的<code>layer</code>的时候，需要额外开辟内存，绘制好<code>radius，mask</code>，然后再将绘制好的<code>bitmap</code>重新赋值给<code>layer</code>。<br>
+因此继续性能的考虑，<code>Quartz</code>提供了优化的<code>api</code>：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div><div class="line">label.layer.shouldRasterize = <span class="literal">YES</span>;</div><div class="line">label.layer.rasterizationScale = label.layer.contentsScale;</div></pre></td></tr></table></figure>
-<p>简单的说，这是一种<code>cache</code>机制。<br>同样<code>GPU</code>的性能也可以通过<code>instrument</code>去衡量：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e3fad5583fdd4fd52b11a8fe44a9528b95f8ac1b/20171016UIView-Rendering/rendering_result.png" alt=""></p>
+<p>简单的说，这是一种<code>cache</code>机制。<br>
+同样<code>GPU</code>的性能也可以通过<code>instrument</code>去衡量：</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e3fad5583fdd4fd52b11a8fe44a9528b95f8ac1b/20171016UIView-Rendering/rendering_result.png"></p>
 <p>红色代表<code>GPU</code>需要做额外的工作来渲染<code>View</code>，绿色代表<code>GPU</code>无需做额外的工作来处理<code>bitmap</code>。</p>
 <p>全文完</p>
 
@@ -333,13 +364,14 @@
                 <p class="excerpt">
                 
                 前言
-这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时喵神发表了一篇博文 关于 Swift Error 的分类  
+
+这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时喵神发表了一篇博文 关于 Swift Error 的分类
 
 每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.
 当我仔细看喵神博客的时候发现 原来markdown支持很多html标签的小技巧
 比如:
 
-第一
+喵神文
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
@@ -358,11 +390,14 @@
                 <p class="excerpt">
                 
                 
-前言iOS11 苹果改动了一个比较引开发者关注的亮点
+前言
+iOS11 苹果改动了一个比较引开发者关注的亮点
 UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除
 这个问题在微博上已经争论好几天
-iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都有啥
-#import &amp;lt;DeviceC
+iOS11新的设备唯一标识 DCDevice
+介绍 API
+我们首先看看DCDevice类都有啥
+#import &amp;lt;Devi
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-09-30T01:45:25.000Z" class="post-list__meta--date date">2017-09-30</time>
@@ -447,5 +482,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

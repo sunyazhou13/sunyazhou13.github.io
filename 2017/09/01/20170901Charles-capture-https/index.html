@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,46 +191,52 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png" alt=""></p>
-<p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求 </p>
-<h2 id="1-安装Charles"><a href="#1-安装Charles" class="headerlink" title="1.安装Charles"></a>1.安装Charles</h2><p><a href="https://www.charlesproxy.com/download/" target="_blank" rel="external">官网下载</a>就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 </p>
-<h2 id="2-HTTP抓包配置"><a href="#2-HTTP抓包配置" class="headerlink" title="2.HTTP抓包配置"></a>2.HTTP抓包配置</h2><h4 id="1-查看电脑IP"><a href="#1-查看电脑IP" class="headerlink" title="(1) 查看电脑IP"></a>(1) 查看电脑IP</h4><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_mac.png" alt=""></p>
-<h4 id="2-设置手机HTTP代理"><a href="#2-设置手机HTTP代理" class="headerlink" title="(2) 设置手机HTTP代理"></a>(2) 设置手机HTTP代理</h4><p>手机连上电脑，点击“设置-&gt;无线局域网-&gt;连接的WiFi”，设置HTTP代理：<br>服务器为电脑IP地址：如192.168.1.108<br>端口：8888</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_port_iPhone.png" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png"></p>
+<p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求</p>
+<h2 id="安装charles">1.安装Charles</h2>
+<p><a href="https://www.charlesproxy.com/download/" target="_blank" rel="external">官网下载</a>就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的</p>
+<h2 id="http抓包配置">2.HTTP抓包配置</h2>
+<h4 id="查看电脑ip">(1) 查看电脑IP</h4>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_mac.png"></p>
+<h4 id="设置手机http代理">(2) 设置手机HTTP代理</h4>
+<p>手机连上电脑，点击“设置-&gt;无线局域网-&gt;连接的WiFi”，设置HTTP代理： 服务器为电脑IP地址：如192.168.1.108 端口：8888</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_port_iPhone.png"></p>
 <p>注意:<em>这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP</em></p>
 <p>设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_allow.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_allow.png"></p>
 <p>点击<strong>Allow</strong> 就可以了</p>
-<h3 id="3-HTTPS抓包"><a href="#3-HTTPS抓包" class="headerlink" title="3. HTTPS抓包"></a>3. HTTPS抓包</h3><p>左上角菜单中 选择<code>SSL Proxying Settings</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step1.png" alt=""></p>
-<p>然后 勾选<code>Enable SSL Proxying</code> </p>
+<h3 id="https抓包">3. HTTPS抓包</h3>
+<p>左上角菜单中 选择<code>SSL Proxying Settings</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step1.png"></p>
+<p>然后 勾选<code>Enable SSL Proxying</code></p>
 <p>紧接着点击 <code>Add</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step2.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step2.png"></p>
 <p>再然后在</p>
 <p><code>Host</code>: 输入 <code>*</code> 代表通配所有 如果你要截获 比如 *.baidu.com那就写上</p>
 <p><code>Port</code>: 443 默认端口 填完 点击OK</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step3.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step3.png"></p>
 <p>紧接着 点击<code>Help</code> -&gt; <code>SSL Proxying</code> -&gt; 安装根证书</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step4.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step4.png"></p>
 <p>安装到钥匙串后 点击charles的root证书 选择 <code>使用信任</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_cer_root_mac.png" alt=""></p>
-<p>下一步 是安装手机的root证书 </p>
-<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/2017-09-01-Charles-capture-https/charles_step6.png?raw=true" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_cer_root_mac.png"></p>
+<p>下一步 是安装手机的root证书</p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/2017-09-01-Charles-capture-https/charles_step6.png?raw=true"></p>
 <p>这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: <a href="chls.pro/ssl">chls.pro/ssl</a></p>
 <p>此时手机一会儿就弹出这样的 提示 点击<strong>允许</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone1.PNG" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone1.PNG"></p>
 <p>然后 安装证书</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone2.PNG" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone2.PNG"></p>
 <p>安装完 最后一步<strong>非常重要</strong></p>
-<p><strong>必须到 通用-&gt;关于本机-&gt;证书信任设置</strong>去信任 证书 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone3.PNG" alt=""></p>
+<p>__必须到 通用-&gt;关于本机-&gt;证书信任设置__去信任 证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone3.PNG"></p>
 <p>如果不信任 就会抓取的时候出现下图这样的问题</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_root_cer_error.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_root_cer_error.png"></p>
 <blockquote>
 <p>注意:<em>iOS10.3以上版本 貌似才需要</em></p>
 </blockquote>
 <p>最后放上一张截获成功的图 (支付宝的接口)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/result.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/result.png"></p>
 <p>全文完</p>
 
   </section>
@@ -285,12 +293,13 @@
                 <p class="excerpt">
                 
                 前言
+
 以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格
 demo:
 
 普通样式
 
-| 一个普通标题 | 一个普通标题 | 一个普通标题 || ------| ------ | ------ || 短文本 | 中等文本 | 稍微长一点的文本 || 稍微长一点的文
+| 一个普通标题 | 一个普通标题 | 一个普通标题 || ------| ------ | ------ || 短文本 | 中等文本 | 稍微长一点的文本 || 稍微长一点的
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-09-29T10:01:08.000Z" class="post-list__meta--date date">2017-09-29</time>
@@ -309,15 +318,18 @@ demo:
                 <p class="excerpt">
                 
                 前言
-本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.期间有任何问题请大家集思广益,多多指教. 
+
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解. 期间有任何问题请大家集思广益,多多指教.
 主要内容
-AR技术介绍 
-ARKit工作原理及流程介绍 
-ARKit简单代码实现 
-ARKit框架所有API介绍 
-ARScnView介绍 
-ARSession介绍 
-ARCamera介
+
+AR技术介绍
+ARKit工作原理及流程介绍
+ARKit简单代码实现
+ARKit框架所有API介绍
+ARScnView介绍
+ARSession介绍
+ARCamera介绍
+AR
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-08-30T06:50:43.000Z" class="post-list__meta--date date">2017-08-30</time>
@@ -402,5 +414,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,7 +191,8 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20170929markdown-table/table.png" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20170929markdown-table/table.png"></p>
 <p>以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格</p>
 <p>demo:</p>
 <ul>
@@ -199,19 +202,19 @@
 <p>现实效果是这样的</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>一个普通标题</th>
 <th>一个普通标题</th>
 <th>一个普通标题</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>短文本</td>
 <td>中等文本</td>
 <td>稍微长一点的文本</td>
 </tr>
-<tr>
+<tr class="even">
 <td>稍微长一点的文本</td>
 <td>短文本</td>
 <td>中等文本</td>
@@ -223,22 +226,22 @@
 <p>效果是这样的</p>
 <table>
 <thead>
-<tr>
-<th style="text-align:left">左对齐标题</th>
-<th style="text-align:right">右对齐标题</th>
-<th style="text-align:center">居中对齐标题</th>
+<tr class="header">
+<th style="text-align: left;">左对齐标题</th>
+<th style="text-align: right;">右对齐标题</th>
+<th style="text-align: center;">居中对齐标题</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left">短文本</td>
-<td style="text-align:right">中等文本</td>
-<td style="text-align:center">稍微长一点的文本</td>
+<tr class="odd">
+<td style="text-align: left;">短文本</td>
+<td style="text-align: right;">中等文本</td>
+<td style="text-align: center;">稍微长一点的文本</td>
 </tr>
-<tr>
-<td style="text-align:left">稍微长一点的文本</td>
-<td style="text-align:right">短文本</td>
-<td style="text-align:center">中等文本</td>
+<tr class="even">
+<td style="text-align: left;">稍微长一点的文本</td>
+<td style="text-align: right;">短文本</td>
+<td style="text-align: center;">中等文本</td>
 </tr>
 </tbody>
 </table>
@@ -312,11 +315,14 @@
                 <p class="excerpt">
                 
                 
-前言iOS11 苹果改动了一个比较引开发者关注的亮点
+前言
+iOS11 苹果改动了一个比较引开发者关注的亮点
 UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除
 这个问题在微博上已经争论好几天
-iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都有啥
-#import &amp;lt;DeviceC
+iOS11新的设备唯一标识 DCDevice
+介绍 API
+我们首先看看DCDevice类都有啥
+#import &amp;lt;Devi
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-09-30T01:45:25.000Z" class="post-list__meta--date date">2017-09-30</time>
@@ -335,10 +341,15 @@ iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都
                 <p class="excerpt">
                 
                 前言
-如何使用charles在iOS设备上截获https的请求 
-1.安装Charles官网下载就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 
-2.HTTP抓包配置(1) 查看电脑IP
-(2) 设置手机HTTP代理手机连上电脑，点击“设
+
+如何使用charles在iOS设备上截获https的请求
+1.安装Charles
+官网下载就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的
+2.HTTP抓包配置
+(1) 查看电脑IP
+
+(2) 设置手机HTTP代理
+手机连上电脑，点击
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-09-01T15:17:09.000Z" class="post-list__meta--date date">2017-09-01</time>
@@ -423,5 +434,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

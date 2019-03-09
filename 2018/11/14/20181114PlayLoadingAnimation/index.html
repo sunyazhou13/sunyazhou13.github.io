@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,10 +191,12 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画 </p>
+    <h1 id="前言">前言</h1>
+<p>这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画</p>
 <p>上图看成品</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a119e34c5b443ef40036554e5fa05fa9f7c707ce/20181114PlayLoadingAnimation/playloading.gif" alt=""></p>
-<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>首先我创建一个视图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a119e34c5b443ef40036554e5fa05fa9f7c707ce/20181114PlayLoadingAnimation/playloading.gif"></p>
+<h1 id="实现原理">实现原理</h1>
+<p>首先我创建一个视图</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIView</span> *playLoadingView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    </div><div class="line">    <span class="comment">//init player status bar</span></div><div class="line">    <span class="keyword">self</span>.playLoadingView = [[<span class="built_in">UIView</span> alloc]init];</div><div class="line">    <span class="keyword">self</span>.playLoadingView.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">    [<span class="keyword">self</span>.playLoadingView setHidden:<span class="literal">YES</span>];</div><div class="line">    [<span class="keyword">self</span>.view addSubview:<span class="keyword">self</span>.playLoadingView];</div><div class="line">    </div><div class="line">    <span class="comment">//make constraintes</span></div><div class="line">    [<span class="keyword">self</span>.playLoadingView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">        make.center.equalTo(<span class="keyword">self</span>.view);</div><div class="line">        make.width.mas_equalTo(<span class="number">1.0</span>f); <span class="comment">//宽 1 dp</span></div><div class="line">        make.height.mas_equalTo(<span class="number">0.5</span>f); <span class="comment">//高 0.5 dp</span></div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span> startLoadingPlayAnimation:<span class="literal">YES</span>]; <span class="comment">//调用动画代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>这里我们可以看到 我们实际上创建的是一个 1pt宽度 0.5 pt的宽度 的视图</p>
@@ -203,12 +207,13 @@
 <p>其实核心的只有4行代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CABasicAnimation</span> *scaleAnimation = [<span class="built_in">CABasicAnimation</span> animation];</div><div class="line">scaleAnimation.keyPath = <span class="string">@"transform.scale.x"</span>;</div><div class="line">scaleAnimation.fromValue = @(<span class="number">1.0</span>f);</div><div class="line">scaleAnimation.toValue = @(<span class="number">1.0</span>f * ScreenWidth);</div></pre></td></tr></table></figure>
 <blockquote>
-<p>关键在<code>scaleAnimation.keyPath = @&quot;transform.scale.x&quot;;</code> 这里我们要沿着x做缩放</p>
+<p>关键在<code>scaleAnimation.keyPath = @"transform.scale.x";</code> 这里我们要沿着x做缩放</p>
 </blockquote>
-<p>缩放的得值从 <strong>1~屏幕宽度</strong>, 当然值多大自己可以控制. </p>
-<p>如果<code>@&quot;transform.scale.y&quot;</code> 则是沿着Y轴缩放</p>
-<p>当然 如果写成<code>@&quot;transform.scale&quot;</code> 那就X,Y 一起缩放 大家可以试试.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本篇的动画技巧是 缩放的 <code>transform.scale.y</code> 从一个点 做layer缩放 就会出现 加载效果.</p>
+<p>缩放的得值从 <strong>1~屏幕宽度</strong>, 当然值多大自己可以控制.</p>
+<p>如果<code>@"transform.scale.y"</code> 则是沿着Y轴缩放</p>
+<p>当然 如果写成<code>@"transform.scale"</code> 那就X,Y 一起缩放 大家可以试试.</p>
+<h1 id="总结">总结</h1>
+<p>本篇的动画技巧是 缩放的 <code>transform.scale.y</code> 从一个点 做layer缩放 就会出现 加载效果.</p>
 <p><a href="https://github.com/sunyazhou13/PlayLoadingDemo" target="_blank" rel="external">最后附上demo</a></p>
 <p>感谢大家支持</p>
 
@@ -265,7 +270,8 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/11/27/20181127LikeAnimation/" title="iOS抖音点赞动画实现">iOS抖音点赞动画实现</a></h2>
                 <p class="excerpt">
                 
-                前言hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图
+                前言
+hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图
 
 本篇文章主要包含技术点:
 
@@ -273,7 +279,8 @@ CAShapeLayer和贝赛尔曲线绘制三角形
 组合动画的时间技巧
 
 我习惯写完文章的demo都附在文章底部,如果不想看原理的小伙伴可直接跳到底部找demo下载.
-实现原理首先 
+实现原理
+首
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-11-27T03:16:14.000Z" class="post-list__meta--date date">2018-11-27</time>
@@ -291,10 +298,12 @@ CAShapeLayer和贝赛尔曲线绘制三角形
                 <h2 class="post-list__post-title post-title"><a href="/2018/11/13/20181113AllKeypathOfCALayer/" title="iOS所有Animation相关可用的Keypath">iOS所有Animation相关可用的Keypath</a></h2>
                 <p class="excerpt">
                 
-                前言在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画
+                前言
+在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画
 一般情况下我们都要用到Keypath,最近在研究动画,想整理一下所有可用的Keypath在iOS的核心动画中.
-CALayer的相关属性废话不多说 我们上一段代码演示一下 这篇的主题
-CABas
+CALayer的相关属性
+废话不多说 我们上一段代码演示一下 这篇的主题
+CAB
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-11-13T03:46:45.000Z" class="post-list__meta--date date">2018-11-13</time>
@@ -379,5 +388,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

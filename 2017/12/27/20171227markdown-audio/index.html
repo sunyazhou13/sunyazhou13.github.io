@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,8 +191,10 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
-<h2 id="markdown插入音乐"><a href="#markdown插入音乐" class="headerlink" title="markdown插入音乐"></a>markdown插入音乐</h2><p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
+    <h1 id="前言">前言</h1>
+<p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
+<h2 id="markdown插入音乐">markdown插入音乐</h2>
+<p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
 <ul>
 <li><code>div</code>用于控制格式，若无则默认为居左</li>
 <li><code>frameborder</code>用于规定是否显示框架周围的边框，1为是，0为否</li>
@@ -199,20 +203,24 @@
 <li><code>src</code>为播放链接，可以在如网易云音乐的<code>生成外链播放器</code>获取该链接，同时也获得以下代码，并可以自行更改；也可将音频链接改为视频链接，从而播放视频</li>
 </ul>
 <blockquote>
-<p>值得注意的是，音频和视频在默认情况下是会自动循环播放的，可以修改链接的值进行修改<br>在<code>src</code>域中，<code>auto</code>值表示是否自动播放，当值为<code>1</code>时为自动播放，<code>0</code>则不是<br>在<code>src</code>域中，有些链接会附有<code>height</code>或<code>width</code>值，其表示表示播放框的基本宽高，可以更换其值以获得想要的播放框大小，此时可以不用填写外部的<code>width</code>及<code>height</code>.</p>
+<p>值得注意的是，音频和视频在默认情况下是会自动循环播放的，可以修改链接的值进行修改 在<code>src</code>域中，<code>auto</code>值表示是否自动播放，当值为<code>1</code>时为自动播放，<code>0</code>则不是 在<code>src</code>域中，有些链接会附有<code>height</code>或<code>width</code>值，其表示表示播放框的基本宽高，可以更换其值以获得想要的播放框大小，此时可以不用填写外部的<code>width</code>及<code>height</code>.</p>
 </blockquote>
 <figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">life</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">400</span> <span class="attr">height</span>=<span class="string">140</span> <span class="attr">src</span>=<span class="string">"https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<div align="life"><br><iframe frameborder="no" marginwidth="0" marginheight="0" width="400" height="140" src="https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66"></iframe><br></div>
-
-
-<h2 id="接口说明"><a href="#接口说明" class="headerlink" title="接口说明"></a>接口说明</h2><p>这里面可以看到 用了 </p>
+<div data-align="life">
+<iframe frameborder="no" marginwidth="0" marginheight="0" width="400" height="140" src="https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66">
+</iframe>
+</div>
+<h2 id="接口说明">接口说明</h2>
+<p>这里面可以看到 用了</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66</div></pre></td></tr></table></figure>
 <p>这个接口的<code>id=34341360</code>是从这里获取的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio1.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio1.png"></p>
 <p>找到<code>复制链接</code>,然后用浏览器打开.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio2.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio2.png"></p>
 <p>后边的 <code>id=34341360</code>就是我们要的 <code>id</code> 然后接口替换就可以了</p>
-<p>更多技巧可参考以前写的一篇文章<br><a href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/">markdown折叠</a><br><a href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/">markdown 表格</a></p>
+<p>更多技巧可参考以前写的一篇文章<br>
+<a href="https://www.sunyazhou.com/2017/10/25/20171025markdown-skill/">markdown折叠</a><br>
+<a href="https://www.sunyazhou.com/2017/09/29/20170929markdown-table/">markdown 表格</a></p>
 <p>全文完</p>
 
   </section>
@@ -270,9 +278,15 @@
                 
                 
 前言
-时间像车轮一样在飞转历史像江河一样在流淌整整走过了365个风雨历程2017年过的如此不寻常一度春夏秋冬 一度雨雪风霜一度翻山越岭 一度起伏延宕  
 
-又一年过去了,我也得墨守成规的按时交出我的年终总结了,为了不标新立异,我必须尽量不废话.(talk is cheap, show me the
+时间像车轮一样在飞转
+历史像江河一样在流淌
+整整走过了365个风雨历程
+2017年过的如此不寻常
+一度春夏秋冬 一度雨雪风霜
+一度翻山越岭 一度起伏延宕
+
+又一年过去了,我也得墨守成规的按时交出我的年终总结了,为了不标新立异,我必须尽量不废话.(talk is cheap, show me
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-12-31T02:46:20.000Z" class="post-list__meta--date date">2017-12-31</time>
@@ -291,10 +305,12 @@
                 <p class="excerpt">
                 
                 
-前言最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
-开篇最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.下面是 UI 演示.
+前言
+最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
+开篇
+最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果. 下面是 UI 演示.
 
-这里其实修改的类似 AVAudioPlayer里面的pan值
+这里其实修改的类似 AVAudioPlayer里面的p
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-12-19T03:40:13.000Z" class="post-list__meta--date date">2017-12-19</time>
@@ -379,5 +395,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

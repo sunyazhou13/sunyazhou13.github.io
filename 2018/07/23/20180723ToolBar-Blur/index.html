@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,18 +191,15 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif" alt=""></p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif"></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIView</span> *)containerBackgroundView &#123;</div><div class="line">    <span class="keyword">if</span> (!_containerBackgroundView) &#123;</div><div class="line">        <span class="built_in">UIToolbar</span> *toolBar = [[<span class="built_in">UIToolbar</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">        toolBar.barStyle = <span class="built_in">UIBarStyleBlack</span>;</div><div class="line">        toolBar.clipsToBounds = <span class="literal">YES</span>;</div><div class="line">        _containerBackgroundView = toolBar;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _containerBackgroundView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>也可以使用<code>UIBlurEffect</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIBlurEffect</span> *blurEffect = [<span class="built_in">UIBlurEffect</span> effectWithStyle:<span class="built_in">UIBlurEffectStyleLight</span>];</div><div class="line"><span class="built_in">UIVisualEffectView</span> *blurView = [[<span class="built_in">UIVisualEffectView</span> alloc] initWithEffect:blurEffect];</div><div class="line">blurView.frame = myView.bounds;</div><div class="line">[myView addSubview:blurView];</div></pre></td></tr></table></figure>
-<p>UIBlurEffectStyle </p>
+<p>UIBlurEffectStyle</p>
 <ul>
-<li><p>UIBlurEffectStyleExtraLight,//额外亮度，（高亮风格）</p>
-</li>
-<li><p>UIBlurEffectStyleLight,//亮风格</p>
-</li>
-<li><p>UIBlurEffectStyleDark//暗风格</p>
-</li>
+<li><p>UIBlurEffectStyleExtraLight,//额外亮度，（高亮风格）</p></li>
+<li><p>UIBlurEffectStyleLight,//亮风格</p></li>
+<li><p>UIBlurEffectStyleDark//暗风格</p></li>
 </ul>
 <blockquote>
 <p>UIBlurEffect 不能调节模糊半径</p>
@@ -210,7 +209,7 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">-(<span class="built_in">UIImage</span> *)convertToBlurImage:(<span class="built_in">UIImage</span> *)image&#123;</div><div class="line">    <span class="built_in">CIFilter</span> *gaussianBlurFilter = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIGaussianBlur"</span>];</div><div class="line">    [gaussianBlurFilter setDefaults];</div><div class="line">    <span class="built_in">CIImage</span> *inputImage = [<span class="built_in">CIImage</span> imageWithCGImage:[image <span class="built_in">CGImage</span>]];</div><div class="line">    [gaussianBlurFilter setValue:inputImage forKey:kCIInputImageKey];</div><div class="line">    [gaussianBlurFilter setValue:@<span class="number">5</span> forKey:kCIInputRadiusKey];</div><div class="line">    <span class="built_in">CIImage</span> *outputImage = [gaussianBlurFilter outputImage];</div><div class="line">    <span class="built_in">CIContext</span> *context   = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">CGImageRef</span> cgimg     = [context createCGImage:outputImage fromRect:[inputImage extent]];  <span class="comment">// note, use input image extent if you want it the same size, the output image extent is larger</span></div><div class="line">    <span class="built_in">UIImage</span> *convertedImage = [<span class="built_in">UIImage</span> imageWithCGImage:cgimg];</div><div class="line">    <span class="keyword">return</span> convertedImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>核心代码是<code>[gaussianBlurFilter setValue:@5 forKey:kCIInputRadiusKey]</code>;</p>
 <p>但是我测试100也没啥问题 没有测试出最大值</p>
-<p>以上是几种高斯模糊的相关代码 </p>
+<p>以上是几种高斯模糊的相关代码</p>
 <p>全文完</p>
 
   </section>
@@ -267,8 +266,9 @@
                 <p class="excerpt">
                 
                 
-前言Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。
-Taptic Engine 振动模块为 Apple Watch 以及 
+前言
+Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。
+Taptic Engine 振动模块为 Apple Watch 以及
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-08-13T06:28:04.000Z" class="post-list__meta--date date">2018-08-13</time>
@@ -288,6 +288,7 @@ Taptic Engine 振动模块为 Apple Watch 以及
                 
                 
 bash及其特性
+
 bash实质上是一个可执行程序，一个用户的工作环境。
 在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。
 可以使用pstree命令查看当前shell下的子shell个数。
@@ -295,8 +296,8 @@ bash实质上是一个可执行程序，一个用户的工作环境。
 1. 最重要的自动补全
 
 
+
 命令
-解
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-07-18T01:29:39.000Z" class="post-list__meta--date date">2018-07-18</time>
@@ -381,5 +382,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,26 +191,26 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/76ba4614cb348633a74605650cb87898e5a28d56/20181127LikeAnimation/likeAnimation.gif" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p>hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/76ba4614cb348633a74605650cb87898e5a28d56/20181127LikeAnimation/likeAnimation.gif"></p>
 <p>本篇文章主要包含技术点:</p>
 <ul>
 <li>CAShapeLayer和贝赛尔曲线绘制三角形</li>
 <li>组合动画的时间技巧</li>
 </ul>
 <p>我习惯写完文章的demo都附在文章底部,如果不想看原理的小伙伴可直接跳到底部找demo下载.</p>
-<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>首先 我们来详细分解一下这个动画 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation2.gif" alt=""></p>
-<blockquote>
-<p>请仔细观察</p>
-</blockquote>
-<p>我们来看单独的一个动画 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation3.gif" alt=""></p>
+<h1 id="实现原理">实现原理</h1>
+<p>首先 我们来详细分解一下这个动画</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation2.gif"> &gt; 请仔细观察</p>
+<p>我们来看单独的一个动画</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation3.gif"></p>
 <blockquote>
 <p>请仔细观看 我设置10秒的duration 以便于大家能看清楚</p>
 </blockquote>
-<h2 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h2><p>从上述两张图中,我们可以看到 它是一个 三角形的贝塞尔曲线 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png" alt=""></p>
+<h2 id="实现原理-1">实现原理</h2>
+<p>从上述两张图中,我们可以看到 它是一个 三角形的贝塞尔曲线</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png"></p>
 <p>这样的动画需要经过:</p>
 <ul>
 <li>2π (360°)旋转一周</li>
@@ -218,13 +220,14 @@
 </ul>
 <p>说了这么多 实际就是用<code>CABasicAnimation</code>的keypath是<code>path</code>和<code>CABasicAnimation</code>的<code>keypath</code>是<code>transform.scale</code>的动画组合在一起作用于一个三角形上,并且一共创建6个三角形图形.</p>
 <p>结束的时候大概是这样的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif"></p>
 <p>结束的时候实际上是一个从 上一次动画执行完成的path向 一条线上三个点的path过渡的过程,直到最后隐藏消失.</p>
 <p>好下面我们来实现一下这个动画</p>
 <blockquote>
 <p>注意: 背景的❤️红心是 一张图不在本篇讲述范围</p>
 </blockquote>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>首先我们子类话一个<code>ZanLikeView</code>继承自<code>UIView</code>并设置底部的图片和点击变换的❤️图片,就是两张UIImageView加手势,当点击的时候区分不同view的tag就知道哪个imageview点击,这样就可以做两张动画不同的效果了,不过这些可以参考demo.</p>
+<h2 id="代码实现">代码实现</h2>
+<p>首先我们子类话一个<code>ZanLikeView</code>继承自<code>UIView</code>并设置底部的图片和点击变换的❤️图片,就是两张UIImageView加手势,当点击的时候区分不同view的tag就知道哪个imageview点击,这样就可以做两张动画不同的效果了,不过这些可以参考demo.</p>
 <p>我主要介绍核心代码</p>
 <p>创建 <code>CAShapeLayer</code>用于做形状图形相关的图形动画.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CAShapeLayer</span> *layer = [[<span class="built_in">CAShapeLayer</span> alloc]init];</div><div class="line">layer.position = _likeBefore.center;</div><div class="line">layer.fillColor = [<span class="built_in">UIColor</span> redColor].CGColor;</div></pre></td></tr></table></figure>
@@ -235,31 +238,35 @@
 <p>创建初始位置的贝塞尔path</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> length = <span class="number">30</span>;</div><div class="line"><span class="built_in">CGFloat</span> duration = <span class="number">0.5</span>f;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">6</span>; i++) &#123;</div><div class="line">	<span class="built_in">CAShapeLayer</span> *layer = [[<span class="built_in">CAShapeLayer</span> alloc]init];</div><div class="line">	layer.position = _likeBefore.center;</div><div class="line">	layer.fillColor = [[<span class="built_in">UIColor</span> redColor].CGColor;</div><div class="line">	</div><div class="line">	<span class="comment">//...  1</span></div><div class="line">	<span class="comment">//...  2</span></div><div class="line">	<span class="comment">//...  3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
-<p>这里我们一共创建6个shapeLayer的实例并填充成颜色,我们这里填充的是红色 其它的颜色可自行封装.<br>_likeBefore 是我们看到白色的❤️背景视图(UIImageView)</p>
+<p>这里我们一共创建6个shapeLayer的实例并填充成颜色,我们这里填充的是红色 其它的颜色可自行封装. _likeBefore 是我们看到白色的❤️背景视图(UIImageView)</p>
 </blockquote>
 <p>下面 在<code>//...  1</code>的地方加入如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIBezierPath</span> *startPath = [<span class="built_in">UIBezierPath</span> bezierPath];</div><div class="line">[startPath moveToPoint:<span class="built_in">CGPointMake</span>(<span class="number">-2</span>, -length)];</div><div class="line">[startPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">2</span>, -length)];</div><div class="line">[startPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, <span class="number">0</span>)];</div></pre></td></tr></table></figure>
 <p>这行代码加完就是这样的图形</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png"></p>
 <p>然后创建完成我们需要把path给layer.path. 记得转成CGPath</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">layer.path = startPath.CGPath;</div><div class="line">layer.transform = <span class="built_in">CATransform3DMakeRotation</span>(M_PI / <span class="number">3.0</span>f * i, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div><div class="line">[<span class="keyword">self</span>.layer addSublayer:layer]</div></pre></td></tr></table></figure>
 <blockquote>
-<p>注: CATransform3DMakeRotation()函数 当x,y,z值为0时,代表在该轴方向上不进行旋转,当值为-1时,代表在该轴方向上进行逆时针旋转,当值为1时,代表在该轴方向上进行顺时针旋转<br>因为我们是需要60°创建一个layer所以需要顺时针 M_PI / 3.0f = 60°. 每循环一次则创建第N个角度<code>乘</code>60°.</p>
+<p>注: CATransform3DMakeRotation()函数 当x,y,z值为0时,代表在该轴方向上不进行旋转,当值为-1时,代表在该轴方向上进行逆时针旋转,当值为1时,代表在该轴方向上进行顺时针旋转<br>
+因为我们是需要60°创建一个layer所以需要顺时针 M_PI / 3.0f = 60°. 每循环一次则创建第N个角度<code>乘</code>60°.</p>
 </blockquote>
 <p>接着在<code>//...  2</code>添加如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//动画组</span></div><div class="line"><span class="built_in">CAAnimationGroup</span> *group = [[<span class="built_in">CAAnimationGroup</span> alloc] init];</div><div class="line">group.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">group.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">group.fillMode = kCAFillModeForwards;</div><div class="line">group.duration = duration;</div><div class="line"></div><div class="line"><span class="comment">//缩放动画</span></div><div class="line"><span class="built_in">CABasicAnimation</span> *scaleAnim = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</div><div class="line">scaleAnim.fromValue = @(<span class="number">0.0</span>);</div><div class="line">scaleAnim.toValue = @(<span class="number">1.0</span>);</div><div class="line">scaleAnim.duration = duration * <span class="number">0.2</span>f; <span class="comment">//注意这里是在给定时长的地方前0.2f的时间里执行缩放</span></div></pre></td></tr></table></figure>
 <blockquote>
-<p>这里说下duration <em> 0.2f. 比如我给定 10秒的duration,那么 duration </em> 0.2 = 2 秒执行缩放.</p>
+<p>这里说下duration * 0.2f. 比如我给定 10秒的duration,那么 duration * 0.2 = 2 秒执行缩放.</p>
 </blockquote>
 <p>最后在<code>//...  3</code>的代码出加上如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//结束点</span></div><div class="line"><span class="built_in">UIBezierPath</span> *endPath = [<span class="built_in">UIBezierPath</span> bezierPath];</div><div class="line">[endPath moveToPoint:<span class="built_in">CGPointMake</span>(<span class="number">-2</span>, -length)];</div><div class="line">[endPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">2</span>, -length)];</div><div class="line">[endPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, -length)];</div><div class="line">            </div><div class="line"><span class="built_in">CABasicAnimation</span> *pathAnim = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"path"</span>];</div><div class="line">pathAnim.fromValue = (__bridge <span class="keyword">id</span>)layer.path;</div><div class="line">pathAnim.toValue = (__bridge <span class="keyword">id</span>)endPath.CGPath;</div><div class="line">pathAnim.beginTime = duration * <span class="number">0.2</span>f;</div><div class="line">pathAnim.duration = duration * <span class="number">0.8</span>f;</div><div class="line">    </div><div class="line">[group setAnimations:@[scaleAnim, pathAnim]];</div><div class="line">[layer addAnimation:group forKey:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<p>这几行代码的意识是 从我们上一个layer的path位置开始向我们结束位置的path过渡,并且注意开始时间<br><code>pathAnim.beginTime</code>是 duration <em> 0.2也就是说 在上一个动画结束的时间点才开始结束过渡,过渡的时长剩余是duration </em> 0.8.这样两个连贯在一起的动画就执行完了,最后把动画加到动画组 天加给layer.</p>
+<p>这几行代码的意识是 从我们上一个layer的path位置开始向我们结束位置的path过渡,并且注意开始时间<br>
+<code>pathAnim.beginTime</code>是 duration * 0.2也就是说 在上一个动画结束的时间点才开始结束过渡,过渡的时长剩余是duration * 0.8.这样两个连贯在一起的动画就执行完了,最后把动画加到动画组 天加给layer.</p>
 <p>下图是从开始到结束点过渡的动画.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif"></p>
 <p>剩余的工作就是做个普通的动画的 基本没什么了.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.35</span>f</div><div class="line">                      delay:<span class="number">0.0</span>f</div><div class="line">                    options:<span class="built_in">UIViewAnimationOptionCurveEaseIn</span></div><div class="line">                 animations:^&#123;</div><div class="line">                     <span class="keyword">self</span>.likeAfter.transform = <span class="built_in">CGAffineTransformScale</span>(<span class="built_in">CGAffineTransformMakeRotation</span>(-M_PI_4), <span class="number">0.1</span>f, <span class="number">0.1</span>f);</div><div class="line">                 &#125;</div><div class="line">                 completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">                     [<span class="keyword">self</span>.likeAfter setHidden:<span class="literal">YES</span>];</div><div class="line">                     <span class="keyword">self</span>.likeBefore.userInteractionEnabled = <span class="literal">YES</span>;</div><div class="line">                     <span class="keyword">self</span>.likeAfter.userInteractionEnabled = <span class="literal">YES</span>;</div><div class="line">                 &#125;];</div></pre></td></tr></table></figure>
-<h4 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h4><p>结束动画的开始时间和结束时间控制,恰到好处.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>动画实现的细节需要研究和学习和实践,在这里感谢开源作者的代码给了思路, 我个人通过学习和模仿整理出原理写出代码校验并增加相关对外接口.</p>
+<h4 id="技巧">技巧</h4>
+<p>结束动画的开始时间和结束时间控制,恰到好处.</p>
+<h1 id="总结">总结</h1>
+<p>动画实现的细节需要研究和学习和实践,在这里感谢开源作者的代码给了思路, 我个人通过学习和模仿整理出原理写出代码校验并增加相关对外接口.</p>
 <p><a href="https://github.com/sunyazhou13/LikeDemo" target="_blank" rel="external">点击下载Demo</a></p>
 <p><a href="https://github.com/sunyazhou13/LikeDemo/archive/master.zip" target="_blank" rel="external">直接下载zip</a></p>
 
@@ -316,9 +323,10 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/12/06/20181206Detecting-pan-gesture-direction/" title="探测UIPanGesture的滑动方向">探测UIPanGesture的滑动方向</a></h2>
                 <p class="excerpt">
                 
-                前言这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向
+                前言
+这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向
 于是找到stackOverFlow上的答案 记录一下
-- (void)panRecognized:(UIPanGestureRecognizer *)rec&amp;#123;    CGPoint vel = [rec velo
+- (void)panRecognized:(UIPanGestureRecognizer *)rec&amp;#123;    CGPoint vel = [rec vel
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-12-06T05:59:46.000Z" class="post-list__meta--date date">2018-12-06</time>
@@ -336,11 +344,13 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/11/14/20181114PlayLoadingAnimation/" title="iOS视频加载动画">iOS视频加载动画</a></h2>
                 <p class="excerpt">
                 
-                前言这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画 
+                前言
+这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画
 上图看成品
 
-实现原理首先我创建一个视图
-@interface ViewController ()@property (nonatomic, strong) UIView *playLoadingView
+实现原理
+首先我创建一个视图
+@interface ViewController ()@property (nonatomic, strong) UIView *playLoadingVie
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-11-14T06:14:39.000Z" class="post-list__meta--date date">2018-11-14</time>
@@ -425,5 +435,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

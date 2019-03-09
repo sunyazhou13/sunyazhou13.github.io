@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,9 +191,10 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至,<br>相信拿到 iPhone X的感觉是下面这样的:</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll1y5jyygj22io1w0hdt.jpg" alt=""></p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/say_hello_to_furture.png"></p>
+<h1 id="前言">前言</h1>
+<p>最近苹果发布iPhone X,随后小伙伴的 X 都到货了,适配问题也接踵而至, 相信拿到 iPhone X的感觉是下面这样的:</p>
+<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll1y5jyygj22io1w0hdt.jpg"></p>
 <p>本篇主要内容分为:</p>
 <ul>
 <li>iPhone X尺寸参数</li>
@@ -200,102 +203,122 @@
 <li>实践案例</li>
 <li>总结</li>
 </ul>
-<h3 id="1-iPhone-X尺寸参数"><a href="#1-iPhone-X尺寸参数" class="headerlink" title="1.iPhone X尺寸参数"></a>1.iPhone X尺寸参数</h3><h4 id="1-1-首先-来围观一下模拟器的-iPhone-X的外观"><a href="#1-1-首先-来围观一下模拟器的-iPhone-X的外观" class="headerlink" title="1.1 首先 来围观一下模拟器的 iPhone X的外观"></a>1.1 首先 来围观一下模拟器的 iPhone X的外观</h4><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6d0zx4sj20m80c1t9p.jpg" alt="safeArea"></p>
-<p>下面这点先记住这很重要:格式UIEdgeInsetsMake(上, 左,下,右);  </p>
-<blockquote>
-<p>iPhone X竖屏时:占满整个屏幕的控制器的view的safeAreaInsets是（44，0，34，0）<br>iPhone X横屏时:是（0，44，21，44），inset后的区域正好是safeAreaLayoutGuide区域</p>
-</blockquote>
+<h3 id="iphone-x尺寸参数">1.iPhone X尺寸参数</h3>
+<h4 id="首先-来围观一下模拟器的-iphone-x的外观">1.1 首先 来围观一下模拟器的 iPhone X的外观</h4>
+<figure>
+<img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6d0zx4sj20m80c1t9p.jpg" alt="safeArea"><figcaption>safeArea</figcaption>
+</figure>
+<p>下面这点先记住这很重要:格式UIEdgeInsetsMake(上, 左,下,右);<br>
+&gt; iPhone X竖屏时:占满整个屏幕的控制器的view的safeAreaInsets是（44，0，34，0）<br>
+&gt; iPhone X横屏时:是（0，44，21，44），inset后的区域正好是safeAreaLayoutGuide区域</p>
 <p>safeAreaInsets是相对于屏幕的物理边界计算的偏移量,通俗一点就是</p>
 <blockquote>
-<p>横屏: 距离顶部(物理屏幕顶边)偏移44，距离左侧偏移0，距离底部偏移34,距离右边偏移0(从右向左偏移别搞错了).<br>竖屏: 距离顶部(物理屏幕顶边)偏移0，距离左侧偏移44，<strong>距离底部偏移21</strong>(注意横屏底部有home 虚拟键),<strong>距离右边偏移44</strong>(同样注意不是竖屏的30了). </p>
+<p>横屏: 距离顶部(物理屏幕顶边)偏移44，距离左侧偏移0，距离底部偏移34,距离右边偏移0(从右向左偏移别搞错了). 竖屏: 距离顶部(物理屏幕顶边)偏移0，距离左侧偏移44，<strong>距离底部偏移21</strong>(注意横屏底部有home 虚拟键),<strong>距离右边偏移44</strong>(同样注意不是竖屏的30了).</p>
 </blockquote>
 <p>进过测试发现,Margins 区域 有10个像素点就是上边 的 40 - 30 = 10的作用区间(我的理解应该是为了压力触摸屏的事件响应范围)，还有特别留意一下横屏的时候 顶部和底部的区别,顶部为0, 底部要保留21的 pts(points)来显示 home 虚拟键,<strong>记得获取屏幕宽度或者高度的时候要做好减去 21 的准备.</strong></p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3kxabqkj20c10nojru.jpg" alt="穿黑色外套略显优雅"><br><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3pg1izmj20af0n6mxf.jpg" alt="不穿外套略显尴尬"></p>
-<h4 id="1-2-实际场景"><a href="#1-2-实际场景" class="headerlink" title="1.2 实际场景"></a>1.2 实际场景</h4><p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3xqtuydj21w02iokjl.jpg" alt="实际测试中的刘海样式"></p>
+<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3kxabqkj20c10nojru.jpg" alt="穿黑色外套略显优雅"> <img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3pg1izmj20af0n6mxf.jpg" alt="不穿外套略显尴尬"></p>
+<h4 id="实际场景">1.2 实际场景</h4>
+<figure>
+<img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll3xqtuydj21w02iokjl.jpg" alt="实际测试中的刘海样式"><figcaption>实际测试中的刘海样式</figcaption>
+</figure>
 <blockquote>
 <p>看到苹果[射击湿]的扁平化凹陷齐刘海设计的我现在就像在乔布斯坟头上坟烧纸一样,眼神里带有少许悲伤.</p>
 </blockquote>
-<h4 id="1-3-工业化图纸尺寸"><a href="#1-3-工业化图纸尺寸" class="headerlink" title="1.3 工业化图纸尺寸"></a>1.3 工业化图纸尺寸</h4><p>说重点不废话</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4dy8bmrj20yg0icq5y.jpg" alt="iPhone X顶部尺寸图纸"></p>
+<h4 id="工业化图纸尺寸">1.3 工业化图纸尺寸</h4>
+<p>说重点不废话</p>
+<figure>
+<img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4dy8bmrj20yg0icq5y.jpg" alt="iPhone X顶部尺寸图纸"><figcaption>iPhone X顶部尺寸图纸</figcaption>
+</figure>
 <table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
-<tr>
-<th style="text-align:center">参数</th>
-<th style="text-align:center">size 尺寸</th>
-<th style="text-align:center">备注</th>
+<tr class="header">
+<th style="text-align: center;">参数</th>
+<th style="text-align: center;">size 尺寸</th>
+<th style="text-align: center;">备注</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:center">屏幕宽高</td>
-<td style="text-align:center">375 x 812</td>
-<td style="text-align:center">pt(point)</td>
+<tr class="odd">
+<td style="text-align: center;">屏幕宽高</td>
+<td style="text-align: center;">375 x 812</td>
+<td style="text-align: center;">pt(point)</td>
 </tr>
-<tr>
-<td style="text-align:center">屏幕宽高比</td>
-<td style="text-align:center">9:19.5</td>
-<td style="text-align:center">而不是普通的 9:16 了</td>
+<tr class="even">
+<td style="text-align: center;">屏幕宽高比</td>
+<td style="text-align: center;">9:19.5</td>
+<td style="text-align: center;">而不是普通的 9:16 了</td>
 </tr>
-<tr>
-<td style="text-align:center">整体屏幕高度</td>
-<td style="text-align:center">比<code>iPhone 6/7/8&#39;s</code>高了<code>145</code>pt</td>
-<td style="text-align:center">pt(point)</td>
+<tr class="odd">
+<td style="text-align: center;">整体屏幕高度</td>
+<td style="text-align: center;">比<code>iPhone 6/7/8's</code>高了<code>145</code>pt</td>
+<td style="text-align: center;">pt(point)</td>
 </tr>
-<tr>
-<td style="text-align:center">状态栏高度(status bar)</td>
-<td style="text-align:center">44</td>
-<td style="text-align:center">比原来高出了<code>24</code>pt(并且空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域)</td>
+<tr class="even">
+<td style="text-align: center;">状态栏高度(status bar)</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">比原来高出了<code>24</code>pt(并且空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域)</td>
 </tr>
-<tr>
-<td style="text-align:center">传感器区域(sensor housing)</td>
-<td style="text-align:center">30</td>
-<td style="text-align:center">单位 pt,就是被挡住的那个 Face ID传感器区域</td>
+<tr class="odd">
+<td style="text-align: center;">传感器区域(sensor housing)</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">单位 pt,就是被挡住的那个 Face ID传感器区域</td>
 </tr>
-<tr>
-<td style="text-align:center">状态栏+导航栏高度(Navigation Bar)</td>
-<td style="text-align:center">88 或 (带 title 样式的 140)</td>
-<td style="text-align:center">pt(point)</td>
+<tr class="even">
+<td style="text-align: center;">状态栏+导航栏高度(Navigation Bar)</td>
+<td style="text-align: center;">88 或 (带 title 样式的 140)</td>
+<td style="text-align: center;">pt(point)</td>
 </tr>
-<tr>
-<td style="text-align:center">底部 Toolbar</td>
-<td style="text-align:center">83</td>
-<td style="text-align:center">不在是原来的 44 pt(point),如果横屏 Toolbar 高度 53</td>
+<tr class="odd">
+<td style="text-align: center;">底部 Toolbar</td>
+<td style="text-align: center;">83</td>
+<td style="text-align: center;">不在是原来的 44 pt(point),如果横屏 Toolbar 高度 53</td>
 </tr>
-<tr>
-<td style="text-align:center">retina像素倍数</td>
-<td style="text-align:center">3x</td>
-<td style="text-align:center">3倍屏</td>
+<tr class="even">
+<td style="text-align: center;">retina像素倍数</td>
+<td style="text-align: center;">3x</td>
+<td style="text-align: center;">3倍屏</td>
 </tr>
-<tr>
-<td style="text-align:center">pixels像素</td>
-<td style="text-align:center">1125 x 2436</td>
-<td style="text-align:center">和 iPhone各种Plus版本一直</td>
+<tr class="odd">
+<td style="text-align: center;">pixels像素</td>
+<td style="text-align: center;">1125 x 2436</td>
+<td style="text-align: center;">和 iPhone各种Plus版本一直</td>
 </tr>
-<tr>
-<td style="text-align:center">iPhone X 安全区</td>
-<td style="text-align:center">frame 为(0, 44, 375, 734)</td>
-<td style="text-align:center">对比iPhone6/6s安全区frame 为(0, 0, 375, 667)</td>
+<tr class="even">
+<td style="text-align: center;">iPhone X 安全区</td>
+<td style="text-align: center;">frame 为(0, 44, 375, 734)</td>
+<td style="text-align: center;">对比iPhone6/6s安全区frame 为(0, 0, 375, 667)</td>
 </tr>
-<tr>
-<td style="text-align:center">layout margins</td>
-<td style="text-align:center">纵向 20,横向64 )</td>
-<td style="text-align:center">横向 margins 底部有那个 home 键范围</td>
+<tr class="odd">
+<td style="text-align: center;">layout margins</td>
+<td style="text-align: center;">纵向 20,横向64 )</td>
+<td style="text-align: center;">横向 margins 底部有那个 home 键范围</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>注意: <em>别搞错了status bar和FaceID传感器区域范围,因为状态栏(status bar)和传感器区域(sensor housing)之间还是有点间隙的 间隙是 6 pt</em><br><em>status bar空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域.而且我们不能改变 出现比如定位的图标、通话、和其他后台任务的图标的小大</em><br><em>这里说的pt(point)是开发人员的计算屏幕一倍的像素单位,不是视觉提供素材的pixel像素</em></p>
+<p>注意: <em>别搞错了status bar和FaceID传感器区域范围,因为状态栏(status bar)和传感器区域(sensor housing)之间还是有点间隙的 间隙是 6 pt</em><br>
+<em>status bar空余的<code>24</code>(44-20)pts 不能被 app 使用,因为他是给<code>Face ID</code>相关传感器留出区域.而且我们不能改变 出现比如定位的图标、通话、和其他后台任务的图标的小大</em> <em>这里说的pt(point)是开发人员的计算屏幕一倍的像素单位,不是视觉提供素材的pixel像素</em></p>
 </blockquote>
-<h3 id="2-UI适配"><a href="#2-UI适配" class="headerlink" title="2. UI适配"></a>2. UI适配</h3><p>ok 看完各种尺寸 我们来说一下 UI 适配工作</p>
-<h4 id="2-1-工作分工"><a href="#2-1-工作分工" class="headerlink" title="2.1 工作分工:"></a>2.1 工作分工:</h4><ul>
-<li>UI(视觉设计师)的素材提供 </li>
+<h3 id="ui适配">2. UI适配</h3>
+<p>ok 看完各种尺寸 我们来说一下 UI 适配工作</p>
+<h4 id="工作分工">2.1 工作分工:</h4>
+<ul>
+<li>UI(视觉设计师)的素材提供</li>
 <li>RD(研发工程师)的UI相关适配</li>
 </ul>
-<h5 id="2-1-1-设计和开发同学需要考虑适配的范围有"><a href="#2-1-1-设计和开发同学需要考虑适配的范围有" class="headerlink" title="2.1.1 设计和开发同学需要考虑适配的范围有"></a>2.1.1 设计和开发同学需要考虑适配的范围有</h5><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4xm1k21j206f0dwdgm.jpg" alt=""></p>
-<ol>
-<li>传感器区域(sensor housing), 就是那个顶部<code>Face ID</code>的遮盖区域(大家常说的刘海儿).  </li>
-<li>底部<code>Home键</code> 标识的触发区域,就是那个底部的横条(home indicator).  </li>
-<li>圆角 四个定点的圆角问题.  </li>
+<h5 id="设计和开发同学需要考虑适配的范围有">2.1.1 设计和开发同学需要考虑适配的范围有</h5>
+<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll4xm1k21j206f0dwdgm.jpg"></p>
+<ol type="1">
+<li>传感器区域(sensor housing), 就是那个顶部<code>Face ID</code>的遮盖区域(大家常说的刘海儿).<br>
+</li>
+<li>底部<code>Home键</code> 标识的触发区域,就是那个底部的横条(home indicator).<br>
+</li>
+<li>圆角 四个定点的圆角问题.</li>
 </ol>
 <p>三倍(3x)屏的图标素材问题</p>
 <ul>
@@ -303,16 +326,19 @@
 <li>使用<code>@2x</code>或者<code>@3x</code>图</li>
 <li>如果没有使用<code>LaunchScreen.storyboard</code>作为应用启动的话 <code>3x</code>图用不了.</li>
 </ul>
-<h5 id="2-1-2-研发的工作范围"><a href="#2-1-2-研发的工作范围" class="headerlink" title="2.1.2 研发的工作范围"></a>2.1.2 研发的工作范围</h5><ol>
+<h5 id="研发的工作范围">2.1.2 研发的工作范围</h5>
+<ol type="1">
 <li>适配 UI 的导航栏和状态栏</li>
 <li>适配safeArea范围</li>
 </ol>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll5z16qs5j20ep056434.jpg" alt="短视频录制顶部按钮适配前"></p>
+<figure>
+<img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll5z16qs5j20ep056434.jpg" alt="短视频录制顶部按钮适配前"><figcaption>短视频录制顶部按钮适配前</figcaption>
+</figure>
 <p>我们的搞法是把导航栏隐藏掉然后填写上按钮,但是当 iPhone X出来的时候就不行了因为会出现被刘海盖住,其实主要的原因是我们用的 Masonry 自动布局的 edge 超过了安全区范围</p>
-<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll689p471g206h07aju1.gif" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll689p471g206h07aju1.gif"></p>
 <p>我们的搞法是放置一个 View,并且让他的 edge 在 iOS11上 等于安全区范围.</p>
 <p>那么我们为啥要这么搞呢?</p>
-<ol>
+<ol type="1">
 <li>我们需要适配 iPhone X 的 safeArea 并且兼容 iOS8</li>
 <li>后续处理事件 按钮、手势 都用这个 view 搞.</li>
 </ol>
@@ -320,8 +346,12 @@
 <p>代码实现如下:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">       [<span class="keyword">self</span>.canRotateView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.top.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideTop);</div><div class="line">           make.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideBottom);</div><div class="line">           make.left.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideLeft);</div><div class="line">           make.right.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideRight);</div><div class="line">       &#125;];</div><div class="line">   &#125; <span class="keyword">else</span> &#123;</div><div class="line">   	[<span class="keyword">self</span>.safeAreaView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.edges.equalTo(<span class="keyword">self</span>.view);</div><div class="line">       &#125;];	</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <p>下面是完成之后的效果图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_launch.PNG" alt="Launch"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_config.PNG" alt="config"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_record.PNG" alt="record"><br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_edit.PNG" alt="edit"></p>
-<h3 id="3-极端情况处理"><a href="#3-极端情况处理" class="headerlink" title="3. 极端情况处理"></a>3. 极端情况处理</h3><h4 id="极端情况1-如果有些-app-使用的手势-是从下往上滑动的话"><a href="#极端情况1-如果有些-app-使用的手势-是从下往上滑动的话" class="headerlink" title="极端情况1:如果有些 app 使用的手势 是从下往上滑动的话"></a>极端情况1:如果有些 app 使用的手势 是从下往上滑动的话</h4><p><img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6sir2s3j206n0dxjsi.jpg" alt="手势从下往上滑动"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_launch.PNG" alt="Launch"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_config.PNG" alt="config"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_record.PNG" alt="record"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171103iPhone-X-Adaptor/KSYMediaEditorKit_edit.PNG" alt="edit"></p>
+<h3 id="极端情况处理">3. 极端情况处理</h3>
+<h4 id="极端情况1如果有些-app-使用的手势-是从下往上滑动的话">极端情况1:如果有些 app 使用的手势 是从下往上滑动的话</h4>
+<figure>
+<img src="https://ws1.sinaimg.cn/large/89e3e57fly1fll6sir2s3j206n0dxjsi.jpg" alt="手势从下往上滑动"><figcaption>手势从下往上滑动</figcaption>
+</figure>
 <p>这样就会造成在 iPhone X上 滑动和 home 虚拟按键冲突的问题,那如果出现这种问题如何解决呢？</p>
 <p>我们需要 需要开启 <a href="https://developer.apple.com/documentation/uikit/uiviewcontroller/2887512-preferredscreenedgesdeferringsys" target="_blank" rel="external"><code>edge protect</code></a>, 这是控制器的方法.</p>
 <p>在 UIViewController 里面返回 要触摸返回键的范围</p>
@@ -329,17 +359,22 @@
 <p>objc 版本</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIRectEdge</span>)preferredScreenEdgesDeferringSystemGestures&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">UIRectEdgeAll</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样的话 用户 滑动一次 手势响应, 如果 滑动两次 才会触发<code>home indicator</code>.</p>
-<h4 id="极端情况2-如何隐藏底部-home-条"><a href="#极端情况2-如何隐藏底部-home-条" class="headerlink" title="极端情况2:如何隐藏底部 home 条?"></a>极端情况2:如何隐藏底部 home 条?</h4><p>那个底部的横条如何 隐藏掉呢?</p>
-<p>其实这是一种被动的视图响应体验,<a href="https://developer.apple.com/documentation/uikit/uiviewcontroller/2887510-prefershomeindicatorautohidden" target="_blank" rel="external"> auto-hiding</a>, 返回这个<code>UIViewController</code>的 <code>bool</code>的值,这样的话 如果用户没有触发底部的<code>home 条</code>(home indicator)几秒,<code>home 条</code>(home indicator)会淡出不做响应.</p>
+<h4 id="极端情况2如何隐藏底部-home-条">极端情况2:如何隐藏底部 home 条?</h4>
+<p>那个底部的横条如何 隐藏掉呢?</p>
+<p>其实这是一种被动的视图响应体验,<a href="https://developer.apple.com/documentation/uikit/uiviewcontroller/2887510-prefershomeindicatorautohidden" target="_blank" rel="external">auto-hiding</a>, 返回这个<code>UIViewController</code>的 <code>bool</code>的值,这样的话 如果用户没有触发底部的<code>home 条</code>(home indicator)几秒,<code>home 条</code>(home indicator)会淡出不做响应.</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">prefersHomeIndicatorAutoHidden</span><span class="params">()</span></span> -&gt; <span class="type">Bool</span></div></pre></td></tr></table></figure>
 <p>Objective-C 版本</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)prefersHomeIndicatorAutoHidden&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="实践案例"><a href="#实践案例" class="headerlink" title="实践案例"></a>实践案例</h3><h4 id="实践案例1-safeArea-在-iOS11上开启之后-在低版本-怎么处理"><a href="#实践案例1-safeArea-在-iOS11上开启之后-在低版本-怎么处理" class="headerlink" title="实践案例1:safeArea 在 iOS11上开启之后 在低版本 怎么处理?"></a>实践案例1:safeArea 在 iOS11上开启之后 在低版本 怎么处理?</h4><blockquote>
-<p>经过测试 在<code>iOS9</code>之前就是用不了<code>safeArea</code>必须<code>iOS9 or later</code><br>如果兼容 iOS 8.0的建议去掉<code>safeArea</code>否则报错</p>
+<h3 id="实践案例">实践案例</h3>
+<h4 id="实践案例1safearea-在-ios11上开启之后-在低版本-怎么处理">实践案例1:safeArea 在 iOS11上开启之后 在低版本 怎么处理?</h4>
+<blockquote>
+<p>经过测试 在<code>iOS9</code>之前就是用不了<code>safeArea</code>必须<code>iOS9 or later</code><br>
+如果兼容 iOS 8.0的建议去掉<code>safeArea</code>否则报错</p>
 </blockquote>
 <p>解决的方式:参考我们的短视频适配 使用一个背景 View 来做支撑并且使它的 edge 边缘处于<code>safeArea</code>范围内并使用如下代码做 iOS11前的安全区</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> ( <span class="built_in">NS_AVAILABEL</span>(iOS <span class="number">11.0</span>)) &#123;</div><div class="line">	<span class="comment">//iOS11 支持安全区域范围</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//iOS11之前不支持安全区范围</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="实践案例1-Masonryedge-不能等于-safeAreaGuide"><a href="#实践案例1-Masonryedge-不能等于-safeAreaGuide" class="headerlink" title="实践案例1:Masonryedge 不能等于 safeAreaGuide?"></a>实践案例1:<code>Masonry</code>edge 不能等于 safeAreaGuide?</h4><p>因为我们的代码基本都是 xib 拖拽控件，使用 masonry 自动布局</p>
+<h4 id="实践案例1masonryedge-不能等于-safeareaguide">实践案例1:<code>Masonry</code>edge 不能等于 safeAreaGuide?</h4>
+<p>因为我们的代码基本都是 xib 拖拽控件，使用 masonry 自动布局</p>
 <p>如果对一个 view 让它的上、左、下、右 4个边缘等于父视图的话我们经常写下面 代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.xxxView mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">           make.edges.equalTo(<span class="keyword">self</span>.view);</div><div class="line">   &#125;];</div></pre></td></tr></table></figure>
 <p>但是为支持 safeArea,<code>Masonry</code>库提供了<code>safeAreaGuide</code></p>
@@ -348,9 +383,9 @@
 <p>看下边的例子:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement</span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.right.bottom.equalTo(<span class="keyword">self</span>.view);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
 <p>但我要是改成 iOS11</p>
-<p>这个写法就会不支持  </p>
+<p>这个写法就会不支持</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement  </span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.right.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuide);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>必须改成 </p>
+<p>必须改成</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 底部segement</span></div><div class="line">[<span class="keyword">self</span>.panelTabbar mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideLeft);</div><div class="line">    make.right.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideRight);</div><div class="line">    make.bottom.equalTo(<span class="keyword">self</span>.view.mas_safeAreaLayoutGuideBottom);</div><div class="line">    make.height.equalTo(@<span class="number">44</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
 <blockquote>
 <p>正确写法</p>
@@ -359,7 +394,8 @@
 <blockquote>
 <p>这个已经给 Masonry 库提了 issue 近期应该会修复</p>
 </blockquote>
-<h4 id="实践案例3-安全区域-safeArea-的坐标-frame"><a href="#实践案例3-安全区域-safeArea-的坐标-frame" class="headerlink" title="实践案例3: 安全区域 safeArea 的坐标(frame)"></a>实践案例3: 安全区域 safeArea 的坐标(frame)</h4><p>如果有一种需求需要计算 iPhone 的 安全区域 范围 宽高等于多少？如下代码可以得到正确的 范围</p>
+<h4 id="实践案例3-安全区域-safearea-的坐标frame">实践案例3: 安全区域 safeArea 的坐标(frame)</h4>
+<p>如果有一种需求需要计算 iPhone 的 安全区域 范围 宽高等于多少？如下代码可以得到正确的 范围</p>
 <p><code>@available(iOS 11.0, *)</code></p>
 <p><code>NSString * safeAreaRect = NSStringFromCGRect(self.view.safeAreaLayoutGuide.layoutFrame);</code></p>
 <blockquote>
@@ -371,26 +407,29 @@
 <li>iPhone 6s 安全区 (0, 0, 375, 667).</li>
 </ul>
 <blockquote>
-<p>高了 734 - 667 = 67 </p>
+<p>高了 734 - 667 = 67</p>
 </blockquote>
 <p>如果是视频录制 会导致视频比例不对</p>
 <p>解决办法: 推荐 安全区顶部到底部 高度的宽度比值 等于标准的 3:4 或者 9:16</p>
-<h4 id="实践案例4-适配-iPhone-X常用的宏"><a href="#实践案例4-适配-iPhone-X常用的宏" class="headerlink" title="实践案例4: 适配 iPhone X常用的宏"></a>实践案例4: 适配 iPhone X常用的宏</h4><p>其实我个人不推荐用宏 鉴于它短时间内 能解决问题 我不得不列举一些</p>
+<h4 id="实践案例4-适配-iphone-x常用的宏">实践案例4: 适配 iPhone X常用的宏</h4>
+<p>其实我个人不推荐用宏 鉴于它短时间内 能解决问题 我不得不列举一些</p>
 <p>先看问题</p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1a49j20yg05u0tp.jpg" alt="状态栏白色"><br><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd18zlj20np06sq3w.jpg" alt="导航栏太紧"></p>
-<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1ipxj20od0ae40k.jpg" alt="适配完"></p>
+<p><img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1a49j20yg05u0tp.jpg" alt="状态栏白色"> <img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd18zlj20np06sq3w.jpg" alt="导航栏太紧"></p>
+<figure>
+<img src="https://ws1.sinaimg.cn/mw690/89e3e57fly1fll7kd1ipxj20od0ae40k.jpg" alt="适配完"><figcaption>适配完</figcaption>
+</figure>
 <p>出现这种问题是由于</p>
 <blockquote>
-<p>iOS 11上面废除了scrollView的<code>automaticallyAdjustsScrollViewInsets</code>这个属性的使用.使用UIScrollView’s <code>contentInsetAdjustmentBehavior</code>来替代，<a href="https://www.lee1994.com/guan-yu-iphone/" target="_blank" rel="external">详细介绍</a></p>
+<p>iOS 11上面废除了scrollView的<code>automaticallyAdjustsScrollViewInsets</code>这个属性的使用.使用UIScrollView's <code>contentInsetAdjustmentBehavior</code>来替代，<a href="https://www.lee1994.com/guan-yu-iphone/" target="_blank" rel="external">详细介绍</a></p>
 </blockquote>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">    <span class="keyword">self</span>.collectionView.contentInsetAdjustmentBehavior = <span class="built_in">UIApplicationBackgroundFetchIntervalNever</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">self</span>.automaticallyAdjustsScrollViewInsets = <span class="literal">false</span>;</div><div class="line">    <span class="comment">// Fallback on earlier versions</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>为了省事 可以使用这个宏</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#define AdjustsScrollViewInsetNever(controller,view) if(@available(iOS 11.0, *)) &#123;view.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;&#125; else if([controller isKindOfClass:[UIViewController class]]) &#123;controller.automaticallyAdjustsScrollViewInsets = false;&#125;</span></div></pre></td></tr></table></figure>
 <p>高度系数宏 812.0 是iPhoneX的高度尺寸</p>
-<pre><code class="objc"><span class="meta">#define kHeightCoefficient (kScreenHeight == 812.0 ? 667.0/667.0 : kScreenHeight/667.0)</span>
-</code></pre>
+<pre class="objc"><code>#define kHeightCoefficient (kScreenHeight == 812.0 ? 667.0/667.0 : kScreenHeight/667.0)</code></pre>
 <p>好 适配到此为止.</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>上述是测试短视频 SDK 开发过程中适配 iPhone X 的 一些 case,由于偏于多媒体方向,并不涉及到例如 网络层 如果适配 iPhone X等一些短视频开发过程中并没有遇到的特定问题,可能还有一些遗漏部分,如果发现我会及时更新.</p>
+<h3 id="总结">总结</h3>
+<p>上述是测试短视频 SDK 开发过程中适配 iPhone X 的 一些 case,由于偏于多媒体方向,并不涉及到例如 网络层 如果适配 iPhone X等一些短视频开发过程中并没有遇到的特定问题,可能还有一些遗漏部分,如果发现我会及时更新.</p>
 <p>全文完</p>
 
   </section>
@@ -447,8 +486,10 @@
                 <p class="excerpt">
                 
                 
-前言都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是如何正确的给一个UICollectionViewCell添加KVO监听.
-开篇由于目前在开发短视频相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式开发
+前言
+都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是如何正确的给一个UICollectionViewCell添加KVO监听.
+开篇
+由于目前在开发短视频相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-12-15T09:05:10.000Z" class="post-list__meta--date date">2017-12-15</time>
@@ -466,9 +507,11 @@
                 <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031Elegant-present-transition/" title="论一个优雅的模态转场的自我修养">论一个优雅的模态转场的自我修养</a></h2>
                 <p class="excerpt">
                 
-                前言在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
+                前言
+在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
 
-swift 点这里下载demoObjective-C
+swift 点这里下载demo
+Objective
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
@@ -553,5 +596,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,9 +191,13 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画 </p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0cca94607f36a130adc04b7882c5750ca7eb1139/20181029LabelDanceAnimation/danceLabel.gif" alt="demo"></p>
-<h1 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h1><p>上代码 看比较清晰</p>
+    <h1 id="前言">前言</h1>
+<p>写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画</p>
+<figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0cca94607f36a130adc04b7882c5750ca7eb1139/20181029LabelDanceAnimation/danceLabel.gif" alt="demo"><figcaption>demo</figcaption>
+</figure>
+<h1 id="实现思路">实现思路</h1>
+<p>上代码 看比较清晰</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 数字跳动动画</span></div><div class="line">- (<span class="keyword">void</span>)labelDanceAnimation:(<span class="built_in">NSTimeInterval</span>)duration &#123;</div><div class="line">    <span class="comment">//透明度</span></div><div class="line">    <span class="built_in">CABasicAnimation</span> *opacityAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"opacity"</span>];</div><div class="line">    opacityAnimation.duration = <span class="number">0.4</span> * duration;</div><div class="line">    opacityAnimation.fromValue = @<span class="number">0.</span>f;</div><div class="line">    opacityAnimation.toValue = @<span class="number">1.</span>f;</div><div class="line">    </div><div class="line">    <span class="comment">//缩放</span></div><div class="line">    <span class="built_in">CAKeyframeAnimation</span> *scaleAnimation = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</div><div class="line">    scaleAnimation.duration = duration;</div><div class="line">    scaleAnimation.values = @[@<span class="number">3.</span>f, @<span class="number">1.</span>f, @<span class="number">1.2</span>f, @<span class="number">1.</span>f];</div><div class="line">    scaleAnimation.keyTimes = @[@<span class="number">0.</span>f, @<span class="number">0.16</span>f, @<span class="number">0.28</span>f, @<span class="number">0.4</span>f];</div><div class="line">    scaleAnimation.removedOnCompletion = <span class="literal">YES</span>;</div><div class="line">    scaleAnimation.fillMode = kCAFillModeForwards;</div><div class="line">    </div><div class="line">    <span class="built_in">CAAnimationGroup</span> *animationGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">    animationGroup.animations = @[opacityAnimation, scaleAnimation];</div><div class="line">    animationGroup.duration = duration;</div><div class="line">    animationGroup.removedOnCompletion = <span class="literal">YES</span>;</div><div class="line">    animationGroup.fillMode = kCAFillModeForwards;</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.comboLabel.layer addAnimation:animationGroup forKey:<span class="string">@"kComboAnimationKey"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>利用一个透明度从 0 ~ 1之间的alpha,然后缩放 之后加到动画组实现一下就好了</p>
 <blockquote>
@@ -203,7 +209,8 @@
 <p>最后按钮点击的时候调用</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)clickAction:(<span class="built_in">UIButton</span> *)sender &#123;</div><div class="line">    <span class="keyword">self</span>.danceCount++;</div><div class="line">    [<span class="keyword">self</span> labelDanceAnimation:<span class="number">0.4</span>];</div><div class="line">    <span class="keyword">self</span>.comboLabel.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"+  %tu"</span>,<span class="keyword">self</span>.danceCount];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>如果实现 dozen动画的话很简单, <strong>danceCount % 10 == 0</strong> 求模就行了.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个动画比较适合 有些直播场景的点击操作计数相关.感谢观看</p>
+<h1 id="总结">总结</h1>
+<p>这个动画比较适合 有些直播场景的点击操作计数相关.感谢观看</p>
 <p><a href="https://github.com/sunyazhou13/LiveComboLabel" target="_blank" rel="external">Demo在这里</a></p>
 
   </section>
@@ -259,13 +266,15 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/11/06/20181106AwemeTopBottomScrollDemo/" title="iOS抖音的上下滑实现">iOS抖音的上下滑实现</a></h2>
                 <p class="excerpt">
                 
-                前言一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,
+                前言
+一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,
 
 技术实现原理
-UITableView 
+
+UITableView
 
 其实就是一个UITableView改变上下显示范围. talk is cheap show me the code
-我说话不绕弯子,代码如
+我说话不绕弯子,代码
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-11-06T09:55:09.000Z" class="post-list__meta--date date">2018-11-06</time>
@@ -283,17 +292,20 @@ UITableView
                 <h2 class="post-list__post-title post-title"><a href="/2018/09/29/20180929BreathAnimation/" title="iOS呼吸动画">iOS呼吸动画</a></h2>
                 <p class="excerpt">
                 
-                前言快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.
+                前言
+快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.
 上图
 
-大概是这个样子 
-需求和实现思路具体要求
+大概是这个样子
+需求和实现思路
+具体要求
 
 内部头像呼吸放大缩小 无限循环
 每次放大同时需要背景还有一张图也放大 并且透明
 点击缩放整个背景视图
 
-实现思路首先 
+实现思路
+首
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-09-29T02:09:30.000Z" class="post-list__meta--date date">2018-09-29</time>
@@ -378,5 +390,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,75 +191,78 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png" alt=""></p>
-<h1 id="bash及其特性"><a href="#bash及其特性" class="headerlink" title="bash及其特性"></a>bash及其特性</h1><ul>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png"></p>
+<h1 id="bash及其特性">bash及其特性</h1>
+<ul>
 <li><a href="http://cn.linux.vbird.org/linux_basic/0320bash.php" target="_blank" rel="external">bash</a>实质上是一个可执行程序，一个用户的工作环境。</li>
 <li>在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。</li>
 <li>可以使用pstree命令查看当前shell下的子shell个数。</li>
 </ul>
-<h3 id="1-最重要的自动补全"><a href="#1-最重要的自动补全" class="headerlink" title="1. 最重要的自动补全"></a>1. 最重要的自动补全</h3><table>
+<h3 id="最重要的自动补全">1. 最重要的自动补全</h3>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Tab</td>
 <td>自动补全</td>
 </tr>
 </tbody>
 </table>
-<h3 id="2-编辑跳转"><a href="#2-编辑跳转" class="headerlink" title="2. 编辑跳转"></a>2. 编辑跳转</h3><table>
+<h3 id="编辑跳转">2. 编辑跳转</h3>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Ctrl + A</td>
 <td>跳转到当前行首</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl + E</td>
 <td>跳转到当前行末</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Alt + F</td>
 <td>将光标在当前行上向后移动一个单词</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Alt + B</td>
 <td>将光标在当前行上向前移动一个单词</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Ctrl + W</td>
 <td>删除当前光标前的一个单词</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl + K</td>
 <td>删除当前光标后的内容</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Ctrl + U</td>
 <td>清除整行</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl + L</td>
 <td>清屏，类似于 clear 命令</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Ctrl + H</td>
 <td>退格，类似于 backspace 键</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl + T</td>
 <td>将当前光标前的两个字符互换位置</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Esc + T</td>
 <td>将当前光标前的两个单词互换位置</td>
 </tr>
@@ -265,23 +270,24 @@
 </table>
 <p><code>Ctrl + W</code> 和 <code>Ctrl + U</code> 相当常用。拼写错是很常见的事。</p>
 <p><code>Ctrl + L</code> 也不用多说。</p>
-<h3 id="3-进程相关"><a href="#3-进程相关" class="headerlink" title="3. 进程相关"></a>3. 进程相关</h3><table>
+<h3 id="进程相关">3. 进程相关</h3>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Ctrl + C</td>
 <td>终止当前进程</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl + Z</td>
 <td>将当前进程在后台挂起</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Ctrl + D</td>
 <td>退出当前 Shell，类似于 exit 命令</td>
 </tr>
@@ -289,18 +295,19 @@
 </table>
 <p><code>Ctrl + C</code> 是向当前运行的进程发送 SIGINT 信号，终止进程。</p>
 <blockquote>
-<p>SIGINT - This signal is the same as pressing ctrl-c. On some systems, “delete” + “break” sends the same signal to the process. The process is interrupted and stopped. However, the process can ignore this signal.</p>
+<p>SIGINT - This signal is the same as pressing ctrl-c. On some systems, "delete" + "break" sends the same signal to the process. The process is interrupted and stopped. However, the process can ignore this signal.</p>
 </blockquote>
 <p><code>Ctrl + Z</code> 并不结束进程，而是挂起在后台。之后仍然可以通过 <code>fg</code>命令恢复。对应的信号是 SIGTSTP。</p>
-<h3 id="3-搜索使用过的命令（特别推荐）"><a href="#3-搜索使用过的命令（特别推荐）" class="headerlink" title="3. 搜索使用过的命令（特别推荐）"></a>3. 搜索使用过的命令（特别推荐）</h3><table>
+<h3 id="搜索使用过的命令特别推荐">3. 搜索使用过的命令（特别推荐）</h3>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Ctrl + R</td>
 <td>用于搜索之前使用过的命令</td>
 </tr>
@@ -310,7 +317,8 @@
 <p>按下 <code>Ctrl + R</code> 之后，输入查询的关键字，如果不符合，可以继续按 <code>Ctrl + R</code> 进行遍历。</p>
 <p>这个命令其实也是通过 <code>history</code> 记录来查询的。如果不喜欢这种方式，可以直接 <code>history | grep xxx</code> 也是不错的。</p>
 <p><a href="https://www.linuxidc.com/Linux/2017-11/148262.htm" target="_blank" rel="external">参考 Linux公社</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这些命令对工作效率提升很显著,需要反复学习牢记,文章最后推荐大家关注<code>Linux公社</code>这个具有历史人文精神的Linux社区, 它让我学到不少东西.</p>
+<h1 id="总结">总结</h1>
+<p>这些命令对工作效率提升很显著,需要反复学习牢记,文章最后推荐大家关注<code>Linux公社</code>这个具有历史人文精神的Linux社区, 它让我学到不少东西.</p>
 
   </section>
 
@@ -384,11 +392,13 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/06/25/20180625FilterString/" title="Objective-C中使用正则去除非数字字母汉字">Objective-C中使用正则去除非数字字母汉字</a></h2>
                 <p class="excerpt">
                 
-                前言今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
+                前言
+今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
 
 带着这个疑问开始今天的文章
-准备工作创建个demo 代码如下
-@interface ViewController ()@property (weak, nonatomic) IBOutlet UITextField *input;@p
+准备工作
+创建个demo 代码如下
+@interface ViewController ()@property (weak, nonatomic) IBOutlet UITextField *input;
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-06-25T10:35:17.000Z" class="post-list__meta--date date">2018-06-25</time>
@@ -473,5 +483,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

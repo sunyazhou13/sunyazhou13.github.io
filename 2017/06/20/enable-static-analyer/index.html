@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,15 +191,17 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/static.png" alt=""></p>
-<h2 id="Clang-静态分析器"><a href="#Clang-静态分析器" class="headerlink" title="Clang 静态分析器"></a>Clang 静态分析器</h2><p>Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。</p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/static.png"></p>
+<h2 id="clang-静态分析器">Clang 静态分析器</h2>
+<p>Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。</p>
 <p>你可以在 Xcode 的 Product → Analyze 里手动运行分析器。</p>
 <p>分析器可以运行“<code>shallow</code>”和“<code>deep</code>”两种模式。后者要慢得多，但是有跨方法的控制流分析以及数据流分析，因此能发现更多问题。</p>
-<h2 id="建议："><a href="#建议：" class="headerlink" title="建议："></a>建议：</h2><p>开启分析器的 全部 检查（方法是在 <code>build setting</code> 的“<code>Static Analyzer</code>”部分开启所有选项）</p>
+<h2 id="建议">建议：</h2>
+<p>开启分析器的 全部 检查（方法是在 <code>build setting</code> 的“<code>Static Analyzer</code>”部分开启所有选项）</p>
 <p>在 <code>build setting</code> 里，对 <code>release</code> 的 <code>build</code> 配置开启 “<code>Analyze during</code> <code>‘Build’</code>” 。（真的，一定要这样做——你不会记得手动跑分析器的。）</p>
-<p>把 <code>build setting</code> 里的 “Mode of Analysis for <code>‘Analyze’</code>” 设为  <code>Deep</code></p>
+<p>把 <code>build setting</code> 里的 “Mode of Analysis for <code>‘Analyze’</code>” 设为 <code>Deep</code></p>
 <p>把 <code>build setting</code> 里的 “Mode of Analysis for <code>‘Build’</code>” 设为 <code>Shallow</code> (faster)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/enable-static-analyer.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/enable-static-analyer/enable-static-analyer.png"></p>
 <p>全文完</p>
 <p><a href="http://mp.weixin.qq.com/s/x6XSQ_rrYCOXi2EVeiMfCg" target="_blank" rel="external">参考</a></p>
 
@@ -255,10 +259,12 @@
                 <p class="excerpt">
                 
                 
-前言先膜拜一下 RSA的作者
+前言
+先膜拜一下 RSA的作者
 
-RSA非对称加密 原理 各种。。。 请自行百度 
-弯路最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客把真正 好
+RSA非对称加密 原理 各种。。。 请自行百度
+弯路
+最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客 把真正
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-26T02:42:47.000Z" class="post-list__meta--date date">2017-06-26</time>
@@ -277,9 +283,11 @@ RSA非对称加密 原理 各种。。。 请自行百度
                 <p class="excerpt">
                 
                 前言
+
 最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码
 __attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;)));
-场景1我想标识一个方法使用其它方式传入某个参
+场景1
+我想标识一个方法使用其它方式传入某
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
@@ -364,5 +372,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

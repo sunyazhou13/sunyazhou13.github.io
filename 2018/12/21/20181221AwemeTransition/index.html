@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,34 +191,45 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e2c340e680ad8308f23aa1ba8d3e8197847dcfec/20181219AwemeTransition/transition1.gif" alt=""> <img src="https://ws1.sinaimg.cn/large/bf8500b1ly1fyc09rh2cog20630at7wm.gif" alt=""></p>
+    <h1 id="前言">前言</h1>
+<p>这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e2c340e680ad8308f23aa1ba8d3e8197847dcfec/20181219AwemeTransition/transition1.gif"> <img src="https://ws1.sinaimg.cn/large/bf8500b1ly1fyc09rh2cog20630at7wm.gif"></p>
 <p>这里需要用到前一篇文章的上下滑<a href="https://github.com/sunyazhou13/AwemeDemo" target="_blank" rel="external">demo</a></p>
-<p>学习这篇文章之前推荐看下喵神的<a href="https://onevcat.com/2013/10/vc-transition-in-ios7/" target="_blank" rel="external">iOS7中的ViewController转场切换</a> </p>
+<p>学习这篇文章之前推荐看下喵神的<a href="https://onevcat.com/2013/10/vc-transition-in-ios7/" target="_blank" rel="external">iOS7中的ViewController转场切换</a></p>
 <p>如果对转场不是很了解的话可能学习会有一些难度和疑问.</p>
-<h2 id="转场调用代码"><a href="#转场调用代码" class="headerlink" title="转场调用代码"></a>转场调用代码</h2><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didSelectItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">    AwemeListViewController *awemeVC = [[AwemeListViewController alloc] init];</div><div class="line">    awemeVC.transitioningDelegate = <span class="keyword">self</span>; <span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="comment">// 1</span></div><div class="line">    <span class="built_in">UICollectionViewCell</span> *cell = [collectionView cellForItemAtIndexPath:indexPath];</div><div class="line">    <span class="comment">// 2</span></div><div class="line">    <span class="built_in">CGRect</span> cellFrame = cell.frame;</div><div class="line">    <span class="comment">// 3</span></div><div class="line">    <span class="built_in">CGRect</span> cellConvertedFrame = [collectionView convertRect:cellFrame toView:collectionView.superview];</div><div class="line">    </div><div class="line">    <span class="comment">//弹窗转场</span></div><div class="line">    <span class="keyword">self</span>.presentScaleAnimation.cellConvertFrame = cellConvertedFrame; <span class="comment">//4</span></div><div class="line">    </div><div class="line">    <span class="comment">//消失转场</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.selectCell = cell; <span class="comment">// 5</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.originCellFrame  = cellFrame; <span class="comment">//6</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.finalCellFrame = cellConvertedFrame; <span class="comment">//7</span></div><div class="line">    </div><div class="line">    awemeVC.modalPresentationStyle = <span class="built_in">UIModalPresentationOverCurrentContext</span>; <span class="comment">//8</span></div><div class="line">    <span class="keyword">self</span>.modalPresentationStyle = <span class="built_in">UIModalPresentationCurrentContext</span>; <span class="comment">//9</span></div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.leftDragInteractiveTransition wireToViewController:awemeVC];</div><div class="line">    [<span class="keyword">self</span> presentViewController:awemeVC animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> <code>0</code> 处代码使我们需要把当前的类做为转场的代理<br> <code>1</code> 这里我们要拿出cell这个view<br> <code>2</code> 拿出当前Cell的frame坐标<br> <code>3</code> cell的坐标转成屏幕坐标<br> <code>4</code> 设置弹出时候需要cell在屏幕的位置坐标<br> <code>5</code> 设置消失转场需要的选中cell视图<br> <code>6</code> 设置消失转场原始cell坐标位置<br> <code>7</code> 设置消失转场最终得cell屏幕坐标位置 用于消失完成回到原来位置的动画<br> <code>8</code> 设置弹出得vc弹出样式 这个用于显示弹出VC得时候 默认底部使blua的高斯模糊<br> <code>9</code> 设置当前VC的模态弹出样式为当前的弹出上下文  </p>
+<h2 id="转场调用代码">转场调用代码</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView didSelectItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">    AwemeListViewController *awemeVC = [[AwemeListViewController alloc] init];</div><div class="line">    awemeVC.transitioningDelegate = <span class="keyword">self</span>; <span class="comment">//0</span></div><div class="line">    </div><div class="line">    <span class="comment">// 1</span></div><div class="line">    <span class="built_in">UICollectionViewCell</span> *cell = [collectionView cellForItemAtIndexPath:indexPath];</div><div class="line">    <span class="comment">// 2</span></div><div class="line">    <span class="built_in">CGRect</span> cellFrame = cell.frame;</div><div class="line">    <span class="comment">// 3</span></div><div class="line">    <span class="built_in">CGRect</span> cellConvertedFrame = [collectionView convertRect:cellFrame toView:collectionView.superview];</div><div class="line">    </div><div class="line">    <span class="comment">//弹窗转场</span></div><div class="line">    <span class="keyword">self</span>.presentScaleAnimation.cellConvertFrame = cellConvertedFrame; <span class="comment">//4</span></div><div class="line">    </div><div class="line">    <span class="comment">//消失转场</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.selectCell = cell; <span class="comment">// 5</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.originCellFrame  = cellFrame; <span class="comment">//6</span></div><div class="line">    <span class="keyword">self</span>.dismissScaleAnimation.finalCellFrame = cellConvertedFrame; <span class="comment">//7</span></div><div class="line">    </div><div class="line">    awemeVC.modalPresentationStyle = <span class="built_in">UIModalPresentationOverCurrentContext</span>; <span class="comment">//8</span></div><div class="line">    <span class="keyword">self</span>.modalPresentationStyle = <span class="built_in">UIModalPresentationCurrentContext</span>; <span class="comment">//9</span></div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.leftDragInteractiveTransition wireToViewController:awemeVC];</div><div class="line">    [<span class="keyword">self</span> presentViewController:awemeVC animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>0</code> 处代码使我们需要把当前的类做为转场的代理<br>
+<code>1</code> 这里我们要拿出cell这个view<br>
+<code>2</code> 拿出当前Cell的frame坐标<br>
+<code>3</code> cell的坐标转成屏幕坐标<br>
+<code>4</code> 设置弹出时候需要cell在屏幕的位置坐标<br>
+<code>5</code> 设置消失转场需要的选中cell视图<br>
+<code>6</code> 设置消失转场原始cell坐标位置<br>
+<code>7</code> 设置消失转场最终得cell屏幕坐标位置 用于消失完成回到原来位置的动画<br>
+<code>8</code> 设置弹出得vc弹出样式 这个用于显示弹出VC得时候 默认底部使blua的高斯模糊<br>
+<code>9</code> 设置当前VC的模态弹出样式为当前的弹出上下文</p>
 <blockquote>
 <p>5~7 步设置的消失转场动画 下面会讲解</p>
 </blockquote>
-<p> 这里我们用的是前面讲上下滑的VC对象 大家不必担心 当它是一个普通的UIViewController即可</p>
-<h2 id="实现转场所需要的代理"><a href="#实现转场所需要的代理" class="headerlink" title="实现转场所需要的代理"></a>实现转场所需要的代理</h2><p> 首先在需要实现<code>UIViewControllerTransitioningDelegate</code>这个代理</p>
- <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"> <span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UIViewControllerAnimatedTransitioning Delegate</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForPresentedController:(<span class="built_in">UIViewController</span> *)presented presentingController:(<span class="built_in">UIViewController</span> *)presenting sourceController:(<span class="built_in">UIViewController</span> *)source &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.presentScaleAnimation; <span class="comment">//present VC</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForDismissedController:(<span class="built_in">UIViewController</span> *)dismissed &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.dismissScaleAnimation; <span class="comment">//dismiss VC</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerInteractiveTransitioning</span>&gt;)interactionControllerForDismissal:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animator &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.leftDragInteractiveTransition.isInteracting? <span class="keyword">self</span>.leftDragInteractiveTransition: <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 这里面我们看到我们分别返回了</p>
+<p>这里我们用的是前面讲上下滑的VC对象 大家不必担心 当它是一个普通的UIViewController即可</p>
+<p>## 实现转场所需要的代理</p>
+<p>首先在需要实现<code>UIViewControllerTransitioningDelegate</code>这个代理</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"> <span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - UIViewControllerAnimatedTransitioning Delegate</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForPresentedController:(<span class="built_in">UIViewController</span> *)presented presentingController:(<span class="built_in">UIViewController</span> *)presenting sourceController:(<span class="built_in">UIViewController</span> *)source &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.presentScaleAnimation; <span class="comment">//present VC</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForDismissedController:(<span class="built_in">UIViewController</span> *)dismissed &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.dismissScaleAnimation; <span class="comment">//dismiss VC</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerInteractiveTransitioning</span>&gt;)interactionControllerForDismissal:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animator &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.leftDragInteractiveTransition.isInteracting? <span class="keyword">self</span>.leftDragInteractiveTransition: <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里面我们看到我们分别返回了</p>
 <ul>
 <li>弹出动画实例<code>self.presentScaleAnimation</code></li>
 <li>dismiss动画实例<code>self.dismissScaleAnimation</code></li>
-<li><p>以及<code>self.leftDragInteractiveTransition</code>实例用于负责转场切换的具体实现</p>
-<p>所以我们需要在 当前的VC中声明3个成员变量 并初始化</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) PresentScaleAnimation *presentScaleAnimation;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) DismissScaleAnimation *dismissScaleAnimation;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) DragLeftInteractiveTransition *leftDragInteractiveTransition;</div></pre></td></tr></table></figure>
-</li>
+<li>以及<code>self.leftDragInteractiveTransition</code>实例用于负责转场切换的具体实现</li>
 </ul>
-<p> 并在<code>viewDidLoad:</code>方法中初始化一下</p>
- <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"> <span class="comment">//转场的两个动画</span></div><div class="line"><span class="keyword">self</span>.presentScaleAnimation = [[PresentScaleAnimation alloc] init];</div><div class="line"><span class="keyword">self</span>.dismissScaleAnimation = [[DismissScaleAnimation alloc] init];</div><div class="line"><span class="keyword">self</span>.leftDragInteractiveTransition = [DragLeftInteractiveTransition new];</div></pre></td></tr></table></figure>
-<p> 这里我说一下这三个成员都负责啥事</p>
-<p> 首先<code>DragLeftInteractiveTransition</code>类负责转场的 手势 过程,就是pan手势在这个类里面实现,并继承自<code>UIPercentDrivenInteractiveTransition</code>类,这是iOS7以后系统提供的转场基类必须在<code>interactionControllerForDismissal:</code>代理协议中返回这个类或者子类的实例对象,所以我们生成一个成员变量<code>self.leftDragInteractiveTransition</code></p>
-<p> 其次是弹出present和消失dismiss的动画类,这俩类其实是负责简单的手势完成之后的动画.</p>
-<p> 这两个类都是继承自NSObject并实现<code>UIViewControllerAnimatedTransitioning</code>协议的类,这个协议里面有 需要你复写某些方法返回具体的动画执行时间,和中间过程中我们需要的相关的容器视图以及控制器的视图实例,当我们自己执行完成之后调用相关的block回答告知转场是否完成就行了.</p>
+<p>所以我们需要在 当前的VC中声明3个成员变量 并初始化</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) PresentScaleAnimation *presentScaleAnimation;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) DismissScaleAnimation *dismissScaleAnimation;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) DragLeftInteractiveTransition *leftDragInteractiveTransition;</div></pre></td></tr></table></figure></p>
+<p>并在<code>viewDidLoad:</code>方法中初始化一下</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"> <span class="comment">//转场的两个动画</span></div><div class="line"><span class="keyword">self</span>.presentScaleAnimation = [[PresentScaleAnimation alloc] init];</div><div class="line"><span class="keyword">self</span>.dismissScaleAnimation = [[DismissScaleAnimation alloc] init];</div><div class="line"><span class="keyword">self</span>.leftDragInteractiveTransition = [DragLeftInteractiveTransition new];</div></pre></td></tr></table></figure></p>
+<p>这里我说一下这三个成员都负责啥事</p>
+<p>首先<code>DragLeftInteractiveTransition</code>类负责转场的 手势 过程,就是pan手势在这个类里面实现,并继承自<code>UIPercentDrivenInteractiveTransition</code>类,这是iOS7以后系统提供的转场基类必须在<code>interactionControllerForDismissal:</code>代理协议中返回这个类或者子类的实例对象,所以我们生成一个成员变量<code>self.leftDragInteractiveTransition</code></p>
+<p>其次是弹出present和消失dismiss的动画类,这俩类其实是负责简单的手势完成之后的动画.</p>
+<p>这两个类都是继承自NSObject并实现<code>UIViewControllerAnimatedTransitioning</code>协议的类,这个协议里面有 需要你复写某些方法返回具体的动画执行时间,和中间过程中我们需要的相关的容器视图以及控制器的视图实例,当我们自己执行完成之后调用相关的block回答告知转场是否完成就行了.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"> <span class="class"><span class="keyword">@implementation</span> <span class="title">PresentScaleAnimation</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">NSTimeInterval</span>)transitionDuration:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0.3</span>f;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)animateTransition:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext&#123;</div><div class="line">    <span class="built_in">UIViewController</span> *toVC = [transitionContext viewControllerForKey:<span class="built_in">UITransitionContextToViewControllerKey</span>];    </div><div class="line">    <span class="keyword">if</span> (<span class="built_in">CGRectEqualToRect</span>(<span class="keyword">self</span>.cellConvertFrame, <span class="built_in">CGRectZero</span>)) &#123;</div><div class="line">        [transitionContext completeTransition:<span class="literal">YES</span>];</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CGRect</span> initialFrame = <span class="keyword">self</span>.cellConvertFrame;</div><div class="line"></div><div class="line">    <span class="built_in">UIView</span> *containerView = [transitionContext containerView];</div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line"></div><div class="line">    <span class="built_in">CGRect</span> finalFrame = [transitionContext finalFrameForViewController:toVC];</div><div class="line">    <span class="built_in">NSTimeInterval</span> duration = [<span class="keyword">self</span> transitionDuration:transitionContext];</div><div class="line"></div><div class="line">    toVC.view.center = <span class="built_in">CGPointMake</span>(initialFrame.origin.x + initialFrame.size.width/<span class="number">2</span>, initialFrame.origin.y + initialFrame.size.height/<span class="number">2</span>);</div><div class="line">    toVC.view.transform = <span class="built_in">CGAffineTransformMakeScale</span>(initialFrame.size.width/finalFrame.size.width, initialFrame.size.height/finalFrame.size.height);</div><div class="line"></div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:duration</div><div class="line">                          delay:<span class="number">0</span></div><div class="line">         usingSpringWithDamping:<span class="number">0.8</span></div><div class="line">          initialSpringVelocity:<span class="number">1</span></div><div class="line">                        options:<span class="built_in">UIViewAnimationOptionLayoutSubviews</span></div><div class="line">                     animations:^&#123;</div><div class="line">                         toVC.view.center = <span class="built_in">CGPointMake</span>(finalFrame.origin.x + finalFrame.size.width/<span class="number">2</span>, finalFrame.origin.y + finalFrame.size.height/<span class="number">2</span>);</div><div class="line">                         toVC.view.transform = <span class="built_in">CGAffineTransformMakeScale</span>(<span class="number">1</span>, <span class="number">1</span>);</div><div class="line">                     &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">                         [transitionContext completeTransition:<span class="literal">YES</span>];</div><div class="line">                     &#125;];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>很简单.</p>
 <p>消失的动画 同上边差不多</p>
@@ -238,7 +251,7 @@
 <p>开始的时候需要注意下</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//修复当从右侧向左滑动的时候的bug 避免开始的时候从又向左滑动 当未开始的时候</span></div><div class="line"><span class="built_in">CGPoint</span> vel = [gestureRecognizer velocityInView:gestureRecognizer.view];</div><div class="line"><span class="keyword">if</span> (!<span class="keyword">self</span>.isInteracting &amp;&amp; vel.x &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.isInteracting = <span class="literal">NO</span>;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后 开始的时候加个蒙版做为view.mask 这样是为了解决tableView 超出contentSize的范围要隐藏</p>
-<p>剩下的就是中间过程 </p>
+<p>剩下的就是中间过程</p>
 <p><strong>关键的核心代码</strong></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span> updateInteractiveTransition:progress];</div></pre></td></tr></table></figure>
 <blockquote>
@@ -251,7 +264,8 @@
 </blockquote>
 <p>当用户取消的话记得调用<code>cancelInteractiveTransition</code>方法取消</p>
 <p>完成的话调用<code>finishInteractiveTransition</code>完成转场</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程还是比较简单的 如果看过喵神的文章将会更加清晰的了解转场的三个过程<br>就是 弹出和消失动画 以及一个中间转场过程需要我们熟悉.</p>
+<h1 id="总结">总结</h1>
+<p>整个过程还是比较简单的 如果看过喵神的文章将会更加清晰的了解转场的三个过程 就是 弹出和消失动画 以及一个中间转场过程需要我们熟悉.</p>
 <p>优化点: 在原开源工程中的demo转场右滑是有bug的,我做了一下如下判断</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//修复当从右侧向左滑动的时候的bug 避免开始的时候从又向左滑动 当未开始的时候</span></div><div class="line"><span class="built_in">CGPoint</span> vel = [gestureRecognizer velocityInView:gestureRecognizer.view];</div><div class="line"><span class="keyword">if</span> (!<span class="keyword">self</span>.isInteracting &amp;&amp; vel.x &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.isInteracting = <span class="literal">NO</span>;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>vel</code>这个变量 其实是判断当我们从右侧划入返回.修复了原来开源的一个bug</p>
@@ -314,11 +328,15 @@
                 
                 
 前言
-埋头苦干尽五年,晨起面镜白发先.一年到头不见泪,岁月荏苒冬却寒.仿佛回到一三年,北京站前望着天.北漂掘金那刻起,人生已无再少年.
+
+埋头苦干尽五年,晨起面镜白发先.
+一年到头不见泪,岁月荏苒冬却寒.
+仿佛回到一三年,北京站前望着天.
+北漂掘金那刻起,人生已无再少年.
 
 
-我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我…
-这一年过的像网速一样快,看着年末又到了,我依然得墨守陈规的交出我的20
+我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我...
+这一年过的像网速一样快,看着年末又到了,我依然得墨守陈规的
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-12-28T15:04:41.000Z" class="post-list__meta--date date">2018-12-28</time>
@@ -336,9 +354,10 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/12/06/20181206Detecting-pan-gesture-direction/" title="探测UIPanGesture的滑动方向">探测UIPanGesture的滑动方向</a></h2>
                 <p class="excerpt">
                 
-                前言这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向
+                前言
+这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向
 于是找到stackOverFlow上的答案 记录一下
-- (void)panRecognized:(UIPanGestureRecognizer *)rec&amp;#123;    CGPoint vel = [rec velo
+- (void)panRecognized:(UIPanGestureRecognizer *)rec&amp;#123;    CGPoint vel = [rec vel
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-12-06T05:59:46.000Z" class="post-list__meta--date date">2018-12-06</time>
@@ -423,5 +442,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

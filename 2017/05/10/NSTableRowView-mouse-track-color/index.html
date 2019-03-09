@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -245,8 +247,10 @@
                 <p class="excerpt">
                 
                 前言
+
 最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.
-GLSL是什么?GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些C的
+GLSL是什么?
+GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹的和GPU打交道的计算机语言.可以理解为C的变种专门针对OpenGL编程,不支持指针等等一些
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-05-30T12:32:33.000Z" class="post-list__meta--date date">2017-05-30</time>
@@ -265,8 +269,10 @@ GLSL是什么?GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹�
                 <p class="excerpt">
                 
                 
-前言熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
-软连接如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所
+前言
+熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
+软连接
+如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
@@ -351,5 +357,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,16 +191,18 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918KeyboardAnimation/keyboard1.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程</p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918KeyboardAnimation/keyboard1.png"></p>
+<h1 id="前言">前言</h1>
+<p>很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程</p>
 <p>上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/23780124887263a4f9a87f094f061bbd564129c3/20180918KeyboardAnimation/keyboardAnimation.gif" alt=""></p>
-<h1 id="动画细节代码"><a href="#动画细节代码" class="headerlink" title="动画细节代码"></a>动画细节代码</h1><p>细节核心主要是通知中的一些key</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/23780124887263a4f9a87f094f061bbd564129c3/20180918KeyboardAnimation/keyboardAnimation.gif"></p>
+<h1 id="动画细节代码">动画细节代码</h1>
+<p>细节核心主要是通知中的一些key</p>
 <ul>
 <li>动画时长</li>
 <li>动画的出现方式</li>
 </ul>
-<p>…</p>
+<p>...</p>
 <p>下面的通知是接收 键盘将要出现的通知<code>UIKeyboardWillShowNotification</code></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></div><div class="line">                                             selector:<span class="keyword">@selector</span>(didReceiveKeyboardShowNotification:)</div><div class="line">                                                 name:<span class="built_in">UIKeyboardWillShowNotification</span></div><div class="line">                                               object:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
 <p>然后是实现的核心代码</p>
@@ -216,7 +220,8 @@
 <p>利用Masonry做的动画</p>
 <p>最后 别忘记移除通知</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>键盘弹出这个微小的细节 很容易被大家忽视,写这篇文章是为了记录知识和技巧,希望各位多多指教</p>
+<h1 id="总结">总结</h1>
+<p>键盘弹出这个微小的细节 很容易被大家忽视,写这篇文章是为了记录知识和技巧,希望各位多多指教</p>
 <p><a href="https://github.com/sunyazhou13/KeyboardAnimation" target="_blank" rel="external">Demo点击这里下载</a></p>
 <p>全文完</p>
 
@@ -273,13 +278,16 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/09/20/20180920IncreasingTapAreaOfButton/" title="iOS扩大UIButton的点击的响应范围">iOS扩大UIButton的点击的响应范围</a></h2>
                 <p class="excerpt">
                 
-                前言开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
+                前言
+开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
 今天的文章和大家分享一下解决这种问题的代码
 实现思路
+
 子类话UIButton 复写 它的hitTest:方法
 子类话UIButton 复写 point:inside:withEvent: 方法
 
-第一种方式override
+第一种方式
+overr
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
@@ -298,9 +306,11 @@
                 <p class="excerpt">
                 
                 前言
-荷兰🇳🇱被称为”海上马车夫”，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。
-船🚢它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，造这艘船的主人希望能靠这只船养家糊口，但又舍不得花更多的钱买好的木料来制造它。
-灯塔
+
+荷兰🇳🇱被称为&quot;海上马车夫&quot;，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。
+船🚢
+它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，造这艘船的主人希望能靠这只船养家糊口，但又舍不得花更多的钱买好的木料来制造它。
+
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-09-02T04:12:51.000Z" class="post-list__meta--date date">2018-09-02</time>
@@ -385,5 +395,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

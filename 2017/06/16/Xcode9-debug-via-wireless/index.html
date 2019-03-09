@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,15 +191,18 @@
   </header>
 
   <section class="post">
-    <h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行</p>
-<p>看一张图<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/debug.gif" alt=""></p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>第一步 选择设备选项</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/1%402x.png" alt=""></p>
+    <h3 id="效果">效果</h3>
+<p>今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行</p>
+<p>看一张图<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/debug.gif"></p>
+<h3 id="配置">配置</h3>
+<p>第一步 选择设备选项</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/1%402x.png"></p>
 <p>第二步 点勾选 via network</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/2%402x.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Xcode9-debug-via-wireless/2%402x.png"></p>
 <p>剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了</p>
-<p><em>注意:第一次运行的时候比较慢  可以通过数据线插上先运行一次</em><br><em>运行环境: Xcode9 beta</em><br><em>运行设备操作系统: iOS11 beta</em><br><em>Macbook+iPhone 最好在同一个局域网</em></p>
-<p>我估计苹果发布正式版本的时候这个应该比较好用了 </p>
+<p><em>注意:第一次运行的时候比较慢 可以通过数据线插上先运行一次</em> <em>运行环境: Xcode9 beta</em> <em>运行设备操作系统: iOS11 beta</em> <em>Macbook+iPhone 最好在同一个局域网</em></p>
+<p>我估计苹果发布正式版本的时候这个应该比较好用了</p>
 <p>好了 现在可以愉快的玩耍 了</p>
 
   </section>
@@ -254,9 +259,11 @@
                 <p class="excerpt">
                 
                 前言
+
 最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码
 __attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;)));
-场景1我想标识一个方法使用其它方式传入某个参
+场景1
+我想标识一个方法使用其它方式传入某
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
@@ -275,7 +282,8 @@ __attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;))
                 <p class="excerpt">
                 
                 
-前言本篇讲述的AVAsset元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年…. 等这些数据的来源). 当然这种意义上的字段信息 属于AVAsset的一个属性。AV Foundation通过AVAsset封装来
+前言
+本篇讲述的AVAsset元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年.... 等这些数据的来源). 当然这种意义上的字段信息 属于AVAsset的一个属性。AV Foundation通过AVAsset
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-06-16T02:11:19.000Z" class="post-list__meta--date date">2017-06-16</time>
@@ -360,5 +368,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,41 +191,40 @@
   </header>
 
   <section class="post">
-    <h2 id="DFS需求背景"><a href="#DFS需求背景" class="headerlink" title="DFS需求背景"></a>DFS需求背景</h2><blockquote>
+    <h2 id="dfs需求背景">DFS需求背景</h2>
+<blockquote>
 <p>在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况</p>
 </blockquote>
 <pre><code>1. 如果文件里面包含子文件夹的N层嵌套
 2. 如何过滤非空文件夹
-3. 如何处理根层文件夹没有文件那么文件目录也需要创建
-</code></pre><p>举例例子<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_3.png" alt=""></p>
+3. 如何处理根层文件夹没有文件那么文件目录也需要创建</code></pre>
+<p>举例例子 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_3.png"></p>
 <p>这种文件夹如何 <code>此文件夹为空且是叶子结点</code> 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 <code>/1/</code> 的话应该就不用创建了.</p>
-<p>还有一种情况  </p>
+<p>还有一种情况<br>
+&gt; eg: ~/Downloads/A/B/C/ 里面有个 1.txt<br>
+&gt; 路径是: ~/Downloads/A/B/C/1.txt</p>
+<p>一般如果广度优先做上传的话 Downloads、A、B、C分别要发4个http请求 如果深度优先发一个上传这个文件~/Downloads/A/B/C//A/B/C/1.txt就可以了，因为一般server都会做 容错处理发现父目录有没有没有就创建之类的逻辑。</p>
+<h2 id="算法">算法</h2>
 <blockquote>
-<p>eg: ~/Downloads/A/B/C/ 里面有个 1.txt<br>路径是: ~/Downloads/A/B/C/1.txt</p>
-</blockquote>
-<p>一般如果广度优先做上传的话 Downloads、A、B、C分别要发4个http请求<br>如果深度优先发一个上传这个文件~/Downloads/A/B/C//A/B/C/1.txt就可以了，因为一般server都会做 容错处理发现父目录有没有没有就创建之类的逻辑。</p>
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
-<p>不要害怕, 很简单<br>一般我们处理这种问题都是采用自己写的递归算法, 估计是鄙人算法不咋好没搞出来什么好的递归,最后找到了 苹果自带的递归方法</p>
+<p>不要害怕, 很简单 一般我们处理这种问题都是采用自己写的递归算法, 估计是鄙人算法不咋好没搞出来什么好的递归,最后找到了 苹果自带的递归方法</p>
 </blockquote>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//搞个点击事件 在这里我拿macOS上的 文件选择面板做一下测试</span></div><div class="line">- (<span class="keyword">IBAction</span>)dfsAction:(<span class="built_in">NSButton</span> *)sender</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSOpenPanel</span> *panelPath = [<span class="built_in">NSOpenPanel</span> openPanel];</div><div class="line">    [panelPath setCanChooseFiles:<span class="literal">YES</span>];</div><div class="line">    [panelPath setCanChooseDirectories:<span class="literal">YES</span>];</div><div class="line">    [panelPath setTitle:<span class="string">@"上传文件选择"</span>];</div><div class="line">    [panelPath setCanCreateDirectories:<span class="literal">YES</span>];</div><div class="line">    [panelPath setPrompt:<span class="string">@"上传"</span>];</div><div class="line">    [panelPath setMessage:<span class="string">@"这就是message"</span>];</div><div class="line">    panelPath.allowsMultipleSelection = <span class="literal">YES</span>;</div><div class="line">    [panelPath beginSheetModalForWindow:<span class="keyword">self</span>.window completionHandler:^(<span class="built_in">NSInteger</span> result) &#123;</div><div class="line">        <span class="keyword">if</span> (result == <span class="built_in">NSFileHandlingPanelOKButton</span>) &#123;</div><div class="line">            [<span class="keyword">self</span> dfsUrls:panelPath.URLs];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_1.png" alt=""></p>
-<p>然后  </p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_1.png"></p>
+<p>然后</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 选择文件夹的目录</div><div class="line"></div><div class="line"> @param urls 所有选中的目录/文件URL</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)dfsUrls:(<span class="built_in">NSArray</span> *)urls</div><div class="line">&#123;</div><div class="line">	<span class="comment">//开一个线程在异步处理这些耗时任务</span></div><div class="line">	<span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"所有URLs%@"</span>,urls);</div><div class="line">        <span class="keyword">if</span> (urls.count == <span class="number">0</span>) &#123; <span class="keyword">return</span>; &#125;</div><div class="line">        </div><div class="line">        <span class="built_in">NSTimeInterval</span> currentTime = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970];</div><div class="line">        <span class="comment">//深度遍历</span></div><div class="line">        <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line">        <span class="built_in">NSMutableArray</span> *urlDirFiles = [[<span class="built_in">NSMutableArray</span> alloc] initWithCapacity:<span class="number">0</span>];</div><div class="line">        <span class="built_in">NSArray</span> *keys = [<span class="built_in">NSArray</span> arrayWithObjects:<span class="built_in">NSURLIsDirectoryKey</span>,<span class="built_in">NSURLParentDirectoryURLKey</span>, <span class="literal">nil</span>];</div><div class="line">        <span class="built_in">NSUInteger</span> *total = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSURL</span> *localUrl <span class="keyword">in</span> urls) &#123;</div><div class="line">            <span class="built_in">NSDirectoryEnumerator</span> *enumerator = [<span class="keyword">self</span> enumeratorPathByFileManager:fileManager atURL:localUrl propertiesForKeys:keys options:<span class="number">0</span>];</div><div class="line">            </div><div class="line">            <span class="comment">//这里包含的元素是 有子文件的忽略父路径结点</span></div><div class="line">            <span class="comment">//eg: /A/1/2/ (这个就需要移除)   /A/1/2/sun.txt(保留这个文件即可）</span></div><div class="line">            <span class="keyword">for</span> (<span class="built_in">NSURL</span> *url <span class="keyword">in</span> enumerator) &#123;</div><div class="line">                total++;</div><div class="line">                <span class="built_in">NSError</span> *error;</div><div class="line">                <span class="built_in">NSNumber</span> *isDirectory = <span class="literal">nil</span>;</div><div class="line">                <span class="keyword">if</span> (![url getResourceValue:&amp;isDirectory forKey:<span class="built_in">NSURLIsDirectoryKey</span> error:&amp;error]) &#123;</div><div class="line">                    <span class="comment">// handle error</span></div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                <span class="comment">//是否为文件夹</span></div><div class="line">                <span class="keyword">if</span> ([isDirectory boolValue]) &#123;</div><div class="line">                    <span class="comment">//方案1</span></div><div class="line"><span class="comment">//                    NSDirectoryEnumerator *dirEnumerator = [self enumeratorPathByFileManager:fileManager atURL:url propertiesForKeys:@[NSURLIsDirectoryKey] options:NSDirectoryEnumerationSkipsSubdirectoryDescendants];</span></div><div class="line"><span class="comment">//                    if (dirEnumerator.allObjects.count &gt; 0) &#123;</span></div><div class="line"><span class="comment">//                        NSLog(@"文件夹内有文件,忽略此条路径 %@",[url path]);</span></div><div class="line"><span class="comment">//                    &#125; else &#123;</span></div><div class="line"><span class="comment">//                        [urlDirFiles addObject:[url path]];</span></div><div class="line"><span class="comment">//                    &#125;</span></div><div class="line">                    </div><div class="line">                    <span class="comment">//方案2</span></div><div class="line">                    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">                    <span class="built_in">NSArray</span> *listOfFiles = [fileManager contentsOfDirectoryAtPath:[url path] error:<span class="literal">nil</span>];</div><div class="line">                    <span class="keyword">if</span> (listOfFiles != <span class="literal">nil</span> &amp;&amp; listOfFiles.count == <span class="number">0</span>) &#123;</div><div class="line">                        [urlDirFiles addObject:[url path]];</div><div class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (error == <span class="literal">nil</span>)&#123;</div><div class="line">                        <span class="built_in">NSLog</span>(<span class="string">@"文件夹内有文件,忽略此条路径 %@"</span>,[url path]);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="built_in">NSLog</span>(<span class="string">@"文件遍历该层出错:%@"</span>,error);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    [urlDirFiles addObject:[url path]];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"所有可上传文件列表:\n%@"</span>,urlDirFiles);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">NSTimeInterval</span> nowTime = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"\n文件数量:%zd 遍历总数:%zd\n耗时:%.2f 秒"</span>,urlDirFiles.count,total,(nowTime - currentTime));</div><div class="line">        total = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"scan end"</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>接下来就是最核心的代码块  </p>
+<p>接下来就是最核心的代码块</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">NSDirectoryEnumerator</span> *)enumeratorPathByFileManager:(<span class="built_in">NSFileManager</span> *)fileManager</div><div class="line">                                                 atURL:(<span class="built_in">NSURL</span> *)url</div><div class="line">                                     propertiesForKeys:(<span class="keyword">nullable</span> <span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *)keys</div><div class="line">                                               options:(<span class="built_in">NSDirectoryEnumerationOptions</span>)mask</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSDirectoryEnumerator</span> *enumerator = [fileManager</div><div class="line">                                         enumeratorAtURL:url</div><div class="line">                                         includingPropertiesForKeys:keys</div><div class="line">                                         options:mask</div><div class="line">                                         errorHandler:^(<span class="built_in">NSURL</span> *url, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">                                             <span class="comment">// Handle the error.</span></div><div class="line">                                             <span class="comment">// Return YES if the enumeration should continue after the error.</span></div><div class="line">                                             <span class="built_in">NSLog</span>(<span class="string">@"深度遍历出错%@"</span>,error);</div><div class="line">                                             <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">                                         &#125;];</div><div class="line">    <span class="keyword">return</span> enumerator;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>NSDirectoryEnumerator</code> 是一个路径枚举迭代器 </p>
+<p><code>NSDirectoryEnumerator</code> 是一个路径枚举迭代器</p>
 <blockquote>
-<p>talk is cheap, show me the result.  </p>
+<p>talk is cheap, show me the result.</p>
 </blockquote>
-<p>下面是我扫描本地<code>下载</code>目录的结果<br><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_4.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/%E5%9B%BE%E7%89%87%201.png" alt=""></p>
-<p>结果还是比较快的 </p>
+<p>下面是我扫描本地<code>下载</code>目录的结果 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/Snip20170213_4.png"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/DFS%E7%AE%97%E6%B3%95%E6%89%AB%E6%8F%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%3A%E6%96%87%E4%BB%B6%E5%A4%B9/%E5%9B%BE%E7%89%87%201.png"></p>
+<p>结果还是比较快的</p>
 <p>单从数据上来讲 比广度优先节省至少7万次Http请求</p>
 <p>我怀疑是macOS对系统目录有索引或者缓存 第二次扫码速度比较快</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看，效果还可以，如果你有更好的算法来解决这种问题 欢迎@我 或者发邮件我也学习一下. </p>
-<blockquote>
-<p><a href="https://github.com/sunyazhou13/DFSDemo" target="_blank" rel="external">最终DFSdemo</a></p>
-</blockquote>
+<h2 id="总结">总结</h2>
+<p>总体来看，效果还可以，如果你有更好的算法来解决这种问题 欢迎@我 或者发邮件我也学习一下. &gt; <a href="https://github.com/sunyazhou13/DFSDemo" target="_blank" rel="external">最终DFSdemo</a></p>
 <p>也可学一下:<a href="https://www.raywenderlich.com/157949/swift-algorithm-club-depth-first-search" target="_blank" rel="external">Swift Depth First Search</a></p>
 
   </section>
@@ -280,14 +281,20 @@
                 <p class="excerpt">
                 
                 
-Jekyll迁移到Hexo搭建个人博客  
+Jekyll迁移到Hexo搭建个人博客
+
+
 HEXO + Github 搭建自己的博客系统
+
+
 利用Hexo和Github Pages搭建个人博客
 
-1 初级功能github pages  配置 大家自行google吧 真的很简单
-上边是我参考的文章主要是环境比较费劲  
-1. nodejs  
-2.
+1 初级功能
+github pages 配置 大家自行google吧 真的很简单
+上边是我参考的文章
+主要是环境比较费劲
+1. nodejs
+2. 
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-02-10T02:24:25.000Z" class="post-list__meta--date date">2017-02-10</time>
@@ -306,11 +313,13 @@ HEXO + Github 搭建自己的博客系统
                 <p class="excerpt">
                 
                 
-全局配置git$ git config --global user.name &quot;username&quot;  $ git config --global user.email &quot;email@you.com&quot;
+全局配置git
+$ git config --global user.name &quot;username&quot;  $ git config --global user.email &quot;email@you.com&quot;
 
-username 一般代表提交的本机用户名email@you.com 一般是邮箱地址 
+username 一般代表提交的本机用户名
+email@you.com 一般是邮箱地址
 
-创建本
+创建
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-02-09T11:35:45.000Z" class="post-list__meta--date date">2017-02-09</time>
@@ -395,5 +404,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

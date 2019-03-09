@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -185,26 +187,34 @@
       <p class="excerpt">
     
       
-前言    在iOS和macOS开发者中积累了一些快捷操作记录下来
+shortcuts
+
+前言 在iOS和macOS开发者中积累了一些快捷操作记录下来
 隐藏左侧面板
+
 
 command+0=显示/隐藏左侧面板
 
 隐藏右侧面板
 
+
 command+option+0=显示/隐藏右侧面板
 
 隐藏debug区域
 
+
 command+shift+y=显示/隐藏底部控制等调试区域
 
-跳转到代码多少行 
+跳转到代码多少行
 
-command + l (L)=跳转到代码多少行 注意看清是l 不是i 
 
-隐藏/显示函数体 
+command + l (L)=跳转到代码多少行 注意看清是l 不是i
 
-command+option+⬅︎=隐藏函数 ⬅︎代表左箭头command+option+➡︎
+隐藏/显示函数体
+
+
+command+option+⬅︎=隐藏函数 ⬅︎代表左箭头
+comman
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
@@ -220,9 +230,7 @@ command+option+⬅︎=隐藏函数 ⬅︎代表左箭头command+option+➡︎
       <h2 class="post-list__post-title post-title"><a href="/2017/03/29/Access-privacy-sensitive-data-private-access-permission/" title="link to post.title">隐私及敏感数据访问权限(Access privacy-sensitive data)</a></h2>
       <p class="excerpt">
     
-      在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些：
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must contain an NSContactsUsageDescription key with a st
+      在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &amp;gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app&#39;s Info.plist must contain an NSContactsUsageDescription key with 
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
@@ -239,15 +247,17 @@ This app has crashed because it attempted to access privacy-sensitive data witho
       <p class="excerpt">
     
       
-前言在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
-主要内容如下:如何创建AVAudioRecorder  
+前言
+在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内容如下:
+如何创建AVAudioRecorder  
     1. 音频格式
     2. 采样率
     3. 通道数
 创建Demo
     1. 配置音频会话
     2. 实现录音功能
-    3.
+    
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
@@ -281,9 +291,13 @@ refs:How to know if a NSWi
       <p class="excerpt">
     
       
-开篇最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章本期的内容是AVAudioPlayer
-音频知识基础  
-音频文件的生成过程是将声音信息采样、量化和编码产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最大带宽是20KHZ。根据奈奎斯特的理论，只有采样频率高于声音信号最高频率的两倍时，才能把数字信号表示的声音还原成为原来的声音，所以音频文件的采样率一般在40~50KHZ，比如最常见的CD音质采样率4
+AVAudioPlayer
+
+开篇
+最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章 本期的内容是AVAudioPlayer
+音频知识基础
+
+音频文件的生成过程是将声音信息__采样__、__量化__和__编码__产生的数字信号的过程，人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20KHZ，因此音频文件格式的最大带宽是20KHZ。根据奈奎斯特的理论，只有采样频率高于声音信号最高频率的两倍时，才能把数字信号表示的声音还原成为原来的声音，所以音频文件的采
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-03-17T02:26:06.000Z" class="post-list__meta--date date">2017-03-17</time>
@@ -300,9 +314,15 @@ refs:How to know if a NSWi
       <p class="excerpt">
     
       
+AVSpeechSynthesizer
+
 前言
 
-最近在研究AV Foundation 框架 发现有一本书叫做AV Foundation开发秘籍：实践掌握iOS &amp;amp; OS X 应用的视听处理技术然后google查了一下英文版叫Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含量 这么直译就没技术含量了。看着开发秘籍这名字不禁
+最近在研究AV Foundation 框架 发现有一本书叫做
+AV Foundation开发秘籍：实践掌握iOS &amp;amp; OS X 应用的视听处理技术
+然后google查了一下英文版叫
+Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framework
+看着国人的翻译不仅慨叹的想说一句话: 为啥不自己写一本书 何必这么费劲翻译它搞得原来很有技术含
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-03-11T04:38:53.000Z" class="post-list__meta--date date">2017-03-11</time>
@@ -339,7 +359,8 @@ refs:How to know if a NSWi
       <h2 class="post-list__post-title post-title"><a href="/2017/02/21/SRCROOT-and-PROJECT-DIR-different/" title="link to post.title">$(SRCROOT)和$(PROJECT_DIR)区别</a></h2>
       <p class="excerpt">
     
-      $(SRCROOT)代表的是项目根目录下$(PROJECT_DIR)代表的是整个项目
+      $(SRCROOT)代表的是项目根目录下
+$(PROJECT_DIR)代表的是整个项目
 
     &hellip;
       </p>
@@ -357,15 +378,15 @@ refs:How to know if a NSWi
       <p class="excerpt">
     
       前言
-大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
 
-NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
-$ defaults delete + 包名  eg: com.baidu.demo 
-下面这样会删除所有以com.baidu.demo为包名的文件  
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息
+
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults delete + 包名 eg: com.baidu.demo
+下面这样会删除所有以com.baidu.demo为包名的文件
 $ defaults delete com.baidu.demo
 
-
-
+实际的的路
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
@@ -382,14 +403,13 @@ $ defaults delete com.baidu.demo
       <p class="excerpt">
     
       前言
-开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  
+
+开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题 如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？
 
 
-这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  
-
-Building a Barcode and QR Code Reader in Swift 3 and Xcode 8
-
-这里比较核心的代码如下 AVCaptureMetadataOutputObjectsDe
+这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码
+&amp;gt; Building a Barcode and QR Code Reader in Swift 3 and Xcode 8
+这里比较核心的代码如下 AVCaptureMetadataOutputObjectsD
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
@@ -463,5 +483,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

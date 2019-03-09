@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,13 +191,20 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d91bef0915eb510aeb874e05ccf21df897d2d03d/20180601Random/powered-by-Swift-random-numbers.png" alt=""></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天儿童节,写一篇<code>随机数</code>技术文章纪念<code>留守儿童(资深)</code>的童年.</p>
-<h2 id="swift中的随机数使用"><a href="#swift中的随机数使用" class="headerlink" title="swift中的随机数使用"></a>swift中的随机数使用</h2><p>在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章</p>
-<h2 id="整型随机数"><a href="#整型随机数" class="headerlink" title="整型随机数"></a>整型随机数</h2><p>首先是这个arc4random()</p>
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d91bef0915eb510aeb874e05ccf21df897d2d03d/20180601Random/powered-by-Swift-random-numbers.png"></p>
+<h1 id="前言">前言</h1>
+<p>今天儿童节,写一篇<code>随机数</code>技术文章纪念<code>留守儿童(资深)</code>的童年.</p>
+<h2 id="swift中的随机数使用">swift中的随机数使用</h2>
+<p>在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章</p>
+<h2 id="整型随机数">整型随机数</h2>
+<p>首先是这个arc4random()</p>
 <blockquote>
 <p><code>arc4random()</code>使用了<code>arc4</code>密码加密的<code>key</code> <code>stream</code>生成器，产生一个<code>[0, 2^32)</code>区间的随机数(注意是左闭右开区间)。这个函数的返回类型是<code>UInt32</code></p>
-<p>提示: <em><code>[</code>和<code>]</code> 分别代表左右闭区间</em>,<br><em><code>(</code>和<code>)</code>代表左右开区间</em><br>也就是<code>中括号</code> -&gt; 代表 闭区间, 闭区间代表包含.<br>小括号 -&gt; 代表开区间, 开区间代表不包含.<br>所以以下看到</p>
+</blockquote>
+<blockquote>
+<p>提示: <em><code>[</code>和<code>]</code> 分别代表左右闭区间</em>, <em><code>(</code>和<code>)</code>代表左右开区间</em> 也就是<code>中括号</code> -&gt; 代表 闭区间, 闭区间代表包含.<br>
+小括号 -&gt; 代表开区间, 开区间代表不包含.<br>
+所以以下看到</p>
 </blockquote>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random()   <span class="comment">//"4058056034"</span></div></pre></td></tr></table></figure>
 <p>如果我们想生成一个<strong>指定范围内</strong>的整型随机数，则可以使用<code>arc4random()</code> <code>%</code> <code>upper_bound</code>的方式，其中<code>upper_bound</code>指定的是上边界，如下代码:</p>
@@ -214,10 +223,11 @@
 <li><code>rand()</code>函数以有规律的低位循环方式实现，更容易预测</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><div class="line">srand(UInt32(time(nil)))  <span class="comment">// 种子,random对应的是srandom</span></div><div class="line">rand()				      <span class="comment">// 1,314,695,483</span></div><div class="line">rand() % <span class="number">10</span>	   			  <span class="comment">// 8</span></div></pre></td></tr></table></figure>
-<h2 id="64位整型随机数"><a href="#64位整型随机数" class="headerlink" title="64位整型随机数"></a>64位整型随机数</h2><p>我们发现这些函数主要都是针对<code>32</code>位整型数来操作的.如果需要生成一个<code>64</code>位的整型随机数呢?</p>
+<h2 id="位整型随机数">64位整型随机数</h2>
+<p>我们发现这些函数主要都是针对<code>32</code>位整型数来操作的.如果需要生成一个<code>64</code>位的整型随机数呢?</p>
 <p>可以使用如下代码:</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">arc4random</span> &lt;T: ExpressibleByIntegerLiteral&gt; <span class="params">(type: T.<span class="keyword">Type</span>)</span></span> -&gt; <span class="type">T</span> &#123;</div><div class="line">    <span class="keyword">var</span> r: <span class="type">T</span> = <span class="number">0</span></div><div class="line">    arc4random_buf(&amp;r, <span class="type">MemoryLayout</span>&lt;<span class="type">T</span>&gt;.size)</div><div class="line">    <span class="keyword">return</span> r</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以像下面这样调用 </p>
+<p>可以像下面这样调用</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>) <span class="comment">//8021765689869396105</span></div><div class="line">arc4random(type: <span class="type">UInt32</span>.<span class="keyword">self</span>) <span class="comment">//1293034028</span></div><div class="line">arc4random(type: <span class="type">UInt16</span>.<span class="keyword">self</span>) <span class="comment">//29059</span></div><div class="line">arc4random(type: <span class="type">UInt8</span>.<span class="keyword">self</span>)  <span class="comment">//183</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>swift 4 语法</p>
@@ -227,15 +237,18 @@
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UInt64</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">(lower: UInt64 = <span class="built_in">min</span>, upper: UInt64 = <span class="built_in">max</span>)</span></span> -&gt; <span class="type">UInt64</span> &#123;</div><div class="line">        <span class="keyword">var</span> m: <span class="type">UInt64</span></div><div class="line">        <span class="keyword">let</span> u = upper - lower</div><div class="line">        <span class="keyword">var</span> r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        <span class="keyword">if</span> u &gt; <span class="type">UInt64</span>(<span class="type">Int64</span>.<span class="built_in">max</span>) &#123;</div><div class="line">            m = <span class="number">1</span> + ~u</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            m = ((<span class="built_in">max</span> - (u * <span class="number">2</span>)) + <span class="number">1</span>) % u</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> r &lt; m &#123;</div><div class="line">            r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> (r % u) + lower</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们来试用一下：</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="type">UInt64</span>.random()      <span class="comment">//9223372036854775807</span></div></pre></td></tr></table></figure>
-<h2 id="浮点型随机数"><a href="#浮点型随机数" class="headerlink" title="浮点型随机数"></a>浮点型随机数</h2><p>如果需要一个浮点值的随机数，则可以使用drand48函数，这个函数产生一个[0.0, 1.0]区间中的浮点数。这个函数的返回值是Double类型。其使用如下所示：</p>
+<h2 id="浮点型随机数">浮点型随机数</h2>
+<p>如果需要一个浮点值的随机数，则可以使用drand48函数，这个函数产生一个[0.0, 1.0]区间中的浮点数。这个函数的返回值是Double类型。其使用如下所示：</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">srand48(<span class="type">Int</span>(time(<span class="literal">nil</span>)))</div><div class="line">drand48()  <span class="comment">//0.4643666202473504</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>注意:需要先调用srand48()生成种子</p>
 </blockquote>
-<h2 id="示例实践"><a href="#示例实践" class="headerlink" title="示例实践"></a>示例实践</h2><p>如何生成一个0~9 这几个数组做个随机排序,实现类似银行类动态键盘的功能</p>
+<h2 id="示例实践">示例实践</h2>
+<p>如何生成一个0~9 这几个数组做个随机排序,实现类似银行类动态键盘的功能</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>]</div><div class="line">arr.<span class="built_in">sort</span> &#123; (s1, s2) -&gt; <span class="type">Bool</span> <span class="keyword">in</span></div><div class="line">    arc4random() &lt; arc4random()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(arr)</div></pre></td></tr></table></figure>
 <p>在闭包中，随机生成两个数，比较它们之间的大小，来确定数组的排序.注意不需要重新赋值了在swift4上.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>随机数相关的知识容易忘记,特此记录一些技巧,争取每个月发布两篇文章.</p>
+<h1 id="总结">总结</h1>
+<p>随机数相关的知识容易忘记,特此记录一些技巧,争取每个月发布两篇文章.</p>
 <p><a href="http://southpeak.github.io/2015/09/26/ios-techset-5/" target="_blank" rel="external">参考</a></p>
 
   </section>
@@ -292,10 +305,12 @@
                 <p class="excerpt">
                 
                 
-前言在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学习.特此新发一篇新的随机数文章以彰其咎.
+前言
+在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学习.特此新发一篇新的随机数文章以彰其咎.
 开发环境
-Xcode10或者更高版本 
-Swift4
+
+Xcode10或者更高版本
+Swift
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-06-08T01:18:03.000Z" class="post-list__meta--date date">2018-06-08</time>
@@ -314,9 +329,11 @@ Swift4
                 <p class="excerpt">
                 
                 
-前言开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
+前言
+开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
 这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
-通常导角self.view.cornerRadius = 20.0self.view.clipToB
+通常导角
+self.view.cornerRadius = 20.0self.view.clipT
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
@@ -401,5 +418,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

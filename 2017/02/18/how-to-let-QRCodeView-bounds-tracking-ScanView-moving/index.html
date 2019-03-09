@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,42 +191,43 @@
   </header>
 
   <section class="post">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题<br>如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？  </p>
-</blockquote>
-<p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg" alt=""></p>
-<p>这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码  </p>
+    <h2 id="前言">前言</h2>
 <blockquote>
-<p><a href="http://www.appcoda.com/barcode-reader-swift/" target="_blank" rel="external">Building a Barcode and QR Code Reader in Swift 3 and Xcode 8</a></p>
+<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题 如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？</p>
 </blockquote>
+<p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg"></p>
+<p>这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码<br>
+&gt; <a href="http://www.appcoda.com/barcode-reader-swift/" target="_blank" rel="external">Building a Barcode and QR Code Reader in Swift 3 and Xcode 8</a></p>
 <p><em>这里比较核心的代码如下</em> <code>AVCaptureMetadataOutputObjectsDelegate</code>代理</p>
-<pre><code class="swift">
-<span class="function"><span class="keyword">func</span> <span class="title">captureOutput</span><span class="params">(<span class="number">_</span> captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!)</span></span> {  
-
-    <span class="comment">// Check if the metadataObjects array is not nil and it contains at least one object.</span>
-    <span class="keyword">if</span> metadataObjects == <span class="literal">nil</span> || metadataObjects.<span class="built_in">count</span> == <span class="number">0</span> {
-        qrCodeFrameView?.frame = <span class="type">CGRect</span>.zero
-        messageLabel.text = <span class="string">"No QR code is detected"</span>
-        <span class="keyword">return</span>
+<pre class="swift"><code>
+func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {  
+    
+    // Check if the metadataObjects array is not nil and it contains at least one object.
+    if metadataObjects == nil || metadataObjects.count == 0 {
+        qrCodeFrameView?.frame = CGRect.zero
+        messageLabel.text = &quot;No QR code is detected&quot;
+        return
     }
-
-    <span class="comment">// Get the metadata object.</span>
-    <span class="keyword">let</span> metadataObj = metadataObjects[<span class="number">0</span>] <span class="keyword">as</span>! <span class="type">AVMetadataMachineReadableCodeObject</span>
-
-    <span class="keyword">if</span> metadataObj.type == <span class="type">AVMetadataObjectTypeQRCode</span> {
-        <span class="comment">// If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds</span>
-        <span class="keyword">let</span> barCodeObject = videoPreviewLayer?.transformedMetadataObject(<span class="keyword">for</span>: metadataObj)
-        <span class="comment">//核心代码在这</span>
+    
+    // Get the metadata object.
+    let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+    
+    if metadataObj.type == AVMetadataObjectTypeQRCode {
+        // If the found metadata is equal to the QR code metadata then update the status label&#39;s text and set the bounds
+        let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
+        //核心代码在这
         qrCodeFrameView?.frame = barCodeObject!.bounds
-
-        <span class="keyword">if</span> metadataObj.stringValue != <span class="literal">nil</span> {
+        
+        if metadataObj.stringValue != nil {
             messageLabel.text = metadataObj.stringValue
         }
     }
 }}
-</code></pre>
-<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code><br>这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 <strong><a href="https://github.com/sunyazhou13/QRCodeReader" target="_blank" rel="external">最终项目</a></strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BA%8C%E7%BB%B4%E7%A0%81-%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E6%A1%86%E8%B7%9F%E9%9A%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%A7%BB%E5%8A%A8/2017-02-18%2019_01_35loop.gif" alt="QRCode 跟踪"></p>
+    </code></pre>
+<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code> 这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 <strong><a href="https://github.com/sunyazhou13/QRCodeReader" target="_blank" rel="external">最终项目</a></strong></p>
+<figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BA%8C%E7%BB%B4%E7%A0%81-%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E6%A1%86%E8%B7%9F%E9%9A%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%A7%BB%E5%8A%A8/2017-02-18%2019_01_35loop.gif" alt="QRCode 跟踪"><figcaption>QRCode 跟踪</figcaption>
+</figure>
 <p>全文完</p>
 
   </section>
@@ -281,9 +284,10 @@
                 <p class="excerpt">
                 
                 前言
-大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息  
 
-NSUserDefaults和win开发的注册表一样 用于存储一些标记位最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息
+
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
 $ defaults d
                 &hellip;
                 </p>
@@ -302,7 +306,8 @@ $ defaults d
                 <h2 class="post-list__post-title post-title"><a href="/2017/02/17/iOS-internationalization-language-some-skills/" title="iOS语言本地化/国际化一些技巧">iOS语言本地化/国际化一些技巧</a></h2>
                 <p class="excerpt">
                 
-                代码获取国际化语言数组  获取当前app使用的语言NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firs
+                代码获取国际化语言数组
+获取当前app使用的语言 NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firs
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
@@ -387,5 +392,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

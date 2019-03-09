@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,19 +191,24 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.</p>
+    <h1 id="前言">前言</h1>
+<p>快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.</p>
 <p>上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/43eb3d3df2ddda60a3ec26ba376755425ac88f7f/20180929BreathAnimation/breathAnimation.gif" alt=""></p>
-<p>大概是这个样子 </p>
-<h1 id="需求和实现思路"><a href="#需求和实现思路" class="headerlink" title="需求和实现思路"></a>需求和实现思路</h1><p>具体要求</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/43eb3d3df2ddda60a3ec26ba376755425ac88f7f/20180929BreathAnimation/breathAnimation.gif"></p>
+<p>大概是这个样子</p>
+<h1 id="需求和实现思路">需求和实现思路</h1>
+<p>具体要求</p>
 <ul>
 <li>内部头像呼吸放大缩小 无限循环</li>
 <li>每次放大同时需要背景还有一张图也放大 并且透明</li>
 <li>点击缩放整个背景视图</li>
 </ul>
-<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>首先 需要使用创建一个Layer 装第一个无限放大缩小的呼吸的图<br>背景也需要一个Layer 做 放大+透明度渐变的动画组并且也放置一张需要放大渐变的图片</p>
+<h2 id="实现思路">实现思路</h2>
+<p>首先 需要使用创建一个Layer 装第一个无限放大缩小的呼吸的图<br>
+背景也需要一个Layer 做 放大+透明度渐变的动画组并且也放置一张需要放大渐变的图片</p>
 <p>最后点击触发. 添加一个一次性的缩放动画即可</p>
-<h3 id="呼吸动画layer和动画"><a href="#呼吸动画layer和动画" class="headerlink" title="呼吸动画layer和动画"></a>呼吸动画layer和动画</h3><p>呼吸layer</p>
+<h3 id="呼吸动画layer和动画">呼吸动画layer和动画</h3>
+<p>呼吸layer</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CALayer</span> *layer = [<span class="built_in">CALayer</span> layer];</div><div class="line">layer.position = <span class="built_in">CGPointMake</span>(kHeartSizeWidth/<span class="number">2.0</span>f, kHeartSizeHeight/<span class="number">2.0</span>f);</div><div class="line">layer.bounds = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, kHeartSizeWidth/<span class="number">2.0</span>f, kHeartSizeHeight/<span class="number">2.0</span>f);</div><div class="line">layer.backgroundColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</div><div class="line">layer.contents = (__bridge <span class="keyword">id</span> _Nullable)([<span class="built_in">UIImage</span> imageNamed:<span class="string">@"breathImage"</span>].CGImage);</div><div class="line">layer.contentsGravity = kCAGravityResizeAspect;</div><div class="line">[<span class="keyword">self</span>.heartView.layer addSublayer:layer];</div></pre></td></tr></table></figure>
 <blockquote>
 <p>kHeartSizeHeight 和kHeartSizeWidth 是常量 demo中写好了100</p>
@@ -212,24 +219,29 @@
 <p>差值器也可以自定义 例如:</p>
 </blockquote>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">[<span class="built_in">CAMediaTimingFunction</span> functionWithControlPoints:<span class="number">0.33</span> :<span class="number">0</span> :<span class="number">0.67</span> :<span class="number">1</span>]</div></pre></td></tr></table></figure>
-<p>这里我做的持续时常1秒 </p>
-<h3 id="放大渐变动画group"><a href="#放大渐变动画group" class="headerlink" title="放大渐变动画group"></a>放大渐变动画group</h3><p>创建新layer</p>
+<p>这里我做的持续时常1秒</p>
+<h3 id="放大渐变动画group">放大渐变动画group</h3>
+<p>创建新layer</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CALayer</span> *breathLayer = [<span class="built_in">CALayer</span> layer];</div><div class="line">breathLayer.position = layer.position;</div><div class="line">breathLayer.bounds = layer.bounds;</div><div class="line">breathLayer.backgroundColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</div><div class="line">breathLayer.contents = (__bridge <span class="keyword">id</span> _Nullable)([<span class="built_in">UIImage</span> imageNamed:<span class="string">@"breathImage"</span>].CGImage);</div><div class="line">breathLayer.contentsGravity = kCAGravityResizeAspect;</div><div class="line">[<span class="keyword">self</span>.heartView.layer insertSublayer:breathLayer below:layer];</div><div class="line"><span class="comment">//[self.heartView.layer addSublayer:breathLayer];</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>这里用的是放在 呼吸layer后边 如果想放在呼吸layer前边 就把里面注释打开 然后注掉 inert那行代码</p>
 </blockquote>
 <p>动画组 包含 放大 渐变</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//缩放</span></div><div class="line"><span class="built_in">CAKeyframeAnimation</span> *scaleAnimation = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</div><div class="line">scaleAnimation.values = @[@<span class="number">1.</span>f, @<span class="number">2.4</span>f];</div><div class="line">scaleAnimation.keyTimes = @[@<span class="number">0.</span>f,@<span class="number">1.</span>f];</div><div class="line">scaleAnimation.duration = animation.duration;</div><div class="line">scaleAnimation.repeatCount = FLT_MAX;</div><div class="line">scaleAnimation.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line"><span class="comment">//透明度</span></div><div class="line"><span class="built_in">CAKeyframeAnimation</span> *opacityAnimation = [<span class="built_in">CAKeyframeAnimation</span> animation];</div><div class="line">opacityAnimation.keyPath = <span class="string">@"opacity"</span>;</div><div class="line">opacityAnimation.values = @[@<span class="number">1.</span>f, @<span class="number">0.</span>f];</div><div class="line">opacityAnimation.duration = <span class="number">0.4</span>f;</div><div class="line">opacityAnimation.keyTimes = @[@<span class="number">0.</span>f, @<span class="number">1.</span>f];</div><div class="line">opacityAnimation.repeatCount = FLT_MAX;</div><div class="line">opacityAnimation.duration = animation.duration;</div><div class="line">opacityAnimation.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line"></div><div class="line"><span class="comment">//动画组</span></div><div class="line"><span class="built_in">CAAnimationGroup</span> *scaleOpacityGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">scaleOpacityGroup.animations = @[scaleAnimation, opacityAnimation];</div><div class="line">scaleOpacityGroup.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">scaleOpacityGroup.fillMode = kCAFillModeForwards;</div><div class="line">scaleOpacityGroup.duration = animation.duration;</div><div class="line">scaleOpacityGroup.repeatCount = FLT_MAX;</div><div class="line">[breathLayer addAnimation:scaleOpacityGroup forKey:kBreathScaleName];</div></pre></td></tr></table></figure>
-<h3 id="点击缩放动画"><a href="#点击缩放动画" class="headerlink" title="点击缩放动画"></a>点击缩放动画</h3><p>跟第一个一样 只不过 执行次数默认一次 执行完就可以了</p>
+<h3 id="点击缩放动画">点击缩放动画</h3>
+<p>跟第一个一样 只不过 执行次数默认一次 执行完就可以了</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)shakeAnimation &#123;</div><div class="line">    <span class="built_in">CAKeyframeAnimation</span> *animation = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</div><div class="line">    animation.values = @[@<span class="number">1.0</span>f, @<span class="number">0.8</span>f, @<span class="number">1.</span>f];</div><div class="line">    animation.keyTimes = @[@<span class="number">0.</span>f,@<span class="number">0.5</span>f, @<span class="number">1.</span>f];</div><div class="line">    animation.duration = <span class="number">0.35</span>f;</div><div class="line">    animation.timingFunctions = @[[<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseInEaseOut],[<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];</div><div class="line">    [<span class="keyword">self</span>.heartView.layer addAnimation:animation forKey:<span class="string">@""</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>手势触发的时候 调用一下</p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>在开发动画的时候遇到 都一个动画 要执行 呼吸 </p>
-<p>呼吸如果duration 到中间的话 比如1秒 那么0.5秒的时候 它就需要折回 </p>
+<h3 id="遇到的问题">遇到的问题</h3>
+<p>在开发动画的时候遇到 都一个动画 要执行 呼吸</p>
+<p>呼吸如果duration 到中间的话 比如1秒 那么0.5秒的时候 它就需要折回</p>
 <p>那么第二个动画刚刚执行到一半,就会感觉很奇怪</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ba57cc09ea58317c4cef38da51c1824ddc977f39/20180929BreathAnimation/aniamation.jpeg" alt=""></p>
-<p>如果<strong>渐变动画</strong>执行0.5秒的话 它是重复的 那么他就重新开始 相当于 呼吸折回的时候它又重新开开始渐变</p>
-<h4 id="怎么解决呢？"><a href="#怎么解决呢？" class="headerlink" title="怎么解决呢？"></a>怎么解决呢？</h4><p>我们把0.5秒的动画加到 动画组里面,然后给动画组设置的时长保持和呼吸动画 一样,这样剩余的0.5的时候 渐变动画是不会重新开始的.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>动画很久没玩了 基本都忘了一干二净了,以后要勤加练习,多出文章和demo,记录一些更多的知识技巧.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ba57cc09ea58317c4cef38da51c1824ddc977f39/20180929BreathAnimation/aniamation.jpeg"></p>
+<p>如果__渐变动画__执行0.5秒的话 它是重复的 那么他就重新开始 相当于 呼吸折回的时候它又重新开开始渐变</p>
+<h4 id="怎么解决呢">怎么解决呢？</h4>
+<p>我们把0.5秒的动画加到 动画组里面,然后给动画组设置的时长保持和呼吸动画 一样,这样剩余的0.5的时候 渐变动画是不会重新开始的.</p>
+<h1 id="总结">总结</h1>
+<p>动画很久没玩了 基本都忘了一干二净了,以后要勤加练习,多出文章和demo,记录一些更多的知识技巧.</p>
 <p>博客像车一样,要是不是的时候经常保养,才能走更远的路,记录更多的美好.</p>
 <p>全文完</p>
 <p><a href="https://github.com/sunyazhou13/BreathAnimation" target="_blank" rel="external">Demo在这里下载</a></p>
@@ -287,10 +299,14 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/10/29/20181029LabelDanceAnimation/" title="iOS数字倍数动画">iOS数字倍数动画</a></h2>
                 <p class="excerpt">
                 
-                前言写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画 
+                前言
+写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画
 
-实现思路上代码 看比较清晰
-// 数字跳动动画- (void)labelDanceAnimation:(NSTimeInterval)duration &amp;#123;    //透明度    CABasicAnimation *opac
+demo
+
+实现思路
+上代码 看比较清晰
+// 数字跳动动画- (void)labelDanceAnimation:(NSTimeInterval)duration &amp;#123;    //透明度    CABasicAnimatio
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-10-29T10:13:15.000Z" class="post-list__meta--date date">2018-10-29</time>
@@ -308,13 +324,16 @@
                 <h2 class="post-list__post-title post-title"><a href="/2018/09/20/20180920IncreasingTapAreaOfButton/" title="iOS扩大UIButton的点击的响应范围">iOS扩大UIButton的点击的响应范围</a></h2>
                 <p class="excerpt">
                 
-                前言开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
+                前言
+开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
 今天的文章和大家分享一下解决这种问题的代码
 实现思路
+
 子类话UIButton 复写 它的hitTest:方法
 子类话UIButton 复写 point:inside:withEvent: 方法
 
-第一种方式override
+第一种方式
+overr
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
@@ -399,5 +418,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

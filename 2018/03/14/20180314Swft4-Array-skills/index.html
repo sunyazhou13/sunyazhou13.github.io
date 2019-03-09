@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -189,9 +191,11 @@
   </header>
 
   <section class="post">
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
+    <h1 id="前言">前言</h1>
+<p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
 <p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
-<h2 id="Swift-4-0-中的可变数组技巧"><a href="#Swift-4-0-中的可变数组技巧" class="headerlink" title="Swift 4.0 中的可变数组技巧"></a>Swift 4.0 中的可变数组技巧</h2><p>我们可用 Xcode 创建playground 来进行练习</p>
+<h2 id="swift-4.0-中的可变数组技巧">Swift 4.0 中的可变数组技巧</h2>
+<p>我们可用 Xcode 创建playground 来进行练习</p>
 <p><strong>首先创建个数组</strong></p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</div></pre></td></tr></table></figure>
 <p><strong>for in 循环遍历</strong></p>
@@ -203,7 +207,7 @@
 <p>打印</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">2 3 4 5 6</div></pre></td></tr></table></figure>
 <blockquote>
-<p>dropFirst() 函数参数是可以添加数值的  for x in array.dropFirst(3) 打印:4 5 6.</p>
+<p>dropFirst() 函数参数是可以添加数值的 for x in array.dropFirst(3) 打印:4 5 6.</p>
 </blockquote>
 <p>有 <code>first</code> 的地方基本就有<code>last</code></p>
 <p><strong>想要扣除最后 3 个元素以外的元素进行遍历？</strong></p>
@@ -273,9 +277,11 @@
                 <p class="excerpt">
                 
                 
-前言RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
+前言
+RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
 本文内容
-RunLoop 
+
+RunLoo
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-04-02T06:16:34.000Z" class="post-list__meta--date date">2018-04-02</time>
@@ -294,11 +300,13 @@ RunLoop
                 <p class="excerpt">
                 
                 
-前言iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+前言
+iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
 本周主要内容如下
+
 什么是符号表？
 为什么要配置符号表？
-dSYM文
+dSY
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
@@ -383,5 +391,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

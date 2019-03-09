@@ -26,12 +26,14 @@
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     
     <meta name="generator" content="hexo"/>
@@ -168,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-disabled"></div>
+    <div class="panel-cover--overlay cover-slate"></div>
   </div>
 </header>
 
@@ -185,16 +187,19 @@
       <p class="excerpt">
     
       
-前言最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
-理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:
+UIView渲染
+
+前言
+最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
+理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?
+首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:
 
 view的缓冲区创建
-view内容的绘制(如果重写了 drawRect)  
+view内容的绘制(如果重写了 drawRect)
 
 这些 CPU的工作.
 然后将这个缓冲区交给GPU渲染, 这个过程又包含:
 
-多个view的拼接
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
@@ -211,11 +216,14 @@ view内容的绘制(如果重写了 drawRect)
       <p class="excerpt">
     
       
-前言iOS11 苹果改动了一个比较引开发者关注的亮点
+前言
+iOS11 苹果改动了一个比较引开发者关注的亮点
 UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除
 这个问题在微博上已经争论好几天
-iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都有啥
-#import &amp;lt;DeviceCheck/DeviceCheck.h&amp;gt;NS_ASSUME_NONNULL_BEGINAPI_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(wa
+iOS11新的设备唯一标识 DCDevice
+介绍 API
+我们首先看看DCDevice类都有啥
+#import &amp;lt;DeviceCheck/DeviceCheck.h&amp;gt;NS_ASSUME_NONNULL_BEGINAPI_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-09-30T01:45:25.000Z" class="post-list__meta--date date">2017-09-30</time>
@@ -232,6 +240,7 @@ iOS11新的设备唯一标识 DCDevice介绍 API我们首先看看DCDevice类都
       <p class="excerpt">
     
       前言
+
 以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格
 demo:
 
@@ -261,7 +270,7 @@ demo:
 
 
 对齐
-| 
+|
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-09-29T10:01:08.000Z" class="post-list__meta--date date">2017-09-29</time>
@@ -278,12 +287,17 @@ demo:
       <p class="excerpt">
     
       前言
-如何使用charles在iOS设备上截获https的请求 
-1.安装Charles官网下载就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 
-2.HTTP抓包配置(1) 查看电脑IP
-(2) 设置手机HTTP代理手机连上电脑，点击“设置-&amp;gt;无线局域网-&amp;gt;连接的WiFi”，设置HTTP代理：服务器为电脑IP地址：如192.168.1.108端口：8888
 
-注意:这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电
+如何使用charles在iOS设备上截获https的请求
+1.安装Charles
+官网下载就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的
+2.HTTP抓包配置
+(1) 查看电脑IP
+
+(2) 设置手机HTTP代理
+手机连上电脑，点击“设置-&amp;gt;无线局域网-&amp;gt;连接的WiFi”，设置HTTP代理： 服务器为电脑IP地址：如192.168.1.108 端口：8888
+
+注意:这里用我自己电脑的IP举例 红色区域 记得替换成你
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-09-01T15:17:09.000Z" class="post-list__meta--date date">2017-09-01</time>
@@ -300,20 +314,24 @@ demo:
       <p class="excerpt">
     
       前言
-本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.期间有任何问题请大家集思广益,多多指教. 
-主要内容
-AR技术介绍 
-ARKit工作原理及流程介绍 
-ARKit简单代码实现 
-ARKit框架所有API介绍 
-ARScnView介绍 
-ARSession介绍 
-ARCamera介绍 
-ARKit捕捉平地 
-AR代码demo实现 
 
-AR技术介绍AR技术简介
-增强现实技术（Augmented Reality，简称 AR），是一种实时的计算摄影机影像的位置及角度并加上相应图像、视
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解. 期间有任何问题请大家集思广益,多多指教.
+主要内容
+
+AR技术介绍
+ARKit工作原理及流程介绍
+ARKit简单代码实现
+ARKit框架所有API介绍
+ARScnView介绍
+ARSession介绍
+ARCamera介绍
+ARKit捕捉平地
+AR代码demo实现
+
+AR技术介绍
+AR技术简介
+
+增强现实技术（Augmented Reality，简称 AR），是一种实时的计算摄影机影像的位置及角度并加上相应图像、视频、3D模
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-08-30T06:50:43.000Z" class="post-list__meta--date date">2017-08-30</time>
@@ -330,12 +348,14 @@ AR技术介绍AR技术简介
       <p class="excerpt">
     
       
-前言先上图 
+前言
+先上图
 
 这一篇 我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化
-内容介绍结构图
+内容介绍
+结构图 
 
-class 代码 
+class 代码
 
 MediaItem (一个直接对外的接口)
 MetaData (元数据model)
@@ -344,7 +364,8 @@ AVMetadataItem+Additions
 MetadataDefines
 MetadataKit
 Converters (文件夹包含如下:)
-MetadataConverter  (Protocol 存取 AVM
+
+MetadataConverter (Protocol 存取 AV
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-08-07T12:36:46.000Z" class="post-list__meta--date date">2017-08-07</time>
@@ -361,11 +382,13 @@ MetadataConverter  (Protocol 存取 AVM
       <p class="excerpt">
     
       
-可用性检查API在swift代码中经常可以看到 某个API 适用于 iOS10.0 
+可用性检查API
+在swift代码中经常可以看到 某个API 适用于 iOS10.0
 如下代码
 if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	//老版本API&amp;#125;
 在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查
-通过API_AVAILABLE宏来标注方法的可用性@interface ViewController : UIViewController- (void)x
+通过API_AVAILABLE宏来标注方法的可用性
+@interface ViewController : UIViewController- (void)
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-07-13T02:55:15.000Z" class="post-list__meta--date date">2017-07-13</time>
@@ -414,11 +437,16 @@ if (@available(iOS 11, *)) &amp;#123;	//iOS 11可用 &amp;#125; else &amp;#123;	
       <p class="excerpt">
     
       
-前言先膜拜一下 RSA的作者
+前言
+先膜拜一下 RSA的作者
 
-RSA非对称加密 原理 各种。。。 请自行百度 
-弯路最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾) 
-代码实现第一步 生成公私钥对命令生成原始 RSA私钥文件 rsa_private_key.pemopenssl
+RSA非对称加密 原理 各种。。。 请自行百度
+弯路
+最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客 把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾)
+代码实现
+第一步 生成公私钥对
+命令生成原始 RSA私钥文件 rsa_private_key.pem
+ope
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-06-26T02:42:47.000Z" class="post-list__meta--date date">2017-06-26</time>
@@ -492,5 +520,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
