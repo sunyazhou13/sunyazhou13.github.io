@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>東引甌越 | 不断学习, 与时俱进.</title>
+    <title>東引甌越 | 不断学习, 与时俱进. - 始于2017</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,23 +15,25 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="東引甌越 | 不断学习, 与时俱进.">
+    <meta name="twitter:title" content="東引甌越 | 不断学习, 与时俱进. - 始于2017">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="東引甌越 | 不断学习, 与时俱进.">
+    <meta property="og:title" content="東引甌越 | 不断学习, 与时俱进. - 始于2017">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
     <meta name="author" content="sunyazhou">
     
     <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 
     
     <link rel="icon" href="/images/favicon.ico">
     
 
+    
+    
     <meta name="generator" content="hexo"/>
     
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
@@ -41,6 +43,13 @@
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
     
 </head>
 
@@ -60,10 +69,10 @@
         <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进.</span>
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧,始于2016.望诸位同仁多多指教.</p>
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧.望诸位同仁多多指教.</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -159,7 +168,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
+    <div class="panel-cover--overlay cover-disabled"></div>
   </div>
 </header>
 
@@ -169,6 +178,32 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/10/16/20171016UIView-Rendering/" title="link to post.title">理解UIView的绘制</a></h2>
+      <p class="excerpt">
+    
+      
+前言最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
+理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘制一次屏幕,这个时间段内要完成:
+
+view的缓冲区创建
+view内容的绘制(如果重写了 drawRect)  
+
+这些 CPU的工作.
+然后将这个缓冲区交给GPU渲染, 这个过程又包含:
+
+多个view的拼接
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/10/16/20171016UIView-Rendering/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -391,26 +426,6 @@ RSA非对称加密 原理 各种。。。 请自行百度
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/安全/">安全</a>
 
 </span><a class="btn-border-small" href="/2017/06/26/rsa-universal-cross-platform-ios-android-php/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/20/enable-static-analyer/" title="link to post.title">Xcode开启静态分析器</a></h2>
-      <p class="excerpt">
-    
-      
-Clang 静态分析器Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。
-你可以在 Xcode 的 Product → Analyze 里手动运行分析器。
-分析器可以运行“shallow”和“deep”两种模式。后者要慢得多，但是有跨方法的控制流分析以及数据流分析，因此能发现更多问题。
-建议：开启分析器的 全部 检查（方法是在 build setting 的“Stati
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-20T07:07:33.000Z" class="post-list__meta--date date">2017-06-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
-
-</span><a class="btn-border-small" href="/2017/06/20/enable-static-analyer/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
