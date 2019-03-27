@@ -183,6 +183,43 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2019/03/21/20190321UIScrollTextDemo/" title="link to post.title">iOS抖音滚动字幕</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图
+抖音如下
+
+系统的滚动字幕如下
+
+本篇完成之后如下
+
+
+支持蒙版渐变模糊 可调节
+支持富文本字符串用于显示表情或者图片
+
+开篇
+整个实现比较简单 不超过 200行代码
+
+首先我们要用到两个CALayer
+
+CATextLayer 用于展示文本
+CAGradientLayer 用于给文本加蒙版
+
+然后我们新建一个UIScrollTextView继承自UI
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2019-03-21T01:50:20.000Z" class="post-list__meta--date date">2019-03-21</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2019/03/21/20190321UIScrollTextDemo/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2019/02/15/20190215Tools/" title="link to post.title">Mac上的一些好软件推荐</a></h2>
       <p class="excerpt">
     
@@ -424,29 +461,6 @@ _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -SCREEN_HEIGHT, SC
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/10/29/20181029LabelDanceAnimation/" title="link to post.title">iOS数字倍数动画</a></h2>
-      <p class="excerpt">
-    
-      前言
-写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画
-
-demo
-
-实现思路
-上代码 看比较清晰
-// 数字跳动动画- (void)labelDanceAnimation:(NSTimeInterval)duration &amp;#123;    //透明度    CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@&quot;opacity&quot;];    opacityAnimation.durati
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-10-29T10:13:15.000Z" class="post-list__meta--date date">2018-10-29</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/10/29/20181029LabelDanceAnimation/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -508,22 +522,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 </body>
 </html>

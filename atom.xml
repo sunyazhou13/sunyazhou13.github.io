@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2019-02-16T05:59:28.804Z</updated>
+  <updated>2019-03-25T03:25:18.895Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,138 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>iOS抖音滚动字幕</title>
+    <link href="https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/"/>
+    <id>https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/</id>
+    <published>2019-03-21T01:50:20.000Z</published>
+    <updated>2019-03-25T03:25:18.895Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIScrollTextDemo/CALayer_proSwift_ru_hsuie-2.png"></p>
+<h1 id="前言">前言</h1>
+<p>很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图</p>
+<p>抖音如下<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/douyin_scroll_text.gif"></p>
+<p>系统的滚动字幕如下</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8d850a7f752b71fa29b9f069baaeef2e14ecf7d/20190321UIScrollTextDemo/scrolltextdemo4.gif"></p>
+<p>本篇完成之后如下<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
+<ul>
+<li>支持蒙版渐变模糊 可调节</li>
+<li>支持富文本字符串用于显示表情或者图片</li>
+</ul>
+<h1 id="开篇">开篇</h1>
+<p>整个实现比较简单 不超过 200行代码</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/bf6d749844033ba3b0c074559db978a18121f467/20190321UIScrollTextDemo/scrolltextdemo1.gif"></p>
+<p>首先我们要用到两个CALayer</p>
+<ul>
+<li><code>CATextLayer</code> 用于展示文本</li>
+<li><code>CAGradientLayer</code> 用于给文本加蒙版</li>
+</ul>
+<p>然后我们新建一个<code>UIScrollTextView</code>继承自<code>UIView</code>(我这是纯娱乐写成UI前缀大家可自行封装哈.)</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIScrollTextView</span> : <span class="title">UIView</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>  ) <span class="built_in">NSString</span>           *text;   <span class="comment">//1</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>            *textColor; <span class="comment">//2</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIFont</span>             *font;  <span class="comment">//3</span></div><div class="line"> </div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSAttributedString</span> *attrString; <span class="comment">//4</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> 渐变开始的距离(0~0.5) 推荐 0.0x eg:0.026,</div><div class="line"> 如果设置成1的时候视图不够长会出现溢出得情况 不推荐超出范围</div><div class="line"> */</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>            fade; <span class="comment">//5</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>对外暴露的接口</p>
+<ul>
+<li>1.显示的文本内容</li>
+<li>2.文本颜色</li>
+<li>3.文本字体</li>
+<li>4.属性字符串 自行可控颜色字体和样式</li>
+<li>5.蒙版渐变模糊的 渐变长度</li>
+</ul>
+<p>首先大家可以先忽略这些对外暴露的接口 到.m中看实现如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIScrollTextView</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CATextLayer</span>  *textLayer; <span class="comment">//文本layer  </span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CAGradientLayer</span> *gradientLayer; <span class="comment">//蒙版渐变layer</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textSeparateWidth; <span class="comment">//文本分割宽度</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textWidth;   <span class="comment">//文本宽度</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textHeight;  <span class="comment">//文本高度</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGRect</span>       textLayerFrame; <span class="comment">//文本layer的frame</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      translationX; <span class="comment">//文字位置游标</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>在<code>initWithFrame:</code>;和<code>awakeFromNib</code>方法中 初始化一些成员变量</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> configProperty];<span class="comment">//初始化成员变量 //1</span></div><div class="line">        [<span class="keyword">self</span> initLayer]; <span class="comment">//2</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)configProperty &#123;</div><div class="line">    _text = <span class="string">@""</span>;</div><div class="line">    _textColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">    _font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>];</div><div class="line">    <span class="keyword">self</span>.textSeparateWidth = [kSeparateText calculateSingleLineSizeFromFont:<span class="keyword">self</span>.font].width;</div><div class="line">    _fade = <span class="number">0.026</span>;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>1.configProperty方法 初始化默认值</li>
+<li>2.initLayer方法创建我们需要的2个layer &gt; configProperty方法 初始化成员变量最好用<code>_</code>下划线 这样不会触发<code>setter</code>因为我们很多的代码都是写在setter和getter中</li>
+</ul>
+<h4 id="初始化layer">初始化Layer</h4>
+<p>下面我们重点看下<code>initLayer</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)initLayer &#123;</div><div class="line">    <span class="comment">//文本layer  1</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.textLayer == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.textLayer = [[<span class="built_in">CATextLayer</span> alloc] init];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.textLayer.alignmentMode = kCAAlignmentNatural; <span class="comment">//设置文字对齐模式 自然对齐</span></div><div class="line">    <span class="keyword">self</span>.textLayer.truncationMode = kCATruncationNone;  <span class="comment">//设置截断模式</span></div><div class="line">    <span class="keyword">self</span>.textLayer.wrapped = <span class="literal">NO</span>; <span class="comment">//是否折行</span></div><div class="line">    <span class="keyword">self</span>.textLayer.contentsScale = [<span class="built_in">UIScreen</span> mainScreen].scale;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.textLayer.superlayer == <span class="literal">nil</span>) &#123;</div><div class="line">        [<span class="keyword">self</span>.layer addSublayer:<span class="keyword">self</span>.textLayer];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//渐变 2</span></div><div class="line">    <span class="keyword">self</span>.gradientLayer = [<span class="built_in">CAGradientLayer</span> layer];</div><div class="line">    <span class="keyword">self</span>.gradientLayer.shouldRasterize = <span class="literal">YES</span>;</div><div class="line">    <span class="keyword">self</span>.gradientLayer.rasterizationScale = [<span class="built_in">UIScreen</span> mainScreen].scale;</div><div class="line">    <span class="keyword">self</span>.gradientLayer.startPoint = <span class="built_in">CGPointMake</span>(<span class="number">0.0</span>f, <span class="number">0.5</span>f); <span class="comment">//3</span></div><div class="line">    <span class="keyword">self</span>.gradientLayer.endPoint = <span class="built_in">CGPointMake</span>(<span class="number">1.0</span>f, <span class="number">0.5</span>f);  <span class="comment">//4</span></div><div class="line">    <span class="keyword">id</span> transparent = (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> clearColor].CGColor; <span class="comment">// 5</span></div><div class="line">    <span class="keyword">id</span> opaque = (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> blackColor].CGColor; <span class="comment">//5</span></div><div class="line">    <span class="keyword">self</span>.gradientLayer.colors = @[transparent, opaque, opaque, transparent]; <span class="comment">// 6</span></div><div class="line">    <span class="keyword">self</span>.gradientLayer.locations = @[@<span class="number">0</span>,@(<span class="keyword">self</span>.fade),@(<span class="number">1</span>-<span class="keyword">self</span>.fade),@<span class="number">1</span>]; <span class="comment">// 7</span></div><div class="line">    <span class="keyword">self</span>.layer.mask = <span class="keyword">self</span>.gradientLayer; <span class="comment">//8</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码<code>1</code>处 创建<code>CATextLayer</code>和我们创建其它CALayer一样没啥好说的,设置折行、对齐、截断...</p>
+<p>代码<code>2</code>处 这里重点说一下这个<code>CAGradientLayer</code></p>
+<p>代码<code>3</code>和<code>4</code>处是设置蒙版渐变 的开始方向和结束方向. (以屏幕左下角为原点0,0计算 到屏幕右上角1，1)</p>
+<blockquote>
+<p>如果开始点是(0.0,0.5)结束点是(1.0,0.5)是横向渐变<br>
+如果开始点是(0.5,0)结束点是(0.5,1)是纵向渐变<br>
+这两个点决定了渐变的方向</p>
+</blockquote>
+<p>我们可以把代码去掉运行看下不加蒙版的效果图 如下:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6e4cfde36e70fcae28eea1be9ec30b45b2ff8889/20190321UIScrollTextDemo/scrolltextdemo2.gif"></p>
+<p>这里我用cyan颜色区域代表视图的大小,文本不加蒙版实际上超出显示范围的.</p>
+<blockquote>
+<p>注意: 动画不是这个layer自带,是我们自己加的代码,往下看 有代码</p>
+</blockquote>
+<p>代码<code>5</code>处代码 是给当前渐变layer加渐变颜色 实现蒙版模糊遮盖的效果</p>
+<p>代码<code>6</code>处 把对于的颜色的数组中给<code>gradientLayer.colors</code></p>
+<p>代码<code>7</code>处 对应 代码<code>6</code>处 配合使用,就做到了我们两边渐变遮盖的效果</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/31e8bdd5de62b4a84ed7be97154bb99f61abb8ab/20190321UIScrollTextDemo/scrolltextdemo3.gif"></p>
+<p>上图就是我们下面代码的效果,我们加了4个点</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">self</span>.gradientLayer.colors = @[transparent, opaque, opaque, transparent]; <span class="comment">// 6</span></div><div class="line"><span class="keyword">self</span>.gradientLayer.locations = @[@<span class="number">0</span>,@(<span class="keyword">self</span>.fade),@(<span class="number">1</span>-<span class="keyword">self</span>.fade),@<span class="number">1</span>]; <span class="comment">// 7</span></div></pre></td></tr></table></figure>
+<h4 id="更新layer布局">更新layer布局</h4>
+<p>这里我们要在layoutSubviews方法中计算出正确的布局坐标,因为外部有可能使用autolayout布局.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line">    [<span class="keyword">super</span> layoutSubviews];</div><div class="line">    </div><div class="line">    [<span class="built_in">CATransaction</span> begin];</div><div class="line">    [<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</div><div class="line">    <span class="built_in">CGFloat</span> textLayerFrameY = <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span> - <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.textLayer.bounds) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">self</span>.textLayer.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, textLayerFrameY, <span class="built_in">CGRectGetWidth</span>(<span class="keyword">self</span>.textLayerFrame), <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.textLayerFrame));</div><div class="line">    <span class="keyword">self</span>.gradientLayer.frame = <span class="keyword">self</span>.bounds;</div><div class="line">    [<span class="built_in">CATransaction</span> commit];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里代码主要是更新gradientLayer 和textLayer的frame. 并</p>
+<h5 id="为什么要用catransaction">为什么要用CATransaction?</h5>
+<p>因为我们要在动画进行中手动改变动画的参数详情参考<a href="http://jefferyfan.github.io/2016/06/27/programing/iOS/CATransaction/" target="_blank" rel="external">设置动画参数</a></p>
+<h3 id="剩下的主要有3个工作">剩下的主要有3个工作</h3>
+<ul>
+<li>绘制文本layer,就是把想显示的字符串给self.textLayer.string</li>
+<li>添加滚动动画</li>
+<li>成员变量的setter中调用绘制文本layer和滚动动画方法</li>
+</ul>
+<h5 id="添加drawtextlayer私有方法">添加drawTextLayer私有方法</h5>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//拼装文本</span></div><div class="line">- (<span class="keyword">void</span>)drawTextLayer &#123;</div><div class="line">    <span class="keyword">self</span>.textLayer.foregroundColor = <span class="keyword">self</span>.textColor.CGColor;</div><div class="line">    <span class="built_in">CFStringRef</span> fontName = (__bridge <span class="built_in">CFStringRef</span>)<span class="keyword">self</span>.font.fontName;</div><div class="line">    <span class="built_in">CGFontRef</span> fontRef = <span class="built_in">CGFontCreateWithFontName</span>(fontName);</div><div class="line">    <span class="keyword">self</span>.textLayer.font = fontRef;</div><div class="line">    <span class="keyword">self</span>.textLayer.fontSize = <span class="keyword">self</span>.font.pointSize;</div><div class="line">    <span class="built_in">CGFontRelease</span>(fontRef);</div><div class="line">    <span class="comment">// 1</span></div><div class="line">    <span class="keyword">self</span>.textLayer.string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@%@%@%@%@"</span>,_text,kSeparateText,_text,kSeparateText,_text];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里注意 <code>1</code> 处 代码 干了两件事</p>
+<ul>
+<li>拼接文本</li>
+<li>给layer.string</li>
+</ul>
+<p>格式拼接 <strong>文本+3个空格+文本+3个空格+文本</strong></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> kSeparateText          = <span class="string">@"   "</span>;   <span class="comment">//3个空格</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>kSeparateText 是个常量</p>
+</blockquote>
+<h5 id="添加文本滚动动画">添加文本滚动动画</h5>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)startAnimation &#123;</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.textLayer animationForKey:kTextLayerAnimationKey]) &#123;</div><div class="line">        [<span class="keyword">self</span>.textLayer removeAnimationForKey:kTextLayerAnimationKey];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">CABasicAnimation</span> *animation = [<span class="built_in">CABasicAnimation</span> animation];</div><div class="line">    animation.keyPath = <span class="string">@"transform.translation.x"</span>; <span class="comment">//沿着X轴运动</span></div><div class="line">    animation.fromValue = @(<span class="keyword">self</span>.bounds.origin.x);</div><div class="line">    animation.toValue = @(<span class="keyword">self</span>.bounds.origin.x - <span class="keyword">self</span>.translationX);</div><div class="line">    animation.duration = <span class="keyword">self</span>.textWidth * <span class="number">0.035</span>f;</div><div class="line">    animation.repeatCount = MAXFLOAT;</div><div class="line">    animation.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">    animation.fillMode = kCAFillModeForwards;</div><div class="line">    animation.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionLinear];</div><div class="line">    [<span class="keyword">self</span>.textLayer addAnimation:animation forKey:kTextLayerAnimationKey];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里给<code>self.textLayer</code>加一个CABasicAnimation,让它沿着X轴运动,当然如果大家喜欢后续我添加多个方向类似<a href="https://github.com/sunyazhou13/MarqueeLabel" target="_blank" rel="external">MarqueeLabel滚动文本</a>一样,不过我觉得<a href="https://github.com/sunyazhou13/MarqueeLabel" target="_blank" rel="external">MarqueeLabel滚动文本</a>的实现太复杂,不够接地气,这个简单的动画效果还是要自己写比较靠谱.</p>
+<blockquote>
+<p>给self.textLayer添加动画即可,相信大家非常了解iOS动画我就不一一介绍了.</p>
+</blockquote>
+<h5 id="成员变量的setter中调用绘制文本layer和滚动动画方法">成员变量的setter中调用绘制文本layer和滚动动画方法</h5>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)setText:(<span class="built_in">NSString</span> *)text &#123;</div><div class="line">    _text = text;</div><div class="line">    <span class="comment">//计算单行文本大小</span></div><div class="line">    <span class="built_in">CGSize</span> size = [text calculateSingleLineSizeWithAttributeText:_font];</div><div class="line">    _textWidth = size.width;</div><div class="line">    _textHeight = size.height;</div><div class="line">    _textLayerFrame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, _textWidth * <span class="number">3</span> + _textSeparateWidth * <span class="number">2</span>, _textHeight);</div><div class="line">    _translationX = _textWidth + _textSeparateWidth;</div><div class="line">    [<span class="keyword">self</span> drawTextLayer];</div><div class="line">    [<span class="keyword">self</span> startAnimation];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里每次给当前视图设置相关文本的时候 setter处,就调用一下 渲染文本和动画.这样可以对外部暴露相关接口实时修改实时生效.至于其它的属性字符串,字体等也要最后追加上</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span> drawTextLayer];</div><div class="line">[<span class="keyword">self</span> startAnimation];</div></pre></td></tr></table></figure>
+<p>因为改动对文本大小有影响</p>
+<p>文字的计算大小这里用的是 CoreText,支持多行和单行</p>
+<p>属性字符串也一样就不写在这里了. 详细代码demo我已经把它写到文章下方 大家自行加载学习即可</p>
+<p>最终效果 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
+<h1 id="总结">总结</h1>
+<p>由于业余时间有限,没能1个月稳定更新2偏文章,请各位同仁理解,抖音系列动画需要先写demo然后仔细研究,最终才形成文章.制作不易,本篇也参考了开源代码和一些滚动字幕的库.由于演示的不完美,有些类还有可扩展空间,比如 开始动画和结束动画对外暴露接口,比如像系统那样的自然添加动画组. 本篇感谢开源作者<a href="https://github.com/sshiqiao/douyin-ios-objectc" target="_blank" rel="external">qiaoshi</a>,因为作者写的不是很完美我学习研究一下,增加了渐变效果和属性字符串得支持.</p>
+<p><a href="https://github.com/sunyazhou13/UIScrollTextDemo" target="_blank" rel="external">本篇demo</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIS
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="抖音动画系列" scheme="https://www.sunyazhou.com/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mac上的一些好软件推荐</title>
     <link href="https://www.sunyazhou.com/2019/02/15/20190215Tools/"/>
     <id>https://www.sunyazhou.com/2019/02/15/20190215Tools/</id>
     <published>2019-02-15T02:40:15.000Z</published>
-    <updated>2019-02-16T05:59:28.804Z</updated>
+    <updated>2019-03-11T09:12:28.367Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>新年第一篇 把自己用的比较好的工具都记录下来</p>
@@ -110,7 +237,7 @@
     <link href="https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/"/>
     <id>https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/</id>
     <published>2018-12-28T15:04:41.000Z</published>
-    <updated>2019-03-09T04:39:33.600Z</updated>
+    <updated>2019-03-06T01:47:21.856Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e263dd6fbfaf3cb12eee6ebcbfff3519dc5f9eb/20181231FinalSummary/1500x500.JPEG"></p>
 <h1 id="前言">前言</h1>
@@ -417,7 +544,7 @@
     <link href="https://www.sunyazhou.com/2018/12/21/20181221AwemeTransition/"/>
     <id>https://www.sunyazhou.com/2018/12/21/20181221AwemeTransition/</id>
     <published>2018-12-21T02:12:07.000Z</published>
-    <updated>2018-12-24T14:05:50.935Z</updated>
+    <updated>2018-12-21T02:13:54.273Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图</p>
@@ -524,7 +651,7 @@
     <link href="https://www.sunyazhou.com/2018/12/06/20181206Detecting-pan-gesture-direction/"/>
     <id>https://www.sunyazhou.com/2018/12/06/20181206Detecting-pan-gesture-direction/</id>
     <published>2018-12-06T05:59:46.000Z</published>
-    <updated>2018-12-18T16:05:06.393Z</updated>
+    <updated>2018-12-06T06:08:33.730Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向</p>
@@ -554,7 +681,7 @@
     <link href="https://www.sunyazhou.com/2018/11/27/20181127LikeAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/27/20181127LikeAnimation/</id>
     <published>2018-11-27T03:16:14.000Z</published>
-    <updated>2018-12-18T16:05:06.393Z</updated>
+    <updated>2018-11-28T02:52:44.709Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图</p>
@@ -658,7 +785,7 @@
     <link href="https://www.sunyazhou.com/2018/11/14/20181114PlayLoadingAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/14/20181114PlayLoadingAnimation/</id>
     <published>2018-11-14T06:14:39.000Z</published>
-    <updated>2018-12-18T16:05:06.392Z</updated>
+    <updated>2018-11-28T03:04:07.928Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画</p>
@@ -710,7 +837,7 @@
     <link href="https://www.sunyazhou.com/2018/11/13/20181113AllKeypathOfCALayer/"/>
     <id>https://www.sunyazhou.com/2018/11/13/20181113AllKeypathOfCALayer/</id>
     <published>2018-11-13T03:46:45.000Z</published>
-    <updated>2018-11-17T05:03:35.107Z</updated>
+    <updated>2018-11-13T06:41:08.676Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画</p>
@@ -977,7 +1104,7 @@
     <link href="https://www.sunyazhou.com/2018/11/08/20181108AwemeAlbumAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/08/20181108AwemeAlbumAnimation/</id>
     <published>2018-11-08T03:52:06.000Z</published>
-    <updated>2018-12-18T16:05:06.391Z</updated>
+    <updated>2018-11-28T03:04:02.096Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画</p>
@@ -1116,7 +1243,7 @@
     <link href="https://www.sunyazhou.com/2018/11/06/20181106AwemeTopBottomScrollDemo/"/>
     <id>https://www.sunyazhou.com/2018/11/06/20181106AwemeTopBottomScrollDemo/</id>
     <published>2018-11-06T09:55:09.000Z</published>
-    <updated>2018-12-18T16:05:06.391Z</updated>
+    <updated>2018-11-28T03:05:35.538Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,</p>
@@ -1204,7 +1331,7 @@
     <link href="https://www.sunyazhou.com/2018/10/29/20181029LabelDanceAnimation/"/>
     <id>https://www.sunyazhou.com/2018/10/29/20181029LabelDanceAnimation/</id>
     <published>2018-10-29T10:13:15.000Z</published>
-    <updated>2018-11-11T06:43:38.687Z</updated>
+    <updated>2018-10-30T01:58:14.315Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画</p>
@@ -1252,7 +1379,7 @@
     <link href="https://www.sunyazhou.com/2018/09/29/20180929BreathAnimation/"/>
     <id>https://www.sunyazhou.com/2018/09/29/20180929BreathAnimation/</id>
     <published>2018-09-29T02:09:30.000Z</published>
-    <updated>2018-11-11T06:43:38.687Z</updated>
+    <updated>2018-10-29T10:30:16.707Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.</p>
@@ -1333,7 +1460,7 @@
     <link href="https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/"/>
     <id>https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/</id>
     <published>2018-09-20T01:40:06.000Z</published>
-    <updated>2018-09-24T08:16:46.426Z</updated>
+    <updated>2018-09-20T02:13:00.934Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>开发过程中经常遇到<code>UIButton</code>点击区域太小 又不想 改动按钮的大小.</p>
@@ -1410,7 +1537,7 @@
     <link href="https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/"/>
     <id>https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/</id>
     <published>2018-09-18T01:49:58.000Z</published>
-    <updated>2018-09-24T08:16:46.426Z</updated>
+    <updated>2018-09-18T03:48:25.329Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918KeyboardAnimation/keyboard1.png"></p>
 <h1 id="前言">前言</h1>
@@ -1467,7 +1594,7 @@
     <link href="https://www.sunyazhou.com/2018/09/02/20180902Beacon/"/>
     <id>https://www.sunyazhou.com/2018/09/02/20180902Beacon/</id>
     <published>2018-09-02T04:12:51.000Z</published>
-    <updated>2018-09-02T04:20:37.405Z</updated>
+    <updated>2018-09-18T01:46:43.660Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180902Beacon/beacon.jpg"></p>
@@ -1515,7 +1642,7 @@
     <link href="https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/"/>
     <id>https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/</id>
     <published>2018-08-17T09:19:23.000Z</published>
-    <updated>2018-08-31T00:29:32.840Z</updated>
+    <updated>2018-08-17T11:14:59.642Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿...</p>
@@ -1605,7 +1732,7 @@
     <link href="https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/"/>
     <id>https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/</id>
     <published>2018-08-13T06:28:04.000Z</published>
-    <updated>2018-08-31T00:29:32.839Z</updated>
+    <updated>2018-08-13T07:34:57.192Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813TapticEngineFeedback/taptic_engine.jpg"></p>
 <h1 id="前言">前言</h1>
@@ -1714,7 +1841,7 @@
     <link href="https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/"/>
     <id>https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/</id>
     <published>2018-07-23T10:22:05.000Z</published>
-    <updated>2018-08-04T06:34:54.028Z</updated>
+    <updated>2018-07-25T03:15:08.313Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif"></p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIView</span> *)containerBackgroundView &#123;</div><div class="line">    <span class="keyword">if</span> (!_containerBackgroundView) &#123;</div><div class="line">        <span class="built_in">UIToolbar</span> *toolBar = [[<span class="built_in">UIToolbar</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">        toolBar.barStyle = <span class="built_in">UIBarStyleBlack</span>;</div><div class="line">        toolBar.clipsToBounds = <span class="literal">YES</span>;</div><div class="line">        _containerBackgroundView = toolBar;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _containerBackgroundView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1758,7 +1885,7 @@
     <link href="https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/"/>
     <id>https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/</id>
     <published>2018-07-18T01:29:39.000Z</published>
-    <updated>2018-08-04T06:34:54.028Z</updated>
+    <updated>2018-07-18T01:46:46.024Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png"></p>
 <h1 id="bash及其特性">bash及其特性</h1>
@@ -1910,7 +2037,7 @@
     <link href="https://www.sunyazhou.com/2018/06/25/20180625FilterString/"/>
     <id>https://www.sunyazhou.com/2018/06/25/20180625FilterString/</id>
     <published>2018-06-25T10:35:17.000Z</published>
-    <updated>2018-06-26T13:48:16.801Z</updated>
+    <updated>2018-06-25T10:55:19.466Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
@@ -1950,102 +2077,6 @@
       &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
 &lt;p&gt;今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-im
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用NSAttributeString实现不同颜色大小显示</title>
-    <link href="https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/"/>
-    <id>https://www.sunyazhou.com/2018/06/15/20180615NSAttributeString/</id>
-    <published>2018-06-15T02:10:58.000Z</published>
-    <updated>2018-06-17T08:28:16.706Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png"> # 前言</p>
-<p>最近开发需求遇到一个比较简单但又棘手的问题.先看需求</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b20f325385e063624b16aa726df0077209327fb0/20180615NSAttributeString/NSAttributeString1.png"></p>
-<p>一个<code>UILabel</code>显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：</p>
-<p>必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串</p>
-<p>比如: <code>2分14秒</code> or <code>2min14secs</code></p>
-<p>也就是给我们的是一个 <code>"2分14秒"</code>字符串 我们需要匹配range来修改或者替换. 带着这个疑问开始今天的文章?</p>
-<h2 id="实现思路">实现思路</h2>
-<p>孔圣贤有云:"举一隅不以三隅反，则不复也。"<br>
-&gt; 出自《论语·第七章·述而篇》</p>
-<p>为了不愧对圣贤对我的期待我把 这个问题定位升级成 4个等级</p>
-<ul>
-<li>Level 1 最优解,时间复杂度最低,效率最高</li>
-<li>Level 2 非最优解,时间复杂度最低,效率高</li>
-<li>Level 3 都一般</li>
-<li>Level 4 简单粗暴</li>
-</ul>
-<p>我想到了以下至少两种方法</p>
-<ol type="1">
-<li>通过计算出来的时间 eg: <code>分</code> <code>秒</code> 字符串 range去国际化处理完的字符串去匹配修改</li>
-<li>用正则匹配数字</li>
-<li>用谓词匹配数字</li>
-<li>level4太业余了不敢想向一个工作好几年的开发者还写出这么打脸的代码</li>
-</ol>
-<h3 id="准备工作">准备工作</h3>
-<p>在工程中拖拽了一个label</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"> </div><div class="line"> 	<span class="comment">//调用</span></div><div class="line">    <span class="built_in">NSAttributedString</span> *resultTime = [<span class="keyword">self</span> formattedCurrentTime:<span class="number">133</span>];</div><div class="line">    <span class="keyword">self</span>.label.attributedText = resultTime;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="方案1-字符串range匹配">方案1: 字符串range匹配</h3>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSRange</span> minRange, secRange;</div><div class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">        minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">        secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;</div><div class="line">    [attributeStr addAttributes:timeAttrs range:minRange];</div><div class="line">    [attributeStr addAttributes:timeAttrs range:secRange];    </div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>看下显示结果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18f973e4bf79ada776e8bbe9fb845a66375100d1/20180615NSAttributeString/first_arrtributestring.png"></p>
-<blockquote>
-<p>是不是看上去很好</p>
-</blockquote>
-<p>但我认为这并不完美,这种搞法虽然简单直接,但是过于依赖<code>minStr</code>和<code>secStr</code>的原始range,基于iOS9之后提供的API计算<code>range</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</div><div class="line">    minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    minRange = [localizedFormatString rangeOfString:minStr];</div><div class="line">    secRange = [localizedFormatString rangeOfString:secStr];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意:<em>API平台区分</em></p>
-</blockquote>
-<p>但是这么实现有个Bug 当遇到同样字符串的时候就会匹配错位, 如图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ce8515d36cdf420cbe900bc3e4e73c3cfbda7ef6/20180615NSAttributeString/%08NSAttributeString_bug.png"></p>
-<p>错误的原因显然大家都了解</p>
-<p>字符串 "0" 的range相同了,但就解决这个问题而言,简单判断一下range然后截取字符串向后跳跃length继续截取获取能实现,但这显然很啰嗦,万一有一天 你遇到的是 "<code>0小时0分12秒</code>"这种字符串那该如何写呢？</p>
-<p>是不是要递归的遍历一遍然后挨个取<code>Range</code> 做属性修改?</p>
-<p>这样的结果显然不但代码啰嗦 实现起来成本还是比较高的,对代码阅读性都有很大影响(写得好的代码除外哈).</p>
-<h5 id="那怎么不啰嗦呢">那怎么不啰嗦呢?</h5>
-<p>有一种搞法就是 用两个不同的字符占位.然后 国际化完成之后取Range,再然后替换文字,搞法虽然low点,但是时间复杂度降低了不少,还是可以考虑的.代码我就不写了 我怕小伙伴review代码的时候会虐我.继续往下看</p>
-<p><strong>评级: Level 2</strong></p>
-<p>那如何不依赖range解决这种问题呢？</p>
-<h3 id="方案2-正则匹配">方案2: 正则匹配</h3>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回当前时间格式</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</div><div class="line">    </div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</div><div class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</div><div class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></div><div class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</div><div class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</div><div class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</div><div class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;    </div><div class="line">    <span class="comment">/** 方案2 **/</span></div><div class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">    <span class="built_in">NSRegularExpression</span> *reg = [<span class="built_in">NSRegularExpression</span> regularExpressionWithPattern:<span class="string">@"[0-9]+"</span> options:<span class="built_in">NSRegularExpressionCaseInsensitive</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="built_in">NSArray</span> *matches = [reg matchesInString:localizedFormatString options:<span class="built_in">NSMatchingReportCompletion</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, localizedFormatString.length)];</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSTextCheckingResult</span> *match <span class="keyword">in</span> matches) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; match.numberOfRanges; i++) &#123;</div><div class="line">                <span class="built_in">NSRange</span> range = [match rangeAtIndex:i];</div><div class="line">                <span class="keyword">if</span> (range.location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">                    [attributeStr addAttributes:timeAttrs range:range];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>看下显示结果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/85f7a4f8f09e10c1603968555d86a0128c98696f/20180615NSAttributeString/second_attributestring.png"></p>
-<p>完美实现</p>
-<blockquote>
-<p>这种方案缺点就是,时间复杂度高了一些,需要每次正则遍历 有点是扩展性好一点,万一有一天PM又提了需求要做成 <code>A1</code> <code>B2</code> <code>C3</code> <code>XXX#话题</code>这种，那一定会出坑</p>
-</blockquote>
-<p>但我第一次这么实现被小伙伴嘲笑很业余.确实很业余,但它能避免方案1中的bug.而且相当精确.</p>
-<p><strong>评级: Level 2</strong></p>
-<h3 id="方案3-谓词匹配">方案3: 谓词匹配</h3>
-<p>这种搞法我没尝试,估计会比 方案1和方案2都快一些和简单直接一些,时间太紧张算了,期待评论轻喷吧！</p>
-<h3 id="方案4-简单粗暴">方案4: 简单粗暴</h3>
-<p>就搞 4个label. 我都想象到了被实习生嘲讽+打脸的搞法发生在一个工作好几年开发者身上是多么惨痛的画面. 放弃这种low的搞法</p>
-<h1 id="总结">总结</h1>
-<p>最终解决问题的方案还是方案2:正则匹配比较靠谱,而且一劳永逸</p>
-<p>本篇主要蛋疼的问题是 国际化后的字符串返回结果后,对返回的结果进行加工处理.</p>
-<p>没有做到Level 1级的做法很是遗憾,愧对圣贤. 希望小伙伴多提提建议.</p>
-<p><a href="https://github.com/sunyazhou13/NSAttributeStringDemo" target="_blank" rel="external">Demo</a>在这里找到</p>
-<h2 id="补充">补充</h2>
-<p>格式化时间的代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 返回时间格式 HH:mm:ss</div><div class="line"> @return 返回组装好的字符串</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSString</span> *)formattedCurrentTime &#123;</div><div class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)<span class="keyword">self</span>.recorder.currentTime;</div><div class="line">    <span class="built_in">NSInteger</span> hours = (time / <span class="number">3600</span>);</div><div class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</div><div class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">NSString</span> *format = <span class="string">@"%02i:%02i:%02i"</span>;</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:format, hours, minutes, seconds];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png&quot;&gt; # 前言
     
     </summary>
     
