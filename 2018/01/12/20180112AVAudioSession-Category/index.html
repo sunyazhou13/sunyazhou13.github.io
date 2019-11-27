@@ -170,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
+    <div class="panel-cover--overlay cover-red"></div>
   </div>
 </header>
 
@@ -560,7 +560,8 @@
 </table>
 <h1 id="总结">总结</h1>
 <p><code>AVAudioSession</code>构建了一个音频使用生命周期的上下文。当前状态是否可以录音、对其他App有怎样的影响、是否响应系统的静音键、如何感知来电话了等都可以通过它来实现。尤为重要的是<code>AVAudioSession</code>不仅可以和<code>AVFoundation</code>中的<code>AVAudioPlyaer</code>/<code>AVAudioRecorder</code>配合，其他录音/播放工具比如<code>AudioUnit</code>、<code>AudioQueueService</code>也都需要他进行录音、静音等上下文配合。</p>
-<p><a href="https://www.jianshu.com/p/3e0a399380df" target="_blank" rel="external">参考</a></p>
+<p><a href="https://www.jianshu.com/p/3e0a399380df" target="_blank" rel="external">参考</a><br>
+<a href="http://cinvoke.me/?p=37" target="_blank" rel="external">参考2</a></p>
 <p>全文完</p>
 
   </section>
@@ -734,22 +735,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 </body>
 </html>

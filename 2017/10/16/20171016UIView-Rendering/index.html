@@ -170,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
+    <div class="panel-cover--overlay cover-red"></div>
   </div>
 </header>
 
@@ -211,7 +211,10 @@
 <p>最终现实在屏幕上.因此,如果在16.7ms 内完不成这些操作, eg: CPU做了太多的工作, 或者<code>view</code>层次过于多,图片过于大,导致<code>GPU</code>压力太大,就会导致"卡"的现象,也就是 <strong>丢帧</strong>,<strong>掉帧</strong>.</p>
 <p>苹果官方给出的最佳帧率是:<strong>60fps</strong>(60Hz),也就是一帧不丢, 当然这是理想中的绝佳体验.</p>
 <h3 id="这个60fps该怎么理解呢">这个<code>60fps</code>该怎么理解呢？</h3>
-<p>一般来说如果帧率达到 <code>25+fps</code>(fps &gt;= 25帧以上,不是25加别看错),人眼就基本感觉不到卡顿了,因此,如果你能让你的 iOS 程序__稳定__保持在<code>30fps</code>已经很不错了, 注释,是"稳定"在30fps,而不是, <code>10fps</code>,<code>40fps</code>,<code>20fps</code>这样的跳动,如果帧频不稳就会有卡的感觉,<code>60fps</code>真的很难达到, 尤其是在 iPhone 4/4s等 32bit 位机上,不过现在苹果已经全面放弃32位,支持最低64位会好很多.</p>
+<p>一般来说如果帧率达到 <code>60+fps</code>(fps &gt;= 60帧以上,如果帧率fps &gt; 50,人眼就基本感觉不到卡顿了,因此,如果你能让你的 iOS 程序__稳定__保持在<code>60fps</code>已经很不错了, 注释,是"稳定"在60fps,而不是, <code>10fps</code>,<code>40fps</code>,<code>20fps</code>这样的跳动,如果帧频不稳就会有卡的感觉,<code>60fps</code>真的很难达到, 尤其是在 iPhone 4/4s等 32bit 位机上,不过现在苹果已经全面放弃32位,支持最低64位会好很多.</p>
+<blockquote>
+<p>fps 代表的是刷新频率,单位赫兹Hz,因为电子工程中考虑到能耗和视觉以及其它方面,60Hz是一个比较理想的刷新频率,所以家用电器也经常会出现60Hz的字样. 视频中帧率FPS &gt;= 25 才不会人眼察觉有卡顿,因为视频中视频模糊视频中的i p b帧能够给予前后帧一些需要的像素信息方便GPU的离屏渲染,GPU的索引可以节省很多性能.</p>
+</blockquote>
 <p>总的来说, UIView从绘制到Render的过程有如下几步：</p>
 <ul>
 <li>每一个<code>UIView</code>都有一个<code>layer</code></li>
@@ -482,22 +485,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 </body>
 </html>

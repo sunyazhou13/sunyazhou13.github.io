@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2019-03-25T03:25:18.895Z</updated>
+  <updated>2019-11-27T14:24:05.022Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,510 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用Masonry约束实现简单的高级拖拽视图</title>
+    <link href="https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/"/>
+    <id>https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/</id>
+    <published>2019-09-26T12:05:20.000Z</published>
+    <updated>2019-11-27T14:24:05.022Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7ba7422a28bf99800889c69175423c274ed649b3/20190926MasonryPanViewDemo/panviewdemo.gif"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<h2 id="背景">背景</h2>
+<p>最近开发遇到一个上图的需求,做一个挂件能四处拖动并且上边还时不时的展示一个tips气泡的<code>Label</code>,在尽量使用少的代码来实现这个功能,作为我手一名iOS开发人员必须严格考究这个需求,显然这有点麻烦,一贯懒惰我的实在不想计算哪个边哪个角甚至滑动到哪里的<code>frame</code>,计算frame这既听起来可笑又觉的没什么技术含量. 为了让代码量少并且能满足需求,我选择使用Masonry来实现这个功能</p>
+<h2 id="开搞">开搞</h2>
+<p>首先我搞起之前我建议大家看下<a href="http://tutuge.me/" target="_blank" rel="external">土土哥</a>的<a href="http://tutuge.me/tags/Masonry/" target="_blank" rel="external">有趣的Autolayout示例1~5Masonry实现文章</a>,本文也是参考土土哥的文章学习写出的,见笑了各位,个人认为土土哥的文章简直就是Masonry自动布局的样板教程,强烈建议入门的小伙伴或者高手经常复写.</p>
+<p>下面的图是土土哥实现的demo<br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e8d67bc843f2afc69cad61704396a1378fba6cc/20190926MasonryPanViewDemo/tutugeMasonry1.gif"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e8d67bc843f2afc69cad61704396a1378fba6cc/20190926MasonryPanViewDemo/tutugeMasonry2.gif"></p>
+<p>但我的问题是怎么保证那个tip的气泡label左右拖拽能辗转腾挪的允许logo图像之间有<code>旷量移动</code></p>
+<h2 id="代码实现旷量移动">代码实现旷量移动</h2>
+<p>首先我们创建一个demo,很简单VC的demo就行 创建相关绿色背景视图和图像imageView以及tipLabel的气泡视图,具体代码我贴了出来,我就不啰嗦如何创建其它视图了xib拖拽一下就行了.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;Masonry/Masonry.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UIView</span>        *greenView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span>   *widgetView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span>       *bubbleTitleLabel;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) MASConstraint *leftConstraint; <span class="comment">//左侧约束变量</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) MASConstraint *topConstraint;  <span class="comment">//顶部约束变量</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这里可以看到有两个<code>leftConstraint</code>和<code>topConstraint</code>的约束全局变量,这两个就是实现拖拽的时候改变约束的偏移量来实现的.具体代码如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> screenWidth = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width;</div><div class="line"><span class="built_in">CGFloat</span> screenHeight = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.height;</div><div class="line">[<span class="keyword">self</span>.widgetView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    <span class="comment">// 设置边界条件约束，保证内容可见，优先级1000</span></div><div class="line">    make.left.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_left);</div><div class="line">    make.right.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_right);</div><div class="line">    make.top.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_top);</div><div class="line">    make.bottom.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_bottom);</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.leftConstraint = make.centerX.equalTo(<span class="keyword">self</span>.greenView.mas_left).with.offset(screenWidth - <span class="number">20</span>).priorityHigh(); <span class="comment">// 优先级要比边界条件低</span></div><div class="line">    <span class="keyword">self</span>.topConstraint = make.centerY.equalTo(<span class="keyword">self</span>.greenView.mas_top).with.offset(screenHeight - <span class="number">100</span>).priorityHigh(); <span class="comment">// 优先级要比边界条件低</span></div><div class="line">    make.width.height.mas_equalTo(@<span class="number">100</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>上边的<code>greaterThanOrEqualTo</code>和<code>lessThanOrEqualTo</code>都是限制挂件的可滑动范围,而最后的<code>make.centerX/Y.equalTo</code>是限制挂件的默认位置,我让它默认在右下角,所以通过偏移量移动过去</p>
+<blockquote>
+<p>注意:这里有个坑就是因为这个东西能四处滑动 所以基本需要锁定<code>left</code>和<code>top</code>,我发现只有通过offset移动才能确定最初位置,如果equalTo直接写成xxxview的bottom或者right是滑动不了的,仔细思考一下masonry就知道为啥了.</p>
+</blockquote>
+<p>然后添加手势并实现相关滑动事件即可实现滑动</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIPanGestureRecognizer</span> *pan = [[<span class="built_in">UIPanGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(panWithGesture:)];</div><div class="line">[<span class="keyword">self</span>.greenView addGestureRecognizer:pan];</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)panWithGesture:(<span class="built_in">UIPanGestureRecognizer</span> *)pan &#123;</div><div class="line">    <span class="built_in">CGPoint</span> touchPoint = [pan locationInView:<span class="keyword">self</span>.greenView];</div><div class="line">    <span class="keyword">self</span>.leftConstraint.offset = touchPoint.x;</div><div class="line">    <span class="keyword">self</span>.topConstraint.offset = touchPoint.y;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="旷量label的约束">旷量Label的约束</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.bubbleTitleLabel mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">	make.height.equalTo(@<span class="number">26</span>);</div><div class="line">	make.bottom.equalTo(<span class="keyword">self</span>.widgetView.mas_top);</div><div class="line">	make.left.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_left).offset(<span class="number">0</span>);</div><div class="line">	make.right.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_right).offset(<span class="number">0</span>);</div><div class="line">	make.centerX.lessThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_right).offset(<span class="number">10</span>);</div><div class="line">	make.centerX.greaterThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_left).offset(<span class="number">-10</span>);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>想要实现旷量移动必须增加更多的约束限制</p>
+<p>这里就增加了</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">make.centerX.lessThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_right).offset(<span class="number">10</span>);</div><div class="line">make.centerX.greaterThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_left).offset(<span class="number">-10</span>);</div></pre></td></tr></table></figure>
+<p>这样就实现了 左右超过滑动便宜还依然控制着tip的label左右移动范围.</p>
+<h1 id="总结">总结</h1>
+<p>经过工作中遇到的问题实例,学习了一些Masonry的技巧,希望和大家分享,demo我已放到下面 喜欢自行下载学习.</p>
+<p><a href="https://github.com/sunyazhou13/PanViewDemo" target="_blank" rel="external">demo下载</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7ba7422a28bf99800889c69175423c274ed649b3/20190926Mas
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UITraitCollection详解</title>
+    <link href="https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/"/>
+    <id>https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/</id>
+    <published>2019-09-16T10:49:05.000Z</published>
+    <updated>2019-11-27T14:24:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UITraitCollection/UITraitCollection1.png"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<h2 id="先说问题">先说问题</h2>
+<p>最近在适配iOS13 有个<code>Dark Mode</code>的暗黑模式, 为了适配这个模式不得不在UIView和UIViewController以及UIWindow中复写如下方法</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)traitCollectionDidChange:(<span class="built_in">UITraitCollection</span> *)previousTraitCollection &#123;</div><div class="line">    [<span class="keyword">super</span> traitCollectionDidChange:previousTraitCollection];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有个<code>UITraitCollection</code>的类以前从来没有仔细研究,今天详细研究一下.</p>
+<blockquote>
+<p>Trait 特性 特点</p>
+</blockquote>
+<p>显然 这个类是一个UIKit中用于处理苹果手机的一些特性的储存与UI相关的配置, 大家有没有想过如果你在iOS修改通用中的某些系统设置,比如(下图) 对比度、全局字体大小,这个我们开发人员怎么处理.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UITraitCollection/UITraitCollection2.gif"></p>
+<p>这些系统的特性修改就放到这个<code>UITraitCollection</code>中,这个类也就是我们经常在VC和View中经常用到而大家往往容易忽略的,下面简单记录一下这些特性都有哪些</p>
+<h2 id="uitraitcollection-api介绍">UITraitCollection API介绍</h2>
+<h4 id="判断当前设备时-iphoneipadtvcarplay-的配置">判断当前设备时 iPhone/iPad/tv/carPlay 的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithUserInterfaceIdiom:(<span class="built_in">UIUserInterfaceIdiom</span>)idiom;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceIdiom</span> userInterfaceIdiom; <span class="comment">// unspecified: UIUserInterfaceIdiomUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="关于布局方向的配置">关于布局方向的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithLayoutDirection:(<span class="built_in">UITraitEnvironmentLayoutDirection</span>)layoutDirection API_AVAILABLE(ios(<span class="number">10.0</span>));</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UITraitEnvironmentLayoutDirection</span> layoutDirection API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UITraitEnvironmentLayoutDirectionUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="图片-scale-的配置">图片 Scale 的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithDisplayScale:(<span class="built_in">CGFloat</span>)scale;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGFloat</span> displayScale; <span class="comment">// unspecified: 0.0</span></div></pre></td></tr></table></figure>
+<h4 id="布局-size-class-的配置">布局 Size Class 的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithHorizontalSizeClass:(<span class="built_in">UIUserInterfaceSizeClass</span>)horizontalSizeClass;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceSizeClass</span> horizontalSizeClass; <span class="comment">// unspecified: UIUserInterfaceSizeClassUnspecified</span></div><div class="line"></div><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithVerticalSizeClass:(<span class="built_in">UIUserInterfaceSizeClass</span>)verticalSizeClass;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceSizeClass</span> verticalSizeClass; <span class="comment">// unspecified: UIUserInterfaceSizeClassUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="force-touch-是否可用的配置">Force Touch 是否可用的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithForceTouchCapability:(<span class="built_in">UIForceTouchCapability</span>)capability API_AVAILABLE(ios(<span class="number">9.0</span>));</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIForceTouchCapability</span> forceTouchCapability API_AVAILABLE(ios(<span class="number">9.0</span>)); <span class="comment">// unspecified: UIForceTouchCapabilityUnknown</span></div></pre></td></tr></table></figure>
+<h4 id="全局字体大小的配置">全局字体大小的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithPreferredContentSizeCategory:(<span class="built_in">UIContentSizeCategory</span>)preferredContentSizeCategory API_AVAILABLE(ios(<span class="number">10.0</span>));</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) <span class="built_in">UIContentSizeCategory</span> preferredContentSizeCategory API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UIContentSizeCategoryUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="色域的配置">色域的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithDisplayGamut:(<span class="built_in">UIDisplayGamut</span>)displayGamut API_AVAILABLE(ios(<span class="number">10.0</span>));</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIDisplayGamut</span> displayGamut API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UIDisplayGamutUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="是否开启高对比度的配置">是否开启高对比度的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithAccessibilityContrast:(<span class="built_in">UIAccessibilityContrast</span>)accessibilityContrast API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>)) API_UNAVAILABLE(watchos);</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIAccessibilityContrast</span> accessibilityContrast API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>)) API_UNAVAILABLE(watchos); <span class="comment">// unspecified: UIAccessibilityContrastUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="全局字重的配置">全局字重的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithLegibilityWeight:(<span class="built_in">UILegibilityWeight</span>)legibilityWeight API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>), watchos(<span class="number">6.0</span>));</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UILegibilityWeight</span> legibilityWeight API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>), watchos(<span class="number">6.0</span>)); <span class="comment">// unspecified: UILegibilityWeightUnspecified</span></div></pre></td></tr></table></figure>
+<h4 id="主题的配置">主题的配置</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithUserInterfaceStyle:(<span class="built_in">UIUserInterfaceStyle</span>)userInterfaceStyle API_AVAILABLE(tvos(<span class="number">10.0</span>)) API_AVAILABLE(ios(<span class="number">12.0</span>)) API_UNAVAILABLE(watchos);</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceStyle</span> userInterfaceStyle API_AVAILABLE(tvos(<span class="number">10.0</span>)) API_AVAILABLE(ios(<span class="number">12.0</span>)) API_UNAVAILABLE(watchos); <span class="comment">// unspecified: UIUserInterfaceStyleUnspecified</span></div></pre></td></tr></table></figure>
+<h3 id="如何获取-uitraitcollection">如何获取 UITraitCollection</h3>
+<p><code>UITraitCollection</code>本身是一个配置的集合，每个 <code>UIView</code>/<code>UIViewController</code>都有自己的 <code>UITraitCollection</code>对象，并将自己的<code>UITraitCollection</code>传递给子<code>UIView</code>/<code>UIViewController</code>作为默认值。</p>
+<ul>
+<li>可以通过 <code>UIView</code>/<code>UIViewController</code>的属性 <code>traitCollection</code> 获取到当前视图的 UITraitCollection 对象</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.traitCollection <span class="comment">//拿到当前得</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>可以通过子类重写如下方法的方式监控 traitCollection 属性的变化</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)traitCollectionDidChange:(<span class="built_in">UITraitCollection</span> *)previousTraitCollection &#123;</div><div class="line">    [<span class="keyword">super</span> traitCollectionDidChange:previousTraitCollection];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>获取全局的<code>UITraitCollection</code></li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">UITraitCollection</span> currentTraitCollection];</div></pre></td></tr></table></figure>
+<h2 id="技巧">技巧</h2>
+<p>如果要在UIViewController中更新状态栏 当设置完style的时候可以调用</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span> setNeedsStatusBarAppearanceUpdate];</div></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>通过简单的学习<code>UITraitCollection</code>又深刻学习了一下这个类,希望以后能记录一下学过的知识.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UIT
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从零学习OpenGLES的纹理渲染</title>
+    <link href="https://www.sunyazhou.com/2019/09/06/20190906OpenGLESDemo1/"/>
+    <id>https://www.sunyazhou.com/2019/09/06/20190906OpenGLESDemo1/</id>
+    <published>2019-09-06T02:19:48.000Z</published>
+    <updated>2019-11-27T14:24:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d906db5da48581d2dd96615aeb5122c0e6265304/20190906OpenGLESDemo1/sunyazhou_logo_glsl.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>很久没用OpenGL了 记录一下学习GLSL代码和实现</p>
+<h2 id="objctive-c代码">Objctive-C代码</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;GLKit/GLKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//顶点结构体类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">    GLKVector3 positionCoord; <span class="comment">// (x,y,z)</span></div><div class="line">    GLKMatrix2 textureCoord; <span class="comment">// (u, v)</span></div><div class="line">    </div><div class="line">&#125; SenceVertex;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) SenceVertex *vertices; <span class="comment">//顶点数组</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) EAGLContext *context;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - override methods 复写方法</span></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">    [<span class="keyword">self</span> commonInit];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line">- (<span class="keyword">void</span>)commonInit &#123;</div><div class="line">    <span class="comment">// 创建上下文 使用 2.0版本</span></div><div class="line">    <span class="keyword">self</span>.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line">    [EAGLContext setCurrentContext:<span class="keyword">self</span>.context];</div><div class="line">    </div><div class="line">    <span class="comment">//创建顶点数组</span></div><div class="line">    <span class="keyword">self</span>.vertices = malloc(<span class="keyword">sizeof</span>(SenceVertex) * <span class="number">4</span>); <span class="comment">//4个顶点</span></div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">0</span>] = (SenceVertex)&#123;&#123;<span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;,&#123; <span class="number">0</span>, <span class="number">1</span> &#125;&#125;; <span class="comment">//左上角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">1</span>] = (SenceVertex)&#123;&#123;<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">0</span> ,<span class="number">0</span>&#125;&#125;; <span class="comment">//左下角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">2</span>] = (SenceVertex)&#123;&#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">1</span>, <span class="number">1</span>&#125;&#125;; <span class="comment">//右上角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">3</span>] = (SenceVertex)&#123;&#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;; <span class="comment">//右下角</span></div><div class="line">    </div><div class="line">    <span class="comment">//创建一个展示纹理的layer</span></div><div class="line">    </div><div class="line">    <span class="built_in">CAEAGLLayer</span> *layer = [<span class="built_in">CAEAGLLayer</span> layer];</div><div class="line">    layer.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">100</span>, <span class="keyword">self</span>.view.frame.size.width, <span class="keyword">self</span>.view.frame.size.width);</div><div class="line">    layer.contentsScale = [[<span class="built_in">UIScreen</span> mainScreen] scale]; <span class="comment">//设置缩放比例，不设置的话，纹理会失真</span></div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.view.layer addSublayer:layer];</div><div class="line">    </div><div class="line">    <span class="comment">// 绑定纹理到输出layer</span></div><div class="line">    [<span class="keyword">self</span> bindRenderLayer:layer];</div><div class="line">    </div><div class="line">    <span class="comment">// 读取纹理</span></div><div class="line">    <span class="built_in">NSString</span> *imagePath = [[[<span class="built_in">NSBundle</span> mainBundle] resourcePath] stringByAppendingPathComponent:<span class="string">@"logo.png"</span>];</div><div class="line">    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithContentsOfFile:imagePath];</div><div class="line">    GLuint textureID = [<span class="keyword">self</span> createTextureWithImage:image];</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">// 设置视口尺寸</span></div><div class="line">    </div><div class="line">    glViewport(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.drawableWidth, <span class="keyword">self</span>.drawableHeight);</div><div class="line">    </div><div class="line">    <span class="comment">// 编译链接 着色器</span></div><div class="line">    GLuint program = [<span class="keyword">self</span> programWithShaderName:<span class="string">@"glsl"</span>];</div><div class="line">    glUseProgram(program);</div><div class="line">    </div><div class="line">    <span class="comment">// 获取shader 中的参数 然后传数据进去</span></div><div class="line">    GLuint positionSlot = glGetAttribLocation(program, <span class="string">"Position"</span>); <span class="comment">//获取顶点着色器的位置</span></div><div class="line">    GLuint textureCoordsSlot = glGetAttribLocation(program, <span class="string">"TextureCoords"</span>); <span class="comment">//获取顶点着色器中的纹理坐标</span></div><div class="line"></div><div class="line">    GLuint textureSlot = glGetUniformLocation(program, <span class="string">"Texture"</span>); <span class="comment">//获取片元着色器纹理变量</span></div><div class="line"></div><div class="line">    <span class="comment">//将纹理 ID 传给着色器程序</span></div><div class="line">    glActiveTexture(GL_TEXTURE0);</div><div class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</div><div class="line">    glUniform1i(textureSlot, <span class="number">0</span>); <span class="comment">// 将textureSlot 赋值为 0, 而 0 与 GL_TEXTURE0 对应,这里如果写1,就是GL_TEXTURE1</span></div><div class="line">    </div><div class="line">    <span class="comment">// 创建顶点缓存</span></div><div class="line">    GLuint vertexBuffer;</div><div class="line">    glGenBuffers(<span class="number">1</span>, &amp;vertexBuffer);</div><div class="line">    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);</div><div class="line">    GLsizeiptr bufferSizeBytes = <span class="keyword">sizeof</span>(SenceVertex) * <span class="number">4</span>;</div><div class="line">    glBufferData(GL_ARRAY_BUFFER, bufferSizeBytes, <span class="keyword">self</span>.vertices, GL_STATIC_DRAW);</div><div class="line">    </div><div class="line">    <span class="comment">// 设置顶点数据</span></div><div class="line">    glEnableVertexAttribArray(positionSlot);</div><div class="line">    glVertexAttribPointer(positionSlot, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="keyword">sizeof</span>(SenceVertex), <span class="literal">NULL</span> + offsetof(SenceVertex, positionCoord));</div><div class="line">    </div><div class="line">    <span class="comment">// 设置纹理数据</span></div><div class="line">    glEnableVertexAttribArray(textureCoordsSlot);</div><div class="line">    glVertexAttribPointer(textureCoordsSlot, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="keyword">sizeof</span>(SenceVertex), <span class="literal">NULL</span> + offsetof(SenceVertex, textureCoord));</div><div class="line">    </div><div class="line">    <span class="comment">// 开始绘制</span></div><div class="line">    glDrawArrays(GL_TRIANGLE_STRIP, <span class="number">0</span>, <span class="number">4</span>);</div><div class="line">    </div><div class="line">    <span class="comment">// 将绑定</span></div><div class="line">    [<span class="keyword">self</span>.context presentRenderbuffer:GL_RENDERBUFFER];</div><div class="line">    </div><div class="line">    <span class="comment">//删除顶点缓存</span></div><div class="line">    glDeleteBuffers(<span class="number">1</span>, &amp;vertexBuffer);</div><div class="line">    vertexBuffer = <span class="number">0</span>;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//绑定图像要输出的 layer</span></div><div class="line">- (<span class="keyword">void</span>)bindRenderLayer:(<span class="built_in">CALayer</span> &lt;EAGLDrawable&gt; *)layer &#123;</div><div class="line">    GLuint frameBuffer; <span class="comment">//帧缓冲</span></div><div class="line">    GLuint renderBuffer; <span class="comment">//渲染缓冲</span></div><div class="line"></div><div class="line">    <span class="comment">//绑定渲染缓冲到 输出的layer</span></div><div class="line">    glGenRenderbuffers(<span class="number">1</span>, &amp;renderBuffer);</div><div class="line">    glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);</div><div class="line">    [<span class="keyword">self</span>.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];</div><div class="line">    </div><div class="line">    <span class="comment">//将渲染缓冲附着在帧缓冲上</span></div><div class="line">    glGenFramebuffers(<span class="number">1</span>, &amp;frameBuffer);</div><div class="line">    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);</div><div class="line">    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderBuffer);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 通过一个图片 创建纹理</span></div><div class="line">- (GLuint)createTextureWithImage:(<span class="built_in">UIImage</span> *)image &#123;</div><div class="line">    <span class="comment">// 将 UIImage 转换为 CGImageRef</span></div><div class="line">    <span class="built_in">CGImageRef</span> cgImageRef = [image <span class="built_in">CGImage</span>];</div><div class="line">    GLuint width = (GLuint)<span class="built_in">CGImageGetWidth</span>(cgImageRef);</div><div class="line">    GLuint height = (GLuint)<span class="built_in">CGImageGetHeight</span>(cgImageRef);</div><div class="line">    <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</div><div class="line">    </div><div class="line">    <span class="comment">// 绘制图片</span></div><div class="line">    <span class="built_in">CGColorSpaceRef</span> colorSpace = <span class="built_in">CGColorSpaceCreateDeviceRGB</span>();</div><div class="line">    <span class="keyword">void</span> *imageData = malloc(width * height * <span class="number">4</span>);</div><div class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">CGBitmapContextCreate</span>(imageData, width, height, <span class="number">8</span>, width * <span class="number">4</span>, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0</span>, height);</div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>f, <span class="number">-1.0</span>f);</div><div class="line">    <span class="built_in">CGColorSpaceRelease</span>(colorSpace);</div><div class="line">    <span class="built_in">CGContextClearRect</span>(context, rect);</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(context, rect, cgImageRef);</div><div class="line"></div><div class="line">    <span class="comment">// 生成纹理</span></div><div class="line">    GLuint textureID;</div><div class="line">    glGenTextures(<span class="number">1</span>, &amp;textureID);</div><div class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</div><div class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, width, height, <span class="number">0</span>, GL_RGBA, GL_UNSIGNED_BYTE, imageData); <span class="comment">// 将图片数据写入纹理缓存</span></div><div class="line">    </div><div class="line">    <span class="comment">// 设置如何把纹素映射成像素</span></div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</div><div class="line">    </div><div class="line">    <span class="comment">// 解绑</span></div><div class="line">    glBindTexture(GL_TEXTURE_2D, <span class="number">0</span>);</div><div class="line">    </div><div class="line">    <span class="comment">// 释放内存</span></div><div class="line">    <span class="built_in">CGContextRelease</span>(context);</div><div class="line">    free(imageData);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> textureID;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将一个顶点着色器和片元着色器挂在到一个着色器程序上, 并返回程序的 id</span></div><div class="line">- (GLuint)programWithShaderName:(<span class="built_in">NSString</span> *)shaderName &#123;</div><div class="line">    <span class="comment">// 编译两个着色器</span></div><div class="line">    GLuint vertexShader = [<span class="keyword">self</span> compileShaderWithName:shaderName type:GL_VERTEX_SHADER];</div><div class="line">    GLuint fragmentShader = [<span class="keyword">self</span> compileShaderWithName:shaderName type:GL_FRAGMENT_SHADER];</div><div class="line">    </div><div class="line">    <span class="comment">// 挂载 shader 到 program 上</span></div><div class="line">    GLuint program = glCreateProgram();</div><div class="line">    glAttachShader(program, vertexShader);</div><div class="line">    glAttachShader(program, fragmentShader);</div><div class="line">    </div><div class="line">    <span class="comment">// 链接 program</span></div><div class="line">    glLinkProgram(program);</div><div class="line">    </div><div class="line">    <span class="comment">// 检查链接是否成功</span></div><div class="line">    GLint linkSuccess;</div><div class="line">    glGetProgramiv(program, GL_LINK_STATUS, &amp;linkSuccess);</div><div class="line">    <span class="keyword">if</span> (linkSuccess == GL_FALSE) &#123;</div><div class="line">        GLchar messages[<span class="number">256</span>];</div><div class="line">        glGetProgramInfoLog(program, <span class="keyword">sizeof</span>(messages), <span class="number">0</span>, &amp;messages[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">NSString</span> *messageString = [<span class="built_in">NSString</span> stringWithUTF8String:messages];</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"program链接失败：%@"</span>, messageString);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> program;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 编译一个 shader，并返回 shader 的 id</span></div><div class="line">- (GLuint)compileShaderWithName:(<span class="built_in">NSString</span> *)name type:(GLenum)shaderType &#123;</div><div class="line">    <span class="comment">// 查找 shader 文件</span></div><div class="line">    <span class="built_in">NSString</span> *shaderPath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:name ofType:shaderType == GL_VERTEX_SHADER ? <span class="string">@"vsh"</span> : <span class="string">@"fsh"</span>]; <span class="comment">// 根据不同的类型确定后缀名</span></div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="built_in">NSString</span> *shaderString = [<span class="built_in">NSString</span> stringWithContentsOfFile:shaderPath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (!shaderString) &#123;</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"读取shader失败"</span>);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 创建一个 shader 对象</span></div><div class="line">    GLuint shader = glCreateShader(shaderType);</div><div class="line">    </div><div class="line">    <span class="comment">// 获取 shader 的内容</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *shaderStringUTF8 = [shaderString UTF8String];</div><div class="line">    <span class="keyword">int</span> shaderStringLength = (<span class="keyword">int</span>)[shaderString length];</div><div class="line">    glShaderSource(shader, <span class="number">1</span>, &amp;shaderStringUTF8, &amp;shaderStringLength);</div><div class="line">    </div><div class="line">    <span class="comment">// 编译shader</span></div><div class="line">    glCompileShader(shader);</div><div class="line">    </div><div class="line">    <span class="comment">// 查询 shader 是否编译成功</span></div><div class="line">    GLint compileSuccess;</div><div class="line">    glGetShaderiv(shader, GL_COMPILE_STATUS, &amp;compileSuccess);</div><div class="line">    <span class="keyword">if</span> (compileSuccess == GL_FALSE) &#123;</div><div class="line">        GLchar messages[<span class="number">256</span>];</div><div class="line">        glGetShaderInfoLog(shader, <span class="keyword">sizeof</span>(messages), <span class="number">0</span>, &amp;messages[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">NSString</span> *messageString = [<span class="built_in">NSString</span> stringWithUTF8String:messages];</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"shader编译失败：%@"</span>, messageString);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> shader;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"><span class="comment">// 获取渲染缓存宽度</span></div><div class="line">- (GLint)drawableWidth &#123;</div><div class="line">    GLint backingWidth;</div><div class="line">    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &amp;backingWidth);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> backingWidth;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 获取渲染缓存高度</span></div><div class="line">- (GLint)drawableHeight &#123;</div><div class="line">    GLint backingHeight;</div><div class="line">    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &amp;backingHeight);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> backingHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    <span class="keyword">if</span> ([EAGLContext currentContext] == <span class="keyword">self</span>.context) &#123;</div><div class="line">        [EAGLContext setCurrentContext:<span class="literal">nil</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//释放结构体内存的数组 需要手动free</span></div><div class="line">    <span class="keyword">if</span> (_vertices) &#123;</div><div class="line">        free(_vertices);</div><div class="line">        _vertices = <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="顶点着色器">顶点着色器</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">attribute vec4 Position;</div><div class="line">attribute vec2 TextureCoords;</div><div class="line">varying vec2 TextureCoordsVarying;</div><div class="line"></div><div class="line">void main (void) &#123;</div><div class="line">    gl_Position = Position;</div><div class="line">    TextureCoordsVarying = TextureCoords;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="片元着色器">片元着色器</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">precision mediump float;</div><div class="line"></div><div class="line">uniform sampler2D Texture;</div><div class="line">varying vec2 TextureCoordsVarying;</div><div class="line"></div><div class="line">void main (void) &#123;</div><div class="line">    vec4 mask = texture2D(Texture, TextureCoordsVarying);</div><div class="line">    gl_FragColor = vec4(mask.rgb, 1.0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>最近一有时间就尽量研习图形图像相关的技术,本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p><a href="https://github.com/sunyazhou13/GLSLDemo1" target="_blank" rel="external">Demo</a></p>
+<p><a href="http://www.lymanli.com/2019/02/17/ios-opengles-render-texture/" target="_blank" rel="external">学习参考</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d906db5da48581d2dd96615aeb5122c0e6265304/20190906Ope
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>做一个简单的Loading动画</title>
+    <link href="https://www.sunyazhou.com/2019/07/26/20190726LoadingAnimationI/"/>
+    <id>https://www.sunyazhou.com/2019/07/26/20190726LoadingAnimationI/</id>
+    <published>2019-07-26T03:13:44.000Z</published>
+    <updated>2019-11-27T14:24:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c85027ac27deef00d0e98c5a4f898d5dd2642146/20190726LoadingAnimationI/circle-loading-animation.png"></p>
+<h1 id="前言">前言</h1>
+<p>由于最近工作忙到坐地铁回家都能睡着,博客没能及时更新,今天抽个时间写个加载动画,废话不多说上图.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/1ecb815a4985fcf281d399f42686c277189593cd/20190726LoadingAnimationI/LoadingAnimation1.gif"></p>
+<p>(颜色可以自定义哈,非常简单,小白自己可以随便改)</p>
+<h1 id="开始">开始</h1>
+<p>创建一个UIView的子类<code>UILoadingView</code>(名字最好不要带<code>UI</code>开头哈,我这是为了玩 大家理解就行),然后添加两个接口</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UILoadingView</span> : <span class="title">UIView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)startLoading; <span class="comment">//1</span></div><div class="line">- (<span class="keyword">void</span>)stopLoading;  <span class="comment">//2</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<blockquote>
+<ol type="1">
+<li>开始动画</li>
+<li>结束动画</li>
+</ol>
+</blockquote>
+<p>实现的.m文件中我们需要用到<code>CAReplicatorLayer</code>,主要是看上边的小圆点比较多,用<code>CAReplicatorLayer</code>可以帮助我们自动创建多个小圆点实例.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UILoadingView</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CAReplicatorLayer</span> *replicatorLayer;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UILoadingView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> setupSubviews];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</div><div class="line">    [<span class="keyword">super</span> awakeFromNib];</div><div class="line">    [<span class="keyword">self</span> setupSubviews];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setupSubviews &#123;</div><div class="line">	<span class="comment">//这里要补全代码 创建需要的视图 继续往下看</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="创建子视图">创建子视图</h3>
+<p>首先我们需要创建一个replicatorLayer的实例对象,然后向这个对象上添加一个圆点的,并错开角度.这里用到的知识点基本就是position和bounds啥关系.这里我不想啰嗦了大家自行google就行了.上代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)setupSubviews &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.replicatorLayer == <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.replicatorLayer = [<span class="built_in">CAReplicatorLayer</span> layer];</div><div class="line">        <span class="keyword">self</span>.replicatorLayer.backgroundColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</div><div class="line">        [<span class="keyword">self</span>.layer addSublayer:<span class="keyword">self</span>.replicatorLayer];</div><div class="line">        <span class="keyword">self</span>.replicatorLayer.bounds = <span class="keyword">self</span>.bounds;</div><div class="line">        <span class="keyword">self</span>.replicatorLayer.position = <span class="keyword">self</span>.center;</div><div class="line">        <span class="built_in">NSInteger</span> instanceCount = <span class="number">15</span>;  <span class="comment">//1</span></div><div class="line">        <span class="keyword">self</span>.replicatorLayer.instanceCount = instanceCount; <span class="comment">//</span></div><div class="line">        <span class="keyword">self</span>.replicatorLayer.instanceTransform = <span class="built_in">CATransform3DMakeRotation</span>(M_PI * <span class="number">2</span> / instanceCount, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>); <span class="comment">//2</span></div><div class="line">        <span class="keyword">self</span>.replicatorLayer.instanceDelay = <span class="number">1</span> / (instanceCount * <span class="number">1.0</span>); <span class="comment">//2</span></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    <span class="comment">//圆点</span></div><div class="line">    <span class="built_in">CALayer</span> *circle = [<span class="built_in">CALayer</span> layer];</div><div class="line">    circle.bounds = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>);</div><div class="line">    circle.cornerRadius = <span class="number">5</span>;</div><div class="line">    circle.position = <span class="built_in">CGPointZero</span>;</div><div class="line">    circle.backgroundColor = [<span class="keyword">self</span> randomColor].CGColor;</div><div class="line">    circle.name = kCircleName; <span class="comment">//3  设置layer的唯一标识 </span></div><div class="line">    [<span class="keyword">self</span>.replicatorLayer addSublayer:circle];</div><div class="line">    <span class="comment">//小技巧 刚开始的动画不是很自然，那是因为小圆点的初始比例是1,让小圆点的初始比例为0.01</span></div><div class="line">    circle.transform = <span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.01</span>, <span class="number">0.01</span>, <span class="number">0.01</span>); <span class="comment">//5</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<ol type="1">
+<li>1处的代码是让<code>CAReplicatorLayer</code>帮我们创建指定数量的实例对象(我们添加的原点就是它需要的也就是说它帮你创建了instanceCount个实例对象)</li>
+<li>2处代码 是设置错开的角度（2π 是 360°, 如果需要一圈创建指定数量的圆点 那么 instanceCount/2π 就是每个圆的角度,这里很重要 认真学习一下.）</li>
+<li>3处代码是给这个layer设置一个唯一标识 一会儿要通过方法找到它,如果 不这样做你就要搞个成员变量去存一下,如果用成员变量存储的话注意内存引用关系,我这里不推荐成员变量的搞法.</li>
+<li>4处代码主要是解决动画不自然,因为添加动画的圆点的初始比例是1,只有第一次开始的时候很愣.</li>
+</ol>
+</blockquote>
+<h4 id="找到圆点layer">找到圆点layer</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">CALayer</span> *)findCircleLayer &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">CALayer</span> *layer <span class="keyword">in</span> [<span class="keyword">self</span>.replicatorLayer sublayers]) &#123;</div><div class="line">        <span class="keyword">if</span> ([[layer name] isEqualToString:kCircleName]) &#123;</div><div class="line">            <span class="keyword">return</span> layer;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们用的时候调用这个方法 找一下我们添加上去的layer即可</p>
+<h4 id="实现对外暴露的方法">实现对外暴露的方法</h4>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)startLoading &#123;</div><div class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</div><div class="line">    <span class="keyword">if</span> (circleLayer &amp;&amp; ![[circleLayer animationKeys] containsObject:kScaleAnimationKey]) &#123;</div><div class="line">        <span class="comment">//加动画</span></div><div class="line">        <span class="built_in">CABasicAnimation</span> *scale = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</div><div class="line">        scale.fromValue = @(<span class="number">1</span>);</div><div class="line">        scale.toValue = @(<span class="number">0.1</span>);</div><div class="line">        scale.duration = <span class="number">1</span>;</div><div class="line">        scale.repeatCount = HUGE;</div><div class="line">        [circleLayer addAnimation:scale forKey:kScaleAnimationKey];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)stopLoading &#123;</div><div class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</div><div class="line">    <span class="keyword">if</span> (circleLayer &amp;&amp; [[circleLayer animationKeys] containsObject:kScaleAnimationKey]) &#123;</div><div class="line">        [circleLayer removeAnimationForKey:kScaleAnimationKey];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>kScaleAnimationKey 常量自行定义即可.</p>
+</blockquote>
+<h4 id="支持autolayout">支持AutoLayout</h4>
+<p>目前大家用的比较多的是<code>Masonry</code>,所以这里使用<code>Masonry</code>自动布局, 使用自动布局主要是是为了方便外部调用的时候外部视图使用了自动布局,那么内部就需要更新相关<code>layer</code>的<code>frame</code>.具体代码如下</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line">    [<span class="keyword">super</span> layoutSubviews];</div><div class="line">    </div><div class="line">    [<span class="built_in">CATransaction</span> begin];</div><div class="line">    [<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</div><div class="line">    <span class="keyword">self</span>.replicatorLayer.bounds = <span class="keyword">self</span>.bounds;</div><div class="line">    <span class="keyword">self</span>.replicatorLayer.position = <span class="built_in">CGPointMake</span>(<span class="built_in">CGRectGetWidth</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span>, <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span>);</div><div class="line">    </div><div class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</div><div class="line">    <span class="keyword">if</span> (circleLayer) &#123;</div><div class="line">        circleLayer.position = <span class="built_in">CGPointMake</span>(<span class="keyword">self</span>.frame.size.width / <span class="number">2</span>, <span class="keyword">self</span>.frame.size.height/<span class="number">2</span> - <span class="number">40</span>); <span class="comment">//距离圆心 40pt</span></div><div class="line">    &#125;</div><div class="line">    [<span class="built_in">CATransaction</span> commit];</div><div class="line">    [<span class="keyword">self</span>.replicatorLayer layoutSublayers];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里使用了 隐式动画和显式动画相关的知识</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">CATransaction</span> begin];</div><div class="line">[<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</div><div class="line"></div><div class="line"><span class="comment">//... 这里修改相关动画参数 </span></div><div class="line"></div><div class="line">[<span class="built_in">CATransaction</span> commit];</div></pre></td></tr></table></figure>
+<p>因为有可能layer在动画中,如果在动画中一般在这里需要加上<code>事务</code>修改这样才会更顺畅自然. 可以看到我上边的代码注释写的<code>40pt</code>的距离 实际上是圆心距离我们上边做的原点layer的的距离,大家可自行修改.</p>
+<h1 id="总结">总结</h1>
+<p>由于最近在研究一<a href="https://juejin.im/post/5c1bbec66fb9a049cb18b64c" target="_blank" rel="external">音频波形</a>的动画效果,想实现一个类似网易云音乐的黑胶唱片效果,可是用到的知识有点忘记,用此片文章来回顾复习一下动画的知识,也是为了很久没更新的博客更新一下,记录一下经常忘记的小技巧</p>
+<p>Demo我给在下面也把相关的文章参考 放在下方,有兴趣大家可以学习一下.</p>
+<p><a href="https://github.com/sunyazhou13/UILoadingView" target="_blank" rel="external">loading动画Demo</a></p>
+<p><a href="http://www.devtalking.com/articles/calayer-animation-replicator-animation/" target="_blank" rel="external">参考</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c85027ac27deef00d0e98c5a4f898d5dd2642146/20190726Loa
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="iOS动画" scheme="https://www.sunyazhou.com/tags/iOS%E5%8A%A8%E7%94%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7安装iptables防火墙</title>
+    <link href="https://www.sunyazhou.com/2019/05/28/20190528CentosIptables/"/>
+    <id>https://www.sunyazhou.com/2019/05/28/20190528CentosIptables/</id>
+    <published>2019-05-28T02:06:24.000Z</published>
+    <updated>2019-11-27T14:24:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>最近翻墙总不稳定 最后发现是防火墙配置问题今天 记录一下</p>
+<h2 id="配置">配置</h2>
+<p>CentOS7默认的防火墙不是iptables,而是firewalle.</p>
+<p>安装iptable iptable-service</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#先检查是否安装了iptables</span></div><div class="line">service iptables status</div><div class="line"><span class="comment">#安装iptables</span></div><div class="line">yum install -y iptables</div><div class="line"><span class="comment">#升级iptables</span></div><div class="line">yum update iptables </div><div class="line"><span class="comment">#安装iptables-services</span></div><div class="line">yum install iptables-services</div></pre></td></tr></table></figure>
+<h2 id="禁用停止自带的firewalld服务">禁用/停止自带的firewalld服务</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#停止firewalld服务</span></div><div class="line">systemctl stop firewalld</div><div class="line"><span class="comment">#禁用firewalld服务</span></div><div class="line">systemctl mask firewalld</div></pre></td></tr></table></figure>
+<h2 id="设置现有规则">设置现有规则</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#查看iptables现有规则</span></div><div class="line">iptables -L -n</div><div class="line"><span class="comment">#先允许所有,不然有可能会杯具</span></div><div class="line">iptables -P INPUT ACCEPT</div><div class="line"><span class="comment">#清空所有默认规则</span></div><div class="line">iptables -F</div><div class="line"><span class="comment">#清空所有自定义规则</span></div><div class="line">iptables -X</div><div class="line"><span class="comment">#所有计数器归0</span></div><div class="line">iptables -Z</div><div class="line"><span class="comment">#允许来自于lo接口的数据包(本地访问)</span></div><div class="line">iptables -A INPUT -i lo -j ACCEPT</div><div class="line"><span class="comment">#开放22端口</span></div><div class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</div><div class="line"><span class="comment">#开放21端口(FTP)</span></div><div class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</div><div class="line"><span class="comment">#开放80端口(HTTP)</span></div><div class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</div><div class="line"><span class="comment">#开放443端口(HTTPS)</span></div><div class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</div><div class="line"><span class="comment">#允许ping</span></div><div class="line">iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT</div><div class="line"><span class="comment">#允许接受本机请求之后的返回数据 RELATED,是为FTP设置的</span></div><div class="line">iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT</div><div class="line"><span class="comment">#其他入站一律丢弃</span></div><div class="line">iptables -P INPUT DROP</div><div class="line"><span class="comment">#所有出站一律绿灯</span></div><div class="line">iptables -P OUTPUT ACCEPT</div><div class="line"><span class="comment">#所有转发一律丢弃</span></div><div class="line">iptables -P FORWARD DROP</div></pre></td></tr></table></figure>
+<h2 id="其他规则设定">其他规则设定</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#如果要添加内网ip信任（接受其所有TCP请求）</span></div><div class="line">iptables -A INPUT -p tcp -s 45.96.174.68 -j ACCEPT</div><div class="line"><span class="comment">#过滤所有非以上规则的请求</span></div><div class="line">iptables -P INPUT DROP</div><div class="line"><span class="comment">#要封停一个IP，使用下面这条命令：</span></div><div class="line">iptables -I INPUT -s ***.***.***.*** -j DROP</div><div class="line"><span class="comment">#要解封一个IP，使用下面这条命令:</span></div><div class="line">iptables -D INPUT -s ***.***.***.*** -j DROP</div></pre></td></tr></table></figure>
+<h2 id="保存规则设定">保存规则设定</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#保存上述规则</span></div><div class="line">service iptables save</div></pre></td></tr></table></figure>
+<h2 id="开启iptables服务">开启iptables服务</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#注册iptables服务</span></div><div class="line"><span class="comment">#相当于以前的chkconfig iptables on</span></div><div class="line">systemctl <span class="built_in">enable</span> iptables.service</div><div class="line"><span class="comment">#开启服务</span></div><div class="line">systemctl start iptables.service</div><div class="line"><span class="comment">#查看状态</span></div><div class="line">systemctl status iptables.service</div></pre></td></tr></table></figure>
+<h2 id="解决vsftpd在iptables开启后无法使用被动模式的问题">解决vsftpd在iptables开启后,无法使用被动模式的问题</h2>
+<p>1.首先在/etc/sysconfig/iptables-config中修改或者添加以下内容</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="comment">#添加以下内容,注意顺序不能调换</span></div><div class="line">IPTABLES_MODULES=<span class="string">"ip_conntrack_ftp"</span></div><div class="line">IPTABLES_MODULES=<span class="string">"ip_nat_ftp"</span></div></pre></td></tr></table></figure>
+<p>2.重新设置iptables设置</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT</div></pre></td></tr></table></figure>
+<h3 id="以下为完整设置脚本">以下为完整设置脚本</h3>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">iptables -P INPUT ACCEPT</div><div class="line">iptables -F</div><div class="line">iptables -X</div><div class="line">iptables -Z</div><div class="line">iptables -A INPUT -i lo -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</div><div class="line">iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT</div><div class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</div><div class="line">iptables -P INPUT DROP</div><div class="line">iptables -P OUTPUT ACCEPT</div><div class="line">iptables -P FORWARD DROP</div><div class="line">service iptables save</div><div class="line">systemctl restart iptables.service</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;最近翻墙总不稳定 最后发现是防火墙配置问题今天 记录一下&lt;/p&gt;
+&lt;h2 id=&quot;配置&quot;&gt;配置&lt;/h2&gt;
+&lt;p&gt;CentOS7默认的防火墙不是iptables,而是firewalle.&lt;/p&gt;
+&lt;p&gt;安装iptable iptable
+    
+    </summary>
+    
+      <category term="linux" scheme="https://www.sunyazhou.com/categories/linux/"/>
+    
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="shell" scheme="https://www.sunyazhou.com/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Cleaner For Xcode编译</title>
+    <link href="https://www.sunyazhou.com/2019/05/17/20190517CleanerForXcodeBuild/"/>
+    <id>https://www.sunyazhou.com/2019/05/17/20190517CleanerForXcodeBuild/</id>
+    <published>2019-05-17T08:37:43.000Z</published>
+    <updated>2019-11-27T14:24:05.020Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18892e73bf7f0e113b0fe700afa62e43fe29272c/20190517CleanerForXcodeBuild/cleanerforxcode.png"></p>
+<h1 id="前言">前言</h1>
+<p>最近公司给配发一个最新版的macbook pro, 然后经过一顿折腾以后发现原来的软件 无法 迁移过来或者迁移起来比较费劲.于是就有了这篇文章.</p>
+<h2 id="背景">背景</h2>
+<p>由于mac磁盘空间有限,不得不借助一些第三方软件清理磁盘,尤其对于一个iOS开发者来说,固态硬盘128G的mac我只能说公司太抠了,就是能安装个Xcode干活,其余的我觉得我的256G的iPhone X足够应付了</p>
+<p>Xcode是占用mac空间最大的app,无论从内存、磁盘io、系统资源 全部都能排第一.因为平时都用真机运行所以Xcode自带的模拟器也排不上用场还占用了一些磁盘空间,几年前有封面的这个软件叫Cleaner For Xcode.</p>
+<p>是个开源的并且用React Native写的,我觉得很好用,不过这个开发者不够厚道,在mac的 app store 标价 $0.99。</p>
+<p>真的我说这个作者你真不够厚道你都open source 了为啥不打个 release包 广大 mac上的小伙伴用呢.于是 今天有点时间 我配上RN环境 誓死编译出一个app<strong>免费</strong>给大家使用.</p>
+<h2 id="过程">过程</h2>
+<p>话说我真不想装RN 太浪费磁盘空间 还浪费时间,迫不得已 经过一番折腾 遇到好多坑</p>
+<h4 id="填坑经历">填坑经历</h4>
+<p>0.45以上的RN 需要 boost 库,这个库 翻墙都很费劲 下载。。。Done.</p>
+<p>又要安装 yarn、node、npm、看门狗 watchdag。。。 Done.</p>
+<p>编辑错误, Xcode10.12.1 目前最新版 各种编译选项 静态分析 Done.</p>
+<p>大概过了 30分钟 终于 折腾 出一个app</p>
+<h1 id="总结">总结</h1>
+<p><a href="https://pan.baidu.com/s/1BClEjWLHS3htvKXoM11UjQ" target="_blank" rel="external">链接https://pan.baidu.com/s/1BClEjWLHS3htvKXoM11UjQ</a> 提取码: <code>uhns</code></p>
+<p>各位拿去不用客气</p>
+<p>其实就是了解删除 Xcode每个目录都存储什么缓存 没事删除一下 搞个好看的UI.作者 是有点蛋疼 这么简单的功能 一个shell或者objc几行代码搞定 非要大动干戈用RN. 然后还很不厚道的开源,这种开发者真是蛋疼.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18892e73bf7f0e113b0fe700afa62e43fe29272c/20190517Cle
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows装机教程</title>
+    <link href="https://www.sunyazhou.com/2019/04/24/20190424WindowsResources/"/>
+    <id>https://www.sunyazhou.com/2019/04/24/20190424WindowsResources/</id>
+    <published>2019-04-24T03:26:34.000Z</published>
+    <updated>2019-11-27T14:24:05.020Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具</p>
+<h3 id="pe安装系统教程">PE安装系统教程</h3>
+<p>PE工具箱制作</p>
+<p>主要步骤：</p>
+<ul>
+<li>第一步:制作前的软件、硬件准备：8G及以上U盘一个都可以， 一台可正常可上网的电脑</li>
+<li>第二步:用电脑店U盘启动制作工具制作启动U盘</li>
+<li>第三步:下载您需要的系统文件并复制到U盘中</li>
+<li>第四步:进入BIOS设置U盘启动顺序</li>
+<li>第五步:在进入WIN10 PE模式分区安装系统即可</li>
+<li>第六步:系统激活问题</li>
+<li>第七步:安装驱动问题</li>
+</ul>
+<h2 id="制作工具箱教程">制作工具箱教程</h2>
+<p>首先先下载一个制作启动工具的软件：</p>
+<p>下载地址:链接：<a href="http://www.usbrun.com/" target="_blank" rel="external">http://www.usbrun.com/</a></p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkgqy53nj20qn0d7gu0.jpg"></p>
+<p>下载精简版本好后 先把杀毒软件关掉 ！！ 双击安装一下此软件到电脑上 ，安装好软件后打开 ，如果软件提示更新，可以忽略，不需要更新！！</p>
+<p>把U盘插上 &gt;【注：U盘会格式化，有资料先拷贝出来保存避免被格式掉了】</p>
+<p>要是看不到设备的话， 把U盘重新插一下</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkgqtg3cj20km0efwih.jpg"></p>
+<p>点一键制作然后等制作完成就OK！！ 制作完成之后 点一下模拟启动看下U盘能不能启动，能的话就OK。关掉即可</p>
+<h2 id="下载系统步骤">下载系统步骤</h2>
+<p>下面选1个需要的系统版本下载 (U盘容量够大两个系统都可以下载使用 此PE支持原版系统安装)</p>
+<p>WIN7 64位（B360B450锐龙二代CPU主板不支持） 系统下载连接：<a href="http://www.jsgho.net/win7/jsy/35178.html" target="_blank" rel="external">链接</a>(技术员纯净版)</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkknutp5j20le07ndhs.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkknlhboj20nr0543yh.jpg"></p>
+<h2 id="win710-64位">WIN7~10 64位</h2>
+<p>专业版 下载地址：<a href="http://msdn.itellyou.cn/" target="_blank" rel="external">http://msdn.itellyou.cn/</a></p>
+<p>可复制此磁力链接使用迅雷新建下载：</p>
+<p>ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dvd_07b164ed.iso|5229189120|5CC3C32DB198D647DCED4B0EB96B8547|/</p>
+<p>下载参考：</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkmns9ewj20w60n5djh.jpg"></p>
+<p>下载好的系统直接拷贝到您刚刚制作好的的U盘里，随便放什么位置都可以。</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkmnyn49j20q10hztgf.jpg"></p>
+<h2 id="设置u盘启动步骤">设置U盘启动步骤</h2>
+<p>制作好的U盘插上您需要装系统的电脑上，以下主板U盘快捷启动按键 华硕启动快捷键：F8<br>
+技嘉、微星、七彩虹、昂达、华擎、映泰 点击：F11<br>
+品牌机：惠普、惠普、戴尔、联想、神州 点击：F12</p>
+<p>以下华硕主板快捷启动菜单选择进入U盘PE参考图，这是一个开机启动设备选项，我们选择刚刚做好的U盘 ADATA USB Flash Drlve(14800MB)按回车即可</p>
+<blockquote>
+<p>（注意：选择不带UEFI的选项）</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkogn1kzj20pc0ige62.jpg"></p>
+<p>出现U盘启动界面 如下图选择 启动WIN10 PE X 64 ，别的不用去选择。</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkogdvc2j20kg0feaot.jpg"></p>
+<h2 id="分区安装系统步骤">分区安装系统步骤</h2>
+<p>进去PE之后 我们就要对新硬盘 进行一个分区操作了</p>
+<blockquote>
+<p>【如果是老硬盘，有分区的 那可以省略这一步 直接按照下面装系统】</p>
+</blockquote>
+<p>这里采用的是一个三星120G的固态硬盘，<strong>一般为了发回固态最大性能，都要在主板预先开启AHCI模式和分区的时候选择4K对齐</strong>，另外3.0的数据线和主板必须支持3.0的接口。</p>
+<p>AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是IDE的预先设置好，华硕技嘉B250等以上主板 默认都是AHCI模式不需要更改</p>
+<p>就要首先打开DG分区工具箱进行分区处理 ，如下图</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkql68yej2087095n03.jpg"></p>
+<p>点击分区工具 之后 会看到您的硬盘 这时候 可以选择您的新硬盘之后 点击上面的快速分区 如下图</p>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkqlcps7j20sk0le0vb.jpg"></p>
+<p>在新的页面中 你可以选择分几个区 多少容量 都可以自行填写 别的不需要去改变 ，另外右下角 就是4K对齐，只许勾选即可，如下图</p>
+<blockquote>
+<p>注：固态硬盘需要选择4K，机械硬盘不用现在 ，选择了会导致进不了系统</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkqlfbuwj20sg0lcdix.jpg"></p>
+<p>分区好后关闭分区接口窗口看下一步操作</p>
+<h2 id="安装系统镜像步骤">安装系统镜像步骤</h2>
+<p>打开桌面上的电脑店一键还原，如下图</p>
+<ul>
+<li>①选择系统镜像文件，等待自动识别和挂载后再次选择系统版本。</li>
+<li>②选择需要安装系统的分区。[可以根据分区容量格式信息来判断分区]</li>
+<li>③点击执行按钮等待系统安装完成后重启拔掉U盘。</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkteiu6oj20sh0lcndo.jpg"><br>
+<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdvyxqj20sg0lcjz6.jpg"><br>
+<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdt7xvj20sg0ldqaq.jpg"><br>
+<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdmj5lj20s70lcwmd.jpg"><br>
+<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktddlauj20se0lc0wb.jpg"><br>
+<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdxzdgj20sg0ldgtn.jpg"></p>
+<blockquote>
+<p>PS：等进度条走完了 提示重启的时候一定要拔掉U盘 再重启哦！！之后就可以正常进入安装系统过程了，等待大概5-10分钟左右装好重启即可正常使用了</p>
+</blockquote>
+<p>免责条款 &gt; (本作品仅限网友交流安装系统经验，或可作临时安装测试PC硬件之用，请在安装后24小时内删除，若需要长期使用，请购买正版系统及软件。)</p>
+<h2 id="激活系统步骤">激活系统步骤</h2>
+<p>激活工具箱下载连接： <a href="https://pan.baidu.com/s/1i47JsOl" target="_blank" rel="external">win7~win10激活工具</a></p>
+<h2 id="华硕主板网卡驱动安装步骤">华硕主板网卡驱动安装步骤</h2>
+<p>教程连接：<a href="http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438" target="_blank" rel="external">http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438</a></p>
+<p>建议上网其他驱动问题下载：<a href="http://www.drivergenius.com/" target="_blank" rel="external">驱动精灵 标准版</a></p>
+<h1 id="总结">总结</h1>
+<p>每次装机总忘记一些流程 这里记录下来</p>
+<p><a href="https://note.youdao.com/ynoteshare1/index.html?id=e0f8c30393c4f069555d286020f9d394&amp;type=note" target="_blank" rel="external">参考 PE安装系统教程</a><br>
+<a href="http://05aebac1.wiz03.com/share/s/05HHH13zK4EY2bE37Q00RO3H1CvO101754vQ2bNyFE2nhALV?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="external">U盘刻录安装原版系统教程</a><br>
+<a href="http://msdn.itellyou.cn/" target="_blank" rel="external">I tell you神奇的镜像下载网站 绝对纯洁</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具&lt;/p&gt;
+&lt;h3 id=&quot;pe安装系统教程&quot;&gt;PE安装系统教程&lt;/h3&gt;
+&lt;p&gt;PE工具箱制作&lt;/p&gt;
+&lt;p&gt;主要步骤：&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="windows装机" scheme="https://www.sunyazhou.com/categories/windows%E8%A3%85%E6%9C%BA/"/>
+    
+    
+      <category term="win7" scheme="https://www.sunyazhou.com/tags/win7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AVRoutePickerView</title>
+    <link href="https://www.sunyazhou.com/2019/04/17/20190417AVRoutePickerView/"/>
+    <id>https://www.sunyazhou.com/2019/04/17/20190417AVRoutePickerView/</id>
+    <published>2019-04-17T07:19:52.000Z</published>
+    <updated>2019-11-27T14:24:05.020Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b0103699818f9d0cf124236b1693aca4fae22bad/20190417AVRoutePickerView/cover_album.jpg"></p>
+<h1 id="前言">前言</h1>
+<p>最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个<code>AVRoutePickerView</code>的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/13eb2699ea561fa3020d4611f9464c4f02aa0c96/20190417AVRoutePickerView/RouteChange2.gif"></p>
+<p>这里网易云音乐中有实践的例子</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/13eb2699ea561fa3020d4611f9464c4f02aa0c96/20190417AVRoutePickerView/RouteChange1.gif"></p>
+<p>这个控件主要用于AirPlay投屏 和音频的线路切换</p>
+<p>那么我今天就跟大家一起学习一下这个新的控件</p>
+<h2 id="代码实现">代码实现</h2>
+<p>导入<code>#import &lt;AVKit/AVKit.h&gt;</code></p>
+<p>剩下的就是创建实例调用方法</p>
+<p>这里用ViewController做示例</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()  &lt;<span class="title">AVRoutePickerViewDelegate</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">        <span class="built_in">AVRoutePickerView</span> *routerPickerView = [[<span class="built_in">AVRoutePickerView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>)];</div><div class="line">        routerPickerView.activeTintColor = [<span class="built_in">UIColor</span> cyanColor];</div><div class="line">        routerPickerView.delegate = <span class="keyword">self</span>;</div><div class="line">        [<span class="keyword">self</span>.view addSubview:routerPickerView];</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// Fallback on earlier versions</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//AirPlay界面弹出时回调</span></div><div class="line">- (<span class="keyword">void</span>)routePickerViewWillBeginPresentingRoutes:(<span class="built_in">AVRoutePickerView</span> *)routePickerView API_AVAILABLE(ios(<span class="number">11.0</span>))&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Airplay视图弹出"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">//AirPlay界面结束时回调</span></div><div class="line">- (<span class="keyword">void</span>)routePickerViewDidEndPresentingRoutes:(<span class="built_in">AVRoutePickerView</span> *)routePickerView API_AVAILABLE(ios(<span class="number">11.0</span>))&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Airplay视图弹回"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>添加完之后运行如下</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/526b8265245ebd6cd4c51c591720868eff8d2d60/20190417AVRoutePickerView/routechange3.gif"></p>
+<p><code>AVRoutePickerView</code>这个View提供的API 就两个颜色值剩下的啥都没有,啥都改不了,那怎么才能实现网易云音乐那样自定义图标呢？</p>
+<h5 id="添加自定义视图">添加自定义视图</h5>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIImageView</span> *imageView = [[<span class="built_in">UIImageView</span> alloc] initWithFrame:routerPickerView.bounds];</div><div class="line">        imageView.image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"logo2"</span>];</div><div class="line">        [routerPickerView addSubview:imageView];</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/526b8265245ebd6cd4c51c591720868eff8d2d60/20190417AVRoutePickerView/routechange4.gif"></p>
+<p>自己加个图标即可.</p>
+<h1 id="总结">总结</h1>
+<p>此控件只适用于iOS11以后,使用的时候 记得加可用性检测API</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</div><div class="line">	<span class="comment">//这里写创建视图代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个控件在多数场景上提升了用户体验,比如音视频类app经常频繁接线控或者蓝牙耳机,那么对这个有要求的可以试试.感谢支持!</p>
+<p><a href="https://github.com/sunyazhou13/AVRoutePickerViewDemo" target="_blank" rel="external">demo点击这里下载</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b0103699818f9d0cf124236b1693aca4fae22bad/20190417AVR
+    
+    </summary>
+    
+      <category term="AVKit" scheme="https://www.sunyazhou.com/categories/AVKit/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>iOS抖音滚动字幕</title>
     <link href="https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/"/>
     <id>https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/</id>
     <published>2019-03-21T01:50:20.000Z</published>
-    <updated>2019-03-25T03:25:18.895Z</updated>
+    <updated>2019-03-27T13:25:06.834Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIScrollTextDemo/CALayer_proSwift_ru_hsuie-2.png"></p>
 <h1 id="前言">前言</h1>
@@ -147,7 +646,7 @@
     <link href="https://www.sunyazhou.com/2019/02/15/20190215Tools/"/>
     <id>https://www.sunyazhou.com/2019/02/15/20190215Tools/</id>
     <published>2019-02-15T02:40:15.000Z</published>
-    <updated>2019-03-11T09:12:28.367Z</updated>
+    <updated>2019-02-16T05:59:28.804Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>新年第一篇 把自己用的比较好的工具都记录下来</p>
@@ -237,7 +736,7 @@
     <link href="https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/"/>
     <id>https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/</id>
     <published>2018-12-28T15:04:41.000Z</published>
-    <updated>2019-03-06T01:47:21.856Z</updated>
+    <updated>2019-03-09T04:39:33.600Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e263dd6fbfaf3cb12eee6ebcbfff3519dc5f9eb/20181231FinalSummary/1500x500.JPEG"></p>
 <h1 id="前言">前言</h1>
@@ -544,7 +1043,7 @@
     <link href="https://www.sunyazhou.com/2018/12/21/20181221AwemeTransition/"/>
     <id>https://www.sunyazhou.com/2018/12/21/20181221AwemeTransition/</id>
     <published>2018-12-21T02:12:07.000Z</published>
-    <updated>2018-12-21T02:13:54.273Z</updated>
+    <updated>2018-12-24T14:05:50.935Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图</p>
@@ -651,7 +1150,7 @@
     <link href="https://www.sunyazhou.com/2018/12/06/20181206Detecting-pan-gesture-direction/"/>
     <id>https://www.sunyazhou.com/2018/12/06/20181206Detecting-pan-gesture-direction/</id>
     <published>2018-12-06T05:59:46.000Z</published>
-    <updated>2018-12-06T06:08:33.730Z</updated>
+    <updated>2018-12-18T16:05:06.393Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向</p>
@@ -681,7 +1180,7 @@
     <link href="https://www.sunyazhou.com/2018/11/27/20181127LikeAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/27/20181127LikeAnimation/</id>
     <published>2018-11-27T03:16:14.000Z</published>
-    <updated>2018-11-28T02:52:44.709Z</updated>
+    <updated>2018-12-18T16:05:06.393Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图</p>
@@ -785,7 +1284,7 @@
     <link href="https://www.sunyazhou.com/2018/11/14/20181114PlayLoadingAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/14/20181114PlayLoadingAnimation/</id>
     <published>2018-11-14T06:14:39.000Z</published>
-    <updated>2018-11-28T03:04:07.928Z</updated>
+    <updated>2018-12-18T16:05:06.392Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画</p>
@@ -837,7 +1336,7 @@
     <link href="https://www.sunyazhou.com/2018/11/13/20181113AllKeypathOfCALayer/"/>
     <id>https://www.sunyazhou.com/2018/11/13/20181113AllKeypathOfCALayer/</id>
     <published>2018-11-13T03:46:45.000Z</published>
-    <updated>2018-11-13T06:41:08.676Z</updated>
+    <updated>2018-11-17T05:03:35.107Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画</p>
@@ -1104,7 +1603,7 @@
     <link href="https://www.sunyazhou.com/2018/11/08/20181108AwemeAlbumAnimation/"/>
     <id>https://www.sunyazhou.com/2018/11/08/20181108AwemeAlbumAnimation/</id>
     <published>2018-11-08T03:52:06.000Z</published>
-    <updated>2018-11-28T03:04:02.096Z</updated>
+    <updated>2018-12-18T16:05:06.391Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画</p>
@@ -1243,7 +1742,7 @@
     <link href="https://www.sunyazhou.com/2018/11/06/20181106AwemeTopBottomScrollDemo/"/>
     <id>https://www.sunyazhou.com/2018/11/06/20181106AwemeTopBottomScrollDemo/</id>
     <published>2018-11-06T09:55:09.000Z</published>
-    <updated>2018-11-28T03:05:35.538Z</updated>
+    <updated>2018-12-18T16:05:06.391Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,</p>
@@ -1331,7 +1830,7 @@
     <link href="https://www.sunyazhou.com/2018/10/29/20181029LabelDanceAnimation/"/>
     <id>https://www.sunyazhou.com/2018/10/29/20181029LabelDanceAnimation/</id>
     <published>2018-10-29T10:13:15.000Z</published>
-    <updated>2018-10-30T01:58:14.315Z</updated>
+    <updated>2018-11-11T06:43:38.687Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画</p>
@@ -1379,7 +1878,7 @@
     <link href="https://www.sunyazhou.com/2018/09/29/20180929BreathAnimation/"/>
     <id>https://www.sunyazhou.com/2018/09/29/20180929BreathAnimation/</id>
     <published>2018-09-29T02:09:30.000Z</published>
-    <updated>2018-10-29T10:30:16.707Z</updated>
+    <updated>2018-11-11T06:43:38.687Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.</p>
@@ -1443,640 +1942,6 @@
 &lt;p&gt;快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好.&lt;/p&gt;
 &lt;p&gt;上图&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://raw.githubuserconte
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS扩大UIButton的点击的响应范围</title>
-    <link href="https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/"/>
-    <id>https://www.sunyazhou.com/2018/09/20/20180920IncreasingTapAreaOfButton/</id>
-    <published>2018-09-20T01:40:06.000Z</published>
-    <updated>2018-09-20T02:13:00.934Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>开发过程中经常遇到<code>UIButton</code>点击区域太小 又不想 改动按钮的大小.</p>
-<p>今天的文章和大家分享一下解决这种问题的代码</p>
-<h1 id="实现思路">实现思路</h1>
-<ul>
-<li>子类话UIButton 复写 它的<code>hitTest:</code>方法</li>
-<li>子类话UIButton 复写 point:inside:withEvent: 方法</li>
-</ul>
-<h2 id="第一种方式">第一种方式</h2>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span><span class="params">(<span class="number">_</span> point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">	<span class="keyword">let</span> biggerButtonFrame = theButton.frame.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>) <span class="comment">// 1	</span></div><div class="line">	<span class="keyword">if</span> biggerButtonFrame.<span class="built_in">contains</span>(point) &#123; <span class="comment">// 2</span></div><div class="line">		<span class="keyword">return</span> theButton <span class="comment">// 3</span></div><div class="line">	&#125;		</div><div class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.hitTest(point, with: event) <span class="comment">// 4</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li><ol type="1">
-<li>让theButton的 x 扩大 30, y 扩大 30 (正数为缩小 负数为放大. 然后宽高 分别是2 * 30和 2 * 30)</li>
-</ol></li>
-<li><ol start="2" type="1">
-<li>判断点击的位置是否在放大完的frame内.</li>
-</ol></li>
-<li><ol start="3" type="1">
-<li>如果是 就返回button</li>
-</ol></li>
-<li><ol start="4" type="1">
-<li>不是的话让事件继续传递</li>
-</ol></li>
-</ul>
-<blockquote>
-<p>注意:<em>这里没判断 theButton.alpha == 0 和 theButton.userInterface.. == YES 还有它是否可见之类的,请自行判断</em></p>
-</blockquote>
-<h2 id="第二种方式">第二种方式</h2>
-<p>复写UIView的point:方法</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">point</span><span class="params">(inside point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">	<span class="keyword">let</span> biggerFrame = bounds.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> biggerFrame.<span class="built_in">contains</span>(point)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>OC的版本是这样</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">	<span class="comment">//这里写上 </span></div><div class="line">	</div><div class="line">	<span class="built_in">CGRectInset</span>(&lt;<span class="meta">#CGRect rect#&gt;, <span class="meta-string">&lt;#CGFloat dx#&gt;</span>, <span class="meta-string">&lt;#CGFloat dy#&gt;</span>)</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>但是 第二种方式 其实 是 hitTest:方法调用之前UIView的判断,它判断当前点击的point是否在这个UIView上.</p>
-<p>不过 还是推荐第一种方式</p>
-<h2 id="核心代码">核心代码</h2>
-<p>其实 最核心的代码是</p>
-<p>CGRectInset(&lt;#CGRect rect#&gt;, &lt;#CGFloat dx#&gt;, &lt;#CGFloat dy#&gt;)</p>
-<blockquote>
-<p>CGRect CGRectOffset(CGRect rect, CGFloat dx, CGFloat dy)是以rect为中心，根据dx和dy来实现缩小。</p>
-</blockquote>
-<p>如果dx 和 dy是负数 则放大 ,正数则缩小</p>
-<p>但是大家可能很疑惑 那宽度和高度怎么 缩小放大</p>
-<p>首先: 我们明确 这个API的含义 只要传入正数 它就缩放 那么 宽高也会适当前传入的dx和dy来决定 缩放比</p>
-<p>因为是中心点缩放 所以宽高 <strong>要 X 2</strong>,因为有两侧嘛,左侧缩小30右侧也需要缩小30,上部和底部是一样的.</p>
-<p>大家可自行查阅google看下</p>
-<p><a href="https://rolandleth.com/increasing-the-tap-area-of-a-uibutton" target="_blank" rel="external">参考Increasing the tap area of a UIButton</a><br>
-<a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="external">参考 iOS触摸事件全家桶</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;开发过程中经常遇到&lt;code&gt;UIButton&lt;/code&gt;点击区域太小 又不想 改动按钮的大小.&lt;/p&gt;
-&lt;p&gt;今天的文章和大家分享一下解决这种问题的代码&lt;/p&gt;
-&lt;h1 id=&quot;实现思路&quot;&gt;实现思路&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;子
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS键盘动画细节</title>
-    <link href="https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/"/>
-    <id>https://www.sunyazhou.com/2018/09/18/20180918KeyboardAnimation/</id>
-    <published>2018-09-18T01:49:58.000Z</published>
-    <updated>2018-09-18T03:48:25.329Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918KeyboardAnimation/keyboard1.png"></p>
-<h1 id="前言">前言</h1>
-<p>很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程</p>
-<p>上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/23780124887263a4f9a87f094f061bbd564129c3/20180918KeyboardAnimation/keyboardAnimation.gif"></p>
-<h1 id="动画细节代码">动画细节代码</h1>
-<p>细节核心主要是通知中的一些key</p>
-<ul>
-<li>动画时长</li>
-<li>动画的出现方式</li>
-</ul>
-<p>...</p>
-<p>下面的通知是接收 键盘将要出现的通知<code>UIKeyboardWillShowNotification</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></div><div class="line">                                             selector:<span class="keyword">@selector</span>(didReceiveKeyboardShowNotification:)</div><div class="line">                                                 name:<span class="built_in">UIKeyboardWillShowNotification</span></div><div class="line">                                               object:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<p>然后是实现的核心代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didReceiveKeyboardShowNotification:(<span class="built_in">NSNotification</span> *)noti &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *userInfo = noti.userInfo;</div><div class="line">    <span class="built_in">NSTimeInterval</span> animationDuration;</div><div class="line">    <span class="built_in">UIViewAnimationCurve</span> animationCurve;</div><div class="line">    <span class="built_in">CGRect</span> keyboardFrame;</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] getValue:&amp;animationCurve];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] getValue:&amp;animationDuration];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] getValue:&amp;keyboardFrame];</div><div class="line">    </div><div class="line">    <span class="built_in">UIViewAnimationOptions</span> animationOptions = animationCurve &lt;&lt; <span class="number">16</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.bottomConstrains.offset = -<span class="built_in">CGRectGetHeight</span>(keyboardFrame);</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:animationDuration delay:<span class="number">0.</span> options:animationOptions animations:^&#123;</div><div class="line">        [<span class="keyword">self</span>.view setNeedsUpdateConstraints];</div><div class="line">        [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>self.bottomConstrains.offset = -CGRectGetHeight(keyboardFrame); 是我写的约束 详细请参考demo</p>
-</blockquote>
-<p>键盘消失也是一样的 <code>UIKeyboardWillHideNotification</code> 接收这个key</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span></div><div class="line">                                             selector:<span class="keyword">@selector</span>(didReceiveKeyboardHideNotification:)</div><div class="line">                                                 name:<span class="built_in">UIKeyboardWillHideNotification</span></div><div class="line">                                               object:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<p>消失的时候 把约束偏移量设置<code>0</code>即可</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didReceiveKeyboardHideNotification:(<span class="built_in">NSNotification</span> *)noti &#123;</div><div class="line">    <span class="built_in">NSDictionary</span> *userInfo = noti.userInfo;</div><div class="line">    <span class="built_in">NSTimeInterval</span> animationDuration;</div><div class="line">    <span class="built_in">UIViewAnimationCurve</span> animationCurve;</div><div class="line">    <span class="built_in">CGRect</span> keyboardFrame;</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationCurveUserInfoKey</span>] getValue:&amp;animationCurve];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardAnimationDurationUserInfoKey</span>] getValue:&amp;animationDuration];</div><div class="line">    [[userInfo objectForKey:<span class="built_in">UIKeyboardFrameEndUserInfoKey</span>] getValue:&amp;keyboardFrame];</div><div class="line">    </div><div class="line">    <span class="built_in">UIViewAnimationOptions</span> animationOptions = animationCurve &lt;&lt; <span class="number">16</span>;</div><div class="line">    <span class="keyword">self</span>.bottomConstrains.offset = <span class="number">0</span>;</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:animationDuration delay:<span class="number">0.</span> options:animationOptions animations:^&#123;</div><div class="line">        [<span class="keyword">self</span>.view setNeedsUpdateConstraints];</div><div class="line">        [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>self.bottomConstrains.offset = 0; //设置偏移量会原来位置</p>
-</blockquote>
-<p>利用Masonry做的动画</p>
-<p>最后 别忘记移除通知</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="总结">总结</h1>
-<p>键盘弹出这个微小的细节 很容易被大家忽视,写这篇文章是为了记录知识和技巧,希望各位多多指教</p>
-<p><a href="https://github.com/sunyazhou13/KeyboardAnimation" target="_blank" rel="external">Demo点击这里下载</a></p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3c30ff9ede53ff83c4dd1d31ec6e75b27bb5d3f3/20180918Key
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>船与灯塔</title>
-    <link href="https://www.sunyazhou.com/2018/09/02/20180902Beacon/"/>
-    <id>https://www.sunyazhou.com/2018/09/02/20180902Beacon/</id>
-    <published>2018-09-02T04:12:51.000Z</published>
-    <updated>2018-09-18T01:46:43.660Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180902Beacon/beacon.jpg"></p>
-<p>荷兰🇳🇱被称为"海上马车夫"，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。</p>
-<h1 id="船">船🚢</h1>
-<p>它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，造这艘船的主人希望能靠这只船养家糊口，但又舍不得花更多的钱买好的木料来制造它。</p>
-<h1 id="灯塔">灯塔</h1>
-<p>这是一座集成很多高新科技的灯塔，塔基可以在海上漂浮，自动平衡系统让他在海浪的动荡中稳如泰山，灯塔的父母距离这座新的灯塔不远，形成海上灯塔群，发出很强的激光束，指明航线方向，这坐新的灯塔还能发出加密的无线电信号，这座灯塔通过自身的太阳能外壳和风力发电机提供电力，还能通过坐落于港口海岸线的父母灯塔群无线传输电力给自己充电。只要她觉得电力不足，她就可以移动回父母灯塔群的无线充电有效范围补充能量，在众多灯塔群中，有两座地面灯塔为她提供稳定的电力输送。这座灯塔很幸福。但这座灯塔喜欢游弋在距离父母灯塔不远的浅海区，距离灯塔不超过几海里的范围内。</p>
-<h1 id="邂逅那只船">邂逅那只船</h1>
-<p>同在浅海区，有一天这只船在海上的一次风急浪高的夜晚迷失了方向，那只移动的灯塔发现了它，并回应了灯光交换信令，渐渐地，这艘船能识别这个灯塔发出的灯光束，船渐渐地喜欢上了这座移动的灯塔，这座灯塔也很钦佩这艘船，他能在如此大的风浪中屹立不沉，可是船自己深深地知道，自己是载货船，只有通过拉更多的货才能让主人把自己改造成更大的舰船，灯塔看出了船眼中的迷茫，说:"你可以留在浅海区，拉着普通的货物，我的灯塔父母那里是一座港口，他们也许有些小的货物可以给你"，船心里也很想留在这座灯塔附近的港口做一些普通的货物运输，可是船出身寒微，怕被灯塔父母看不起，加之这座港口的贸易很不透明，只有有关系的船才能得到好的货物，船的自尊心受到了极大打击，决心一定要成为一艘旗舰，才有资格去这座港口拉重达几十吨的集装箱，去赢得灯塔父母和灯塔的尊重。就这样那天的风浪过后，船离开了这座灯塔，去了很多像这只小船组成的小船群队。</p>
-<h1 id="海上漂泊">海上漂泊</h1>
-<p>在大海上运送完全超载的货物，过着漂流的生活，举目无亲，背井离乡，由于每次都拉超载的货物，船每次都打肿脸充胖子的运自己运不动的货物，每次触礁都撞得遍体鳞伤，渐渐地船学会了自我修复和疗伤，就这样船的主人赚了第一桶金，打算改造升级这艘木船，把他变成一艘铁甲舰船，去掉了双桨，还用发动机提供动力，这艘船的灯光系统不知为何，对那座灯塔发出的光有一种特殊的能力，识别率能达到200%.可是对其它灯塔的光束识别基本50%都达不到，船主人对这套灯光系统简直食之无用弃之可惜。可是船自己满足，知道灯光识别系统还在我就不会失去方向，我就能运送更重的货物，我就能看到那座灯塔，那座悬浮的灯塔。</p>
-<p>刚货运不久，船给灯塔发出了无线电信号，请求灯塔能否和她一样来这座大的港口指名方向，船内心是没有底的，不知道新的港口是好是坏，只是这里的贸易很发达可以积累更多资本，灯塔发来反馈信号，表达了灯塔不想来到新港口的意愿，船很伤心，也很无助，伤心的是自己太弱小，无助的是就算灯塔来了船也给不了灯塔需要的一切电力和希望。不过船内心没有放弃，只要努力才能得到那些需要的一切。</p>
-<p>第一次运送货物回到港口，船身已经从木板换成了轻型铁甲，可以运载不超过10吨的货物，当他第一次回到港口时，灯光系统识别那座灯塔发出的光束很精准，甚至光的色彩都可以模拟变换，用船的心里话说，我甚至可以识别那座灯塔光闪烁快慢，闪烁次数分别代表什么意思，以及最重要的是我能解密出她发出的加密信号。那座灯塔也很高兴，那艘很不一样的船回应她的速度很快很精准，也许这座灯塔的光线专为那艘船而发。</p>
-<p>船停靠在港口一周时间，然后又要再一次的出海航行，船这一周想了很多，"我纵然能运重10吨的货物，可是马达还达不到指定的节数，速度不够快"(节 是指船只航行速度的单位，类似汽车的马力是多少匹)，就这样道别了灯塔又开始扬帆起航。</p>
-<p>在海上航行的时候，船一直思考一个问题，我为什么要放弃这些美好，是因为过上更好的生活吗？是为了把自身打造成旗舰去拉货吗？还是因为贫穷我需要自我救赎的脱贫致富？</p>
-<p>在航行中，船会间隔一定时间给灯塔发送无线电波，从而证明他的存在。</p>
-<p>在航行的几年中，灯塔很孤独，船也一样孤独，突然有一天船从其它船那里得知灯塔旁边出现了一座新的灯塔，船伤心了，自己没有机会去灯塔父母那里赢得他们的尊重了，于是船卸载了旧的灯光识别系统，卸载了无线电台收发器。直到一段时间以后船换上了新的无线电台和灯光系统，从光谱中删除了那座移动的灯塔的全部信道和交换秘钥，从此失去了一切和那座灯塔的联系。</p>
-<p>每次运送货物的周期大概需要在海上航行一年，每年船都会回到浅海区的港口一次看望那座灯塔，远远的望着她，但那座灯塔心里了解，那艘船一年一定有一次会回到这里，只是它不发出光而已。</p>
-<p>突然有一天船听说新建在悬浮灯塔旁边的新灯塔因为施工时间紧任务重导致质量不合格而坍塌，船为那座悬浮的灯塔深深地捏了一把汗，她没事吧？我是不是应该在这个时候跟她说句话，安慰一下她，可是我的无线电系统中已经没有了她的信道和交换秘钥。我比她都伤心，在她需要我的光束的时候我居然发不出来任何她需要的光束，让我唯一能有欣慰的是，她还有父母灯塔为她提供地面电力输送，保障她没有被坍塌的风险。</p>
-<p>就这样时光过了4年2个月，在这四年中船在每个航行的夜晚时不时的做同一个梦，梦到那座移动的灯塔在发出寻找他的光束，他回应了这灯塔以同样的光束和无线电信号，互相拥抱着哭泣。每次梦里醒来，船的眼角里含着眼泪（当我写到这里时眼角里已经流出了眼泪），每次醒来船都会发出一次信号，记录下时间，就这样4年中梦到了灯塔15次，每次都是很伤心，船也许永远也想不明白自己到底做错了什么，怎么永远忘不掉那永不磨灭的电波，怎么永远也没有机会赢得属于自己的尊重，船的四年中不断完善自己的缺陷，把自己从轻型铁甲舰升级成了巡洋舰，但船的内心依然没有丝毫的高兴，即便自己能拉千吨货物，万吨排量，几千节速度，成为战列舰又能怎样，能换回那座悬浮的灯塔吗？不能，因为船很失败，一辈子也许都是载集装箱的命运，运更多的货物，船沉默了，船很想击沉自己永远沉没。</p>
-<p>船试图启用新的灯光系统尝试发出那座灯塔需要的光束和新的无线电台接收系统，从其它友船那里找到这座灯塔信号频道和光谱。不久收到了悬浮灯塔的应答，船内心很矛盾，很高兴，很心酸，很无助，得知那座新灯塔倒塌后海洋总署联合地面港口以及父母灯塔，为悬浮灯塔建造了一座新的灯塔，并且用钢缆固定塔基，让她不在孤独，不在风浪的洗礼中摇摆不定。</p>
-<p>灯塔也许不知道船的灯光系统中只换了灯芯和灯罩还有线路，灯光的芯片依然还是原来的芯片，只是现在仅仅能识别90%的那座灯塔光束。船的内心是替灯塔高兴的，她终于有了她想要的一切。但船也许很伤心，他的那座灯塔已经倒塌了，再也不能在海中为船指明方向了，船也不得不找下一座灯塔...</p>
-<h1 id="结尾">结尾</h1>
-<p>这艘船叫"良工"号。</p>
-<p>真人故事改编，版权所有翻版必究。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180902Beacon/beacon.jpg
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="文学" scheme="https://www.sunyazhou.com/tags/%E6%96%87%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS中CPU线程调试高级技巧</title>
-    <link href="https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/"/>
-    <id>https://www.sunyazhou.com/2018/08/17/20180817CPU-thread-debug/</id>
-    <published>2018-08-17T09:19:23.000Z</published>
-    <updated>2018-08-17T11:14:59.642Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿...</p>
-<p>为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.</p>
-<h1 id="talk-is-cheap-show-me-the-code">Talk is cheap show me the code</h1>
-<p>我们的实现思路是找到动态库的首地址调用从此入手用相关指令恢复</p>
-<h3 id="前期准备">前期准备</h3>
-<ul>
-<li>build setting中开启符号表</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6db967f376eddf5c04bda7db38be27b07f2d48bc/20180817CPU-thread-debug/enable_dysm.png"></p>
-<h2 id="导入头文件">1.导入头文件</h2>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></div></pre></td></tr></table></figure>
-<p>这是mac os的可执行文件的动态链接库头文件 内部内建函数有几个我们需要用到</p>
-<h2 id="复制下面代码到你的相关调用的地方">2.复制下面代码到你的相关调用的地方</h2>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//1</span></div><div class="line">uint32_t count = _dyld_image_count();</div><div class="line">DDLogInfo(<span class="string">@"Dyld image count %d"</span>, count);</div><div class="line"><span class="comment">//2</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">    <span class="keyword">char</span> *image_name = (<span class="keyword">char</span> *)_dyld_get_image_name(i);</div><div class="line">    <span class="comment">//3</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> mach_header *mh = _dyld_get_image_header(i);</div><div class="line">    intptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);</div><div class="line">    <span class="comment">//4</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Image name %s at address 0x%llx and ASLR slide 0x%lx.\n"</span>,</div><div class="line">              image_name, (mach_vm_address_t)mh, vmaddr_slide);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我解释一下以上代码</p>
-<ul>
-<li>1.拿出当前镜像数量<br>
-</li>
-<li>2.遍历镜像<br>
-</li>
-<li>3.获取镜像首地址<br>
-</li>
-<li>4.打印</li>
-</ul>
-<p>然后运行你的程序</p>
-<p>然后看下控制台 过滤一下 ASLR我们log中的键入内容</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/consolo_debug.png"></p>
-<p>然后 点击 工程中的Product</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/products.png"></p>
-<p>右键 show in finder</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/product_dir.png"></p>
-<p>下一步骤 打开终端 cd 到这这个目录(可以打开终端 输入 cd 空格 拖拽那个文件夹)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/dir_final.png"></p>
-<p>然后 <code>pwd</code>一下 看看</p>
-<h2 id="控制台搜索相关我们打印log的代码">3.控制台搜索相关我们打印log的代码</h2>
-<p>找到我们第一条首地址</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/536c82a196f36b0b4634d6825ee3e297d66e3830/20180817CPU-thread-debug/importent.png"></p>
-<blockquote>
-<p>注意:<strong>这一步非常重要 如果不好使,请重试几次.</strong></p>
-</blockquote>
-<h4 id="拿出main函数的首地址-aslr中搜搜的-首地址然后复制-回到终端中输入">拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 <strong>回到终端中输入</strong></h4>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif -l  0x1006b8000</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意:<strong>这里是符号表路径</strong>,如果不知道在哪里找到请google一下.</p>
-</blockquote>
-<p>我们来测试一下 好不好使</p>
-<p>首先在控制台顶部的面板点击</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/breakpoint1.png"></p>
-<p>然后 在 consolo中输入 <code>bt</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main.png"></p>
-<p>如果看到 如下内容说明已经成功.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main_result.png"></p>
-<h2 id="真机运行-找出未知线程">4.真机运行 找出未知线程</h2>
-<p>首先点击Xcode工程中的Profile运行<code>instruments</code>,我这里是运行工程之后 Xcode9.4可以无缝转换到<code>instruments</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments0.png"></p>
-<p>我们找到相关线程 没有名称也不知道对象叫什么 就一个十六进制地址</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments2.png"></p>
-<p>我们随便找个地址 在终端中输入</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments3.png"></p>
-<p>好了 如果有问题 请删除product和符号表重新编译</p>
-<h1 id="总结">总结</h1>
-<p>CPU调试的过程非常麻烦,而且中间过程的代码多数都是C++的调用,主要是线程消耗的开销,中有很多收获希望大家多多指教.</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿...&lt;/p&gt;
-&lt;p&gt;为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Taptic Engine振动反馈</title>
-    <link href="https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/"/>
-    <id>https://www.sunyazhou.com/2018/08/13/20180813TapticEngineFeedback/</id>
-    <published>2018-08-13T06:28:04.000Z</published>
-    <updated>2018-08-13T07:34:57.192Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813TapticEngineFeedback/taptic_engine.jpg"></p>
-<h1 id="前言">前言</h1>
-<p>Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。</p>
-<p>Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 Force Touch 以及 3D Touch，不同的屏幕操作，可以感受到不同的振动触觉效果，带来更好的用户体验</p>
-<h1 id="触觉振动体验">触觉振动体验</h1>
-<h2 id="振动代码旧方案">振动代码(旧方案)</h2>
-<p>调用这行代码虽然可以振动 但是它属于长振动</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);</div></pre></td></tr></table></figure>
-<h2 id="振动代码新方案">振动代码(新方案)</h2>
-<p>iOS10 引入了一种新的、产生触觉反馈的方式， 帮助用户认识到不同的震动反馈有不同的含义 。这个功能的核心就是由 UIFeedbackGenerator 提供。</p>
-<p><code>UIFeedbackGenerator</code> 可以帮助你实现 <code>haptic feedback</code>。它的要求是：</p>
-<ul>
-<li>支持 Taptic Engine 机型 (iPhone 7 以及 iPhone 7 Plus).</li>
-<li>app 需要在前台运行</li>
-<li>系统 Taptic setting 需要开启</li>
-</ul>
-<blockquote>
-<p>下图开启 声音与触感 手机 -- 设置 -- 声音与触感 -- 系统触感反馈(打开) <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8bed46d914016aaeb13aa7bac8d7b4c9e287dba/20180813TapticEngineFeedback/setting.png"></p>
-</blockquote>
-<h3 id="调用相关振动代码实现振动功能">调用相关振动代码实现振动功能</h3>
-<p><code>UIFeedbackGenerator</code> 子类有:</p>
-<ul>
-<li>UIImpactFeedbackGenerator</li>
-<li>UISelectionFeedbackGenerator</li>
-<li>UINotificationFeedbackGenerator</li>
-</ul>
-<h4 id="uiimpactfeedbackgenerator振动">UIImpactFeedbackGenerator振动</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIImpactFeedbackGenerator</span> *generator = [[<span class="built_in">UIImpactFeedbackGenerator</span> alloc] initWithStyle: <span class="built_in">UIImpactFeedbackStyleLight</span>];</div><div class="line">[generator impactOccurred];</div></pre></td></tr></table></figure>
-<p>振动style有三种枚举</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIImpactFeedbackStyle</span>) &#123;</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleLight</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleMedium</span>,</div><div class="line">    <span class="built_in">UIImpactFeedbackStyleHeavy</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>基本每次振动相当于创建一个实例调用一次方法就行了,如果觉得性能更好的设计可以搞成成员变量</p>
-</blockquote>
-<p>反馈结果</p>
-<table>
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>UIImpactFeedbackGenerator</th>
-<th>UIImpactFeedbackStyleLight</th>
-<th>UIImpactFeedbackStyleMedium</th>
-<th>UIImpactFeedbackStyleHeavy</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>iPhone 7（iOS 10）及以上机型</td>
-<td>微弱短振</td>
-<td>中等短振</td>
-<td>明显短振</td>
-</tr>
-<tr class="even">
-<td>iPhone 6s Puls（iOS 9）</td>
-<td>长振</td>
-<td>长振</td>
-<td>长振</td>
-</tr>
-<tr class="odd">
-<td>iPhone 6（iOS 10）</td>
-<td>无振动</td>
-<td>无振动</td>
-<td>无振动</td>
-</tr>
-</tbody>
-</table>
-<h4 id="uiselectionfeedbackgenerator振动">UISelectionFeedbackGenerator振动</h4>
-<p>这里我试图搞成成员变量模拟手势拖拽 振动</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UISelectionFeedbackGenerator</span> *feedbackGesGenerator;</div></pre></td></tr></table></figure>
-<p>事件相应</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)gestrueHandle:(<span class="built_in">UIGestureRecognizer</span> *)sender &#123;</div><div class="line">    <span class="keyword">switch</span> (sender.state) &#123;</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateBegan</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Instantiate a new generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = [[<span class="built_in">UISelectionFeedbackGenerator</span> alloc] init];</div><div class="line">            </div><div class="line">            <span class="comment">// Prepare the generator when the gesture begins.</span></div><div class="line">            [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateChanged</span>: &#123;</div><div class="line">            </div><div class="line">            <span class="comment">// Check to see if the selection has changed...</span></div><div class="line">           </div><div class="line">                <span class="comment">// Trigger selection feedback.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator selectionChanged];</div><div class="line">                </div><div class="line">                <span class="comment">// Keep the generator in a prepared state.</span></div><div class="line">                [<span class="keyword">self</span>.feedbackGesGenerator prepare];</div><div class="line">            </div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateCancelled</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateEnded</span>:</div><div class="line">        <span class="keyword">case</span> <span class="built_in">UIGestureRecognizerStateFailed</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Release the current generator.</span></div><div class="line">            <span class="keyword">self</span>.feedbackGesGenerator = <span class="literal">nil</span>;</div><div class="line">            </div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            </div><div class="line">            <span class="comment">// Do nothing.</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意: __这里调用了一下<code>[self.feedbackGesGenerator prepare]</code>方法让振动引擎准备就绪,方便下次快速启动__这个方法是父类的方法</p>
-</blockquote>
-<h4 id="uinotificationfeedbackgenerator振动">UINotificationFeedbackGenerator振动</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UINotificationFeedbackGenerator</span> *notifiFeedBack = [[<span class="built_in">UINotificationFeedbackGenerator</span> alloc] init];</div><div class="line">    [notifiFeedBack notificationOccurred:<span class="built_in">UINotificationFeedbackTypeWarning</span>];</div></pre></td></tr></table></figure>
-<p>同样<code>UINotificationFeedbackType</code>也是三种枚举</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UINotificationFeedbackType</span>) &#123;</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeSuccess</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeWarning</span>,</div><div class="line">    <span class="built_in">UINotificationFeedbackTypeError</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h1 id="总结">总结</h1>
-<p>几种不同的振动API 可以视情况而使用, 比较常用的是 <code>UIImpactFeedbackGenerator</code>, 当然也可以随意使用注意操作系统判断检查。</p>
-<p>例如:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (@available(iOS <span class="number">10.0</span>, *)) &#123;</div><div class="line">	<span class="comment">//写相关振动代码</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6215324852334218b2d9908f39be966090de2f33/20180813Tap
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用UIToolBar做高斯模糊背景</title>
-    <link href="https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/"/>
-    <id>https://www.sunyazhou.com/2018/07/23/20180723ToolBar-Blur/</id>
-    <published>2018-07-23T10:22:05.000Z</published>
-    <updated>2018-07-25T03:15:08.313Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723ToolBar-Blur/blur.gif"></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">UIView</span> *)containerBackgroundView &#123;</div><div class="line">    <span class="keyword">if</span> (!_containerBackgroundView) &#123;</div><div class="line">        <span class="built_in">UIToolbar</span> *toolBar = [[<span class="built_in">UIToolbar</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">        toolBar.barStyle = <span class="built_in">UIBarStyleBlack</span>;</div><div class="line">        toolBar.clipsToBounds = <span class="literal">YES</span>;</div><div class="line">        _containerBackgroundView = toolBar;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _containerBackgroundView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>也可以使用<code>UIBlurEffect</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UIBlurEffect</span> *blurEffect = [<span class="built_in">UIBlurEffect</span> effectWithStyle:<span class="built_in">UIBlurEffectStyleLight</span>];</div><div class="line"><span class="built_in">UIVisualEffectView</span> *blurView = [[<span class="built_in">UIVisualEffectView</span> alloc] initWithEffect:blurEffect];</div><div class="line">blurView.frame = myView.bounds;</div><div class="line">[myView addSubview:blurView];</div></pre></td></tr></table></figure>
-<p>UIBlurEffectStyle</p>
-<ul>
-<li><p>UIBlurEffectStyleExtraLight,//额外亮度，（高亮风格）</p></li>
-<li><p>UIBlurEffectStyleLight,//亮风格</p></li>
-<li><p>UIBlurEffectStyleDark//暗风格</p></li>
-</ul>
-<blockquote>
-<p>UIBlurEffect 不能调节模糊半径</p>
-</blockquote>
-<p>如果要调整模糊半径</p>
-<p>可以对图片进行高斯模糊</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">-(<span class="built_in">UIImage</span> *)convertToBlurImage:(<span class="built_in">UIImage</span> *)image&#123;</div><div class="line">    <span class="built_in">CIFilter</span> *gaussianBlurFilter = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIGaussianBlur"</span>];</div><div class="line">    [gaussianBlurFilter setDefaults];</div><div class="line">    <span class="built_in">CIImage</span> *inputImage = [<span class="built_in">CIImage</span> imageWithCGImage:[image <span class="built_in">CGImage</span>]];</div><div class="line">    [gaussianBlurFilter setValue:inputImage forKey:kCIInputImageKey];</div><div class="line">    [gaussianBlurFilter setValue:@<span class="number">5</span> forKey:kCIInputRadiusKey];</div><div class="line">    <span class="built_in">CIImage</span> *outputImage = [gaussianBlurFilter outputImage];</div><div class="line">    <span class="built_in">CIContext</span> *context   = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">CGImageRef</span> cgimg     = [context createCGImage:outputImage fromRect:[inputImage extent]];  <span class="comment">// note, use input image extent if you want it the same size, the output image extent is larger</span></div><div class="line">    <span class="built_in">UIImage</span> *convertedImage = [<span class="built_in">UIImage</span> imageWithCGImage:cgimg];</div><div class="line">    <span class="keyword">return</span> convertedImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>核心代码是<code>[gaussianBlurFilter setValue:@5 forKey:kCIInputRadiusKey]</code>;</p>
-<p>但是我测试100也没啥问题 没有测试出最大值</p>
-<p>以上是几种高斯模糊的相关代码</p>
-<p>全文完</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360cb7db556ac95a3d8e2028e7027cdcf1378d51/20180723Too
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 终端 Bash 常用快捷键介绍及经验</title>
-    <link href="https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/"/>
-    <id>https://www.sunyazhou.com/2018/07/18/20180718Linux-Bash/</id>
-    <published>2018-07-18T01:29:39.000Z</published>
-    <updated>2018-07-18T01:46:46.024Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Linux-Bash/2013-05-20-linux_logo-on-centos5.png"></p>
-<h1 id="bash及其特性">bash及其特性</h1>
-<ul>
-<li><a href="http://cn.linux.vbird.org/linux_basic/0320bash.php" target="_blank" rel="external">bash</a>实质上是一个可执行程序，一个用户的工作环境。</li>
-<li>在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。</li>
-<li>可以使用pstree命令查看当前shell下的子shell个数。</li>
-</ul>
-<h3 id="最重要的自动补全">1. 最重要的自动补全</h3>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Tab</td>
-<td>自动补全</td>
-</tr>
-</tbody>
-</table>
-<h3 id="编辑跳转">2. 编辑跳转</h3>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ctrl + A</td>
-<td>跳转到当前行首</td>
-</tr>
-<tr class="even">
-<td>Ctrl + E</td>
-<td>跳转到当前行末</td>
-</tr>
-<tr class="odd">
-<td>Alt + F</td>
-<td>将光标在当前行上向后移动一个单词</td>
-</tr>
-<tr class="even">
-<td>Alt + B</td>
-<td>将光标在当前行上向前移动一个单词</td>
-</tr>
-<tr class="odd">
-<td>Ctrl + W</td>
-<td>删除当前光标前的一个单词</td>
-</tr>
-<tr class="even">
-<td>Ctrl + K</td>
-<td>删除当前光标后的内容</td>
-</tr>
-<tr class="odd">
-<td>Ctrl + U</td>
-<td>清除整行</td>
-</tr>
-<tr class="even">
-<td>Ctrl + L</td>
-<td>清屏，类似于 clear 命令</td>
-</tr>
-<tr class="odd">
-<td>Ctrl + H</td>
-<td>退格，类似于 backspace 键</td>
-</tr>
-<tr class="even">
-<td>Ctrl + T</td>
-<td>将当前光标前的两个字符互换位置</td>
-</tr>
-<tr class="odd">
-<td>Esc + T</td>
-<td>将当前光标前的两个单词互换位置</td>
-</tr>
-</tbody>
-</table>
-<p><code>Ctrl + W</code> 和 <code>Ctrl + U</code> 相当常用。拼写错是很常见的事。</p>
-<p><code>Ctrl + L</code> 也不用多说。</p>
-<h3 id="进程相关">3. 进程相关</h3>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ctrl + C</td>
-<td>终止当前进程</td>
-</tr>
-<tr class="even">
-<td>Ctrl + Z</td>
-<td>将当前进程在后台挂起</td>
-</tr>
-<tr class="odd">
-<td>Ctrl + D</td>
-<td>退出当前 Shell，类似于 exit 命令</td>
-</tr>
-</tbody>
-</table>
-<p><code>Ctrl + C</code> 是向当前运行的进程发送 SIGINT 信号，终止进程。</p>
-<blockquote>
-<p>SIGINT - This signal is the same as pressing ctrl-c. On some systems, "delete" + "break" sends the same signal to the process. The process is interrupted and stopped. However, the process can ignore this signal.</p>
-</blockquote>
-<p><code>Ctrl + Z</code> 并不结束进程，而是挂起在后台。之后仍然可以通过 <code>fg</code>命令恢复。对应的信号是 SIGTSTP。</p>
-<h3 id="搜索使用过的命令特别推荐">3. 搜索使用过的命令（特别推荐）</h3>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ctrl + R</td>
-<td>用于搜索之前使用过的命令</td>
-</tr>
-</tbody>
-</table>
-<p>我经常用 <code>history</code> 查看历史命令，其实已经有现成的快捷键可以用。</p>
-<p>按下 <code>Ctrl + R</code> 之后，输入查询的关键字，如果不符合，可以继续按 <code>Ctrl + R</code> 进行遍历。</p>
-<p>这个命令其实也是通过 <code>history</code> 记录来查询的。如果不喜欢这种方式，可以直接 <code>history | grep xxx</code> 也是不错的。</p>
-<p><a href="https://www.linuxidc.com/Linux/2017-11/148262.htm" target="_blank" rel="external">参考 Linux公社</a></p>
-<h1 id="总结">总结</h1>
-<p>这些命令对工作效率提升很显著,需要反复学习牢记,文章最后推荐大家关注<code>Linux公社</code>这个具有历史人文精神的Linux社区, 它让我学到不少东西.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fb11c210541063b65b788d918ab299cea1f4373f/20180718Lin
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Objective-C中使用正则去除非数字字母汉字</title>
-    <link href="https://www.sunyazhou.com/2018/06/25/20180625FilterString/"/>
-    <id>https://www.sunyazhou.com/2018/06/25/20180625FilterString/</id>
-    <published>2018-06-25T10:35:17.000Z</published>
-    <updated>2018-06-25T10:55:19.466Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0c00202bcba36a3821f799a16e006f467c33a9fc/20180625FilterString/RegularExpressDemo.gif"></p>
-<p>带着这个疑问开始今天的文章</p>
-<h1 id="准备工作">准备工作</h1>
-<p>创建个demo 代码如下</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UITextField</span> *input;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *label;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.input.delegate = <span class="keyword">self</span>;</div><div class="line">    [<span class="keyword">self</span>.input addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(textChange:) forControlEvents:<span class="built_in">UIControlEventEditingChanged</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//当文本内容改变时调用</span></div><div class="line">- (<span class="keyword">void</span>)textChange:(<span class="built_in">UITextField</span> *)textField</div><div class="line">&#123;</div><div class="line">    <span class="comment">//这里调用相关方法过滤字符串显示出来</span></div><div class="line">    <span class="keyword">self</span>.label.text = <span class="comment">//...;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在网上找了一圈大多都是使用谓词去判断时候包含,没有几个给出相应的处理字符串.</p>
-<p>我找到了3种 处理字符串的方式</p>
-<ul>
-<li>方案1 使用谓词过滤</li>
-<li>方案2 使用正则过滤增加寻找的字符串长度</li>
-<li>方案3 使用正则精简过滤字符串</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">方案<span class="number">1</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString1:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"^[a-zA-Z0-9\u4e00-\u9fa5]+"</span>;</div><div class="line">    <span class="built_in">NSPredicate</span> *pred = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"SELF MATCHES %@"</span>, regex];</div><div class="line">    <span class="built_in">NSMutableString</span> * retStr = [<span class="built_in">NSMutableString</span> string];</div><div class="line">    <span class="keyword">for</span>(<span class="built_in">NSInteger</span> i=<span class="number">0</span>; i&lt; [str length];i++)&#123;</div><div class="line">        <span class="built_in">NSRange</span> range = <span class="built_in">NSMakeRange</span>(i, <span class="number">1</span>);</div><div class="line">        <span class="built_in">NSString</span> *character = [str substringWithRange:range];</div><div class="line">        <span class="keyword">if</span>([pred evaluateWithObject:character])</div><div class="line">        &#123;</div><div class="line">            [retStr appendString:character];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> retStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>这种方式虽然能实现 但是代码略显冗长,不过能就解决问题</p>
-</blockquote>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//方案2</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString2:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"[^a-zA-Z0-9\u4e00-\u9fa5]"</span>;</div><div class="line">    <span class="built_in">NSMutableString</span> *mstr = [<span class="built_in">NSMutableString</span> stringWithFormat:<span class="string">@"%@"</span>, str];</div><div class="line">    <span class="built_in">NSUInteger</span> i = [mstr replaceOccurrencesOfString:regex withString:<span class="string">@""</span> options:<span class="built_in">NSRegularExpressionSearch</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, mstr.length)];</div><div class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@-长度:%zd"</span>,mstr,i];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>同样的方法使用正则<code>replaceOccurrencesOfString:withString:options:range:</code>方法替换字符串</p>
-</blockquote>
-<p>下面我们精简到2行代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//方案3</span></div><div class="line">- (<span class="built_in">NSString</span> *)filterString3:(<span class="built_in">NSString</span> *)str &#123;</div><div class="line">    <span class="built_in">NSString</span> *regex = <span class="string">@"[^a-zA-Z0-9\u4e00-\u9fa5]"</span>;</div><div class="line">    <span class="keyword">return</span> [str stringByReplacingOccurrencesOfString:regex withString:<span class="string">@""</span> options:<span class="built_in">NSRegularExpressionSearch</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, str.length)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>最终方案3 得到的预期结果还是不错,推荐使用</p>
-</blockquote>
-<h1 id="总结">总结</h1>
-<p>有些问题都是在工作中遇到,希望记录下来一起分享和学习.</p>
-<p>全完完</p>
-<p><a href="https://github.com/sunyazhou13/RegularExpressDemo" target="_blank" rel="external">Demo在这里</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-im
     
     </summary>
     

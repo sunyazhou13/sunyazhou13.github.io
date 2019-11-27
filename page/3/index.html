@@ -170,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
+    <div class="panel-cover--overlay cover-red"></div>
   </div>
 </header>
 
@@ -180,6 +180,245 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/09/20/20180920IncreasingTapAreaOfButton/" title="link to post.title">iOS扩大UIButton的点击的响应范围</a></h2>
+      <p class="excerpt">
+    
+      前言
+开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
+今天的文章和大家分享一下解决这种问题的代码
+实现思路
+
+子类话UIButton 复写 它的hitTest:方法
+子类话UIButton 复写 point:inside:withEvent: 方法
+
+第一种方式
+override func hitTest(_ point: CGPoint, with event: UIEvent?) -&amp;gt; UIView? &amp;#123;	let biggerButtonFrame 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/09/20/20180920IncreasingTapAreaOfButton/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/09/18/20180918KeyboardAnimation/" title="link to post.title">iOS键盘动画细节</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程
+上图
+
+动画细节代码
+细节核心主要是通知中的一些key
+
+动画时长
+动画的出现方式
+
+...
+下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotification
+[[NSNotificationCenter defaultCenter] addObserver:self                                             selector:@sel
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-09-18T01:49:58.000Z" class="post-list__meta--date date">2018-09-18</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/09/18/20180918KeyboardAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/09/02/20180902Beacon/" title="link to post.title">船与灯塔</a></h2>
+      <p class="excerpt">
+    
+      前言
+
+荷兰🇳🇱被称为&quot;海上马车夫&quot;，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。
+船🚢
+它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，造这艘船的主人希望能靠这只船养家糊口，但又舍不得花更多的钱买好的木料来制造它。
+灯塔
+这是一座集成很多高新科技的灯塔，塔基可以在海上漂浮，自动平衡系统让他在海浪的动荡中稳如泰山，灯塔的父母距离这座新的灯塔不远，形成海上灯塔群，发出很强的激光束，指明航线方向，这坐新的灯塔还能发出加
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-09-02T04:12:51.000Z" class="post-list__meta--date date">2018-09-02</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/文学/">文学</a>
+
+</span><a class="btn-border-small" href="/2018/09/02/20180902Beacon/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/08/17/20180817CPU-thread-debug/" title="link to post.title">iOS中CPU线程调试高级技巧</a></h2>
+      <p class="excerpt">
+    
+      前言
+最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿...
+为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.
+Talk is cheap show me the code
+我们的实现思路是找到动态库的首地址
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-08-17T09:19:23.000Z" class="post-list__meta--date date">2018-08-17</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/08/17/20180817CPU-thread-debug/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/08/13/20180813TapticEngineFeedback/" title="link to post.title">Taptic Engine振动反馈</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。
+Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 Force Touch 以及 3D Touch，不同的屏幕操作，可以感受到不同的振动触觉效果，带来更好的用户体验
+触觉振动体验
+振动代码(旧方案)
+调用
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-08-13T06:28:04.000Z" class="post-list__meta--date date">2018-08-13</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/08/13/20180813TapticEngineFeedback/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/07/23/20180723ToolBar-Blur/" title="link to post.title">利用UIToolBar做高斯模糊背景</a></h2>
+      <p class="excerpt">
+    
+      
+- (UIView *)containerBackgroundView &amp;#123;    if (!_containerBackgroundView) &amp;#123;        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectZero];        toolBar.barStyle = UIBarStyleBlack;        toolBar.clipsToBounds = YES;        _cont
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-07-23T10:22:05.000Z" class="post-list__meta--date date">2018-07-23</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/07/23/20180723ToolBar-Blur/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/07/18/20180718Linux-Bash/" title="link to post.title">Linux 终端 Bash 常用快捷键介绍及经验</a></h2>
+      <p class="excerpt">
+    
+      
+bash及其特性
+
+bash实质上是一个可执行程序，一个用户的工作环境。
+在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。
+可以使用pstree命令查看当前shell下的子shell个数。
+
+1. 最重要的自动补全
+
+
+
+命令
+解释
+
+
+
+
+Tab
+自动补全
+
+
+
+2. 编辑跳转
+
+
+
+命令
+解释
+
+
+
+
+Ctrl + A
+跳转到当前行首
+
+
+Ctrl + E
+跳转到当前行末
+
+
+Alt + F
+将光标在当前行上向后移动一
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-07-18T01:29:39.000Z" class="post-list__meta--date date">2018-07-18</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/07/18/20180718Linux-Bash/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/06/25/20180625FilterString/" title="link to post.title">Objective-C中使用正则去除非数字字母汉字</a></h2>
+      <p class="excerpt">
+    
+      前言
+今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
+
+带着这个疑问开始今天的文章
+准备工作
+创建个demo 代码如下
+@interface ViewController ()@property (weak, nonatomic) IBOutlet UITextField *input;@property (weak, nonatomic) IBOutlet UILabel *label;@end@implementation ViewController- (void)viewDi
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-06-25T10:35:17.000Z" class="post-list__meta--date date">2018-06-25</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/06/25/20180625FilterString/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/06/15/20180615NSAttributeString/" title="link to post.title">使用NSAttributeString实现不同颜色大小显示</a></h2>
+      <p class="excerpt">
+    
+       # 前言
+最近开发需求遇到一个比较简单但又棘手的问题.先看需求
+
+一个UILabel显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：
+必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串
+比如: 2分14秒 or 2min14secs
+也就是给我们的是一个 &quot;2分14秒&quot;字符串 我们需要匹配range来修改或者替换. 带着这个疑问开始今天的文章?
+实现思路
+孔圣贤有云:&quot;举一隅不以三隅反，则不复也。&quot;
+&amp;gt; 出自《
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-06-15T02:10:58.000Z" class="post-list__meta--date date">2018-06-15</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/06/15/20180615NSAttributeString/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -204,240 +443,6 @@ Swift4.2
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2018/06/08/20180608Swift-Random2/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/01/20180601Random/" title="link to post.title">Swift中的随机数</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-今天儿童节,写一篇随机数技术文章纪念留守儿童(资深)的童年.
-swift中的随机数使用
-在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章
-整型随机数
-首先是这个arc4random()
-
-arc4random()使用了arc4密码加密的key stream生成器，产生一个[0, 2^32)区间的随机数(注意是左闭右开区间)。这个函数的返回类型是UInt32
-
-
-提示: [和] 分别代表左右闭区间, (和)代表左右开区间 也就是中括号 -&amp;gt; 代表 闭区间, 闭区间代表
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-01T09:30:56.000Z" class="post-list__meta--date date">2018-06-01</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/06/01/20180601Random/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/" title="link to post.title">UIView不同方向的导角</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。
-这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文
-通常导角
-self.view.cornerRadius = 20.0self.view.clipToBounds = true
-这两行代码是全方向导角
-如果像要搞成不同方向的话可以用iOS11 新的API和 iOS11以前的CAShapeLayer画贝赛尔曲线来解决
-首先我们要创建一个UIView
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-05-15T01:58:00.000Z" class="post-list__meta--date date">2018-05-15</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/05/15/20180515How-to-Create-Top-or-Bottom-Rounded-Corners-for-Views/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/" title="link to post.title">手动管理UIViewController的生命周期</a></h2>
-      <p class="excerpt">
-    
-      前言
-话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头条等.这篇文章回味一下古老的手动控制视图控制器的生命周期的API.
-UIViewController
-我们在使用addChildViewController:的时候会遇到个问题.如何手动控制被添加控制器的生命周期.
-如下代码
-self.vc1 = [[VC1ViewController all
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-05-08T04:01:27.000Z" class="post-list__meta--date date">2018-05-08</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/05/08/20180508ManualControlUIViewControllerLifeCycle/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/05/07/20180507AudioUnit/" title="link to post.title">AudioUnit</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果....
-今天带领大家深入了解和学习一下这些音效.
-实现iOS变声的背景
-声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声.
-下图是AVAudioSession的工作流 
-大家常用的变声方案有很多:
-
-FFMpeg提供内部效果器 eg:EQ均衡器
-
-AVFoundation底层的Audio Unit eg
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/05/07/20180507AudioUnit/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/04/02/20180402RunLoop/" title="link to post.title">深入理解RunLoop</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
-本文内容
-
-RunLoop 的概念
-RunLoop 与线程的关系
-RunLoop 对外的接口
-RunLoop 的 Mode
-RunLoop 的内部逻辑
-RunLoop 的底层实现
-苹果用 RunLoop 实现的功能
-
-Aut
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-04-02T06:16:34.000Z" class="post-list__meta--date date">2018-04-02</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/04/02/20180402RunLoop/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/03/14/20180314Swft4-Array-skills/" title="link to post.title">Swift 4 中的数组技巧</a></h2>
-      <p class="excerpt">
-    
-      前言
-年前买了本Swift 进阶(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错
-当我从头来学习数组的时候发现好多函数真的太有用了
-Swift 4.0 中的可变数组技巧
-我们可用 Xcode 创建playground 来进行练习
-首先创建个数组
-let array = NSMutableArray(array: [1, 2, 3, 4 , 5, 6])
-for in 循环遍历
-for x in a
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-03-14T02:17:56.000Z" class="post-list__meta--date date">2018-03-14</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/03/14/20180314Swft4-Array-skills/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308What-is-the-dSYM/" title="link to post.title">什么是符号表?</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
-本周主要内容如下
-
-什么是符号表？
-为什么要配置符号表？
-dSYM文件？
-
-什么是符号表？
-符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
-&amp;lt;起始地址&amp;gt; &amp;lt;结束地址&amp;gt; &amp;lt;函数&amp;gt; [&amp;lt;文件名&amp;gt;:&amp;
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/03/08/20180308What-is-the-dSYM/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="link to post.title">计算机图形渲染的流程</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.
-计算机图形渲染的流程
-计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水线可以简化为(本文的概念):绘图位置座标指定;着色指定;输出指定;下图简单解释了这一个流水线过程。计算机绘图需要一个输入绘图数据，这个数据可以是用户指定的，也可以是操作系统决定的，也可以是混合的。这些数据是分组的。
-
-座标生成：当绘图数据送入座标生成系统后，流水线就会对
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-03-05T04:11:41.000Z" class="post-list__meta--date date">2018-03-05</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/03/04/Learning-AV-Foundation-Playing-Video/" title="link to post.title">Learning AV Foundation(五)播放视频</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-很久没有写Learning AV Foundation相关的文章了,言归正传 本篇介绍一下简单的视频播放
-了解视频播放之前我们来看戏AVPlayer需要的一些组件模型
-
-AVPlayer组件模型
-
-AVPlayer
-AVPlayer是一个用来播放基于基于时间的视听媒体的控制对象,支持播放:
-
-本地 媒体文件
-异步下载 媒体文件
-HTTP Live Streaming协议的流媒体 文件
-
-AVPlayer 是个 逻辑层组件
-(应用可以分为如下几层) &amp;gt; UI层
-&amp;gt; 业务逻辑层
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-03-04T08:56:06.000Z" class="post-list__meta--date date">2018-03-04</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/03/04/Learning-AV-Foundation-Playing-Video/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
@@ -504,22 +509,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 </body>
 </html>

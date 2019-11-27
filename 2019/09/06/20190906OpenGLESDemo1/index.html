@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>从零学习OpenGLES的纹理渲染 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="从零学习OpenGLES的纹理渲染 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="从零学习OpenGLES的纹理渲染 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2019/09/06/20190906OpenGLESDemo1/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,也搞过一些mac.现居帝都北京.开发数年有余,没有为往圣续绝学深感惭愧.望诸位同仁多多指教.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-red"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-09-06T02:19:48.000Z" class="post-list__meta--date date">2019-09-06</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">从零学习OpenGLES的纹理渲染</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d906db5da48581d2dd96615aeb5122c0e6265304/20190906OpenGLESDemo1/sunyazhou_logo_glsl.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>很久没用OpenGL了 记录一下学习GLSL代码和实现</p>
+<h2 id="objctive-c代码">Objctive-C代码</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;GLKit/GLKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//顶点结构体类型</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">    GLKVector3 positionCoord; <span class="comment">// (x,y,z)</span></div><div class="line">    GLKMatrix2 textureCoord; <span class="comment">// (u, v)</span></div><div class="line">    </div><div class="line">&#125; SenceVertex;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) SenceVertex *vertices; <span class="comment">//顶点数组</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) EAGLContext *context;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - override methods 复写方法</span></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">    [<span class="keyword">self</span> commonInit];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line">- (<span class="keyword">void</span>)commonInit &#123;</div><div class="line">    <span class="comment">// 创建上下文 使用 2.0版本</span></div><div class="line">    <span class="keyword">self</span>.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line">    [EAGLContext setCurrentContext:<span class="keyword">self</span>.context];</div><div class="line">    </div><div class="line">    <span class="comment">//创建顶点数组</span></div><div class="line">    <span class="keyword">self</span>.vertices = malloc(<span class="keyword">sizeof</span>(SenceVertex) * <span class="number">4</span>); <span class="comment">//4个顶点</span></div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">0</span>] = (SenceVertex)&#123;&#123;<span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;,&#123; <span class="number">0</span>, <span class="number">1</span> &#125;&#125;; <span class="comment">//左上角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">1</span>] = (SenceVertex)&#123;&#123;<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">0</span> ,<span class="number">0</span>&#125;&#125;; <span class="comment">//左下角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">2</span>] = (SenceVertex)&#123;&#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">1</span>, <span class="number">1</span>&#125;&#125;; <span class="comment">//右上角</span></div><div class="line">    <span class="keyword">self</span>.vertices[<span class="number">3</span>] = (SenceVertex)&#123;&#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;,&#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;; <span class="comment">//右下角</span></div><div class="line">    </div><div class="line">    <span class="comment">//创建一个展示纹理的layer</span></div><div class="line">    </div><div class="line">    <span class="built_in">CAEAGLLayer</span> *layer = [<span class="built_in">CAEAGLLayer</span> layer];</div><div class="line">    layer.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">100</span>, <span class="keyword">self</span>.view.frame.size.width, <span class="keyword">self</span>.view.frame.size.width);</div><div class="line">    layer.contentsScale = [[<span class="built_in">UIScreen</span> mainScreen] scale]; <span class="comment">//设置缩放比例，不设置的话，纹理会失真</span></div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.view.layer addSublayer:layer];</div><div class="line">    </div><div class="line">    <span class="comment">// 绑定纹理到输出layer</span></div><div class="line">    [<span class="keyword">self</span> bindRenderLayer:layer];</div><div class="line">    </div><div class="line">    <span class="comment">// 读取纹理</span></div><div class="line">    <span class="built_in">NSString</span> *imagePath = [[[<span class="built_in">NSBundle</span> mainBundle] resourcePath] stringByAppendingPathComponent:<span class="string">@"logo.png"</span>];</div><div class="line">    <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithContentsOfFile:imagePath];</div><div class="line">    GLuint textureID = [<span class="keyword">self</span> createTextureWithImage:image];</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">// 设置视口尺寸</span></div><div class="line">    </div><div class="line">    glViewport(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.drawableWidth, <span class="keyword">self</span>.drawableHeight);</div><div class="line">    </div><div class="line">    <span class="comment">// 编译链接 着色器</span></div><div class="line">    GLuint program = [<span class="keyword">self</span> programWithShaderName:<span class="string">@"glsl"</span>];</div><div class="line">    glUseProgram(program);</div><div class="line">    </div><div class="line">    <span class="comment">// 获取shader 中的参数 然后传数据进去</span></div><div class="line">    GLuint positionSlot = glGetAttribLocation(program, <span class="string">"Position"</span>); <span class="comment">//获取顶点着色器的位置</span></div><div class="line">    GLuint textureCoordsSlot = glGetAttribLocation(program, <span class="string">"TextureCoords"</span>); <span class="comment">//获取顶点着色器中的纹理坐标</span></div><div class="line"></div><div class="line">    GLuint textureSlot = glGetUniformLocation(program, <span class="string">"Texture"</span>); <span class="comment">//获取片元着色器纹理变量</span></div><div class="line"></div><div class="line">    <span class="comment">//将纹理 ID 传给着色器程序</span></div><div class="line">    glActiveTexture(GL_TEXTURE0);</div><div class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</div><div class="line">    glUniform1i(textureSlot, <span class="number">0</span>); <span class="comment">// 将textureSlot 赋值为 0, 而 0 与 GL_TEXTURE0 对应,这里如果写1,就是GL_TEXTURE1</span></div><div class="line">    </div><div class="line">    <span class="comment">// 创建顶点缓存</span></div><div class="line">    GLuint vertexBuffer;</div><div class="line">    glGenBuffers(<span class="number">1</span>, &amp;vertexBuffer);</div><div class="line">    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);</div><div class="line">    GLsizeiptr bufferSizeBytes = <span class="keyword">sizeof</span>(SenceVertex) * <span class="number">4</span>;</div><div class="line">    glBufferData(GL_ARRAY_BUFFER, bufferSizeBytes, <span class="keyword">self</span>.vertices, GL_STATIC_DRAW);</div><div class="line">    </div><div class="line">    <span class="comment">// 设置顶点数据</span></div><div class="line">    glEnableVertexAttribArray(positionSlot);</div><div class="line">    glVertexAttribPointer(positionSlot, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="keyword">sizeof</span>(SenceVertex), <span class="literal">NULL</span> + offsetof(SenceVertex, positionCoord));</div><div class="line">    </div><div class="line">    <span class="comment">// 设置纹理数据</span></div><div class="line">    glEnableVertexAttribArray(textureCoordsSlot);</div><div class="line">    glVertexAttribPointer(textureCoordsSlot, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="keyword">sizeof</span>(SenceVertex), <span class="literal">NULL</span> + offsetof(SenceVertex, textureCoord));</div><div class="line">    </div><div class="line">    <span class="comment">// 开始绘制</span></div><div class="line">    glDrawArrays(GL_TRIANGLE_STRIP, <span class="number">0</span>, <span class="number">4</span>);</div><div class="line">    </div><div class="line">    <span class="comment">// 将绑定</span></div><div class="line">    [<span class="keyword">self</span>.context presentRenderbuffer:GL_RENDERBUFFER];</div><div class="line">    </div><div class="line">    <span class="comment">//删除顶点缓存</span></div><div class="line">    glDeleteBuffers(<span class="number">1</span>, &amp;vertexBuffer);</div><div class="line">    vertexBuffer = <span class="number">0</span>;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//绑定图像要输出的 layer</span></div><div class="line">- (<span class="keyword">void</span>)bindRenderLayer:(<span class="built_in">CALayer</span> &lt;EAGLDrawable&gt; *)layer &#123;</div><div class="line">    GLuint frameBuffer; <span class="comment">//帧缓冲</span></div><div class="line">    GLuint renderBuffer; <span class="comment">//渲染缓冲</span></div><div class="line"></div><div class="line">    <span class="comment">//绑定渲染缓冲到 输出的layer</span></div><div class="line">    glGenRenderbuffers(<span class="number">1</span>, &amp;renderBuffer);</div><div class="line">    glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);</div><div class="line">    [<span class="keyword">self</span>.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];</div><div class="line">    </div><div class="line">    <span class="comment">//将渲染缓冲附着在帧缓冲上</span></div><div class="line">    glGenFramebuffers(<span class="number">1</span>, &amp;frameBuffer);</div><div class="line">    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);</div><div class="line">    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderBuffer);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 通过一个图片 创建纹理</span></div><div class="line">- (GLuint)createTextureWithImage:(<span class="built_in">UIImage</span> *)image &#123;</div><div class="line">    <span class="comment">// 将 UIImage 转换为 CGImageRef</span></div><div class="line">    <span class="built_in">CGImageRef</span> cgImageRef = [image <span class="built_in">CGImage</span>];</div><div class="line">    GLuint width = (GLuint)<span class="built_in">CGImageGetWidth</span>(cgImageRef);</div><div class="line">    GLuint height = (GLuint)<span class="built_in">CGImageGetHeight</span>(cgImageRef);</div><div class="line">    <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</div><div class="line">    </div><div class="line">    <span class="comment">// 绘制图片</span></div><div class="line">    <span class="built_in">CGColorSpaceRef</span> colorSpace = <span class="built_in">CGColorSpaceCreateDeviceRGB</span>();</div><div class="line">    <span class="keyword">void</span> *imageData = malloc(width * height * <span class="number">4</span>);</div><div class="line">    <span class="built_in">CGContextRef</span> context = <span class="built_in">CGBitmapContextCreate</span>(imageData, width, height, <span class="number">8</span>, width * <span class="number">4</span>, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0</span>, height);</div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>f, <span class="number">-1.0</span>f);</div><div class="line">    <span class="built_in">CGColorSpaceRelease</span>(colorSpace);</div><div class="line">    <span class="built_in">CGContextClearRect</span>(context, rect);</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(context, rect, cgImageRef);</div><div class="line"></div><div class="line">    <span class="comment">// 生成纹理</span></div><div class="line">    GLuint textureID;</div><div class="line">    glGenTextures(<span class="number">1</span>, &amp;textureID);</div><div class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</div><div class="line">    glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, width, height, <span class="number">0</span>, GL_RGBA, GL_UNSIGNED_BYTE, imageData); <span class="comment">// 将图片数据写入纹理缓存</span></div><div class="line">    </div><div class="line">    <span class="comment">// 设置如何把纹素映射成像素</span></div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</div><div class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</div><div class="line">    </div><div class="line">    <span class="comment">// 解绑</span></div><div class="line">    glBindTexture(GL_TEXTURE_2D, <span class="number">0</span>);</div><div class="line">    </div><div class="line">    <span class="comment">// 释放内存</span></div><div class="line">    <span class="built_in">CGContextRelease</span>(context);</div><div class="line">    free(imageData);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> textureID;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将一个顶点着色器和片元着色器挂在到一个着色器程序上, 并返回程序的 id</span></div><div class="line">- (GLuint)programWithShaderName:(<span class="built_in">NSString</span> *)shaderName &#123;</div><div class="line">    <span class="comment">// 编译两个着色器</span></div><div class="line">    GLuint vertexShader = [<span class="keyword">self</span> compileShaderWithName:shaderName type:GL_VERTEX_SHADER];</div><div class="line">    GLuint fragmentShader = [<span class="keyword">self</span> compileShaderWithName:shaderName type:GL_FRAGMENT_SHADER];</div><div class="line">    </div><div class="line">    <span class="comment">// 挂载 shader 到 program 上</span></div><div class="line">    GLuint program = glCreateProgram();</div><div class="line">    glAttachShader(program, vertexShader);</div><div class="line">    glAttachShader(program, fragmentShader);</div><div class="line">    </div><div class="line">    <span class="comment">// 链接 program</span></div><div class="line">    glLinkProgram(program);</div><div class="line">    </div><div class="line">    <span class="comment">// 检查链接是否成功</span></div><div class="line">    GLint linkSuccess;</div><div class="line">    glGetProgramiv(program, GL_LINK_STATUS, &amp;linkSuccess);</div><div class="line">    <span class="keyword">if</span> (linkSuccess == GL_FALSE) &#123;</div><div class="line">        GLchar messages[<span class="number">256</span>];</div><div class="line">        glGetProgramInfoLog(program, <span class="keyword">sizeof</span>(messages), <span class="number">0</span>, &amp;messages[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">NSString</span> *messageString = [<span class="built_in">NSString</span> stringWithUTF8String:messages];</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"program链接失败：%@"</span>, messageString);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> program;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 编译一个 shader，并返回 shader 的 id</span></div><div class="line">- (GLuint)compileShaderWithName:(<span class="built_in">NSString</span> *)name type:(GLenum)shaderType &#123;</div><div class="line">    <span class="comment">// 查找 shader 文件</span></div><div class="line">    <span class="built_in">NSString</span> *shaderPath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:name ofType:shaderType == GL_VERTEX_SHADER ? <span class="string">@"vsh"</span> : <span class="string">@"fsh"</span>]; <span class="comment">// 根据不同的类型确定后缀名</span></div><div class="line">    <span class="built_in">NSError</span> *error;</div><div class="line">    <span class="built_in">NSString</span> *shaderString = [<span class="built_in">NSString</span> stringWithContentsOfFile:shaderPath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:&amp;error];</div><div class="line">    <span class="keyword">if</span> (!shaderString) &#123;</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"读取shader失败"</span>);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 创建一个 shader 对象</span></div><div class="line">    GLuint shader = glCreateShader(shaderType);</div><div class="line">    </div><div class="line">    <span class="comment">// 获取 shader 的内容</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *shaderStringUTF8 = [shaderString UTF8String];</div><div class="line">    <span class="keyword">int</span> shaderStringLength = (<span class="keyword">int</span>)[shaderString length];</div><div class="line">    glShaderSource(shader, <span class="number">1</span>, &amp;shaderStringUTF8, &amp;shaderStringLength);</div><div class="line">    </div><div class="line">    <span class="comment">// 编译shader</span></div><div class="line">    glCompileShader(shader);</div><div class="line">    </div><div class="line">    <span class="comment">// 查询 shader 是否编译成功</span></div><div class="line">    GLint compileSuccess;</div><div class="line">    glGetShaderiv(shader, GL_COMPILE_STATUS, &amp;compileSuccess);</div><div class="line">    <span class="keyword">if</span> (compileSuccess == GL_FALSE) &#123;</div><div class="line">        GLchar messages[<span class="number">256</span>];</div><div class="line">        glGetShaderInfoLog(shader, <span class="keyword">sizeof</span>(messages), <span class="number">0</span>, &amp;messages[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">NSString</span> *messageString = [<span class="built_in">NSString</span> stringWithUTF8String:messages];</div><div class="line">        <span class="built_in">NSAssert</span>(<span class="literal">NO</span>, <span class="string">@"shader编译失败：%@"</span>, messageString);</div><div class="line">        exit(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> shader;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - public methods 公有方法</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - getters and setters 设置器和访问器</span></div><div class="line"><span class="comment">// 获取渲染缓存宽度</span></div><div class="line">- (GLint)drawableWidth &#123;</div><div class="line">    GLint backingWidth;</div><div class="line">    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &amp;backingWidth);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> backingWidth;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 获取渲染缓存高度</span></div><div class="line">- (GLint)drawableHeight &#123;</div><div class="line">    GLint backingHeight;</div><div class="line">    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &amp;backingHeight);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> backingHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - life cycle 视图的生命周期</span></div><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    <span class="keyword">if</span> ([EAGLContext currentContext] == <span class="keyword">self</span>.context) &#123;</div><div class="line">        [EAGLContext setCurrentContext:<span class="literal">nil</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//释放结构体内存的数组 需要手动free</span></div><div class="line">    <span class="keyword">if</span> (_vertices) &#123;</div><div class="line">        free(_vertices);</div><div class="line">        _vertices = <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="顶点着色器">顶点着色器</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">attribute vec4 Position;</div><div class="line">attribute vec2 TextureCoords;</div><div class="line">varying vec2 TextureCoordsVarying;</div><div class="line"></div><div class="line">void main (void) &#123;</div><div class="line">    gl_Position = Position;</div><div class="line">    TextureCoordsVarying = TextureCoords;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="片元着色器">片元着色器</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">precision mediump float;</div><div class="line"></div><div class="line">uniform sampler2D Texture;</div><div class="line">varying vec2 TextureCoordsVarying;</div><div class="line"></div><div class="line">void main (void) &#123;</div><div class="line">    vec4 mask = texture2D(Texture, TextureCoordsVarying);</div><div class="line">    gl_FragColor = vec4(mask.rgb, 1.0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>最近一有时间就尽量研习图形图像相关的技术,本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p><a href="https://github.com/sunyazhou13/GLSLDemo1" target="_blank" rel="external">Demo</a></p>
+<p><a href="http://www.lymanli.com/2019/02/17/ios-opengles-render-texture/" target="_blank" rel="external">学习参考</a></p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2019/09/16/20190916UITraitCollection/" title="UITraitCollection详解">UITraitCollection详解</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
+先说问题
+最近在适配iOS13 
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2019-09-16T10:49:05.000Z" class="post-list__meta--date date">2019-09-16</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2019/09/16/20190916UITraitCollection/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2019/07/26/20190726LoadingAnimationI/" title="做一个简单的Loading动画">做一个简单的Loading动画</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+由于最近工作忙到坐地铁回家都能睡着,博客没能及时更新,今天抽个时间写个加载动画,废话不多说上图.
+
+(颜色可以自定义哈,非常简单,小白自己可以随便改)
+开始
+创建一个UIView的子类UILoadingView(名字最好不要带UI开头哈,我这是为了玩 大家理解就行),然后添加两个接口
+@in
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2019-07-26T03:13:44.000Z" class="post-list__meta--date date">2019-07-26</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS动画/">iOS动画</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2019/07/26/20190726LoadingAnimationI/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Fri Sep 06 2019 10:19:48 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2019 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+</body>
+</html>

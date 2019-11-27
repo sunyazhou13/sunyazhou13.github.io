@@ -170,7 +170,7 @@
 
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
+    <div class="panel-cover--overlay cover-red"></div>
   </div>
 </header>
 
@@ -180,6 +180,224 @@
             <div class="main-post-list">
 
   <ol class="post-list">
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/12/28/20181228FinalSummary/" title="link to post.title">2018年终总结</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+
+埋头苦干尽五年,晨起面镜白发先.
+一年到头不见泪,岁月荏苒冬却寒.
+仿佛回到一三年,北京站前望着天.
+北漂掘金那刻起,人生已无再少年.
+
+
+我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我...
+这一年过的像网速一样快,看着年末又到了,我依然得墨守陈规的交出我的2018年终总结
+2018回顾
+这一年的清单如下:
+
+工作
+演唱会
+读书
+技术
+坚持
+生活
+故事
+百年
+总结
+
+很精彩...
+工作
+这一年我很动荡,4月份从金山云到了快手.负责开发快手iOS国
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-12-28T15:04:41.000Z" class="post-list__meta--date date">2018-12-28</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/年终总结/">年终总结</a>, <a class="tag-link" href="/tags/生活/">生活</a>
+
+</span><a class="btn-border-small" href="/2018/12/28/20181228FinalSummary/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/12/21/20181221AwemeTransition/" title="link to post.title">iOS抖音的转场动画</a></h2>
+      <p class="excerpt">
+    
+      前言
+这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图
+ 
+这里需要用到前一篇文章的上下滑demo
+学习这篇文章之前推荐看下喵神的iOS7中的ViewController转场切换
+如果对转场不是很了解的话可能学习会有一些难度和疑问.
+转场调用代码
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath &amp;#123;   
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-12-21T02:12:07.000Z" class="post-list__meta--date date">2018-12-21</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/12/21/20181221AwemeTransition/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/12/06/20181206Detecting-pan-gesture-direction/" title="link to post.title">探测UIPanGesture的滑动方向</a></h2>
+      <p class="excerpt">
+    
+      前言
+这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向
+于是找到stackOverFlow上的答案 记录一下
+- (void)panRecognized:(UIPanGestureRecognizer *)rec&amp;#123;    CGPoint vel = [rec velocityInView:self.view];    if (vel.x &amp;gt; 0)    &amp;#123;        // user dragged towards the right 向右拖动
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-12-06T05:59:46.000Z" class="post-list__meta--date date">2018-12-06</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/12/06/20181206Detecting-pan-gesture-direction/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/27/20181127LikeAnimation/" title="link to post.title">iOS抖音点赞动画实现</a></h2>
+      <p class="excerpt">
+    
+      前言
+hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图
+
+本篇文章主要包含技术点:
+
+CAShapeLayer和贝赛尔曲线绘制三角形
+组合动画的时间技巧
+
+我习惯写完文章的demo都附在文章底部,如果不想看原理的小伙伴可直接跳到底部找demo下载.
+实现原理
+首先 我们来详细分解一下这个动画
+ &amp;gt; 请仔细观察
+我们来看单独的一个动画
+
+
+请仔细观看 我设置10秒的duration 以便于大家能看清楚
+
+实现原理
+从上述两张图中,我们可以看到 它是一个 
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-27T03:16:14.000Z" class="post-list__meta--date date">2018-11-27</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/27/20181127LikeAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/14/20181114PlayLoadingAnimation/" title="link to post.title">iOS视频加载动画</a></h2>
+      <p class="excerpt">
+    
+      前言
+这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画
+上图看成品
+
+实现原理
+首先我创建一个视图
+@interface ViewController ()@property (nonatomic, strong) UIView *playLoadingView;@end@implementation ViewController- (void)viewDidLoad &amp;#123;    [super viewDidLoad];        //init
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-14T06:14:39.000Z" class="post-list__meta--date date">2018-11-14</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/14/20181114PlayLoadingAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/13/20181113AllKeypathOfCALayer/" title="link to post.title">iOS所有Animation相关可用的Keypath</a></h2>
+      <p class="excerpt">
+    
+      前言
+在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画
+一般情况下我们都要用到Keypath,最近在研究动画,想整理一下所有可用的Keypath在iOS的核心动画中.
+CALayer的相关属性
+废话不多说 我们上一段代码演示一下 这篇的主题
+CABasicAnimation * scaleAnimation = [CABasicAnimation animation];scaleAnimation.keyPath = @&quot;transform.s
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-13T03:46:45.000Z" class="post-list__meta--date date">2018-11-13</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/11/13/20181113AllKeypathOfCALayer/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/08/20181108AwemeAlbumAnimation/" title="link to post.title">iOS抖音右下角专辑动画</a></h2>
+      <p class="excerpt">
+    
+      前言
+前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画
+上图看下
+
+再看下抖音的
+
+具体实现思路
+首先需要3涨素材 这个在demo中就可以找到哈
+在文章底部demo中有
+
+ContrainerView
+Background Layer
+Album (UIImageView)
+
+
+我们首先写个 MusicAlbumView 继承自UIView
+@interface MusicAlbumView : UIView@property (nonatomic, strong)
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-08T03:52:06.000Z" class="post-list__meta--date date">2018-11-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/08/20181108AwemeAlbumAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/06/20181106AwemeTopBottomScrollDemo/" title="link to post.title">iOS抖音的上下滑实现</a></h2>
+      <p class="excerpt">
+    
+      前言
+一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,
+
+技术实现原理
+
+UITableView
+
+其实就是一个UITableView改变上下显示范围. talk is cheap show me the code
+我说话不绕弯子,代码如下 实现起来非常简单
+_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -SCREEN_HEIGHT, SCREEN_WID
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-06T09:55:09.000Z" class="post-list__meta--date date">2018-11-06</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/06/20181106AwemeTopBottomScrollDemo/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
   
     
     <li>
@@ -233,220 +451,6 @@ demo
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2018/09/29/20180929BreathAnimation/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/09/20/20180920IncreasingTapAreaOfButton/" title="link to post.title">iOS扩大UIButton的点击的响应范围</a></h2>
-      <p class="excerpt">
-    
-      前言
-开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小.
-今天的文章和大家分享一下解决这种问题的代码
-实现思路
-
-子类话UIButton 复写 它的hitTest:方法
-子类话UIButton 复写 point:inside:withEvent: 方法
-
-第一种方式
-override func hitTest(_ point: CGPoint, with event: UIEvent?) -&amp;gt; UIView? &amp;#123;	let biggerButtonFrame 
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-09-20T01:40:06.000Z" class="post-list__meta--date date">2018-09-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/09/20/20180920IncreasingTapAreaOfButton/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/09/18/20180918KeyboardAnimation/" title="link to post.title">iOS键盘动画细节</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程
-上图
-
-动画细节代码
-细节核心主要是通知中的一些key
-
-动画时长
-动画的出现方式
-
-...
-下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotification
-[[NSNotificationCenter defaultCenter] addObserver:self                                             selector:@sel
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-09-18T01:49:58.000Z" class="post-list__meta--date date">2018-09-18</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/09/18/20180918KeyboardAnimation/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/09/02/20180902Beacon/" title="link to post.title">船与灯塔</a></h2>
-      <p class="excerpt">
-    
-      前言
-
-荷兰🇳🇱被称为&quot;海上马车夫&quot;，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。
-船🚢
-它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，造这艘船的主人希望能靠这只船养家糊口，但又舍不得花更多的钱买好的木料来制造它。
-灯塔
-这是一座集成很多高新科技的灯塔，塔基可以在海上漂浮，自动平衡系统让他在海浪的动荡中稳如泰山，灯塔的父母距离这座新的灯塔不远，形成海上灯塔群，发出很强的激光束，指明航线方向，这坐新的灯塔还能发出加
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-09-02T04:12:51.000Z" class="post-list__meta--date date">2018-09-02</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/文学/">文学</a>
-
-</span><a class="btn-border-small" href="/2018/09/02/20180902Beacon/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/08/17/20180817CPU-thread-debug/" title="link to post.title">iOS中CPU线程调试高级技巧</a></h2>
-      <p class="excerpt">
-    
-      前言
-最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿...
-为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只能看见一坨对象地址,除此以外连个方法名都没有的时候真是手足无措.本篇介绍一个高级调试 方法,使用符号表和相关 指令寻踪 相关代码调用,写的不好 大佬们请轻喷.代码相关过程感谢同事 陈豪的大力支持.
-Talk is cheap show me the code
-我们的实现思路是找到动态库的首地址
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-08-17T09:19:23.000Z" class="post-list__meta--date date">2018-08-17</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/08/17/20180817CPU-thread-debug/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/08/13/20180813TapticEngineFeedback/" title="link to post.title">Taptic Engine振动反馈</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engine，在设计上有所升级。
-Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 Force Touch 以及 3D Touch，不同的屏幕操作，可以感受到不同的振动触觉效果，带来更好的用户体验
-触觉振动体验
-振动代码(旧方案)
-调用
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-08-13T06:28:04.000Z" class="post-list__meta--date date">2018-08-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/08/13/20180813TapticEngineFeedback/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/07/23/20180723ToolBar-Blur/" title="link to post.title">利用UIToolBar做高斯模糊背景</a></h2>
-      <p class="excerpt">
-    
-      
-- (UIView *)containerBackgroundView &amp;#123;    if (!_containerBackgroundView) &amp;#123;        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectZero];        toolBar.barStyle = UIBarStyleBlack;        toolBar.clipsToBounds = YES;        _cont
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-07-23T10:22:05.000Z" class="post-list__meta--date date">2018-07-23</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/07/23/20180723ToolBar-Blur/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/07/18/20180718Linux-Bash/" title="link to post.title">Linux 终端 Bash 常用快捷键介绍及经验</a></h2>
-      <p class="excerpt">
-    
-      
-bash及其特性
-
-bash实质上是一个可执行程序，一个用户的工作环境。
-在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。
-可以使用pstree命令查看当前shell下的子shell个数。
-
-1. 最重要的自动补全
-
-
-
-命令
-解释
-
-
-
-
-Tab
-自动补全
-
-
-
-2. 编辑跳转
-
-
-
-命令
-解释
-
-
-
-
-Ctrl + A
-跳转到当前行首
-
-
-Ctrl + E
-跳转到当前行末
-
-
-Alt + F
-将光标在当前行上向后移动一
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-07-18T01:29:39.000Z" class="post-list__meta--date date">2018-07-18</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/07/18/20180718Linux-Bash/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/25/20180625FilterString/" title="link to post.title">Objective-C中使用正则去除非数字字母汉字</a></h2>
-      <p class="excerpt">
-    
-      前言
-今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
-
-带着这个疑问开始今天的文章
-准备工作
-创建个demo 代码如下
-@interface ViewController ()@property (weak, nonatomic) IBOutlet UITextField *input;@property (weak, nonatomic) IBOutlet UILabel *label;@end@implementation ViewController- (void)viewDi
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-25T10:35:17.000Z" class="post-list__meta--date date">2018-06-25</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/06/25/20180625FilterString/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
