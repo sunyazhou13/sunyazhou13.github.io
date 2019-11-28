@@ -192,32 +192,32 @@
 
   <section class="post">
     <h1 id="前言">前言</h1>
-<p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="external">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
+<p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="noopener">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
 <p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
 <h2 id="swift-4.0-中的可变数组技巧">Swift 4.0 中的可变数组技巧</h2>
 <p>我们可用 Xcode 创建playground 来进行练习</p>
 <p><strong>首先创建个数组</strong></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</span><br></pre></td></tr></table></figure>
 <p><strong>for in 循环遍历</strong></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>打印</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3 4 5 6</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5 6</span><br></pre></td></tr></table></figure>
 <p><strong>想要扣除第一个元素剩余的元素进行迭代遍历呢？</strong></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>()&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>()&#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>打印</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">2 3 4 5 6</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">2 3 4 5 6</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>dropFirst() 函数参数是可以添加数值的 for x in array.dropFirst(3) 打印:4 5 6.</p>
 </blockquote>
 <p>有 <code>first</code> 的地方基本就有<code>last</code></p>
 <p><strong>想要扣除最后 3 个元素以外的元素进行遍历？</strong></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">3</span>)&#123;</div><div class="line">    <span class="built_in">print</span>(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">3</span>)&#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>打印</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">1 2 3</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
 <p><strong>带下标和数组元素遍历</strong></p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> (num, element) <span class="keyword">in</span> array.enumerated() &#123;</div><div class="line">    <span class="built_in">print</span>(num, element)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (num, element) <span class="keyword">in</span> array.enumerated() &#123;</span><br><span class="line">    <span class="built_in">print</span>(num, element)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>打印 左边下标 右边元素</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">0 1</div><div class="line">1 2</div><div class="line">2 3</div><div class="line">3 4</div><div class="line">4 5</div><div class="line">5 6</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">0 1</span><br><span class="line">1 2</span><br><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">4 5</span><br><span class="line">5 6</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>左边下标 右边元素</p>
 </blockquote>
@@ -405,8 +405,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

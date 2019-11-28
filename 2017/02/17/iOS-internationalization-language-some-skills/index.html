@@ -192,9 +192,9 @@
 
   <section class="post">
     <h2 id="代码获取国际化语言数组">代码获取国际化语言数组</h2>
-<p>获取当前app使用的语言 <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</div><div class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</div></pre></td></tr></table></figure></p>
+<p>获取当前app使用的语言 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *langArr1 = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] valueForKey:<span class="string">@"AppleLanguages"</span>];</span><br><span class="line"><span class="built_in">NSString</span> *language1 = langArr1.firstObject;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"模拟器语言：%@"</span>,language1);</span><br></pre></td></tr></table></figure></p>
 <p>切换语言 <code>en</code>代表 英语, <code>zh-Hans</code> 简体中文, <code>zh-Hant</code> 繁体中文.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *lans = @[<span class="string">@"en"</span>];</div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setObject:lans forKey:<span class="string">@"AppleLanguages"</span>];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *lans = @[<span class="string">@"en"</span>];</span><br><span class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setObject:lans forKey:<span class="string">@"AppleLanguages"</span>];</span><br></pre></td></tr></table></figure>
 <h2 id="修改scheme切换启动语言">修改scheme切换启动语言</h2>
 <figure>
 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/iOS%E8%AF%AD%E8%A8%80%E6%9C%AC%E5%9C%B0%E5%8C%96-%E5%9B%BD%E9%99%85%E5%8C%96%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7/Snip20170217_2.png" alt="图1"><figcaption>图1</figcaption>
@@ -209,13 +209,13 @@
 其它小伙伴们自己总结一下也可以 注意 <strong>空格</strong></p>
 </blockquote>
 <h2 id="国际化取不同图片代码">国际化取不同图片代码</h2>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *imageView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">//xxx 是国际化 图片的名字 例如xxx.png </span></div><div class="line">    <span class="comment">//如果是 xxx.jpg 必须写把xxx 替换成xxx.jpg</span></div><div class="line">    <span class="built_in">NSString</span> *imageName = <span class="built_in">NSLocalizedString</span>(<span class="string">@"xxx"</span>, <span class="literal">nil</span>); </div><div class="line">    <span class="keyword">self</span>.imageView.image = [<span class="built_in">UIImage</span> imageNamed:imageName];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>下面是我写的一个<a href="https://github.com/sunyazhou13/LocalizedDemo/tree/master" target="_blank" rel="external">demo</a><br>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *imageView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">//xxx 是国际化 图片的名字 例如xxx.png </span></span><br><span class="line">    <span class="comment">//如果是 xxx.jpg 必须写把xxx 替换成xxx.jpg</span></span><br><span class="line">    <span class="built_in">NSString</span> *imageName = <span class="built_in">NSLocalizedString</span>(<span class="string">@"xxx"</span>, <span class="literal">nil</span>); </span><br><span class="line">    <span class="keyword">self</span>.imageView.image = [<span class="built_in">UIImage</span> imageNamed:imageName];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>下面是我写的一个<a href="https://github.com/sunyazhou13/LocalizedDemo/tree/master" target="_blank" rel="noopener">demo</a><br>
 主要完成 如下内容 1. 工程名称配置plist 国际化<br>
 2. 字符串国际化<br>
 3. 自定义字符串国际化<br>
 4. 图片国际化</p>
-<p>参考 <a href="http://www.jianshu.com/p/88c1b65e3ddb" target="_blank" rel="external">VV木公子</a></p>
+<p>参考 <a href="http://www.jianshu.com/p/88c1b65e3ddb" target="_blank" rel="noopener">VV木公子</a></p>
 <p>全文完</p>
 
   </section>
@@ -408,8 +408,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

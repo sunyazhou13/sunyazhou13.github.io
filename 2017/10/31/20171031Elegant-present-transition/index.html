@@ -192,10 +192,10 @@
 
   <section class="post">
     <h1 id="前言">前言</h1>
-<p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="external">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
+<p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="noopener">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
 <blockquote>
-<p>swift 点这里下载<a href="https://koenig-media.raywenderlich.com/uploads/2016/08/Medal_Count_Completed.zip" target="_blank" rel="external">demo</a><br>
-Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPresentation" target="_blank" rel="external">demo</a></p>
+<p>swift 点这里下载<a href="https://koenig-media.raywenderlich.com/uploads/2016/08/Medal_Count_Completed.zip" target="_blank" rel="noopener">demo</a><br>
+Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPresentation" target="_blank" rel="noopener">demo</a></p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fd8747d4c220c683f587db45126037b080e5c380/20171031Elegant-present-transition/Elegant-present-transition.gif"></p>
 <h3 id="需求背景">需求背景</h3>
@@ -207,11 +207,11 @@ Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPre
 <ul>
 <li>导入头文件</li>
 </ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"SlideInPresentationManager.h"</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"SlideInPresentationManager.h"</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>声明属性</li>
 </ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SlideInPresentationManager *slideInTransitioningDelegate;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SlideInPresentationManager *slideInTransitioningDelegate;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>弹出模态控制器的时候如下代码</li>
 </ul>
@@ -439,8 +439,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

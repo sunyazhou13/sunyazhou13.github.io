@@ -202,10 +202,10 @@
 </ul>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6db967f376eddf5c04bda7db38be27b07f2d48bc/20180817CPU-thread-debug/enable_dysm.png"></p>
 <h2 id="导入头文件">1.导入头文件</h2>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>这是mac os的可执行文件的动态链接库头文件 内部内建函数有几个我们需要用到</p>
 <h2 id="复制下面代码到你的相关调用的地方">2.复制下面代码到你的相关调用的地方</h2>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">//1</span></div><div class="line">uint32_t count = _dyld_image_count();</div><div class="line">DDLogInfo(<span class="string">@"Dyld image count %d"</span>, count);</div><div class="line"><span class="comment">//2</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">    <span class="keyword">char</span> *image_name = (<span class="keyword">char</span> *)_dyld_get_image_name(i);</div><div class="line">    <span class="comment">//3</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> mach_header *mh = _dyld_get_image_header(i);</div><div class="line">    intptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);</div><div class="line">    <span class="comment">//4</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Image name %s at address 0x%llx and ASLR slide 0x%lx.\n"</span>,</div><div class="line">              image_name, (mach_vm_address_t)mh, vmaddr_slide);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1</span></span><br><span class="line">uint32_t count = _dyld_image_count();</span><br><span class="line">DDLogInfo(<span class="string">@"Dyld image count %d"</span>, count);</span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">    <span class="keyword">char</span> *image_name = (<span class="keyword">char</span> *)_dyld_get_image_name(i);</span><br><span class="line">    <span class="comment">//3</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> mach_header *mh = _dyld_get_image_header(i);</span><br><span class="line">    intptr_t vmaddr_slide = _dyld_get_image_vmaddr_slide(i);</span><br><span class="line">    <span class="comment">//4</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Image name %s at address 0x%llx and ASLR slide 0x%lx.\n"</span>,</span><br><span class="line">              image_name, (mach_vm_address_t)mh, vmaddr_slide);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我解释一下以上代码</p>
 <ul>
 <li>1.拿出当前镜像数量<br>
@@ -233,7 +233,7 @@
 <p>注意:<strong>这一步非常重要 如果不好使,请重试几次.</strong></p>
 </blockquote>
 <h4 id="拿出main函数的首地址-aslr中搜搜的-首地址然后复制-回到终端中输入">拿出main函数的首地址 ASLR中搜搜的 首地址然后复制 <strong>回到终端中输入</strong></h4>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif -l  0x1006b8000</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif -l  0x1006b8000</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意:<strong>这里是符号表路径</strong>,如果不知道在哪里找到请google一下.</p>
 </blockquote>
@@ -434,8 +434,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

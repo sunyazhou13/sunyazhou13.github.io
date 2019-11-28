@@ -200,7 +200,7 @@
 <li>子类话UIButton 复写 point:inside:withEvent: 方法</li>
 </ul>
 <h2 id="第一种方式">第一种方式</h2>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span><span class="params">(<span class="number">_</span> point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">	<span class="keyword">let</span> biggerButtonFrame = theButton.frame.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>) <span class="comment">// 1	</span></div><div class="line">	<span class="keyword">if</span> biggerButtonFrame.<span class="built_in">contains</span>(point) &#123; <span class="comment">// 2</span></div><div class="line">		<span class="keyword">return</span> theButton <span class="comment">// 3</span></div><div class="line">	&#125;		</div><div class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.hitTest(point, with: event) <span class="comment">// 4</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span><span class="params">(<span class="number">_</span> point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">UIView</span>? &#123;</span><br><span class="line">	<span class="keyword">let</span> biggerButtonFrame = theButton.frame.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>) <span class="comment">// 1	</span></span><br><span class="line">	<span class="keyword">if</span> biggerButtonFrame.<span class="built_in">contains</span>(point) &#123; <span class="comment">// 2</span></span><br><span class="line">		<span class="keyword">return</span> theButton <span class="comment">// 3</span></span><br><span class="line">	&#125;		</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.hitTest(point, with: event) <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><ol type="1">
 <li>让theButton的 x 扩大 30, y 扩大 30 (正数为缩小 负数为放大. 然后宽高 分别是2 * 30和 2 * 30)</li>
@@ -220,9 +220,9 @@
 </blockquote>
 <h2 id="第二种方式">第二种方式</h2>
 <p>复写UIView的point:方法</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">point</span><span class="params">(inside point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">	<span class="keyword">let</span> biggerFrame = bounds.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> biggerFrame.<span class="built_in">contains</span>(point)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">point</span><span class="params">(inside point: CGPoint, with event: UIEvent?)</span></span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">	<span class="keyword">let</span> biggerFrame = bounds.insetBy(dx: -<span class="number">30</span>, dy: -<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> biggerFrame.<span class="built_in">contains</span>(point)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>OC的版本是这样</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">	<span class="comment">//这里写上 </span></div><div class="line">	</div><div class="line">	<span class="built_in">CGRectInset</span>(&lt;<span class="meta">#CGRect rect#&gt;, <span class="meta-string">&lt;#CGFloat dx#&gt;</span>, <span class="meta-string">&lt;#CGFloat dy#&gt;</span>)</span></div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line">	<span class="comment">//这里写上 </span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGRectInset</span>(&lt;<span class="meta">#CGRect rect#&gt;, <span class="meta-string">&lt;#CGFloat dx#&gt;</span>, <span class="meta-string">&lt;#CGFloat dy#&gt;</span>)</span></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但是 第二种方式 其实 是 hitTest:方法调用之前UIView的判断,它判断当前点击的point是否在这个UIView上.</p>
 <p>不过 还是推荐第一种方式</p>
 <h2 id="核心代码">核心代码</h2>
@@ -236,8 +236,8 @@
 <p>首先: 我们明确 这个API的含义 只要传入正数 它就缩放 那么 宽高也会适当前传入的dx和dy来决定 缩放比</p>
 <p>因为是中心点缩放 所以宽高 <strong>要 X 2</strong>,因为有两侧嘛,左侧缩小30右侧也需要缩小30,上部和底部是一样的.</p>
 <p>大家可自行查阅google看下</p>
-<p><a href="https://rolandleth.com/increasing-the-tap-area-of-a-uibutton" target="_blank" rel="external">参考Increasing the tap area of a UIButton</a><br>
-<a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="external">参考 iOS触摸事件全家桶</a></p>
+<p><a href="https://rolandleth.com/increasing-the-tap-area-of-a-uibutton" target="_blank" rel="noopener">参考Increasing the tap area of a UIButton</a><br>
+<a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="noopener">参考 iOS触摸事件全家桶</a></p>
 <p>全文完</p>
 
   </section>
@@ -436,8 +436,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

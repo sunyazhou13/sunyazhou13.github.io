@@ -206,15 +206,15 @@
 小括号 -&gt; 代表开区间, 开区间代表不包含.<br>
 所以以下看到</p>
 </blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random()   <span class="comment">//"4058056034"</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">arc4random()   <span class="comment">//"4058056034"</span></span><br></pre></td></tr></table></figure>
 <p>如果我们想生成一个<strong>指定范围内</strong>的整型随机数，则可以使用<code>arc4random()</code> <code>%</code> <code>upper_bound</code>的方式，其中<code>upper_bound</code>指定的是上边界，如下代码:</p>
 <p>求一个10以内的随机数</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random() % <span class="number">10</span>  <span class="comment">// 0~9 注意没有10哈</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">arc4random() % <span class="number">10</span>  <span class="comment">// 0~9 注意没有10哈</span></span><br></pre></td></tr></table></figure>
 <p>不过使用这种方法，在<code>upper_bound</code>不是<code>2</code>的幂次方时，会产生一个所谓<code>Modulo bias</code>(模偏差)的问题。</p>
 <p>可以使用<code>arc4random_uniform()</code>，它接受一个<code>UInt32</code>类型的参数，<strong>指定随机数区间的上边界</strong><code>upper_bound</code>，该函数生成的随机数范围是[0, upper_bound)，如下所示：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random_uniform(<span class="number">10</span>)		<span class="comment">// 5</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">arc4random_uniform(<span class="number">10</span>)		<span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
 <p>那问题来了？我想指定区间随机 比如: <code>[10, 200)</code>.</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> maxNum: <span class="type">UInt32</span> = <span class="number">200</span></div><div class="line"><span class="keyword">let</span> minNum: <span class="type">UInt32</span> = <span class="number">10</span></div><div class="line">arc4random_uniform(maxNum - minNum) + minNum   <span class="comment">// 153</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> maxNum: <span class="type">UInt32</span> = <span class="number">200</span></span><br><span class="line"><span class="keyword">let</span> minNum: <span class="type">UInt32</span> = <span class="number">10</span></span><br><span class="line">arc4random_uniform(maxNum - minNum) + minNum   <span class="comment">// 153</span></span><br></pre></td></tr></table></figure>
 <p>可以看到上述结果 是 <code>153</code>.</p>
 <p>swift也可以用C函数中的随机 eg: random() 或者 rand(),但是这些有下面缺点:</p>
 <ul>
@@ -222,34 +222,34 @@
 <li>这两个函数的上限在<code>RAND_MAX=0X7fffffff</code>(2147483647)，是<code>arc4random</code>的一半.</li>
 <li><code>rand()</code>函数以有规律的低位循环方式实现，更容易预测</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><div class="line">srand(UInt32(time(nil)))  <span class="comment">// 种子,random对应的是srandom</span></div><div class="line">rand()				      <span class="comment">// 1,314,695,483</span></div><div class="line">rand() % <span class="number">10</span>	   			  <span class="comment">// 8</span></div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">srand(UInt32(time(nil)))  <span class="comment">// 种子,random对应的是srandom</span></span><br><span class="line">rand()				      <span class="comment">// 1,314,695,483</span></span><br><span class="line">rand() % <span class="number">10</span>	   			  <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
 <h2 id="位整型随机数">64位整型随机数</h2>
 <p>我们发现这些函数主要都是针对<code>32</code>位整型数来操作的.如果需要生成一个<code>64</code>位的整型随机数呢?</p>
 <p>可以使用如下代码:</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">arc4random</span> &lt;T: ExpressibleByIntegerLiteral&gt; <span class="params">(type: T.<span class="keyword">Type</span>)</span></span> -&gt; <span class="type">T</span> &#123;</div><div class="line">    <span class="keyword">var</span> r: <span class="type">T</span> = <span class="number">0</span></div><div class="line">    arc4random_buf(&amp;r, <span class="type">MemoryLayout</span>&lt;<span class="type">T</span>&gt;.size)</div><div class="line">    <span class="keyword">return</span> r</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">arc4random</span> &lt;T: ExpressibleByIntegerLiteral&gt; <span class="params">(type: T.<span class="keyword">Type</span>)</span></span> -&gt; <span class="type">T</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> r: <span class="type">T</span> = <span class="number">0</span></span><br><span class="line">    arc4random_buf(&amp;r, <span class="type">MemoryLayout</span>&lt;<span class="type">T</span>&gt;.size)</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以像下面这样调用</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>) <span class="comment">//8021765689869396105</span></div><div class="line">arc4random(type: <span class="type">UInt32</span>.<span class="keyword">self</span>) <span class="comment">//1293034028</span></div><div class="line">arc4random(type: <span class="type">UInt16</span>.<span class="keyword">self</span>) <span class="comment">//29059</span></div><div class="line">arc4random(type: <span class="type">UInt8</span>.<span class="keyword">self</span>)  <span class="comment">//183</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>) <span class="comment">//8021765689869396105</span></span><br><span class="line">arc4random(type: <span class="type">UInt32</span>.<span class="keyword">self</span>) <span class="comment">//1293034028</span></span><br><span class="line">arc4random(type: <span class="type">UInt16</span>.<span class="keyword">self</span>) <span class="comment">//29059</span></span><br><span class="line">arc4random(type: <span class="type">UInt8</span>.<span class="keyword">self</span>)  <span class="comment">//183</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>swift 4 语法</p>
 </blockquote>
 <p>这个函数中使用了<code>arc4random_buf()</code>来生成随机数。</p>
 <p>这个函数使用ARC4加密的随机数来填充该函数第二个参数指定的长度的缓存区域。因此，如果我们传入的是sizeof(UInt64)，该函数便会生成一个随机数来填充8个字节的区域，并返回给r。那么64位的随机数生成方法便可以如下实现：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UInt64</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">(lower: UInt64 = <span class="built_in">min</span>, upper: UInt64 = <span class="built_in">max</span>)</span></span> -&gt; <span class="type">UInt64</span> &#123;</div><div class="line">        <span class="keyword">var</span> m: <span class="type">UInt64</span></div><div class="line">        <span class="keyword">let</span> u = upper - lower</div><div class="line">        <span class="keyword">var</span> r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        <span class="keyword">if</span> u &gt; <span class="type">UInt64</span>(<span class="type">Int64</span>.<span class="built_in">max</span>) &#123;</div><div class="line">            m = <span class="number">1</span> + ~u</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            m = ((<span class="built_in">max</span> - (u * <span class="number">2</span>)) + <span class="number">1</span>) % u</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> r &lt; m &#123;</div><div class="line">            r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> (r % u) + lower</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UInt64</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">random</span><span class="params">(lower: UInt64 = <span class="built_in">min</span>, upper: UInt64 = <span class="built_in">max</span>)</span></span> -&gt; <span class="type">UInt64</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> m: <span class="type">UInt64</span></span><br><span class="line">        <span class="keyword">let</span> u = upper - lower</span><br><span class="line">        <span class="keyword">var</span> r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">if</span> u &gt; <span class="type">UInt64</span>(<span class="type">Int64</span>.<span class="built_in">max</span>) &#123;</span><br><span class="line">            m = <span class="number">1</span> + ~u</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            m = ((<span class="built_in">max</span> - (u * <span class="number">2</span>)) + <span class="number">1</span>) % u</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> r &lt; m &#123;</span><br><span class="line">            r = arc4random(type: <span class="type">UInt64</span>.<span class="keyword">self</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (r % u) + lower</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们来试用一下：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="type">UInt64</span>.random()      <span class="comment">//9223372036854775807</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="type">UInt64</span>.random()      <span class="comment">//9223372036854775807</span></span><br></pre></td></tr></table></figure>
 <h2 id="浮点型随机数">浮点型随机数</h2>
 <p>如果需要一个浮点值的随机数，则可以使用drand48函数，这个函数产生一个[0.0, 1.0]区间中的浮点数。这个函数的返回值是Double类型。其使用如下所示：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">srand48(<span class="type">Int</span>(time(<span class="literal">nil</span>)))</div><div class="line">drand48()  <span class="comment">//0.4643666202473504</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">srand48(<span class="type">Int</span>(time(<span class="literal">nil</span>)))</span><br><span class="line">drand48()  <span class="comment">//0.4643666202473504</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意:需要先调用srand48()生成种子</p>
 </blockquote>
 <h2 id="示例实践">示例实践</h2>
 <p>如何生成一个0~9 这几个数组做个随机排序,实现类似银行类动态键盘的功能</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>]</div><div class="line">arr.<span class="built_in">sort</span> &#123; (s1, s2) -&gt; <span class="type">Bool</span> <span class="keyword">in</span></div><div class="line">    arc4random() &lt; arc4random()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(arr)</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"0"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>]</span><br><span class="line">arr.<span class="built_in">sort</span> &#123; (s1, s2) -&gt; <span class="type">Bool</span> <span class="keyword">in</span></span><br><span class="line">    arc4random() &lt; arc4random()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br></pre></td></tr></table></figure>
 <p>在闭包中，随机生成两个数，比较它们之间的大小，来确定数组的排序.注意不需要重新赋值了在swift4上.</p>
 <h1 id="总结">总结</h1>
 <p>随机数相关的知识容易忘记,特此记录一些技巧,争取每个月发布两篇文章.</p>
-<p><a href="http://southpeak.github.io/2015/09/26/ios-techset-5/" target="_blank" rel="external">参考</a></p>
+<p><a href="http://southpeak.github.io/2015/09/26/ios-techset-5/" target="_blank" rel="noopener">参考</a></p>
 
   </section>
 
@@ -432,8 +432,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

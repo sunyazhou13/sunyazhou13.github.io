@@ -199,14 +199,14 @@
 <h3 id="ios11新的设备唯一标识-dcdevice">iOS11新的设备唯一标识 DCDevice</h3>
 <h4 id="介绍-api">介绍 API</h4>
 <p>我们首先看看<code>DCDevice</code>类都有啥</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;DeviceCheck/DeviceCheck.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"></div><div class="line">API_AVAILABLE(ios(<span class="number">11.0</span>), tvos(<span class="number">11.0</span>)) API_UNAVAILABLE(watchos, macos)</div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DCDevice</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="comment">//当前设备</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">class</span>, <span class="keyword">readonly</span>) DCDevice *currentDevice;</div><div class="line"></div><div class="line"><span class="comment">//是否支持</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">getter</span>=isSupported, <span class="keyword">readonly</span>) <span class="built_in">BOOL</span> supported;</div><div class="line"></div><div class="line"><span class="comment">//生成唯一标识的 token 注意:每call一次就会生成一个新的 token(和前边不同)</span></div><div class="line">- (<span class="keyword">void</span>)generateTokenWithCompletionHandler:(<span class="keyword">void</span>(^)(<span class="built_in">NSData</span> * _Nullable token, <span class="built_in">NSError</span> * _Nullable error))completion;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;DeviceCheck/DeviceCheck.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></span><br><span class="line"></span><br><span class="line">API_AVAILABLE(ios(<span class="number">11.0</span>), tvos(<span class="number">11.0</span>)) API_UNAVAILABLE(watchos, macos)</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DCDevice</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="comment">//当前设备</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">class</span>, <span class="keyword">readonly</span>) DCDevice *currentDevice;</span><br><span class="line"></span><br><span class="line"><span class="comment">//是否支持</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">getter</span>=isSupported, <span class="keyword">readonly</span>) <span class="built_in">BOOL</span> supported;</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成唯一标识的 token 注意:每call一次就会生成一个新的 token(和前边不同)</span></span><br><span class="line">- (<span class="keyword">void</span>)generateTokenWithCompletionHandler:(<span class="keyword">void</span>(^)(<span class="built_in">NSData</span> * _Nullable token, <span class="built_in">NSError</span> * _Nullable error))completion;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></span><br></pre></td></tr></table></figure>
 <p>接口简直不能再简单了 <strong>创建实例调方法</strong></p>
 <h4 id="使用-api">使用 API</h4>
 <p>下面我们来看下如何使用<code>DCDevice</code></p>
 <p>导入头文件</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;DeviceCheck/DeviceCheck.h&gt;</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;DeviceCheck/DeviceCheck.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>check 是否支持 如果支持 的话会在回调以后返回 <code>token</code>(NSData)</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    </div><div class="line">    <span class="comment">//下面是调用代码</span></div><div class="line">    <span class="keyword">if</span>([DCDevice currentDevice].supported)&#123;</div><div class="line">        [[DCDevice currentDevice] generateTokenWithCompletionHandler:^(<span class="built_in">NSData</span> * _Nullable token, <span class="built_in">NSError</span> * _Nullable error) &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,token);</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//下面是调用代码</span></span><br><span class="line">    <span class="keyword">if</span>([DCDevice currentDevice].supported)&#123;</span><br><span class="line">        [[DCDevice currentDevice] generateTokenWithCompletionHandler:^(<span class="built_in">NSData</span> * _Nullable token, <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,token);</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>token 是个 2188字节(2k 多点)的二进制流,很小</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/213b6d379c40ee75415b6a3447085d7914181ef3/20170930DeviceCheck/DCDevice_code%402x.png"></p>
 <p>我尝试各种字符串编码最终也不知道里面是啥 没能成功打印出来</p>
@@ -219,7 +219,7 @@
 <blockquote>
 <p>但是对于购买了二手手机的使用场景，可能会出现一些边界情况，这个在业务中也需要考虑进去。</p>
 </blockquote>
-<p>引自<a href="https://github.com/ChenYilong/iOS11AdaptationTips/issues/22" target="_blank" rel="external">iOS11开发新特性之实用小tips</a></p>
+<p>引自<a href="https://github.com/ChenYilong/iOS11AdaptationTips/issues/22" target="_blank" rel="noopener">iOS11开发新特性之实用小tips</a></p>
 <p>首先要明白我们 的 token 需要发给谁</p>
 <ol type="1">
 <li>token 需要发送给我们自己公司的<code>server</code>做记录</li>
@@ -230,7 +230,7 @@
 <h5 id="查询接口">查询接口</h5>
 <p><strong>https://api.development.devicecheck.apple.com/v1/query_two_bits</strong></p>
 <p>可以用终端自己模拟一下 就当作你自己是自己的服务器访问Apple 的服务器</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">curl -i --verbose -H <span class="string">"Authorization: Bearer &lt;GeneratedJWT&gt;"</span> \</div><div class="line">-X POST --data-binary @ValidQueryRequest.json \ </div><div class="line">https://api.development.devicecheck.apple.com/v1/query_two_bits</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -i --verbose -H <span class="string">"Authorization: Bearer &lt;GeneratedJWT&gt;"</span> \</span><br><span class="line">-X POST --data-binary @ValidQueryRequest.json \ </span><br><span class="line">https://api.development.devicecheck.apple.com/v1/query_two_bits</span><br></pre></td></tr></table></figure>
 <p>json 的定义如下:</p>
 <table>
 <thead>
@@ -263,10 +263,10 @@
 </tbody>
 </table>
 <p>它会 返回 如下格式</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">   <span class="attr">"device_token"</span> : <span class="string">"wlkCDA2Hy/CfrMqVAShs1BAR/0sAiuRIUm5jQg0a..."</span></div><div class="line">   <span class="string">"transaction_id"</span> : <span class="string">"5b737ca6-a4c7-488e-b928-8452960c4be9"</span>,</div><div class="line">   <span class="attr">"timestamp"</span> : <span class="number">1487716472000</span> </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">"device_token"</span> : <span class="string">"wlkCDA2Hy/CfrMqVAShs1BAR/0sAiuRIUm5jQg0a..."</span></span><br><span class="line">   <span class="string">"transaction_id"</span> : <span class="string">"5b737ca6-a4c7-488e-b928-8452960c4be9"</span>,</span><br><span class="line">   <span class="attr">"timestamp"</span> : <span class="number">1487716472000</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="更新接口">更新接口</h5>
 <p><strong>https://api.development.devicecheck.apple.com/v1/update_two_bits</strong></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">curl -i --verbose -H <span class="string">"Authorization: Bearer &lt;GeneratedJWT&gt;"</span> \</div><div class="line">-X POST --data-binary @ValidUpdateRequest.json \</div><div class="line">https://api.development.devicecheck.apple.com/v1/update_two_bits</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -i --verbose -H <span class="string">"Authorization: Bearer &lt;GeneratedJWT&gt;"</span> \</span><br><span class="line">-X POST --data-binary @ValidUpdateRequest.json \</span><br><span class="line">https://api.development.devicecheck.apple.com/v1/update_two_bits</span><br></pre></td></tr></table></figure>
 <p>json 的定义如下:</p>
 <table>
 <thead>
@@ -311,7 +311,7 @@
 </tbody>
 </table>
 <p>json 的示例:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">   <span class="attr">"device_token"</span> : <span class="string">"wlkCDA2Hy/CfrMqVAShs1BAR/0sAiuRIUm5jQg0a..."</span></div><div class="line">   <span class="string">"transaction_id"</span> : <span class="string">"5b737ca6-a4c7-488e-b928-8452960c4be9"</span>,</div><div class="line">   <span class="attr">"timestamp"</span> : <span class="number">1487716472000</span>,</div><div class="line">   <span class="attr">"bit0"</span> : <span class="literal">true</span>,</div><div class="line">   <span class="attr">"bit1"</span> : <span class="literal">false</span> </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">"device_token"</span> : <span class="string">"wlkCDA2Hy/CfrMqVAShs1BAR/0sAiuRIUm5jQg0a..."</span></span><br><span class="line">   <span class="string">"transaction_id"</span> : <span class="string">"5b737ca6-a4c7-488e-b928-8452960c4be9"</span>,</span><br><span class="line">   <span class="attr">"timestamp"</span> : <span class="number">1487716472000</span>,</span><br><span class="line">   <span class="attr">"bit0"</span> : <span class="literal">true</span>,</span><br><span class="line">   <span class="attr">"bit1"</span> : <span class="literal">false</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="最终的方案">最终的方案</h3>
 <ol type="1">
 <li>iOS11以前版本暂且才用 UUID 等 keychian 方式</li>
@@ -506,8 +506,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

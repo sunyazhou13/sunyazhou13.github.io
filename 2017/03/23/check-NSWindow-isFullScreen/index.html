@@ -191,8 +191,8 @@
   </header>
 
   <section class="post">
-    <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="external">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
+    <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSWindow</span> (<span class="title">FullScreen</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)mn_isFullScreen</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (([<span class="keyword">self</span> styleMask] &amp; <span class="built_in">NSFullScreenWindowMask</span>) == <span class="built_in">NSFullScreenWindowMask</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>refs:<a href="http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion" target="_blank" rel="noopener">How to know if a NSWindow is fullscreen in Mac OS X Lion?</a></p>
 
   </section>
 
@@ -374,8 +374,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

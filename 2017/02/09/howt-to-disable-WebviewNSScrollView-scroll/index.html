@@ -192,7 +192,7 @@
 
   <section class="post">
     <p>在<code>webview</code>的<code>WebFrameLoadDelegate</code>代理里面实现如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#pragma mark -</span></div><div class="line"><span class="meta">#pragma mark - WebViewDelegate</span></div><div class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</div><div class="line">&#123;</div><div class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#pragma mark -</span></span><br><span class="line"><span class="meta">#pragma mark - WebViewDelegate</span></span><br><span class="line">- (<span class="keyword">void</span>)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame</span><br><span class="line">&#123;</span><br><span class="line">    [sender stringByEvaluatingJavaScriptFromString:<span class="string">@"document.documentElement.style.overflow='hidden'"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以上代码属于<code>macOS</code>上的开发内容.</p>
 
   </section>
@@ -376,8 +376,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

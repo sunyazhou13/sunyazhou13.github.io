@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 获取沙盒主目录路径</span></div><div class="line"><span class="built_in">NSString</span> *homeDir = <span class="built_in">NSHomeDirectory</span>();</div><div class="line"><span class="comment">// 获取Documents目录路径</span></div><div class="line"><span class="built_in">NSString</span> *docDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取Library的目录路径</span></div><div class="line"><span class="built_in">NSString</span> *libDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</div><div class="line"><span class="comment">// 获取Caches目录路径</span></div><div class="line"><span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</div><div class="line"><span class="comment">// 获取tmp目录路径</span></div><div class="line"><span class="built_in">NSString</span> *tmpDir =  <span class="built_in">NSTemporaryDirectory</span>();</div></pre></td></tr></table></figure>
+    <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取沙盒主目录路径</span></span><br><span class="line"><span class="built_in">NSString</span> *homeDir = <span class="built_in">NSHomeDirectory</span>();</span><br><span class="line"><span class="comment">// 获取Documents目录路径</span></span><br><span class="line"><span class="built_in">NSString</span> *docDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</span><br><span class="line"><span class="comment">// 获取Library的目录路径</span></span><br><span class="line"><span class="built_in">NSString</span> *libDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) lastObject];</span><br><span class="line"><span class="comment">// 获取Caches目录路径</span></span><br><span class="line"><span class="built_in">NSString</span> *cachesDir = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</span><br><span class="line"><span class="comment">// 获取tmp目录路径</span></span><br><span class="line"><span class="built_in">NSString</span> *tmpDir =  <span class="built_in">NSTemporaryDirectory</span>();</span><br></pre></td></tr></table></figure>
 
   </section>
 
@@ -369,8 +369,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -194,16 +194,16 @@
     <h1 id="前言">前言</h1>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/deprecated.png"></p>
 <p>最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">__attribute__((deprecated(<span class="string">"此方法已弃用,请使用xxxxx:方法"</span>)));</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">__attribute__((deprecated(<span class="string">"此方法已弃用,请使用xxxxx:方法"</span>)));</span><br></pre></td></tr></table></figure>
 <h3 id="场景1">场景1</h3>
 <p>我想标识一个方法使用其它方式传入某个参数</p>
 <p>例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">VideoEditorViewController</span> : <span class="title">UIViewController</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">NSURL</span> *videoPath;</div><div class="line"></div><div class="line">-(<span class="keyword">instancetype</span>)initWithUrl:(<span class="built_in">NSURL</span> *)path __attribute__((deprecated(<span class="string">"使用setVideoPath:方法传入"</span>)));</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">VideoEditorViewController</span> : <span class="title">UIViewController</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>)<span class="built_in">NSURL</span> *videoPath;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">instancetype</span>)initWithUrl:(<span class="built_in">NSURL</span> *)path __attribute__((deprecated(<span class="string">"使用setVideoPath:方法传入"</span>)));</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>这样调用的时候就直接显示警告了 告诉当前方法传入URL被弃用</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-deprecated-a-mothod-in-Objective-C/code.png"></p>
 <p>相关<code>__attribute__</code>更多用法 请参考苹果官方文档和其它博客 后续会持续更新更多用法</p>
 <p>全文完</p>
-<p><a href="http://www.jianshu.com/p/0237c34158f0" target="_blank" rel="external">参考</a></p>
+<p><a href="http://www.jianshu.com/p/0237c34158f0" target="_blank" rel="noopener">参考</a></p>
 
   </section>
 
@@ -389,8 +389,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

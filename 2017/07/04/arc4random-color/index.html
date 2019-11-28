@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> hue = ( arc4random() % <span class="number">256</span> / <span class="number">256.0</span> );  <span class="comment">//  0.0 to 1.0</span></div><div class="line">   <span class="built_in">CGFloat</span> saturation = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from white</span></div><div class="line">   <span class="built_in">CGFloat</span> brightness = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from black</span></div><div class="line">   <span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithHue:hue saturation:saturation brightness:brightness alpha:<span class="number">1</span>];</div></pre></td></tr></table></figure>
+    <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> hue = ( arc4random() % <span class="number">256</span> / <span class="number">256.0</span> );  <span class="comment">//  0.0 to 1.0</span></span><br><span class="line">   <span class="built_in">CGFloat</span> saturation = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from white</span></span><br><span class="line">   <span class="built_in">CGFloat</span> brightness = ( arc4random() % <span class="number">128</span> / <span class="number">256.0</span> ) + <span class="number">0.5</span>;  <span class="comment">//  0.5 to 1.0, away from black</span></span><br><span class="line">   <span class="built_in">UIColor</span> *color = [<span class="built_in">UIColor</span> colorWithHue:hue saturation:saturation brightness:brightness alpha:<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
 
   </section>
 
@@ -368,8 +368,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

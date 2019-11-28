@@ -194,7 +194,7 @@
     <h1 id="前言">前言</h1>
 <p>喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.</p>
 <h2 id="markdown插入音乐">markdown插入音乐</h2>
-<p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="external">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
+<p><code>markdown</code>其实就是 一种<code>html</code>的转换语法,其实内部也同时支持直接写<code>html</code>标签, 如果不了解各种标签请点击<a href="https://www.w3schools.com/tags/tag_iframe.asp" target="_blank" rel="noopener">w3cschool</a>查看各种 API 的用法,此时要用到的标签为<code>iframe</code>，代码如下所示，其中</p>
 <ul>
 <li><code>div</code>用于控制格式，若无则默认为居左</li>
 <li><code>frameborder</code>用于规定是否显示框架周围的边框，1为是，0为否</li>
@@ -205,14 +205,14 @@
 <blockquote>
 <p>值得注意的是，音频和视频在默认情况下是会自动循环播放的，可以修改链接的值进行修改 在<code>src</code>域中，<code>auto</code>值表示是否自动播放，当值为<code>1</code>时为自动播放，<code>0</code>则不是 在<code>src</code>域中，有些链接会附有<code>height</code>或<code>width</code>值，其表示表示播放框的基本宽高，可以更换其值以获得想要的播放框大小，此时可以不用填写外部的<code>width</code>及<code>height</code>.</p>
 </blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">life</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">400</span> <span class="attr">height</span>=<span class="string">140</span> <span class="attr">src</span>=<span class="string">"https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">life</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">400</span> <span class="attr">height</span>=<span class="string">140</span> <span class="attr">src</span>=<span class="string">"https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <div data-align="life">
 <iframe frameborder="no" marginwidth="0" marginheight="0" width="400" height="140" src="https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66">
 </iframe>
 </div>
 <h2 id="接口说明">接口说明</h2>
 <p>这里面可以看到 用了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https://music.163.com/outchain/player?type=2&amp;id=34341360&amp;auto=0&amp;height=66</span><br></pre></td></tr></table></figure>
 <p>这个接口的<code>id=34341360</code>是从这里获取的</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171227markdown-audio/markdown_audio1.png"></p>
 <p>找到<code>复制链接</code>,然后用浏览器打开.</p>
@@ -409,8 +409,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

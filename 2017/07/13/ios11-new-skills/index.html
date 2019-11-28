@@ -195,21 +195,21 @@
 <h2 id="可用性检查api">可用性检查API</h2>
 <p>在swift代码中经常可以看到 某个API 适用于 iOS10.0</p>
 <p>如下代码</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="meta">@available</span>(iOS <span class="number">11</span>, *)) &#123;</div><div class="line">	<span class="comment">//iOS 11可用 </span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//老版本API</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="meta">@available</span>(iOS <span class="number">11</span>, *)) &#123;</span><br><span class="line">	<span class="comment">//iOS 11可用 </span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//老版本API</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查</p>
 <h5 id="通过api_available宏来标注方法的可用性">通过<code>API_AVAILABLE</code>宏来标注方法的可用性</h5>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> : <span class="title">UIViewController</span></span></div><div class="line">- (<span class="keyword">void</span>)xxxMethodA API_AVAILABLE(ios(<span class="number">11.0</span>));</div><div class="line">- (<span class="keyword">void</span>)xxxMethodB API_AVAILABLE(ios(<span class="number">8.0</span>), macos(<span class="number">10.10</span>), watchos(<span class="number">2.0</span>), tvos(<span class="number">9.0</span>));</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> : <span class="title">UIViewController</span></span></span><br><span class="line">- (<span class="keyword">void</span>)xxxMethodA API_AVAILABLE(ios(<span class="number">11.0</span>));</span><br><span class="line">- (<span class="keyword">void</span>)xxxMethodB API_AVAILABLE(ios(<span class="number">8.0</span>), macos(<span class="number">10.10</span>), watchos(<span class="number">2.0</span>), tvos(<span class="number">9.0</span>));</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>切记 <code>macos</code>、<code>ios</code>、<code>watchos</code>、<code>tvos</code>都是小写</p>
 </blockquote>
 <p>通过这种写法进行可用性判断, 编辑器就不会产生警告了, 并且在<code>运行时</code>就根据iOS系统版本执行相应代码.</p>
 <h5 id="通过api_available宏来标注整个class的可用性">通过<code>API_AVAILABLE</code>宏来标注整个<code>class</code>的可用性</h5>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">API_AVAILABLE(ios(<span class="number">11.0</span>))</div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">A</span> : <span class="title">NSObject</span></span></div><div class="line">- (<span class="keyword">void</span>)xxxMothod;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">API_AVAILABLE(ios(<span class="number">11.0</span>))</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">A</span> : <span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)xxxMothod;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>看了大家会发现 这个 都是用于OC的代码 那C/C++ 有吗? 必须有</p>
 <h5 id="cc-代码-可以使用">C/C++ 代码 可以使用 ``</h5>
 <p>判断是否可用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> (__builtin_available(iOS <span class="number">11</span>, macOS <span class="number">10.13</span>, *)) &#123;</div><div class="line">     xxxxFunc();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">//导入头文件</div><div class="line">#include &lt;os/availability.h&gt; </div><div class="line"></div><div class="line">//可用性判断用于 声明函数 </div><div class="line">void myFunctionForiOS11OrNewer(int i) API_AVAILABLE(ios(11.0), macos(10.13));  </div><div class="line"></div><div class="line">//可用性判断 用于类 XXXClassA</div><div class="line">class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> (__builtin_available(iOS <span class="number">11</span>, macOS <span class="number">10.13</span>, *)) &#123;</span><br><span class="line">     xxxxFunc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment">//导入头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;os/availability.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可用性判断用于 声明函数 </span></span><br><span class="line">void myFunctionForiOS11OrNewer(int i) API_AVAILABLE(ios(11.0), macos(10.13));  </span><br><span class="line"></span><br><span class="line"><span class="comment">//可用性判断 用于类 XXXClassA</span></span><br><span class="line">class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;</span><br></pre></td></tr></table></figure>
 <p>默认 <code>API_AVAILABLE()</code> 只能用于 <code>iOS 11</code> / <code>tvOS 11</code> / <code>macOS 10.13</code> / <code>watchOS 4</code> 以上的 API 生效</p>
 <p>如果就工程想使用这种llvm新版特性的话 需要修改 <code>buid setting</code>里面的 <code>Unguarded availability</code> 如下图:</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/availability%402x.png"></p>
@@ -233,12 +233,12 @@
 <h2 id="gcd-统一队列标识">GCD 统一队列标识</h2>
 <p>统一队列标识是指我们在工程中散落在各处的创建队列，如果队列标识是一样的，他们在内核中会被 bind 在一起，其效率可以提高 30%。Apple 没有告诉我们其内核是怎么做到的，它提供了这样的建议，如果一类操作重要性程度或其他属性接近，亦或开发者希望散落在工程各处的代码可以放在同一个队列里去控制，那么我们在创建队列的时候就可以指定一个共同的标识符。 然后系统在内核中会把这些标识相同的队列 bind 到一起来管理</p>
 <p>如下代码 如果app里面都使用同一个字符串 的话 效率可以提高30%</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"com.sunyazhou.demo.queue"</span>, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">   <span class="built_in">dispatch_async</span>(queue, ^&#123;</div><div class="line">      <span class="comment">//异步执行代码写在这里</span></div><div class="line">   &#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"com.sunyazhou.demo.queue"</span>, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">   <span class="built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">      <span class="comment">//异步执行代码写在这里</span></span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>老实说 工程里面 避免不了文件上传下载 或者耗时任务处理 如果 整体搞成一个queue显然 不太符合业务需求 如果尽量保持 一个标识的Queue的话 也只能根据 业务分类来做到 可以有机会尝试一下</p>
 </blockquote>
 <p>全文完</p>
-<p><a href="https://techblog.toutiao.com/2017/07/05/session0-2/" target="_blank" rel="external">参考</a></p>
+<p><a href="https://techblog.toutiao.com/2017/07/05/session0-2/" target="_blank" rel="noopener">参考</a></p>
 
   </section>
 
@@ -423,8 +423,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

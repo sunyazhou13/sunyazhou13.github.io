@@ -233,14 +233,14 @@
 <li>CPU bound:</li>
 </ul>
 <p>假设我们创建一个 UILabel</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"><span class="built_in">UILabel</span>* label = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">50</span>, <span class="number">300</span>, <span class="number">14</span>)];</div><div class="line">label.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">label.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>f];</div><div class="line">label.text = <span class="string">@"test"</span>;</div><div class="line">[<span class="keyword">self</span>.view addSubview:label];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UILabel</span>* label = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">50</span>, <span class="number">300</span>, <span class="number">14</span>)];</span><br><span class="line">label.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">label.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>f];</span><br><span class="line">label.text = <span class="string">@"test"</span>;</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:label];</span><br></pre></td></tr></table></figure>
 <p>这个时候不会发生任何操作, 由于 UILabel 重写了<code>drawRect</code>方法,因此,这个 <code>View</code>会被 <code>marked as "dirty"</code>:</p>
 <p>类似这个样子:</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/179212e7ed967e07c602dbe7eef101c4c5eb7b16/20171016UIView-Rendering/drawRect.png"></p>
 <p>然后一个新的<code>Runloop</code>到来，上面说道在这个<code>Runloop</code>中需要将界面渲染上去，对于<code>UIKit</code>的渲染，Apple用的是它的<code>Core Animation</code>。 做法是在Runloop开始的时候调用：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="built_in">CATransaction</span> begin]</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">CATransaction</span> begin]</span><br></pre></td></tr></table></figure>
 <p>在<code>Runloop</code>结束的时候调用</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line"></div><div class="line">[<span class="built_in">CATransaction</span> commit]</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">[<span class="built_in">CATransaction</span> commit]</span><br></pre></td></tr></table></figure>
 <p>在<code>begin</code>和<code>commit</code>之间做的事情是将<code>view</code>增加到<code>view hierarchy</code>中，这个时候也不会发生任何绘制的操作。 当<code>[CATransaction commit]</code>执行完后，<code>CPU</code>开始绘制这个<code>view</code>:</p>
 <figure>
 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CATransaction_commit.png" alt="CPU绘制图"><figcaption>CPU绘制图</figcaption>
@@ -252,9 +252,9 @@
 清空<code>dirty flag</code>标记<br>
 这样<code>CPU</code>的绘制基本上就完成了.<br>
 通过<code>time profiler</code>可以完整的看到个过程：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line"></div><div class="line">Running Time Self Symbol Name</div><div class="line">2.0ms 1.2% 0.0 +[CATransaction flush]</div><div class="line">2.0ms 1.2% 0.0 CA::Transaction::commit()</div><div class="line">2.0ms 1.2% 0.0 CA::Context::commit_transaction(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::layout_and_display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_if_needed(CA::Transaction*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display()</div><div class="line">1.0ms 0.6% 0.0 -[CALayer _display]</div><div class="line">1.0ms 0.6% 0.0 CA::Layer::display_()</div><div class="line">1.0ms 0.6% 0.0 CABackingStoreUpdate_</div><div class="line">1.0ms 0.6% 0.0 backing_callback(CGContext*, void*)</div><div class="line">1.0ms 0.6% 0.0 -[CALayer drawInContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UIView(CALayerDelegate) drawLayer:inContext:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawRect:]</div><div class="line">1.0ms 0.6% 0.0 -[UILabel drawTextInRect:]</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">Running Time Self Symbol Name</span><br><span class="line">2.0ms 1.2% 0.0 +[CATransaction flush]</span><br><span class="line">2.0ms 1.2% 0.0 CA::Transaction::commit()</span><br><span class="line">2.0ms 1.2% 0.0 CA::Context::commit_transaction(CA::Transaction*)</span><br><span class="line">1.0ms 0.6% 0.0 CA::Layer::layout_and_display_if_needed(CA::Transaction*)</span><br><span class="line">1.0ms 0.6% 0.0 CA::Layer::display_if_needed(CA::Transaction*)</span><br><span class="line">1.0ms 0.6% 0.0 -[CALayer display]</span><br><span class="line">1.0ms 0.6% 0.0 CA::Layer::display()</span><br><span class="line">1.0ms 0.6% 0.0 -[CALayer _display]</span><br><span class="line">1.0ms 0.6% 0.0 CA::Layer::display_()</span><br><span class="line">1.0ms 0.6% 0.0 CABackingStoreUpdate_</span><br><span class="line">1.0ms 0.6% 0.0 backing_callback(CGContext*, void*)</span><br><span class="line">1.0ms 0.6% 0.0 -[CALayer drawInContext:]</span><br><span class="line">1.0ms 0.6% 0.0 -[UIView(CALayerDelegate) drawLayer:inContext:]</span><br><span class="line">1.0ms 0.6% 0.0 -[UILabel drawRect:]</span><br><span class="line">1.0ms 0.6% 0.0 -[UILabel drawTextInRect:]</span><br></pre></td></tr></table></figure>
 <p>假如某个时刻修改了<code>label</code>的<code>text</code>:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.text = <span class="string">@"hello world"</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">label.text = <span class="string">@"hello world"</span>;</span><br></pre></td></tr></table></figure>
 <p>由于内容变了,<code>layer</code>的<code>content</code>的<code>bitmap</code>的尺寸也要变化，因此这个时候当新的<code>Runloop</code>到来时，<code>CPU</code>要为<code>layer</code>重新创建一个<code>backing store</code>，重新绘制<code>bitmap</code>.<br>
 <code>CPU</code>这一块最耗时的地方往往在<code>Core Graphic</code>的绘制上，关于<code>Core Graphic</code>的性能优化是另一个话题了，又会牵扯到很多东西，就不在这里讨论了.</p>
 <p>GPU bound：</p>
@@ -275,7 +275,7 @@
 <li>Compositing:</li>
 </ul>
 <p><code>Compositing</code>是指将多个纹理拼到一起的过程，对应<code>UIKit</code>，是指处理多个<code>view</code>合到一起的情况，如:</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">[<span class="keyword">self</span>.view addsubview : subview]。</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">self</span>.view addsubview : subview]。</span><br></pre></td></tr></table></figure>
 <p>如果<code>view</code>之间没有叠加，那么<code>GPU</code>只需要做普通渲染即可.<br>
 如果多个<code>view</code>之间有叠加部分，<code>GPU</code>需要做<code>blending</code>.</p>
 <p>加入两个<code>view</code>大小相同，一个叠加在另一个上面，那么计算公式如下：</p>
@@ -303,10 +303,10 @@
 <li>Offscreen Rendering And Mask</li>
 </ul>
 <p>如果我们对<code>layer</code>做这样的操作：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</span><br><span class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</span><br></pre></td></tr></table></figure>
 <p>会产生<code>offscreen rendering</code>,它带来的最大的问题是，当渲染这样的<code>layer</code>的时候，需要额外开辟内存，绘制好<code>radius，mask</code>，然后再将绘制好的<code>bitmap</code>重新赋值给<code>layer</code>。<br>
 因此继续性能的考虑，<code>Quartz</code>提供了优化的<code>api</code>：</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><div class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</div><div class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</div><div class="line">label.layer.shouldRasterize = <span class="literal">YES</span>;</div><div class="line">label.layer.rasterizationScale = label.layer.contentsScale;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</span><br><span class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</span><br><span class="line">label.layer.shouldRasterize = <span class="literal">YES</span>;</span><br><span class="line">label.layer.rasterizationScale = label.layer.contentsScale;</span><br></pre></td></tr></table></figure>
 <p>简单的说，这是一种<code>cache</code>机制。<br>
 同样<code>GPU</code>的性能也可以通过<code>instrument</code>去衡量：</p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e3fad5583fdd4fd52b11a8fe44a9528b95f8ac1b/20171016UIView-Rendering/rendering_result.png"></p>
@@ -499,8 +499,6 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
