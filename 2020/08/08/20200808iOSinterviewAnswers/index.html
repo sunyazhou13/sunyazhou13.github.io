@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题2 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题2 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题2 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-red"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-08-08T06:54:07.000Z" class="post-list__meta--date date">2020-08-08</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试系列/">iOS面试系列</a>
+
+</span>
+    </div>
+    <h1 class="post-title">阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题2</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<blockquote>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+</blockquote>
+<p>本篇我们来讲一下 <a href="https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w" target="_blank" rel="noopener">阿里、字节：一套高效的iOS面试题</a> 中的runtime相关问题部分的内存管理相关的内容.</p>
+<h1 id="runtime相关问题之-内存管理">runtime相关问题之 内存管理</h1>
+<p>基本内容包括:</p>
+<ul>
+<li>weak的实现原理？SideTable的结构是什么样的</li>
+<li>关联对象的应用？系统如何实现关联对象的</li>
+<li>关联对象的如何进行内存管理的？关联对象如何实现weak属性</li>
+<li>Autoreleasepool的原理？所使用的的数据结构是什么</li>
+<li>ARC的实现原理？ARC下对retain, release做了哪些优化</li>
+<li>ARC下哪些情况会造成内存泄漏</li>
+</ul>
+<h2 id="weak的实现原理sidetable的结构是什么样的">weak的实现原理？SideTable的结构是什么样的</h2>
+<p>先说结论:</p>
+<ul>
+<li><code>weak表</code>其实是一个hash(哈西)表.<code>Key</code>是所指对象的地址，<code>Value</code>是<code>weak</code>指针的地址数组.实现原理是通过新旧表的更新指针方式,对weak对象单独存储于<code>SideTable</code>中的<code>weak_table_t</code>(类型) <code>weak_table</code>表中,通过函数<code>objc_initWeak()</code>-&gt;<code>storeWeak()</code>函数中的新旧<code>SideTable</code>(结构体)表来实现</li>
+<li><code>SideTable</code>是一个结构体，内部主要有引用计数表和弱引用表两个成员，内存存储的其实都是对象的地址和引用计数和weak变量的地址，而不是对象本身的数据,它的结构如下</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> SideTable &#123;</span><br><span class="line">    spinlock_t slock;</span><br><span class="line">    RefcountMap refcnts;</span><br><span class="line">    weak_table_t weak_table;</span><br><span class="line">    SideTable() &#123;</span><br><span class="line">        memset(&amp;weak_table, <span class="number">0</span>, <span class="keyword">sizeof</span>(weak_table));</span><br><span class="line">    &#125;</span><br><span class="line">    ~SideTable() &#123;</span><br><span class="line">        _objc_fatal(<span class="string">"Do not delete SideTable."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">void</span> lock() &#123; slock.lock(); &#125;</span><br><span class="line">    <span class="keyword">void</span> unlock() &#123; slock.unlock(); &#125;</span><br><span class="line">    <span class="keyword">void</span> forceReset() &#123; slock.forceReset(); &#125;</span><br><span class="line">    <span class="comment">// Address-ordered lock discipline for a pair of side tables.</span></span><br><span class="line">    template&lt;HaveOld, HaveNew&gt;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> lockTwo(SideTable *lock1, SideTable *lock2);</span><br><span class="line">    template&lt;HaveOld, HaveNew&gt;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> unlockTwo(SideTable *lock1, SideTable *lock2);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="weak实现原理">weak实现原理</h3>
+<p>实现原理概括分为3个时机</p>
+<ul>
+<li>1.初始化</li>
+<li>2.添加引用</li>
+<li>3.释放</li>
+</ul>
+<h4 id="初始化时候">1.初始化时候</h4>
+<p><code>runtime</code>会调用<code>objc_initWeak</code>函数，初始化一个新的<code>weak</code>指针指向对象的地址.</p>
+<p>我们引入一段测试代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSObject</span> *obj = [[<span class="built_in">NSObject</span> alloc] init];</span><br><span class="line"><span class="keyword">id</span> __<span class="keyword">weak</span> obj1 = obj;</span><br></pre></td></tr></table></figure>
+<p>当我们初始化一个weak变量时，<code>runtime</code>会调用<code>NSObject.mm</code>中的<code>objc_initWeak()</code>函数。这个函数在Clang中的声明如下：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">id</span> objc_initWeak(<span class="keyword">id</span> *location, <span class="keyword">id</span> newObj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!newObj) &#123; <span class="comment">// 查看对象实例是否有效 无效对象直接导致指针释放</span></span><br><span class="line">        *location = <span class="literal">nil</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这里传递了三个 bool 数值 old, new, crash.使用 template 进行常量参数传递是为了优化性能</span></span><br><span class="line">    <span class="keyword">return</span> storeWeak&lt;DontHaveOld, DoHaveNew, DontCrashIfDeallocating&gt;</span><br><span class="line">        (location, (objc_object*)newObj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，这个函数仅仅是一个深层函数的调用入口，而一般的入口函数中，都会做一些简单的判断（例如 <code>objc_msgSend</code> 中的缓存判断），这里判断了其指针指向的类对象是否有效，无效直接释放，不再往深层调用函数。否则，object将被注册为一个指向value的<code>__weak</code>对象。而这事应该是<code>objc_storeWeak</code>函数干的.</p>
+<blockquote>
+<p>注意： <code>objc_initWeak</code>函数有一个前提条件：就是object必须是一个没有被注册为<code>__weak</code>对象的有效指针。而value则可以是null，或者指向一个有效的对象.</p>
+</blockquote>
+<h4 id="添加引用时">2.添加引用时</h4>
+<p><code>objc_initWeak</code>函数会调用 <code>objc_storeWeak()</code>函数,<code>objc_storeWeak()</code>则会调用<code>storeWeak()</code>函数， <code>storeWeak()</code>的作用是更新指针指向，创建对应的弱引用表</p>
+<p>模板</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// HaveOld:  true - 变量有值 ,false - 需要被及时清理，当前值可能为 nil</span></span><br><span class="line"><span class="comment">// HaveNew:  true - 需要被分配的新值，当前值可能为nil, false - 不需要分配新值</span></span><br><span class="line"><span class="comment">// CrashIfDeallocating: true - 说明 newObj 已经释放或者 newObj 不支持弱引用，该过程需要暂停,false - 用 nil 替代存储</span></span><br><span class="line"><span class="keyword">template</span> &lt;HaveOld haveOld, HaveNew haveNew,CrashIfDeallocating crashIfDeallocating&gt;</span><br></pre></td></tr></table></figure>
+<p>weak实现函数 <strong>该过程用来更新弱引用指针的指向</strong>.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">id</span> </span><br><span class="line">storeWeak(<span class="keyword">id</span> *location, objc_object *newObj)</span><br><span class="line">&#123;</span><br><span class="line">    ASSERT(haveOld  ||  haveNew);</span><br><span class="line">    <span class="keyword">if</span> (!haveNew) ASSERT(newObj == <span class="literal">nil</span>);  </span><br><span class="line">    <span class="comment">// 初始化 previouslyInitializedClass 指针.</span></span><br><span class="line">    Class previouslyInitializedClass = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">id</span> oldObj;</span><br><span class="line">    <span class="comment">// 声明两个 SideTable,① 新旧散列创建</span></span><br><span class="line">    SideTable *oldTable;</span><br><span class="line">    SideTable *newTable;</span><br><span class="line">    <span class="comment">//获得新值和旧值的锁存位置(用地址作为唯一标示),通过地址来建立索引标志,防止桶重复,下面指向的操作会改变旧值.</span></span><br><span class="line">    <span class="keyword">if</span> (haveOld) &#123;</span><br><span class="line">        oldObj = *location;<span class="comment">// 更改指针，获得以 oldObj 为索引所存储的值地址</span></span><br><span class="line">        oldTable = &amp;SideTables()[oldObj];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        oldTable = <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (haveNew) &#123;</span><br><span class="line">        newTable = &amp;SideTables()[newObj];<span class="comment">// 更改新值指针，获得以 newObj 为索引所存储的值地址</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        newTable = <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 加锁操作，防止多线程中竞争冲突</span></span><br><span class="line">    SideTable::lockTwo&lt;haveOld, haveNew&gt;(oldTable, newTable);</span><br><span class="line">	<span class="comment">// 避免线程冲突重处理,location 应该与 oldObj 保持一致，如果不同，说明当前的 location 已经处理过 oldObj 可是又被其他线程所修改</span></span><br><span class="line">    <span class="keyword">if</span> (haveOld  &amp;&amp;  *location != oldObj) &#123;</span><br><span class="line">        SideTable::unlockTwo&lt;haveOld, haveNew&gt;(oldTable, newTable);</span><br><span class="line">        <span class="keyword">goto</span> retry;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 防止弱引用间死锁,并且通过 +initialize 初始化构造器保证所有弱引用的 isa 非空指向</span></span><br><span class="line">    <span class="keyword">if</span> (haveNew  &amp;&amp;  newObj) &#123;</span><br><span class="line">        Class cls = newObj-&gt;getIsa();<span class="comment">// 获得新对象的 isa 指针</span></span><br><span class="line">        <span class="comment">// 判断 isa 非空且已经初始化</span></span><br><span class="line">        <span class="keyword">if</span> (cls != previouslyInitializedClass  &amp;&amp;  </span><br><span class="line">            !((objc_class *)cls)-&gt;isInitialized()) </span><br><span class="line">        &#123; </span><br><span class="line">            SideTable::unlockTwo&lt;haveOld, haveNew&gt;(oldTable, newTable);/ 解锁</span><br><span class="line">            class_initialize(cls, (<span class="keyword">id</span>)newObj); <span class="comment">//如果该类已经完成执行 +initialize 方法是最理想情况,如果该类 +initialize 在线程中,例如 +initialize 正在调用 storeWeak 方法,需要手动对其增加保护策略，并设置 previouslyInitializedClass 指针进行标记</span></span><br><span class="line">            previouslyInitializedClass = cls;</span><br><span class="line">            <span class="keyword">goto</span> retry; <span class="comment">//重试</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ② 清除旧值</span></span><br><span class="line">    <span class="keyword">if</span> (haveOld) &#123;</span><br><span class="line">        weak_unregister_no_lock(&amp;oldTable-&gt;weak_table, oldObj, location);</span><br><span class="line">    &#125;</span><br><span class="line">	 <span class="comment">// ③ 分配新值</span></span><br><span class="line">    <span class="keyword">if</span> (haveNew) &#123;</span><br><span class="line">        newObj = (objc_object *)</span><br><span class="line">            weak_register_no_lock(&amp;newTable-&gt;weak_table, (<span class="keyword">id</span>)newObj, location, </span><br><span class="line">                                  crashIfDeallocating);</span><br><span class="line">        <span class="comment">//如果弱引用被释放 weak_register_no_lock 方法返回 nil,在引用计数表中设置若引用标记位</span></span><br><span class="line">        <span class="keyword">if</span> (newObj  &amp;&amp;  !newObj-&gt;isTaggedPointer()) &#123;</span><br><span class="line">	        <span class="comment">//弱引用位初始化操作,引用计数那张散列表的weak引用对象的引用计数中标识为weak引用</span></span><br><span class="line">            newObj-&gt;setWeaklyReferenced_nolock();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//之前不要设置 location 对象，这里需要更改指针指向</span></span><br><span class="line">        *location = (<span class="keyword">id</span>)newObj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 没有新值，则无需更改</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    SideTable::unlockTwo&lt;haveOld, haveNew&gt;(oldTable, newTable);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)newObj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="sidetable">SideTable</h5>
+<p>SideTable就是一个结构体，内部主要有引用计数表和弱引用表两个成员，内存存储的其实都是对象的地址和引用计数和weak变量的地址，而不是对象本身的数据. &gt; 主要用于管理对象的引用计数和 weak 表.</p>
+<p>我们来看图</p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/a06ef43ee379ded750d059be868112c7f3769dad/20200722iOSinterviewAnswers/SideTableStructure.png?raw=true"></p>
+<blockquote>
+<p>操作系统维护64个SideTable，通过对象的地址位置hash之后模64(就是%64求余数)找到指定的SideTable 每个SideTable维护了一个RefcountMap的引用计数表，key就是对象地址，value就是此对象的引用计数</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> SideTable &#123;</span><br><span class="line">    spinlock_t slock; <span class="comment">//保证原子操作的自旋锁</span></span><br><span class="line">    RefcountMap refcnts; <span class="comment">//引用计数的 hash 表</span></span><br><span class="line">    weak_table_t weak_table; <span class="comment">//weak 引用全局 hash 表</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>slock 防止竞争的自旋锁</li>
+<li>refcnts 协助对象的 isa 指针的<code>extra_rc</code>共同引用计数的变量</li>
+</ul>
+<h5 id="weak表">weak表</h5>
+<p>弱引用hash表,<code>weak_table_t</code>类型的结构体,存储某个实例对象相关的所有弱引用信息. 定义如下:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> weak_table_t &#123;</span><br><span class="line">    weak_entry_t *weak_entries; <span class="comment">// 保存了所有指向指定对象的 weak 指针</span></span><br><span class="line">    size_t    num_entries;		 <span class="comment">// 存储空间</span></span><br><span class="line">    uintptr_t mask;     			<span class="comment">// 参与判断引用计数辅助量</span></span><br><span class="line">    uintptr_t max_hash_displacement;     <span class="comment">// hash key 最大偏移值</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这是一个全局弱引用hash表。使用不定类型对象的地址作为<code>key</code>，用<code>weak_entry_t</code>类型结构体对象作为<code>value</code>,其中的<code>weak_entries</code> 成员,即为弱引用表入口.</p>
+<p>其中<code>weak_entry_t</code>是存储在弱引用表中的一个内部结构体，它负责维护和存储指向一个对象的所有弱引用hash表。其定义如下：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> DisguisedPtr&lt;objc_object *&gt; weak_referrer_t;</span><br><span class="line"><span class="keyword">struct</span> weak_entry_t &#123;</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; referent;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">struct</span> &#123;</span><br><span class="line">            weak_referrer_t *referrers;</span><br><span class="line">            uintptr_t        out_of_line_ness : <span class="number">2</span>;</span><br><span class="line">            uintptr_t        num_refs : PTR_MINUS_2;</span><br><span class="line">            uintptr_t        mask;</span><br><span class="line">            uintptr_t        max_hash_displacement;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">struct</span> &#123;</span><br><span class="line">            <span class="comment">// out_of_line_ness field is low bits of inline_referrers[1]</span></span><br><span class="line">            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中<code>DisguisedPtr</code>类型的<code>referent</code>变量是<strong>对泛型对象的指针的封装</strong>,通过这个<code>泛型类</code>来解决内存泄露的问题.</p>
+<p>注释中有个很重要的<code>out_of_line</code>成员,它代表最低的有效位,当它为0的时候,<code>weak_referrer_t</code>成员将扩展为多行静态的<code>hask table</code>.</p>
+<p>其中<code>weak_referrer_t</code> 是一个二维<code>objc_object</code>的别名(typedef),通过一个二维指针地址偏移,用下标作hash的<code>key</code>,做成了一个弱引用的散列。</p>
+<p>那么<code>weak_entry_t</code>中的各成员<code>out_of_line</code>、<code>num_refs</code>、<code>mask</code> 、<code>max_hash_displacement</code> 在有效位未生效的时候有什么作用？</p>
+<ul>
+<li><code>out_of_line</code>:最低有效位，也是标志位。当标志位 0 时，增加引用表指针纬度。</li>
+<li><code>num_refs</code>: 引用数值。这里记录弱引用表中引用有效数字，因为弱引用表使用的是静态 hash 结构，所以需要使用变量来记录数目。</li>
+<li><code>mask</code>:计数辅助量。</li>
+<li><code>max_hash_displacement</code>:<code>hash</code>元素上限阀值。</li>
+</ul>
+<blockquote>
+<p>其实 <code>out_of_line</code> 的值通常情况下是等于零的，所以弱引用表总是一个<code>objc_objective</code>指针二维数组。一维 <code>objc_objective</code>指针可构成一张弱引用散列表，通过第三纬度实现了多张散列表，并且表数量为 <code>WEAK_INLINE_COUNT</code>.</p>
+</blockquote>
+<p>以上是weak表的实现原理.</p>
+<h4 id="释放">3.释放</h4>
+<p>释放时，调用<code>clearDeallocating</code>函数。<code>clearDeallocating</code>函数首先根据对象地址获取所有<code>weak</code>指针地址的数组，然后遍历这个数组把其中的数据设为<code>nil</code>，最后把这个<code>entry</code>从<code>weak</code>表中删除，最后清理对象的记录.</p>
+<h5 id="当weak引用指向的对象被释放时又是如何去处理weak指针的呢当释放对象时其基本流程如下">当weak引用指向的对象被释放时，又是如何去处理weak指针的呢？当释放对象时，其基本流程如下:</h5>
+<ul>
+<li>1.调用<code>objc_release</code></li>
+<li>2.因为对象的引用计数为0，所以执行<code>dealloc</code></li>
+<li>3.在dealloc中，调用了<code>_objc_rootDealloc</code>函数</li>
+<li>4.在<code>_objc_rootDealloc</code>中，调用了<code>object_dispose</code>函数</li>
+<li>5.调用<code>objc_destructInstance</code></li>
+<li>6.最后调用<code>objc_clear_deallocating</code></li>
+</ul>
+<p>重点看对象被释放时调用的<code>objc_clear_deallocating</code>函数。该函数实现如下:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> objc_clear_deallocating(<span class="keyword">id</span> obj)  </span><br><span class="line">&#123;</span><br><span class="line">    ASSERT(obj);</span><br><span class="line">    <span class="keyword">if</span> (obj-&gt;isTaggedPointer()) <span class="keyword">return</span>;</span><br><span class="line">    obj-&gt;clearDeallocating();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用了<code>clearDeallocating()</code>,点击源码进去追踪发现,它最终是使用了迭代器来取<code>weak</code>表的<code>value</code>,然后调用<code>weak_clear_no_lock()</code>查找对应<code>value</code>,将该<code>weak</code>指针置空.</p>
+<p><code>weak_clear_no_lock()</code>函数的实现如下:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> weak_clear_no_lock(weak_table_t *weak_table, <span class="keyword">id</span> referent_id) </span><br><span class="line">&#123;</span><br><span class="line">    objc_object *referent = (objc_object *)referent_id;</span><br><span class="line">    weak_entry_t *entry = weak_entry_for_referent(weak_table, referent);</span><br><span class="line">    <span class="keyword">if</span> (entry == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="comment">/// XXX shouldn't happen, but does with mismatched CF/objc</span></span><br><span class="line">        <span class="comment">//printf("XXX no entry for clear deallocating %p\n", referent);</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// zero out references</span></span><br><span class="line">    weak_referrer_t *referrers;</span><br><span class="line">    size_t count;</span><br><span class="line">    <span class="keyword">if</span> (entry-&gt;out_of_line()) &#123;</span><br><span class="line">        referrers = entry-&gt;referrers;</span><br><span class="line">        count = TABLE_SIZE(entry);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        referrers = entry-&gt;inline_referrers;</span><br><span class="line">        count = WEAK_INLINE_COUNT;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (size_t i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">        objc_object **referrer = referrers[i];</span><br><span class="line">        <span class="keyword">if</span> (referrer) &#123;</span><br><span class="line">            <span class="keyword">if</span> (*referrer == referent) &#123;</span><br><span class="line">                *referrer = <span class="literal">nil</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (*referrer) &#123;</span><br><span class="line">                _objc_inform(<span class="string">"__weak variable at %p holds %p instead of %p. "</span></span><br><span class="line">                             <span class="string">"This is probably incorrect use of "</span></span><br><span class="line">                             <span class="string">"objc_storeWeak() and objc_loadWeak(). "</span></span><br><span class="line">                             <span class="string">"Break on objc_weak_error to debug.\n"</span>, </span><br><span class="line">                             referrer, (<span class="keyword">void</span>*)*referrer, (<span class="keyword">void</span>*)referent);</span><br><span class="line">                objc_weak_error();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    weak_entry_remove(weak_table, entry);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>objc_clear_deallocating()</code>该函数的动作如下：</p>
+<ul>
+<li>1.从weak表中获取废弃对象的地址为键值的记录</li>
+<li>2.将包含在记录中的所有附有 weak修饰符变量的地址，赋值为nil</li>
+<li>3.将weak表中该记录删除</li>
+<li>4.从引用计数表中删除废弃对象的地址为键值的记录</li>
+</ul>
+<p><a href="https://www.jianshu.com/p/13c4fb1cedea" target="_blank" rel="noopener">参考</a></p>
+<h2 id="关联对象的应用系统如何实现关联对象的">关联对象的应用？系统如何实现关联对象的</h2>
+<h3 id="关联对象的应用">关联对象的应用？</h3>
+<p>一般应用在<code>category</code>(分类)中为 当前类 添加关联属性,因为不能直接添加成员变量，但是可以通过runtime的方式间接实现添加成员变量的效果。</p>
+<p>当我们在<code>category</code>中声明如下代码:</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ClassA</span> : <span class="title">NSObject</span> (<span class="title">Category</span>)</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *property;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>实际上<code>@property</code>这个objc标准库的内建关键字帮我们实现了 setter和 getter,但是在category中并不能帮我们声明成员变量 <code>property</code> 我们需要通过runtime提供的两个C函数的api间接实现 动态添加 成员变量<code>property</code>.</p>
+<ul>
+<li><code>objc_setAssociatedObject()</code></li>
+<li><code>objc_getAssociatedObject()</code></li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"ClassA+Category.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ClassA</span> (<span class="title">Category</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *) property &#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, _cmd);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setProperty:(<span class="built_in">NSString</span> *)categoryProperty &#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(property), categoryProperty, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>看到上面的关联方法,我们来仔细研究一下下面经常使用的关联属下相关的API</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_setAssociatedObject</span><span class="params">(id object, <span class="keyword">const</span> <span class="keyword">void</span> *key, id value, objc_AssociationPolicy policy)</span></span>;</span><br><span class="line"><span class="function">id <span class="title">objc_getAssociatedObject</span><span class="params">(id object, <span class="keyword">const</span> <span class="keyword">void</span> *key)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">objc_removeAssociatedObjects</span><span class="params">(id object)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li><code>objc_setAssociatedObject()</code>以键值对形式添加关联对象</li>
+<li><code>objc_getAssociatedObject()</code>根据 key 获取关联对象</li>
+<li><code>objc_removeAssociatedObjects()</code>移除所有关联对象</li>
+</ol>
+<p><code>objc_setAssociatedObject()</code>的调用栈</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> objc_setAssociatedObject(<span class="keyword">id</span> object, <span class="keyword">const</span> <span class="keyword">void</span> *key, <span class="keyword">id</span> value, objc_AssociationPolicy policy)</span><br><span class="line">└── SetAssocHook.get()(object, key, value, policy)</span><br><span class="line">    └── <span class="keyword">void</span> _object_set_associative_reference(<span class="keyword">id</span> object, <span class="keyword">void</span> *key, <span class="keyword">id</span> value, uintptr_t policy)</span><br></pre></td></tr></table></figure>
+<p>上述调用栈中的<code>_object_set_associative_reference()</code>函数实际完成了设置关联对象的任务：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">_object_set_associative_reference(id object, <span class="keyword">const</span> <span class="keyword">void</span> *key, id value, <span class="keyword">uintptr_t</span> policy)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">if</span> (!object &amp;&amp; !value) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (object-&gt;getIsa()-&gt;forbidsAssociatedObjects())</span><br><span class="line">        _objc_fatal(<span class="string">"objc_setAssociatedObject called on instance (%p) of class %s which does not allow associated objects"</span>, object, object_getClassName(object));</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; disguised&#123;(objc_object *)object&#125;;</span><br><span class="line">    ObjcAssociation association&#123;policy, value&#125;;</span><br><span class="line">    association.acquireValue();</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        AssociationsHashMap &amp;associations(manager.get());</span><br><span class="line">        <span class="keyword">if</span> (value) &#123;</span><br><span class="line">            <span class="keyword">auto</span> refs_result = associations.try_emplace(disguised, ObjectAssociationMap&#123;&#125;);</span><br><span class="line">            <span class="keyword">if</span> (refs_result.second) &#123;</span><br><span class="line">                object-&gt;setHasAssociatedObjects();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">auto</span> &amp;refs = refs_result.first-&gt;second;</span><br><span class="line">            <span class="keyword">auto</span> result = refs.try_emplace(key, <span class="built_in">std</span>::move(association));</span><br><span class="line">            <span class="keyword">if</span> (!result.second) &#123;</span><br><span class="line">                association.swap(result.first-&gt;second);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    association.releaseHeldValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>省略的很多代码,上述代码中就是应用场景,上面调用的类<code>AssociationsManager</code>就是我们下面要讲的系统如何实现关联对象的原理.</p>
+<h3 id="系统如何实现关联对象的关联对象实现原理">系统如何实现关联对象的(关联对象实现原理)</h3>
+<p>实现关联对象技术的核心对象 有如下这么几个:</p>
+<ol type="1">
+<li>AssociationsManager</li>
+<li>AssociationsHashMap<br>
+</li>
+<li>ObjectAssociationMap</li>
+<li>ObjcAssociation</li>
+</ol>
+<blockquote>
+<p>其中Map同我们平时使用的字典类似。通过<code>key</code>-<code>value</code>的形式对应存值.</p>
+</blockquote>
+<p>下面我们通过源码来一探究竟</p>
+<h4 id="objc_setassociatedobject函数"><code>objc_setAssociatedObject()</code>函数</h4>
+<p>runtime源码</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</span><br><span class="line">&#123;</span><br><span class="line">    _object_set_associative_reference(object, key, value, policy);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>源码调用过程有hook函数,有点长,这里我简化一下,直接调用核心的函数</p>
+</blockquote>
+<p>下面看下<code>_object_set_associative_reference()</code>函数的代码实现</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> _object_set_associative_reference(<span class="keyword">id</span> object, <span class="keyword">const</span> <span class="keyword">void</span> *key, <span class="keyword">id</span> value, uintptr_t policy)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (object-&gt;getIsa()-&gt;forbidsAssociatedObjects())</span><br><span class="line">        _objc_fatal(<span class="string">"objc_setAssociatedObject called on instance (%p) of class %s which does not allow associated objects"</span>, object, object_getClassName(object));</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; disguised&#123;(objc_object *)object&#125;;</span><br><span class="line">    ObjcAssociation association&#123;policy, value&#125;; <span class="comment">//4. 我们用到的ObjcAssociation</span></span><br><span class="line">    association.acquireValue();</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager; <span class="comment">//1. 我们用到的AssociationsManager</span></span><br><span class="line">        AssociationsHashMap &amp;associations(manager.get()); <span class="comment">//2.我们上面列举的AssociationsHashMap</span></span><br><span class="line">        <span class="keyword">if</span> (value) &#123;</span><br><span class="line">            auto refs_result = associations.try_emplace(disguised, ObjectAssociationMap&#123;&#125;); <span class="comment">//3.我们用到的ObjectAssociationMap</span></span><br><span class="line">            <span class="keyword">if</span> (refs_result.second) &#123;</span><br><span class="line">                object-&gt;setHasAssociatedObjects();</span><br><span class="line">            &#125;</span><br><span class="line">            auto &amp;refs = refs_result.first-&gt;second;</span><br><span class="line">            auto result = refs.try_emplace(key, std::move(association));</span><br><span class="line">            <span class="keyword">if</span> (!result.second) &#123;</span><br><span class="line">                association.swap(result.first-&gt;second);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            auto refs_it = associations.find(disguised);</span><br><span class="line">            <span class="keyword">if</span> (refs_it != associations.end()) &#123;</span><br><span class="line">                auto &amp;refs = refs_it-&gt;second;</span><br><span class="line">                auto it = refs.find(key);</span><br><span class="line">                <span class="keyword">if</span> (it != refs.end()) &#123;</span><br><span class="line">                    association.swap(it-&gt;second);</span><br><span class="line">                    refs.erase(it);</span><br><span class="line">                    <span class="keyword">if</span> (refs.size() == <span class="number">0</span>) &#123;</span><br><span class="line">                        associations.erase(refs_it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    association.releaseHeldValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码可以找到我们实现关联对象技术的核心对象. 下面我们分别介绍一下几个核心对象的内部实现.</p>
+<h5 id="associationsmanager">AssociationsManager</h5>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> DenseMap&lt;<span class="keyword">const</span> <span class="keyword">void</span> *, ObjcAssociation&gt; ObjectAssociationMap;</span><br><span class="line"><span class="keyword">typedef</span> DenseMap&lt;DisguisedPtr&lt;objc_object&gt;, ObjectAssociationMap&gt; AssociationsHashMap;</span><br><span class="line"><span class="keyword">class</span> AssociationsManager &#123;</span><br><span class="line">    using Storage = ExplicitInitDenseMap&lt;DisguisedPtr&lt;objc_object&gt;, ObjectAssociationMap&gt;;</span><br><span class="line">    <span class="keyword">static</span> Storage _mapStorage;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    AssociationsManager()   &#123; AssociationsManagerLock.lock(); &#125;</span><br><span class="line">    ~AssociationsManager()  &#123; AssociationsManagerLock.unlock(); &#125;</span><br><span class="line"></span><br><span class="line">    AssociationsHashMap &amp;get() &#123;</span><br><span class="line">        <span class="keyword">return</span> _mapStorage.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> init() &#123;</span><br><span class="line">        _mapStorage.init();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>AssociationsManager</code>内部有一个<code>get()</code>函数返回一个<code>AssociationsHashMap</code>对象</p>
+<h5 id="associationshashmap">AssociationsHashMap</h5>
+<p><code>AssociationsHashMap</code> 是<code>DenseMap</code>的typedef(可以理解为别名) 只不过它被定义成符合某些<code>元组</code>的条件的<code>DenseMap</code>类型</p>
+<p>实际上 <code>AssociationsHashMap</code> 用与保存从对象的 <code>disguised_ptr_t</code>到 <code>ObjectAssociationMap</code>的映射,这个数据结构保存了当前对象对应的所有关联对象</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> DenseMap&lt;<span class="keyword">const</span> <span class="keyword">void</span> *, ObjcAssociation&gt; ObjectAssociationMap;</span><br><span class="line"><span class="keyword">typedef</span> DenseMap&lt;DisguisedPtr&lt;objc_object&gt;, ObjectAssociationMap&gt; AssociationsHashMap;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>ObjectAssociationMap</code>是另一类型的typedef,里面存着<code>ObjcAssociation</code>类型的对象指针的key,value形式.</p>
+<p>下面再看下 <code>ObjcAssociation</code> ,这是一个C++的类对象,最关键的<code>ObjcAssociation</code>包含了<code>policy</code>以及<code>value</code>.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObjcAssociation</span> &#123;</span></span><br><span class="line">    <span class="keyword">uintptr_t</span> _policy;</span><br><span class="line">    id _value;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ObjcAssociation(<span class="keyword">uintptr_t</span> policy, id value) : _policy(policy), _value(value) &#123;&#125;</span><br><span class="line">    ObjcAssociation() : _policy(<span class="number">0</span>), _value(nil) &#123;&#125;</span><br><span class="line">    ObjcAssociation(<span class="keyword">const</span> ObjcAssociation &amp;other) = <span class="keyword">default</span>;</span><br><span class="line">    ObjcAssociation &amp;<span class="keyword">operator</span>=(<span class="keyword">const</span> ObjcAssociation &amp;other) = <span class="keyword">default</span>;</span><br><span class="line">    ObjcAssociation(ObjcAssociation &amp;&amp;other) : ObjcAssociation() &#123;</span><br><span class="line">        swap(other);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(ObjcAssociation &amp;other)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::swap(_policy, other._policy);</span><br><span class="line">        <span class="built_in">std</span>::swap(_value, other._value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> uintptr_t <span class="title">policy</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> _policy; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> id <span class="title">value</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> _value; &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="关联对象在内存中以什么形式存储的">关联对象在内存中以什么形式存储的？</h5>
+<p>示例代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line">        objc_setAssociatedObject(obj, <span class="keyword">@selector</span>(hello), <span class="string">@"Hello"</span>, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个调用函数<code>objc_setAssociatedObject(OBJC_ASSOCIATION_RETAIN_NONATOMIC, @"Hello")</code>在内存中是这样的存储结构</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5b953093c9952792b56acc976a0de7fd128451b7/20200722iOSinterviewAnswers/AssociationOrder.png"></p>
+<h5 id="objc_setassociatedobject"><code>objc_setAssociatedObject()</code></h5>
+<p>我们回头来详细分解一下<code>objc_setAssociatedObject()</code>函数中的真实实现部分,<code>_object_set_associative_reference()</code></p>
+<p>这个函数需要传入<code>(id object, const void *key, id value, uintptr_t policy)</code>,这么几个参数,我们拿第3个<code>value</code>参数来分解.</p>
+<p>我们分解为2步</p>
+<ol type="1">
+<li><code>value != nil</code> 设置或者更新关联对象的值</li>
+<li><code>value == nil</code> 删除一个关联对象.</li>
+</ol>
+<p>下面是具体是代码解释 <strong>注意看代码注释!!!</strong></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">_object_set_associative_reference(<span class="keyword">id</span> object, <span class="keyword">const</span> <span class="keyword">void</span> *key, <span class="keyword">id</span> value, uintptr_t policy)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 判空</span></span><br><span class="line">    <span class="keyword">if</span> (!object &amp;&amp; !value) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 判断本类对象是否允许关联其他对象.如果允许则进入代码块</span></span><br><span class="line">    <span class="keyword">if</span> (object-&gt;getIsa()-&gt;forbidsAssociatedObjects())</span><br><span class="line">        _objc_fatal(<span class="string">"objc_setAssociatedObject called on instance (%p) of class %s which does not allow associated objects"</span>, object, object_getClassName(object));</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将被关联的对象封装成DisguisedPtr方便在后边hash表中的管理,它的作用就像是一个指针</span></span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; disguised&#123;(objc_object *)object&#125;;</span><br><span class="line">    <span class="comment">// 将需要关联的对象,封装成ObjcAssociation,方便管理</span></span><br><span class="line">    ObjcAssociation association&#123;policy, value&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理policy为retain和copy的修饰情况,</span></span><br><span class="line">    association.acquireValue();</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="comment">// 获取关联对象管理者对象</span></span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        <span class="comment">// 根据管理者对象获取对应关联表(HashMap)</span></span><br><span class="line">        AssociationsHashMap &amp;associations(manager.get());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (value) &#123;</span><br><span class="line">        	<span class="comment">// 如果这个disguised存在于ObjectAssociationMap()中,则替换,如果不存在则初始化后在插入</span></span><br><span class="line">        	<span class="comment">// 这里说明一下,我们关联的对象关系存在于ObjectAssociationMap中,而</span></span><br><span class="line">        	<span class="comment">//	ObjectAssociationMap有多个,所以,这一步是对ObjectAssociationMap的一个管理,下边才是对我们要关联的对象的操作</span></span><br><span class="line">            auto refs_result = associations.try_emplace(disguised, ObjectAssociationMap&#123;&#125;);</span><br><span class="line">            <span class="comment">// 如果这是此对象第一次被关联</span></span><br><span class="line">            <span class="keyword">if</span> (refs_result.second) &#123;</span><br><span class="line">               <span class="comment">// 修改isa_t中的has_assoc字段,标记其被关联状态</span></span><br><span class="line">                object-&gt;setHasAssociatedObjects();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 这里才是对我们要关联的对象操作</span></span><br><span class="line">            auto &amp;refs = refs_result.first-&gt;second;</span><br><span class="line">            <span class="comment">// 想map中插入key value对</span></span><br><span class="line">            auto result = refs.try_emplace(key, std::move(association));</span><br><span class="line">            <span class="comment">// 这里没有看懂,为什么没有第二个就要交换一下..</span></span><br><span class="line">            <span class="keyword">if</span> (!result.second) &#123;</span><br><span class="line">                association.swap(result.first-&gt;second);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        	<span class="comment">// value为空, 并且在associations中有记录,则进行擦除操作 </span></span><br><span class="line">            auto refs_it = associations.find(disguised);</span><br><span class="line">            <span class="keyword">if</span> (refs_it != associations.end()) &#123;</span><br><span class="line">                auto &amp;refs = refs_it-&gt;second;</span><br><span class="line">                auto it = refs.find(key);</span><br><span class="line">                <span class="keyword">if</span> (it != refs.end()) &#123;</span><br><span class="line">                    association.swap(it-&gt;second);</span><br><span class="line">                    refs.erase(it);</span><br><span class="line">                    <span class="keyword">if</span> (refs.size() == <span class="number">0</span>) &#123;</span><br><span class="line">                        associations.erase(refs_it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// release the old value (outside of the lock).</span></span><br><span class="line">    association.releaseHeldValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="objc_setassociatedobject函数的作用是什么"><code>objc_setAssociatedObject()</code>函数的作用是什么?</h5>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">objc_object::setHasAssociatedObjects()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (isTaggedPointer()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line"> retry:</span><br><span class="line">    <span class="keyword">isa_t</span> oldisa = LoadExclusive(&amp;isa.bits);</span><br><span class="line">    <span class="keyword">isa_t</span> newisa = oldisa;</span><br><span class="line">    <span class="keyword">if</span> (!newisa.nonpointer  ||  newisa.has_assoc) &#123;</span><br><span class="line">        ClearExclusive(&amp;isa.bits);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    newisa.has_assoc = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (!StoreExclusive(&amp;isa.bits, oldisa.bits, newisa.bits)) <span class="keyword">goto</span> retry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它会将<code>isa</code>结构体中的标记位<code>has_assoc</code>标记为<code>true</code>，也就是表示当前对象有关联对象，如下图<code>isa</code>中的各个标记位都是干什么的.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/aa6f2dd59253613f71e66dfa3e7627a6e168f6fa/20200722iOSinterviewAnswers/isa.jpg"></p>
+<h5 id="objc_getassociatedobject"><code>objc_getAssociatedObject()</code></h5>
+<p>这个函数的调用栈如下</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">id objc_getAssociatedObject(id object, const void *key)</span><br><span class="line">└── id _object_get_associative_reference(id object, const void *key);</span><br></pre></td></tr></table></figure>
+<p>通过上面我们介绍，理解这个函数相当简单了</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">id</span></span><br><span class="line">_object_get_associative_reference(<span class="keyword">id</span> object, <span class="keyword">const</span> <span class="keyword">void</span> *key)</span><br><span class="line">&#123;</span><br><span class="line">    ObjcAssociation association&#123;&#125;;</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager; <span class="comment">//1</span></span><br><span class="line">        AssociationsHashMap &amp;associations(manager.get()); <span class="comment">//1</span></span><br><span class="line">        AssociationsHashMap::iterator i = associations.find((objc_object *)object); <span class="comment">//2</span></span><br><span class="line">        <span class="keyword">if</span> (i != associations.end()) &#123;</span><br><span class="line">            ObjectAssociationMap &amp;refs = i-&gt;second;</span><br><span class="line">            ObjectAssociationMap::iterator j = refs.find(key);</span><br><span class="line">            <span class="keyword">if</span> (j != refs.end()) &#123;</span><br><span class="line">                association = j-&gt;second;</span><br><span class="line">                association.retainReturnedValue();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> association.autoreleaseReturnedValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li>通过<code>AssociationsManager</code>拿到<code>AssociationsHashMap</code>哈西表</li>
+<li>通过哈西表寻找关联对象</li>
+<li>剩下的就是更新对象是否初次创建等标记 然后返回对象</li>
+</ol>
+<h5 id="objc_removeassociatedobjects"><code>objc_removeAssociatedObjects()</code></h5>
+<p>调用栈如下:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">void objc_removeAssociatedObjects(id object)</span><br><span class="line">└── void _object_remove_assocations(id object)</span><br></pre></td></tr></table></figure>
+<p>代码具体实现</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> objc_removeAssociatedObjects(<span class="keyword">id</span> object) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (object &amp;&amp; object-&gt;hasAssociatedObjects()) &#123; </span><br><span class="line">        _object_remove_assocations(object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>check对象是否为nil 且 关联对象是否存在</p>
+</blockquote>
+<p>然后调用实现跟上边的get差不多</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">_object_remove_assocations(<span class="keyword">id</span> object)</span><br><span class="line">&#123;</span><br><span class="line">    ObjectAssociationMap refs&#123;&#125;;</span><br><span class="line">    &#123;</span><br><span class="line">        AssociationsManager manager;</span><br><span class="line">        AssociationsHashMap &amp;associations(manager.get());</span><br><span class="line">        AssociationsHashMap::iterator i = associations.find((objc_object *)object);</span><br><span class="line">        <span class="keyword">if</span> (i != associations.end()) &#123;</span><br><span class="line">            refs.swap(i-&gt;second);</span><br><span class="line">            associations.erase(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// release everything (outside of the lock).</span></span><br><span class="line">    <span class="keyword">for</span> (auto &amp;i: refs) &#123;</span><br><span class="line">        i.second.releaseHeldValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>AssociationsManager</code> -&gt; <code>AssociationsHashMap</code> -&gt; object 是否存在,如果存在就<strong>擦除</strong>.- &gt; releaseHeldValue()是否对象</p>
+<h4 id="小结">小结</h4>
+<p>关联对象的应用和系统如何实现关联对象的大概顺序如下:<br>
+<code>AssociationsManager</code>关联对象管理器-&gt;<code>AssociationsHashMap</code>哈希映射表-&gt;<code>ObjectAssociationMap</code>关联对象指针-&gt;<code>ObjcAssociation</code>关联对象</p>
+<h2 id="关联对象的如何进行内存管理的关联对象如何实现weak属性">关联对象的如何进行内存管理的？关联对象如何实现weak属性?</h2>
+<h3 id="关联对象的如何进行内存管理的">关联对象的如何进行内存管理的？</h3>
+<p>当我调用关联对象函数<code>objc_setAssociatedObject()</code>的时候会调用如下函数：</p>
+<p><code>_object_set_associative_reference(id object, const void *key, id value, uintptr_t policy)</code>,这里面有个方法</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">ObjcAssociation association&#123;policy, value&#125;;</span><br><span class="line"><span class="comment">// retain the new value (if any) outside the lock.</span></span><br><span class="line">association.acquireValue();</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>policy</code>就是具体绝对内存使用retain还是其它相关的内存枚举.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> &#123;</span><br><span class="line">    OBJC_ASSOCIATION_SETTER_ASSIGN      = <span class="number">0</span>,</span><br><span class="line">    OBJC_ASSOCIATION_SETTER_RETAIN      = <span class="number">1</span>,</span><br><span class="line">    OBJC_ASSOCIATION_SETTER_COPY        = <span class="number">3</span>,            <span class="comment">// <span class="doctag">NOTE:</span>  both bits are set, so we can simply test 1 bit in releaseValue below.</span></span><br><span class="line">    OBJC_ASSOCIATION_GETTER_READ        = (<span class="number">0</span> &lt;&lt; <span class="number">8</span>),</span><br><span class="line">    OBJC_ASSOCIATION_GETTER_RETAIN      = (<span class="number">1</span> &lt;&lt; <span class="number">8</span>),</span><br><span class="line">    OBJC_ASSOCIATION_GETTER_AUTORELEASE = (<span class="number">2</span> &lt;&lt; <span class="number">8</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过 acquireValue()函数判断使用那种内存关键字.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> acquireValue() &#123;</span><br><span class="line">    <span class="keyword">if</span> (_value) &#123;</span><br><span class="line">        <span class="keyword">switch</span> (_policy &amp; <span class="number">0xFF</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> OBJC_ASSOCIATION_SETTER_RETAIN:</span><br><span class="line">            _value = objc_retain(_value);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> OBJC_ASSOCIATION_SETTER_COPY:</span><br><span class="line">            _value = ((<span class="keyword">id</span>(*)(<span class="keyword">id</span>, SEL))objc_msgSend)(_value, <span class="keyword">@selector</span>(<span class="keyword">copy</span>));</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="关联对象如何实现weak属性">关联对象如何实现weak属性？</h3>
+<p>首先说一下 这个问题问的非常有技术含量,完全考验iOS开发者对底层了解的程度.</p>
+<p>在为NSObject对象绑定 associated object 时可以指定如下依赖关系：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</span><br><span class="line">    OBJC_ASSOCIATION_ASSIGN = <span class="number">0</span>, <span class="comment">//弱引用</span></span><br><span class="line">    OBJC_ASSOCIATION_RETAIN_NONATOMIC = <span class="number">1</span>, <span class="comment">//强引用，非原子操作</span></span><br><span class="line">    OBJC_ASSOCIATION_COPY_NONATOMIC = <span class="number">3</span>,  <span class="comment">//先 copy，然后强引用</span></span><br><span class="line">    OBJC_ASSOCIATION_RETAIN = <span class="number">01401</span>, <span class="comment">//强引用，原子操作</span></span><br><span class="line">    OBJC_ASSOCIATION_COPY = <span class="number">01403</span> <span class="comment">//先 copy，然后强引用，原子操作</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>根据上述的枚举我们发现一个很奇怪的问题,这里的枚举中并没有<code>OBJC_ASSOCIATION_WEAK</code>这样的选项.</p>
+<p>基于上述的代码介绍我们知道<code>Objective-C</code>在底层使用<code>AssociationsManager</code>统一管理各个对象的 <code>associated objects</code>关联对象.然后通过<code>static key</code>(一般是一个固定值)去访问对应的<code>associated object</code>关联对象.然后在<code>dealloc</code>的时候调用<code>擦除函数</code>(<code>associations.erase()</code>)来解除对这些关联对象的引用:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">dealloc</span><br><span class="line">    object_dispose</span><br><span class="line">        objc_destructInstance</span><br><span class="line">            _object_remove_assocations  // 移除必要的associated objects</span><br></pre></td></tr></table></figure>
+<p>也就是说,在<code>NSObject</code>对象的内存空间里，并没有为 <code>associated objects</code>(关联对象) 分配任何变量.</p>
+<p>我们知道weak变量和 assign变量的区别是:weak指向的对象销毁的时候,<code>Objective-C</code>会自动帮我们设置<code>nil</code>,而<code>assign</code>却不能.</p>
+<p>这个逻辑是如何实现的呢？</p>
+<p><code>Runtime</code>在底层维护一个<code>weak</code>表(也就是本文开头讲的<code>SlideTable</code>中的<code>weak_table_t</code> <code>weak_tabl</code>)，每每分配一个<code>weak</code>指针并赋值有效对象的地址时，会将对象地址和<code>weak</code>指针地址注册到<code>weak</code>表中，其中对象地址作为<code>key</code>;当对象被废弃时,可根据对象地址快速寻找到指向它的所有<code>weak</code> 指针,这些<code>weak</code>指针会被赋值<code>0</code>(即<code>nil</code>）并移出`weak表。</p>
+<p>所以,实现<code>weak</code>引用(而非<code>assign</code>引用)的前提是存在一个<code>__weak</code>指针指向到被引用对象的地址,只有这样,当对象被销毁时，指针才能被<code>runtime</code>找到然后被设置为<code>nil</code>；<code>NSObject</code>对象和其<code>associated object</code>关联对象的关系，并不存在指针这样的<strong>中间媒介</strong>，因此只存在<code>OBJC_ASSOCIATION_ASSIGN</code>选项，而不存在<code>OBJC_ASSOCIATION_WEAK</code>选项.</p>
+<h4 id="那我们怎么解决为关联对象实现weak属性呢">那我们怎么解决为关联对象实现weak属性呢？</h4>
+<p>可以通过曲线救国的方式声明一个<code>class</code>类 持有一个weak的成员变量,然后通过 实例化 我们自定义的class的实例,然后把这个实例作为关联对象即可.</p>
+<p>声明封装weak对象的类</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WeakAssociatedObjectWrapper</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> object;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">WeakAssociatedObjectWrapper</span></span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>调用</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">ViewController</span>)</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">UIViewController</span> *vc;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UIView</span> (<span class="title">ViewController</span>)</span></span><br><span class="line">- (<span class="keyword">void</span>)setVc:(<span class="built_in">UIViewController</span> *)vc &#123;</span><br><span class="line">    WeakAssociatedObjectWrapper *wrapper = [WeakAssociatedObjectWrapper new];</span><br><span class="line">    wrapper.object = vc;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(vc), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">UIViewController</span> *)vc &#123;</span><br><span class="line">    WeakAssociatedObjectWrapper *wrapper = objc_getAssociatedObject(<span class="keyword">self</span>, _cmd);</span><br><span class="line">    <span class="keyword">return</span> wrapper.object;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看明白没有,曲线救国.代码引入自<a href="https://zhangbuhuai.com/post/weak-associated-object.html" target="_blank" rel="noopener">Weak Associated Object</a></p>
+</blockquote>
+<p><a href="https://draveness.me/ao/" target="_blank" rel="noopener">关联对象参考</a></p>
+<h2 id="autoreleasepool的原理所使用的的数据结构是什么">Autoreleasepool的原理？所使用的的数据结构是什么？</h2>
+<p>在ARC下我们使用<code>@autoreleasepool{}</code> 关键字 把需要自动管理的代码块圈起来 ,这个过程就是在使用一个<code>AutoReleasePool</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">	 &lt;<span class="meta">#statements#&gt; //代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码编译器 最终会把它改写成下面的样子</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> *context = objc_autoreleasePoolPush();</span><br></pre></td></tr></table></figure>
+<p>既然有压栈一定就有 出栈操作<code>objc_autoreleasePoolPop(context)</code>;</p>
+<ul>
+<li><code>objc_autoreleasePoolPush()</code></li>
+<li><code>objc_autoreleasePoolPop()</code></li>
+</ul>
+<p>这俩函数都是对<code>AutoreleasePoolPage</code>的封装,自动释放机制的核心就是这个类</p>
+<h3 id="autoreleasepoolpage"><code>AutoreleasePoolPage</code></h3>
+<p><code>AutoreleasePoolPage</code>是个C++的类</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9b2bae4b681c8dc3286c9be9c46c896bfccf0748/20200722iOSinterviewAnswers/autoreleasepoolpage.png"></p>
+<ul>
+<li><strong>AutoreleasePool</strong>并没有单独的结构,而是由若干个<code>AutoreleasePoolPage</code>以<code>双向链表</code>的形式组合成的,根据上图可以看出,这个双向链表有<code>前驱parent</code>和<code>后继child</code>.</li>
+<li><strong>AutoreleasePool</strong>是按<code>线程</code>一一对应的(thread 成员变量)</li>
+<li><strong>AutoreleasePoolPage</strong>就是自动释放池存储对象的数据结构每个Page占用<code>4KB</code>内存，本身的成员变量占用<code>56</code>字节，剩下的空间用来存放调用了<code>autorelease</code>方法的对象地址,同时将一个哨兵插入到Page中，这个哨兵其实就是一个空地址</li>
+<li>当一个page被占满以后会新建一个新的<code>AutoreleasePoolPage</code>对象,并插入哨兵标记.  具体代码如下:</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> AutoreleasePoolPage &#123;</span><br><span class="line"><span class="meta">#   define EMPTY_POOL_PLACEHOLDER ((id*)1)</span></span><br><span class="line"><span class="meta">#   define POOL_BOUNDARY nil</span></span><br><span class="line">    <span class="keyword">static</span> pthread_key_t <span class="keyword">const</span> key = AUTORELEASE_POOL_KEY;</span><br><span class="line">    <span class="keyword">static</span> uint8_t <span class="keyword">const</span> SCRIBBLE = <span class="number">0xA3</span>;  <span class="comment">// 0xA3A3A3A3 after releasing</span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> SIZE = </span><br><span class="line"><span class="meta">#if PROTECT_AUTORELEASEPOOL</span></span><br><span class="line">        PAGE_MAX_SIZE;  <span class="comment">// must be multiple of vm page size</span></span><br><span class="line"><span class="meta">#else</span></span><br><span class="line">        PAGE_MAX_SIZE;  <span class="comment">// size and alignment, power of 2</span></span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> COUNT = SIZE / <span class="keyword">sizeof</span>(<span class="keyword">id</span>);</span><br><span class="line">    magic_t <span class="keyword">const</span> magic;</span><br><span class="line">    <span class="keyword">id</span> *next;</span><br><span class="line">    pthread_t <span class="keyword">const</span> thread;</span><br><span class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;</span><br><span class="line">    AutoreleasePoolPage *child;</span><br><span class="line">    uint32_t <span class="keyword">const</span> depth;</span><br><span class="line">    uint32_t hiwat;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>magic</code> 检查校验完整性的变量</li>
+<li><code>next</code> 指向新加入的autorelease对象</li>
+<li><code>thread</code> page当前所在的线程，AutoreleasePool是按线程一一对应的（结构中的thread指针指向当前线程）</li>
+<li><code>parent</code> 父节点 指向前一个page</li>
+<li><code>child</code> 子节点 指向下一个page</li>
+<li><code>depth</code> 链表的深度，节点个数</li>
+<li><code>hiwat</code> high water mark 数据容纳的一个上限</li>
+<li><code>EMPTY_POOL_PLACEHOLDER</code> 空池占位</li>
+<li><code>POOL_BOUNDARY</code> 是一个边界对象 nil,之前的源代码变量名是 <code>POOL_SENTINEL</code>哨兵对象,用来区别每个page即每个 AutoreleasePoolPage 边界</li>
+<li><code>PAGE_MAX_SIZE</code> = 4096, 为什么是4096呢？其实就是虚拟内存每个扇区4096个字节,4K对齐的说法。</li>
+<li><code>COUNT</code> 一个page里对象数</li>
+</ul>
+<p>下面看下工作机制图</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e55ee99f223e2e14b55bac7b1b453562a16cdd9a/20200722iOSinterviewAnswers/autoreleasepoolworkflow.gif"></p>
+<blockquote>
+<p>这张图来自快手同事 周学运,如果大佬看到这张图的话希望能允许授权给我使用哈.</p>
+</blockquote>
+<p>根据上面的示意图我们大概明白, <code>AutoreleasePoolPage</code>是以栈的形式存在,并且内部对象通过进栈出栈来对应着<code>objc_autoreleasePoolPush</code>和<code>objc_autoreleasePoolPop</code></p>
+<p>如果嵌套AutoreleasePool 就是通过<code>哨兵对象</code>来标识,每次更新链表的next和<code>前驱``后继</code>来完成表的创建销毁.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f58f08e831c6ee2e73417235549a7a41845c877b/20200722iOSinterviewAnswers/autoreleasepoolpage1.png"></p>
+<p>当我们对一个对象发送一条<code>autorelease</code>消息的时候实际上就是将这个对象加入到当前<code>AutoreleasePoolPage</code>的栈顶<code>next</code>指针指向的位置</p>
+<blockquote>
+<p>这里只拿了一张page举例.</p>
+</blockquote>
+<h4 id="小结-1">小结</h4>
+<ul>
+<li>自动释放池是有N张<code>AutoreleasePoolPage</code>组成,每张page 4K大小, AutoreleasePoolPage是c++的类, AutoreleasePoolPage以双向链表连接起来形成一个自动释放池</li>
+<li>当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中</li>
+<li>pop 时是传入边界对象(哨兵对象),然后对page 中的对象发送release 的消息</li>
+</ul>
+<p><a href="https://www.jianshu.com/p/0afda1f23782" target="_blank" rel="noopener">自动释放池原理</a> <a href="https://juejin.im/post/6844903609428115470" target="_blank" rel="noopener">AutoreleasePool底层实现原理</a></p>
+<h2 id="arc的实现原理arc下对retain-release做了哪些优化">ARC的实现原理？ARC下对retain, release做了哪些优化</h2>
+<p>ARC自动引用计数,是苹果objc4引入的编译器自动在适当位置 帮助实例对象进行 自动retain后者release的一套机制.</p>
+<p>它的实现原理就是在编译层面插入相关代码,帮助补全MRC时代需要开发者手动填写的和管理的对象的相关内存操作的方法.</p>
+<p>为了解释清楚具体实现原理 ,我找到一篇有代码示例的文章,从代码编译成汇编过程中 编译器做了很多优化工作. 更新<code>isa指针</code>的信息.</p>
+<p><a href="https://juejin.im/post/6844903847622606861#heading-4" target="_blank" rel="noopener">理解 ARC 实现原理</a></p>
+<p>这里有个点需要跟大家说一下, 上文 中我们讲了SlideTable,但是还是有不懂得地方下面我们来通过isa串联起来</p>
+<p>isa的组成</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="keyword">isa_t</span> </span><br><span class="line">&#123;</span><br><span class="line">    Class cls;</span><br><span class="line">    <span class="keyword">uintptr_t</span> bits;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> nonpointer        : <span class="number">1</span>;<span class="comment">//-&gt;表示使用优化的isa指针</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> has_assoc         : <span class="number">1</span>;<span class="comment">//-&gt;是否包含关联对象</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> has_cxx_dtor      : <span class="number">1</span>;<span class="comment">//-&gt;是否设置了析构函数，如果没有，释放对象更快</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> shiftcls          : <span class="number">33</span>; <span class="comment">// MACH_VM_MAX_ADDRESS 0x1000000000 -&gt;类的指针</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> magic             : <span class="number">6</span>;<span class="comment">//-&gt;固定值,用于判断是否完成初始化</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> weakly_referenced : <span class="number">1</span>;<span class="comment">//-&gt;对象是否被弱引用</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> deallocating      : <span class="number">1</span>;<span class="comment">//-&gt;对象是否正在销毁</span></span><br><span class="line">         <span class="keyword">uintptr_t</span> has_sidetable_rc  : <span class="number">1</span>;<span class="comment">//1-&gt;在extra_rc存储引用计数将要溢出的时候,借助Sidetable(散列表)存储引用计数,has_sidetable_rc设置成1</span></span><br><span class="line">        <span class="keyword">uintptr_t</span> extra_rc          : <span class="number">19</span>;  <span class="comment">//-&gt;存储引用计数</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中<code>nonpointer</code>、<code>weakly_referenced</code>、<code>has_sidetable_rc</code>和<code>extra_rc</code>都是 <code>ARC</code>有直接关系的成员变量，其他的大多也有涉及到。</p>
+<h3 id="retainrelease做了哪些优化">retain,release做了哪些优化</h3>
+<p>大概可以分为如下</p>
+<ul>
+<li>TaggedPointer 指针优化</li>
+<li>!newisa.nonpointer：未优化的 isa 的情况下retain或者release</li>
+<li>newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出区别 我把相关代码站在下面并且把结论输出出来.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">内存操作</th>
+<th style="text-align: center;">objc_retain</th>
+<th style="text-align: center;">objc_release</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">TaggedPointer</td>
+<td style="text-align: center;">值存在指针内，直接返回</td>
+<td style="text-align: center;">直接返回 false。</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">!nonpointer</td>
+<td style="text-align: center;">未优化的<code>isa</code>,使用<code>sidetable_retain()</code></td>
+<td style="text-align: center;">未优化的<code>isa</code>执行<code>sidetable_release</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">nonpointer</td>
+<td style="text-align: center;">已优化的<code>isa</code>,这其中又分<code>extra_rc</code>溢出和未溢出的两种情况</td>
+<td style="text-align: center;">已优化的<code>isa</code>,分下溢和未下溢两种情况</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>nonpointer已优化isa的extra_rc</th>
+<th>objc_retain</th>
+<th>objc_release</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>未溢出时</td>
+<td><code>isa.extra_rc</code>+1</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>溢出时</td>
+<td>将<code>isa.extra_rc</code>中一半值转移至<code>sidetable</code>中,然后将<code>isa.has_sidetable_rc</code>设置为<code>true</code>,表示使用了<code>sidetable</code>来计算引用次数</td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>未下溢</td>
+<td>NA</td>
+<td>extra_rc--</td>
+</tr>
+<tr class="even">
+<td>下溢</td>
+<td>NA</td>
+<td>从<code>sidetable</code>中借位给<code>extra_rc</code>达到半满,如果无法借位则说明引用计数归零需要进行释放,其中借位时可能保存失败会不断重试</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>NA -&gt; non available 不可获得</p>
+</blockquote>
+<p>下面我们看下retain源码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">ALWAYS_INLINE <span class="keyword">id</span> objc_object::rootRetain(<span class="keyword">bool</span> tryRetain, <span class="keyword">bool</span> handleOverflow) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isTaggedPointer()) <span class="keyword">return</span> (<span class="keyword">id</span>)<span class="keyword">this</span>;     <span class="comment">// 如果是 TaggedPointer 直接返回</span></span><br><span class="line">    <span class="keyword">bool</span> sideTableLocked = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">bool</span> transcribeToSideTable = <span class="literal">false</span>;</span><br><span class="line">    isa_t oldisa;</span><br><span class="line">    isa_t newisa;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        transcribeToSideTable = <span class="literal">false</span>;</span><br><span class="line">        oldisa = LoadExclusive(&amp;isa.bits);  <span class="comment">// 获取 isa</span></span><br><span class="line">        newisa = oldisa;</span><br><span class="line">        <span class="keyword">if</span> (slowpath(!newisa.nonpointer)) &#123;</span><br><span class="line">            ClearExclusive(&amp;isa.bits);<span class="comment">// 未优化的 isa 部分</span></span><br><span class="line">            <span class="keyword">if</span> (!tryRetain &amp;&amp; sideTableLocked) sidetable_unlock();</span><br><span class="line">            <span class="keyword">if</span> (tryRetain) <span class="keyword">return</span> sidetable_tryRetain() ? (<span class="keyword">id</span>)<span class="keyword">this</span> : <span class="literal">nil</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> sidetable_retain();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (slowpath(tryRetain &amp;&amp; newisa.deallocating)) &#123; <span class="comment">// 正在被释放的处理</span></span><br><span class="line">            ClearExclusive(&amp;isa.bits);</span><br><span class="line">            <span class="keyword">if</span> (!tryRetain &amp;&amp; sideTableLocked) sidetable_unlock();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// extra_rc 未溢出时引用计数++</span></span><br><span class="line">        uintptr_t carry;</span><br><span class="line">        newisa.bits = addc(newisa.bits, RC_ONE, <span class="number">0</span>, &amp;carry);  <span class="comment">// extra_rc++</span></span><br><span class="line">        <span class="comment">// extra_rc 溢出</span></span><br><span class="line">        <span class="keyword">if</span> (slowpath(carry)) &#123;</span><br><span class="line">            <span class="comment">// newisa.extra_rc++ overflowed</span></span><br><span class="line">            <span class="keyword">if</span> (!handleOverflow) &#123;</span><br><span class="line">                ClearExclusive(&amp;isa.bits);</span><br><span class="line">                <span class="keyword">return</span> rootRetain_overflow(tryRetain);   <span class="comment">// 重新调用该函数 入参 handleOverflow 为 true</span></span><br><span class="line">            &#125; </span><br><span class="line">            <span class="comment">// 保留一半引用计数,准备将另一半复制到 side table.</span></span><br><span class="line">            <span class="keyword">if</span> (!tryRetain &amp;&amp; !sideTableLocked) sidetable_lock();</span><br><span class="line">            sideTableLocked = <span class="literal">true</span>;</span><br><span class="line">            transcribeToSideTable = <span class="literal">true</span>;</span><br><span class="line">            newisa.extra_rc = RC_HALF;</span><br><span class="line">            newisa.has_sidetable_rc = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//  更新 isa 值</span></span><br><span class="line">    &#125; <span class="keyword">while</span> (slowpath(!StoreExclusive(&amp;isa.bits, oldisa.bits, newisa.bits)));</span><br><span class="line">    <span class="keyword">if</span> (slowpath(transcribeToSideTable)) &#123;</span><br><span class="line">        sidetable_addExtraRC_nolock(RC_HALF); <span class="comment">// 将另一半复制到 side table side table.</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (slowpath(!tryRetain &amp;&amp; sideTableLocked)) sidetable_unlock();</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">id</span>)<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>release</code>源码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">ALWAYS_INLINE <span class="keyword">bool</span> objc_object::rootRelease(<span class="keyword">bool</span> performDealloc, <span class="keyword">bool</span> handleUnderflow)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (isTaggedPointer()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">bool</span> sideTableLocked = <span class="literal">false</span>;</span><br><span class="line">    isa_t oldisa;</span><br><span class="line">    isa_t newisa;</span><br><span class="line"> retry:</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        oldisa = LoadExclusive(&amp;isa.bits);</span><br><span class="line">        newisa = oldisa;</span><br><span class="line">        <span class="keyword">if</span> (slowpath(!newisa.nonpointer)) &#123;</span><br><span class="line">            ClearExclusive(&amp;isa.bits);<span class="comment">// 未优化 isa</span></span><br><span class="line">            <span class="keyword">if</span> (sideTableLocked) sidetable_unlock();</span><br><span class="line">            <span class="keyword">return</span> sidetable_release(performDealloc);<span class="comment">// 入参是否要执行 Dealloc 函数，如果为 true 则执行 SEL_dealloc</span></span><br><span class="line">        &#125;</span><br><span class="line">        newisa.bits = subc(newisa.bits, RC_ONE, <span class="number">0</span>, &amp;carry);  <span class="comment">// extra_rc--</span></span><br><span class="line">        <span class="keyword">if</span> (slowpath(carry)) &#123;</span><br><span class="line">            <span class="comment">// donot ClearExclusive()</span></span><br><span class="line">            <span class="keyword">goto</span> underflow;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新 isa 值</span></span><br><span class="line">    &#125; <span class="keyword">while</span> (slowpath(!StoreReleaseExclusive(&amp;isa.bits, </span><br><span class="line">                                             oldisa.bits, newisa.bits)));</span><br><span class="line">    <span class="keyword">if</span> (slowpath(sideTableLocked)) sidetable_unlock();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> underflow:</span><br><span class="line"> 	<span class="comment">// 处理下溢，从 side table 中借位或者释放</span></span><br><span class="line">    newisa = oldisa;</span><br><span class="line">    <span class="keyword">if</span> (slowpath(newisa.has_sidetable_rc)) &#123; <span class="comment">// 如果使用了 sidetable_rc</span></span><br><span class="line">        <span class="keyword">if</span> (!handleUnderflow) &#123;</span><br><span class="line">        	ClearExclusive(&amp;isa.bits);<span class="comment">// 调用本函数处理下溢</span></span><br><span class="line">            <span class="keyword">return</span> rootRelease_underflow(performDealloc);</span><br><span class="line">        &#125;</span><br><span class="line">        size_t borrowed = sidetable_subExtraRC_nolock(RC_HALF); <span class="comment">// 从 sidetable 中借位引用计数给 extra_rc</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (borrowed &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="comment">// extra_rc 是计算额外的引用计数，0 即表示被引用一次</span></span><br><span class="line">            newisa.extra_rc = borrowed - <span class="number">1</span>;  <span class="comment">// redo the original decrement too</span></span><br><span class="line">            <span class="keyword">bool</span> stored = StoreReleaseExclusive(&amp;isa.bits, </span><br><span class="line">                                                oldisa.bits, newisa.bits);                                    </span><br><span class="line">            <span class="comment">// 保存失败，恢复现场，重试                                    </span></span><br><span class="line">            <span class="keyword">if</span> (!stored) &#123;</span><br><span class="line">                isa_t oldisa2 = LoadExclusive(&amp;isa.bits);</span><br><span class="line">                isa_t newisa2 = oldisa2;</span><br><span class="line">                <span class="keyword">if</span> (newisa2.nonpointer) &#123;</span><br><span class="line">                    uintptr_t overflow;</span><br><span class="line">                    newisa2.bits = </span><br><span class="line">                        addc(newisa2.bits, RC_ONE * (borrowed<span class="number">-1</span>), <span class="number">0</span>, &amp;overflow);</span><br><span class="line">                    <span class="keyword">if</span> (!overflow) &#123;</span><br><span class="line">                        stored = StoreReleaseExclusive(&amp;isa.bits, oldisa2.bits, </span><br><span class="line">                                                       newisa2.bits);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">		<span class="comment">// 如果还是保存失败，则还回 side table</span></span><br><span class="line">            <span class="keyword">if</span> (!stored) &#123;</span><br><span class="line">                sidetable_addExtraRC_nolock(borrowed);</span><br><span class="line">                <span class="keyword">goto</span> retry;</span><br><span class="line">            &#125;</span><br><span class="line">            sidetable_unlock();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Side table is empty after all. Fall-through to the dealloc path.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 没有使用 sidetable_rc ，或者 sidetable_rc 计数 == 0 的就直接释放</span></span><br><span class="line">    <span class="comment">// 如果已经是释放中，抛个过度释放错误</span></span><br><span class="line">    <span class="keyword">if</span> (slowpath(newisa.deallocating)) &#123;</span><br><span class="line">        ClearExclusive(&amp;isa.bits);</span><br><span class="line">        <span class="keyword">if</span> (sideTableLocked) sidetable_unlock();</span><br><span class="line">        <span class="keyword">return</span> overrelease_error();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 更新 isa 状态</span></span><br><span class="line">    newisa.deallocating = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (!StoreExclusive(&amp;isa.bits, oldisa.bits, newisa.bits)) <span class="keyword">goto</span> retry;</span><br><span class="line">    <span class="keyword">if</span> (slowpath(sideTableLocked)) sidetable_unlock();</span><br><span class="line">	<span class="comment">// 执行 SEL_dealloc 事件</span></span><br><span class="line">    __sync_synchronize();</span><br><span class="line">    <span class="keyword">if</span> (performDealloc) &#123;</span><br><span class="line">        ((<span class="keyword">void</span>(*)(objc_object *, SEL))objc_msgSend)(<span class="keyword">this</span>, SEL_dealloc);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="小结-2">小结</h3>
+<p>到这里可以知道 引用计数分别保存在<code>isa.extra_rc</code>和<code>sidetable</code>中，当<code>isa.extra_rc</code>溢出时，将一半计数转移至<code>sidetable</code>中，而当其下溢时，又会将计数转回。当二者都为空时，会执行释放流程</p>
+<h2 id="arc下哪些情况会造成内存泄漏">ARC下哪些情况会造成内存泄漏</h2>
+<ul>
+<li>block中的循环引用</li>
+<li>NSTimer的循环引用</li>
+<li>addObserver的循环引用</li>
+<li>delegate的强引用</li>
+<li>大次数循环内存爆涨</li>
+<li>非OC对象的内存处理（需手动释放）</li>
+</ul>
+<h1 id="总结">总结</h1>
+<p>以上就是我们讨论上述一套面试题的 runtime相关问题之 内存管理部分,下一篇讲把剩余的问题收一下尾 感谢各位支持</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2020/07/06/20200721iOSinterviewAnswers/" title="阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题1">阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题1</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
+
+记得过年时候 有一个微信公众
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2020-07-06T01:52:47.000Z" class="post-list__meta--date date">2020-07-06</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发-iOS面试系列/">iOS开发 -  iOS面试系列</a>
+
+</span><a class="btn-border-small" href="/2020/07/06/20200721iOSinterviewAnswers/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Sat Aug 08 2020 14:54:07 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
