@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-08-31T07:16:25.173Z</updated>
+  <updated>2020-08-31T08:56:30.919Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -16,11 +16,150 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题3</title>
+    <link href="https://www.sunyazhou.com/2020/08/31/20200831iOSinterviewAnswers/"/>
+    <id>https://www.sunyazhou.com/2020/08/31/20200831iOSinterviewAnswers/</id>
+    <published>2020-08-31T08:52:25.000Z</published>
+    <updated>2020-08-31T08:56:30.919Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<h1 id="runtime相关问题之内存部分的关联属性或者hook相关的method-swizzle">runtime相关问题之内存部分的关联属性或者hook相关的Method Swizzle</h1>
+<p>经过前两期内容 我们这期来讲一下 内存部分的剩余问题 主要包含如下:</p>
+<ol type="1">
+<li><code>Method Swizzle</code>注意事项</li>
+<li>属性修饰符atomic的内部实现是怎么样的?能保证线程安全吗</li>
+<li>iOS 中内省的几个方法有哪些？内部实现原理是什么</li>
+<li><code>class</code>、<code>objc_getClass</code>、<code>object_getclass</code> 方法有什么区别?</li>
+</ol>
+<h2 id="method-swizzle注意事项"><code>Method Swizzle</code>注意事项</h2>
+<ol type="1">
+<li><p><strong>需要注意的是交换方法实现后的副作用</strong>, <code>method_exchangeImplementations()</code>.交换方法函数最终会以<code>objc_msgSend()</code>方式调用,副作用主要集中在第一个参数 如下示例</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">objc_msgSend(payment, <span class="keyword">@selector</span>(quantity))</span><br></pre></td></tr></table></figure></p>
+<p>方法交换后再去调用quantity方法将有可能会crash.解决这种副作用的方式是使用<code>method_setImplementation()</code>来替换原来的交换方式,这样才最为合理, 具体原理请参照 <a href="https://www.ctolib.com/topics-103098.html" target="_blank" rel="noopener">Objc 黑科技 - Method Swizzle 的一些注意事项</a></p></li>
+<li><p><strong>避免交换父类方法</strong></p>
+<p>如果当前类没有实现被交换的方法且父类实现了,此时父类的实现会被交换,若此父类的多个继承者都在交换时会引起多次交换导致混乱,同时调用父类方法有可能因为找不到方法签名而crash.<br>
+所以交换前都应该check能否为当前类添加被交换的函数的新的实现IMP,这个过程大概分为3步骤</p>
+<ul>
+<li><p><code>class_addMethod</code> check能否添加方法 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BOOL</span> class_addMethod(Class cls, SEL name, IMP imp, <span class="keyword">const</span> <span class="keyword">char</span> *types)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>给类cls的SEL添加一个实现IMP, 返回YES则表明类cls并未实现此方法，返回NO则表明类已实现了此方法。注意：添加成功与否，完全由该类本身来决定，与父类有无该方法无关。</p>
+</blockquote></li>
+<li><p><code>class_replaceMethod</code> 替换类cls的SEL的函数实现为imp <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">class_replaceMethod(Class _Nullable cls, SEL _Nonnull name, IMP _Nonnull imp, </span><br><span class="line">                 <span class="keyword">const</span> <span class="keyword">char</span> * _Nullable types)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>method_exchangeImplementations</code> 最终方法交换 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">method_exchangeImplementations(Method _Nonnull m1, Method _Nonnull m2)</span><br></pre></td></tr></table></figure></p></li>
+</ul></li>
+<li><p>交换方法应在+load方法</p>
+<p>这个前面讲消息转发的时候讲过,+load不是消息转发的方式实现的且在运行时初始化过程中类被加载的时候调用,而且父类,当前类,category,子类等 都会调用一次.所以这里最适合写方法交换的hook(Method Swizzle).</p></li>
+<li><p>交换的分类方法应该添加自定义前缀,避免冲突</p>
+<p>这个毫无疑问,方法名称一样的时候会出现,分类的方法会覆盖类中同名的方法.</p></li>
+</ol>
+<p><a href="https://blog.csdn.net/weixin_34168700/article/details/88762738" target="_blank" rel="noopener">method swizzling你应该注意的点</a></p>
+<h2 id="属性修饰符atomic的内部实现是怎么样的能保证线程安全吗">属性修饰符atomic的内部实现是怎么样的?能保证线程安全吗?</h2>
+<h3 id="atomic内部实现">atomic内部实现</h3>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">id</span> objc_getProperty(<span class="keyword">id</span> <span class="keyword">self</span>, SEL _cmd, ptrdiff_t offset, <span class="built_in">BOOL</span> atomic) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">id</span> *slot = (<span class="keyword">id</span>*) ((<span class="keyword">char</span>*)<span class="keyword">self</span> + offset);</span><br><span class="line">    <span class="keyword">if</span> (!atomic) <span class="keyword">return</span> *slot;  </span><br><span class="line">    <span class="comment">// Atomic retain release world</span></span><br><span class="line">    spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">    slotlock.lock();</span><br><span class="line">    <span class="keyword">id</span> value = objc_retain(*slot);</span><br><span class="line">    slotlock.unlock();</span><br><span class="line">    <span class="keyword">return</span> objc_autoreleaseReturnValue(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> reallySetProperty(<span class="keyword">id</span> <span class="keyword">self</span>, SEL _cmd, <span class="keyword">id</span> newValue, ptrdiff_t offset, <span class="keyword">bool</span> atomic, <span class="keyword">bool</span> <span class="keyword">copy</span>, <span class="keyword">bool</span> mutableCopy)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (!atomic) &#123;</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">        slotlock.lock();</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;        </span><br><span class="line">        slotlock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">    objc_release(oldValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>property</code> 的 <code>atomic</code> 是采用 <code>spinlock_t</code>自旋锁实现的.</p>
+<h3 id="能保证线程安全吗">能保证线程安全吗?</h3>
+<p><code>atomic</code>通过这种方法.在运行时仅仅是保证了<code>set</code>,<code>get</code>方法的原子性.所以使用atomic并不能保证线程安全。</p>
+<h2 id="ios-中内省的几个方法有哪些内部实现原理是什么">iOS 中内省的几个方法有哪些？内部实现原理是什么?</h2>
+<p>首先要明白一个名词 <code>introspection</code> 反省,内省的意思,在iOS开发中我们会称它为反射.</p>
+<p>内省方法 例如常用的<code>NSObject</code>中的<code>isKindOfClass:</code> 通过实例对象判断<code>class</code>这就是一种内省方法或者叫反射方法,但我认为<code>NSClassFromString()</code>这个应该也算一种反射方法.</p>
+<h3 id="ios-中内省的几个方法">iOS 中内省的几个方法</h3>
+<p>我们从NSObject.h中看下吧</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)isKindOfClass:(Class)aClass; <span class="comment">//判断是否是这个类或者这个类的子类的实例</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)aClass; <span class="comment">//判断是否是这个类的实例</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)aProtocol;  <span class="comment">//判断是否遵守某个协议</span></span><br><span class="line">+ (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)protocol; <span class="comment">//判断某个类是否遵守某个协议</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)aSelector;  <span class="comment">//判读实例是否有这样方法</span></span><br><span class="line">+ (<span class="built_in">BOOL</span>)instancesRespondToSelector:(SEL)aSelector; <span class="comment">//判断类是否有这个方法</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="内部实现原理">内部实现原理</h3>
+<p>1.<code>isKindOfClass:</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)isKindOfClass:(Class)cls &#123;</span><br><span class="line">    <span class="keyword">for</span> (Class tcls = <span class="keyword">self</span>-&gt;ISA(); tcls; tcls = tcls-&gt;superclass) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tcls == cls) <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">- (<span class="built_in">BOOL</span>)isKindOfClass:(Class)cls &#123;</span><br><span class="line">    <span class="keyword">for</span> (Class tcls = [<span class="keyword">self</span> <span class="keyword">class</span>]; tcls; tcls = tcls-&gt;superclass) &#123;</span><br><span class="line">        <span class="keyword">if</span> (tcls == cls) <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类方法是通过ISA()函数拿到指向元类的存储isa指针数据的地址bit位按位与上相关掩码的方式判断当前是否是某个类的子类.<br>
+实例方法是通过<code>objc_object::getIsa()</code>函数通过存储的<code>tag_ext</code>表形式拿到isa对于的class来取出class平check来实现的.</p>
+<p>2.<code>isMemberOfClass:</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)cls &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>-&gt;ISA() == cls;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)isMemberOfClass:(Class)cls &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> <span class="keyword">class</span>] == cls;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这俩方法非常简单直接 拿到isa指针对比</p>
+<p>3.<code>conformsToProtocol:</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)protocol &#123;</span><br><span class="line">    <span class="keyword">if</span> (!protocol) <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">for</span> (Class tcls = <span class="keyword">self</span>; tcls; tcls = tcls-&gt;superclass) &#123;</span><br><span class="line">        <span class="keyword">if</span> (class_conformsToProtocol(tcls, protocol)) <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)conformsToProtocol:(Protocol *)protocol &#123;</span><br><span class="line">    <span class="keyword">if</span> (!protocol) <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">for</span> (Class tcls = [<span class="keyword">self</span> <span class="keyword">class</span>]; tcls; tcls = tcls-&gt;superclass) &#123;</span><br><span class="line">        <span class="keyword">if</span> (class_conformsToProtocol(tcls, protocol)) <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两个方法最终还是去isa-&gt;data()-&gt;protocols 拿到相关协议然后判断是否存在相关协议 如下代码：</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BOOL</span> class_conformsToProtocol(Class cls, Protocol *proto_gen)</span><br><span class="line">&#123;</span><br><span class="line">    protocol_t *proto = newprotocol(proto_gen);  </span><br><span class="line">    <span class="keyword">if</span> (!cls) <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">if</span> (!proto_gen) <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    mutex_locker_t lock(runtimeLock);</span><br><span class="line">    checkIsKnownClass(cls);</span><br><span class="line">    ASSERT(cls-&gt;isRealized())</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> auto&amp; proto_ref : cls-&gt;data()-&gt;protocols) &#123;</span><br><span class="line">        protocol_t *p = remapProtocol(proto_ref);</span><br><span class="line">        <span class="keyword">if</span> (p == proto || protocol_conformsToProtocol_nolock(p, proto)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里可以清晰的看到for循环 取出相关protocol指针 然后通过指针和传入的参数生成的<code>proto</code>对比</p>
+</blockquote>
+<p>4.<code>respondsToSelector:</code></p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)sel &#123;</span><br><span class="line">    <span class="keyword">return</span> class_respondsToSelector_inst(<span class="keyword">self</span>, sel, <span class="keyword">self</span>-&gt;ISA());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)sel &#123;</span><br><span class="line">    <span class="keyword">return</span> class_respondsToSelector_inst(<span class="keyword">self</span>, sel, [<span class="keyword">self</span> <span class="keyword">class</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个源码比较麻烦 我简单叙述一下吧 实际上调用栈比较深就是一直寻找到当前实例能响应哪些方法,当前类没有就去父类,父类没有则直到元类.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">respondsToSelector:</span><br><span class="line">	|__ class_respondsToSelector_inst()</span><br><span class="line">		|__ lookUpImpOrNil()</span><br><span class="line">			|__ lookUpImpOrForward()</span><br><span class="line">				返回IMP结果</span><br></pre></td></tr></table></figure>
+<p>这就是整个消息转发的过程 就不在这里赘述了.感兴趣回看一下<a href="https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/">第二章</a> 消息转发部分</p>
+<p>我上述列举了一些常用的内省方法,其它的都方法基本没什么特别之处都是拿到isa各种操作内部的获取相关属性的函数返回结.</p>
+<h2 id="classobjc_getclassobject_getclass-方法有什么区别"><code>class</code>、<code>objc_getClass</code>、<code>object_getclass</code> 方法有什么区别?</h2>
+<p>我用xcode随便建了一个demo 打印一下viewcontrooller的内容</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    Class cls1 = [<span class="keyword">self</span> <span class="keyword">class</span>];</span><br><span class="line">    Class cls2 = object_getClass(cls1);</span><br><span class="line">    Class cls3 = objc_getClass(object_getClassName([<span class="keyword">self</span> <span class="keyword">class</span>]));</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%p"</span>,cls1);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%p"</span>,cls2);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%p"</span>,cls3);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">2020-08-31 16:15:48.150285+0800 ClassDemo[5582:55836] 0x10205b3b0</span><br><span class="line">2020-08-31 16:15:48.150456+0800 ClassDemo[5582:55836] 0x10205b3d8</span><br><span class="line">2020-08-31 16:15:48.150575+0800 ClassDemo[5582:55836] 0x10205b3b0</span><br></pre></td></tr></table></figure>
+<p>我简单列举了一张表格</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><code>class</code></th>
+<th style="text-align: center;"><code>object_getclass()</code></th>
+<th style="text-align: center;"><code>objc_getClass()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">传入参数</td>
+<td style="text-align: center;">N/a</td>
+<td style="text-align: center;">id类型</td>
+<td style="text-align: center;">类名的字符串</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">操作对象</td>
+<td style="text-align: center;">obj</td>
+<td style="text-align: center;">这个id的isa指针所指向的Class</td>
+<td style="text-align: center;">这个类的类对象</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">实例对象时</td>
+<td style="text-align: center;">和<code>object_getclass()</code>一致</td>
+<td style="text-align: center;">和<code>class</code>一致</td>
+<td style="text-align: center;">N/a</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">类对象/元类对象时</td>
+<td style="text-align: center;">返回的消息对象本身</td>
+<td style="text-align: center;">返回的是下一个对象</td>
+<td style="text-align: center;">N/a</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>原因：因为class返回的是self，而object_getClass返回的是isa指向的对象</p>
+</blockquote>
+<h1 id="总结">总结</h1>
+<p>以上就是"一套高效的iOS面试题之我整理的答案之runtime相关问题3"中的内存剩余部分,问题答案虽然简短 但是每道题都问的非常到位,下一期我们讲一下 通知部分 争取用最快时间内把所有问题都整理出来答案.</p>
+<p><a href="https://www.codenong.com/cs106358283/" target="_blank" rel="noopener">参考</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOS
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="iOS面试题" scheme="https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
     <title>阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题2</title>
     <link href="https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/"/>
     <id>https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/</id>
     <published>2020-08-08T06:54:07.000Z</published>
-    <updated>2020-08-31T07:16:25.173Z</updated>
+    <updated>2020-08-31T08:54:34.360Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
 <h1 id="前言">前言</h1>
@@ -2442,313 +2581,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2018年终总结</title>
-    <link href="https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/"/>
-    <id>https://www.sunyazhou.com/2018/12/28/20181228FinalSummary/</id>
-    <published>2018-12-28T15:04:41.000Z</published>
-    <updated>2020-08-10T05:22:36.758Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e263dd6fbfaf3cb12eee6ebcbfff3519dc5f9eb/20181231FinalSummary/1500x500.JPEG"></p>
-<h1 id="前言">前言</h1>
-<blockquote>
-<p><strong>埋头苦干尽五年,晨起面镜白发先.</strong><br>
-<strong>一年到头不见泪,岁月荏苒冬却寒.</strong><br>
-<strong>仿佛回到一三年,北京站前望着天.</strong><br>
-<strong>北漂掘金那刻起,人生已无再少年.</strong></p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/945de09dbf0788844a86a92c623e057815808238/20181231FinalSummary/yingxiongbense.gif"></p>
-<p><em>我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我...</em></p>
-<p><strong>这一年过的像网速一样快,看着年末又到了,我依然得墨守陈规的交出我的2018年终总结</strong></p>
-<h2 id="回顾">2018回顾</h2>
-<p>这一年的清单如下:</p>
-<ul>
-<li>工作</li>
-<li>演唱会</li>
-<li>读书</li>
-<li>技术</li>
-<li>坚持</li>
-<li>生活</li>
-<li>故事</li>
-<li>百年</li>
-<li>总结</li>
-</ul>
-<p>很精彩...</p>
-<h2 id="工作">工作</h2>
-<p>这一年我很动荡,4月份从金山云到了快手.负责开发快手iOS国内版App的直播业务.我是一个不太喜欢换工作的人.从百度一路走来,回头看除了心酸和热泪盈眶...</p>
-<p>来到了快手,感觉到这个公司确实很有意思,是参加工作以来我认为最值得去的一个公司,因为我在与一群清华的学子为伍,与北邮的小伙伴肩并肩,这里基本50%都是清华系,老实说,当我面试的时候从上午10点面到下午4点多,我都不知道我是怎么面过的时候,我真的想放弃了,如果不面吐的面试那只能算唠嗑.团队的中坚力量来自于麻省理工学院,以及Facebook来的大佬.这其实是一种收获,一种能与世界顶尖大学的毕业生一起工作的机会,虽然我的工作经历算不上有多好,不过能与这样的小伙伴为伍我应该感到荣幸,当然自己不能太low.他们身上有我值得学习地方,我不喜欢横向对比,只喜欢纵向对比,对比那些比我优秀的人.</p>
-<blockquote>
-<p>北邮(北京邮电大学)被誉为计算机界的黄埔军校,录入分数仅次于清华几分.</p>
-</blockquote>
-<p>说完了我的感受,我再说一下这家公司的价值观,从我肤浅的认知价值观来看这家公司,确实很值得__尊重__,我只说两点:</p>
-<ul>
-<li>第一:接地气,如果你喜欢抖音,那我只能说你太不切实际,因为抖音的美女瘦身都是AI通过肢体识别实现的,换句话说你在被忽悠,再说抖音的视频中的内容,豪车,豪宅,高贵轻奢的生活,品质高档的餐厅...__我就想问你,中国有多少人能过的上你在抖音视频中能看到的生活,你能吗？你能开着劳斯莱斯有事没事的炫耀吗?__快手不一样,这里你能看到底层的劳动人民为了美好的生活而付出的实践行动,他们没有好的背景,他们真的只有背影,那种背影就是他们拍摄的视频的时候,这就是他们真实生活的写照...</li>
-<li>第二:不像主播倾斜流量.基本不签约明星,名人,让每个普通人能凭借自己的本领脱颖而出,这换句话说就是在用互联网帮助每个人得到公平.(倾斜流量就是把一些高端名人推荐给你让你默认就关注他就跟微博似的最后整的都没法正常说话发东西.全是劈天盖地的牛皮癣广告)</li>
-</ul>
-<blockquote>
-<p>回头再来看看BAT 哪家敢站出来说自己做到了上边这两点.做到了的在底部评论区扣1.</p>
-</blockquote>
-<p>今年来快手又两件事让我很高兴</p>
-<ul>
-<li>杭州之旅</li>
-<li>快手家乡</li>
-</ul>
-<h4 id="南下杭州">南下杭州</h4>
-<p>刚到这家公司不久就赶上了Team Building(团队建设),去杭州 我从未去过杭州,第一站是杭州的海宁</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5b7ec1d2b93ef37e0298da61b8ca8d2fead18ac1/20181231FinalSummary/haining.jpg"></p>
-<blockquote>
-<p>当年孙中山先生就是在这里下车去钱塘江观潮</p>
-</blockquote>
-<p>西塘,在家乡我习惯了23年的低矮平房,从未见过如下得建筑风格,这种徽系的白墙瓦房有一种中国地方的特色</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d7b92c1b06942ffcae31bb001359836d2030e016/20181231FinalSummary/hangzhou2.jpg"> &gt; 真是栏杆拍遍吴钩看了，无人会登临意,休说鲈鱼堪脍尽西风季鹰归未...</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d7b92c1b06942ffcae31bb001359836d2030e016/20181231FinalSummary/hangzhou1.jpg"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fc87f192bde618d91574bf116c58409d5e4f1023/20181231FinalSummary/hangzhou3.jpg"></p>
-<p>这里曾经是__伍子胥（公元前559年—公元前484年,大约是春秋末年）<strong> 兴修的水利工程,我对春秋末年吴王夫差越王勾践的故事记忆犹新,但对吴国的风土人情的认知仅限于上学时候读的</strong>《史记》__内容描述,从未亲自来到这里.虽然我的认知十分肤浅,但看到了江南风情的别具一格还是令我肃然起敬,从北京到杭州的列车上,途径山东泰山,苏州的姑苏城,上海的长江流域.长江三角洲的确不同于我的家乡东北,这里物流车辆远高于在东北的任何高速,从这一点就可以客观的发现江浙一带经济比东北要发达的多.这一路我几乎一夜没睡,各地都在大兴土木搞基建,火车途径每一个城市附近周边都很明显的发现塔吊楼房,正在施工作业.</p>
-<p>江南的风景如画的确如此.</p>
-<p><strong>杭州之旅我路过了钱塘江</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5b7ec1d2b93ef37e0298da61b8ca8d2fead18ac1/20181231FinalSummary/qiantangriver.jpg"></p>
-<p>这一幕让我不禁的想起初一时候清晨背诵的一首白居易的《钱塘湖春行》</p>
-<p>当我身临其境的感受钱塘江的时候,我只有一个感慨,此情此景如果我是白居易我也一样能做出一首诗,这一幕也许在东北几乎是感受不到的.对于一个东北的孩子,让他有诗人的灵感的前提是他需要有这样的环境和人文历史.我喜欢比较我的家乡和我去过的所有地方,在我的家乡冰天雪地,夏季没有像江南的小桥流水人家,没有古道西风瘦马,更没有夕阳西下断肠人在天涯...我的家乡只有黑土地和森林,以及一望无际的平原,唯一一条松花江还只是我们从电视上才能感受到唯一人文地理.地域的文化差距是截然不同的,但是我们的初中依然要学习白居易的《钱塘湖春行》这种以我看来就是为了应付考试的任务文章已经脱离地域特色,变得毫无意义.我并不是偏激,学识渊博是好的,但是,需要了解自己的生活地域和文化我认为比背诵白居易的《钱塘湖春行》更有意义.</p>
-<h4 id="快手家乡">快手家乡</h4>
-<p>今年晚些时候, 快手征求全公司员工意见,为一部分员工的家乡树立广告牌,我很幸运,成为了其中之一</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/13fb4cba3ab24f4d00201b7dae171b65633c06f6/20181231FinalSummary/kwaihometown.JPG"></p>
-<p>我也从未想过有一天我能登上海伦的京都广告牌,成为快手的形象代言人之一,这要是在百度估计即便升到T8也未曾有如此这般的待遇吧! 真的很感谢快手,<strong>这是一家有人文主义精神和艺术气质的公司.</strong></p>
-<p>工作的内容大概就介绍这么多吧! 现在的工作和团队还是不错的.就像我前边说的那样,与清华的学子为伍,与北邮的小伙伴肩并肩.这一切不是每个人都能在工作中遇到的.</p>
-<h2 id="演唱会">演唱会</h2>
-<p>今年夏天,伍佰在北京五棵松体育馆 凯迪拉克中心开个人演唱会,这么多年我从未参加过任何一个明星真正意义上的演唱会.2013年的时候刘德华在北京开个人演唱会,由于当时没有舍得花钱买票,所以至今都觉得遗憾,当时刘德华的门票 ￥980一张. 如今伍佰的演唱会门票￥680一张,我买了两张,这一次说什么也要去看一看,以前因为工作没多久,花钱的确不敢大手大脚.</p>
-<p>首席看台</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/42510f7a70af133d03d2a2060f3604e7163be3aa/20181231FinalSummary/chinablue2.jpg"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/42510f7a70af133d03d2a2060f3604e7163be3aa/20181231FinalSummary/chinablue3.jpg"></p>
-<p>我记得第一次听伍佰的歌的时候是2000年左右,那时候我寄人篱下在我舅家东胜村,去双胜去上初中初一,有一次去一个叫镇东的地方全班同学都去听文艺演出,我坐在拖拉机的后车斗上,唱着伍佰的《白鸽》那时候还不知道MP3是什么东西,能听上这首录用磁带已经很满足了</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/61ad05a558d65fd4714b431755cbd8cfd810ca53/20181231FinalSummary/opentheshow.gif"></p>
-<p>在伍佰的演唱会上开场的第二首想起的就是这首《白鸽》,唱出我的初中回忆,那个时候很穷,后来才知道还有一首成名曲叫《挪威的森林》.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/42510f7a70af133d03d2a2060f3604e7163be3aa/20181231FinalSummary/chinablue1.gif"></p>
-<p>当全场一起演唱挪威的森林的时候 那种场合的效果,绝对比KTV好多了.真的是前所未有,老实说 现场的声音算是原声了,这场演唱会真的值得.</p>
-<p>伍佰说:"他的歌曲99%都是自己的原创" 不过仔细听过他的歌曲 真的很多经典<br>
-这中间伍佰唱了一首我第一感觉我没听过的歌曲,但是很好听,后来才得知叫__《被动》__,推荐给你们听听.</p>
-<h2 id="读书">读书</h2>
-<p>这一年严格意义上来说我的眼睛很疼,每天至少14小时对着显示器,所以我列举了一些今年连看带听的书籍.</p>
-<p>《晚清的最后十八年4》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/2e584f112f9b0f935c97330a521b0c3ee4536ab6/20181231FinalSummary/wanqing.jpg"></p>
-<p>《曾国藩》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/zengguofan.jpg"></p>
-<p>《晚清重臣李鸿章》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/lepetit.jpg"></p>
-<p>《毛泽东传》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20181231FinalSummary/maozedong.jpg"></p>
-<p>《周总理的最后600天》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/zhouzongli.jpg"></p>
-<p>《普京传记》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%9F%D1%83%D1%82%D0%B8%D0%BD.jpg"></p>
-<p>《习近平的七年知青岁月》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/xijinping.jpg"></p>
-<p>《乔布斯传》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/jobs.jpg"></p>
-<p>《货币战争1~5部》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/currency_wars.jpg"></p>
-<p>《拿破仑传》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/Napol%C3%A9onBonaparte.jpg"></p>
-<p>《李嘉诚传》<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/68128680d7b63955098277c9815c07eedff64f14/20181231FinalSummary/superlee.jpg"></p>
-<h4 id="晚清的最后十八年-第4部">晚清的最后十八年 第4部</h4>
-<p>去年我读完了1~3部,可是那时候还没有完整版的第4部,这本书俞敏洪都亲自推荐,最后一部绝对殿堂班史诗级没有之一,读完最后一部才了解,原来康有为是个喜欢办事总打脸的人,根本做不到严于利己.原来孙中山其实并没有教科书上那样有多好,反而我觉得辛亥革命得归功于袁世凯,因为晚清是中国历史上像西方文明进军最恢宏得时代,袁世凯主张君主立宪保全皇族脸面,而黎洪元这些后来者为了掩盖造反的事实主张共和,葬送大清王朝最快的一个人是载沣(北京恭亲王府就是这个人的,最后捐给了中国人民政府)，就是他曾经去德国,德国沙皇让他下跪他保持了中华民族的尊严没有下跪,得到了德国皇帝得尊重,对这个人还是中国最后一个皇帝溥仪得父亲.总之这些 细节都会在这本书上说到.</p>
-<p>从第一部介绍北洋舰队到介绍各种巡洋舰 驱逐舰 护卫舰 鱼雷艇... 这4部书简直完整的记录了中国清朝末期从中日甲午战争到辛亥革命全程记录.值得一看,强烈推荐</p>
-<p>如果非要我写出推荐的理由,那我只能拿一张照片说明一下:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/218720dd578111252efde67a95bcdfb1fedb2077/20181231FinalSummary/Krupp.jpg"></p>
-<p>这是我今年10月份去天津市津南区小镇站 小站练兵园(袁世凯曾经练兵的地方)拍摄的德国克虏伯公司1860左右生产的野炮.</p>
-<p>北洋时期的军舰巡洋舰大部分来自德国克虏伯公司,从这门炮的制造工艺来推测当时的工业制造程度和北洋海军的军事装备基本算是中国近代史亚洲第一的强国了.我们不是打不过日本,我们打不过的是清朝内部的腐败.</p>
-<h4 id="曾国藩传">曾国藩传</h4>
-<p>如果要问我为什么如此这般推荐曾国藩,我只能说,这是我认为清朝历史上屈指可数的名臣,作为清朝经历过三代皇帝的变更,三朝大臣,恪尽职守兢兢业业,嘉庆皇帝说作为大清帝国的大臣必须得干啥啥行,曾国藩从0开始学习建筑学,从0开始学习西方文明,从0开始学习任何别人能擅长自己不擅长的东西.儒士中的典范,曾子的后人.练习新军评定太平天国起义.麾下基本招纳当时神舟各路领域第一的人才,比如我们化学上的元素周期表,就是当时在曾国藩幕府效力的科学家<a href="https://baike.baidu.com/item/%E5%BE%90%E5%AF%BF/3672479?fr=aladdin" target="_blank" rel="noopener">徐寿</a>所做,如果不是这个人我们今天看到化学元素将是英文符号,不会全部都带金字旁.作为老师,他教出中国近代文明学贯中西的伟大门生<a href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E9%B4%BB%E7%AB%A0" target="_blank" rel="noopener">李鸿章</a>,功勋卓著.可是后来的人们因为曾国藩没有处理好<a href="https://zh.wikipedia.org/wiki/%E5%A4%A9%E6%B4%A5%E6%95%99%E6%A1%88" target="_blank" rel="noopener">天津教案事件</a>而倍受争议,我认为不是处理不好,真正的原因是因为__弱国无外交__,是慈禧想让曾国藩来收拾这个烂摊子刻意把这事让曾国藩当替罪羊.换作今天就是,有时候人非圣贤孰能无过,得倍受争议的活着,这显然不是曾国藩的本意,以曾国藩大人的原则和立场绝不是因为这事被别人抛石子而不去为之,相反曾大人敢于直面惨淡的人生,敢于正视淋漓的献血.如果那时候是现在习大大的中国,曾大人也会像外交官王毅一样敢于跟世界任何一个国家平起平坐. 这是我钦佩这位伟人不为人知的一面.</p>
-<p>所以为了表达我对曾大人的尊重我送曾大人一副对联:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/45604ae3bd82a1e2d71c15873023b9140761581f/20181231FinalSummary/zengguofan1.jpg"></p>
-<p><strong>求忠臣必于孝子之门</strong><br>
-<strong>凡秀才当以天下为任</strong></p>
-<h4 id="晚清重臣李鸿章">晚清重臣李鸿章</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/lepetit1.jpg"></p>
-<p>这位慈祥的老人,改变了中国近代史,被西方人誉为"东方的脾斯麦",中国第一位登上美国时代周刊封面人物,中国历史上第一位欧洲考察的人,第一位... 总计创造 了 47个 中国第一.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/lepetit2.jpg"> &gt; 访问香港的李鸿章与香港总督卜力会面，站与李鸿章右侧者为刘学询，1900年7月。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/ChineseMinisterLi%20HongzhangAndPrinceBismarck.jpg"> &gt; 为了表示对李鸿章的尊重和敬意，俾斯麦的着装极为庄重，穿上了他极少穿的盛装——德皇所赐玉冕、红鹰大十字宝星，手拿大玉，腰挂宝剑。两人见面后，首先互相问候对方身体如何，交流了各自的身心健康问题。</p>
-<p>脾斯麦被誉为 德国的铁血宰相,简直跟李鸿章一模一样经历三朝德皇,欧洲动荡,苦战多年终于换来了德国的统一.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/c0bcc0e89234e74891d378696d8a596e72e27f31/20181231FinalSummary/Bismarck%2COttoF%C3%BCrst_von_und%20LiHungChang.jpg"> &gt; 李鸿章与俾斯麦在首相府阳台</p>
-<p>我用了这么多篇幅来介绍这位晚清名臣,我为什么这么崇拜这个人?</p>
-<p>对,你问到了重点,我告诉你答案.</p>
-<p>在我们的工作生活中,我们所从事的劳动基本都是西方文明的产物吧,计算机,物理化学,各种高科技,电路,哪种我们从几千年的中国的文化洗礼中能找到.我们饱读了中国的四书五经,可是我们反问过自己吗？读了这么多年书,没有从本质或者说从实际的实践中改变或者提过生产力,电脑,智能手机都是西方发明的,我们的时代已经进入了全盘西化的教育模式了</p>
-<p>我们学习的英文 这东西我们的古典文学中根本找不到一个字母是能跟英语扯上关系的,我们今天用的汉语拼音是建国后和民国时期的产物.</p>
-<p>在我自己的工作中经常会经历或者遭遇一些困难难以在断时间内克服或者解决,这个时候我就在反问自己,我怎么读了这么多年书连一个最简单的计算机理论问题都解决不了,回头想想计算机从发明的那一刻起到现在才几十年,我们从小就没有经历过计算的玩法,原理和制造,从某种意义上来说我们算不算是落后与西方文明,计算机不是中国人发明的,我们先要了解英语,了解和计算打交道的电脑语言,了解如何编写这种语言跟计算机交流,每当这个时候我内心是脆弱的,我的脆弱来自于我不够深入了解计算机内部,从我小的时候读的书都是千字文,跟这个东西扯不上关系,我应该找一个人作为我前进的榜样,这个人是谁呢,是谁在中国历史上第一位敢于学习西方文明,学贯中西,学习西方的先进文化,技术...制造自己的国家的计算机.我觉得这个人非李鸿章莫属,他虽然没有造计算机,但是他每天的工作都是面对着自己极大挑战的任务,他每天要处理洋人的事物,从德国克虏伯公司购买军舰创造北洋舰队,创办江南制造总局制造枪械兵器.用今天的话说,你首先得有车床,得有冶炼金属的技艺,得有技术,这位李大人可谓是中国第一个敢于解放思想观念接受西方文化和教育.学习西方先进文明技术来改造清朝的能臣了.</p>
-<p>在西学东进的浪潮中,敢于像西方学习得人,非李鸿章莫属,我心中佩服这样的人,我今天工作中遇到的困难都是来自于西方的文明技术.有时候我们对于一些困难感到恐惧,其实恐惧源于未知,你不知道这么操作会意味着什么感到心理没底,主要的原因是我们还没有完全驾驭这一切.努力弄懂深入研究实践得到结论才是唯一的解决方式.</p>
-<h5 id="用实力去赢得别人的尊重">用实力去赢得别人的尊重</h5>
-<p>晚清重臣李鸿章为了练军(淮军)去镇压太平天国农民起义,自己回安徽在没有经费和职权得前提下,操练了一只新军,每次镇压太平天国起义总是败多胜少,最后迫于无奈解散了队伍,自己去投奔了恩师 曾国藩,那时候曾国藩也是练习了自己的一只新军-湘军,曾大人也跟李鸿章一样没有经费,但是各路大臣回乡操练新军中,几乎都像李鸿章一样失败,只有曾国藩的湘军不太一样,当李鸿章落魄投奔恩师的时候,曾国藩内心无比高兴,因为在某种重要的决策上他的门生李鸿章原胜于自己,李鸿章投奔门房军营去见恩师,曾国藩故意当什么都没发生,简单吩咐门房说我太忙让 少荃(李鸿章 字少荃)去临营寒舍歇息,待我有空便去探望.在曾国藩的幕府 接纳清朝大臣必须 鸣礼炮 多少响,迎接仪式必须隆重,李鸿章当时还算是一个不大的官员,按照朝廷礼节得 鸣礼炮隆重接待的,在曾国藩这里基本就跟个兵卒来了一样没啥反应,这李鸿章心理十分难受,第二天 一早,左宗棠平定西北叛乱回来,来见曾国藩,曾国藩的迎接仪式远比想象中要隆重,鸣礼炮多少响。。。迎接仪式非常隆重,这一幕李鸿章看眼在里,苦在心里,一个左宗棠连我一半的官职都不到,恩师居然这么隆重接待,我来了恩师当什么都没发生,恩师是带我登上文学殿大学士的人,是我科举考试中对我严加管教,教授我生存本领的人,现在这般场景,怎让我不心酸,哎 看来__我还得有自己的军队,打出几次胜仗,得有实力这样才能得到恩师得认可,才能去赢得别人的尊重__.我现在什么都没有,左宗棠带领一群兵卒都这么嚣张... 李鸿章当时的心酸我看完了这段故事我很理解,我相信看到这里的你也一样感同身受.</p>
-<p>其实曾国藩的良苦用心李鸿章当时还没察觉到,作为自己的门生没有谁比曾国藩更了解李鸿章了,曾国藩为了磨平李鸿章的棱角让他受如此这么心酸,就让他尝尝这是啥滋味,让他懂得__人就得用实力去赢得别人的尊重__.</p>
-<p>曾国藩和李鸿章的故事一开始很抵触西方文明,到最后疲于应对再到主动出击,再到学贯中西,要不是洋人的船坚炮利那怎么会有李鸿章,怎么会诞生『中国的铁血宰相脾斯麦』.李鸿章在洋务运动中开创了多少个第一,回头再看看我的成长史又开创了多少第一,第一次背井离乡,第一次加入Baidu,比较早的接触iOS开发,第一次用博客记录知识技艺,第一次走出农村用计算机技术改变命运,成为村里人的希望,我完全就是再走李鸿章的老路,希望走在成为圣贤的路上,这条路上一定没有『前方300米有闯红灯拍照』,有前人的经验让我很幸运,但再往后会遇到前人都没经历过得东西,我将成为别人的前人.</p>
-<p>故事讲完了</p>
-<p>我们再来看看今天的我们,我们心目中按照王阳明的《知行合一》大家也都佩服有实力的人吧.<br>
-如果你觉得一个富二代 爹妈在一线二线城市给他买套房 帮他摆平了他需要的一切,这个人还没个正经工作,每天都过着养尊处优的生活你会佩服他吗？这不就是我们身边的一些人嘛? 我相信你一定不佩服他,你佩服他的是他有如此有正事的父母.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ef7d1636166dc587859a78cda527113bd85c8ead/20181231FinalSummary/five-year_plan.jpeg"></p>
-<p>我从2013年开始制定自己的第一个五年计划,现在2018年了,我没有给自己一个满意的答卷,看着我的五年计划 勉强完成70%的程度,我很惭愧. 我承认我说了大话,我向那些看到我制定五年计划的各位,以及我的高中老师,深表歉意. 我确实在富二代的面前抬不起头,我的父亲没有正事,一切需要我自己白手起家.</p>
-<p>于是我给自己写了句座右铭: <strong>埋头苦干十年,与富二代抬头相见.</strong></p>
-<h4 id="毛泽东传">毛泽东传</h4>
-<p>这是我今年的地四本书,听完感觉毛爷爷的故事,真的不容易,这个人很有气魄和诗人才华.在内外交困的新中国如果从零开始着手准备未来几十年的任务是不容易的,毛爷爷做到.从小生活在地主的家庭中没有因为父亲的小农思想而影响.</p>
-<h4 id="周总理的最后600天">周总理的最后600天</h4>
-<p>这位共和国总理的声音你都需要听到,这也是我第一次听到周总理的原声录音,在最后的600多天的日子里,这位总理可谓鞠躬尽瘁日理万机,与江青团伙斗智斗勇,努力纠正文革的错误,把共和国的重任一步一步交给邓小平,没有小平爷爷的改革开放,那你今天也许就不会看到我写的博客文章来总结我的2018,周总理的勤俭值得我去学习,由于医疗条件不是很完备,当时的新中国还没有能力制造一些高级药品,周总理的药都是国外进口,可是这位总理节俭到当药片掉地上很珍惜的捡起来吃,他说,我多么希望我们共和国也能制造这种药去帮助那些像我一样受病痛折磨的人民.在最后的岁月里与病魔坚强抗争.</p>
-<p>为了纪念这位伟人,我认真的听完讲解周总理的最后岁月,我很荣幸能在中国国家博物馆里找到总理的几件物品,让我瞻仰一下这位共和国总理的爱戴人民的精神和气质.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a55bae832166b756dc2b68c32b93560c9ccde8ba/20181231FinalSummary/hatOfZhouPrimeMinister.jpg"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a55bae832166b756dc2b68c32b93560c9ccde8ba/20181231FinalSummary/hatOfZhouPrimeMinister2.JPG"></p>
-<p>这是周总理参加日内瓦会议的礼帽 也就是下面这张我们在初高中历史书上经常看到的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3454b2b00ff269f32b025ee9ffcdfd092bafab2/20181231FinalSummary/hatOfZhouPrimeMinister3.JPG"></p>
-<p><em>图片引用自百度百科</em></p>
-<p>我相信你看到这位共和国总理也会情不自禁的潸然泪下,他的声音你需要听到.</p>
-<h4 id="普京传记">普京传记</h4>
-<p>这位前克格勃特工,俄罗斯的硬汉,对于苏联集体后的经济重建,强硬铁腕解决俄罗斯寡头的财务霸权,车臣战争的终结者,克里米亚地区的国际精神,敢于在世界上与美国强硬对抗. 普京传记确实记录的很详细,不过 就我个人观点 俄罗斯现在国民经济没有改善多好,依然是两架马车式的发展. 为了了解世界的历史和欧洲的地理我今年 学习很多欧洲的内容, 这本书就是在学习范围内.</p>
-<h4 id="习近平的七年知青岁月">习近平的七年知青岁月</h4>
-<p>在我小时候父母经常跟我说学习不好就挑大粪,但是我要说的是这位现任中华人民共和国共和国的主席就是曾经挑过粪,在陕北梁家河一步一步从知青下乡到村支书再到加入中国共产党,恢复高考继续上清华学习,最终成为中华人民共和国的国家主席,这一路走真的很不平凡,这本书让我记忆犹新的一个故事值得我们每个人去学习.</p>
-<p>当年习大大 作为知青刚下乡, 由于不够了解农村的百姓的生活,加上陕北十分贫困,知青们需要自己学会做饭,自己学会捡柴烧火,由于第一次没有经验,刚去梁家河的一段日子赶上陕北下雨, 做饭的柴都被雨淋湿了,没办法引火,知青们你瞅瞅我我瞅瞅你,互相不知所措,这种日子实在太过艰难, 习大大下乡的时候满满的一包又一包的都是书,在这段日子里白天干农活晚上吃完饭还要继续学习,由于没有什么吃的晚上学到很晚的时候会觉得饿,就简单 锅里放点水 放里两碎玉米,柴这种资源是有限的 所以煮完的玉米 也不知熟没熟就吃了,这段艰苦的生活我相信在看这篇文章的年轻人也许都理解不了,但是过的确实无比艰难,由于陕北的底线多山和高坡 不能积水加上田地是有限的,习大大带领全村的人民修堤坝蓄水灌溉,然后开垦农田.习大大深知陕北为什么贫穷因为百姓的田地实在太少,只能像大地要粮食,建完堤坝开山拓田地,办沼气池,当年还没有好的机械,全部都是人工挑这粪便装到沼气坑.沼气池需要技术,习大大又探访四川学习办沼气的经验,沼气池刚投入使用之前需要把沼气弄个洞来检测沼气是否能够达标使用,习大大亲自开洞,当时由于池内压力很大,喷了一身粪汤, 看到这的时候我不仅感叹,中国能有以为这样的主席太幸运了,这个人可真是深入基层劳动,敢于干最脏最累的活,一般干这种活的人他肯定知道底层人民的疾苦,他也一定知道如果带领祖国的广大人民脱贫致富.</p>
-<p>如果放到现在你让一个年轻人去农村赶上下雨天做饭的柴都淋湿,根本点不着火做饭,这种苦日子真没几年轻人尝过,更别说办沼气池挑粪了.</p>
-<p>即便你心目中的政府有多么贪腐,我觉得习大大不会,他尝过太多人没吃过的苦,受到过文革父亲的影响入了N次党才最终成功,这段经历不寻常,如果不了解这位国家领导人的历史,那我们也不会懂得现在的辛福来的多么不容易.现在其实比习大大的过去幸福多了,但是社会主义初级阶段就这样,先能解决温饱,摆脱贫困,然后再去研究奔小康发家致富,我希望习大大的人生经历能让每个人都知道,所以这本书强烈推荐.</p>
-<h4 id="乔布斯传">乔布斯传</h4>
-<p>作为一名 苹果开发者 如果不去了解创造苹果的人其实是一种悲哀,乔布斯的个人性格非常极端追求绝对机制,如果没有这么刻薄的追求就不会有今天的iPhone, 当然光有这种气质是不够的,需要有技术驱动,沃兹尼亚克就是其中之一.数学天才,第一台 Apple I 就是这个大神手工做的,用芯片叠加,电路设计.....</p>
-<p>乔布斯是一个极具 "现实扭曲立场"的人,(接地气一点就是能忽悠),作为孤儿的乔布斯深受养父的影响,他父亲是一个木匠,这个人说:"做什么其实跟做家具是一样的,衣柜的背板不容易被人所看见,但是衣柜的外表质量也要跟内在的背板一样的品质",所以你今天拆开苹果的任何设备看看电路板就知道,黑色PCB印刷,内部电路设置和元器件都十分整齐,真的跟衣柜的背板一样质量. 例如: iPhone 4/4s</p>
-<p>这是唯一两部乔布斯在世时发布的最后两样产品,但是现在的库克也许没有100%的遵照乔布斯的人格和习惯以及追求,整的现在的苹果手机国产的质量总出问题.这要是在乔布斯时代我相信这即便有也可以全部换新而且很少能出问题.</p>
-<p>由于性格的极端和追求的极致导致 苹果的同事把被乔布斯伤害的同事称为"低通滤波器"(无论如何大声或者激烈大家都很低调平和的处理)</p>
-<p>乔布斯的一生是不是传奇我不知道,我觉得至少我通过苹果的这副键盘敲出了一栋100w+楼房.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7a51ed176820e66e48ec015069843b0686a5e2f0/20181231FinalSummary/applekeyboard.png"></p>
-<p>是的 我是一个Apple iOS Developer,这位伟人不为人知的一面的值得学习.</p>
-<h4 id="货币战争15部">货币战争1~5部</h4>
-<p>这几部货币战争非常好,虽然以小说的形式出现,但是作者自述说如果以真实的材料出现那么银行家基本不会让这本书出版,往往小说的形式可以逃避它.</p>
-<p>一部世界经济的必须经典, 英格兰银行...罗斯柴尔德家族...布雷顿森林体系...世界经济的金本位,银本位还有我国的以物资为本位的人民币,这些背后的价值都在这本书中一一列举.</p>
-<h4 id="拿破仑传">拿破仑传</h4>
-<p>这位活跃在欧洲半个世纪的法兰西缔造者,大约活跃在中国的清朝中晚期,出生在法国南部的科西嘉岛的拿破仑,一路驰骋政府整片西欧领土,没一次的战争都以胜利为结尾,但是因为最后的一次滑铁卢战役而毁于一生,其实我们应该 以"不以成败论英雄"的态度来欣赏这位战斗勇士.</p>
-<p>为了更多的了解欧洲,我需要了解那里的人文和地理,所以这本书值得一看</p>
-<h4 id="李嘉诚传">李嘉诚传</h4>
-<p>最后要说说这位励志伟人李嘉诚,这位李超人简直称霸香港又温文尔雅,其实李超人的祖先时清朝时期的文官拔贡出身(可以理解为有文化有学识的秀才).这位伟人征服全港,无论做人做事都勤勤恳恳踏踏实实,从一家做塑胶花厂商到最后收购港灯,英资企业,汇丰银行的长期合作伙伴,怡和置地,再到香港的房地产...以及收购希尔顿酒店....太多太长一言难尽</p>
-<p>这里要说一下这个怡和置地,它的前身是<a href="https://baike.baidu.com/item/%E6%80%A1%E5%92%8C%E6%B4%8B%E8%A1%8C/5039743?fr=aladdin" target="_blank" rel="noopener">怡和洋行</a>(英资企业)由两名苏格兰裔英国人威廉·渣甸（William Jardine，1784年～1843年）及詹姆士·马地臣（James Matheson，一译“孖地臣”，1796年～1878年）在中国广州创办,就是当年林则徐虎门销烟,捣毁东印度公司的鸦片,实际上背后是怡和洋行在掌控,因为林则徐侵犯了怡和洋行的利益在华利益,这位渣甸老板在英国女皇面前游说,挑起了1840年的鸦片战争.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f654b576ec4663c04c56eb2c121d5d98ba46ec32/20181231FinalSummary/yihe.jpg"></p>
-<p>怡和洋行旧址 <em>图片引自百度百科</em></p>
-<p>李嘉诚的一生真的从无到有,邻近坎坷,稳扎稳打,一步一步吞并收购.</p>
-<p>让我印象深刻的是怡和大班 纽碧坚 跟李嘉诚的合作...</p>
-<p>绝对励志的人生奋斗史 值得一看</p>
-<h2 id="技术">技术</h2>
-<p>这一年在技术上投入和收益没有明显提升,不过我给自己的定下的OKR(Object key result一种工作目标的实现方式类似KPI)是每个月保证产出两篇技术文章,至少有一篇质量较高经过这一年的技术写作,还是很有收获的,我从没想过能用博客记录我的生活中的点点滴滴,大多都是技术相关很少写个人生活,除了年终总结以外基本都是iOS相关的技术,不过整体上个人感觉还是很水的,2019年需要比现在更有质量和深度.</p>
-<p>为了奖励自己一年的技术进步和对写作的坚持,2018年我买了有一个BOSE降噪耳机(￥1888),作为程序员只有几样东西视为珍宝</p>
-<ul>
-<li>1.机械键盘</li>
-<li>2.降噪耳机</li>
-</ul>
-<p>这一年坚持学习python和机器学习,但是明显的进步并不多,只是稍稍了解了一些数据挖掘和加工数据.不过目前负责快手的直播业务让我锻炼了很多,每一次开发遇到的问题我都会记下来,业余时间写demo然后发表文章到博客记录世界记录你.</p>
-<p>不过对比去年的KPI指标</p>
-<p>去年的KPI如下:</p>
-<ul>
-<li>swift4 进阶看完</li>
-<li>iOS Core Animation 看完</li>
-<li>Learn AV Foundation 要写几篇博客从上次段的位置续上</li>
-<li>学会Python和数据挖掘 为机器学习做铺垫</li>
-<li>多媒体相关技术深耕</li>
-<li>英语水平再提高一个level</li>
-</ul>
-<p>显然我没有完成30%,很惭愧,所以我把目标实现的方式从KPI变成了OKR.这样弹性实现目标以便能更好的实现2019年的目标.</p>
-<p>这一年我很败家,买了一堆破烂花了不少钱</p>
-<p><strong>机械键盘</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/keyboard.jpg"></p>
-<blockquote>
-<p>这机械键盘,确实很好,周末在家写代码非常流畅顺手.￥519</p>
-</blockquote>
-<p><strong>iPhone X 256G 美版</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/iPhoneX.JPG"> &gt; 同事去美国帮忙代购的,作为一个iOS developer,我也是忍受了4年iPhone6,确实卡的不行了,￥8000</p>
-<p><strong>Apple Watch 3</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/AppleWatch3.jpg"></p>
-<blockquote>
-<p>这个我认为基本没啥用,就能戴在手上看个点儿,其余的功能都用不了,￥3188</p>
-</blockquote>
-<p><strong>PC</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/PC.jpg"> &gt; 为了学习机器学习买了个1050Ti,很久没DIY了,整套自己的买的装的.16G DDR4 2400内存,240G+120G两块三星固态硬盘,i5 8400 CPU, 技嘉Z370主板 总造价 ￥5547.<br>
-&gt; 我已经把旧的那个200+贱卖了.</p>
-<p><strong>BOSE 降噪耳机</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/bose.jpg"> &gt; 双11 打算买个程序员梦想中的耳机 ￥1888</p>
-<p><strong>小牛 N1s 动力版</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/56e5c68e0b83c60ff00f960a24097fe14bb2e90a/20181231FinalSummary/n1s.jpg"> &gt; 上班的代步工具.￥7399</p>
-<p>今年败家花了 ￥26541.</p>
-<p>然而这里面我觉得最好用的东西,一个是小牛的这个电动车,一个是降噪耳机,至于手机我觉得对于一个像我这样穿31块钱林甸鞋的人,拿着一个8000多的 iPhone X 无疑是更加鲜明的证明我是一个十足的屌丝.电动车这个东西实在解决了我很多忙,上下班无论去哪里都很方便,降噪耳机则是在工作中能很安静投入的工作.至于机械键盘 显然没啥用,但是苹果的键盘更贵,想想还是算了,也算值得吧.最没啥用的就是PC 和那块手表,这两样东西是我买东西的一个败笔.</p>
-<p>买了这么多破烂,花了不少钱,然后我发现有些东西一定要物尽其用.如果花了很多钱却没有发挥有用的价值显然就是一种不理性的消费..</p>
-<h2 id="坚持">坚持</h2>
-<p>每年教师节我都会给一位初中的语文老师打电话问候一下,我一直连续坚持了11年.我觉得我的初中学习真的很差,没有给这位老师留下过太好的印象,我想弥补一下,想创造一项记录,这项记录是要做在这位老师的学生中连续坚持一句问候的学生,之不之一我不知道,未来如果能的话我会尽量坚持下去,希望这位老师记得这位学生很平凡,但却做了一件不平凡的事情,希望这位老师记得这位学生来自第二良种场.</p>
-<p>在我的人生目标中需要树立一个二良人都佩服的榜样.这位榜样就是发生在这座几乎地图都没有导航路线且被中国忽略的村庄.我梦想有一天衣锦还乡的那一天能为二良建造一座计算机博物馆,在这座博物馆中你可以尽情的学习计算机类的书籍.像我一样用所学的知识改变自己的命运.</p>
-<p>因为在我上学的红光农场初中,二良的学生受到了太多不平等不公正的待遇,这不禁让我潸然泪下,为什么我们就在红光农场这座邻近的农场村庄抬不起头来,是因为我们落后,落后就要挨打,就要受到不公正的待遇,为了改变这一切需要我们忍受"韩信的胯下之辱".</p>
-<p>在这所中学,老师们只对亲信子弟负责,对该农场的子弟次之,再次才能轮到像二良这种借读的学生中学习好的学生,至于像我这种既无背景也没关系,又学习不好的学生这种歧视真的刻骨铭心,参加工作后也依然没有忘记,为什么同样是中国人还搞这么具体的地域歧视.</p>
-<p>我希望我能用自己的实践证明给这位老师看,看看到底是红光的学生坚持11年给您打电话还是二良的学生能坚持11年给你打电话,<strong>人活的要用实力去赢得别人佩服和尊重</strong>,我希望虽然二良和红光地域的经济差距很大,但是每个地域都有其独特性,没有哪里比哪里高低贵贱之分,要相互融合互相尊重.</p>
-<p>少一些教育资源的倾斜,让每个学生都能得到公正平等的待遇.</p>
-<h2 id="生活">生活</h2>
-<p>我认为人生有两堂选修课</p>
-<ul>
-<li>1.装修</li>
-<li>2.做饭</li>
-</ul>
-<h4 id="装修">装修</h4>
-<p>从17年买房到现在房子还没有下来,如果是毛坯房的话,需要自己学会装修.</p>
-<p>厨房: 集成灶、消毒柜、蒸烤箱 水槽、净水器、垃圾处理器...</p>
-<p>这堂课只有两种人可以逃避</p>
-<ul>
-<li>有钱人</li>
-<li>买二手房的人</li>
-</ul>
-<p>显然我不是这两种人,既没钱也没买二手房,需要经历有限的装修经费,捉襟见肘的装修.</p>
-<p>在房子没下来之前我经常抽出时间了解一些相关的装修经验,我想装完修也许就成了半个装修工.</p>
-<h4 id="做饭">做饭</h4>
-<p>这是一件只要有一个人需要干的活.</p>
-<p>如果不去了解如何下厨做饭,那也许一辈子过的很平庸,如果不去了解毛葱和小葱大葱到底做饭好不好吃,什么样的葱适合做什么样的菜那么人就不会有太多的成长.</p>
-<p>显然上面的两堂课我没有逃课.</p>
-<p>所谓生活,有的年轻人认为我们不需要做成功人士,享受现在的静好不就可以了么,是的你能享受现在的美好那么一定有人替你砥砺前行,那个人要么是你父母要么是你爱人.</p>
-<p>没有被生活折磨过只有两种可能</p>
-<ul>
-<li>第一 有人替你扛着</li>
-<li>第二 别着急 还没轮到你</li>
-</ul>
-<p>家人总有用钱的时候,在中国 一场大病能摧毁一个中产阶级的家庭.即便是现在的医保力度很大,但是还是经不起大风大浪</p>
-<p>在家里的老人总说钱买不来幸福, 我想说:『钱买不来100%的幸福,成长后99%的烦恼都是因为没钱』.</p>
-<p>我现在懂得什么叫选择比努力更重要了,努力是为了让自己有更多选择的权利.</p>
-<h2 id="故事">故事</h2>
-<p>有一个同学,我4年零2个月没有联系,时间过的真快 一晃 快5年了,我又重新加了一下微信,为了纪念这位同学,我撰写了一篇题材为《船与灯塔》的剧本.</p>
-<p>这么多年我总结的真理是:"父母一定要有正事,如果没有正事那子女就得为父母的没正事买单,因为父母没有积攒下儿女未来几十年需要发展的经济基础,显然儿女就得白手起家从零开始".</p>
-<h2 id="百年">百年</h2>
-<p>今年的十一假期我去了阔别11年的天津,去看看07年去过的身影,11年前还没有GPS定位的地图,我却依然能找到方向.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3bc95da6f8fb8b7cb7c10d1c2e0c428d5b575044/20181231FinalSummary/sun.JPG"></p>
-<p>这是我在天津找到家族百年以来唯一留下仅存的几张照片,我曾祖父,曾祖母,我的父亲和姑姑.现在看到这显得无比珍贵.</p>
-<p>我的祖先是闯关东去的东北,家谱记载地址:山东省青州府寿光县孙家神庙,甸子北住.</p>
-<p>也就是现在的:山东省潍坊市青州市寿光县孙家村</p>
-<p>但是我搜索地图发现了至少3处</p>
-<p>第一处</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f173d0b32c3aa7a39bc1a1c7f1ff24b6ed8d13f9/20181231FinalSummary/hometown1.png"></p>
-<p>第二处</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f173d0b32c3aa7a39bc1a1c7f1ff24b6ed8d13f9/20181231FinalSummary/hometown2.png"></p>
-<p>第三处</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8a00db92a789d99e2c0e43841d48bad35e2b76a8/20181231FinalSummary/hometown.png"></p>
-<p>这里最有可能的是第一处 因为靠近河流有河流地面过渡区(甸子),经过百年的地域变化,可能河流流量减少,地表高处水面,时间长了形成村落和耕地.</p>
-<p>这里如今已经高铁建成,成为了祖国的蔬菜之乡,我为此感到欣慰,也许1900年左右我的祖先曾经生活在这里.</p>
-<p>我的曾祖父来到东北的时候赶上了日本占领东三省,那时候也许迫于生计和民族的沦落,不得不为日本人工作,也就是在现在的黑龙江省海伦市海北镇十三井子村,日本人在这里养军马,前面是东方红水库,我的曾祖父练就一身打铁的手艺,为军马钉马掌,因为东北很冷,路面结冰,防止马打滑,所以钉马掌是其中的任务之一,上边中间这张照片,是当年仅存到现在的一张日本为工匠照的相片.</p>
-<p>想想那个时候真是国破山河在,家书抵万金.这位老人也许经历过晚清覆灭,中华民国的初建到军阀混战,在到新中国的成立,历经3个朝代的更迭.</p>
-<p>也许换做普通人都活不到一个朝代的覆灭</p>
-<p>不过打铁的手艺可是传承3代人,我的爷爷,叔父,现在到我的哥哥,如果在现代应该成为工匠,希望有一天我的计算机博物馆中,能存放着家族打铁工艺的绝唱.</p>
-<p>曾祖父那一代人活的不容易.</p>
-<h2 id="总结">总结</h2>
-<p>这一年我写了很多技术的文章,我不想在年终总结中还谈论技术,应该记录一些生活的美好回忆.</p>
-<p>去年的这个时候我给自己的定下的KPI今年显然没有完成</p>
-<p>2019年希望能不断学习,与时俱进,学会更多有用的知识来提高影响力.</p>
-<p>最后,幸福是奋斗出来的,还得撸起袖子加油干,得敢于直面惨淡的人生,敢于用实力去赢得别人的尊重,这样才能成为自己羡慕的别人.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e263dd6fbfaf3cb12eee6ebcbfff3519dc5f9eb/20181231Fin
-    
-    </summary>
-    
-      <category term="记录世界记录你" scheme="https://www.sunyazhou.com/categories/%E8%AE%B0%E5%BD%95%E4%B8%96%E7%95%8C%E8%AE%B0%E5%BD%95%E4%BD%A0/"/>
-    
-    
-      <category term="生活" scheme="https://www.sunyazhou.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-      <category term="年终总结" scheme="https://www.sunyazhou.com/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   

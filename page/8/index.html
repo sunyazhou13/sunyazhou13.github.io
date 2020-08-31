@@ -183,6 +183,29 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/" title="link to post.title">如何在Objective-C中废弃一个方法</a></h2>
+      <p class="excerpt">
+    
+      前言
+
+最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码
+__attribute__((deprecated(&quot;此方法已弃用,请使用xxxxx:方法&quot;)));
+场景1
+我想标识一个方法使用其它方式传入某个参数
+例如:控制器中我想标识设置URL的方法直接使用setter方法就可以了
+@interface VideoEditorViewController : UIViewController@prop
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T08:40:26.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/how-to-deprecated-a-mothod-in-Objective-C/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/06/16/Xcode9-debug-via-wireless/" title="link to post.title">Xcode9新功能 无线真机调试</a></h2>
       <p class="excerpt">
     
@@ -405,22 +428,6 @@ comman
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/04/06/Xcode-shortcuts/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/29/Access-privacy-sensitive-data-private-access-permission/" title="link to post.title">隐私及敏感数据访问权限(Access privacy-sensitive data)</a></h2>
-      <p class="excerpt">
-    
-      在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &amp;gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app&#39;s Info.plist must contain an NSContactsUsageDescription key with 
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/29/Access-privacy-sensitive-data-private-access-permission/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
