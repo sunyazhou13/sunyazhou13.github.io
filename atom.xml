@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-09-01T09:38:12.927Z</updated>
+  <updated>2020-09-01T09:41:21.160Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2020/09/01/20200901iOSinterviewAnswers/"/>
     <id>https://www.sunyazhou.com/2020/09/01/20200901iOSinterviewAnswers/</id>
     <published>2020-09-01T02:15:27.000Z</published>
-    <updated>2020-09-01T09:38:12.927Z</updated>
+    <updated>2020-09-01T09:41:21.160Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
 <h1 id="前言">前言</h1>
@@ -88,7 +88,8 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">id</span> &lt;<span class="built_in">NSObject</span>&gt;)addObserverForName:(<span class="keyword">nullable</span> <span class="built_in">NSNotificationName</span>)name object:(<span class="keyword">nullable</span> <span class="keyword">id</span>)obj queue:(<span class="keyword">nullable</span> <span class="built_in">NSOperationQueue</span> *)queue usingBlock:(<span class="keyword">void</span> (^)(<span class="built_in">NSNotification</span> *note))block</span><br></pre></td></tr></table></figure>
 <p>2.<code>NSMachPort</code>的方式 通过在主线程的runloop中添加machPort，设置这个port的delegate，通过这个Port其他线程可以跟主线程通信，在这个port的代理回调中执行的代码肯定在主线程中运行，所以，在这里调用NSNotificationCenter发送通知即可</p>
 <h2 id="页面销毁时不移除通知会崩溃吗">页面销毁时不移除通知会崩溃吗?</h2>
-<p>iOS9.0之前，会crash，原因：通知中心对观察者的引用是unsafe_unretained，导致当观察者释放的时候，观察者的指针值并不为nil，出现野指针。 iOS9.0之后，不会crash，原因：通知中心对观察者的引用是weak。</p>
+<p>iOS9.0之前，会crash，原因：通知中心对观察者的引用是unsafe_unretained，导致当观察者释放的时候，观察者的指针值并不为nil，出现野指针.</p>
+<p>iOS9.0之后，不会crash，原因：通知中心对观察者的引用是weak。</p>
 <h2 id="多次添加同一个通知会是什么结果多次移除通知呢">多次添加同一个通知会是什么结果？多次移除通知呢</h2>
 <p>多次添加同一个通知，会导致发送一次这个通知的时候，响应多次通知回调。 多次移除通知不会产生crash。</p>
 <h2 id="下面的方式能接收到通知吗为什么">下面的方式能接收到通知吗？为什么</h2>
