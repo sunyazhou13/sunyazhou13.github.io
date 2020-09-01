@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>阿里、字节：一套高效的iOS面试题之NSNotification相关 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="阿里、字节：一套高效的iOS面试题之NSNotification相关 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="阿里、字节：一套高效的iOS面试题之NSNotification相关 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2020/09/01/20200901iOSinterviewAnswers/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-red"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-09-01T02:15:27.000Z" class="post-list__meta--date date">2020-09-01</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
+
+</span>
+    </div>
+    <h1 class="post-title">阿里、字节：一套高效的iOS面试题之NSNotification相关</h1>
+  </header>
+
+  <section class="post">
+    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p>前3篇中已经讲完了内存管理,今天我们继续完成<a href="https://juejin.im/post/6844904064937902094" target="_blank" rel="noopener">阿里、字节：一套高效的iOS面试题</a>的通知部分. 主要内容包含如下:</p>
+<ul>
+<li>实现原理（结构设计、通知如何存储的、name&amp;observer&amp;SEL之间的关系等）</li>
+<li>通知的发送时同步的，还是异步的</li>
+<li>NSNotificationCenter接受消息和发送消息是在一个线程里吗？如何异步发送消息</li>
+<li>NSNotificationQueue是异步还是同步发送？在哪个线程响应</li>
+<li>NSNotificationQueue和runloop的关系</li>
+<li>如何保证通知接收的线程在主线程</li>
+<li>页面销毁时不移除通知会崩溃吗</li>
+<li>多次添加同一个通知会是什么结果？多次移除通知呢</li>
+<li>下面的方式能接收到通知吗？为什么<br>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 发送通知</span></span><br><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(handleNotification:) name:<span class="string">@"TestNotification"</span> object:@<span class="number">1</span>];</span><br><span class="line"><span class="comment">// 接收通知</span></span><br><span class="line">[<span class="built_in">NSNotificationCenter</span>.defaultCenter postNotificationName:<span class="string">@"TestNotification"</span> object:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>在解释这些内容之前 强烈建议认真研读一下这篇 <a href="https://juejin.im/post/6844904082516213768" target="_blank" rel="noopener">一文全解iOS通知机制(经典收藏)</a>文章 了解一下大概 所有的问题就迎刃而解了.</p>
+<h2 id="实现原理结构设计通知如何存储的nameobserversel之间的关系等">实现原理（结构设计、通知如何存储的、name&amp;observer&amp;SEL之间的关系等</h2>
+<p>首先通知中心结构大概分为如下几个类</p>
+<ul>
+<li><code>NSNotification</code> 通知的模型 name、object、userinfo.</li>
+<li><code>NSNotificationCenter</code>通知中心 负责发送<code>NSNotification</code></li>
+<li><code>NSNotificationQueue</code>通知队列 负责在某些时机触发 调用<code>NSNotificationCenter</code>通知中心 <code>post</code>通知</li>
+</ul>
+<p>通知是结构体通过双向链表进行数据存储</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation		*wildcard;	<span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable		nameless;	<span class="comment">/* 存储没有name但是有object的通知	*/</span></span><br><span class="line">  GSIMapTable		named;		<span class="comment">/* 存储带有name的通知，不管有没有object	*/</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span>	Obs &#123;</span><br><span class="line">  <span class="keyword">id</span>		observer;	<span class="comment">/* 观察者，接收通知的对象	*/</span></span><br><span class="line">  SEL		selector;	<span class="comment">/* 响应方法		*/</span></span><br><span class="line">  <span class="keyword">struct</span> Obs	*next;		<span class="comment">/* Next item in linked list.	*/</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
+<p>主要是以<code>key</code> <code>value</code>的形式存储,这里需要重点强调一下 通知以 <code>name</code>和<code>object</code>两个纬度来存储相关通知内容,也就是我们添加通知的时候传入的两个不同的方法.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"><br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p>简单理解<code>name</code>&amp;<code>observer</code>&amp;<code>SEL</code>之间的关系就是<code>name</code>作为<code>key</code>, <code>observer</code>作为观察者对象,当合适时机触发就会调用<code>observer</code>的<code>SEL</code>.这基本很简单,如果觉得我说的不准确可以看下文章开头的文章.</p>
+<h2 id="通知的发送时同步的还是异步的">通知的发送时同步的，还是异步的</h2>
+<p>同步发送.因为要调用消息转发.所谓异步，指的是<strong>非实时发送</strong>而是<strong>在合适的时机发送</strong>，并没有开启异步线程.</p>
+<h2 id="nsnotificationcenter接受消息和发送消息是在一个线程里吗如何异步发送消息">NSNotificationCenter接受消息和发送消息是在一个线程里吗？如何异步发送消息</h2>
+<p>是的, 异步线程发送通知则响应函数也是在异步线程.</p>
+<p>异步发送通知可以开启异步线程发送即可.</p>
+<h2 id="nsnotificationqueue是异步还是同步发送在哪个线程响应">NSNotificationQueue是异步还是同步发送？在哪个线程响应</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 表示通知的发送时机</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSPostingStyle</span>) &#123;</span><br><span class="line">    <span class="built_in">NSPostWhenIdle</span> = <span class="number">1</span>, <span class="comment">// runloop空闲时发送通知</span></span><br><span class="line">    <span class="built_in">NSPostASAP</span> = <span class="number">2</span>, <span class="comment">// 尽快发送，这种时机是穿插在每次事件完成期间来做的</span></span><br><span class="line">    <span class="built_in">NSPostNow</span> = <span class="number">3</span> <span class="comment">// 立刻发送或者合并通知完成之后发送</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>NSPostWhenIdle</th>
+<th>NSPostASAP</th>
+<th>NSPostNow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NSPostingStyle</td>
+<td>异步发送</td>
+<td>异步发送</td>
+<td>同步发送</td>
+</tr>
+</tbody>
+</table>
+<p><code>NSNotificationCenter</code>都是同步发送的，而这里介绍关于<code>NSNotificationQueue</code>的异步发送，从线程的角度看并不是真正的异步发送，或可称为<strong>延时发送</strong>，它是利用了<code>runloop</code>的时机来触发的.</p>
+<p>异步线程发送通知则响应函数也是在异步线程,主线程发送则在主线程.</p>
+<h2 id="nsnotificationqueue和runloop的关系">NSNotificationQueue和runloop的关系</h2>
+<p><code>NSNotificationQueue</code>依赖<code>runloop</code>. 因为通知队列要在runloop回调的某个时机调用通知中心发送通知.从下面的枚举值就能看出来</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 表示通知的发送时机</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSPostingStyle</span>) &#123;</span><br><span class="line">    <span class="built_in">NSPostWhenIdle</span> = <span class="number">1</span>, <span class="comment">// runloop空闲时发送通知</span></span><br><span class="line">    <span class="built_in">NSPostASAP</span> = <span class="number">2</span>, <span class="comment">// 尽快发送，这种时机是穿插在每次事件完成期间来做的</span></span><br><span class="line">    <span class="built_in">NSPostNow</span> = <span class="number">3</span> <span class="comment">// 立刻发送或者合并通知完成之后发送</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="如何保证通知接收的线程在主线程">如何保证通知接收的线程在主线程</h2>
+<p>如果想在主线程响应异步通知的话可以用如下两种方式</p>
+<p>1.系统接受通知的API指定队列</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">id</span> &lt;<span class="built_in">NSObject</span>&gt;)addObserverForName:(<span class="keyword">nullable</span> <span class="built_in">NSNotificationName</span>)name object:(<span class="keyword">nullable</span> <span class="keyword">id</span>)obj queue:(<span class="keyword">nullable</span> <span class="built_in">NSOperationQueue</span> *)queue usingBlock:(<span class="keyword">void</span> (^)(<span class="built_in">NSNotification</span> *note))block</span><br></pre></td></tr></table></figure>
+<p>2.<code>NSMachPort</code>的方式 通过在主线程的runloop中添加machPort，设置这个port的delegate，通过这个Port其他线程可以跟主线程通信，在这个port的代理回调中执行的代码肯定在主线程中运行，所以，在这里调用NSNotificationCenter发送通知即可</p>
+<h2 id="页面销毁时不移除通知会崩溃吗">页面销毁时不移除通知会崩溃吗?</h2>
+<p>iOS9.0之前，会crash，原因：通知中心对观察者的引用是unsafe_unretained，导致当观察者释放的时候，观察者的指针值并不为nil，出现野指针。 iOS9.0之后，不会crash，原因：通知中心对观察者的引用是weak。</p>
+<h2 id="多次添加同一个通知会是什么结果多次移除通知呢">多次添加同一个通知会是什么结果？多次移除通知呢</h2>
+<p>多次添加同一个通知，会导致发送一次这个通知的时候，响应多次通知回调。 多次移除通知不会产生crash。</p>
+<h2 id="下面的方式能接收到通知吗为什么">下面的方式能接收到通知吗？为什么</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 发送通知</span></span><br><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(handleNotification:) name:<span class="string">@"TestNotification"</span> object:@<span class="number">1</span>];</span><br><span class="line"><span class="comment">// 接收通知</span></span><br><span class="line">[<span class="built_in">NSNotificationCenter</span>.defaultCenter postNotificationName:<span class="string">@"TestNotification"</span> object:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
+<p>不能</p>
+<p>首先我们看下通知中心存储通知观察者的结构</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation  *wildcard;    <span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable nameless;    <span class="comment">/* 存储没有name但是有object的通知    */</span></span><br><span class="line">  GSIMapTable named;        <span class="comment">/* 存储带有name的通知，不管有没有object    */</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span> Obs &#123;</span><br><span class="line">  <span class="keyword">id</span> observer;    <span class="comment">/* 观察者，接收通知的对象    */</span></span><br><span class="line">  SEL selector;    <span class="comment">/* 响应方法        */</span></span><br><span class="line">  <span class="keyword">struct</span> Obs *next;        <span class="comment">/* Next item in linked list.    */</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
+<p><code>nameless</code>与<code>named</code>的具体数据结构如下:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p>当添加通知监听的时候，我们传入了<code>name</code>和<code>object</code>，所以，观察者的存储链表是这样的：</p>
+<p><code>named</code>表：<code>key(name)</code> : <code>value</code>-&gt;<code>key(object)</code> : <code>value(Observation)</code></p>
+<p>因此在发送通知的时候，如果只传入<code>name</code>而并没有传入<code>object</code>，是找不到<code>Observation</code>的，也就不能执行观察者回调.</p>
+<h1 id="总结">总结</h1>
+<p>经过今天的 复习又重新认识了iOS中的通知中心,希望大家经常温故而知新. 下一篇我们开始讲解 <code>Runloop</code>&amp; <code>KVO</code></p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2020/08/31/20200831iOSinterviewAnswers/" title="阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题3">阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题3</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
+runtime相关问题之内存部分
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2020-08-31T08:52:25.000Z" class="post-list__meta--date date">2020-08-31</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
+
+</span><a class="btn-border-small" href="/2020/08/31/20200831iOSinterviewAnswers/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Tue Sep 01 2020 10:15:27 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

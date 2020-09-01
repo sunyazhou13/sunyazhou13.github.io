@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-08-31T08:56:30.919Z</updated>
+  <updated>2020-09-01T09:38:12.927Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,112 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>阿里、字节：一套高效的iOS面试题之NSNotification相关</title>
+    <link href="https://www.sunyazhou.com/2020/09/01/20200901iOSinterviewAnswers/"/>
+    <id>https://www.sunyazhou.com/2020/09/01/20200901iOSinterviewAnswers/</id>
+    <published>2020-09-01T02:15:27.000Z</published>
+    <updated>2020-09-01T09:38:12.927Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p>前3篇中已经讲完了内存管理,今天我们继续完成<a href="https://juejin.im/post/6844904064937902094" target="_blank" rel="noopener">阿里、字节：一套高效的iOS面试题</a>的通知部分. 主要内容包含如下:</p>
+<ul>
+<li>实现原理（结构设计、通知如何存储的、name&amp;observer&amp;SEL之间的关系等）</li>
+<li>通知的发送时同步的，还是异步的</li>
+<li>NSNotificationCenter接受消息和发送消息是在一个线程里吗？如何异步发送消息</li>
+<li>NSNotificationQueue是异步还是同步发送？在哪个线程响应</li>
+<li>NSNotificationQueue和runloop的关系</li>
+<li>如何保证通知接收的线程在主线程</li>
+<li>页面销毁时不移除通知会崩溃吗</li>
+<li>多次添加同一个通知会是什么结果？多次移除通知呢</li>
+<li>下面的方式能接收到通知吗？为什么<br>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 发送通知</span></span><br><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(handleNotification:) name:<span class="string">@"TestNotification"</span> object:@<span class="number">1</span>];</span><br><span class="line"><span class="comment">// 接收通知</span></span><br><span class="line">[<span class="built_in">NSNotificationCenter</span>.defaultCenter postNotificationName:<span class="string">@"TestNotification"</span> object:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>在解释这些内容之前 强烈建议认真研读一下这篇 <a href="https://juejin.im/post/6844904082516213768" target="_blank" rel="noopener">一文全解iOS通知机制(经典收藏)</a>文章 了解一下大概 所有的问题就迎刃而解了.</p>
+<h2 id="实现原理结构设计通知如何存储的nameobserversel之间的关系等">实现原理（结构设计、通知如何存储的、name&amp;observer&amp;SEL之间的关系等</h2>
+<p>首先通知中心结构大概分为如下几个类</p>
+<ul>
+<li><code>NSNotification</code> 通知的模型 name、object、userinfo.</li>
+<li><code>NSNotificationCenter</code>通知中心 负责发送<code>NSNotification</code></li>
+<li><code>NSNotificationQueue</code>通知队列 负责在某些时机触发 调用<code>NSNotificationCenter</code>通知中心 <code>post</code>通知</li>
+</ul>
+<p>通知是结构体通过双向链表进行数据存储</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation		*wildcard;	<span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable		nameless;	<span class="comment">/* 存储没有name但是有object的通知	*/</span></span><br><span class="line">  GSIMapTable		named;		<span class="comment">/* 存储带有name的通知，不管有没有object	*/</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span>	Obs &#123;</span><br><span class="line">  <span class="keyword">id</span>		observer;	<span class="comment">/* 观察者，接收通知的对象	*/</span></span><br><span class="line">  SEL		selector;	<span class="comment">/* 响应方法		*/</span></span><br><span class="line">  <span class="keyword">struct</span> Obs	*next;		<span class="comment">/* Next item in linked list.	*/</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
+<p>主要是以<code>key</code> <code>value</code>的形式存储,这里需要重点强调一下 通知以 <code>name</code>和<code>object</code>两个纬度来存储相关通知内容,也就是我们添加通知的时候传入的两个不同的方法.</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"><br>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p>简单理解<code>name</code>&amp;<code>observer</code>&amp;<code>SEL</code>之间的关系就是<code>name</code>作为<code>key</code>, <code>observer</code>作为观察者对象,当合适时机触发就会调用<code>observer</code>的<code>SEL</code>.这基本很简单,如果觉得我说的不准确可以看下文章开头的文章.</p>
+<h2 id="通知的发送时同步的还是异步的">通知的发送时同步的，还是异步的</h2>
+<p>同步发送.因为要调用消息转发.所谓异步，指的是<strong>非实时发送</strong>而是<strong>在合适的时机发送</strong>，并没有开启异步线程.</p>
+<h2 id="nsnotificationcenter接受消息和发送消息是在一个线程里吗如何异步发送消息">NSNotificationCenter接受消息和发送消息是在一个线程里吗？如何异步发送消息</h2>
+<p>是的, 异步线程发送通知则响应函数也是在异步线程.</p>
+<p>异步发送通知可以开启异步线程发送即可.</p>
+<h2 id="nsnotificationqueue是异步还是同步发送在哪个线程响应">NSNotificationQueue是异步还是同步发送？在哪个线程响应</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 表示通知的发送时机</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSPostingStyle</span>) &#123;</span><br><span class="line">    <span class="built_in">NSPostWhenIdle</span> = <span class="number">1</span>, <span class="comment">// runloop空闲时发送通知</span></span><br><span class="line">    <span class="built_in">NSPostASAP</span> = <span class="number">2</span>, <span class="comment">// 尽快发送，这种时机是穿插在每次事件完成期间来做的</span></span><br><span class="line">    <span class="built_in">NSPostNow</span> = <span class="number">3</span> <span class="comment">// 立刻发送或者合并通知完成之后发送</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>NSPostWhenIdle</th>
+<th>NSPostASAP</th>
+<th>NSPostNow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NSPostingStyle</td>
+<td>异步发送</td>
+<td>异步发送</td>
+<td>同步发送</td>
+</tr>
+</tbody>
+</table>
+<p><code>NSNotificationCenter</code>都是同步发送的，而这里介绍关于<code>NSNotificationQueue</code>的异步发送，从线程的角度看并不是真正的异步发送，或可称为<strong>延时发送</strong>，它是利用了<code>runloop</code>的时机来触发的.</p>
+<p>异步线程发送通知则响应函数也是在异步线程,主线程发送则在主线程.</p>
+<h2 id="nsnotificationqueue和runloop的关系">NSNotificationQueue和runloop的关系</h2>
+<p><code>NSNotificationQueue</code>依赖<code>runloop</code>. 因为通知队列要在runloop回调的某个时机调用通知中心发送通知.从下面的枚举值就能看出来</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 表示通知的发送时机</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSPostingStyle</span>) &#123;</span><br><span class="line">    <span class="built_in">NSPostWhenIdle</span> = <span class="number">1</span>, <span class="comment">// runloop空闲时发送通知</span></span><br><span class="line">    <span class="built_in">NSPostASAP</span> = <span class="number">2</span>, <span class="comment">// 尽快发送，这种时机是穿插在每次事件完成期间来做的</span></span><br><span class="line">    <span class="built_in">NSPostNow</span> = <span class="number">3</span> <span class="comment">// 立刻发送或者合并通知完成之后发送</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="如何保证通知接收的线程在主线程">如何保证通知接收的线程在主线程</h2>
+<p>如果想在主线程响应异步通知的话可以用如下两种方式</p>
+<p>1.系统接受通知的API指定队列</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">id</span> &lt;<span class="built_in">NSObject</span>&gt;)addObserverForName:(<span class="keyword">nullable</span> <span class="built_in">NSNotificationName</span>)name object:(<span class="keyword">nullable</span> <span class="keyword">id</span>)obj queue:(<span class="keyword">nullable</span> <span class="built_in">NSOperationQueue</span> *)queue usingBlock:(<span class="keyword">void</span> (^)(<span class="built_in">NSNotification</span> *note))block</span><br></pre></td></tr></table></figure>
+<p>2.<code>NSMachPort</code>的方式 通过在主线程的runloop中添加machPort，设置这个port的delegate，通过这个Port其他线程可以跟主线程通信，在这个port的代理回调中执行的代码肯定在主线程中运行，所以，在这里调用NSNotificationCenter发送通知即可</p>
+<h2 id="页面销毁时不移除通知会崩溃吗">页面销毁时不移除通知会崩溃吗?</h2>
+<p>iOS9.0之前，会crash，原因：通知中心对观察者的引用是unsafe_unretained，导致当观察者释放的时候，观察者的指针值并不为nil，出现野指针。 iOS9.0之后，不会crash，原因：通知中心对观察者的引用是weak。</p>
+<h2 id="多次添加同一个通知会是什么结果多次移除通知呢">多次添加同一个通知会是什么结果？多次移除通知呢</h2>
+<p>多次添加同一个通知，会导致发送一次这个通知的时候，响应多次通知回调。 多次移除通知不会产生crash。</p>
+<h2 id="下面的方式能接收到通知吗为什么">下面的方式能接收到通知吗？为什么</h2>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 发送通知</span></span><br><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(handleNotification:) name:<span class="string">@"TestNotification"</span> object:@<span class="number">1</span>];</span><br><span class="line"><span class="comment">// 接收通知</span></span><br><span class="line">[<span class="built_in">NSNotificationCenter</span>.defaultCenter postNotificationName:<span class="string">@"TestNotification"</span> object:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
+<p>不能</p>
+<p>首先我们看下通知中心存储通知观察者的结构</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation  *wildcard;    <span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable nameless;    <span class="comment">/* 存储没有name但是有object的通知    */</span></span><br><span class="line">  GSIMapTable named;        <span class="comment">/* 存储带有name的通知，不管有没有object    */</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span> Obs &#123;</span><br><span class="line">  <span class="keyword">id</span> observer;    <span class="comment">/* 观察者，接收通知的对象    */</span></span><br><span class="line">  SEL selector;    <span class="comment">/* 响应方法        */</span></span><br><span class="line">  <span class="keyword">struct</span> Obs *next;        <span class="comment">/* Next item in linked list.    */</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
+<p><code>nameless</code>与<code>named</code>的具体数据结构如下:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p>当添加通知监听的时候，我们传入了<code>name</code>和<code>object</code>，所以，观察者的存储链表是这样的：</p>
+<p><code>named</code>表：<code>key(name)</code> : <code>value</code>-&gt;<code>key(object)</code> : <code>value(Observation)</code></p>
+<p>因此在发送通知的时候，如果只传入<code>name</code>而并没有传入<code>object</code>，是找不到<code>Observation</code>的，也就不能执行观察者回调.</p>
+<h1 id="总结">总结</h1>
+<p>经过今天的 复习又重新认识了iOS中的通知中心,希望大家经常温故而知新. 下一篇我们开始讲解 <code>Runloop</code>&amp; <code>KVO</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOS
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="iOS面试题" scheme="https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>阿里、字节：一套高效的iOS面试题之我整理的答案之runtime相关问题3</title>
@@ -2491,96 +2597,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="抖音动画系列" scheme="https://www.sunyazhou.com/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mac上的一些好软件推荐</title>
-    <link href="https://www.sunyazhou.com/2019/02/15/20190215Tools/"/>
-    <id>https://www.sunyazhou.com/2019/02/15/20190215Tools/</id>
-    <published>2019-02-15T02:40:15.000Z</published>
-    <updated>2019-02-16T05:59:28.804Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>新年第一篇 把自己用的比较好的工具都记录下来</p>
-<h2 id="截屏-snipaste">截屏 Snipaste</h2>
-<p>没当没有网络的时候 或者拿到新mac的时候由于没有什么软件截屏,不得不用QQ或者微信自带的截屏.这就逼着我不得不安装这两个app，有了Snipaste 跟截屏说再见吧</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/snipaste.png"></p>
-<p>Snipaste是一个小巧强大的截图软件，可以直接对截图进行打码、标注、分享，而不用先保存到本地.</p>
-<p>使用方法是按住<code>Fn</code>+<code>F1</code> 就出现了截屏页面大家可以试试</p>
-<p><a href="https://www.snipaste.com/" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="快捷键查看器cheatsheet">快捷键查看器CheatSheet</h2>
-<p>CheatSheet可以快速调出当前软件支持的快捷键，长按command即可，简单实用。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/CheatSheet.png"></p>
-<blockquote>
-<p>使用之前必须在隐藏策略和安全性那个地方给这个加上访问权限才可以 具体有图片提示按照图片操作即可</p>
-</blockquote>
-<p><a href="https://www.mediaatelier.com/CheatSheet/" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="下载工具-folx">下载工具 Folx</h2>
-<p>迅雷的替代品，支持BT下载，遇到迅雷无法下载的资源时，可以尝试一下Folx，免费版就可以满足基本需求</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/Folx.png"></p>
-<p>对于一个曾经在百度网盘搬过砖的程序员 文件上传下载这种最基础的业务必须玩的很溜,当年迅雷有意让我去面试被我拒绝,主要是公司距离住的地方太远,但是从文件下载限速的策略上我觉得是迅雷还是不足以驱动互联网前进的方向,这种第三方的folx完全彻底取代了迅雷.</p>
-<p><a href="https://mac.eltima.com/cn/torrent-client.html" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="视频播放器iina">视频播放器IINA</h2>
-<p>IINA被很多人认为是Mac端的最强视频播放器，简洁无广告，并且功能强大，支持在线字幕的功能，值得尝试</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/IINA.png"></p>
-<p>各种使用还行</p>
-<p><a href="https://iina.io/" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="mactracker">Mactracker</h2>
-<p>Mactracker提供了苹果全系列产品的所有信息，包括性能参数、售价等。可以进行检索，还有发布的时间顺序，方便查看。这个软件也有iOS版。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/Mactracker.jpeg"></p>
-<p>做为一个iOS开发者,如果不能实时了解水果公司得各种产品的积极动向我觉得是一种不积极的工作表现,这个软件可以实时的查看苹果目前的所有发不过的型号等等info.</p>
-<p><a href="https://itunes.apple.com/cn/app/mactracker/id430255202?mt=12" target="_blank" rel="noopener">下载地址iTunes</a></p>
-<h2 id="图片水印批量添加工具-photobulk">图片水印批量添加工具 PhotoBulk</h2>
-<p>PhotoBulk可以对图片进行批量处理，比如批量加水印，只要设置好了固定的水印内容、大小、位置，就可以一键生成带水印的图片，十分方便。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/PhotoBulk.jpeg"></p>
-<p><a href="https://itunes.apple.com/cn/app/photobulk-watermark-in-batch/id537211143?mt=12" target="_blank" rel="noopener">下载地址(收费软件)</a></p>
-<h2 id="解压缩">解压缩</h2>
-<p>Mac对压缩文件的格式支持不足，只支持zip，借助The Unarchiver可以补足这个缺陷，它支持常见的zip、rar、7z等常见格式，可以完成压缩、解压等工作</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/The%20Unarchiver.png"></p>
-<p><a href="https://itunes.apple.com/cn/app/the-unarchiver/id425424353?mt=12" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="mac上管理android的文件管理-handshaker">mac上管理android的文件管理 handshaker</h2>
-<p>锤子科技出品的文件管理软件，用于在Mac电脑上管理Android手机内容，功能强大，可以互传文件、分类管理。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/HandShaker.jpeg"></p>
-<p><a href="https://www.smartisan.com/apps/#/handshaker" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="mac-视频转gif-工具-gif-brewery-3">mac 视频转gif 工具 GIF Brewery 3</h2>
-<p>Mac上最强大的GIF图处理工具，可以将视频转为GIF，对尺寸、大小、起止点等进行设置，之前是付费软件，现在免费提供。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/GIF%20Brewery%203.png"></p>
-<blockquote>
-<p>这个软件不错 我经常写博客配图就是录制成mov转成gif</p>
-</blockquote>
-<p><a href>下载地址</a></p>
-<h2 id="mac上音量分别控制-background-music">mac上音量分别控制 Background Music</h2>
-<p>Background Music的功能非常简单，在MacBook中分别控制不同软件的音量，就像Android手机和Windows电脑一样。</p>
-<figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/Background%20Music.jpeg" alt="Background Music"><figcaption>Background Music</figcaption>
-</figure>
-<p>我经常用企业IM 但总是因为聊天软件的声音太大 影响体验,没想到还有这种细致入微的app专门解决了这个痛点.</p>
-<p><a href="https://github.com/kyleneideck/BackgroundMusic/releases" target="_blank" rel="noopener">下载地址</a></p>
-<h2 id="第三方网易云音乐">第三方网易云音乐</h2>
-<p>第三方的网易云音乐播放器，界面经过重新设计，喜欢的朋友可以尝试一下。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8fc0ac07afdde666f0175c27f191e7b6037a85d1/20190215Tools/ieaseMusic.png"></p>
-<p>这个第三方的过于花哨 不实用,不如不装.</p>
-<p><a href="https://github.com/trazyn/ieaseMusic" target="_blank" rel="noopener">下载地址</a></p>
-<h1 id="总结">总结</h1>
-<p>有很多软件没有及时整理 有时间会不定时更新 多谢支持</p>
-<p><a href="https://onevcat.com/apps/" target="_blank" rel="noopener">喵神的工具集合</a><br>
-<a href="https://www.ithome.com/0/409/410.htm" target="_blank" rel="noopener">参考ithome</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;新年第一篇 把自己用的比较好的工具都记录下来&lt;/p&gt;
-&lt;h2 id=&quot;截屏-snipaste&quot;&gt;截屏 Snipaste&lt;/h2&gt;
-&lt;p&gt;没当没有网络的时候 或者拿到新mac的时候由于没有什么软件截屏,不得不用QQ或者微信自带的截屏.这
-    
-    </summary>
-    
-      <category term="神兵利器" scheme="https://www.sunyazhou.com/categories/%E7%A5%9E%E5%85%B5%E5%88%A9%E5%99%A8/"/>
-    
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
