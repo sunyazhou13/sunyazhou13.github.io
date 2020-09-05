@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-09-01T09:41:21.160Z</updated>
+  <updated>2020-09-05T02:04:31.440Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,108 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>阿里、字节：一套高效的iOS面试题之Runloop&amp;KVO</title>
+    <link href="https://www.sunyazhou.com/2020/09/02/20200902iOSinterviewAnswers/"/>
+    <id>https://www.sunyazhou.com/2020/09/02/20200902iOSinterviewAnswers/</id>
+    <published>2020-09-02T03:23:24.000Z</published>
+    <updated>2020-09-05T02:04:31.440Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p><a href="https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/">前几篇</a>我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO</p>
+<p>本章的主要回答的问题如下:</p>
+<h4 id="runloop">Runloop</h4>
+<ul>
+<li>app如何接收到触摸事件的</li>
+<li>为什么只有主线程的runloop是开启的</li>
+<li>为什么只在主线程刷新UI</li>
+<li>PerformSelector和runloop的关系</li>
+<li>如何使线程保活</li>
+</ul>
+<h4 id="kvo">KVO</h4>
+<ul>
+<li>实现原理</li>
+<li>如何手动关闭kvo</li>
+<li>通过KVC修改属性会触发KVO么</li>
+<li>哪些情况下使用kvo会崩溃，怎么防护崩溃</li>
+<li>kvo的优缺点</li>
+</ul>
+<h2 id="runloop-1">Runloop</h2>
+<p>作为一个合格的iOS开发者必须对runloop有一个更深入的了解,下面我们来回答一下 相关问题</p>
+<h3 id="app如何接收到触摸事件的">1.app如何接收到触摸事件的</h3>
+<p>回答这个问题前请认真阅读一下 <a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="noopener">iOS触摸事件全家桶</a></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/84faabd5c9fbc51414c35a0130ddadba16123862/20200902iOSinterviewAnswers/runloop_event_receive.jpg"></p>
+<p>通过上图可以看出整个流程就是 我们app启动默认会通过machPort监听端口的方式 来接受IOHIDEvent 来接收和处理触摸事件.</p>
+<h3 id="为什么只有主线程的runloop是开启的">2.为什么只有主线程的runloop是开启的</h3>
+<p>mian()函数中调用UIApplicationMain，这里会创建一个主线程，用于UI处理，为了让程序可以一直运行并接收事件，所以在主线程中开启一个runloop，让主线程常驻.</p>
+<h3 id="为什么只在主线程刷新ui">3.为什么只在主线程刷新UI</h3>
+<p>我们所有用到的UI都是来自于UIKit这个基础库.因为objc不是一门线程安全的语言所以存在多线程读写不同步的问题,如果使用加锁的方式操作系统开销很大,会耗费大量的系统资源(内存、时间片轮转、cpu处理速度...)，加上上面讲到的系统事件的接收处理都在主线程,如果UI异步线程的话 还会存在 同步处理事件的问题,所以多点触摸手势等一些事件要保持和UI在同一个线程相对是最优解.</p>
+<p>另一方面是 屏幕的渲染是 60帧(60Hz/秒), 也就是1秒钟回调60次的频率,(iPad Pro 是120Hz/秒),我们的runloop 理想状态下也会按照时钟周期 回调60次(iPad Pro 120次), 这么高频率的调用是为了 屏幕图像显示能够垂直同步 不卡顿.在异步线程的话是很难保证这个处理过程的同步更新. 即便能保证的话 相对主线程而言 系统资源开销 线程调度等等将会占据大部分资源和在同一个线程只专门干一件事有点得不偿失.</p>
+<h3 id="performselector和runloop的关系">4.PerformSelector和runloop的关系</h3>
+<p>当调用NSObect的 performSelector:相关的时候,内部会创建一个timer定时器添加到当前线程的runloop中,如果当前线程没有启动runloop,则该方法不会被调用.</p>
+<p>开发中遇到最多的问题就是这个performSelector: 导致对象的延迟释放,这里开发过程中注意一下,可以用单次的NSTimer替代.</p>
+<p>详细可以参考<a href="https://juejin.im/post/6844903781755256840" target="_blank" rel="noopener">Runloop与performSelector</a></p>
+<h3 id="如何使线程保活">5.如何使线程保活？</h3>
+<p>想要线程保活的话就开启该线程的runloop即可,注意:在NSThread执行的方法中添加while(true){}，这样是模拟runloop的运行原理，结合GCD的信号量，在{}代码块中处理任务.</p>
+<p>但是注意 开启runloop的方法要正确</p>
+<p>如下代码</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//测试开启线程</span></span><br><span class="line">- (<span class="keyword">void</span>)memoryTest &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">NSThread</span> *thread = [[<span class="built_in">NSThread</span> alloc] initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(run) object:<span class="literal">nil</span>];</span><br><span class="line">        [thread start];</span><br><span class="line">        [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(stopThread) onThread:thread withObject:<span class="literal">nil</span> waitUntilDone:<span class="literal">YES</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//线程停止</span></span><br><span class="line">- (<span class="keyword">void</span>)stopThread &#123;</span><br><span class="line">    <span class="built_in">CFRunLoopStop</span>(<span class="built_in">CFRunLoopGetCurrent</span>());</span><br><span class="line">    <span class="built_in">NSThread</span> *thread = [<span class="built_in">NSThread</span> currentThread];</span><br><span class="line">    [thread cancel];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行线程的runloop 注意 意添加的那个空port,否则会出现内存泄露</span></span><br><span class="line">- (<span class="keyword">void</span>)run &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"current thread = %@"</span>, [<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">        <span class="built_in">NSRunLoop</span> *runLoop = [<span class="built_in">NSRunLoop</span> currentRunLoop];</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">self</span>.emptyPort) &#123;</span><br><span class="line">            <span class="keyword">self</span>.emptyPort = [<span class="built_in">NSMachPort</span> port];</span><br><span class="line">        &#125;</span><br><span class="line">        [runLoop addPort:<span class="keyword">self</span>.emptyPort forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line">        [runLoop runMode:<span class="built_in">NSRunLoopCommonModes</span> beforeDate:[<span class="built_in">NSDate</span> distantFuture]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//下列代码用于模拟线程内部做的一些耗时任务</span></span><br><span class="line">- (<span class="keyword">void</span>)printSomething &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"current thread = %@"</span>, [<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(printSomething) withObject:<span class="literal">nil</span> afterDelay:<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//模拟手动点击按钮 让 runloop停掉</span></span><br><span class="line">- (<span class="keyword">void</span>)stopButtonDidClicked:(<span class="keyword">id</span>)sender &#123;</span><br><span class="line">    [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(stopRunloop) onThread:<span class="keyword">self</span>.thread withObject:<span class="literal">nil</span> waitUntilDone:<span class="literal">YES</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stopRunloop &#123;</span><br><span class="line">    <span class="built_in">CFRunLoopStop</span>(<span class="built_in">CFRunLoopGetCurrent</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详细请参考:<a href="https://allluckly.cn/%E6%8A%95%E7%A8%BF/tuogao55" target="_blank" rel="noopener">iOS开发深入研究Runloop与线程保活</a></p>
+<h2 id="kvo-1">KVO</h2>
+<p>在开发过程中我们经常使用KVO,下面解答一下KVO相关的问题.</p>
+<h3 id="kvo的实现原理">KVO的实现原理</h3>
+<p>通过<code>runtime</code>派生子类的方式 复写相关需要KVO监听的属性,在该属性setter之前和之后调用NSObject的监听方法,这样KVO就实现了属性变换前后的回调.</p>
+<p>KVO派生的子类具体格式应该是:<code>NSKVONotifying_+类名</code>的类 eg: NSKVONotifying_Person</p>
+<p>下面示例代码为Person类的name添加KVO的模拟实验</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setName:(<span class="built_in">NSString</span> *)name&#123;</span><br><span class="line">    _NSSetObjectValueAndNotify();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> _NSSetObjectValueAndNotify &#123;</span><br><span class="line">    [<span class="keyword">self</span> willChangeValueForKey:<span class="string">@"name"</span>];</span><br><span class="line">    [<span class="keyword">super</span> setName:name];</span><br><span class="line">    [<span class="keyword">self</span> didChangeValueForKey:<span class="string">@"name"</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didChangeValueForKey:(<span class="built_in">NSString</span> *)key&#123;</span><br><span class="line">    [observe observeValueForKeyPath:key ofObject:<span class="keyword">self</span> change:<span class="literal">nil</span> context:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题来了如何动态创建类呢?</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//动态创建XXCustomClass</span></span><br><span class="line">Class customClass = objc_allocateClassPair([<span class="built_in">NSObject</span> <span class="keyword">class</span>], <span class="string">"XXCustomClass"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// 添加实例变量</span></span><br><span class="line">class_addIvar(customClass, <span class="string">"age"</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>), <span class="number">0</span>, <span class="string">"i"</span>);</span><br><span class="line"><span class="comment">// 动态添加方法</span></span><br><span class="line">class_addMethod(customClass, <span class="keyword">@selector</span>(hahahha), (IMP)hahahha, <span class="string">"V@:"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//需要实现的方法</span></span><br><span class="line"><span class="keyword">void</span> hahahha(<span class="keyword">id</span> <span class="keyword">self</span>, SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"hahahha===="</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)hahahha&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最后注册到运行时环境</span></span><br><span class="line">objc_registerClassPair(customClass);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1" target="_blank" rel="noopener">V@:表示方法的参数和返回值</a></p>
+</blockquote>
+<p>具体原理以及自定义实现KVO可以参考<a href="https://cloud.tencent.com/developer/article/1136759" target="_blank" rel="noopener">KVO详解及底层实现</a></p>
+<h3 id="如何手动关闭kvo">如何手动关闭KVO?</h3>
+<p>被观察的对象复写如下方法 返回<code>NO</code>即可关闭KVO <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)automaticallyNotifiesObserversForKey:(<span class="built_in">NSString</span> *)key &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果关闭后还想触发 KVO的话 修改需要手动调用在变量setter的前后 主动调用 <code>willChangeValueForKey:</code>和<code>didChangeValueForKey:</code></p>
+<h3 id="通过kvc修改属性会触发kvo么">通过KVC修改属性会触发KVO么?</h3>
+<p>会的</p>
+<h3 id="哪些情况下使用kvo会崩溃怎么防护崩溃">哪些情况下使用kvo会崩溃，怎么防护崩溃？</h3>
+<p>使用不当 会crash,比如:</p>
+<p>- 添加和移出不是成对出现且存在多线程添加KVO的情况,经常遇到的crash是移出 - 内存dealloc的时候 或者对象销毁前没有正确移出Observer</p>
+<p>如何防护？</p>
+<p>1.注意移出对象 匹配<br>
+2.内存野指针问题,一定要在对象销毁前移出观察者 3.可以使用第三方库BlockKit添加KVO,blockkit内部会自动移除Observer避免crash.</p>
+<h3 id="kvo的优缺点">KVO的优缺点</h3>
+<p>优点:</p>
+<p>- 方便两个对象间同步状态(keypath)更加方便,一般都是在A类要观察B类的属性的变化.<br>
+- 非侵入式的得到某内部对象的状态改变并作出响应.(就是在不改变原来对象类的代码情况下即可做出对该对象的状态变化进行监听)<br>
+- 可以嵌入更改前后的两个时机的状态. - 可以通过Keypaths对嵌套对象的监听.</p>
+<p>缺点:</p>
+<p>- 需要手动移除观察者,不移除容易造成crash.<br>
+- 注册和移出成对匹配出现.<br>
+- keypath参数的类型String, 如果对象的成员变量被重构而变化字符串不会被编译器识别而报错.<br>
+- 实现观察的方式是复写NSObjec的相关KVO的方法,应该更加面向protocol的方式会更好.</p>
+<h2 id="总结">总结</h2>
+<p>这一篇我们讲了 runloop和KVO相关的内容,这里面最负责的当属runloop如何处理触摸手势事件.建议认真研读相关链接文章.这样才有一个对runloop更深刻的理解, 下一篇我们讲一下Block,敬请期待.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d41ccde23ec0d6cf14438b8f95f8a75407046c45/20200706iOS
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="iOS面试题" scheme="https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>阿里、字节：一套高效的iOS面试题之NSNotification相关</title>
@@ -2471,133 +2573,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS抖音滚动字幕</title>
-    <link href="https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/"/>
-    <id>https://www.sunyazhou.com/2019/03/21/20190321UIScrollTextDemo/</id>
-    <published>2019-03-21T01:50:20.000Z</published>
-    <updated>2019-03-27T13:25:06.835Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIScrollTextDemo/CALayer_proSwift_ru_hsuie-2.png"></p>
-<h1 id="前言">前言</h1>
-<p>很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图</p>
-<p>抖音如下<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/douyin_scroll_text.gif"></p>
-<p>系统的滚动字幕如下</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8d850a7f752b71fa29b9f069baaeef2e14ecf7d/20190321UIScrollTextDemo/scrolltextdemo4.gif"></p>
-<p>本篇完成之后如下<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
-<ul>
-<li>支持蒙版渐变模糊 可调节</li>
-<li>支持富文本字符串用于显示表情或者图片</li>
-</ul>
-<h1 id="开篇">开篇</h1>
-<p>整个实现比较简单 不超过 200行代码</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/bf6d749844033ba3b0c074559db978a18121f467/20190321UIScrollTextDemo/scrolltextdemo1.gif"></p>
-<p>首先我们要用到两个CALayer</p>
-<ul>
-<li><code>CATextLayer</code> 用于展示文本</li>
-<li><code>CAGradientLayer</code> 用于给文本加蒙版</li>
-</ul>
-<p>然后我们新建一个<code>UIScrollTextView</code>继承自<code>UIView</code>(我这是纯娱乐写成UI前缀大家可自行封装哈.)</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIScrollTextView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>  ) <span class="built_in">NSString</span>           *text;   <span class="comment">//1</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIColor</span>            *textColor; <span class="comment">//2</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIFont</span>             *font;  <span class="comment">//3</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSAttributedString</span> *attrString; <span class="comment">//4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 渐变开始的距离(0~0.5) 推荐 0.0x eg:0.026,</span></span><br><span class="line"><span class="comment"> 如果设置成1的时候视图不够长会出现溢出得情况 不推荐超出范围</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>            fade; <span class="comment">//5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>对外暴露的接口</p>
-<ul>
-<li>1.显示的文本内容</li>
-<li>2.文本颜色</li>
-<li>3.文本字体</li>
-<li>4.属性字符串 自行可控颜色字体和样式</li>
-<li>5.蒙版渐变模糊的 渐变长度</li>
-</ul>
-<p>首先大家可以先忽略这些对外暴露的接口 到.m中看实现如下</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIScrollTextView</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CATextLayer</span>  *textLayer; <span class="comment">//文本layer  </span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CAGradientLayer</span> *gradientLayer; <span class="comment">//蒙版渐变layer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textSeparateWidth; <span class="comment">//文本分割宽度</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textWidth;   <span class="comment">//文本宽度</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      textHeight;  <span class="comment">//文本高度</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGRect</span>       textLayerFrame; <span class="comment">//文本layer的frame</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">CGFloat</span>      translationX; <span class="comment">//文字位置游标</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>在<code>initWithFrame:</code>;和<code>awakeFromNib</code>方法中 初始化一些成员变量</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> configProperty];<span class="comment">//初始化成员变量 //1</span></span><br><span class="line">        [<span class="keyword">self</span> initLayer]; <span class="comment">//2</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)configProperty &#123;</span><br><span class="line">    _text = <span class="string">@""</span>;</span><br><span class="line">    _textColor = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">    _font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>];</span><br><span class="line">    <span class="keyword">self</span>.textSeparateWidth = [kSeparateText calculateSingleLineSizeFromFont:<span class="keyword">self</span>.font].width;</span><br><span class="line">    _fade = <span class="number">0.026</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>1.configProperty方法 初始化默认值</li>
-<li>2.initLayer方法创建我们需要的2个layer &gt; configProperty方法 初始化成员变量最好用<code>_</code>下划线 这样不会触发<code>setter</code>因为我们很多的代码都是写在setter和getter中</li>
-</ul>
-<h4 id="初始化layer">初始化Layer</h4>
-<p>下面我们重点看下<code>initLayer</code></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)initLayer &#123;</span><br><span class="line">    <span class="comment">//文本layer  1</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.textLayer == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.textLayer = [[<span class="built_in">CATextLayer</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span>.textLayer.alignmentMode = kCAAlignmentNatural; <span class="comment">//设置文字对齐模式 自然对齐</span></span><br><span class="line">    <span class="keyword">self</span>.textLayer.truncationMode = kCATruncationNone;  <span class="comment">//设置截断模式</span></span><br><span class="line">    <span class="keyword">self</span>.textLayer.wrapped = <span class="literal">NO</span>; <span class="comment">//是否折行</span></span><br><span class="line">    <span class="keyword">self</span>.textLayer.contentsScale = [<span class="built_in">UIScreen</span> mainScreen].scale;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.textLayer.superlayer == <span class="literal">nil</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span>.layer addSublayer:<span class="keyword">self</span>.textLayer];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//渐变 2</span></span><br><span class="line">    <span class="keyword">self</span>.gradientLayer = [<span class="built_in">CAGradientLayer</span> layer];</span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.shouldRasterize = <span class="literal">YES</span>;</span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.rasterizationScale = [<span class="built_in">UIScreen</span> mainScreen].scale;</span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.startPoint = <span class="built_in">CGPointMake</span>(<span class="number">0.0</span>f, <span class="number">0.5</span>f); <span class="comment">//3</span></span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.endPoint = <span class="built_in">CGPointMake</span>(<span class="number">1.0</span>f, <span class="number">0.5</span>f);  <span class="comment">//4</span></span><br><span class="line">    <span class="keyword">id</span> transparent = (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> clearColor].CGColor; <span class="comment">// 5</span></span><br><span class="line">    <span class="keyword">id</span> opaque = (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> blackColor].CGColor; <span class="comment">//5</span></span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.colors = @[transparent, opaque, opaque, transparent]; <span class="comment">// 6</span></span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.locations = @[@<span class="number">0</span>,@(<span class="keyword">self</span>.fade),@(<span class="number">1</span>-<span class="keyword">self</span>.fade),@<span class="number">1</span>]; <span class="comment">// 7</span></span><br><span class="line">    <span class="keyword">self</span>.layer.mask = <span class="keyword">self</span>.gradientLayer; <span class="comment">//8</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码<code>1</code>处 创建<code>CATextLayer</code>和我们创建其它CALayer一样没啥好说的,设置折行、对齐、截断...</p>
-<p>代码<code>2</code>处 这里重点说一下这个<code>CAGradientLayer</code></p>
-<p>代码<code>3</code>和<code>4</code>处是设置蒙版渐变 的开始方向和结束方向. (以屏幕左下角为原点0,0计算 到屏幕右上角1，1)</p>
-<blockquote>
-<p>如果开始点是(0.0,0.5)结束点是(1.0,0.5)是横向渐变<br>
-如果开始点是(0.5,0)结束点是(0.5,1)是纵向渐变<br>
-这两个点决定了渐变的方向</p>
-</blockquote>
-<p>我们可以把代码去掉运行看下不加蒙版的效果图 如下:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6e4cfde36e70fcae28eea1be9ec30b45b2ff8889/20190321UIScrollTextDemo/scrolltextdemo2.gif"></p>
-<p>这里我用cyan颜色区域代表视图的大小,文本不加蒙版实际上超出显示范围的.</p>
-<blockquote>
-<p>注意: 动画不是这个layer自带,是我们自己加的代码,往下看 有代码</p>
-</blockquote>
-<p>代码<code>5</code>处代码 是给当前渐变layer加渐变颜色 实现蒙版模糊遮盖的效果</p>
-<p>代码<code>6</code>处 把对于的颜色的数组中给<code>gradientLayer.colors</code></p>
-<p>代码<code>7</code>处 对应 代码<code>6</code>处 配合使用,就做到了我们两边渐变遮盖的效果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/31e8bdd5de62b4a84ed7be97154bb99f61abb8ab/20190321UIScrollTextDemo/scrolltextdemo3.gif"></p>
-<p>上图就是我们下面代码的效果,我们加了4个点</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">self</span>.gradientLayer.colors = @[transparent, opaque, opaque, transparent]; <span class="comment">// 6</span></span><br><span class="line"><span class="keyword">self</span>.gradientLayer.locations = @[@<span class="number">0</span>,@(<span class="keyword">self</span>.fade),@(<span class="number">1</span>-<span class="keyword">self</span>.fade),@<span class="number">1</span>]; <span class="comment">// 7</span></span><br></pre></td></tr></table></figure>
-<h4 id="更新layer布局">更新layer布局</h4>
-<p>这里我们要在layoutSubviews方法中计算出正确的布局坐标,因为外部有可能使用autolayout布局.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</span><br><span class="line">    [<span class="keyword">super</span> layoutSubviews];</span><br><span class="line">    </span><br><span class="line">    [<span class="built_in">CATransaction</span> begin];</span><br><span class="line">    [<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</span><br><span class="line">    <span class="built_in">CGFloat</span> textLayerFrameY = <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span> - <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.textLayer.bounds) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">self</span>.textLayer.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, textLayerFrameY, <span class="built_in">CGRectGetWidth</span>(<span class="keyword">self</span>.textLayerFrame), <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.textLayerFrame));</span><br><span class="line">    <span class="keyword">self</span>.gradientLayer.frame = <span class="keyword">self</span>.bounds;</span><br><span class="line">    [<span class="built_in">CATransaction</span> commit];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里代码主要是更新gradientLayer 和textLayer的frame. 并</p>
-<h5 id="为什么要用catransaction">为什么要用CATransaction?</h5>
-<p>因为我们要在动画进行中手动改变动画的参数详情参考<a href="http://jefferyfan.github.io/2016/06/27/programing/iOS/CATransaction/" target="_blank" rel="noopener">设置动画参数</a></p>
-<h3 id="剩下的主要有3个工作">剩下的主要有3个工作</h3>
-<ul>
-<li>绘制文本layer,就是把想显示的字符串给self.textLayer.string</li>
-<li>添加滚动动画</li>
-<li>成员变量的setter中调用绘制文本layer和滚动动画方法</li>
-</ul>
-<h5 id="添加drawtextlayer私有方法">添加drawTextLayer私有方法</h5>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//拼装文本</span></span><br><span class="line">- (<span class="keyword">void</span>)drawTextLayer &#123;</span><br><span class="line">    <span class="keyword">self</span>.textLayer.foregroundColor = <span class="keyword">self</span>.textColor.CGColor;</span><br><span class="line">    <span class="built_in">CFStringRef</span> fontName = (__bridge <span class="built_in">CFStringRef</span>)<span class="keyword">self</span>.font.fontName;</span><br><span class="line">    <span class="built_in">CGFontRef</span> fontRef = <span class="built_in">CGFontCreateWithFontName</span>(fontName);</span><br><span class="line">    <span class="keyword">self</span>.textLayer.font = fontRef;</span><br><span class="line">    <span class="keyword">self</span>.textLayer.fontSize = <span class="keyword">self</span>.font.pointSize;</span><br><span class="line">    <span class="built_in">CGFontRelease</span>(fontRef);</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="keyword">self</span>.textLayer.string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@%@%@%@%@"</span>,_text,kSeparateText,_text,kSeparateText,_text];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里注意 <code>1</code> 处 代码 干了两件事</p>
-<ul>
-<li>拼接文本</li>
-<li>给layer.string</li>
-</ul>
-<p>格式拼接 <strong>文本+3个空格+文本+3个空格+文本</strong></p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> kSeparateText          = <span class="string">@"   "</span>;   <span class="comment">//3个空格</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>kSeparateText 是个常量</p>
-</blockquote>
-<h5 id="添加文本滚动动画">添加文本滚动动画</h5>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startAnimation &#123;</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span>.textLayer animationForKey:kTextLayerAnimationKey]) &#123;</span><br><span class="line">        [<span class="keyword">self</span>.textLayer removeAnimationForKey:kTextLayerAnimationKey];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">CABasicAnimation</span> *animation = [<span class="built_in">CABasicAnimation</span> animation];</span><br><span class="line">    animation.keyPath = <span class="string">@"transform.translation.x"</span>; <span class="comment">//沿着X轴运动</span></span><br><span class="line">    animation.fromValue = @(<span class="keyword">self</span>.bounds.origin.x);</span><br><span class="line">    animation.toValue = @(<span class="keyword">self</span>.bounds.origin.x - <span class="keyword">self</span>.translationX);</span><br><span class="line">    animation.duration = <span class="keyword">self</span>.textWidth * <span class="number">0.035</span>f;</span><br><span class="line">    animation.repeatCount = MAXFLOAT;</span><br><span class="line">    animation.removedOnCompletion = <span class="literal">NO</span>;</span><br><span class="line">    animation.fillMode = kCAFillModeForwards;</span><br><span class="line">    animation.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionLinear];</span><br><span class="line">    [<span class="keyword">self</span>.textLayer addAnimation:animation forKey:kTextLayerAnimationKey];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里给<code>self.textLayer</code>加一个CABasicAnimation,让它沿着X轴运动,当然如果大家喜欢后续我添加多个方向类似<a href="https://github.com/sunyazhou13/MarqueeLabel" target="_blank" rel="noopener">MarqueeLabel滚动文本</a>一样,不过我觉得<a href="https://github.com/sunyazhou13/MarqueeLabel" target="_blank" rel="noopener">MarqueeLabel滚动文本</a>的实现太复杂,不够接地气,这个简单的动画效果还是要自己写比较靠谱.</p>
-<blockquote>
-<p>给self.textLayer添加动画即可,相信大家非常了解iOS动画我就不一一介绍了.</p>
-</blockquote>
-<h5 id="成员变量的setter中调用绘制文本layer和滚动动画方法">成员变量的setter中调用绘制文本layer和滚动动画方法</h5>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setText:(<span class="built_in">NSString</span> *)text &#123;</span><br><span class="line">    _text = text;</span><br><span class="line">    <span class="comment">//计算单行文本大小</span></span><br><span class="line">    <span class="built_in">CGSize</span> size = [text calculateSingleLineSizeWithAttributeText:_font];</span><br><span class="line">    _textWidth = size.width;</span><br><span class="line">    _textHeight = size.height;</span><br><span class="line">    _textLayerFrame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, _textWidth * <span class="number">3</span> + _textSeparateWidth * <span class="number">2</span>, _textHeight);</span><br><span class="line">    _translationX = _textWidth + _textSeparateWidth;</span><br><span class="line">    [<span class="keyword">self</span> drawTextLayer];</span><br><span class="line">    [<span class="keyword">self</span> startAnimation];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里每次给当前视图设置相关文本的时候 setter处,就调用一下 渲染文本和动画.这样可以对外部暴露相关接口实时修改实时生效.至于其它的属性字符串,字体等也要最后追加上</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">self</span> drawTextLayer];</span><br><span class="line">[<span class="keyword">self</span> startAnimation];</span><br></pre></td></tr></table></figure>
-<p>因为改动对文本大小有影响</p>
-<p>文字的计算大小这里用的是 CoreText,支持多行和单行</p>
-<p>属性字符串也一样就不写在这里了. 详细代码demo我已经把它写到文章下方 大家自行加载学习即可</p>
-<p>最终效果 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
-<h1 id="总结">总结</h1>
-<p>由于业余时间有限,没能1个月稳定更新2偏文章,请各位同仁理解,抖音系列动画需要先写demo然后仔细研究,最终才形成文章.制作不易,本篇也参考了开源代码和一些滚动字幕的库.由于演示的不完美,有些类还有可扩展空间,比如 开始动画和结束动画对外暴露接口,比如像系统那样的自然添加动画组. 本篇感谢开源作者<a href="https://github.com/sshiqiao/douyin-ios-objectc" target="_blank" rel="noopener">qiaoshi</a>,因为作者写的不是很完美我学习研究一下,增加了渐变效果和属性字符串得支持.</p>
-<p><a href="https://github.com/sunyazhou13/UIScrollTextDemo" target="_blank" rel="noopener">本篇demo</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIS
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="抖音动画系列" scheme="https://www.sunyazhou.com/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/"/>
     
   </entry>
   
