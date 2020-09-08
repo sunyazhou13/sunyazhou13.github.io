@@ -217,6 +217,7 @@
 <h3 id="app如何接收到触摸事件的">1.app如何接收到触摸事件的</h3>
 <p>回答这个问题前请认真阅读一下 <a href="https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ" target="_blank" rel="noopener">iOS触摸事件全家桶</a></p>
 <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/84faabd5c9fbc51414c35a0130ddadba16123862/20200902iOSinterviewAnswers/runloop_event_receive.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200902iOSinterviewAnswers/runloop_event_receive.jpg"></p>
 <p>通过上图可以看出整个流程就是 我们app启动默认会通过machPort监听端口的方式 来接受IOHIDEvent 来接收和处理触摸事件.</p>
 <h3 id="为什么只有主线程的runloop是开启的">2.为什么只有主线程的runloop是开启的</h3>
 <p>mian()函数中调用UIApplicationMain，这里会创建一个主线程，用于UI处理，为了让程序可以一直运行并接收事件，所以在主线程中开启一个runloop，让主线程常驻.</p>
