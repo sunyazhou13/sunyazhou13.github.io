@@ -198,7 +198,7 @@
 <p><strong>百度</strong> 2014.6~2017.6</p>
 <p>- 百度 BP&amp;IT部 2017.2~2017.6 负责开发内部IM聊天软件 百度Hi for macOS. 负责基础聊天群讨论组 文件处理等基础工作.<br>
 - 百度 个人云部 2014.12~2017.2 负责开发 <a href="https://apps.apple.com/cn/app/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/id547166701" target="_blank" rel="noopener">百度网盘</a> iOS 以及macOS. 负责 上传、下载、传输列表、闪断互传、等等业务开发.<br>
-- 百度 云设备部 2014.6~2014.12 负责开发 小度新路由,在百度智能硬件部门开发小度只能设备.</p>
+- 百度 云设备部 2014.6~2014.12 负责开发 小度新路由,在百度智能硬件部门开发小度智能设备.</p>
 <p>2014年加入百度.</p>
 <p><strong>其它</strong> 2013.5~2014.5</p>
 <p>混迹于一家 叫做中国新闻社的单位,负责开发一款新闻类的app,再后来去了一家开发设备管理的公司负责只能硬件相关的iOS开发.</p>
@@ -229,7 +229,7 @@
 - 2016年末又在宇光的帮助下搭建...成功.</p>
 <p>- success running<br>
 - 2017年初开始熟悉hexo...发表各种文章.</p>
-<p>写博客是因为经历一个搜索和存储知识的『内存堆栈』、『引用』、『关键字索引』等过程.因为我的大脑一开始像内存栈一样,从空栈到栈溢出,后来用堆存储知识,发现堆也溢出.再后来用引用标签存储iOS开发相关的文章、教程、搞法、技巧、实践代码等等,搞得我的浏览器标签一排一排的看着好像中毒了似的.再再后来我只记住几个关键字去google搜索相关文章.有时候有些人发文章搞着搞着就删了,导致我实在找不到了.加上自己也有些技术的积累和技巧的分享.于是打算搞博客记录下来.和各位开发大神相比我的技术简直相差的太远太远.所以我更应该多写写记录一下自己成长过程中的点点滴滴.即便我的种种观点充满太多狭隘的理论和稚嫩的论证,也要知今是而昨非的做下去.否则我会因虚度年华而悔恨,也会因碌碌无为而羞耻.</p>
+<p>写博客是因为经历一个搜索和存储知识的<strong>内存堆栈</strong>、<strong>引用</strong>、<strong>关键字索引</strong>等过程.因为我的大脑一开始像内存栈一样,从空栈到栈溢出,后来用堆存储知识,发现内存也<a href="https://cs.wikipedia.org/wiki/Out_of_memory" target="_blank" rel="noopener">OOM</a>.再后来用引用标签存储iOS开发相关的文章、教程、搞法、技巧、实践代码等等,搞得我的浏览器标签一排一排的看着好像中毒了似的.再再后来我只记住几个关键字去google搜索相关文章.有时候有些人发文章搞着搞着就删了,导致我实在找不到了.加上自己也有些技术的积累和技巧的分享.于是打算搞博客记录下来.和各位开发大神相比我的技术简直相差的太远太远.所以我更应该多写写记录一下自己成长过程中的点点滴滴.即便我的种种观点充满太多狭隘的理论和稚嫩的论证,也要知今是而昨非的做下去.否则我会因虚度年华而悔恨,也会因碌碌无为而羞耻.</p>
 <h3 id="technical-skill">Technical &amp; Skill</h3>
 <p><code>iOS</code>,<code>Objective-C</code>,<code>Swift</code>,<code>Git</code>,<code>Markdown</code>,<code>App开发</code>,<code>Hexo博客</code>,<code>Cocoapods</code>,<code>UIKit</code>,<code>音视频</code>,<code>FFMpeg</code>,<code>NLP</code>,<code>Python</code>.</p>
 <p>我打算将来学会一门技术或者技巧都会在这上面打上tag,看看退休的时候自己都学了哪些东西.</p>
@@ -316,5 +316,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
