@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/03/29/20170329AccessPrivacySensitiveDataPrivateAccessPermission/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-red"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">隐私及敏感数据访问权限(Access privacy-sensitive data)</h1>
+  </header>
+
+  <section class="post">
+    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
+<p>私有数据的框架列表可是个不小的东西:<br>
+&gt; 通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
+<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="noopener">这个大神</a></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍照捕捉视频内容,及拍摄短视频时访问相机&lt;/string&gt;</span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍摄短视频时访问麦克风收录视频声音&lt;/string&gt;</span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br></pre></td></tr></table></figure>
+<p>以上是常用的并且通过 App Store 审核的文本</p>
+<p>下面是方便调试使用的隐私文案提醒</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo album use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location --&gt;</span><br><span class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location When In Use --&gt;</span><br><span class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location Always --&gt;</span><br><span class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📆 Calendars --&gt;</span><br><span class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ⏰ Reminders --&gt;</span><br><span class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📒 Contacts --&gt;</span><br><span class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏊 Motion --&gt;</span><br><span class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Update --&gt;</span><br><span class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Share --&gt;</span><br><span class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</span><br><span class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎵 Media Library --&gt;</span><br><span class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📱 Siri --&gt;</span><br><span class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏡 HomeKit --&gt;</span><br><span class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📻 SpeechRecognition --&gt;</span><br><span class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📺 VideoSubscriber --&gt;</span><br><span class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📟 NFC reader iOS11  --&gt;</span><br><span class="line">&lt;key&gt;NFCReaderUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) use the device’s NFC reader&lt;/string&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<em>上线前务必换成友好的提醒文案.</em></p>
+</blockquote>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/06/20170406XcodeShortcuts/" title="Xcode快捷键">Xcode快捷键</a></h2>
+                <p class="excerpt">
+                
+                
+shortcuts
+
+前言 在iOS和macOS开发者中积累了一些快捷操作记录下来
+隐藏左侧面板
+
+
+command+0=显示/隐藏左侧面板
+
+隐藏右侧面板
+
+
+command+option+0=显示/隐藏右侧面板
+
+隐藏debug区域
+
+
+command+shift+y=显示/隐藏底部控制等调试
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/04/06/20170406XcodeShortcuts/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/" title="Learning AV Foundation(三)AVAudioRecorder">Learning AV Foundation(三)AVAudioRecorder</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Wed Mar 29 2017 10:54:40 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
