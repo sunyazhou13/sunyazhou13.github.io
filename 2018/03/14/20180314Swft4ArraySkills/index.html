@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Swift 4 中的数组技巧 | 東引甌越</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Swift 4 中的数组技巧 | 東引甌越">
+    <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Swift 4 中的数组技巧 | 東引甌越">
+    <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
+
+    
+    <meta name="author" content="sunyazhou">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/14/20180314Swft4ArraySkills/"/>
+
+    
+    <link rel="author" href="https://plus.google.com/107423989995616646161"/>
+    
+    <!-- fancybox support -->
+    
+        <script src="/lib/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/lib/fancybox/dist/jquery.fancybox.min.css">
+        <script src="/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+        <script src="/js/wrapImage.js"></script>
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 東引甌越 的主页"><img src="/images/logo2.jpg" width="80" alt="東引甌越 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 東引甌越">東引甌越</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">不断学习, 与时俱进. - 始于2017</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+              <li class="navigation__item"><a href="/archives">归档</a></li>
+            
+              <li class="navigation__item"><a href="/projects">作品</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="https://weibo.com/sunyazhou13" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/sunyazhou13" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+  <li class="navigation__item">
+    <a href="https://plus.google.com/107423989995616646161" title="Google+" target="_blank">
+      <i class='social fa fa-google-plus-square'></i>
+      <span class="label">Google+</span>
+    </a>
+  </li>
+
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/sunyazhou" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+  <li class="navigation__item">
+    <a href="mailto:sunyazhou13@163.com" title="邮件联系我" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-red"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-14T02:17:56.000Z" class="post-list__meta--date date">2018-03-14</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span>
+    </div>
+    <h1 class="post-title">Swift 4 中的数组技巧</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="前言">前言</h1>
+<p>年前买了本<a href="https://objccn.io/products/advanced-swift/" target="_blank" rel="noopener">Swift 进阶</a>(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错</p>
+<p>当我从头来学习数组的时候发现好多函数真的太有用了</p>
+<h2 id="swift-4.0-中的可变数组技巧">Swift 4.0 中的可变数组技巧</h2>
+<p>我们可用 Xcode 创建playground 来进行练习</p>
+<p><strong>首先创建个数组</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> array = <span class="type">NSMutableArray</span>(array: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> , <span class="number">5</span>, <span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+<p><strong>for in 循环遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5 6</span><br></pre></td></tr></table></figure>
+<p><strong>想要扣除第一个元素剩余的元素进行迭代遍历呢？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>()&#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">2 3 4 5 6</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>dropFirst() 函数参数是可以添加数值的 for x in array.dropFirst(3) 打印:4 5 6.</p>
+</blockquote>
+<p>有 <code>first</code> 的地方基本就有<code>last</code></p>
+<p><strong>想要扣除最后 3 个元素以外的元素进行遍历？</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">3</span>)&#123;</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<p><strong>带下标和数组元素遍历</strong></p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (num, element) <span class="keyword">in</span> array.enumerated() &#123;</span><br><span class="line">    <span class="built_in">print</span>(num, element)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印 左边下标 右边元素</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">0 1</span><br><span class="line">1 2</span><br><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">4 5</span><br><span class="line">5 6</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>左边下标 右边元素</p>
+</blockquote>
+<p>全文完</p>
+
+  </section>
+
+</article>
+
+
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+           欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+    </div>  
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 方式一： 
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="undefined"
+                <img src="undefined"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/images/Alipay.jpg" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/images/WeChatpay.jpg" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+
+<! -- 添加捐赠图标 -->
+
+
+
+<section class="read-more">
+     
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/04/02/20180402RunLoop/" title="深入理解RunLoop">深入理解RunLoop</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
+本文内容
+
+RunLoo
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-04-02T06:16:34.000Z" class="post-list__meta--date date">2018-04-02</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/04/02/20180402RunLoop/">继续阅读</a></div>
+
+            </div>
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308WhatIsThedSYM/" title="什么是符号表?">什么是符号表?</a></h2>
+                <p class="excerpt">
+                
+                
+前言
+iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+
+什么是符号表？
+为什么要配置符号表？
+dSY
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308WhatIsThedSYM/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+
+  if(true){
+    var gitalk = new Gitalk({
+      clientID: '15c55ed469ea673ae332',
+      clientSecret: '1801dbf9b1589c256260c85d779eb51d0cf40885',
+      repo: 'gitment-comments',
+      owner: 'sunyazhou13',
+      admin: ['sunyazhou13'],
+      id: 'Wed Mar 14 2018 10:17:56 GMT+0800',
+      distractionFreeMode: 'true'
+  })
+  gitalk.render('gitalk-container') 
+  }
+  </script>
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 和 Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2020 - 本站由 <a href="/">@sunyazhou13</a> 创建,
+        使用<a href="https://github.com/lenbo-ma/hexo-theme-vno">hexo-theme-vno</a>主题,
+        修改自<a href="https://github.com/onevcat/vno" target="_blank">喵神的vno</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+
+
+
+
+    
+
+
+    
+
+<script type="text/javascript">
+
+// var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+// document.write(unescape("%3Cspan id='cnzz_stat_icon_1274885345'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274885345%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+
+var cnzz_s_tag = document.createElement('script');
+cnzz_s_tag.type = 'text/javascript';
+cnzz_s_tag.async = true;
+cnzz_s_tag.charset = "utf-8";
+cnzz_s_tag.src = src="https://s13.cnzz.com/z_stat.php?id=1274885345&web_id=1274885345&async=1";
+var root_s = document.getElementsByTagName('script')[0];
+root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+
+</script>
+
+
+</body>
+</html>
