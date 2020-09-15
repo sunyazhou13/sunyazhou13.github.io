@@ -1962,9 +1962,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2019/12/06/20191206Chisel/"/>
     <id>https://www.sunyazhou.com/2019/12/06/20191206Chisel/</id>
     <published>2019-12-06T03:09:25.000Z</published>
-    <updated>2020-08-10T05:22:36.760Z</updated>
+    <updated>2020-09-15T02:06:46.763Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/43536cf4dc28231d419c0cf09077b2c29c1f0401/20191206Chisel/lldb1.png"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191206Chisel/lldb1.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <p>最近比较懒 Xcdeo每次启动的时候都会报一个找不到某某python文件的log在lldb中,为了一探究竟,花了点时间简单修复了</p>
@@ -1978,10 +1978,10 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 </blockquote>
 <p>然后它会告诉你看下用户home目录有个隐藏文件 <code>.lldbinit</code>如果没有就创建一下</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">touch .lldbinit </span><br><span class="line">open .lldbinit</span><br></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f580725a714dd550d65e488cd790ed2044c7bcac/20191206Chisel/lldbinit.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191206Chisel/lldbinit.png"></p>
 <p>创建完 把脚本命令搞进去 这里我就不说官方的写法了 跟屎一样一点不好使</p>
 <p>我贴一下我的添加方法.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/987f3c5ae804f1646fbf1bb5cd69efea9b5ca222/20191206Chisel/lldb2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191206Chisel/lldb2.png"></p>
 <p>这是我用本地电脑安装完成之后的路径图</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">### Chisel LLDB add by sunyazhou</span></span><br><span class="line"><span class="built_in">command</span> script import /usr/<span class="built_in">local</span>/Cellar/chisel/1.8.1/libexec/fblldb.py</span><br></pre></td></tr></table></figure>
 <p>本地的 .lldbinit 文件中加入上代码 记得必须对应上路径.然后重启Xcode运行即可在控制台使用无问题</p>
@@ -2021,7 +2021,7 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <li><code>slowanim</code>/<code>unslowanim</code>：降低(或取消)动画速度,默认0.1 ，可以在任意断点或Xcode暂定执行slowanim即可，方便动画调试</li>
 </ul>
 <p>演示效果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f580725a714dd550d65e488cd790ed2044c7bcac/20191206Chisel/lldb3_chisel.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191206Chisel/lldb3_chisel.png"></p>
 <h2 id="其它调试lldb有哪些">其它调试lldb有哪些？</h2>
 <p><a href="https://github.com/DerekSelander/LLDB" target="_blank" rel="noopener">lldb_commands</a> 是另一个第三方的lldb扩展库，其中提供了很多实用的文件操作</p>
 <p><code>ls</code>：显示指定路径的目录或文件列表 <code>pexecutable</code>：打印当前可执行文件所在位置 <code>dumpenv</code>：查看环境信息，比如说沙盒地址 <code>yoink</code>：拷贝指定目录的文件到mac的临时目录 <code>keychain</code>：查看keychain信息</p>
@@ -2032,7 +2032,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/43536cf4dc28231d419c0cf09077b2c29c1f0401/20191206Chi
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191206Chisel/lldb1.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;本文具有强
     
     </summary>
     
@@ -2050,21 +2052,22 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2019/12/04/20191204MathGraphicTool/"/>
     <id>https://www.sunyazhou.com/2019/12/04/20191204MathGraphicTool/</id>
     <published>2019-12-04T10:12:58.000Z</published>
-    <updated>2020-08-10T05:22:36.760Z</updated>
+    <updated>2020-09-15T02:12:46.083Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6588bbe457cd41f04c0213bab61f54bae8511d75/20191204MathGraphicTool/MathGraphic.png"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191204MathGraphicTool/MathGraphic.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <p>以前经常写一些动画需要描述示意图形的运动图.这样能生动形象的表述我所讲述的内容到底是什么样的</p>
 <p>最近发现了一个网站,专门做数学图形绘制</p>
 <h1 id="httpswww.geogebra.org"><a href="https://www.geogebra.org/" target="_blank" rel="noopener">https://www.geogebra.org/</a></h1>
 <p>这里数学上用的东西都是可以直接拿来使用的,比如画个坐标系 表述一下 动画运动轨迹等</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9f7e82efb33d298dd2790259fb8558d06309b61a/20191204MathGraphicTool/MathGraphicOverView.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191204MathGraphicTool/MathGraphicOverView.gif"></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6588bbe457cd41f04c0213bab61f54bae8511d75/20191204Mat
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191204MathGraphicTool/MathGraphic.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;前
     
     </summary>
     
@@ -2082,9 +2085,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/"/>
     <id>https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/</id>
     <published>2019-09-26T12:05:20.000Z</published>
-    <updated>2019-11-28T23:28:53.034Z</updated>
+    <updated>2020-09-15T02:16:11.098Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7ba7422a28bf99800889c69175423c274ed649b3/20190926MasonryPanViewDemo/panviewdemo.gif"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/panviewdemo.gif"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <h2 id="背景">背景</h2>
@@ -2092,7 +2095,8 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <h2 id="开搞">开搞</h2>
 <p>首先我搞起之前我建议大家看下<a href="http://tutuge.me/" target="_blank" rel="noopener">土土哥</a>的<a href="http://tutuge.me/tags/Masonry/" target="_blank" rel="noopener">有趣的Autolayout示例1~5Masonry实现文章</a>,本文也是参考土土哥的文章学习写出的,见笑了各位,个人认为土土哥的文章简直就是Masonry自动布局的样板教程,强烈建议入门的小伙伴或者高手经常复写.</p>
 <p>下面的图是土土哥实现的demo<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e8d67bc843f2afc69cad61704396a1378fba6cc/20190926MasonryPanViewDemo/tutugeMasonry1.gif"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9e8d67bc843f2afc69cad61704396a1378fba6cc/20190926MasonryPanViewDemo/tutugeMasonry2.gif"></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/tutugeMasonry1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/tutugeMasonry2.gif"></p>
 <p>但我的问题是怎么保证那个tip的气泡label左右拖拽能辗转腾挪的允许logo图像之间有<code>旷量移动</code></p>
 <h2 id="代码实现旷量移动">代码实现旷量移动</h2>
 <p>首先我们创建一个demo,很简单VC的demo就行 创建相关绿色背景视图和图像imageView以及tipLabel的气泡视图,具体代码我贴了出来,我就不啰嗦如何创建其它视图了xib拖拽一下就行了.</p>
@@ -2118,7 +2122,8 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7ba7422a28bf99800889c69175423c274ed649b3/20190926Mas
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/panviewdemo.gif&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言
     
     </summary>
     
