@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>markdown嵌入折叠标签 | 東引甌越</title>
+    <title>如何使用Charles截获https请求 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="markdown嵌入折叠标签 | 東引甌越">
+    <meta name="twitter:title" content="如何使用Charles截获https请求 | 東引甌越">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="markdown嵌入折叠标签 | 東引甌越">
+    <meta property="og:title" content="如何使用Charles截获https请求 | 東引甌越">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/10/25/20171025MarkdownSkill/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/09/01/20170901CharlesCaptureHttps/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,56 +181,62 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
+      <time datetime="2017-09-01T15:17:09.000Z" class="post-list__meta--date date">2017-09-01</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
 
 </span>
     </div>
-    <h1 class="post-title">markdown嵌入折叠标签</h1>
+    <h1 class="post-title">如何使用Charles截获https请求</h1>
   </header>
 
   <section class="post">
     <h1 id="前言">前言</h1>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_album.png"></p>
+<p>如何使用<code>charles</code>在iOS设备上截获<code>https</code>的请求</p>
+<h2 id="安装charles">1.安装Charles</h2>
+<p><a href="https://www.charlesproxy.com/download/" target="_blank" rel="noopener">官网下载</a>就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的</p>
+<h2 id="http抓包配置">2.HTTP抓包配置</h2>
+<h4 id="查看电脑ip">(1) 查看电脑IP</h4>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_mac.png"></p>
+<h4 id="设置手机http代理">(2) 设置手机HTTP代理</h4>
+<p>手机连上电脑，点击“设置-&gt;无线局域网-&gt;连接的WiFi”，设置HTTP代理： 服务器为电脑IP地址：如192.168.1.108 端口：8888</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/wifi_ip_port_iPhone.png"></p>
+<p>注意:<em>这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP</em></p>
+<p>设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_allow.png"></p>
+<p>点击<strong>Allow</strong> 就可以了</p>
+<h3 id="https抓包">3. HTTPS抓包</h3>
+<p>左上角菜单中 选择<code>SSL Proxying Settings</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step1.png"></p>
+<p>然后 勾选<code>Enable SSL Proxying</code></p>
+<p>紧接着点击 <code>Add</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step2.png"></p>
+<p>再然后在</p>
+<p><code>Host</code>: 输入 <code>*</code> 代表通配所有 如果你要截获 比如 *.baidu.com那就写上</p>
+<p><code>Port</code>: 443 默认端口 填完 点击OK</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step3.png"></p>
+<p>紧接着 点击<code>Help</code> -&gt; <code>SSL Proxying</code> -&gt; 安装根证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_step4.png"></p>
+<p>安装到钥匙串后 点击charles的root证书 选择 <code>使用信任</code></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_cer_root_mac.png"></p>
+<p>下一步 是安装手机的root证书</p>
+<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/2017-09-01-Charles-capture-https/charles_step6.png?raw=true"></p>
+<p>这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: <a href="chls.pro/ssl">chls.pro/ssl</a></p>
+<p>此时手机一会儿就弹出这样的 提示 点击<strong>允许</strong></p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone1.PNG"></p>
+<p>然后 安装证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone2.PNG"></p>
+<p>安装完 最后一步<strong>非常重要</strong></p>
+<p>__必须到 通用-&gt;关于本机-&gt;证书信任设置__去信任 证书</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/iPhone3.PNG"></p>
+<p>如果不信任 就会抓取的时候出现下图这样的问题</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/charles_root_cer_error.png"></p>
 <blockquote>
-<p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="noopener">喵神发表了一篇博文 关于 Swift Error 的分类</a></p>
+<p>注意:<em>iOS10.3以上版本 貌似才需要</em></p>
 </blockquote>
-<p>每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.</p>
-<p>当我仔细看喵神博客的时候发现 原来<code>markdown</code>支持很多<code>html</code>标签的小技巧</p>
-<p>比如:</p>
-<figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_skill1.gif" alt="喵神文章中的"><figcaption>喵神文章中的</figcaption>
-</figure>
-<p>第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神</p>
-<figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_question.png" alt="与喵神对话"><figcaption>与喵神对话</figcaption>
-</figure>
-<p><a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">简单的 summary tag 而已..</a></p>
-<p>于是我测试了一下代码</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>点击时的区域标题<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> - 测试 测试测试<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> 测试二 测试三 。。。。。 .<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>下面我们来玩一下试试</p>
-<details>
-<summary>这是孙先生的博客 点击查看更多内容.</summary>
-<p>
-666666 昨天程序员节 是不是被 PM 虐了 QA 提个很多 bug 不想 fix.
-</p>
-<p>
-昨天一不小心驾照考下来了 耗时2个月 快不快。。。。.
-</p>
-</details>
-<p>还可以嵌入图片</p>
-<details>
-<summary>书法</summary>
-<p>
-<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg" alt>
-</p>
-<p>
-</p>
-</details>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>书法<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>OK 上边就是我们用到的几行代码 很简单直接嵌入 markdown 编辑器里面就马上出效果</p>
-<p>感谢<a href="https://onevcat.com/" target="_blank" rel="noopener">喵神的指导</a></p>
-<p>更多标签相关 可参考<a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">w3schools</a></p>
+<p>最后放上一张截获成功的图 (支付宝的接口)</p>
+<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/2017-09-01-Charles-capture-https/result.png"></p>
 <p>全文完</p>
 
   </section>
@@ -283,21 +289,24 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031ElegantPresentTransition/" title="论一个优雅的模态转场的自我修养">论一个优雅的模态转场的自我修养</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/09/29/20170929MarkdownTable/" title="Markdown插入表格语法">Markdown插入表格语法</a></h2>
                 <p class="excerpt">
                 
                 前言
-在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
 
-swift 点这里下载demo
-Objective
+以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格
+demo:
+
+普通样式
+
+| 一个普通标题 | 一个普通标题 | 一个普通标题 || ------| ------ | ------ || 短文本 | 中等文本 | 稍微长一点的文本 || 稍微长一点的
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
+                <div class="post-list__meta"><time datetime="2017-09-29T10:01:08.000Z" class="post-list__meta--date date">2017-09-29</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
 
-</span><a class="btn-border-small" href="/2017/10/31/20171031ElegantPresentTransition/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/09/29/20170929MarkdownTable/">继续阅读</a></div>
 
             </div>
         
@@ -305,23 +314,29 @@ Objective
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/10/16/20171016UIViewRendering/" title="理解UIView的绘制">理解UIView的绘制</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/08/30/20170830ARKit/" title="ARKit">ARKit</a></h2>
                 <p class="excerpt">
                 
-                
-UIView渲染
+                前言
 
-前言
-最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
-理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?
-首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7m
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解. 期间有任何问题请大家集思广益,多多指教.
+主要内容
+
+AR技术介绍
+ARKit工作原理及流程介绍
+ARKit简单代码实现
+ARKit框架所有API介绍
+ARScnView介绍
+ARSession介绍
+ARCamera介绍
+AR
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
+                <div class="post-list__meta"><time datetime="2017-08-30T06:50:43.000Z" class="post-list__meta--date date">2017-08-30</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/10/16/20171016UIViewRendering/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/08/30/20170830ARKit/">继续阅读</a></div>
 
             </div>
         
@@ -343,7 +358,7 @@ UIView渲染
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Wed Oct 25 2017 16:10:35 GMT+0800',
+      id: 'Fri Sep 01 2017 23:17:09 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 
