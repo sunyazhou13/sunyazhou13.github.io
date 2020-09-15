@@ -193,7 +193,7 @@
   <section class="post">
     <h1 id="前言">前言</h1>
 <p>一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d2b991b6d10e643c8e4c619cc913bbbaea19a534/20181106AwemeTopBottomScrollDemo/AwemeDemo1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181106AwemeTopBottomScrollDemo/AwemeDemo1.gif"></p>
 <h1 id="技术实现原理">技术实现原理</h1>
 <ul>
 <li>UITableView</li>
@@ -206,7 +206,7 @@
 <li>contentInset 显示内容的内边距, 以此是 <code>上</code>, <code>左</code>, <code>下</code>, <code>右</code>, 上边距 距离整好屏幕高度,底部 是 顶部边距(屏幕高度的 3倍) 方便滑动, 左右分别顶到两边 搞定.</li>
 </ol>
 <p>我画个图演示一下.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/748bbcbbc7ef5e60d1b6844ab26b73d7debc06ca/20181106AwemeTopBottomScrollDemo/AwemeDemo2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181106AwemeTopBottomScrollDemo/AwemeDemo2.png"></p>
 <p>看到这张图 大家也许 已经明白了，最核心的地方是控制 TableView的上下边距,上边距留够一个屏幕高度,下边距留够下滑3屏左右的缓冲.</p>
 <h1 id="说一下用到的技巧">说一下用到的技巧</h1>
 <p>创建tableView很简单 如果理解不了 可以下载文章末尾demo</p>
@@ -236,7 +236,7 @@
 <p>我们如何监听状态栏的事件?</p>
 <p>我们当然可以设置TableView自动滑动到顶部.但是 我们怎么拦截下来这个事件去把我们 相关页码 <strong>置<code>0</code></strong></p>
 <p>为什么置0呢?看下 下面这张图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ab61f58501e90d17c3dcc2af351eba13694a71ce/20181106AwemeTopBottomScrollDemo/AwemeDemo3_error.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181106AwemeTopBottomScrollDemo/AwemeDemo3Error.gif"></p>
 <p>虽然我们能实现 自动滑动TableView到顶部 但是 我们拦截不到顶部状态栏点击的事件,在这个事件调用的地方 把当前页码置<code>0</code>.</p>
 <h4 id="监听点击状态栏事件">监听点击状态栏事件</h4>
 <p>这里使用的是在AppDelegate 中 复写 touchesBagan:方法</p>

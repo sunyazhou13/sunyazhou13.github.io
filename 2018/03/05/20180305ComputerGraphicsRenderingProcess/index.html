@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/05/20180305Computer-graphics-rendering-process/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/03/05/20180305ComputerGraphicsRenderingProcess/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/%20Ivan-Sutherland.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180305ComputerGraphicsRenderingProcess/IvanSutherland.jpg"></p>
 <h1 id="前言">前言</h1>
 <p>今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识.</p>
 <h2 id="计算机图形渲染的流程">计算机图形渲染的流程</h2>
@@ -201,7 +201,7 @@
 <li>着色指定：当座标系统生成出带座标的绘图数据后就需要送入着色器，着色器指定了这些线框的填充颜色或纹理。</li>
 <li>渲染：着色器将绘图数据加上着色数据后就被送入渲染器，渲染器根据绘图数据描述，将像素填充到描述的线框组里并送入帧缓存，然后然后送入显示器，显示器获取到帧缓存的数据后再根据数据的描述来绘图到屏幕上。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/render1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180305ComputerGraphicsRenderingProcess/render1.png"></p>
 <h2 id="像素与点point与点dot">像素与点（point）与点（dot）</h2>
 <p>像素与点（point），点（dot）这三个单位很容易令人混淆，原因在于它们在很多场合上是可以互换的。但是本文需要区分这两者的概念。</p>
 <p>像素指的是一种数据结构，这个数据结构包含了RGB三个数据，分别对应的是红色，绿色，蓝色。我们说一张计算机生成的位图时，我们会说这图是多少像素x多少像素，例如800x600像素。值得注意的是，像素没有一个固定的尺寸单位，它只是一个抽象概念。</p>
@@ -214,7 +214,7 @@
 <p>PPI指的是每英寸多少像素，与DPI有一定概念上的区别。PPI一般指的是屏幕的点密度，DPI指的是打印点的密度。PPI不是固定的，不同屏幕尺寸结合不同的分辨率会有不同的PPI，但是DPI则是相对固定在72。</p>
 <p>HiDPI是苹果的一项绘图技术，结合这种技术，计算机座标系统上的一个点（point）不再对应一个像素，一般来说会是一个座标点对应四个像素，而一个像素对应屏幕的一个物理点（dot）。</p>
 <p>由于像素是一组色彩数据，所以绘图数据在经过着色器后才包含了它。举个例子，绘图数据在送入着色器前是描述一个100x100的矩形，经过着色器指定色彩属性后会被送入一个HiDPI系统，这个系统将200x200个像素的数据添加到绘图数据里。在经过渲染器后，相当于将200x200个像素填充进100x100这个矩形线框。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180305Computer-graphics-rendering-process/render2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180305ComputerGraphicsRenderingProcess/render2.png"></p>
 <h2 id="帧缓存与显示器屏幕">帧缓存与显示器屏幕</h2>
 <p>帧缓存是储存计算机渲染后的图形数据的，这些数据包括座标，像素，分辨率等等。。简单来说就是描述图象的数据，当这些描述数据送入显示器后，显示器就知道怎么绘图了。</p>
 <p>一般来说的屏幕分辨率指的是渲染器生产出来的像素数据排列，例如1280x800像素。值得注意的是这个屏幕分辨率与显示器屏幕的物理点排列没关系的。屏幕分辨率是可设置的，显示器的物理点排列是固定的。例如帧缓存里的分辨率是1280x800像素，但是显示器屏幕是1920x1200点排列的，那么显示器会怎么将帧缓存里的数据呈现到屏幕上呢？答案是通过自适应放缩，是经过显示器内部芯片来转换的。</p>

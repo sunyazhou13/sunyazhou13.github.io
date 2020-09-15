@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/home_page_log.jpeg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/homePageLog.jpeg"></p>
 <h1 id="前言">前言</h1>
 <p>iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.</p>
 <h2 id="本周主要内容如下">本周主要内容如下</h2>
@@ -206,19 +206,19 @@
 <h3 id="为什么要配置符号表">为什么要配置符号表？</h3>
 <p>为了能快速并准确地定位用户APP发生<code>Crash</code>的代码<code>位置</code>，我们可以使用符号表对APP发生<code>Crash</code>的程序<code>堆栈</code>进行<code>解析</code>和<code>还原</code>。</p>
 <p>举一个例子：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f84e46105c453408a030c50d802695917bf5ea4c/20180308What-is-the-dSYM/stack_symbol.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/stackSymbol.png"></p>
 <p>上图是我们通过符号表来解析出来崩溃堆栈的调用</p>
 <h3 id="什么是dsym文件">什么是dSYM文件？</h3>
 <p>iOS平台中，<code>dSYM</code>文件是指具有调试信息的目标文件，文件名通常为： <code>com.公司名.dSYM</code>。如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/test_dSYM.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/testdSYM.png"></p>
 <p>一般都是和Xcode 工程名的 aget一样的名字</p>
 <blockquote>
 <p>为了方便找回Crash对应的dSYM文件和还原堆栈，建议每次构建或者发布APP版本的时候，备份好dSYM文件</p>
 </blockquote>
 <h4 id="如何定位dsym文件">如何定位dSYM文件？</h4>
 <p>一般情况下，项目编译完<code>dSYM</code>文件跟<code>app</code>文件在同一个目录下，下面以<code>XCode</code>作为IDE详细说明定位<code>dSYM</code>文件</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dSYM1%402x.png"></p>
-<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/master/20180308What-is-the-dSYM/dSYM2@2x.png?raw=true"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/dSYM1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/dSYM2.png"></p>
 <blockquote>
 <p>这里用 release 模式做的测试</p>
 </blockquote>
@@ -228,28 +228,28 @@
 <p>如果要在<code>Debug</code>对应的<code>Xcode</code>配置如下:</p>
 <p><code>XCode -&gt; Build Settings -&gt; Code Generation -&gt; Generate Debug Symbols -&gt; Yes</code><br>
 <code>XCode -&gt; Build Settings -&gt; Build Option -&gt; Debug Information Format -&gt; DWARF with dSYM File</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym3%402x.png"><br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/dsym4%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/dSYM3.png"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/dSYM4.png"></p>
 <h4 id="开启bitcode之后需要注意哪些问题">开启Bitcode之后需要注意哪些问题?</h4>
 <ul>
 <li>在点<code>Upload to App Store</code>上传到<code>App Store</code>服务器的时候需要声明符号文件(<code>dSYM</code>文件)的生成:</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3d0ace06f1a780aa3691cc55af98d2403a7cfce1/20180308What-is-the-dSYM/dsym5.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/dSYM5.jpg"></p>
 <ul>
 <li>在配置符号表文件之前，需要从App Store中把该版本对应的dSYM文件下载回本地,然后用符号表工具生成和上传符号表文件。</li>
 </ul>
 <p>这里找回<code>ipa</code>版本对应的dSYM文件有两种方式</p>
 <ol type="1">
-<li><p>通过Xcode的归档文件找回dSYM,打开<code>Xcode</code> 顶部菜单栏 -&gt; <code>Window</code> -&gt; <code>Organizer</code> 窗口,如下图: <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-2.jpg"><br>
+<li><p>通过Xcode的归档文件找回dSYM,打开<code>Xcode</code> 顶部菜单栏 -&gt; <code>Window</code> -&gt; <code>Organizer</code> 窗口,如下图: <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/BitcodedSYM2.jpg"><br>
 打开 <code>Xcode</code> 顶部菜单栏，选择<code>Archive</code> 标签:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-3.jpg"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/BitcodedSYM3.jpg"><br>
 找到发布的归档包，右键点击对应归档包，选择<code>Show in Finder</code>操作:<br>
-<img src="https://bugly.qq.com/docs/img/symbol-ios/BitcodedSYM-4.jpg?v=20180119105842"> 右键选择定位到的归档文件，选择显示包内容操作:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-5.jpg"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/BitcodedSYM4.jpg"> 右键选择定位到的归档文件，选择显示包内容操作:<br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/BitcodedSYM5.jpg"><br>
 选择<code>dSYMs</code>目录，目录内即为下载到的 <code>dSYM</code> 文件:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180308What-is-the-dSYM/BitcodedSYM-6.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/BitcodedSYM6.jpg"></p></li>
 <li><p>通过<a href="https://itunesconnect.apple.com/" target="_blank" rel="noopener">iTunes Connect</a>找回</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/757ac10eb4448e952a1f9b42d71073de424da159/20180308What-is-the-dSYM/itunes_connect%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180308WhatIsThedSYM/itunesConnect.png"></p>
 <p>在“所有构件版本（All Builds）”中选择某一个版本，点“下载<code>dSYM</code>（Download dSYM）”下载dSYM文件.</p></li>
 </ol>
 <blockquote>
@@ -332,7 +332,7 @@ Swift 4.0 中的可变数组技巧
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="计算机图形渲染的流程">计算机图形渲染的流程</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305ComputerGraphicsRenderingProcess/" title="计算机图形渲染的流程">计算机图形渲染的流程</a></h2>
                 <p class="excerpt">
                 
                 
@@ -346,7 +346,7 @@ Swift 4.0 中的可变数组技巧
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2018/03/05/20180305ComputerGraphicsRenderingProcess/">继续阅读</a></div>
 
             </div>
         

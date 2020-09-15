@@ -200,7 +200,7 @@
 <ul>
 <li>build setting中开启符号表</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6db967f376eddf5c04bda7db38be27b07f2d48bc/20180817CPU-thread-debug/enable_dysm.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/enableDysm.png"></p>
 <h2 id="导入头文件">1.导入头文件</h2>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;mach-o/dyld.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>这是mac os的可执行文件的动态链接库头文件 内部内建函数有几个我们需要用到</p>
@@ -218,17 +218,17 @@
 </ul>
 <p>然后运行你的程序</p>
 <p>然后看下控制台 过滤一下 ASLR我们log中的键入内容</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/consolo_debug.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/consoloDebug.png"></p>
 <p>然后 点击 工程中的Product</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/products.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/products.png"></p>
 <p>右键 show in finder</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/product_dir.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/productDir.png"></p>
 <p>下一步骤 打开终端 cd 到这这个目录(可以打开终端 输入 cd 空格 拖拽那个文件夹)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/dir_final.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/dirFinal.png"></p>
 <p>然后 <code>pwd</code>一下 看看</p>
 <h2 id="控制台搜索相关我们打印log的代码">3.控制台搜索相关我们打印log的代码</h2>
 <p>找到我们第一条首地址</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/536c82a196f36b0b4634d6825ee3e297d66e3830/20180817CPU-thread-debug/importent.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/importent.png"></p>
 <blockquote>
 <p>注意:<strong>这一步非常重要 如果不好使,请重试几次.</strong></p>
 </blockquote>
@@ -239,18 +239,18 @@
 </blockquote>
 <p>我们来测试一下 好不好使</p>
 <p>首先在控制台顶部的面板点击</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/breakpoint1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/breakpoint1.png"></p>
 <p>然后 在 consolo中输入 <code>bt</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/main.png"></p>
 <p>如果看到 如下内容说明已经成功.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/08f5465b5d977904da7f3acf876cb6efcd11bf0b/20180817CPU-thread-debug/main_result.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/mainResult.png"></p>
 <h2 id="真机运行-找出未知线程">4.真机运行 找出未知线程</h2>
 <p>首先点击Xcode工程中的Profile运行<code>instruments</code>,我这里是运行工程之后 Xcode9.4可以无缝转换到<code>instruments</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments0.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/instruments0.png"></p>
 <p>我们找到相关线程 没有名称也不知道对象叫什么 就一个十六进制地址</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/instruments2.png"></p>
 <p>我们随便找个地址 在终端中输入</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ffdc3d690a4b68cd3d26a1148e81e5817044442c/20180817CPU-thread-debug/instruments3.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180817CPUThreadDebug/instruments3.png"></p>
 <p>好了 如果有问题 请删除product和符号表重新编译</p>
 <h1 id="总结">总结</h1>
 <p>CPU调试的过程非常麻烦,而且中间过程的代码多数都是C++的调用,主要是线程消耗的开销,中有很多收获希望大家多多指教.</p>

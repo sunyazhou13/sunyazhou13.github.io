@@ -191,9 +191,9 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180615NSAttributeString/richtext.png"> # 前言</p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180615NSAttributeString/richtext.png"> # 前言</p>
 <p>最近开发需求遇到一个比较简单但又棘手的问题.先看需求</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b20f325385e063624b16aa726df0077209327fb0/20180615NSAttributeString/NSAttributeString1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180615NSAttributeString/NSAttributeString1.png"></p>
 <p>一个<code>UILabel</code>显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：</p>
 <p>必须在国际化完成以后才能追加我们的逻辑,而不是一上来就加属性字符串</p>
 <p>比如: <code>2分14秒</code> or <code>2min14secs</code></p>
@@ -221,7 +221,7 @@
 <h3 id="方案1-字符串range匹配">方案1: 字符串range匹配</h3>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 返回当前时间格式</span></span><br><span class="line"><span class="comment"> @return 返回组装好的字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</span><br><span class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</span><br><span class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</span><br><span class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</span><br><span class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></span><br><span class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</span><br><span class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</span><br><span class="line">    <span class="built_in">NSRange</span> minRange, secRange;</span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">9.0</span>, *)) &#123;</span><br><span class="line">        minRange = [localizedFormatString localizedStandardRangeOfString:minStr];</span><br><span class="line">        secRange = [localizedFormatString localizedStandardRangeOfString:secStr];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        minRange = [localizedFormatString rangeOfString:minStr];</span><br><span class="line">        secRange = [localizedFormatString rangeOfString:secStr];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</span><br><span class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;</span><br><span class="line">    [attributeStr addAttributes:timeAttrs range:minRange];</span><br><span class="line">    [attributeStr addAttributes:timeAttrs range:secRange];    </span><br><span class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>看下显示结果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/18f973e4bf79ada776e8bbe9fb845a66375100d1/20180615NSAttributeString/first_arrtributestring.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180615NSAttributeString/arrtributestring1.png"></p>
 <blockquote>
 <p>是不是看上去很好</p>
 </blockquote>
@@ -231,7 +231,7 @@
 <p>注意:<em>API平台区分</em></p>
 </blockquote>
 <p>但是这么实现有个Bug 当遇到同样字符串的时候就会匹配错位, 如图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ce8515d36cdf420cbe900bc3e4e73c3cfbda7ef6/20180615NSAttributeString/%08NSAttributeString_bug.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180615NSAttributeString/NSAttributeStringBug1.png"></p>
 <p>错误的原因显然大家都了解</p>
 <p>字符串 "0" 的range相同了,但就解决这个问题而言,简单判断一下range然后截取字符串向后跳跃length继续截取获取能实现,但这显然很啰嗦,万一有一天 你遇到的是 "<code>0小时0分12秒</code>"这种字符串那该如何写呢？</p>
 <p>是不是要递归的遍历一遍然后挨个取<code>Range</code> 做属性修改?</p>
@@ -243,7 +243,7 @@
 <h3 id="方案2-正则匹配">方案2: 正则匹配</h3>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 返回当前时间格式</span></span><br><span class="line"><span class="comment"> @return 返回组装好的字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">NSAttributedString</span> *)formattedCurrentTime:(<span class="built_in">NSTimeInterval</span>)timeInterval &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSUInteger</span> time = (<span class="built_in">NSUInteger</span>)timeInterval;</span><br><span class="line">    <span class="built_in">NSInteger</span> minutes = (time / <span class="number">60</span>) % <span class="number">60</span>;</span><br><span class="line">    <span class="built_in">NSInteger</span> seconds = time % <span class="number">60</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *minStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,minutes];</span><br><span class="line">    <span class="built_in">NSString</span> *secStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@" %zd "</span>,seconds];</span><br><span class="line">    <span class="comment">//假设这就是我们国际化后的字符串</span></span><br><span class="line">    <span class="built_in">NSString</span> *localizedFormatString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@分%@秒"</span>,minStr,secStr];</span><br><span class="line">    <span class="built_in">NSMutableAttributedString</span> *attributeStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:localizedFormatString];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *timeAttrs = @&#123; <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> redColor],</span><br><span class="line">                                 <span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">40.0</span>f]&#125;;    </span><br><span class="line">    <span class="comment">/** 方案2 **/</span></span><br><span class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line">    <span class="built_in">NSRegularExpression</span> *reg = [<span class="built_in">NSRegularExpression</span> regularExpressionWithPattern:<span class="string">@"[0-9]+"</span> options:<span class="built_in">NSRegularExpressionCaseInsensitive</span> error:&amp;error];</span><br><span class="line">    <span class="keyword">if</span> (error == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="built_in">NSArray</span> *matches = [reg matchesInString:localizedFormatString options:<span class="built_in">NSMatchingReportCompletion</span> range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, localizedFormatString.length)];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSTextCheckingResult</span> *match <span class="keyword">in</span> matches) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; match.numberOfRanges; i++) &#123;</span><br><span class="line">                <span class="built_in">NSRange</span> range = [match rangeAtIndex:i];</span><br><span class="line">                <span class="keyword">if</span> (range.location != <span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">                    [attributeStr addAttributes:timeAttrs range:range];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [[<span class="built_in">NSAttributedString</span> alloc] initWithAttributedString:attributeStr];;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>看下显示结果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/85f7a4f8f09e10c1603968555d86a0128c98696f/20180615NSAttributeString/second_attributestring.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180615NSAttributeString/attributestring2.png"></p>
 <p>完美实现</p>
 <blockquote>
 <p>这种方案缺点就是,时间复杂度高了一些,需要每次正则遍历 有点是扩展性好一点,万一有一天PM又提了需求要做成 <code>A1</code> <code>B2</code> <code>C3</code> <code>XXX#话题</code>这种，那一定会出坑</p>
@@ -338,7 +338,7 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2018/06/08/20180608SwiftRandom2/" title="Swift4.2中的随机数">Swift4.2中的随机数</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/06/08/20180608SwiftRandom/" title="Swift4.2中的随机数">Swift4.2中的随机数</a></h2>
                 <p class="excerpt">
                 
                 
@@ -354,7 +354,7 @@ Swift
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2018/06/08/20180608SwiftRandom2/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2018/06/08/20180608SwiftRandom/">继续阅读</a></div>
 
             </div>
         

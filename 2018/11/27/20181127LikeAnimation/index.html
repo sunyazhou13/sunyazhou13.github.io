@@ -193,7 +193,7 @@
   <section class="post">
     <h1 id="前言">前言</h1>
 <p>hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/76ba4614cb348633a74605650cb87898e5a28d56/20181127LikeAnimation/likeAnimation.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation1.gif"></p>
 <p>本篇文章主要包含技术点:</p>
 <ul>
 <li>CAShapeLayer和贝赛尔曲线绘制三角形</li>
@@ -202,15 +202,15 @@
 <p>我习惯写完文章的demo都附在文章底部,如果不想看原理的小伙伴可直接跳到底部找demo下载.</p>
 <h1 id="实现原理">实现原理</h1>
 <p>首先 我们来详细分解一下这个动画</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation2.gif"> &gt; 请仔细观察</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation2.gif"> &gt; 请仔细观察</p>
 <p>我们来看单独的一个动画</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3e284f04ea28b305a0cfe2c25618fcc71685ab21/20181127LikeAnimation/likeAnimation3.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation3.gif"></p>
 <blockquote>
 <p>请仔细观看 我设置10秒的duration 以便于大家能看清楚</p>
 </blockquote>
 <h2 id="实现原理-1">实现原理</h2>
 <p>从上述两张图中,我们可以看到 它是一个 三角形的贝塞尔曲线</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation4.png"></p>
 <p>这样的动画需要经过:</p>
 <ul>
 <li>2π (360°)旋转一周</li>
@@ -220,7 +220,7 @@
 </ul>
 <p>说了这么多 实际就是用<code>CABasicAnimation</code>的keypath是<code>path</code>和<code>CABasicAnimation</code>的<code>keypath</code>是<code>transform.scale</code>的动画组合在一起作用于一个三角形上,并且一共创建6个三角形图形.</p>
 <p>结束的时候大概是这样的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation5.gif"></p>
 <p>结束的时候实际上是一个从 上一次动画执行完成的path向 一条线上三个点的path过渡的过程,直到最后隐藏消失.</p>
 <p>好下面我们来实现一下这个动画</p>
 <blockquote>
@@ -243,7 +243,7 @@
 <p>下面 在<code>//...  1</code>的地方加入如下代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UIBezierPath</span> *startPath = [<span class="built_in">UIBezierPath</span> bezierPath];</span><br><span class="line">[startPath moveToPoint:<span class="built_in">CGPointMake</span>(<span class="number">-2</span>, -length)];</span><br><span class="line">[startPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">2</span>, -length)];</span><br><span class="line">[startPath addLineToPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, <span class="number">0</span>)];</span><br></pre></td></tr></table></figure>
 <p>这行代码加完就是这样的图形</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47fde336e6b929ef6163f87e248147d9ddf2354b/20181127LikeAnimation/likeAnimation4.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation4.png"></p>
 <p>然后创建完成我们需要把path给layer.path. 记得转成CGPath</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">layer.path = startPath.CGPath;</span><br><span class="line">layer.transform = <span class="built_in">CATransform3DMakeRotation</span>(M_PI / <span class="number">3.0</span>f * i, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">[<span class="keyword">self</span>.layer addSublayer:layer]</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -260,7 +260,7 @@
 <p>这几行代码的意识是 从我们上一个layer的path位置开始向我们结束位置的path过渡,并且注意开始时间<br>
 <code>pathAnim.beginTime</code>是 duration * 0.2也就是说 在上一个动画结束的时间点才开始结束过渡,过渡的时长剩余是duration * 0.8.这样两个连贯在一起的动画就执行完了,最后把动画加到动画组 天加给layer.</p>
 <p>下图是从开始到结束点过渡的动画.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8ad48f681be3c7d5bdb60eb3e8c5b3fbe15ec29f/20181127LikeAnimation/likeAnimation5.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20181127LikeAnimation/likeAnimation5.gif"></p>
 <p>剩余的工作就是做个普通的动画的 基本没什么了.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.35</span>f</span><br><span class="line">                      delay:<span class="number">0.0</span>f</span><br><span class="line">                    options:<span class="built_in">UIViewAnimationOptionCurveEaseIn</span></span><br><span class="line">                 animations:^&#123;</span><br><span class="line">                     <span class="keyword">self</span>.likeAfter.transform = <span class="built_in">CGAffineTransformScale</span>(<span class="built_in">CGAffineTransformMakeRotation</span>(-M_PI_4), <span class="number">0.1</span>f, <span class="number">0.1</span>f);</span><br><span class="line">                 &#125;</span><br><span class="line">                 completion:^(<span class="built_in">BOOL</span> finished) &#123;</span><br><span class="line">                     [<span class="keyword">self</span>.likeAfter setHidden:<span class="literal">YES</span>];</span><br><span class="line">                     <span class="keyword">self</span>.likeBefore.userInteractionEnabled = <span class="literal">YES</span>;</span><br><span class="line">                     <span class="keyword">self</span>.likeAfter.userInteractionEnabled = <span class="literal">YES</span>;</span><br><span class="line">                 &#125;];</span><br></pre></td></tr></table></figure>
 <h4 id="技巧">技巧</h4>

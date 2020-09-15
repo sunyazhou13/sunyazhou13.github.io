@@ -191,12 +191,12 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/5k-airplay.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180304LearningAVFoundationPlayingVideo/5kAirplay.jpg"></p>
 <h1 id="前言">前言</h1>
 <p>很久没有写Learning AV Foundation相关的文章了,言归正传 本篇介绍一下简单的视频播放</p>
 <p>了解视频播放之前我们来看戏<code>AVPlayer</code>需要的一些组件模型</p>
 <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/AVPlayer.png" alt="AVPlayer组件模型"><figcaption>AVPlayer组件模型</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180304LearningAVFoundationPlayingVideo/AVPlayer.png" alt="AVPlayer组件模型"><figcaption>AVPlayer组件模型</figcaption>
 </figure>
 <h2 id="avplayer">AVPlayer</h2>
 <p><code>AVPlayer</code>是一个用来播放基于基于时间的视听媒体的控制对象,支持播放:</p>
@@ -219,10 +219,10 @@
 <p><code>AVPlayerLayer</code>扩展了<code>Core Animation</code> 的<code>CALayer</code>类, 并通过框架显示视频内容到屏幕上. 我们知道Layer是不响应事件的.</p>
 <p>创建<code>AVPlayerLayer</code>需要实例化一个<code>AVPlayer</code>的对象，<code>AVPlayerLayer</code>有一个<code>videoGravity</code>属性可以设置三种类似填充模式的东西,用来拉扯和缩放的视频. 下面列举了16:9的视频置于4:3矩形范围来说明不同的<code>gravity</code>.</p>
 <p>如下图:</p>
-<p>__AVLayerVideoGravityResizeAspect__保持缩放比例 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/AVLayerVideoGravityResizeAspect.png"></p>
-<p>__AVLayerVideoGravityResizeAspectFill__填充 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/AVLayerVideoGravityResizeAspectFill.png"></p>
+<p>__AVLayerVideoGravityResizeAspect__保持缩放比例 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspect.png"></p>
+<p>__AVLayerVideoGravityResizeAspectFill__填充 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspectFill.png"></p>
 <p>__AVLayerVideoGravityResize__拉伸</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-Playing-Video/AVLayerVideoGravityResize.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResize.png"></p>
 <h2 id="avplayeritem">AVPlayerItem</h2>
 <p>我们需要使用<code>AVPlayer</code>播放<code>AVAsset</code>,前面我知道<code>AVAsset</code>元数据里面有<code>创建时间</code>、<code>元数据</code>和<code>时长</code>等信息.但是并没有媒体中特定位置的方法.</p>
 <p><strong>这是因为<code>AVAsset</code>模型只包含媒体资源的静态信息.这些不变的属性用来描述对象的静态信息.这就意味着仅使用<code>AVAsset</code>对象是不能实现播放功能的.如果播放我们需要使用<code>AVPlayerItem</code></strong></p>
@@ -353,7 +353,7 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305Computer-graphics-rendering-process/" title="计算机图形渲染的流程">计算机图形渲染的流程</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305ComputerGraphicsRenderingProcess/" title="计算机图形渲染的流程">计算机图形渲染的流程</a></h2>
                 <p class="excerpt">
                 
                 
@@ -367,7 +367,7 @@
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2018/03/05/20180305Computer-graphics-rendering-process/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2018/03/05/20180305ComputerGraphicsRenderingProcess/">继续阅读</a></div>
 
             </div>
         

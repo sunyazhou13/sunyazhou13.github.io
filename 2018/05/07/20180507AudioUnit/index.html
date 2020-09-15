@@ -191,13 +191,13 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180430AudioEffectImplement/au_host_app1.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/auHostApp.png"></p>
 <h1 id="前言">前言</h1>
 <p>声音的渲染在iOS平台上回直接使用<code>AudioUnit</code>的API来完成.用来实现一些类似<code>大叔</code>,<code>KTV</code>,<code>耳返等效果</code>....</p>
 <p>今天带领大家深入了解和学习一下这些音效.</p>
 <h2 id="实现ios变声的背景">实现iOS变声的背景</h2>
 <p>声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声.</p>
-<p>下图是AVAudioSession的工作流 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9818fa6853c32f92936661cfc06f25c87f07f64f/20180430AudioEffectImplement/ASPG_intro_2x.png"></p>
+<p>下图是AVAudioSession的工作流 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/ASPGIntro.png"></p>
 <p>大家常用的变声方案有很多:</p>
 <ol type="1">
 <li>FFMpeg提供内部效果器 eg:EQ均衡器<br>
@@ -215,23 +215,23 @@
 <li>需要图状的结构来处理音频. eg: 有点类似PC时代的主播经常用的一种叫KX 驱动.</li>
 </ul>
 <p>下图是KX 驱动连线图 windows平台</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/ce762c6a5f6eb1d09da7bde9c7ec773c42f2d663/20180430AudioEffectImplement/kx.jpeg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/kx.jpeg"></p>
 <h2 id="audiounit介绍">AudioUnit介绍</h2>
 <h4 id="ios层级架构图">iOS层级架构图</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180430AudioEffectImplement/iphone_os_audio_architecture_2x.png"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180430AudioEffectImplement/AboutAudioUnitHosting_2x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/iPhone0sAudioArchitecture.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/AboutAudioUnitHosting.png"></p>
 <blockquote>
 <p>声音的处理过程, 首先需要认识一下<code>AUGraph</code></p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/360b2677618e504462966e58d406d0a47a6e993d/20180430AudioEffectImplement/simple_au_chain_2x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/simpleAuChain.png"></p>
 <blockquote>
 <p><strong>audio processing graph</strong>: A representation of a signal chain comprising an interconnection of audio units. Also called an AUGraph or graph. Core Audio represents such an interconnected network as a software object of typeAUGraph. Audio processing graphs must end in an output unit. See also audio unit.<br>
 一种信号链的表示，包括音频单元的互连。也称为AUGraph或graph。Core Audio代表着这样一个相互连接的网络，它是一个<code>AUGraph</code>类型的对象。</p>
 </blockquote>
 <h4 id="audio-unit-结构图工作流">audio unit 结构图(工作流)</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7e99645383e5db4837567bd9ec35fe78588439f6/20180430AudioEffectImplement/au_architecture.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/auArchitecture.jpg"></p>
 <h4 id="audio-unit-构成图">Audio Unit 构成图</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0b99a7e821ed34b72dd684552394dda26c16cf2d/20180430AudioEffectImplement/audioUnitScopes_2x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/AudioUnitScopes.png"></p>
 <p>Unit 一般 分为 Element0 和 Element1</p>
 <p>下面我们举Remote I/O Unit为例:</p>
 <p>RemoteIO 这个Unit是和硬件IO相关的Unit，它分为输入端和输出端, 输入端一般指麦克风,输出端一般指扬声器.</p>
@@ -241,7 +241,7 @@
 图中Element 也叫 bus；<br>
 音频流从输入域（input scope）输入， 从输出域（output scope）输出 整个Render过程就是一次RenderCycle</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180430AudioEffectImplement/IO_unit_2x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/IOUnit.png"></p>
 <p><strong>同时每个Element分为Input Scope 和 Output Scope.如果我们想使用扬声器的声音播放功能,必须需将这个Unit的<code>Element0</code>的<code>OutputScope</code>和Speak进行连接. 如果想使用麦克风录音功能,那么必须将这个Unit的<code>Element1</code>的<code>InputScope</code>和麦克风进行连接.</strong></p>
 <h3 id="构建audio-unit">构建Audio Unit</h3>
 <p>首先需要启用音频会话 这些大家自己配置就好 了</p>
@@ -265,7 +265,7 @@
 注意:<strong><em>AUNode必须和AudioUnit成对出现</em></strong></p>
 </blockquote>
 <p>如下图 ：Remote I/O Unit</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/0b99a7e821ed34b72dd684552394dda26c16cf2d/20180430AudioEffectImplement/IO_unit_2x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/IOUnit.png"></p>
 <blockquote>
 <p>麦克风或者扬声器在Audio Unit中有相应的枚举.<br>
 直播中的<code>耳返</code>就是用的这个把麦克风采集的数据直接扔给扬声器 这样就能做到 低延迟的实时听到麦克风的声音.<br>
@@ -286,7 +286,7 @@
 <h4 id="avaudiomix">AVAudioMix</h4>
 <p>我们一般都在采集、录制或编辑音视频相应的类中使用AVAudioMixer.</p>
 <p>举个例子:我们变声实现的流程大概是这个样子 <strong>AVAudioPlayer -&gt; AVPlayerItem -&gt; AVAudioMixer-&gt; AUGraph -&gt; AUNode + AudioUnit</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/903e2fa4eb2daafcc3b187854edc69d1bad8b382/20180430AudioEffectImplement/AVAudioMix-class.001.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180507AudioUnit/AVAudioMixClass.png"></p>
 <h4 id="audiostreambasicdescription-配置麦克风输入的参数">AudioStreamBasicDescription 配置麦克风输入的参数</h4>
 <p>当我们控制Remote IO Unit的时候想告诉麦克风 各种input的参数 可以通过 一个叫ASBD 格式的结构体数据描述来设置给相应的Unit</p>
 <h5 id="audio-stream-format-描述asbd">Audio Stream Format 描述ASBD</h5>
