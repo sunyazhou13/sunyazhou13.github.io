@@ -191,22 +191,22 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/74173425cf3b36cfe3ca5895322534c073110e22/20190321UIScrollTextDemo/CALayer_proSwift_ru_hsuie-2.png"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/CAGradientCover.png"></p>
 <h1 id="前言">前言</h1>
 <p>很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图</p>
 <p>抖音如下<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/douyin_scroll_text.gif"></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo0.gif"></p>
 <p>系统的滚动字幕如下</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a8d850a7f752b71fa29b9f069baaeef2e14ecf7d/20190321UIScrollTextDemo/scrolltextdemo4.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo4.gif"></p>
 <p>本篇完成之后如下<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo5.gif"></p>
 <ul>
 <li>支持蒙版渐变模糊 可调节</li>
 <li>支持富文本字符串用于显示表情或者图片</li>
 </ul>
 <h1 id="开篇">开篇</h1>
 <p>整个实现比较简单 不超过 200行代码</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/bf6d749844033ba3b0c074559db978a18121f467/20190321UIScrollTextDemo/scrolltextdemo1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo1.gif"></p>
 <p>首先我们要用到两个CALayer</p>
 <ul>
 <li><code>CATextLayer</code> 用于展示文本</li>
@@ -242,7 +242,7 @@
 这两个点决定了渐变的方向</p>
 </blockquote>
 <p>我们可以把代码去掉运行看下不加蒙版的效果图 如下:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/6e4cfde36e70fcae28eea1be9ec30b45b2ff8889/20190321UIScrollTextDemo/scrolltextdemo2.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo2.gif"></p>
 <p>这里我用cyan颜色区域代表视图的大小,文本不加蒙版实际上超出显示范围的.</p>
 <blockquote>
 <p>注意: 动画不是这个layer自带,是我们自己加的代码,往下看 有代码</p>
@@ -250,7 +250,7 @@
 <p>代码<code>5</code>处代码 是给当前渐变layer加渐变颜色 实现蒙版模糊遮盖的效果</p>
 <p>代码<code>6</code>处 把对于的颜色的数组中给<code>gradientLayer.colors</code></p>
 <p>代码<code>7</code>处 对应 代码<code>6</code>处 配合使用,就做到了我们两边渐变遮盖的效果</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/31e8bdd5de62b4a84ed7be97154bb99f61abb8ab/20190321UIScrollTextDemo/scrolltextdemo3.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo3.gif"></p>
 <p>上图就是我们下面代码的效果,我们加了4个点</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">self</span>.gradientLayer.colors = @[transparent, opaque, opaque, transparent]; <span class="comment">// 6</span></span><br><span class="line"><span class="keyword">self</span>.gradientLayer.locations = @[@<span class="number">0</span>,@(<span class="keyword">self</span>.fade),@(<span class="number">1</span>-<span class="keyword">self</span>.fade),@<span class="number">1</span>]; <span class="comment">// 7</span></span><br></pre></td></tr></table></figure>
 <h4 id="更新layer布局">更新layer布局</h4>
@@ -290,7 +290,8 @@
 <p>因为改动对文本大小有影响</p>
 <p>文字的计算大小这里用的是 CoreText,支持多行和单行</p>
 <p>属性字符串也一样就不写在这里了. 详细代码demo我已经把它写到文章下方 大家自行加载学习即可</p>
-<p>最终效果 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/a3d901e656f38c50dd52ea42306cad6527f99739/20190321UIScrollTextDemo/me_scroll_text.gif"></p>
+<p>最终效果<br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190321UIScrollTextDemo/scrolltextdemo5.gif"></p>
 <h1 id="总结">总结</h1>
 <p>由于业余时间有限,没能1个月稳定更新2偏文章,请各位同仁理解,抖音系列动画需要先写demo然后仔细研究,最终才形成文章.制作不易,本篇也参考了开源代码和一些滚动字幕的库.由于演示的不完美,有些类还有可扩展空间,比如 开始动画和结束动画对外暴露接口,比如像系统那样的自然添加动画组. 本篇感谢开源作者<a href="https://github.com/sshiqiao/douyin-ios-objectc" target="_blank" rel="noopener">qiaoshi</a>,因为作者写的不是很完美我学习研究一下,增加了渐变效果和属性字符串得支持.</p>
 <p><a href="https://github.com/sunyazhou13/UIScrollTextDemo" target="_blank" rel="noopener">本篇demo</a></p>

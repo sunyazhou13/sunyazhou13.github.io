@@ -191,12 +191,12 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/b0103699818f9d0cf124236b1693aca4fae22bad/20190417AVRoutePickerView/cover_album.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190417AVRoutePickerView/cover_album.jpg"></p>
 <h1 id="前言">前言</h1>
 <p>最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个<code>AVRoutePickerView</code>的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/13eb2699ea561fa3020d4611f9464c4f02aa0c96/20190417AVRoutePickerView/RouteChange2.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190417AVRoutePickerView/RouteChange2.gif"></p>
 <p>这里网易云音乐中有实践的例子</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/13eb2699ea561fa3020d4611f9464c4f02aa0c96/20190417AVRoutePickerView/RouteChange1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190417AVRoutePickerView/RouteChange1.gif"></p>
 <p>这个控件主要用于AirPlay投屏 和音频的线路切换</p>
 <p>那么我今天就跟大家一起学习一下这个新的控件</p>
 <h2 id="代码实现">代码实现</h2>
@@ -205,11 +205,11 @@
 <p>这里用ViewController做示例</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()  &lt;<span class="title">AVRoutePickerViewDelegate</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</span><br><span class="line">        <span class="built_in">AVRoutePickerView</span> *routerPickerView = [[<span class="built_in">AVRoutePickerView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>)];</span><br><span class="line">        routerPickerView.activeTintColor = [<span class="built_in">UIColor</span> cyanColor];</span><br><span class="line">        routerPickerView.delegate = <span class="keyword">self</span>;</span><br><span class="line">        [<span class="keyword">self</span>.view addSubview:routerPickerView];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//AirPlay界面弹出时回调</span></span><br><span class="line">- (<span class="keyword">void</span>)routePickerViewWillBeginPresentingRoutes:(<span class="built_in">AVRoutePickerView</span> *)routePickerView API_AVAILABLE(ios(<span class="number">11.0</span>))&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Airplay视图弹出"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//AirPlay界面结束时回调</span></span><br><span class="line">- (<span class="keyword">void</span>)routePickerViewDidEndPresentingRoutes:(<span class="built_in">AVRoutePickerView</span> *)routePickerView API_AVAILABLE(ios(<span class="number">11.0</span>))&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Airplay视图弹回"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>添加完之后运行如下</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/526b8265245ebd6cd4c51c591720868eff8d2d60/20190417AVRoutePickerView/routechange3.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190417AVRoutePickerView/RouteChange3.gif"></p>
 <p><code>AVRoutePickerView</code>这个View提供的API 就两个颜色值剩下的啥都没有,啥都改不了,那怎么才能实现网易云音乐那样自定义图标呢？</p>
 <h5 id="添加自定义视图">添加自定义视图</h5>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UIImageView</span> *imageView = [[<span class="built_in">UIImageView</span> alloc] initWithFrame:routerPickerView.bounds];</span><br><span class="line">        imageView.image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"logo2"</span>];</span><br><span class="line">        [routerPickerView addSubview:imageView];</span><br></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/526b8265245ebd6cd4c51c591720868eff8d2d60/20190417AVRoutePickerView/routechange4.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190417AVRoutePickerView/RouteChange4.gif"></p>
 <p>自己加个图标即可.</p>
 <h1 id="总结">总结</h1>
 <p>此控件只适用于iOS11以后,使用的时候 记得加可用性检测API</p>
