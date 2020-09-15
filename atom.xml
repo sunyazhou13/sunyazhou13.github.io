@@ -2141,9 +2141,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/"/>
     <id>https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/</id>
     <published>2019-09-16T10:49:05.000Z</published>
-    <updated>2019-11-28T23:28:53.030Z</updated>
+    <updated>2020-09-15T02:24:31.017Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UITraitCollection/UITraitCollection1.png"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection1.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <h2 id="先说问题">先说问题</h2>
@@ -2154,7 +2154,7 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <p>Trait 特性 特点</p>
 </blockquote>
 <p>显然 这个类是一个UIKit中用于处理苹果手机的一些特性的储存与UI相关的配置, 大家有没有想过如果你在iOS修改通用中的某些系统设置,比如(下图) 对比度、全局字体大小,这个我们开发人员怎么处理.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UITraitCollection/UITraitCollection2.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection2.gif"></p>
 <p>这些系统的特性修改就放到这个<code>UITraitCollection</code>中,这个类也就是我们经常在VC和View中经常用到而大家往往容易忽略的,下面简单记录一下这些特性都有哪些</p>
 <h2 id="uitraitcollection-api介绍">UITraitCollection API介绍</h2>
 <h4 id="判断当前设备时-iphoneipadtvcarplay-的配置">判断当前设备时 iPhone/iPad/tv/carPlay 的配置</h4>
@@ -2200,7 +2200,8 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/47b603f535020f06f999ad34f5070646fdfd3562/20190916UIT
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection1.png&quot;&gt;&lt;/p&gt;
+&lt;h1 
     
     </summary>
     
