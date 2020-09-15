@@ -195,7 +195,7 @@
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <h2 id="背景">背景</h2>
 <p>iOS11之后推出的safeArea 用于处理刘海屏幕的问题.如果自己处理起来可能比较 麻烦 又需要判断 版本又需要判断 API的可用性. 清明假期 在家没事写个demo 解决如何更快捷处理屏幕的边界问题,比如 视图要布局在iOS导航栏底部 和 <code>Home Indicator</code>. 先看下图:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/860db64c317a7301635b39458f36a9b6c66e3b56/20200407MasonryTricks/SafeArea1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/SafeArea1.gif"></p>
 <p>如果使用更少的代码实现在安全区域内部 展示某个View.</p>
 <h2 id="代码实现">代码实现</h2>
 <p>这里我们借助Masonry最新库提供的支持API</p>
@@ -208,15 +208,15 @@
 <li><p>顶部区域</p>
 <ul>
 <li><p><code>mas_topLayoutGuide</code>和<code>mas_topLayoutGuideBottom</code>都是 顶到屏幕 刘海屏底部 也就是说和 safeAreaTop一样,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_topLayoutGuide%26mas_topLayoutGuideBottom.jpg"></p></li>
-<li><p><code>mas_topLayoutGuideTop</code> 顶到屏幕顶部(忽略刘海屏,也就是说被刘海盖住),如下图示: <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_topLayoutGuideTop.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_topLayoutGuide&amp;mas_topLayoutGuideBottom.jpg"></p></li>
+<li><p><code>mas_topLayoutGuideTop</code> 顶到屏幕顶部(忽略刘海屏,也就是说被刘海盖住),如下图示: <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_topLayoutGuideTop.jpg"></p></li>
 </ul></li>
 <li><p>底部区域</p>
 <ul>
 <li><p><code>mas_bottomLayoutGuide</code>和<code>mas_bottomLayoutGuideTop</code> 都是在<code>Home条</code>的上面 ,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_bottomLayoutGuide%26mas_bottomLayoutGuideTop.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_bottomLayoutGuide&amp;mas_bottomLayoutGuideTop.jpg"></p></li>
 <li><p><code>mas_bottomLayoutGuideBottom</code> 直接推底,撑到屏幕边缘,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_bottomLayoutGuideBottom.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_bottomLayoutGuideBottom.jpg"></p></li>
 </ul></li>
 </ol>
 <h4 id="如果想实现和safearea一样的搞法-可以这样写">如果想实现和safeArea一样的搞法 可以这样写</h4>
@@ -225,7 +225,7 @@
 <p>!!!注意 LayoutGuide 紧紧适用于<code>ios(7.0,11.0)</code>,也就是说11之后 必须使用safeArea才精准.</p>
 </blockquote>
 <p>附上一张搞完的效果图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/LayoutGuideFullsceen.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/LayoutGuideFullsceen.jpg"></p>
 <h1 id="总结">总结</h1>
 <p>借入Masory 可以更加方便快捷的实现我们想要的布局效果并且不用写宏区分是否是刘海屏或者其他屏幕,因为我们操控的实际上就是 安全区内部的范围. 没事得多关注开源代码时长写个demo实验一下.</p>
 <p>所以想实现上文中最佳实践的代码应该是</p>
@@ -394,20 +394,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

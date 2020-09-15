@@ -1291,13 +1291,13 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2020/04/07/20200407MasonryTricks/"/>
     <id>https://www.sunyazhou.com/2020/04/07/20200407MasonryTricks/</id>
     <published>2020-04-07T03:54:39.000Z</published>
-    <updated>2020-08-10T05:22:36.762Z</updated>
+    <updated>2020-09-15T00:55:47.497Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
 <h2 id="背景">背景</h2>
 <p>iOS11之后推出的safeArea 用于处理刘海屏幕的问题.如果自己处理起来可能比较 麻烦 又需要判断 版本又需要判断 API的可用性. 清明假期 在家没事写个demo 解决如何更快捷处理屏幕的边界问题,比如 视图要布局在iOS导航栏底部 和 <code>Home Indicator</code>. 先看下图:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/860db64c317a7301635b39458f36a9b6c66e3b56/20200407MasonryTricks/SafeArea1.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/SafeArea1.gif"></p>
 <p>如果使用更少的代码实现在安全区域内部 展示某个View.</p>
 <h2 id="代码实现">代码实现</h2>
 <p>这里我们借助Masonry最新库提供的支持API</p>
@@ -1310,15 +1310,15 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <li><p>顶部区域</p>
 <ul>
 <li><p><code>mas_topLayoutGuide</code>和<code>mas_topLayoutGuideBottom</code>都是 顶到屏幕 刘海屏底部 也就是说和 safeAreaTop一样,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_topLayoutGuide%26mas_topLayoutGuideBottom.jpg"></p></li>
-<li><p><code>mas_topLayoutGuideTop</code> 顶到屏幕顶部(忽略刘海屏,也就是说被刘海盖住),如下图示: <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_topLayoutGuideTop.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_topLayoutGuide&amp;mas_topLayoutGuideBottom.jpg"></p></li>
+<li><p><code>mas_topLayoutGuideTop</code> 顶到屏幕顶部(忽略刘海屏,也就是说被刘海盖住),如下图示: <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_topLayoutGuideTop.jpg"></p></li>
 </ul></li>
 <li><p>底部区域</p>
 <ul>
 <li><p><code>mas_bottomLayoutGuide</code>和<code>mas_bottomLayoutGuideTop</code> 都是在<code>Home条</code>的上面 ,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_bottomLayoutGuide%26mas_bottomLayoutGuideTop.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_bottomLayoutGuide&amp;mas_bottomLayoutGuideTop.jpg"></p></li>
 <li><p><code>mas_bottomLayoutGuideBottom</code> 直接推底,撑到屏幕边缘,如下图:<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/mas_bottomLayoutGuideBottom.jpg"></p></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/mas_bottomLayoutGuideBottom.jpg"></p></li>
 </ul></li>
 </ol>
 <h4 id="如果想实现和safearea一样的搞法-可以这样写">如果想实现和safeArea一样的搞法 可以这样写</h4>
@@ -1327,7 +1327,7 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <p>!!!注意 LayoutGuide 紧紧适用于<code>ios(7.0,11.0)</code>,也就是说11之后 必须使用safeArea才精准.</p>
 </blockquote>
 <p>附上一张搞完的效果图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/44fa37e778be1a3797877d78b49d443853997850/20200407MasonryTricks/LayoutGuideFullsceen.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200407MasonryTricks/LayoutGuideFullsceen.jpg"></p>
 <h1 id="总结">总结</h1>
 <p>借入Masory 可以更加方便快捷的实现我们想要的布局效果并且不用写宏区分是否是刘海屏或者其他屏幕,因为我们操控的实际上就是 安全区内部的范围. 没事得多关注开源代码时长写个demo实验一下.</p>
 <p>所以想实现上文中最佳实践的代码应该是</p>
@@ -1356,9 +1356,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2020/03/20/20200320NSURLProtocol/"/>
     <id>https://www.sunyazhou.com/2020/03/20/20200320NSURLProtocol/</id>
     <published>2020-03-20T03:34:22.000Z</published>
-    <updated>2020-08-10T05:22:36.762Z</updated>
+    <updated>2020-09-15T00:56:35.410Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5022b259e0b806548c58e2a098276c55a230927b/20200320NSURLProtocol/NSURLProtocol.png"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200320NSURLProtocol/NSURLProtocol.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文经由微信<code>知识小集</code>公众号授权并转载自<a href="https://blog.fiteen.top/2020/hijacking-webview-request-with-nsprotocol" target="_blank" rel="noopener">FiTeen博客</a>,如果版权问题请与我联系sunyazhou13@163.com.转载此文目的是为了记录iOS开发中的重要知识点,防止原文博客寻找起来麻烦.</p>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
@@ -1463,7 +1463,8 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5022b259e0b806548c58e2a098276c55a230927b/20200320NSU
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200320NSURLProtocol/NSURLProtocol.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;前
     
     </summary>
     
@@ -1533,9 +1534,9 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     <link href="https://www.sunyazhou.com/2019/12/31/20191231FinalSummary/"/>
     <id>https://www.sunyazhou.com/2019/12/31/20191231FinalSummary/</id>
     <published>2019-12-31T15:30:00.000Z</published>
-    <updated>2020-08-10T05:22:36.761Z</updated>
+    <updated>2020-09-15T01:50:25.076Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d028510cc28c9a7ca92f90b174d8a74886d6972f/20191231FinalSummary/2019T02020.JPG"></p>
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/AlanTuring.jpg"></p>
 <p>2019年 <a href="https://baike.baidu.com/item/%E8%89%BE%E4%BC%A6%C2%B7%E9%BA%A6%E5%B8%AD%E6%A3%AE%C2%B7%E5%9B%BE%E7%81%B5/3940576?fromtitle=%E9%98%BF%E5%85%B0%C2%B7%E5%9B%BE%E7%81%B5&amp;fromid=10961384" target="_blank" rel="noopener">阿兰图灵</a>(计算机的先驱缔造者)将出现在未来的50英镑纸币的封面,这将是计算机发展史上的里程碑,是他破解了德国的著名密码系统Enigma，帮助盟军取得了二战的胜利.没有他就没有今天的计算机.</p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
@@ -1563,7 +1564,7 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <h3 id="工作">工作</h3>
 <p>今年工作很稳定,一直在快手干活,只是从6月份开始被调整去做一个新的app<code>快手极速版</code>,目前来看还不错,由于去年我所在的直播团队获得了<code>业务突破奖</code>.公司发了<code>500w</code>的奖金,显然这没我们什么事,只是出去团建的档次或许能提高一下.</p>
 <p>今年有一件愉快的事情是我分享的一下AVAudioSesion相关文章,给个奖励,激励我不断学习专研技术.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/09a700e1b223e921f093b566785726229e501779/20191231FinalSummary/share1.jpg"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/09a700e1b223e921f093b566785726229e501779/20191231FinalSummary/share2.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/share1.jpg"> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/share2.jpg"></p>
 <blockquote>
 <p>感谢我手官方,如此关怀备至.</p>
 </blockquote>
@@ -1571,15 +1572,16 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <p>深处这个高风险高收益高失业率的行业上,连续2年以上不换工作已经太难了.这个行业几乎每天晚上12点睡觉早晨9点到公司. 这的确是拿生命来换钱,每次去理发店我都要求理发小哥先帮我剪一下白头发.如果你没做好心里准备的时候我不建议你选择IT行业,开发不是一件小事情,干到中年你就知道啥叫失业.</p>
 <p>从百度,金山再到快手,这几年的变化让我不断产生新的想法. <strong>快手是我在北京的最后一家公司,没有哪家能像它一样接地气.</strong></p>
 <p>就在我写这篇文章的时候,我参与开发的<code>快手极速版</code>已经登上了App Store top1.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/423a4b8b3463820e3920690fbbf23dc63047b6d2/20191231FinalSummary/nebula.PNG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/nebula.png"></p>
 <p>我2019年的年终OKR就是要把快手极速版送上App Store top1的宝座,今天实现了.</p>
 <h3 id="装修">装修</h3>
 <p>2019年初 开发商交房之后办理了入户手续,然后就开始准备着手装修.入户的时候心情很激动毕竟花了100w+ 的房子开发商没跑路,也没烂尾. 入户的时候需要缴纳各种费用 2w+多点吧.开发商被我们业主维权维的还算良心,免除供热费和其它零碎的费用小几千块钱. 但是 入户依赖各种问题 我就不说了 买房如果你有钱 就买别墅,没钱就买二手房,买新房除非你财富自由和时间经历都多,否则你会慢慢体会到什么叫<code>磨练灵魂</code>.</p>
 <p>装修是我女朋友父母帮忙全权搞的,全部都是自己家人做的,不能说多好,毕竟不专业,但是能用就行了 我就这标准. 全都下来 17w多吧</p>
 <p>下图是装完最后上理石包口的场景.<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3adb78775d8523d865ad81e6dcacbf454c329dd2/20191231FinalSummary/decoration1.gif"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/3adb78775d8523d865ad81e6dcacbf454c329dd2/20191231FinalSummary/decoration2.gif"></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/decoration1.gif"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/decoration2.gif"></p>
 <p>下面是装修完最后的一张图<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/32bc21b836597aa73a6df3a73fe83fad8f62a5ea/20191231FinalSummary/decoration3.gif"></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/decoration3.gif"></p>
 <p>具体的装修套路我大概了解一二供后续装修的各位参考:</p>
 <ol type="1">
 <li>规划设计</li>
@@ -1604,56 +1606,56 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <h3 id="日本之旅">日本之旅</h3>
 <p>今年五一以后,直播团队迎来了第一次团建,经过大家投票决定去日本,但是每个人需要自己补贴费用至少5000+以上,由于以前也经历过这样的事情,没有买房,所以当时也没敢报名,现在打算出去看看,长长见识.看看资本主义.</p>
 <p>北京首都国际机场直飞日本东京羽田机场</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/87463798662389a5dec4f05325bfbc0313b59351/20191231FinalSummary/japen_%20travel1.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel1.jpg"></p>
 <blockquote>
 <p>出乎我意料的是这飞机是沿着朝鲜和韩国的38线飞过去的.</p>
 </blockquote>
 <p>到达东京坐大巴,日本的车牌让我震惊了</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/973808483a92c483b4b00b2e5aaec0c0d982f421/20191231FinalSummary/japen_%20travel2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel2.png"></p>
 <p>简单几个数字就能代表一个车牌.</p>
 <p>上车后 我发现一下非常实用的设计 大巴的杯架</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/973808483a92c483b4b00b2e5aaec0c0d982f421/20191231FinalSummary/japen_%20travel4.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel4.gif"></p>
 <p>不说咱崇洋媚外,就说这玩意为啥国内公交车没有吧!这玩意又没技术含量,这么人性化设计简直太难得了.</p>
 <p>东京湾的港口以及工厂基本说明了,日本之所以发达的原因</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/973808483a92c483b4b00b2e5aaec0c0d982f421/20191231FinalSummary/japen_%20travel5.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel5.gif"></p>
 <p>日本属于英联邦国家,道路左侧通行,一辆辆卡车擦的锃亮.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e9aa2b743bd43068e7dd4140217e05529675b7ad/20191231FinalSummary/japen_%20travel6.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel6.png"></p>
 <p>右舵的司机位置, 我只听过 日本司机戴白手套,这回见到了. 我还见到了 这司机把相同颜色的行李箱分组摆放,这点真是不一样,方便色盲的游客快速找到自己的行李箱.</p>
 <p>去的第一个景点是<code>平和公园</code>,没有拍照可惜了,空气湿度很好. 从随处可见的蝴蝶就能看出来,环境不错.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/852277fd9fe0a318cf9dc2072f2c8720eb3c15c2/20191231FinalSummary/japen_%20travel7.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel7.gif"></p>
 <p>到达<code>山梨县</code>温泉酒店</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9ea2c61951771dcea97510a15922cd50e75b1c3c/20191231FinalSummary/japen_%20travel9.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel9.jpg"></p>
 <p>这个小县里的药妆店</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9ea2c61951771dcea97510a15922cd50e75b1c3c/20191231FinalSummary/japen_%20travel10.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel10.jpg"></p>
 <p>让我感到资本主义落后社会主义兴盛的唯一客观特征是<code>电线杆子</code>在日本随处可见.</p>
 <p>日本山梨县交警队</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9ea2c61951771dcea97510a15922cd50e75b1c3c/20191231FinalSummary/japen_%20travel8.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel8.jpg"></p>
 <p>日本的送餐摩托车</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7b795d3684d7da1f3666e96eb95a588ebbea69cc/20191231FinalSummary/japen_%20travel11.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel11.jpg"></p>
 <p>看这整齐的车队,比起国内的送餐车除了不环保以外,其实还是很板正的. 啥时候国内能这样整齐的配备送餐工具车那我的祖国基本已经进入了发达国家的行列.这种车在日本被成为<code>大脚摩托</code>.前面还是分体式独立悬挂设计.备箱至少能送超过20人的餐食吧,一箱油200公里. 简直就是发达国家的标配.</p>
 <p>日式温泉酒店</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/23490b54cef4341c2742ee0a0c2b5caee6fec836/20191231FinalSummary/japen_%20travel12.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel12.png"></p>
 <p>被子叠起来就桌子一放就能吃饭 ，省空间 省地方,是挺方便.</p>
 <p>第二天去富士山,富士山掠影</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel13.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel13.jpg"></p>
 <p>回来的路上,看到每家房前屋后都有几罐燃气.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel14.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel14.jpg"></p>
 <p>日本的居民用车<code>K-CAR</code> 它不能超过660cc排量.小到非常实用.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel15.jpg"></p>
-<p>忍者八海 清澈的池塘,让我不禁想起 毛爷爷的那句<code>鹰击长空鱼翔浅底</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/807005510016e905d6d70311ace578e775f13696/20191231FinalSummary/japen_%20travel20.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel15.jpg"></p>
+<p>忍野八海 清澈的池塘,让我不禁想起 毛爷爷的那句<strong>鹰击长空鱼翔浅底</strong></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel20.jpg"></p>
 <p>下午我们抵达东京 去 天皇皇居外面参观</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel16.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel16.jpg"></p>
 <blockquote>
 <p>他叫<a href="https://baike.baidu.com/item/%E6%A5%A0%E6%9C%A8%E6%AD%A3%E6%88%90" target="_blank" rel="noopener">楠木正成</a>,相当于日本的诸葛亮. 日本也有类似我们的三国时期被称为<a href="https://baike.baidu.com/item/%E6%A5%A0%E6%9C%A8%E6%AD%A3%E6%88%90" target="_blank" rel="noopener">战国时代</a>1467—1585年或1615年,也就是 丰臣秀吉、织田信长、德川家康 ,最后以德川幕府取得最终的胜利建立今天的日本天皇时代.</p>
 </blockquote>
 <p>行程的第三天我们自由行 来到的 日本东京繁华的接头<code>新宿</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/252a6cc1daf4a893079ccbb1d57219303603deb0/20191231FinalSummary/japen_%20travel19.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel19.jpg"></p>
 <p>日本的街头 人行横道原来是 横向 竖向 对角都可以.</p>
 <p>第三天我们自由行 晚上去了<code>六本目之丘</code>,俯瞰东京塔和繁华的东京夜景</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel18.JPG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel18.jpg"></p>
 <p>最后一天 去东京港 看一看 曾经日本在美国军舰密苏里号上签字宣布无条件投降的东京湾.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/00dd805e9aa0060ff59d2c9b1a08ff0a4e484653/20191231FinalSummary/japen_%20travel17.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/japen_travel17.jpg"></p>
 <p>由于篇幅较长 这里简短的介绍到这里.</p>
 <h4 id="总结日本之旅-建设好我的祖国">总结日本之旅-建设好我的祖国</h4>
 <p>去了一趟顿感深深的被资本主义教育了, 日本的街头鳞次栉比的房舍,整齐的送餐摩托,干净直饮的街头水龙头,污水沟的水清澈见底,房前屋后的清洁燃气,排量不超过 660cc的家用车,垃圾分类桶,东京湾水陆两栖的公交车,新宿街头横向对角的人行横道. 无论哪里都透漏出日本人环保和以实用为原则的生活原则. 非吾崇洋媚外,确实得师夷长技,尝想此处皆受灵魂之考问,我国尚处社会主义初级阶段,日本的移动网络建设不怎么好,互联网发展不如我们,移动支付不如我们,电动汽车不如我们,这些都是今天的日本需要像我们学习的.日本大多数人都认为中国的邓小平的改革开放没有错,这是一个『金钱至上』的社会,日本也一样.我相信在未来10~20年中国的一定能超过日本</p>
@@ -1681,20 +1683,20 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <h3 id="读书">读书</h3>
 <p>今天几乎没有太多时间读书了,看的最多的是迈腾维修说明书</p>
 <p>买了谭浩强最新出的C程序设计</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/1f69d474bf37f9e1f459c27b577dfafd1ac91f98/20191231FinalSummary/cprogram.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/cprogram.jpg"></p>
 <p>买了鸟哥最新出的linux</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/1f69d474bf37f9e1f459c27b577dfafd1ac91f98/20191231FinalSummary/LinuxNew.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/LinuxNew.png"></p>
 <p>这两本书基本陪我走过了一半的职业生涯,家里装修完了,这些书都要放到书架上珍藏起来. 据说最新版本的linux使用的已经不是centos6了,是centos7操作系统了.有时间把树莓派装上,感觉很棒.</p>
 <h3 id="买摩托车">买摩托车</h3>
 <p>2019年北京出了限制性政策,说不符合标准的电动车2年后禁止上路,于是我把我的小牛N1s卖了,换了一辆摩托车代步,为了摩托又现去海淀驾校增驾的摩托车.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7281803ede295c46f9391b9a4edea88ff3c6c61b/20191231FinalSummary/motocycle1.JPG"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7281803ede295c46f9391b9a4edea88ff3c6c61b/20191231FinalSummary/motocycle2.JPG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/motocycle1.jpg"> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/motocycle2.jpg"></p>
 <p>买个踏板就够用了, 这摩托叫 django 150(姜戈) ,是济南轻骑制造.目前安全骑行3000公里,没有任何问题,价格2w+.买车的时候正好赶上国家执行150cc以下排量的摩托车免税.这辆车希望能骑回哈尔滨.用以纪念北京工作的这几年.</p>
 <p>如果你对摩托车不了解可以下载个叫<code>哈罗摩托</code>的app看下 就了解了.</p>
 <p>为了增驾摩托车,又从科目一考到科目四,从报考到练车再到拿本用时11天.非常到位,不过夏天练摩托车是真热</p>
-<p>摩托车(2轮)科目二 练习</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7efe810fcf5b03e265f317c907534399a4759b6a/20191231FinalSummary/drivin_license_exam1.gif"></p>
-<p>摩托车(3轮)科目二 练习</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7efe810fcf5b03e265f317c907534399a4759b6a/20191231FinalSummary/drivin_license_exam2.gif"></p>
+<p>摩托车(2轮)科目二 练习<br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/drivin_license_exam1.gif"></p>
+<p>摩托车(3轮)科目二 练习<br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/drivin_license_exam2.gif"></p>
 <h5 id="摩托车考试流程">摩托车考试流程</h5>
 <ul>
 <li>科目一理论
@@ -1727,12 +1729,12 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 <p>摩托车科目二也不那么容易过,中途比如绕桩、单边桥只要脚点地就算不合格考试失败, 坡道起步最多停留30秒并且脚只允许点一次地面.</p>
 <h3 id="买汽车">买汽车</h3>
 <p>对于一个拿驾照2年多的我还从未尝试正经开过车,没有车练习怕以后用到的时候手足无措,今年没想到经过同学介绍碰到了一个合适的二手车,车况不错.于是坐飞机回去就买了.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7d88cc6e6c94fdfbfc3e3cbbb7497ebf6f26ac30/20191231FinalSummary/magotan1.JPG"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7d88cc6e6c94fdfbfc3e3cbbb7497ebf6f26ac30/20191231FinalSummary/magotan4.JPG"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7d88cc6e6c94fdfbfc3e3cbbb7497ebf6f26ac30/20191231FinalSummary/magotan3.JPG"> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7d88cc6e6c94fdfbfc3e3cbbb7497ebf6f26ac30/20191231FinalSummary/magotan2.JPG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan1.jpg"> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan2.jpg"> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan3.jpg"> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan4.jpg"></p>
 <p>他叫<code>迈腾</code>B7L,2013年12月左右出厂的第7代迈腾(目前最新出的是迈腾B8.5后边带字母)我接手前 这车实表跑了8w左右.全车4s店保养,没出过大毛病.迈腾2013豪华版2.0TSI,我以10.5w买下. 办理牌照和保险以及保养全部搞完11w左右.</p>
 <p>买到手第一件事加装倒车翻标摄像头,也就是大众车标翻盖伸出来一个摄像头用于倒车影像.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/1b9ef0188a8ca147a99d97b7e8f89c09246369dc/20191231FinalSummary/magotan5.JPG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan5.jpg"></p>
 <p>开到北京周末闲暇的时候洗洗车打打蜡跟新的一样.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/7d88cc6e6c94fdfbfc3e3cbbb7497ebf6f26ac30/20191231FinalSummary/magotan6.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/magotan6.jpg"></p>
 <p>说说买车的过程吧, 原车主一开始以为我不会买他的车也就没当回事,后来发现我连车都不看直接交易这个过程就有点认真了回去直接把全部证件都拿来了,下午4点办理完各种保险 第二天把车一顿保养,上100w的商保,开车回北京,期间感谢同学姚志强,一路办牌照压牌等等手续都板正的帮我整利索了,我这初中同学是在哈尔滨平房一个叫诚杰一汽大众4s店工作,所以在有人办事真快真方便.他在4s店我买车没理由不选择大众.原来的车主小伙送了我一套雪地胎很棒.</p>
 <p>这车买回来的一些小毛病</p>
 <ol type="1">
@@ -1941,7 +1943,8 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d028510cc28c9a7ca92f90b174d8a74886d6972f/20191231Fin
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191231FinalSummary/AlanTuring.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2019年 &lt;a href=
     
     </summary>
     
