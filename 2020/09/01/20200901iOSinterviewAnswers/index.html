@@ -218,8 +218,8 @@
 <p>通知是结构体通过双向链表进行数据存储</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation		*wildcard;	<span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable		nameless;	<span class="comment">/* 存储没有name但是有object的通知	*/</span></span><br><span class="line">  GSIMapTable		named;		<span class="comment">/* 存储带有name的通知，不管有没有object	*/</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span>	Obs &#123;</span><br><span class="line">  <span class="keyword">id</span>		observer;	<span class="comment">/* 观察者，接收通知的对象	*/</span></span><br><span class="line">  SEL		selector;	<span class="comment">/* 响应方法		*/</span></span><br><span class="line">  <span class="keyword">struct</span> Obs	*next;		<span class="comment">/* Next item in linked list.	*/</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
 <p>主要是以<code>key</code> <code>value</code>的形式存储,这里需要重点强调一下 通知以 <code>name</code>和<code>object</code>两个纬度来存储相关通知内容,也就是我们添加通知的时候传入的两个不同的方法.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"><br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200901iOSinterviewAnswers/NCTable.jpg"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
 <p>简单理解<code>name</code>&amp;<code>observer</code>&amp;<code>SEL</code>之间的关系就是<code>name</code>作为<code>key</code>, <code>observer</code>作为观察者对象,当合适时机触发就会调用<code>observer</code>的<code>SEL</code>.这基本很简单,如果觉得我说的不准确可以看下文章开头的文章.</p>
 <h2 id="通知的发送时同步的还是异步的">通知的发送时同步的，还是异步的</h2>
 <p>同步发送.因为要调用消息转发.所谓异步，指的是<strong>非实时发送</strong>而是<strong>在合适的时机发送</strong>，并没有开启异步线程.</p>
@@ -267,8 +267,8 @@
 <p>首先我们看下通知中心存储通知观察者的结构</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根容器，NSNotificationCenter持有</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> NCTbl &#123;</span><br><span class="line">  Observation  *wildcard;    <span class="comment">/* 链表结构，保存既没有name也没有object的通知 */</span></span><br><span class="line">  GSIMapTable nameless;    <span class="comment">/* 存储没有name但是有object的通知    */</span></span><br><span class="line">  GSIMapTable named;        <span class="comment">/* 存储带有name的通知，不管有没有object    */</span></span><br><span class="line">    ...</span><br><span class="line">&#125; NCTable;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Observation 存储观察者和响应结构体，基本的存储单元</span></span><br><span class="line"><span class="keyword">typedef</span>	<span class="keyword">struct</span> Obs &#123;</span><br><span class="line">  <span class="keyword">id</span> observer;    <span class="comment">/* 观察者，接收通知的对象    */</span></span><br><span class="line">  SEL selector;    <span class="comment">/* 响应方法        */</span></span><br><span class="line">  <span class="keyword">struct</span> Obs *next;        <span class="comment">/* Next item in linked list.    */</span></span><br><span class="line">  ...</span><br><span class="line">&#125; Observation;</span><br></pre></td></tr></table></figure>
 <p><code>nameless</code>与<code>named</code>的具体数据结构如下:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/95df395614efd30cfba1b045e4137af0dda5d928/20200901iOSinterviewAnswers/NCTable.jpg"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/d00277cc1650b9111047547e0807138df446f9ef/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200901iOSinterviewAnswers/NCTable.jpg"><br>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200901iOSinterviewAnswers/NCTable2.jpg"></p>
 <p>当添加通知监听的时候，我们传入了<code>name</code>和<code>object</code>，所以，观察者的存储链表是这样的：</p>
 <p><code>named</code>表：<code>key(name)</code> : <code>value</code>-&gt;<code>key(object)</code> : <code>value(Observation)</code></p>
 <p>因此在发送通知的时候，如果只传入<code>name</code>而并没有传入<code>object</code>，是找不到<code>Observation</code>的，也就不能执行观察者回调.</p>
@@ -437,20 +437,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

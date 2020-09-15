@@ -240,7 +240,7 @@
 <h5 id="sidetable">SideTable</h5>
 <p>SideTable就是一个结构体，内部主要有引用计数表和弱引用表两个成员，内存存储的其实都是对象的地址和引用计数和weak变量的地址，而不是对象本身的数据. &gt; 主要用于管理对象的引用计数和 weak 表.</p>
 <p>我们来看图</p>
-<p><img src="https://github.com/sunyazhou13/sunyazhou13.github.io-images/blob/a06ef43ee379ded750d059be868112c7f3769dad/20200722iOSinterviewAnswers/SideTableStructure.png?raw=true"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/SideTableStructure.png"></p>
 <blockquote>
 <p>操作系统维护64个SideTable，通过对象的地址位置hash之后模64(就是%64求余数)找到指定的SideTable 每个SideTable维护了一个RefcountMap的引用计数表，key就是对象地址，value就是此对象的引用计数</p>
 </blockquote>
@@ -352,7 +352,7 @@
 <p>示例代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> new];</span><br><span class="line">        objc_setAssociatedObject(obj, <span class="keyword">@selector</span>(hello), <span class="string">@"Hello"</span>, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个调用函数<code>objc_setAssociatedObject(OBJC_ASSOCIATION_RETAIN_NONATOMIC, @"Hello")</code>在内存中是这样的存储结构</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/5b953093c9952792b56acc976a0de7fd128451b7/20200722iOSinterviewAnswers/AssociationOrder.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/AssociationOrder.png"></p>
 <h5 id="objc_setassociatedobject"><code>objc_setAssociatedObject()</code></h5>
 <p>我们回头来详细分解一下<code>objc_setAssociatedObject()</code>函数中的真实实现部分,<code>_object_set_associative_reference()</code></p>
 <p>这个函数需要传入<code>(id object, const void *key, id value, uintptr_t policy)</code>,这么几个参数,我们拿第3个<code>value</code>参数来分解.</p>
@@ -366,7 +366,7 @@
 <h5 id="objc_setassociatedobject函数的作用是什么"><code>objc_setAssociatedObject()</code>函数的作用是什么?</h5>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">objc_object::setHasAssociatedObjects()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (isTaggedPointer()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line"> retry:</span><br><span class="line">    <span class="keyword">isa_t</span> oldisa = LoadExclusive(&amp;isa.bits);</span><br><span class="line">    <span class="keyword">isa_t</span> newisa = oldisa;</span><br><span class="line">    <span class="keyword">if</span> (!newisa.nonpointer  ||  newisa.has_assoc) &#123;</span><br><span class="line">        ClearExclusive(&amp;isa.bits);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    newisa.has_assoc = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (!StoreExclusive(&amp;isa.bits, oldisa.bits, newisa.bits)) <span class="keyword">goto</span> retry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>它会将<code>isa</code>结构体中的标记位<code>has_assoc</code>标记为<code>true</code>，也就是表示当前对象有关联对象，如下图<code>isa</code>中的各个标记位都是干什么的.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/aa6f2dd59253613f71e66dfa3e7627a6e168f6fa/20200722iOSinterviewAnswers/isa.jpg"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/isa.jpg"></p>
 <h5 id="objc_getassociatedobject"><code>objc_getAssociatedObject()</code></h5>
 <p>这个函数的调用栈如下</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">id objc_getAssociatedObject(id object, const void *key)</span><br><span class="line">└── id _object_get_associative_reference(id object, const void *key);</span><br></pre></td></tr></table></figure>
@@ -435,7 +435,7 @@
 <p>这俩函数都是对<code>AutoreleasePoolPage</code>的封装,自动释放机制的核心就是这个类</p>
 <h3 id="autoreleasepoolpage"><code>AutoreleasePoolPage</code></h3>
 <p><code>AutoreleasePoolPage</code>是个C++的类</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9b2bae4b681c8dc3286c9be9c46c896bfccf0748/20200722iOSinterviewAnswers/autoreleasepoolpage.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/autoreleasepoolpage.png"></p>
 <ul>
 <li><strong>AutoreleasePool</strong>并没有单独的结构,而是由若干个<code>AutoreleasePoolPage</code>以<code>双向链表</code>的形式组合成的,根据上图可以看出,这个双向链表有<code>前驱parent</code>和<code>后继child</code>.</li>
 <li><strong>AutoreleasePool</strong>是按<code>线程</code>一一对应的(thread 成员变量)</li>
@@ -457,13 +457,13 @@
 <li><code>COUNT</code> 一个page里对象数</li>
 </ul>
 <p>下面看下工作机制图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e55ee99f223e2e14b55bac7b1b453562a16cdd9a/20200722iOSinterviewAnswers/autoreleasepoolworkflow.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/autoreleasepoolworkflow.gif"></p>
 <blockquote>
 <p>这张图来自快手同事 周学运,如果大佬看到这张图的话希望能允许授权给我使用哈.</p>
 </blockquote>
 <p>根据上面的示意图我们大概明白, <code>AutoreleasePoolPage</code>是以栈的形式存在,并且内部对象通过进栈出栈来对应着<code>objc_autoreleasePoolPush</code>和<code>objc_autoreleasePoolPop</code></p>
 <p>如果嵌套AutoreleasePool 就是通过<code>哨兵对象</code>来标识,每次更新链表的next和<code>前驱``后继</code>来完成表的创建销毁.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/f58f08e831c6ee2e73417235549a7a41845c877b/20200722iOSinterviewAnswers/autoreleasepoolpage1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200808iOSinterviewAnswers/autoreleasepoolpage1.png"></p>
 <p>当我们对一个对象发送一条<code>autorelease</code>消息的时候实际上就是将这个对象加入到当前<code>AutoreleasePoolPage</code>的栈顶<code>next</code>指针指向的位置</p>
 <blockquote>
 <p>这里只拿了一张page举例.</p>
@@ -738,20 +738,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
