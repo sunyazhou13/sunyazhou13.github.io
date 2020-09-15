@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2018/01/12/20180112AVAudioSession-Category/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2018/01/12/20180112AVAudioSessionCategory/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20180112AVAudioSession-Category/ASPG_intro_2x.png" alt="AVAudioSession"> # 前言</p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180112AVAudioSessionCategory/ASPGIntro.png" alt="AVAudioSession"> # 前言</p>
 <p>2018新年第一篇, 梳理<code>AVAudioSession</code>的<code>Category</code>,解决音频开发中的各种播放被打断或者首次启动时无声音的问题</p>
 <h2 id="开篇">开篇</h2>
 <p>由于<code>iOS</code>系统的特殊性,所有<code>App</code>共用一个<code>AVAudioSession</code>所以这个会话是个单例对象.(<code>macOS</code>是支持同时播放多路音频文件)</p>
@@ -505,7 +505,7 @@
 <h3 id="外设改变">外设改变</h3>
 <p>除了其他<code>App</code>和系统服务，会对我们的<code>App</code>产生影响以外，用户的手也会对我们产生影响。默认情况下，<code>AudioSession</code>会在<code>App</code>启动时选择一个最优的输出方案，比如插入耳机的时候，就用耳机。但是这个过程中，用户可能拔出耳机，我们App要如何感知这样的情况呢？</p>
 <p>同样<code>AVAudioSession</code>也是通过<code>Notifications</code>来进行此类状况的通知。</p>
-<p>假设有这样的App <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/9d2068989e1b3da5c3b2afaa85fd24d07010cceb/20180112AVAudioSession-Category/route_change.png"></p>
+<p>假设有这样的App <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20180112AVAudioSessionCategory/RouteChange.png"></p>
 <p>最开始在录音时，用户插入和拔出耳机我们都停止录音，这里通过<code>Notification</code>来通知有新设备了，或者设备被退出了，然后我们控制停止录音。或者在播放时，当耳机被拔出出时，<code>Notification</code>给了通知，我们先暂停音乐播放，待耳机插回时，在继续播放。</p>
 <p>在<code>NSNotificationCenter</code>中对<code>AVAudioSessionRouteChangeNotification</code>进行注册。在其<code>userInfo</code>中有键：</p>
 <ul>
