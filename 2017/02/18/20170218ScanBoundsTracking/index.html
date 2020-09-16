@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越</title>
+    <title>iOS如何让二维码/条形码扫描框跟随二维码移动 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
+    <meta name="twitter:title" content="iOS如何让二维码/条形码扫描框跟随二维码移动 | 東引甌越">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
+    <meta property="og:title" content="iOS如何让二维码/条形码扫描框跟随二维码移动 | 東引甌越">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/03/29/20170329AccessPrivacySensitiveDataPrivateAccessPermission/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/02/18/20170218ScanBoundsTracking/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,28 +181,54 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
+      <time datetime="2017-02-18T11:08:56.000Z" class="post-list__meta--date date">2017-02-18</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
 
 </span>
     </div>
-    <h1 class="post-title">隐私及敏感数据访问权限(Access privacy-sensitive data)</h1>
+    <h1 class="post-title">iOS如何让二维码/条形码扫描框跟随二维码移动</h1>
   </header>
 
   <section class="post">
-    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
-<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
-<p>私有数据的框架列表可是个不小的东西:<br>
-&gt; 通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
-<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="noopener">这个大神</a></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍照捕捉视频内容,及拍摄短视频时访问相机&lt;/string&gt;</span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍摄短视频时访问麦克风收录视频声音&lt;/string&gt;</span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br></pre></td></tr></table></figure>
-<p>以上是常用的并且通过 App Store 审核的文本</p>
-<p>下面是方便调试使用的隐私文案提醒</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo album use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location --&gt;</span><br><span class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location When In Use --&gt;</span><br><span class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location Always --&gt;</span><br><span class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📆 Calendars --&gt;</span><br><span class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ⏰ Reminders --&gt;</span><br><span class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📒 Contacts --&gt;</span><br><span class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏊 Motion --&gt;</span><br><span class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Update --&gt;</span><br><span class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Share --&gt;</span><br><span class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</span><br><span class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎵 Media Library --&gt;</span><br><span class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📱 Siri --&gt;</span><br><span class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏡 HomeKit --&gt;</span><br><span class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📻 SpeechRecognition --&gt;</span><br><span class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📺 VideoSubscriber --&gt;</span><br><span class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📟 NFC reader iOS11  --&gt;</span><br><span class="line">&lt;key&gt;NFCReaderUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) use the device’s NFC reader&lt;/string&gt;</span><br></pre></td></tr></table></figure>
+    <h2 id="前言">前言</h2>
 <blockquote>
-<p>注意:<em>上线前务必换成友好的提醒文案.</em></p>
+<p>开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题 如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？</p>
 </blockquote>
+<p><img src="http://www.appcoda.com/wp-content/uploads/2016/11/qrcode-reader-5-1024x637.jpg"></p>
+<p>这里有一篇文字讲述了开发过程我这里就不赘述了, 如果有小伙伴觉得需要我翻译的话请在底部留言 我会及时更新代码<br>
+&gt; <a href="http://www.appcoda.com/barcode-reader-swift/" target="_blank" rel="noopener">Building a Barcode and QR Code Reader in Swift 3 and Xcode 8</a></p>
+<p><em>这里比较核心的代码如下</em> <code>AVCaptureMetadataOutputObjectsDelegate</code>代理</p>
+<pre class="swift"><code>
+func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {  
+    
+    // Check if the metadataObjects array is not nil and it contains at least one object.
+    if metadataObjects == nil || metadataObjects.count == 0 {
+        qrCodeFrameView?.frame = CGRect.zero
+        messageLabel.text = &quot;No QR code is detected&quot;
+        return
+    }
+    
+    // Get the metadata object.
+    let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+    
+    if metadataObj.type == AVMetadataObjectTypeQRCode {
+        // If the found metadata is equal to the QR code metadata then update the status label&#39;s text and set the bounds
+        let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
+        //核心代码在这
+        qrCodeFrameView?.frame = barCodeObject!.bounds
+        
+        if metadataObj.stringValue != nil {
+            messageLabel.text = metadataObj.stringValue
+        }
+    }
+}}
+    </code></pre>
+<p><code>qrCodeFrameView?.frame = barCodeObject!.bounds</code> 这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 <strong><a href="https://github.com/sunyazhou13/QRCodeReader" target="_blank" rel="noopener">最终项目</a></strong></p>
+<figure>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170218ScanBoundsTracking/ScanBoundsTracking.gif" alt="QRCode 跟踪"><figcaption>QRCode 跟踪</figcaption>
+</figure>
+<p>全文完</p>
 
   </section>
 
@@ -254,34 +280,22 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/06/20170406XcodeShortcuts/" title="Xcode快捷键">Xcode快捷键</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/20/20170220ClearNSUserDefaultCcontent/" title="使用终端删除NSUserDefault的内容">使用终端删除NSUserDefault的内容</a></h2>
                 <p class="excerpt">
                 
-                
-shortcuts
+                前言
 
-前言 在iOS和macOS开发者中积累了一些快捷操作记录下来
-隐藏左侧面板
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息
 
-
-command+0=显示/隐藏左侧面板
-
-隐藏右侧面板
-
-
-command+option+0=显示/隐藏右侧面板
-
-隐藏debug区域
-
-
-command+shift+y=显示/隐藏底部控制等调试
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults d
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
+                <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/04/06/20170406XcodeShortcuts/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/02/20/20170220ClearNSUserDefaultCcontent/">继续阅读</a></div>
 
             </div>
         
@@ -289,20 +303,18 @@ command+shift+y=显示/隐藏底部控制等调试
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/" title="Learning AV Foundation(三)AVAudioRecorder">Learning AV Foundation(三)AVAudioRecorder</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/17/20170217iOSInternationalizationLanguageSkills/" title="iOS语言本地化/国际化一些技巧">iOS语言本地化/国际化一些技巧</a></h2>
                 <p class="excerpt">
                 
-                
-前言
-在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
-主要内
+                代码获取国际化语言数组
+获取当前app使用的语言 NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@&quot;AppleLanguages&quot;];NSString *language1 = langArr1.firs
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
+                <div class="post-list__meta"><time datetime="2017-02-17T02:01:19.000Z" class="post-list__meta--date date">2017-02-17</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/02/17/20170217iOSInternationalizationLanguageSkills/">继续阅读</a></div>
 
             </div>
         
@@ -324,7 +336,7 @@ command+shift+y=显示/隐藏底部控制等调试
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Wed Mar 29 2017 10:54:40 GMT+0800',
+      id: 'Sat Feb 18 2017 19:08:56 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 

@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/stock-photo-167171895.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170420UniqueFilenameInSystem/StockPhoto.jpg"></p>
 <h2 id="前言">前言</h2>
 <p>当我无数次看到大家写代码的时候总是以一个<code>时间戳+arc4random()</code>创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.</p>
 <pre class="objc"><code>/* Create a recording file */
@@ -210,9 +210,9 @@
         remove(screenRecordingFileName);
         free(screenRecordingFileName);
     }</code></pre>
-<p>使用前 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-01.png"></p>
-<p>过程中 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-23.png"></p>
-<p>完成之后 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/unique-filename-in-system/MacHi%202017-04-20%2016-55-56.png"></p>
+<p>使用前 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170420UniqueFilenameInSystem/before.png"></p>
+<p>过程中 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170420UniqueFilenameInSystem/after.png"></p>
+<p>完成之后 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170420UniqueFilenameInSystem/done.png"></p>
 <p><em><strong>切记文件后缀需要 加上 <code>XXXXXX</code></strong></em> 几个<code>X</code>就代表几位<code>数字+字母</code>混合 <em>注意</em>:最好是6个X或者6个以上 <a href="http://man7.org/linux/man-pages/man3/mkstemp.3.html" target="_blank" rel="noopener">参考Linux</a></p>
 <p>主要的是要明白下面这两个函数</p>
 <p><a href="http://baike.baidu.com/item/strdup/5522525" target="_blank" rel="noopener">strdup()用于c语言中常用的一种字符串拷贝</a></p>

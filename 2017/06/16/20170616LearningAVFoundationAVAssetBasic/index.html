@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2009-18-10.png"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.png"></p>
 <h1 id="前言">前言</h1>
 <p>本篇讲述的<code>AVAsset</code>元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年.... 等这些数据的来源). 当然这种意义上的字段信息 属于<code>AVAsset</code>的一个属性。<code>AV Foundation</code>通过<code>AVAsset</code>封装来处理各种音频的元数据, __比如从mp3文件中解析出来封面图(artwork)__等。 本章的具体内容如下:</p>
 <h3 id="理解资源含义"><strong>理解资源含义</strong></h3>
@@ -243,7 +243,7 @@
 <p>这意味着无论是处理<code>Quick Time</code>影片、<code>MPEG-4</code>视频还是<code>MP3</code>音频，框架提供统一的接口，我们只需要理解只有资源这个概念。这样做的目的是为了__开发者在面对不同格式的内容时有一个统一的处理方法。不需要care多种编码器和容器格式因为细节不同而带来的困扰__. 当然获取这些其余信息可以通过其它方式实现. <code>AVAsset</code>还隐藏了资源位置(GPS定位)信息,当处理一个媒体对象时，通过URL来初始化init. URL可以是Bundle里面 也可以是沙盒的本地文件系统URL.也可以从iPod库中取到的URL。还可以是远程服务器的音频流或视频流的URL。</p>
 <p><code>AVAsset</code>属于低耦合组件方式的封装 让框架来处理那些繁重的工作, 我们就可以很方便的不用考虑文件位置的前提下获取或者载入媒体。由于不用care文件合适和文件位置等复杂的问题。<code>AVAsset</code>为开发者处理<code>timed media(时基媒体)</code>提供了一种简单统一的方式.</p>
 <p><code>AVAsset</code>本身不是媒体资源. 可以把它理解成承载<code>timed media(时基媒体)</code>的容器类。它有很多描述自身元数据的媒体组成. <code>AVAssetTrack</code>才是我们真正存储媒体资源的统一媒体类型。并对每个资源建立相应的model. <code>AVAssetTrack</code>最常见的形式就是 音频流和视频流, 但是他还可以用于表示诸如__文本__、<strong>副标题</strong>、__隐藏字幕__等媒体类型. 如下示意图理解<code>AVAsset</code> 和 <code>AVAssetTrack</code></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/MacHi%202017-04-14%2011-44-16.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/AVAssetTrack.png"></p>
 <p><em><strong><code>AVAsset.tracks</code></strong></em> 如下</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">AVAssetTrack</span> *&gt; *tracks;</span><br></pre></td></tr></table></figure>
 <p>资源曲目可通过tracks属性访问到. 该属性返回一个NSArray的数组,这个数组中的元素就是专辑包含的所有曲目. 此外，<code>AVAsset</code>还可以通过标识符、媒体类型或媒体特征等信息找到相应的曲目.这使得在未来更高级的处理中我们可以很容易获取一组需要的曲目</p>
@@ -288,11 +288,11 @@
 <p>虽然存在多种格式的媒体资源,但是我们在Apple环境下遇到的媒体类型主要有4种, 分别是:<code>QuickTime(mov)</code>、<code>MPEG-4 video(mp4和m4v)</code>、<code>MPEG-4 audio(m4a)</code>和<code>MPEG-Layer Ⅲ audio(mp3)</code>. 虽然<code>AV Foundation</code>处理这些文件中嵌入的元数据时都使用一个接口, 但是理解这些不同类型资源的元数据如何存储及存储位置仍然很有价值. 这里只做概述, 但是如果深入研究这些都是必学的基础.</p>
 <ol type="1">
 <li><p><strong>QuickTime</strong> <code>QuickTime</code>是苹果自己开发的一种跨平台媒体架构, 其中一部分是Quick File Format规范, 定义了 .mov文件的内部结构.<code>QuickTime</code>文件由一种称为<code>atom</code>的数据结构组成. 一般规则是这样的: 一个<code>atom</code>包含了描述媒体资源的某一方面的数据, 或者嵌套包含其它<code>atom</code>,但不能两者都包含.有时候苹果自己的方法实现可能会违背这一规则.<code>atom</code>以一种复杂的树状结构组合在一起, 详细的对布局、音频样本格式、视频帧信息乃至需要呈现的元数据信息(作者,版权等)做了描述.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/atom.jpg"> <em>为了能记住<code>atom</code>我把它戏称为<code>阿童木</code>哈哈-跟阿童木压根没啥关系</em>.</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/atom.jpg"> <em>为了能记住<code>atom</code>我把它戏称为<code>阿童木</code>哈哈-跟阿童木压根没啥关系</em>.</p>
 <p>了解<code>QuickTime</code>的一个好办法是用十六进制编辑器中打开一个.mov格式的文件.(常见的十六进制编辑器有Hex Fiend或Synalyze It! Pro).典型的十六进制工具会将一个真实的<code>QuickTime</code>文件的数据显示出来,但其中的结构和<code>atom</code>间的关系不是很直观能理解,推荐苹果有一个<code>Atom Inspector</code>工具.这个工具将atom结构以<code>NSOutlineView</code>(树形UI控件类似UITableView)方式显示.所以<code>atom</code>的树形瓜西会很清晰的看到,这个工具还提供一个小型的十六进制查看器,可以从中查看到__实际字节布局__.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/atom_inspector.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/AtomInspector.png"></p>
 <p>下载地址:<a href="http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg" target="_blank" rel="noopener">Atom Inspector 猛击这里</a> 貌似需要登录开发者帐号 下载中心:<a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">苹果官方软件下载中心</a> 貌似需要登录开发者帐号</p>
-<p>下图就是atom格式 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/quick_time_atom_structure_new.jpeg"></p>
+<p>下图就是atom格式 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureNew.jpeg"></p>
 <p><em>atom格式</em></p>
 <p><strong><code>QuickTime</code>文件最少包含三个高级的<code>atom</code></strong></p>
 <ul>
@@ -300,14 +300,14 @@
 <li><strong>包含实际音频和视频媒体的<code>mdat</code></strong></li>
 <li><strong>moov atom(moo-vee) 媒体资源的所有细节做了完整描述包括原始的二进制数据</strong></li>
 </ul>
-<p>下图是我实际测试一个mov文件的atom <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/quick_time_atom_structure_real.jpeg"> <em>实测</em></p>
+<p>下图是我实际测试一个mov文件的atom <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureReal.jpeg"> <em>实测</em></p>
 <p>当处理QuickTime电影时会遇到两种类型的元数据. 标准的<code>QuickTime</code>元数据由<code>Final Cut Pro X</code>这样的工具编写, 位于/moov/meta/plist中, 它的key几乎都具有com.apple.quicktime前缀. 其它类型的数据被认为是<code>QuickTime</code>用户数据, 保存在/moov/udta/中.<code>QuickTime</code>用户数据可以包含播放器需要查找的标准数据,eg: 歌曲的演唱者或版权信息, 除此之外还可以包含任何对应用程序有帮助的信息. 上述两种元数据类型在 <code>AV Foundation</code>中都是可以读写的.<br>
 如果想了解更多<code>QuickTime</code>细节可以查看<a href="https://developer.apple.com/library/content/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html" target="_blank" rel="noopener">Quick Time Format Specification</a>官方文档(400多页).<br>
 掌握moov atom的核心知识很重要,有助于我们更好的了解<code>AV Foundation</code>是如何使用这些数据的.</p></li>
 <li><p><strong>MPEG-4 (MP4)音频和视频</strong></p>
 <p>MPEG-4 Part 14是定义MP4文件格式的规范. <code>MP4</code>直接派生自<code>QuickTime</code>文件格式,所以<code>MP4</code>文件格式与<code>QuickTime</code>文件结构很类似. 其实有时候能解析一种文件类型的工具也适用于其它文件类型.<code>MP4</code>文件也由成为<code>atom</code>的数据结构组成.技术上讲,<code>MPEG-4</code>规范将这些称为<code>boxes</code>,因为其大部分来自于<code>QuickTime</code>所以大家都还是把它成为<code>atom</code>.<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/mp4_atom_book.jpg"> <em>MPEG-4 atom结构</em></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/mp4_atom.png"> <em>MPEG-4 atom结构 实测结果</em></p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/mp4AtomBook.jpg"> <em>MPEG-4 atom结构</em></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/mp4Atom.png"> <em>MPEG-4 atom结构 实测结果</em></p>
 <p><code>MPEG-4</code>文件的元数据保存在<code>/moov/udat/meta/ilst</code>中. 对于<code>atom</code>中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考<a href="https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki" target="_blank" rel="noopener">mp4v2库</a>文档了解更多mp4内容.</p>
 <p><code>mp4</code>是对MPEG-4媒体的标准扩展.eg: <code>.m4v</code>、<code>.m4a</code>、<code>.m4p</code>、<code>.m4b</code>.这些变体使用的都是<code>MPEG-4</code>容器格式,也有些包含了附加的扩展功能.<br>
 大家只需要记住几点:</p>
@@ -320,11 +320,11 @@
 </ul></li>
 <li><p><strong>MP3</strong></p>
 <p><code>MP3</code>文件和<code>MPEG-4 (.mp4)</code>、<code>QuickTime(.mov)</code>有显著区别,<code>MP3</code>不使用容器格式,而使用__编码音频数据__,文件开头通常包含可选元数据的结构块.<code>mp3</code>文件使用一种称为ID3v2的格式来保存关于音频内容的描述信息,包含: artist(艺术家)、演唱者、album(所属专辑)、音乐风格等.<br>
-<code>ID3</code>数据很easy,<code>mp3</code>前10个字节带有嵌入的元数据, 这10个字节定义了<code>ID3</code>块的头部.10个字节中的前三个字节始终为'49 44 33'(ID3,用于表示一个<code>ID3v2标签</code>,后面两个字姐用于定义主版本信息,既<code>2、3、4</code>和版本号.剩余字节用于定义标志集合及ID3快的大小. <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/ID3_header.png"> <em>ID3 header</em></p>
+<code>ID3</code>数据很easy,<code>mp3</code>前10个字节带有嵌入的元数据, 这10个字节定义了<code>ID3</code>块的头部.10个字节中的前三个字节始终为'49 44 33'(ID3,用于表示一个<code>ID3v2标签</code>,后面两个字姐用于定义主版本信息,既<code>2、3、4</code>和版本号.剩余字节用于定义标志集合及ID3快的大小. <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/ID3Header.png"> <em>ID3 header</em></p>
 <p><code>ID3</code>块中剩下的数据都是用于描述不同元数据的的key-value键值对的帧.每一帧都有一个__实际标签名称的10字节的头__,之后的4字节表示尺寸,再之后的两个字节用来定义选项标志.</p>
 <p>id3 | version(2字节) | revision (剩余字节)| flag(2字节)| size(4字节) |</p>
 <p>帧剩下的字节包含了实际的元数据值.如果值是文本类型tag中的第一个字节包含了实际的元数据值.如果值是文本类型,tag中的第一个字节用来定义编码类型. eg:Ox00, 代表:<code>ISO-8859=1</code>,也支持其它类型的编码。如下图ID3结构示意图. <strong><code>AV Foundation</code>支持读取<code>ID3v2</code>标签的的所有版本, 但不支持写入.MP3格式收到专利限制.所以<code>AV Foundation</code>无法支持对MP3或ID3数据进行编码.</strong> 不过最近听说德国的MP3专利研究所说专利打算撤销因为<code>AAC</code>格式将有更好的效果相对于MP3而言.看看后续苹果API变动会不会增加修改MP3的数据吧.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/ID3_structure.png"> <em>ID3v2 结构图</em></p></li>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/ID3Structure.png"> <em>ID3v2 结构图</em></p></li>
 </ol>
 <blockquote>
 <p><code>AV Foundation</code>支持所有<code>ID3v2</code>标签格式的读取操作,但是<code>ID3v2</code>是要加星号的.<code>ID3v2.2</code>的布局和<code>ID3v2.3</code>及之后版本的布局不同. 需要注意:有些标签由3个字符组成,而不是4个字符, 比如一首歌曲的标注信息, 当标签为<code>ID3v2.2</code>时,是被保存到COM帧中,但当同一首歌使用<code>ID3v2.3</code>标签或更新版本的标签时,歌曲的标注信息会被保存在COMM帧中,框架定义的字符常量只适用于<code>ID3v2.3</code>及以后版本,后续demo中我们通过代码演示如何向前兼容<code>ID3v2.2</code>.</p>
@@ -335,7 +335,7 @@
 <li><code>AVAsset</code> 大部分情况下会使用</li>
 <li><code>AVAssetTrack</code> 获取曲目一级元数据</li>
 </ul>
-<p>读取具体资源元数据的接口可以使用<code>AVMetadataItem</code>类提供的方法访问<code>QuickTime</code>、<code>MPEG-4 atom</code>和<code>ID3</code>帧中的元数据进行访问. <code>AVAsset</code>和<code>AVAssetTrack</code>提供了两种方法可以获取相关元数据.但是有各自的适用范围.了解适用范围之前首先要知道 <strong>键空间</strong>(key space)的含义. <code>AV Foundation</code>使用__键空间(key space)__作为将相关键组合在一起的方法, 可以实现对<code>AVMetadataItem</code>实例集合的筛选.每个资源至少包含两个键空间,以便从中获取元数据. <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset/keyspace.png"></p>
+<p>读取具体资源元数据的接口可以使用<code>AVMetadataItem</code>类提供的方法访问<code>QuickTime</code>、<code>MPEG-4 atom</code>和<code>ID3</code>帧中的元数据进行访问. <code>AVAsset</code>和<code>AVAssetTrack</code>提供了两种方法可以获取相关元数据.但是有各自的适用范围.了解适用范围之前首先要知道 <strong>键空间</strong>(key space)的含义. <code>AV Foundation</code>使用__键空间(key space)__作为将相关键组合在一起的方法, 可以实现对<code>AVMetadataItem</code>实例集合的筛选.每个资源至少包含两个键空间,以便从中获取元数据. <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170616LearningAVFoundationAVAssetBasic/keyspace.png"></p>
 <p><code>Common</code>键空间用来定义所有支持媒体类型的键, 包括: 曲名、歌手、插图信息等常见元素. 这提供了一种对所有支持的媒体格式进行一定级别的元数据标准化过程.我们可以从<code>Common</code>键空间查询 资源或者曲目的<code>commonMetadata</code>属性来获取元数据 这个属性会返回一个包含所有可用元数据的数组</p>
 <p>访问指定格式的元数据需要在资源或曲目上调用<code>metadataForFormat:</code>方法.这个方法返回一个包含所有相关元数据信息的数组.<code>AVMetadataFormat.h</code>为不同的元数据格式提供对应的字符串常量. 由于不同格式的元数据导致key value对应类型不一致,我们可以利用 <code>availableMetadataFormats</code>(AVAsset的属性)获取到信息.如下代码:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"xxx.mp4"</span>];<span class="comment">//给个路径地址</span></span><br><span class="line">   <span class="comment">//创建元数据</span></span><br><span class="line">   <span class="built_in">AVAset</span> *asset = [<span class="built_in">AVAsset</span> assetWithURL:url];</span><br><span class="line">   <span class="built_in">NSArray</span> *keys = @[<span class="string">@"availableMetadataFormats"</span>];</span><br><span class="line">   [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^&#123;</span><br><span class="line">       <span class="built_in">NSMutableArray</span> *metadata = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line">       <span class="keyword">for</span> (<span class="built_in">NSString</span> *format <span class="keyword">in</span> asset.availableMetadataFormats)&#123;</span><br><span class="line">           [metadata addObjectsFromArray:[asset metadataForFormat:format]];</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="comment">//处理metadata (AVMetadataItems)</span></span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>

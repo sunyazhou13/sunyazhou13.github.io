@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/symboliclink1.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170509HowToCreateSymbolicLinkOnMacosInCode/symboliclink.jpg"></p>
 <h3 id="前言">前言</h3>
 <p>熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文</p>
 <h3 id="软连接">软连接</h3>
@@ -200,13 +200,13 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtPath:(<span class="built_in">NSString</span> *)path withDestinationPath:(<span class="built_in">NSString</span> *)destPath error:(<span class="built_in">NSError</span> **)error ;</span><br><span class="line">- (<span class="built_in">BOOL</span>)createSymbolicLinkAtURL:(<span class="built_in">NSURL</span> *)url withDestinationURL:(<span class="built_in">NSURL</span> *)destURL error:(<span class="built_in">NSError</span> **)error;</span><br></pre></td></tr></table></figure>
 <h3 id="使用场景">使用场景</h3>
 <p>最近在开发插件 需要把插件从工程目录 copy到 系统的插件目录<code>~/Library/Internet Plug-Ins/</code> (<a href="http://www.tanhao.me/pieces/1084.html/" target="_blank" rel="noopener">这里用了老谭的插件举例</a>)</p>
-<p>如下图: <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-05.png"></p>
+<p>如下图: <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170509HowToCreateSymbolicLinkOnMacosInCode/step1.png"></p>
 <p>本想把它直接copy过去, 但可能存在以后升级问题,后续判断各种版本 删除旧的版本逻辑处理比较麻烦,于是想到用替身的方式实现</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-03-42.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170509HowToCreateSymbolicLinkOnMacosInCode/step2.png"></p>
 <p>使用这种方式创建替身:</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//工程目录文件</span></span><br><span class="line"><span class="built_in">NSString</span> *homePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"NPAPI_Download_Plugin"</span> ofType:<span class="string">@"plugin"</span>];</span><br><span class="line"><span class="comment">//插件在系统的目录位置</span></span><br><span class="line"><span class="built_in">NSString</span> *strHome = [<span class="built_in">NSString</span> stringWithUTF8String:getenv(<span class="string">"HOME"</span>)];</span><br><span class="line"><span class="built_in">NSString</span> *desc = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/Library/Internet Plug-Ins/NPAPI_Download_Plugin.plugin"</span>,strHome];</span><br><span class="line"><span class="built_in">NSFileManager</span> *fm = [<span class="built_in">NSFileManager</span> defaultManager];</span><br><span class="line"><span class="comment">//创建替身代码</span></span><br><span class="line">[fm createSymbolicLinkAtPath:desc withDestinationPath:homePath error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
 <p><em>注意:<code>createSymbolicLinkAtPath:withDestinationPath:error:</code>方法 第一个参数<code>LinkAtPath</code>是<code>desc</code>,它是放替身文件的位置. 第二个参数<code>DestinationPath</code>是<code>homePath</code>代表本地文件的原始路径,这里用工程目录的文件是为了方便,切记不要和 copyItem方法搞混</em></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/how-to-create-symbolicLink-on-macos-in-code/MacHi2017-05-0918-04-11.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170509HowToCreateSymbolicLinkOnMacosInCode/step3.png"></p>
 <h3 id="总结">总结</h3>
 <p>主要涉及的一些macOS开发技巧, 希望不足之处大家多多指教.</p>
 <p>参考:<a href="http://www.tanhao.me/pieces/597.html/" target="_blank" rel="noopener">详解OSX(Unix)中的Hard Link与Symbolic Link(硬连接与软连接)</a></p>

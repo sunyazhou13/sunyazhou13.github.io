@@ -191,13 +191,13 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/684038b04b8ff1f2ed00e9b76f8bd02e8e243726/Learning-AV-Foundation-AVAsset-Senior3.2/audio-artwork.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170807LearningAVFoundationAVAssetSenior/AudioArtwork.jpg"></p>
 <h1 id="前言">前言</h1>
 <p>先上图</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/metadata.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170807LearningAVFoundationAVAssetSenior/metadata.gif"></p>
 <p>这一篇 <strong>我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化</strong></p>
 <h2 id="内容介绍">内容介绍</h2>
-<p>结构图 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAsset-Senior3.2/MetaDataModel.png"></p>
+<p>结构图 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170807LearningAVFoundationAVAssetSenior/MetaDataModel.png"></p>
 <hr>
 <p>class 代码</p>
 <ul>
@@ -284,7 +284,7 @@
 <p>但是逻辑还是在的 这里逻辑看代码吧 和 音轨 基本一模一样</p>
 <h3 id="genremetadataconverter-风格转换">GenreMetadataConverter 风格转换</h3>
 <p>数字音频使用的标准风格最初来自 MP3. ID3 规范定义了80个默认的风格类型及 另外46个 WinAmp 扩展,共计 126个风格. 不过这些都不属于正式格式. 由于 mp3风格的主导地位比较明显, iTunes 没有另造轮子,而是基本遵循 ID3 的风格分类,不过做了点小变化。<strong>iTunes 音乐风格的标号比响应的 ID3标识符大 <code>1</code> .</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/34c39090f2a8e0ec7a09652065acdd648d5f0133/Learning-AV-Foundation-AVAsset-Senior3.2/gener.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170807LearningAVFoundationAVAssetSenior/gener.png"></p>
 <p>虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. <a href="https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/" target="_blank" rel="noopener">Apple's Genre IDs Appendix</a></p>
 <p>示例代码已经包含了这些类型 虽不在赘述 请参考 demo</p>
 <h3 id="保存元数据">保存元数据</h3>

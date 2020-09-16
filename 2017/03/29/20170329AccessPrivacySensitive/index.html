@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>markdown嵌入折叠标签 | 東引甌越</title>
+    <title>隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="markdown嵌入折叠标签 | 東引甌越">
+    <meta name="twitter:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="markdown嵌入折叠标签 | 東引甌越">
+    <meta property="og:title" content="隐私及敏感数据访问权限(Access privacy-sensitive data) | 東引甌越">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/10/25/20171025MarkdownSkill/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/03/29/20170329AccessPrivacySensitive/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,57 +181,28 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
+      <time datetime="2017-03-29T02:54:40.000Z" class="post-list__meta--date date">2017-03-29</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">markdown嵌入折叠标签</h1>
+    <h1 class="post-title">隐私及敏感数据访问权限(Access privacy-sensitive data)</h1>
   </header>
 
   <section class="post">
-    <h1 id="前言">前言</h1>
+    <p>在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &gt; This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+<p>打开你工程中名叫 <code>info.plist</code> 的文件，右键点击选择 <code>opening as Source Code</code>，把下面的代码粘贴进去。或者你可以使用默认的 <code>Property List</code> 打开 <code>info.plist</code>，点击add按钮，当你输入 <code>Privacy</code> - Xcode会给你自动补全的建议，用上下键去选择吧。</p>
+<p>私有数据的框架列表可是个不小的东西:<br>
+&gt; 通讯录 日历 提醒 照片 蓝牙共享 耳机 相机 定位 健康 homeKit 多媒体库 运动 callKit 语音识别 SiriKit TV Provider</p>
+<p>参考 <a href="https://github.com/ChenYilong/iOS10AdaptationTips" target="_blank" rel="noopener">这个大神</a></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍照捕捉视频内容,及拍摄短视频时访问相机&lt;/string&gt;</span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于拍摄短视频时访问麦克风收录视频声音&lt;/string&gt;</span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;用于保存拍摄完成的视频内容到相册,及选择相册内视频上传&lt;/string&gt;</span><br></pre></td></tr></table></figure>
+<p>以上是常用的并且通过 App Store 审核的文本</p>
+<p>下面是方便调试使用的隐私文案提醒</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;!-- 🖼 Photo Library --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏞 Photo Library iOS11 new --&gt;</span><br><span class="line">&lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) photo album use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📷 Camera --&gt;</span><br><span class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) camera use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎤 Microphone --&gt;</span><br><span class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) microphone use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location --&gt;</span><br><span class="line">&lt;key&gt;NSLocationUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location When In Use --&gt;</span><br><span class="line">&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) location use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📍 Location Always --&gt;</span><br><span class="line">&lt;key&gt;NSLocationAlwaysUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) always uses location &lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📆 Calendars --&gt;</span><br><span class="line">&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) calendar events&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ⏰ Reminders --&gt;</span><br><span class="line">&lt;key&gt;NSRemindersUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) reminder use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📒 Contacts --&gt;</span><br><span class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) contact use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏊 Motion --&gt;</span><br><span class="line">&lt;key&gt;NSMotionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) motion use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Update --&gt;</span><br><span class="line">&lt;key&gt;NSHealthUpdateUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath update use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 💊 Health Share --&gt;</span><br><span class="line">&lt;key&gt;NSHealthShareUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) heath share use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ᛒ🔵 Bluetooth Peripheral --&gt;</span><br><span class="line">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) Bluetooth Peripheral use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🎵 Media Library --&gt;</span><br><span class="line">&lt;key&gt;NSAppleMusicUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) media library use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📱 Siri --&gt;</span><br><span class="line">&lt;key&gt;NSSiriUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) siri use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 🏡 HomeKit --&gt;</span><br><span class="line">&lt;key&gt;NSHomeKitUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) home kit use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📻 SpeechRecognition --&gt;</span><br><span class="line">&lt;key&gt;NSSpeechRecognitionUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) speech use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📺 VideoSubscriber --&gt;</span><br><span class="line">&lt;key&gt;NSVideoSubscriberAccountUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) tvProvider use&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 📟 NFC reader iOS11  --&gt;</span><br><span class="line">&lt;key&gt;NFCReaderUsageDescription&lt;/key&gt;</span><br><span class="line">&lt;string&gt;$(PRODUCT_NAME) use the device’s NFC reader&lt;/string&gt;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="noopener">喵神发表了一篇博文 关于 Swift Error 的分类</a></p>
+<p>注意:<em>上线前务必换成友好的提醒文案.</em></p>
 </blockquote>
-<p>每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.</p>
-<p>当我仔细看喵神博客的时候发现 原来<code>markdown</code>支持很多<code>html</code>标签的小技巧</p>
-<p>比如:</p>
-<figure>
-<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171025MarkdownSkill/MarkdownSkill.gif" alt="喵神文章中的"><figcaption>喵神文章中的</figcaption>
-</figure>
-<p>第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神</p>
-<figure>
-<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171025MarkdownSkill/MarkdownQuestion.png" alt="与喵神对话"><figcaption>与喵神对话</figcaption>
-</figure>
-<p><a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">简单的 summary tag 而已..</a></p>
-<p>于是我测试了一下代码</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>点击时的区域标题<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> - 测试 测试测试<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> 测试二 测试三 。。。。。 .<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>下面我们来玩一下试试</p>
-<details>
-<summary>这是孙先生的博客 点击查看更多内容.</summary>
-<p>
-666666 昨天程序员节 是不是被 PM 虐了 QA 提个很多 bug 不想 fix.
-</p>
-<p>
-昨天一不小心驾照考下来了 耗时2个月 快不快。。。。.
-</p>
-</details>
-<p>还可以嵌入图片</p>
-<details>
-<summary>书法</summary>
-<p>
-<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg" alt>
-</p>
-<p>
-</p>
-</details>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>书法<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>OK 上边就是我们用到的几行代码 很简单直接嵌入 markdown 编辑器里面就马上出效果</p>
-<p>感谢<a href="https://onevcat.com/" target="_blank" rel="noopener">喵神的指导</a></p>
-<p>更多标签相关 可参考<a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">w3schools</a></p>
-<p>全文完</p>
 
   </section>
 
@@ -283,21 +254,34 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031ElegantPresentTransition/" title="论一个优雅的模态转场的自我修养">论一个优雅的模态转场的自我修养</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/06/20170406XcodeShortcuts/" title="Xcode快捷键">Xcode快捷键</a></h2>
                 <p class="excerpt">
                 
-                前言
-在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
+                
+shortcuts
 
-swift 点这里下载demo
-Objective
+前言 在iOS和macOS开发者中积累了一些快捷操作记录下来
+隐藏左侧面板
+
+
+command+0=显示/隐藏左侧面板
+
+隐藏右侧面板
+
+
+command+option+0=显示/隐藏右侧面板
+
+隐藏debug区域
+
+
+command+shift+y=显示/隐藏底部控制等调试
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
+                <div class="post-list__meta"><time datetime="2017-04-06T02:36:30.000Z" class="post-list__meta--date date">2017-04-06</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/10/31/20171031ElegantPresentTransition/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/04/06/20170406XcodeShortcuts/">继续阅读</a></div>
 
             </div>
         
@@ -305,23 +289,20 @@ Objective
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/10/16/20171016UIViewRendering/" title="理解UIView的绘制">理解UIView的绘制</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/" title="Learning AV Foundation(三)AVAudioRecorder">Learning AV Foundation(三)AVAudioRecorder</a></h2>
                 <p class="excerpt">
                 
                 
-UIView渲染
-
 前言
-最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
-理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?
-首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7m
+在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.
+主要内
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
+                <div class="post-list__meta"><time datetime="2017-03-28T01:40:18.000Z" class="post-list__meta--date date">2017-03-28</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
+  <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/10/16/20171016UIViewRendering/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/03/28/20170328LearningAVFoundationAVAudioRecorder/">继续阅读</a></div>
 
             </div>
         
@@ -343,7 +324,7 @@ UIView渲染
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Wed Oct 25 2017 16:10:35 GMT+0800',
+      id: 'Wed Mar 29 2017 10:54:40 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 

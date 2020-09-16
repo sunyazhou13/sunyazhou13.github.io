@@ -192,7 +192,7 @@
 
   <section class="post">
     <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/stock-photo-55571408.jpg" alt="AVAudioPlayer"><figcaption>AVAudioPlayer</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/cover.jpg" alt="AVAudioPlayer"><figcaption>AVAudioPlayer</figcaption>
 </figure>
 <h2 id="开篇">开篇</h2>
 <p>最近在学习<code>AV Foundation</code> 试图把学习内容记录下来 并参考一些博客文章 本期的内容是<code>AVAudioPlayer</code></p>
@@ -254,17 +254,17 @@
 <p>上边已经介绍了<code>AVAudioSession</code></p>
 <p>这里面说一下<code>[session setCategory:AVAudioSessionCategoryPlayback error:&amp;error]</code> 里面的<code>AVAudioSessionCategoryPlayback</code></p>
 <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/AVAudioPlayer_category.png" alt="音频会话分类"><figcaption>音频会话分类</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/AVAudioPlayerCategory.png" alt="音频会话分类"><figcaption>音频会话分类</figcaption>
 </figure>
 <p>这是这几种分类的列表大家可以看下</p>
-<p>记得开启后台播放 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-43-36.png"><br>
-或者在plist里面修改 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2022-44-05.png"></p>
+<p>记得开启后台播放 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.png"><br>
+或者在plist里面修改 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/PlistModify.png"></p>
 <p>下面就是创建音频播放器代码</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;Masonry/Masonry.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"THControlKnob.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">"THPlayButton.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;AVFoundation/AVFoundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//三个控制推子</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THOrangeControlKnob *panKnob;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THOrangeControlKnob *volumnKnob;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THGreenControlKnob *rateKnob;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> THPlayButton *playButton;</span><br><span class="line"></span><br><span class="line"><span class="comment">//音乐播放器</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioPlayer</span> *musicPlayer;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">getter</span> = isPlaying) <span class="built_in">BOOL</span> playing; <span class="comment">//播放状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//无关代码</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *LeftRightRoundDec;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *voiceDec;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *rateDec;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *trackDescrption;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>导入几个第三方控件的类用于音乐播放</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/MacHi%202017-03-19%2021-22-43.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/Buttons.png"></p>
 <p>这上边的三个旋钮就是导入的开源库</p>
 <p>下面创建播放器<code>AVAudioPlayer</code><br>
 创建时需要一个<code>NSURL</code>代表要播放的文件路径 这里简单从bundle中拖了一首歌进去了</p>
@@ -313,7 +313,7 @@
 <p>如果是耳机<code>AVAudioSessionPortHeadphones</code>则暂停播放</p>
 <p>以上就是中断和线路切换的一些代码逻辑</p>
 <p>下面我介绍一些好玩的</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning%20AV%20Foundation2AVAudioPlayer/IMG_2090.PNG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170317LearningAVFoundationAVAudioPlayer/demo.png"></p>
 <p>前面说的一些后台设置信息显示的内容就是上图所示 在锁屏的时候显示</p>
 <p>但是大家一定很奇怪的是怎么实现接收 <strong>锁屏状态下 点击 上一曲 暂停/播放 下一曲等操作</strong></p>
 <p>需要在AppDelegate里面写上</p>

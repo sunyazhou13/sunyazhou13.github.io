@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/what_is_news_in_ios11.png"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/whatisnewsinios11.png"></p>
 <h2 id="可用性检查api">可用性检查API</h2>
 <p>在swift代码中经常可以看到 某个API 适用于 iOS10.0</p>
 <p>如下代码</p>
@@ -212,23 +212,23 @@
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment">//导入头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;os/availability.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可用性判断用于 声明函数 </span></span><br><span class="line">void myFunctionForiOS11OrNewer(int i) API_AVAILABLE(ios(11.0), macos(10.13));  </span><br><span class="line"></span><br><span class="line"><span class="comment">//可用性判断 用于类 XXXClassA</span></span><br><span class="line">class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;</span><br></pre></td></tr></table></figure>
 <p>默认 <code>API_AVAILABLE()</code> 只能用于 <code>iOS 11</code> / <code>tvOS 11</code> / <code>macOS 10.13</code> / <code>watchOS 4</code> 以上的 API 生效</p>
 <p>如果就工程想使用这种llvm新版特性的话 需要修改 <code>buid setting</code>里面的 <code>Unguarded availability</code> 如下图:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/availability%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/availability.png"></p>
 <h2 id="静态分析">静态分析</h2>
 <p>前面的文章我又讲过<a href="http://www.sunyazhou.com/2017/06/20/enable-static-analyer/">静态分析</a></p>
 <p>这里说一下变化</p>
 <h3 id="nsnumbercfnumberred-静态分析-延时">NSNumber/CFNumberRed 静态分析 延时</h3>
 <p>当我们错误的判断 NSNumber时 静态分析 则给出了提示</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/error.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/error.png"></p>
 <p>在Xcode9 中可以直接把这种倍忽视 的问题改成 当错误处理</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/static.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/static.png"></p>
 <h2 id="开启-lto-并设置为-incremental-模式">开启 LTO 并设置为 Incremental 模式</h2>
 <p>链接时优化（以下简称 <code>LTO</code>）是 LLVM 的一项优化特性，其主要原理是:</p>
 <p><em>利用对象文件经过一些优化得到的中间格式在链接阶段再进行深度优化，包含代码逻辑层面的分析，去除实际未用到的函数、变量、甚至局部代码片段，继而减小安装包大小，同时提高了运行时的效率。</em></p>
 <p>对于 LTO，Xcode 9 做出的改进主要是在进一步优化了编译速度。 苹果演示的例子是以某个大型 C++ 工程为参考，对于一次完整链接，Xcode 9 比 Xcode 8 提升了 35%；对于一次增量链接，Xcode 9 比 Xcode 8 提升了近 60%。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/lto1.png"></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/lto2.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/lto1.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/lto2.png"></p>
 <p>开启LTO</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ios11-new-skills/LTO.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170713ios11NewSkills/LTO.png"></p>
 <p>据说对包大小和运行时速度有 10% 左右的优化</p>
 <h2 id="gcd-统一队列标识">GCD 统一队列标识</h2>
 <p>统一队列标识是指我们在工程中散落在各处的创建队列，如果队列标识是一样的，他们在内核中会被 bind 在一起，其效率可以提高 30%。Apple 没有告诉我们其内核是怎么做到的，它提供了这样的建议，如果一类操作重要性程度或其他属性接近，亦或开发者希望散落在工程各处的代码可以放在同一个队列里去控制，那么我们在创建队列的时候就可以指定一个共同的标识符。 然后系统在内核中会把这些标识相同的队列 bind 到一起来管理</p>

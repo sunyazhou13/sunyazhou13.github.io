@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/stock-photo-200814137.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/cover.jpg"></p>
 <h2 id="前言">前言</h2>
 <p>在<code>AV Foundation</code>中使用<code>AVAudioRecorder</code>类添加音频录制功能和使用<code>AVAudioPlayer</code>一样简单, 都是在<code>Audio Queue Server</code>上层构建的.同时支持<code>macOS</code>和<code>iOS</code>平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制.</p>
 <h2 id="主要内容如下">主要内容如下:</h2>
@@ -234,9 +234,9 @@
 <p><code>AVAudioPlayer</code>音频播放器只能播放本地文件，并且是一次性加载所有的音频数据，但我们有时候需要边下载边听怎么办？ <code>AVAudioPlayer</code>是不支持这种网络流媒体形式的音频播放，要播放这种网络流媒体，我们需要使用<code>AudioToolbox</code>框架的音频队列服务<code>Audio Queue Services</code>。</p>
 <p><strong>音频队列服务分为3个部分:</strong> &gt; * 3个缓冲器 &gt; * 1个缓冲队列 &gt; * 1个回调</p>
 <p><strong>1. 下面是录音的音频队列服务的工作原理:</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/1795722-224996f89679bc19.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/QueueServiceRecord.png"></p>
 <p><strong>2. 下面是播放音频的音频队列服务的工作原理;</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/1795722-45f6a868779059d0.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/QueueServicePlay.png"></p>
 <p>当然处理这些不需要我们自己去写C语言函数实现 有个开源库<a href="https://github.com/sunyazhou13/FreeStreamer" target="_blank" rel="noopener">FreeStreamer</a></p>
 <p>FreeStreamer使用</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;FreeStreamer/FreeStreamer.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    [<span class="keyword">self</span> initAudioStream];</span><br><span class="line">    <span class="comment">//播放网络流媒体音频</span></span><br><span class="line">    [<span class="keyword">self</span>.audioStream play];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 初始化网络流媒体对象 */</span></span><br><span class="line">- (<span class="keyword">void</span>)initAudioStream&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *urlStr = <span class="string">@"http://sc1.111ttt.com/2016/1/02/24/195242042236.mp3"</span>;</span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:urlStr];</span><br><span class="line">    <span class="comment">//创建FSAudioStream对象</span></span><br><span class="line">    <span class="keyword">self</span>.audioStream = [[FSAudioStream alloc] initWithUrl:url];</span><br><span class="line">    <span class="comment">//设置播放错误回调Block</span></span><br><span class="line">    <span class="keyword">self</span>.audioStream.onFailure = ^(FSAudioStreamError error, <span class="built_in">NSString</span> *description)&#123;</span><br><span class="line">          <span class="built_in">NSLog</span>(<span class="string">@"播放过程中发生错误，错误信息：%@"</span>,description);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//设置播放完成回调Block</span></span><br><span class="line">    <span class="keyword">self</span>.audioStream.onCompletion = ^()&#123;</span><br><span class="line">          <span class="built_in">NSLog</span>(<span class="string">@"播放完成!"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    [<span class="keyword">self</span>.audioStream setVolume:<span class="number">0.5</span>];<span class="comment">//设置声音大小</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -249,9 +249,9 @@
 <p>这<code>AVAudioSessionCategoryPlayAndRecord</code>是<a href="http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/" target="_blank" rel="noopener">上一章</a>说的那几种Category,我们需要__录音+播放__功能</p>
 <p>下一步 配置 plist文件访问权限信息 可以参考<a href="http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/" target="_blank" rel="noopener">Access privacy-sensitive data</a>这篇文章把访问权限需要的 信息填充上.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_2.png" alt="plist1"><figcaption>plist1</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/FillInfo.png" alt="plist1"><figcaption>plist1</figcaption>
 </figure>
-<p>然后选择SourceCode <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/Snip20170329_5.png" alt="plist2"></p>
+<p>然后选择SourceCode <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/SourceCode.png" alt="plist2"></p>
 <p>填写上</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 🎤 Microphone --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>NSMicrophoneUsageDescription<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>$(PRODUCT_NAME) microphone use<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>上边这些是为了访问本地授权, 记得授权如果第一次被拒就必须让用户手动 到通用-设置里面去配置否则将永远不好使哈。如果不写这种本地授权 程序应该会 crash</p>
@@ -309,7 +309,7 @@
 <p>这里给出了level和peak的阀值 有很多第三方开源的view大家可以自行研究一下 很简单 就是把相关阀值量化的过程。</p>
 <h2 id="总结">总结</h2>
 <p><code>AVAudioRecorder</code> 的学习还算完整的搞完了,随时记录一下学习内容和技术知识。</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/Learning-AV-Foundation-AVAudioRecorder/IMG_0114.PNG"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170328LearningAVFoundationAVAudioRecorder/FinalDemo.png"></p>
 <p><strong>最终<a href="https://github.com/sunyazhou13/AVAudioRecorderDemo" target="_blank" rel="noopener">Demo</a></strong></p>
 <p>欢迎大家指正错误 全文完</p>
 
@@ -363,7 +363,7 @@
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/29/20170329AccessPrivacySensitiveDataPrivateAccessPermission/" title="隐私及敏感数据访问权限(Access privacy-sensitive data)">隐私及敏感数据访问权限(Access privacy-sensitive data)</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/29/20170329AccessPrivacySensitive/" title="隐私及敏感数据访问权限(Access privacy-sensitive data)">隐私及敏感数据访问权限(Access privacy-sensitive data)</a></h2>
                 <p class="excerpt">
                 
                 在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： &amp;gt; This app has crashed because it attempted to access privacy-sensitive data wi
@@ -373,7 +373,7 @@
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/03/29/20170329AccessPrivacySensitiveDataPrivateAccessPermission/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/03/29/20170329AccessPrivacySensitive/">继续阅读</a></div>
 
             </div>
         
