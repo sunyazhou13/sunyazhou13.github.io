@@ -192,7 +192,7 @@
 
   <section class="post">
     <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/UIView_rendering%402x.png" alt="UIView渲染"><figcaption>UIView渲染</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/UIViewRendering.png" alt="UIView渲染"><figcaption>UIView渲染</figcaption>
 </figure>
 <h1 id="前言">前言</h1>
 <p>最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.</p>
@@ -227,7 +227,7 @@
 <li>当__<code>backing store</code>__写完后，通过render server交给GPU去渲染，将backing store中的bitmap数据显示在屏幕上.</li>
 </ul>
 <p>上面提到的从<code>CPU</code>到<code>GPU</code>的过程可用下图表示:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CPU_to_GPU.001.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/CPUToGPU.png"></p>
 <p>下面具体来讨论下这个过程</p>
 <ul>
 <li>CPU bound:</li>
@@ -236,14 +236,14 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UILabel</span>* label = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">50</span>, <span class="number">300</span>, <span class="number">14</span>)];</span><br><span class="line">label.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">label.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">14.0</span>f];</span><br><span class="line">label.text = <span class="string">@"test"</span>;</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:label];</span><br></pre></td></tr></table></figure>
 <p>这个时候不会发生任何操作, 由于 UILabel 重写了<code>drawRect</code>方法,因此,这个 <code>View</code>会被 <code>marked as "dirty"</code>:</p>
 <p>类似这个样子:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/179212e7ed967e07c602dbe7eef101c4c5eb7b16/20171016UIView-Rendering/drawRect.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/DrawRect.png"></p>
 <p>然后一个新的<code>Runloop</code>到来，上面说道在这个<code>Runloop</code>中需要将界面渲染上去，对于<code>UIKit</code>的渲染，Apple用的是它的<code>Core Animation</code>。 做法是在Runloop开始的时候调用：</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">CATransaction</span> begin]</span><br></pre></td></tr></table></figure>
 <p>在<code>Runloop</code>结束的时候调用</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">[<span class="built_in">CATransaction</span> commit]</span><br></pre></td></tr></table></figure>
 <p>在<code>begin</code>和<code>commit</code>之间做的事情是将<code>view</code>增加到<code>view hierarchy</code>中，这个时候也不会发生任何绘制的操作。 当<code>[CATransaction commit]</code>执行完后，<code>CPU</code>开始绘制这个<code>view</code>:</p>
 <figure>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171016UIView-Rendering/CATransaction_commit.png" alt="CPU绘制图"><figcaption>CPU绘制图</figcaption>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/CATransactionCommit.png" alt="CPU绘制图"><figcaption>CPU绘制图</figcaption>
 </figure>
 <p>首先<code>CPU</code>会为<code>layer</code>分配一块内存用来绘制<code>bitmap</code>，叫做__<code>backing store</code>__<br>
 创建指向这块<code>bitmap</code>缓冲区的指针，叫做<code>CGContextRef</code><br>
@@ -262,7 +262,7 @@
 基本上我们控制<code>GPU</code>都是通过<code>OpenGL</code>来完成的，但是从<code>bitmap</code>到<code>Texture</code>之间需要一座桥梁，<code>Core Animation</code>正好充当了这个角色：<br>
 <code>Core Animation</code>对<code>OpenGL</code>的<code>api</code>有一层封装，当我们要渲染的<code>layer</code>已经有了<code>bitmap content</code>的时候，这个<code>content</code>一般来说是一个<code>CGImageRef</code>，<code>CoreAnimation</code>会创建一个<code>OpenGL</code>的<code>Texture</code>并将<code>CGImageRef（bitmap）</code>和这个<code>Texture</code>绑定，通过<code>TextureID</code>来标识。<br>
 这个对应关系建立起来之后，剩下的任务就是<code>GPU</code>如何将<code>Texture</code>渲染到屏幕上了。 <code>GPU</code>大致的工作模式如下：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/8f92ec74bfc31508293f5a6cadcd68ac703eb1a0/20171016UIView-Rendering/GPU_work.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/GPUWorkflow.png"></p>
 <p>整个过程也就是一件事：</p>
 <p><code>CPU</code>将准备好的<code>bitmap</code>放到<code>RAM</code>里，<code>GPU</code>去搬这快内存到<code>VRAM</code>中处理。 而这个过程<code>GPU</code>所能承受的极限大概在16.7ms完成一帧的处理，所以最开始提到的60fps其实就是GPU能处理的最高频率.<br>
 因此，<code>GPU</code>的挑战有两个：</p>
@@ -309,7 +309,7 @@
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">label.layer.cornerRadius = <span class="number">5.0</span>f;</span><br><span class="line">label.layer.masksToBounds = <span class="literal">YES</span>;</span><br><span class="line">label.layer.shouldRasterize = <span class="literal">YES</span>;</span><br><span class="line">label.layer.rasterizationScale = label.layer.contentsScale;</span><br></pre></td></tr></table></figure>
 <p>简单的说，这是一种<code>cache</code>机制。<br>
 同样<code>GPU</code>的性能也可以通过<code>instrument</code>去衡量：</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/e3fad5583fdd4fd52b11a8fe44a9528b95f8ac1b/20171016UIView-Rendering/rendering_result.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171016UIViewRendering/RenderingResult.png"></p>
 <p>红色代表<code>GPU</code>需要做额外的工作来渲染<code>View</code>，绿色代表<code>GPU</code>无需做额外的工作来处理<code>bitmap</code>。</p>
 <p>全文完</p>
 
@@ -485,20 +485,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

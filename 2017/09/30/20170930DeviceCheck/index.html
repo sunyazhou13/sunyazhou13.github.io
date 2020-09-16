@@ -191,7 +191,7 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/dd5e142392f5ea3756cb8877e134b5334e659738/20170930DeviceCheck/DeviceCheck.png"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170930DeviceCheck/DeviceCheck.png"></p>
 <h1 id="前言">前言</h1>
 <p>iOS11 苹果改动了一个比较引开发者关注的亮点</p>
 <p><strong>UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除</strong></p>
@@ -208,9 +208,9 @@
 <p>check 是否支持 如果支持 的话会在回调以后返回 <code>token</code>(NSData)</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//下面是调用代码</span></span><br><span class="line">    <span class="keyword">if</span>([DCDevice currentDevice].supported)&#123;</span><br><span class="line">        [[DCDevice currentDevice] generateTokenWithCompletionHandler:^(<span class="built_in">NSData</span> * _Nullable token, <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,token);</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>token 是个 2188字节(2k 多点)的二进制流,很小</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/213b6d379c40ee75415b6a3447085d7914181ef3/20170930DeviceCheck/DCDevice_code%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170930DeviceCheck/DCDeviceCode.png"></p>
 <p>我尝试各种字符串编码最终也不知道里面是啥 没能成功打印出来</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/213b6d379c40ee75415b6a3447085d7914181ef3/20170930DeviceCheck/DCDevice_binary%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170930DeviceCheck/DCDeviceBinary.png"></p>
 <p>谁要是打印出来烦请 share 一下</p>
 <h4 id="删除重装app-如何处理">删除/重装App 如何处理</h4>
 <blockquote>
@@ -492,20 +492,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
