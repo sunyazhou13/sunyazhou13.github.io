@@ -192,7 +192,7 @@
 
   <section class="post">
     <h1 id="前言">前言</h1>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20170929markdown-table/table.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170929MarkdownTable/table.png"></p>
 <p>以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格</p>
 <p>demo:</p>
 <ul>
@@ -434,5 +434,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

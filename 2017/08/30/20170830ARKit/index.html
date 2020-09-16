@@ -192,7 +192,7 @@
 
   <section class="post">
     <h1 id="前言">前言</h1>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_preview.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitPreview.png"></p>
 <p>本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解. 期间有任何问题请大家集思广益,多多指教.</p>
 <h1 id="主要内容">主要内容</h1>
 <ul>
@@ -217,7 +217,7 @@
 <li>传感器追踪:主要追踪现实世界动态物体的六轴变化，这六轴分别是X、Y、Z轴位移及旋转。其中位移三轴决定物体的方位和大小，旋转三轴决定物体显示的区域</li>
 <li>坐标识别及转换：3D模型显示在现实图像中不是单纯的frame坐标点，而是一个三维的矩阵坐标</li>
 <li>AR还可以与虚拟物体进行一些交互(optional)<br>
-<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/447c7f0d7eed6cd1e4971d0fa19bef8401686383/ARKit/AR_Direction.png"></li>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDirection.png"></li>
 </ol></li>
 </ul>
 <h4 id="arkit概述及特点">ARKit概述及特点</h4>
@@ -245,18 +245,18 @@
 <li>macOS系统: 10.12.4及以上</li>
 </ul>
 <h4 id="xcode-自带创建模板多数都不用">Xcode 自带创建模板(多数都不用)</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit-Model.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitModel.png"></p>
 <p>demo 演示</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> () &lt;<span class="title">ARSCNViewDelegate</span>&gt;</span></span><br><span class="line"><span class="comment">//AR视图：展示3D界面</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="keyword">IBOutlet</span> ARSCNView *sceneView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//场景代理</span></span><br><span class="line">    <span class="keyword">self</span>.sceneView.delegate = <span class="keyword">self</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 显示帧率</span></span><br><span class="line">    <span class="keyword">self</span>.sceneView.showsStatistics = <span class="literal">YES</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建一个场景</span></span><br><span class="line">    <span class="built_in">SCNScene</span> *scene = [<span class="built_in">SCNScene</span> sceneNamed:<span class="string">@"art.scnassets/ship.scn"</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Set the scene to the view</span></span><br><span class="line">    <span class="keyword">self</span>.sceneView.scene = scene;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 世界坐标系配置</span></span><br><span class="line">    ARWorldTrackingSessionConfiguration *configuration = [ARWorldTrackingSessionConfiguration new];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 运行3D 场景的 会话</span></span><br><span class="line">    [<span class="keyword">self</span>.sceneView.session runWithConfiguration:configuration];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 暂停</span></span><br><span class="line">    [<span class="keyword">self</span>.sceneView.session pause];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Release any cached data, images, etc that aren't in use.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#pragma mark - ARSCNViewDelegate</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//给当前锚点创建一个节点 (node 可以理解成 UIView)</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Override to create and configure nodes for anchors added to the view's session.</span></span><br><span class="line"><span class="comment">- (SCNNode *)renderer:(id&lt;SCNSceneRenderer&gt;)renderer nodeForAnchor:(ARAnchor *)anchor &#123;</span></span><br><span class="line"><span class="comment">    SCNNode *node = [SCNNode new];</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    // Add geometry to the node...</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    return node;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//会话有错误</span></span><br><span class="line">- (<span class="keyword">void</span>)session:(ARSession *)session didFailWithError:(<span class="built_in">NSError</span> *)error &#123;</span><br><span class="line">    <span class="comment">// Present an error message to the user</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//被打断  类似音频播放的时候被打断 eg:前后台切换 来电话  siri</span></span><br><span class="line">- (<span class="keyword">void</span>)sessionWasInterrupted:(ARSession *)session &#123;</span><br><span class="line">    <span class="comment">// Inform the user that the session has been interrupted, for example, by presenting an overlay</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//会话结束</span></span><br><span class="line">- (<span class="keyword">void</span>)sessionInterruptionEnded:(ARSession *)session &#123;</span><br><span class="line">    <span class="comment">// Reset tracking and/or remove existing anchors if consistent tracking is required</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="arkit工作原理及流程介绍">ARKit工作原理及流程介绍</h2>
 <h3 id="主要内容-1">主要内容</h3>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/Rendering_ARKit.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/RenderingARKit.png"></p>
 <p><code>ARKit</code> 并不是一个独立运行的框架 必须要配合<code>SceneKit</code>,没有<code>SceneKit</code> <code>ARKit</code>和普通相机没有任何区别</p>
 <blockquote>
 <p><em>难点:3D坐标的矩阵转换</em> (3D X/Y/Z, 4x4坐标)</p>
 </blockquote>
 <p>下面是一张图 ARKit 的所有.h 头文件 (没有列出派生的子类)</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARDefines%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDefines.png"></p>
 <ul>
 <li><p>ARKit框架中的核心类</p></li>
 <li><p><strong><code>ARScnView</code></strong></p></li>
@@ -274,7 +274,7 @@
 </ol></li>
 <li><p><code>ARKit</code>与<code>SceneKit</code>框架关系图</p></li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_UML.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitUML.png"></p>
 <ol type="1">
 <li><p><code>ARSCNView</code> --&gt; <code>SCNView</code>(SceneKit.framework)--&gt;<code>UIView</code>(UIKit.framework)</p></li>
 <li><p>ARSCNView视图容器,它管理一个 <code>ARSession</code></p></li>
@@ -317,13 +317,13 @@
 <p><strong>ARSCNView里有个 ARFrame(属性 成员变量), ARFrame 里面包含 ARCamera(属性 成员变量)</strong></p>
 </blockquote>
 <p>就需要一个沟通的桥梁 进行调度配合协作完成 图像捕捉到视觉渲染的过程__这个桥梁 就是 <code>ARSession</code>__</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARKit_session.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitSession.png"></p>
 <p>如果想运行一个 <code>ARSession</code>会话,必须指定一个叫<code>会话追踪配置</code>的对象<code>ARConfiguration</code>,<code>ARConfiguration</code>主要目的负责追踪相机在3D 世界中的位置以及一些特征场景的捕捉,<strong>比如捕捉平面</strong>,这个类 作用很大</p>
 <ul>
 <li><code>ARConfiguration</code>是个父类,为了更好实现增强现实的效果,苹果建议我们使用派生自它的子类<code>ARWorldTrackingConfiguration</code>(这个类仅支持<code>A9</code>芯片之后的机型).</li>
 </ul>
 <p>注意: <em>原来是这个<code>ARWorldTrackingSessionConfiguration</code>现在被弃用了.</em></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARWorldTrackingConfiguration.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARWorldTrackingConfiguration.png"></p>
 <h4 id="arframe-与-arworldtrackingconfiguration">ARFrame 与 ARWorldTrackingConfiguration</h4>
 <p><code>ARSession</code> 搭建沟通的桥梁的参与者有两个</p>
 <ol type="1">
@@ -338,14 +338,14 @@
 </blockquote>
 <p><code>ARCamera</code>只负责捕捉图像,不参与数据的处理. 它属于3D 场景中的一个环节, 每个3D Scene 都会有一个 Camera, 这个 Camera 决定了我们看到物体的视野.</p>
 <p>这三者关系如下:</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/relationship_ARFrame.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/RelationshipARFrame.png"></p>
 <blockquote>
 <p><code>ARFrame</code>里面有我们需要的<code>CVPixelBufferRef</code>(capturedImage) 和 <code>ARCamera</code> 也就是我们需要的图像的原始数据</p>
 </blockquote>
 <p><strong>ARCamera在3D世界的位置</strong></p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/coordinate.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/Coordinate.png"></p>
 <h3 id="arkit-工作流程">ARKit 工作流程</h3>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ar_workflow.png"> 图片来自:<a href="http://www.jianshu.com/p/0492c7122d2f" target="_blank" rel="noopener">坤小</a></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARWorkflow.png"> 图片来自:<a href="http://www.jianshu.com/p/0492c7122d2f" target="_blank" rel="noopener">坤小</a></p>
 <ol type="1">
 <li><code>ARSCNView</code>加载场景<code>SCNScene</code></li>
 <li><code>SCNScene</code> 启动相机<code>ARCamera</code>开始捕捉场景</li>
@@ -385,7 +385,7 @@
 <p>注意:<em><strong>所有的场景有且只有一个根节点，其他所有节点都是根节点的子节点</strong></em></p>
 </blockquote>
 <h2 id="arkit框架所有api介绍">ARKit框架所有API介绍</h2>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/ARDefines%402x.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDefines.png"></p>
 <p>还是拿上边这张图说一下 这里我们诉求剖析所有 API 从而达到大家都了解 ARKit的内容</p>
 <h4 id="aranchor">ARAnchor</h4>
 <p><code>ARAnchor</code>表示一个物体在3D 空间的位置和方向(ARAnchor 俗称 3D 锚点, 类似 UIKit 框架中 CALayer的 Anchor)</p>
@@ -439,7 +439,7 @@
 <p>代理方法</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//代理的内部实现了SCNSceneRendererDelegate：scenekit代理 和ARSessionObserver：ARSession监听（KVO机制）</span></span><br><span class="line"><span class="meta">#pragma mark - ARSCNViewDelegate</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ARSCNViewDelegate</span> &lt;<span class="title">SCNSceneRendererDelegate</span>, <span class="title">ARSessionObserver</span>&gt;</span></span><br><span class="line"><span class="keyword">@optional</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//自定义节点的锚点</span></span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">SCNNode</span> *)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer nodeForAnchor:(ARAnchor *)anchor;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当添加节点是会调用，我们可以通过这个代理方法得知我们添加一个虚拟物体到AR场景下的锚点（AR现实世界中的坐标）</span></span><br><span class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didAddNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将要刷新节点</span></span><br><span class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer willUpdateNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</span><br><span class="line"></span><br><span class="line"><span class="comment">//已经刷新节点</span></span><br><span class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didUpdateNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</span><br><span class="line"></span><br><span class="line"><span class="comment">//移除节点</span></span><br><span class="line">- (<span class="keyword">void</span>)renderer:(<span class="keyword">id</span> &lt;<span class="built_in">SCNSceneRenderer</span>&gt;)renderer didRemoveNode:(<span class="built_in">SCNNode</span> *)node forAnchor:(ARAnchor *)anchor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <h4 id="arsesson-重点介绍">ARSesson 重点介绍</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/session_brige002.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/SessionBridge.png"></p>
 <p><code>ARSesson</code> 是一个连接底层与 AR 视图之间的桥梁, <code>ARSCNView</code>里的所有方法都是又<code>ARSession</code>提供的</p>
 <p><strong><code>ARSesson</code>获取相机位置数据主要由两种方式</strong></p>
 <ul>
@@ -476,14 +476,14 @@
 <p>至于<code>ARCamera</code> 的 api 一般我们也不用 care,<code>ARKit</code>默认会配置好.</p>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ARCamera</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//4x4矩阵表示相机位置 跟锚点类似</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 transform;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相机方向（旋转）的矢量欧拉角 分别是x/y/z</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) vector_float3 eulerAngles;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相机追踪状态（在下方会有枚举值介绍）</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARTrackingState trackingState <span class="built_in">NS_REFINED_FOR_SWIFT</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//追踪运动类型</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) ARTrackingStateReason trackingStateReason <span class="built_in">NS_REFINED_FOR_SWIFT</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相机曲率 3x3矩阵  </span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float3x3 intrinsics;</span><br><span class="line"></span><br><span class="line"><span class="comment">//摄像头分辨率</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGSize</span> imageResolution;</span><br><span class="line"></span><br><span class="line"><span class="comment">//投影矩阵</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) matrix_float4x4 projectionMatrix;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建相机 使用x,y,z 位置 </span></span><br><span class="line">- (<span class="built_in">CGPoint</span>)projectPoint:(vector_float3)point orientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation viewportSize:(<span class="built_in">CGSize</span>)viewportSize;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//创建相机投影矩阵 近面距离  远面距离</span></span><br><span class="line">- (matrix_float4x4)projectionMatrixForOrientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation viewportSize:(<span class="built_in">CGSize</span>)viewportSize zNear:(<span class="built_in">CGFloat</span>)zNear zFar:(<span class="built_in">CGFloat</span>)zFar;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建相机投影矩阵</span></span><br><span class="line">- (matrix_float4x4)viewMatrixForOrientation:(<span class="built_in">UIInterfaceOrientation</span>)orientation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>上边提到的远面和近面距离 <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/distance.png"> 可以参考这张图 摘自<a href="http://www.jianshu.com/p/bc151ff65cef" target="_blank" rel="noopener">投影变换</a> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/distance2.png"> 这属于 OpenGL的学习范畴.有兴趣可以学习一下</p>
+<p>上边提到的远面和近面距离 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/distance.png"> 可以参考这张图 摘自<a href="http://www.jianshu.com/p/bc151ff65cef" target="_blank" rel="noopener">投影变换</a> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/distance2.png"> 这属于 OpenGL的学习范畴.有兴趣可以学习一下</p>
 </blockquote>
 <figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">//相机追踪状态枚举</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, ARTrackingState) &#123;</span><br><span class="line">	 <span class="comment">/* 不被允许 */</span></span><br><span class="line">    ARTrackingStateNotAvailable,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 最小 */</span></span><br><span class="line">    ARTrackingStateLimited,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 正常. */</span></span><br><span class="line">    ARTrackingStateNormal,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//追踪运动类型</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, ARTrackingStateReason) &#123;</span><br><span class="line">    <span class="comment">/* 无. */</span></span><br><span class="line">    ARTrackingStateReasonNone,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    ARTrackingStateReasonInitializing,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 运动. */</span></span><br><span class="line">    ARTrackingStateReasonExcessiveMotion,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** 脸部捕捉. */</span></span><br><span class="line">    ARTrackingStateReasonInsufficientFeatures,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>这里面涉及到的 一个叫做<code>eulerAngles</code><a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92" target="_blank" rel="noopener">欧拉角</a> <img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/eulerAngles.png"> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑)</p>
+<p>这里面涉及到的 一个叫做<code>eulerAngles</code><a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92" target="_blank" rel="noopener">欧拉角</a> <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/EulerAngles.png"> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑)</p>
 </blockquote>
 <h4 id="arkit捕捉平地">ARKit捕捉平地</h4>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/ARKit/plane_detective.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/PlaneDetective.gif"></p>
 <p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemoPlaneDetective.zip" target="_blank" rel="noopener">探测平地demo</a></p>
 <p>贴一下核心代码</p>
 <p>添加节点时候调用（当开启平地捕捉模式之后，如果捕捉到平地，ARKit会自动添加一个平地节点）</p>
@@ -672,5 +672,20 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
