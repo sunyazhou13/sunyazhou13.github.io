@@ -191,14 +191,14 @@
   </header>
 
   <section class="post">
-    <p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio-pan.jpg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171219AudioPan/AudioPan.jpg"></p>
 <h1 id="前言">前言</h1>
 <p>最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.</p>
 <h2 id="开篇">开篇</h2>
 <p>最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果. 下面是 UI 演示.</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/audio_pan_demo.gif"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171219AudioPan/AudioPanDemo.gif"></p>
 <p>这里其实修改的类似 <code>AVAudioPlayer</code>里面的<code>pan</code>值修改</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan_audio_api.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171219AudioPan/PanAudioApi.png"></p>
 <p>我在以前的文章也有一篇提到过这个<a href="https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/">pan 值</a></p>
 <p>可能大家不理解为啥 这个 API 起名叫<code>pan</code></p>
 <p>在声学领域这个东西有专门的名字叫 <code>声像</code>.</p>
@@ -206,7 +206,7 @@
 <p>其实按照我们平常的理解应该是这样去实现这个 pan 值的修改</p>
 <p>左声道音量给右声道声音的补偿 或者右侧声道给左侧声道的补偿,通过滑块的 value 来决定两边谁加多少减多少,但是大家的思路是对的,但是做法是不正确的,因为 两边的音量放在中间必须是1.0,也就是说 range 在 <code>-1 ~ 1</code>之间. 如果按照这个滑动方式回导致滑动过大.</p>
 <p>带着这个问题我的同事找到了一个公式 来计算 这个值</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171219AudioPan/pan-algorithm.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20171219AudioPan/PanAlgorithm.png"></p>
 <ul>
 <li><code>pan</code>就是我们的滑块的<code>value</code></li>
 <li><code>Vl</code> 代表左侧音量</li>

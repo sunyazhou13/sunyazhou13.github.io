@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>论一个优雅的模态转场的自我修养 | 東引甌越</title>
+    <title>markdown嵌入折叠标签 | 東引甌越</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="论一个优雅的模态转场的自我修养 | 東引甌越">
+    <meta name="twitter:title" content="markdown嵌入折叠标签 | 東引甌越">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="论一个优雅的模态转场的自我修养 | 東引甌越">
+    <meta property="og:title" content="markdown嵌入折叠标签 | 東引甌越">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="東引甌越" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2017/10/31/20171031ElegantPresentTransition/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2017/10/25/20171025MarkdownSkill/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,72 +181,57 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
+      <time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
 
 </span>
     </div>
-    <h1 class="post-title">论一个优雅的模态转场的自我修养</h1>
+    <h1 class="post-title">markdown嵌入折叠标签</h1>
   </header>
 
   <section class="post">
     <h1 id="前言">前言</h1>
-<p>在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考<a href="https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started" target="_blank" rel="noopener">UIPresentationController Tutorial: Getting Started</a> 这篇博文进行 OC 版翻译 也加入了一些小改动</p>
 <blockquote>
-<p>swift 点这里下载<a href="https://koenig-media.raywenderlich.com/uploads/2016/08/Medal_Count_Completed.zip" target="_blank" rel="noopener">demo</a><br>
-Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPresentation" target="_blank" rel="noopener">demo</a></p>
+<p>这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时<a href="https://onevcat.com/2017/10/swift-error-category/" target="_blank" rel="noopener">喵神发表了一篇博文 关于 Swift Error 的分类</a></p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/fd8747d4c220c683f587db45126037b080e5c380/20171031Elegant-present-transition/Elegant-present-transition.gif"></p>
-<h3 id="需求背景">需求背景</h3>
-<p>转场对目前的 iOS 来讲已经不能再熟悉了 但想找个靠谱点的带遮盖的转场 没找到几个靠谱的</p>
-<p>不是这个问题不行就那个问题不能满足</p>
-<p><img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171031Elegant-present-transition/demo1.png"></p>
-<p>根据<code>Raywenderrich</code>的教程 我翻译成了 OC 版本 并加了一些小改动</p>
-<h3 id="如何使用">如何使用</h3>
-<ul>
-<li>导入头文件</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"SlideInPresentationManager.h"</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>声明属性</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) SlideInPresentationManager *slideInTransitioningDelegate;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>弹出模态控制器的时候如下代码</li>
-</ul>
-<pre class="objc"><code>- (IBAction)presentAction:(UIButton *)sender {
-    PresentationDirection direction;
-    if (sender.tag == 100) {
-        NSLog(@&quot;左侧弹出模态转场&quot;);
-        direction = PresentationDirectionLeft;
-    } else if (sender.tag == 101) {
-        NSLog(@&quot;上弹出模态转场&quot;);
-        direction = PresentationDirectionTop;
-    } else if (sender.tag == 102) {
-        NSLog(@&quot;右弹出模态转场&quot;);
-        direction = PresentationDirectionRight;
-    } else {
-        NSLog(@&quot;下弹出模态转场&quot;);
-        direction = PresentationDirectionBottom;
-    }
-    
-    self.slideInTransitioningDelegate = nil;
-    //控制现实遮盖的视图转场(core 代码)
-    self.slideInTransitioningDelegate = [[SlideInPresentationManager alloc] init];
-    self.slideInTransitioningDelegate.direction = direction;
-    self.slideInTransitioningDelegate.disableCompactHeight = NO;
-    self.slideInTransitioningDelegate.sliderRate = 1.0/3.0;
-    
-    //创建控制器实例
-    PresentController *presentVC = [[PresentController alloc] initWithNibName:@&quot;PresentController&quot; bundle:[NSBundle mainBundle]];
-    presentVC.transitioningDelegate = self.slideInTransitioningDelegate;
-    presentVC.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:presentVC animated:YES completion:nil];
-}
-
-</code></pre>
-<p>剩下的就可以愉快的玩耍了</p>
+<p>每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.</p>
+<p>当我仔细看喵神博客的时候发现 原来<code>markdown</code>支持很多<code>html</code>标签的小技巧</p>
+<p>比如:</p>
+<figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_skill1.gif" alt="喵神文章中的"><figcaption>喵神文章中的</figcaption>
+</figure>
+<p>第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神</p>
+<figure>
+<img src="https://raw.githubusercontent.com/sunyazhou13/sunyazhou13.github.io-images/master/20171025markdown-skill/markdown_question.png" alt="与喵神对话"><figcaption>与喵神对话</figcaption>
+</figure>
+<p><a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">简单的 summary tag 而已..</a></p>
+<p>于是我测试了一下代码</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>点击时的区域标题<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> - 测试 测试测试<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> 测试二 测试三 。。。。。 .<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面我们来玩一下试试</p>
+<details>
+<summary>这是孙先生的博客 点击查看更多内容.</summary>
+<p>
+666666 昨天程序员节 是不是被 PM 虐了 QA 提个很多 bug 不想 fix.
+</p>
+<p>
+昨天一不小心驾照考下来了 耗时2个月 快不快。。。。.
+</p>
+</details>
+<p>还可以嵌入图片</p>
+<details>
+<summary>书法</summary>
+<p>
+<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg" alt>
+</p>
+<p>
+</p>
+</details>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">summary</span>&gt;</span>书法<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/aboutme/about_read_books.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>OK 上边就是我们用到的几行代码 很简单直接嵌入 markdown 编辑器里面就马上出效果</p>
+<p>感谢<a href="https://onevcat.com/" target="_blank" rel="noopener">喵神的指导</a></p>
+<p>更多标签相关 可参考<a href="https://www.w3schools.com/tags/tag_summary.asp" target="_blank" rel="noopener">w3schools</a></p>
+<p>全文完</p>
 
   </section>
 
@@ -298,21 +283,21 @@ Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPre
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/12/15/20171215CellAddKVO/" title="UICollectionViewCell添加KVO">UICollectionViewCell添加KVO</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031ElegantPresentTransition/" title="论一个优雅的模态转场的自我修养">论一个优雅的模态转场的自我修养</a></h2>
                 <p class="excerpt">
                 
-                
-前言
-都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是如何正确的给一个UICollectionViewCell添加KVO监听.
-开篇
-由于目前在开发短视频相关的SDK,面向的多数都是小白开发者,为了能让小白以最低的成本看懂 SDK 的代码以及用法,这就要求我们以小白最容易理解的方式
+                前言
+在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
+
+swift 点这里下载demo
+Objective
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-12-15T09:05:10.000Z" class="post-list__meta--date date">2017-12-15</time>
+                <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/12/15/20171215CellAddKVO/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/10/31/20171031ElegantPresentTransition/">继续阅读</a></div>
 
             </div>
         
@@ -320,25 +305,23 @@ Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPre
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/10/25/20171025MarkdownSkill/" title="markdown嵌入折叠标签">markdown嵌入折叠标签</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/10/16/20171016UIViewRendering/" title="理解UIView的绘制">理解UIView的绘制</a></h2>
                 <p class="excerpt">
                 
-                前言
+                
+UIView渲染
 
-这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时喵神发表了一篇博文 关于 Swift Error 的分类
-
-每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾.
-当我仔细看喵神博客的时候发现 原来markdown支持很多html标签的小技巧
-比如:
-
-喵神文
+前言
+最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值.
+理解 UIView 的绘制, UIView 是如何显示到 Screen 上的?
+首先要从Runloop开始说,iOS 的MainRunloop 是一个60fps 的回调,也就是说16.7m
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-10-25T08:10:35.000Z" class="post-list__meta--date date">2017-10-25</time>
+                <div class="post-list__meta"><time datetime="2017-10-16T05:00:30.000Z" class="post-list__meta--date date">2017-10-16</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
 
-</span><a class="btn-border-small" href="/2017/10/25/20171025MarkdownSkill/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/10/16/20171016UIViewRendering/">继续阅读</a></div>
 
             </div>
         
@@ -360,7 +343,7 @@ Objective-C 点击这里直达<a href="https://github.com/sunyazhou13/SlideInPre
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Tue Oct 31 2017 11:32:17 GMT+0800',
+      id: 'Wed Oct 25 2017 16:10:35 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 
