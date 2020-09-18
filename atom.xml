@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-09-18T06:27:29.111Z</updated>
+  <updated>2020-09-18T06:30:10.375Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.sunyazhou.com/2020/09/17/20200917Block/"/>
     <id>https://www.sunyazhou.com/2020/09/17/20200917Block/</id>
     <published>2020-09-17T06:34:10.000Z</published>
-    <updated>2020-09-18T06:27:29.111Z</updated>
+    <updated>2020-09-18T06:30:10.375Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
 <h1 id="前言">前言</h1>
@@ -176,17 +176,17 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">**_NSConcreteGlobalBlock**</td>
+<td style="text-align: center;">_NSConcreteGlobalBlock</td>
 <td style="text-align: center;">程序的数据区域</td>
 <td style="text-align: center;">什么也不做</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">**_NSConcreteStackBlock**</td>
+<td style="text-align: center;">_NSConcreteStackBlock</td>
 <td style="text-align: center;">栈</td>
 <td style="text-align: center;">从栈拷贝到堆</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">**_NSConcreteMallocBlock**</td>
+<td style="text-align: center;">_NSConcreteMallocBlock</td>
 <td style="text-align: center;">堆</td>
 <td style="text-align: center;">引用计数增加</td>
 </tr>
