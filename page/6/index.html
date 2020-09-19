@@ -183,6 +183,33 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/08/20180308WhatIsThedSYM/" title="link to post.title">什么是符号表?</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
+本周主要内容如下
+
+什么是符号表？
+为什么要配置符号表？
+dSYM文件？
+
+什么是符号表？
+符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
+&amp;lt;起始地址&amp;gt; &amp;lt;结束地址&amp;gt; &amp;lt;函数&amp;gt; [&amp;lt;文件名&amp;gt;:&amp;
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-08T03:14:12.000Z" class="post-list__meta--date date">2018-03-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/03/08/20180308WhatIsThedSYM/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2018/03/05/20180305ComputerGraphicsRenderingProcess/" title="link to post.title">计算机图形渲染的流程</a></h2>
       <p class="excerpt">
     
@@ -420,33 +447,6 @@ marginwidth及mar
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/10/31/20171031ElegantPresentTransition/" title="link to post.title">论一个优雅的模态转场的自我修养</a></h2>
-      <p class="excerpt">
-    
-      前言
-在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博文进行 OC 版翻译 也加入了一些小改动
-
-swift 点这里下载demo
-Objective-C 点击这里直达demo
-
-
-需求背景
-转场对目前的 iOS 来讲已经不能再熟悉了 但想找个靠谱点的带遮盖的转场 没找到几个靠谱的
-不是这个问题不行就那个问题不能满足
-
-根据Raywenderric
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-10-31T03:32:17.000Z" class="post-list__meta--date date">2017-10-31</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/10/31/20171031ElegantPresentTransition/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -510,20 +510,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

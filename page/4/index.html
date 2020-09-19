@@ -183,6 +183,38 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/11/08/20181108AwemeAlbumAnimation/" title="link to post.title">iOS抖音右下角专辑动画</a></h2>
+      <p class="excerpt">
+    
+      前言
+前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画
+上图看下
+
+再看下抖音的
+
+具体实现思路
+首先需要3涨素材 这个在demo中就可以找到哈
+在文章底部demo中有
+
+ContrainerView
+Background Layer
+Album (UIImageView)
+
+
+我们首先写个 MusicAlbumView 继承自UIView
+@interface MusicAlbumView : UIView@property (nonatomic, strong)
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-11-08T03:52:06.000Z" class="post-list__meta--date date">2018-11-08</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
+
+</span><a class="btn-border-small" href="/2018/11/08/20181108AwemeAlbumAnimation/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2018/11/06/20181106AwemeTopBottomScrollDemo/" title="link to post.title">iOS抖音的上下滑实现</a></h2>
       <p class="excerpt">
     
@@ -396,63 +428,6 @@ Taptic Engine 振动模块为 Apple Watch 以及 iPhone 6s、iPhone 7 提供了 
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/07/18/20180718LinuxBash/" title="link to post.title">Linux 终端 Bash 常用快捷键介绍及经验</a></h2>
-      <p class="excerpt">
-    
-      
-bash及其特性
-
-bash实质上是一个可执行程序，一个用户的工作环境。
-在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。
-可以使用pstree命令查看当前shell下的子shell个数。
-
-1. 最重要的自动补全
-
-
-
-命令
-解释
-
-
-
-
-Tab
-自动补全
-
-
-
-2. 编辑跳转
-
-
-
-命令
-解释
-
-
-
-
-Ctrl + A
-跳转到当前行首
-
-
-Ctrl + E
-跳转到当前行末
-
-
-Alt + F
-将光标在当前行上向后移动一
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-07-18T01:29:39.000Z" class="post-list__meta--date date">2018-07-18</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2018/07/18/20180718LinuxBash/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -516,20 +491,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

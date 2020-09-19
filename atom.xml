@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-09-18T11:57:25.150Z</updated>
+  <updated>2020-09-19T08:04:21.083Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,318 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>阿里、字节：一套高效的iOS面试题之多线程</title>
+    <link href="https://www.sunyazhou.com/2020/09/19/20200919GCD/"/>
+    <id>https://www.sunyazhou.com/2020/09/19/20200919GCD/</id>
+    <published>2020-09-19T03:09:28.000Z</published>
+    <updated>2020-09-19T08:04:21.083Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p>本篇我们来讲一下 <a href="https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w" target="_blank" rel="noopener">阿里、字节：一套高效的iOS面试题</a> 中的多线程相关的问题.</p>
+<h2 id="多线程">多线程</h2>
+<p>这一篇我们来解答下多线程问题,主要以GCD为主:</p>
+<ul>
+<li>iOS开发中有多少类型的线程？分别对比</li>
+<li>GCD有哪些队列，默认提供哪些队列</li>
+<li>GCD有哪些方法api</li>
+<li>GCD主线程 &amp; 主队列的关系</li>
+<li>如何实现同步，有多少方式就说多少</li>
+<li><code>dispatch_once</code>实现原理</li>
+<li>什么情况下会死锁</li>
+<li>有哪些类型的线程锁，分别介绍下作用和使用场景</li>
+<li>NSOperationQueue中的<code>maxConcurrentOperationCount</code>默认值</li>
+<li>NSTimer、CADisplayLink、<code>dispatch_source_t</code> 的优劣</li>
+</ul>
+<h3 id="ios开发中有多少类型的线程分别对比">1.iOS开发中有多少类型的线程?分别对比</h3>
+<table>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">线程类型</th>
+<th style="text-align: center;">对比</th>
+<th style="text-align: center;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pthread_t</code></td>
+<td style="text-align: center;">跨平台C语言标准库中的多线程框架</td>
+<td style="text-align: center;">过于底层使用很麻烦,需要封装使用.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GCD(Grand Central Dispatch)</td>
+<td style="text-align: center;">iOS5后苹果推出的双核CPU优化的多线程框架,对A5以后的CPU有很多底层优化,C函数的形式调用 有点面向过程,不能直接设置并发数,需要写一些代码曲线方式实现并发</td>
+<td style="text-align: center;">推荐使用</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NSOperation &amp; NSOperationQueue</td>
+<td style="text-align: center;">更加面向对象 可以设置并发数量</td>
+<td style="text-align: center;">GCD 的封装</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>苹果底层库经过自己多年实践没有问题才会推荐给上层使用, eg:siri. 所以NSOperation实际上是苹果的ver1.0的多线程SDK,对GCD封装和<code>pthread_t</code>的封装.</p>
+</blockquote>
+<h3 id="gcd有哪些队列默认提供哪些队列">2.GCD有哪些队列，默认提供哪些队列</h3>
+<ul>
+<li>1.主线程串行队列</li>
+<li>2.全局并行队列</li>
+<li>3.自定义队列(可自行设置<code>串/并</code>的参数<code>DISPATCH_QUEUE_SERIAL</code>和<code>DISPATCH_QUEUE_CONCURRENT</code>)</li>
+</ul>
+<p>下面我整理了一个表格:</p>
+<table>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">队列类型</th>
+<th style="text-align: center;">对应函数</th>
+<th style="text-align: center;">系统默认提供/自定义</th>
+<th style="text-align: center;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">主线程串行队列(mian)</td>
+<td style="text-align: center;"><code>dispatch_get_main_queue()</code></td>
+<td style="text-align: center;">系统</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">全局并行队列(global)</td>
+<td style="text-align: center;"><code>dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)</code></td>
+<td style="text-align: center;">系统</td>
+<td style="text-align: center;">系统提供参数设置</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">自定义并行队列(Concurrent)</td>
+<td style="text-align: center;"><code>dispatch_queue_create("com.sunyazhou.self.queue.concurrent", DISPATCH_QUEUE_CONCURRENT)</code></td>
+<td style="text-align: center;">自定义</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">自定义串行队列(Serial)</td>
+<td style="text-align: center;"><code>dispatch_queue_create("com.sunyazhou.self.queue.serial", DISPATCH_QUEUE_SERIAL)</code></td>
+<td style="text-align: center;">自定义</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><code>dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)</code> 其中的第一个参数就是队列的优先级,具体对于优先级QOS如下:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">GCD全局队列优先级宏定义</th>
+<th style="text-align: center;">对应枚举数值</th>
+<th style="text-align: left;">对应Qos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>DISPATCH_QUEUE_PRIORITY_HIGH</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><code>QOS_CLASS_USER_INITIATED</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DISPATCH_QUEUE_PRIORITY_DEFAULT</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: left;"><code>QOS_CLASS_DEFAULT</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>DISPATCH_QUEUE_PRIORITY_LOW</code></td>
+<td style="text-align: center;">-2</td>
+<td style="text-align: left;"><code>QOS_CLASS_UTILITY</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DISPATCH_QUEUE_PRIORITY_BACKGROUND</code></td>
+<td style="text-align: center;"><code>INT16_MIN</code></td>
+<td style="text-align: left;"><code>QOS_CLASS_BACKGROUND</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>其中<code>dispatch_get_global_queue</code>的第二个参数flag只是一个苹果予保留字段，通常我们传0（你可以试试传1应该队列创建失败）</p>
+</blockquote>
+<h3 id="gcd有哪些方法api">3.GCD有哪些方法api</h3>
+<ul>
+<li><p>队列相关API</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">dispatch_get_main_queue(<span class="keyword">void</span>) <span class="comment">//获取主线程队列</span></span><br><span class="line">dispatch_get_global_queue(intptr_t identifier, uintptr_t flags) <span class="comment">//获取全局队列</span></span><br><span class="line">dispatch_queue_create(<span class="keyword">const</span> <span class="keyword">char</span> *_Nullable label,dispatch_queue_attr_t _Nullable attr) <span class="comment">//创建自定义队列 (一般大家都用域名倒置来区分队列的唯一标识,苹果对标识符是否一致在iOS10后有优化请注意.)</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>执行API</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dispatch_async</span>(<span class="built_in">dispatch_queue_t</span> queue, dispatch_block_t block) <span class="comment">//在某队列开启异步线程 block&#123;&#125;花括号内的代码将在某队列异步运行</span></span><br><span class="line"><span class="built_in">dispatch_sync</span>(<span class="built_in">dispatch_queue_t</span> queue, DISPATCH_NOESCAPE dispatch_block_t block) <span class="comment">//在某队列开启同步线程 block&#123;&#125;花括号内的代码将在某队列同步运行</span></span><br><span class="line">dispatch_after(dispatch_time_t when, <span class="built_in">dispatch_queue_t</span> queue, dispatch_block_t block) <span class="comment">//GCD定时器 多久后执行 block</span></span><br><span class="line"><span class="built_in">dispatch_once</span>(<span class="built_in">dispatch_once_t</span> *predicate, DISPATCH_NOESCAPE dispatch_block_t block) <span class="comment">//单次操作 (单位时间内只允许一个线程进入操作系统的临界区,一般创建单利时使用)这个变量可以区分冷热启动.</span></span><br><span class="line">dispatch_apply(size_t iterations, <span class="built_in">dispatch_queue_t</span> DISPATCH_APPLY_QUEUE_ARG_NULLABILITY queue, DISPATCH_NOESCAPE <span class="keyword">void</span> (^block)(size_t)) <span class="comment">//向队列中追加任务操作并等待处理执行结束.</span></span><br><span class="line">dispatch_barrier_async()  <span class="comment">//将自己的任务插入到队列之后，不会等待自己的任务结束，它会继续把后面的任务插入到队列，然后等待自己的任务结束后才执行后面任务</span></span><br><span class="line">dispatch_barrier_sync()  <span class="comment">//将自己的任务插入到队列的时候，需要等待自己的任务结束之后才会继续插入被写在它后面的任务，然后执行它们</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>调度组API</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">dispatch_group_create(<span class="keyword">void</span>) <span class="comment">//创建GCD 调度组</span></span><br><span class="line">dispatch_group_async(dispatch_group_t group, <span class="built_in">dispatch_queue_t</span> queue,dispatch_block_t block) <span class="comment">//调度组开启异步线程</span></span><br><span class="line">dispatch_group_enter() <span class="comment">//调度组信号量 需要和leave成对出现.</span></span><br><span class="line">dispatch_group_leave() <span class="comment">//调度组信号量 需要和enter成对出现.</span></span><br><span class="line">dispatch_group_notify() <span class="comment">//调度组任务完成通知调用方 操作(一般都回到主线程)</span></span><br><span class="line">dispatch_group_wait() <span class="comment">//整个调度组 阻塞操作.只等待不做结束处理</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>信号量API</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">dispatch_semaphore_create(intptr_t value) <span class="comment">//创建信号量 (可以理解为是线程锁)</span></span><br><span class="line">dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout) <span class="comment">//信号-1</span></span><br><span class="line">dispatch_semaphore_signal(dispatch_semaphore_t dsema) <span class="comment">//信号+1</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>调度资源API</p>
+<p><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">dispatch_source_create() </span><br><span class="line">dispatch_source_set_timer()</span><br><span class="line">dispatch_source_set_event_handler()</span><br><span class="line">dispatch_activate()</span><br><span class="line">dispatch_resume()</span><br><span class="line">dispatch_suspend()</span><br><span class="line">dispatch_source_cancel()</span><br><span class="line">dispatch_source_testcancel()</span><br><span class="line">dispatch_source_set_cancel_handler()</span><br><span class="line">dispatch_notify()</span><br><span class="line">dispatch_get_context()</span><br><span class="line">dispatch_set_contex()</span><br><span class="line">dispatch_queue_set_specific() 给队列设置标识</span><br><span class="line">dispatch_queue_get_specific() 取出队列标识</span><br><span class="line">dispatch_get_specific() 查询线程标识</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h3 id="gcd主线程-主队列的关系">4.GCD主线程 &amp; 主队列的关系</h3>
+<p>提交到主队列的任务在主线程执行.</p>
+<h3 id="如何实现同步有多少方式就说多少">5.如何实现同步，有多少方式就说多少</h3>
+<ul>
+<li><code>dispatch_sync(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block)</code> 在某队列开启同步线程</li>
+<li>dispatch_barrier_sync() 障碍所得方式同步</li>
+<li>dispatch_group_create() + dispatch_group_wait()</li>
+<li>dispatch_apply() 插队追加 操作同步</li>
+<li>dispatch_semaphore_create() + dispatch_semaphore_wait() 信号量锁</li>
+<li>串行NSOperationQueue队列并发数为1的时候 [NSOpertaion start] 启动任务即使同步操作 (NSOperationQueue.maxConcurrentOperationCount = 1)</li>
+<li><code>pthread_mutex</code>底层锁函数</li>
+<li>上层应用层封装的NSLock</li>
+<li>NSRecursiveLock 递归锁，这个锁可以被同一线程多次请求，而不会引起死锁。这主要是用在循环或递归操作中</li>
+<li>NSConditionLock &amp; NSCondition 条件锁</li>
+<li><span class="citation" data-cites="synchronized">@synchronized</span> 同步操作 单位时间内只允许一个线程进入临界区</li>
+<li>dispatch_once() 单位时间内只允许一个线程进入临界区 ...</li>
+</ul>
+<h3 id="dispatch_once实现原理">6.<code>dispatch_once</code>实现原理</h3>
+<p>这个问题问的很傻吊也很高超.因为要解释清楚所有步骤需要记住里面所有代码</p>
+<p>我认为这个问题应该从操作系统层面回答, 这个问题的核心是操作系统返回状态决定的,<strong>单位时间内操作系统只允许一个线程进入临界区,进入临界区的线程会被标记</strong></p>
+<p>回归到代码就是</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">dispatch_once(dispatch_once_t *val, dispatch_block_t block)  </span><br><span class="line">	|_____dispatch_once_f(val, block, _dispatch_Block_invoke(block))  </span><br><span class="line">		|_______&amp;l-&gt;dgo_once  // &amp;l-&gt;dgo_once 地址中存储的值。显然若该值为DLOCK_ONCE_DONE，即为once已经执行过</span><br></pre></td></tr></table></figure>
+<p><code>dgo_once</code>是<code>dispatch_once_gate_s</code>的成员变量</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> dispatch_once_gate_s &#123;</span><br><span class="line">	<span class="keyword">union</span> &#123;</span><br><span class="line">		dispatch_gate_s dgo_gate;</span><br><span class="line">		uintptr_t dgo_once;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125; dispatch_once_gate_s, *dispatch_once_gate_t;</span><br></pre></td></tr></table></figure>
+<p>有个内联函数<code>static inline bool _dispatch_once_gate_tryenter(dispatch_once_gate_t l)</code></p>
+<p>这个内联函数返回一个 原子性操作的结果</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">return os_atomic_cmpxchg(&amp;l-&gt;dgo_once, DLOCK_ONCE_UNLOCKED,(uintptr_t)_dispatch_lock_value_for_self(), relaxed)</span><br></pre></td></tr></table></figure>
+<p>比较+交换 的原子操作。比较 <code>&amp;l-&gt;dgo_once</code> 的值是否等于 <code>DLOCK_ONCE_UNLOCKED</code></p>
+<p>这样就实现了我们的执行1次的GCD API.</p>
+<p><a href="https://juejin.im/post/6844904143753052174" target="_blank" rel="noopener">dispatch_once的底层实现</a></p>
+<h3 id="什么情况下会死锁">7.什么情况下会死锁</h3>
+<p>造成死锁的主要是 线程信息不对称,出现A等B的同时 B也在等A的情况.</p>
+<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 在主线程中执行这句代码</span></span><br><span class="line"><span class="built_in">dispatch_sync</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"这里死锁了"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>主线程一直不会执行完,追加到主线程同步执行的任务显然惨死.卡住主线程无法自拔.</p>
+<p>其它的情况 都是资源产生竞争或者调用lock的函数没有调用unlock导致,异步线程 先后调用等产生的较多.</p>
+<h3 id="有哪些类型的线程锁分别介绍下作用和使用场景">8.有哪些类型的线程锁，分别介绍下作用和使用场景</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">锁类型</th>
+<th style="text-align: center;">使用场景</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pthread_mutex</code></td>
+<td style="text-align: center;">互斥锁</td>
+<td style="text-align: left;"><code>PTHREAD_MUTEX_NORMAL</code>,<code>#import &lt;pthread.h&gt;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OSSpinLock</td>
+<td style="text-align: center;">自旋锁</td>
+<td style="text-align: left;">不安全，iOS 10 已启用</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>os_unfair_lock</code></td>
+<td style="text-align: center;">互斥锁</td>
+<td style="text-align: left;">替代 OSSpinLock</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>pthread_mutex</code>(recursive)</td>
+<td style="text-align: center;">递归锁</td>
+<td style="text-align: left;"><code>PTHREAD_MUTEX_RECURSIVE</code>,<code>#import &lt;pthread.h&gt;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>pthread_cond_t</code></td>
+<td style="text-align: center;">条件锁</td>
+<td style="text-align: left;"><code>#import &lt;pthread.h&gt;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>pthread_rwlock</code></td>
+<td style="text-align: center;">读写锁</td>
+<td style="text-align: left;">读操作重入，写操作互斥</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="citation" data-cites="synchronized">@synchronized</span></td>
+<td style="text-align: center;">互斥锁</td>
+<td style="text-align: left;">性能差，且无法锁住内存地址更改的对象</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NSLock</td>
+<td style="text-align: center;">互斥锁</td>
+<td style="text-align: left;">封装 <code>pthread_mutex</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NSRecursiveLock</td>
+<td style="text-align: center;">递归锁</td>
+<td style="text-align: left;">封装<code>pthread_mutex</code>(recursive)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NSCondition</td>
+<td style="text-align: center;">条件锁</td>
+<td style="text-align: left;">封装 <code>pthread_cond_t</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NSConditionLock</td>
+<td style="text-align: center;">条件锁</td>
+<td style="text-align: left;">可以指定具体条件值 封装 <code>pthread_cond_t</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="nsoperationqueue中的maxconcurrentoperationcount默认值">9.NSOperationQueue中的maxConcurrentOperationCount默认值</h3>
+<p>默认值 -1. 这个值操作系统会根据资源使用的综合开销情况设置.</p>
+<h3 id="nstimercadisplaylinkdispatch_source_t-的优劣">10.<code>NSTimer、CADisplayLink、</code>dispatch_source_t` 的优劣</h3>
+<table>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 36%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">定时器类型</th>
+<th style="text-align: center;">优势</th>
+<th style="text-align: left;">劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NSTimer</td>
+<td style="text-align: center;">使用简单</td>
+<td style="text-align: left;">依赖 Runloop，具体表现在 无 Runloop 无法使用、NSRunLoopCommonModes、不精确</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CADisplayLink</td>
+<td style="text-align: center;">依赖屏幕刷新频率出发事件,最精.最合适做UI刷新</td>
+<td style="text-align: left;">若屏幕刷新被影响，事件也被影响、事件触发的时间间隔只能是屏幕刷新 duration 的倍数、若事件所需时间大于触发事件，跳过数次、不能被继承</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dispatch_source_t</code></td>
+<td style="text-align: center;">不依赖 Runloop</td>
+<td style="text-align: left;">依赖线程队列,使用麻烦 使用不当容易Crash</td>
+</tr>
+</tbody>
+</table>
+<h1 id="总结">总结</h1>
+<p>今天这篇多线程 也算是一个objc开发者的知识总结,这里面问到的知识大部分和队列线程关系比较多. 高阶一些的搞法并没有. 比如:如何停掉<code>dispatch_source_t</code>的定时器.再比如 为什么要存在<code>dispatch_source</code>. 下一篇我们讲解一下 视图&amp;图像相关文章.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="iOS面试题" scheme="https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>阿里、字节：一套高效的iOS面试题之Block</title>
@@ -2641,127 +2953,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows装机教程</title>
-    <link href="https://www.sunyazhou.com/2019/04/24/20190424WindowsResources/"/>
-    <id>https://www.sunyazhou.com/2019/04/24/20190424WindowsResources/</id>
-    <published>2019-04-24T03:26:34.000Z</published>
-    <updated>2020-08-10T05:22:36.760Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具</p>
-<h3 id="pe安装系统教程">PE安装系统教程</h3>
-<p>PE工具箱制作</p>
-<p>主要步骤：</p>
-<ul>
-<li>第一步:制作前的软件、硬件准备：8G及以上U盘一个都可以， 一台可正常可上网的电脑</li>
-<li>第二步:用电脑店U盘启动制作工具制作启动U盘</li>
-<li>第三步:下载您需要的系统文件并复制到U盘中</li>
-<li>第四步:进入BIOS设置U盘启动顺序</li>
-<li>第五步:在进入WIN10 PE模式分区安装系统即可</li>
-<li>第六步:系统激活问题</li>
-<li>第七步:安装驱动问题</li>
-</ul>
-<h2 id="制作工具箱教程">制作工具箱教程</h2>
-<p>首先先下载一个制作启动工具的软件：</p>
-<p>下载地址:链接：<a href="http://www.usbrun.com/" target="_blank" rel="noopener">http://www.usbrun.com/</a></p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkgqy53nj20qn0d7gu0.jpg"></p>
-<p>下载精简版本好后 先把杀毒软件关掉 ！！ 双击安装一下此软件到电脑上 ，安装好软件后打开 ，如果软件提示更新，可以忽略，不需要更新！！</p>
-<p>把U盘插上 &gt;【注：U盘会格式化，有资料先拷贝出来保存避免被格式掉了】</p>
-<p>要是看不到设备的话， 把U盘重新插一下</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkgqtg3cj20km0efwih.jpg"></p>
-<p>点一键制作然后等制作完成就OK！！ 制作完成之后 点一下模拟启动看下U盘能不能启动，能的话就OK。关掉即可</p>
-<h2 id="下载系统步骤">下载系统步骤</h2>
-<p>下面选1个需要的系统版本下载 (U盘容量够大两个系统都可以下载使用 此PE支持原版系统安装)</p>
-<p>WIN7 64位（B360B450锐龙二代CPU主板不支持） 系统下载连接：<a href="http://www.jsgho.net/win7/jsy/35178.html" target="_blank" rel="noopener">链接</a>(技术员纯净版)</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkknutp5j20le07ndhs.jpg"></p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkknlhboj20nr0543yh.jpg"></p>
-<h2 id="win710-64位">WIN7~10 64位</h2>
-<p>专业版 下载地址：<a href="http://msdn.itellyou.cn/" target="_blank" rel="noopener">http://msdn.itellyou.cn/</a></p>
-<p>可复制此磁力链接使用迅雷新建下载：</p>
-<p>ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dvd_07b164ed.iso|5229189120|5CC3C32DB198D647DCED4B0EB96B8547|/</p>
-<p>下载参考：</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkmns9ewj20w60n5djh.jpg"></p>
-<p>下载好的系统直接拷贝到您刚刚制作好的的U盘里，随便放什么位置都可以。</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkmnyn49j20q10hztgf.jpg"></p>
-<h2 id="设置u盘启动步骤">设置U盘启动步骤</h2>
-<p>制作好的U盘插上您需要装系统的电脑上，以下主板U盘快捷启动按键 华硕启动快捷键：F8<br>
-技嘉、微星、七彩虹、昂达、华擎、映泰 点击：F11<br>
-品牌机：惠普、惠普、戴尔、联想、神州 点击：F12</p>
-<p>以下华硕主板快捷启动菜单选择进入U盘PE参考图，这是一个开机启动设备选项，我们选择刚刚做好的U盘 ADATA USB Flash Drlve(14800MB)按回车即可</p>
-<blockquote>
-<p>（注意：选择不带UEFI的选项）</p>
-</blockquote>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkogn1kzj20pc0ige62.jpg"></p>
-<p>出现U盘启动界面 如下图选择 启动WIN10 PE X 64 ，别的不用去选择。</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkogdvc2j20kg0feaot.jpg"></p>
-<h2 id="分区安装系统步骤">分区安装系统步骤</h2>
-<p>进去PE之后 我们就要对新硬盘 进行一个分区操作了</p>
-<blockquote>
-<p>【如果是老硬盘，有分区的 那可以省略这一步 直接按照下面装系统】</p>
-</blockquote>
-<p>这里采用的是一个三星120G的固态硬盘，<strong>一般为了发回固态最大性能，都要在主板预先开启AHCI模式和分区的时候选择4K对齐</strong>，另外3.0的数据线和主板必须支持3.0的接口。</p>
-<p>AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是IDE的预先设置好，华硕技嘉B250等以上主板 默认都是AHCI模式不需要更改</p>
-<p>就要首先打开DG分区工具箱进行分区处理 ，如下图</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkql68yej2087095n03.jpg"></p>
-<p>点击分区工具 之后 会看到您的硬盘 这时候 可以选择您的新硬盘之后 点击上面的快速分区 如下图</p>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkqlcps7j20sk0le0vb.jpg"></p>
-<p>在新的页面中 你可以选择分几个区 多少容量 都可以自行填写 别的不需要去改变 ，另外右下角 就是4K对齐，只许勾选即可，如下图</p>
-<blockquote>
-<p>注：固态硬盘需要选择4K，机械硬盘不用现在 ，选择了会导致进不了系统</p>
-</blockquote>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkqlfbuwj20sg0lcdix.jpg"></p>
-<p>分区好后关闭分区接口窗口看下一步操作</p>
-<h2 id="安装系统镜像步骤">安装系统镜像步骤</h2>
-<p>打开桌面上的电脑店一键还原，如下图</p>
-<ul>
-<li>①选择系统镜像文件，等待自动识别和挂载后再次选择系统版本。</li>
-<li>②选择需要安装系统的分区。[可以根据分区容量格式信息来判断分区]</li>
-<li>③点击执行按钮等待系统安装完成后重启拔掉U盘。</li>
-</ul>
-<p><img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dkteiu6oj20sh0lcndo.jpg"><br>
-<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdvyxqj20sg0lcjz6.jpg"><br>
-<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdt7xvj20sg0ldqaq.jpg"><br>
-<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdmj5lj20s70lcwmd.jpg"><br>
-<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktddlauj20se0lc0wb.jpg"><br>
-<img src="http://ww1.sinaimg.cn/large/bf8500b1gy1g2dktdxzdgj20sg0ldgtn.jpg"></p>
-<blockquote>
-<p>PS：等进度条走完了 提示重启的时候一定要拔掉U盘 再重启哦！！之后就可以正常进入安装系统过程了，等待大概5-10分钟左右装好重启即可正常使用了</p>
-</blockquote>
-<p>免责条款 &gt; (本作品仅限网友交流安装系统经验，或可作临时安装测试PC硬件之用，请在安装后24小时内删除，若需要长期使用，请购买正版系统及软件。)</p>
-<h2 id="激活系统步骤">激活系统步骤</h2>
-<p>激活工具箱下载连接：</p>
-<p><code>win7</code>点击这里 链接: <code>https://pan.baidu.com/s/1iWVZW534JKqAd9mu1B0VzQ</code> 提取码: <code>u71b</code></p>
-<p><code>win8</code>链接: <code>https://pan.baidu.com/s/1M6t2nGwlBM4qXWT_imcI-A</code> 提取码: tkhb</p>
-<p><code>win10</code> 链接: <code>https://pan.baidu.com/s/1Tr-0PYBVmQFR0HNvzZ5yjA</code> 提取码: a3mt</p>
-<h2 id="华硕主板网卡驱动安装步骤">华硕主板网卡驱动安装步骤</h2>
-<p>教程连接：<a href="http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438" target="_blank" rel="noopener">http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438</a></p>
-<p>建议上网其他驱动问题下载：<a href="http://www.drivergenius.com/" target="_blank" rel="noopener">驱动精灵 标准版</a></p>
-<h1 id="总结">总结</h1>
-<p>每次装机总忘记一些流程 这里记录下来</p>
-<p><a href="https://note.youdao.com/ynoteshare1/index.html?id=e0f8c30393c4f069555d286020f9d394&amp;type=note" target="_blank" rel="noopener">参考 PE安装系统教程</a><br>
-<a href="http://05aebac1.wiz03.com/share/s/05HHH13zK4EY2bE37Q00RO3H1CvO101754vQ2bNyFE2nhALV?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="noopener">U盘刻录安装原版系统教程</a><br>
-<a href="http://msdn.itellyou.cn/" target="_blank" rel="noopener">I tell you神奇的镜像下载网站 绝对纯洁</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具&lt;/p&gt;
-&lt;h3 id=&quot;pe安装系统教程&quot;&gt;PE安装系统教程&lt;/h3&gt;
-&lt;p&gt;PE工具箱制作&lt;/p&gt;
-&lt;p&gt;主要步骤：&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="windows装机" scheme="https://www.sunyazhou.com/categories/windows%E8%A3%85%E6%9C%BA/"/>
-    
-    
-      <category term="win7" scheme="https://www.sunyazhou.com/tags/win7/"/>
     
   </entry>
   
