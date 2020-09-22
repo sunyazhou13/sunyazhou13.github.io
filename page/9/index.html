@@ -183,6 +183,27 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/05/09/20170509HowToCreateSymbolicLinkOnMacosInCode/" title="link to post.title">如何在macOS/MAC OS X上创建替身文件</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文
+软连接
+如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的指针”，软连接本质就是指向硬连接的一个地址，自然它也只会对这一个硬连接有效，一旦软连接所指向的硬连接被删除，软连接也就失效了。当然这与”指针的指针”也有一个很微妙的差别，那就是你对软链接的操作都是通过跳转到硬连接再映射到了对节点的操作
+创建软链接可以使用NSFileManager中的
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-05-09T09:41:17.000Z" class="post-list__meta--date date">2017-05-09</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
+
+</span><a class="btn-border-small" href="/2017/05/09/20170509HowToCreateSymbolicLinkOnMacosInCode/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/04/29/20170429CmputerScienceAndTechnologyClassic/" title="link to post.title">向往计算机科学相关专业的必学经典</a></h2>
       <p class="excerpt">
     
@@ -407,31 +428,6 @@ Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framewor
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/20/20170220ClearNSUserDefaultCcontent/" title="link to post.title">使用终端删除NSUserDefault的内容</a></h2>
-      <p class="excerpt">
-    
-      前言
-
-大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息
-
-NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
-$ defaults delete + 包名 eg: com.baidu.demo
-下面这样会删除所有以com.baidu.demo为包名的文件
-$ defaults delete com.baidu.demo
-
-实际的的路
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/20/20170220ClearNSUserDefaultCcontent/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -495,20 +491,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

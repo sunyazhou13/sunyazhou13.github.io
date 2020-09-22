@@ -183,6 +183,35 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/04/02/20180402RunLoop/" title="link to post.title">深入理解RunLoop</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用RunLoop实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
+本文内容
+
+RunLoop 的概念
+RunLoop 与线程的关系
+RunLoop 对外的接口
+RunLoop 的 Mode
+RunLoop 的内部逻辑
+RunLoop 的底层实现
+苹果用 RunLoop 实现的功能
+
+Aut
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-04-02T06:16:34.000Z" class="post-list__meta--date date">2018-04-02</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/04/02/20180402RunLoop/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2018/03/14/20180314Swft4ArraySkills/" title="link to post.title">Swift 4 中的数组技巧</a></h2>
       <p class="excerpt">
     
@@ -424,33 +453,6 @@ marginwidth及mar
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/19/20171219AudioPan/" title="link to post.title">音频声像Pan值电平左右声道平衡</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
-开篇
-最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果. 下面是 UI 演示.
-
-这里其实修改的类似 AVAudioPlayer里面的pan值修改
-
-我在以前的文章也有一篇提到过这个pan 值
-可能大家不理解为啥 这个 API 起名叫pan
-在声学领域这个东西有专门的名字叫 声像.
-这篇文章介绍了一些我们对声学知识的简单介绍,虽然不知
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-19T03:40:13.000Z" class="post-list__meta--date date">2017-12-19</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/19/20171219AudioPan/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -514,20 +516,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

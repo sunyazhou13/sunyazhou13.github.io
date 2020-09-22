@@ -183,6 +183,27 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2019/05/28/20190528CentosIptables/" title="link to post.title">CentOS7安装iptables防火墙</a></h2>
+      <p class="excerpt">
+    
+      前言
+最近翻墙总不稳定 最后发现是防火墙配置问题今天 记录一下
+配置
+CentOS7默认的防火墙不是iptables,而是firewalle.
+安装iptable iptable-service
+#先检查是否安装了iptablesservice iptables status#安装iptablesyum install -y iptables#升级iptablesyum update iptables #安装iptables-servicesyum install iptables-servic
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2019-05-28T02:06:24.000Z" class="post-list__meta--date date">2019-05-28</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/shell/">shell</a>
+
+</span><a class="btn-border-small" href="/2019/05/28/20190528CentosIptables/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2019/05/17/20190517CleanerForXcodeBuild/" title="link to post.title">Cleaner For Xcode编译</a></h2>
       <p class="excerpt">
     
@@ -439,28 +460,6 @@ CAShapeLayer和贝赛尔曲线绘制三角形
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/11/14/20181114PlayLoadingAnimation/" title="link to post.title">iOS视频加载动画</a></h2>
-      <p class="excerpt">
-    
-      前言
-这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画
-上图看成品
-
-实现原理
-首先我创建一个视图
-@interface ViewController ()@property (nonatomic, strong) UIView *playLoadingView;@end@implementation ViewController- (void)viewDidLoad &amp;#123;    [super viewDidLoad];        //init
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-11-14T06:14:39.000Z" class="post-list__meta--date date">2018-11-14</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/抖音动画系列/">抖音动画系列</a>
-
-</span><a class="btn-border-small" href="/2018/11/14/20181114PlayLoadingAnimation/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -524,20 +523,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

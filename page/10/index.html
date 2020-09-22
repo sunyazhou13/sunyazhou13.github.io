@@ -183,6 +183,31 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/20/20170220ClearNSUserDefaultCcontent/" title="link to post.title">使用终端删除NSUserDefault的内容</a></h2>
+      <p class="excerpt">
+    
+      前言
+
+大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息
+
+NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近开发用到的比较多是如何不运行代码的情况下清理NSUserDefaults信息
+$ defaults delete + 包名 eg: com.baidu.demo
+下面这样会删除所有以com.baidu.demo为包名的文件
+$ defaults delete com.baidu.demo
+
+实际的的路
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-20T11:05:01.000Z" class="post-list__meta--date date">2017-02-20</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/20/20170220ClearNSUserDefaultCcontent/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/02/18/20170218ScanBoundsTracking/" title="link to post.title">iOS如何让二维码/条形码扫描框跟随二维码移动</a></h2>
       <p class="excerpt">
     
@@ -397,23 +422,6 @@ __[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版__必看
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/13/20170113UIViewControllerCodeStandard/" title="link to post.title">UIViewController代码规范</a></h2>
-      <p class="excerpt">
-    
-      Objective-C
-#pragma mark -#pragma mark - private methods 私有方法#pragma mark -#pragma mark - public methods 公有方法#pragma mark -#pragma mark - override methods 复写方法#pragma mark -#pragma mark - getters and setters 设置器和访问器#pragma mark -#pragma mark - UITabl
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-13T03:18:07.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/13/20170113UIViewControllerCodeStandard/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -422,6 +430,8 @@ __[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版__必看
     
       <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/9/">← 最近</a>
     
+    
+      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/11/">更早 →</a>
     
   </nav>
 
@@ -475,20 +485,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
