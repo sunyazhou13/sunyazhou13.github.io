@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>阿里、字节：一套高效的iOS面试题之性能优化 | 迈腾大队长</title>
+    <title>使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="阿里、字节：一套高效的iOS面试题之性能优化 | 迈腾大队长">
+    <meta name="twitter:title" content="使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="阿里、字节：一套高效的iOS面试题之性能优化 | 迈腾大队长">
+    <meta property="og:title" content="使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="迈腾大队长" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2020/09/22/20200922iOSinterviewPerformanceOptimization/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2020/10/04/20201004XcodeBuildXcconfigFile/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,41 +181,62 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2020-09-22T01:42:48.000Z" class="post-list__meta--date date">2020-09-22</time>
+      <time datetime="2020-10-04T03:58:03.000Z" class="post-list__meta--date date">2020-10-04</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">阿里、字节：一套高效的iOS面试题之性能优化</h1>
+    <h1 class="post-title">使用Xcode配置文件来管理不同的环境设置</h1>
   </header>
 
   <section class="post">
-    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
-<p>本篇我们来讲一下 <a href="https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w" target="_blank" rel="noopener">阿里、字节：一套高效的iOS面试题</a> 中的性能优化相关的问题.</p>
-<h2 id="性能优化">性能优化</h2>
-<p>主要的优化如下:</p>
-<ol type="1">
-<li>如何做启动优化，如何监控</li>
-<li>如何做卡顿优化，如何监控</li>
-<li>如何做耗电优化，如何监控</li>
-<li>如何做网络优化，如何监控</li>
-</ol>
-<p>首先优化要从多维度进行才有较大的收益</p>
-<p>这里推荐大家认真分析一下自己的工程并研读一下戴铭老师的<a href="https://ming1016.github.io/2019/12/07/how-to-analyze-startup-time-cost-in-ios/" target="_blank" rel="noopener">如何对 iOS 启动阶段耗时进行分析</a> 文章</p>
-<p>必须要从多维度分析并入手.</p>
-<p>运行时初始化过程 分为：</p>
+<h2 id="背景">背景</h2>
+<p>最近工程遇到了一个环境切换的问题,想到了 *.xcconfig 文件的用处. 查了一圈搜索引擎大家的搞法真是各种抄袭.遇到的问题没有一个能正式解决的</p>
+<p>下面是我遇到的问题,我尝试解决一下.</p>
 <ul>
-<li>加载类扩展</li>
-<li>加载 C++静态对象</li>
-<li>调用+load 函数</li>
-<li>执行 main 函数</li>
-<li>Application 初始化，到 applicationDidFinishLaunchingWithOptions 执行完 初始化帧渲染，到 viewDidAppear 执行完，用户可见可操作。</li>
+<li>创建xcconfig后 cocoapods有警告</li>
+<li>xcconfig继承 需要注意的点</li>
+<li>解决完警告 编译打印问题</li>
 </ul>
+<h3 id="创建">创建</h3>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig1.png"></p>
+<p>下面这里默认勾选tagget (Xcode 不会默认勾选) <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig2.png"></p>
+<p>创建完了 选择我们自己的配置 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig3.png"></p>
+<h4 id="先说第一个警告问题">先说第一个警告问题</h4>
+<p>搞完后我们来看下pod install后出现的警告</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig4.png"></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoDebug.xcconfig`).</span><br><span class="line"></span><br><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoRelease.xcconfig`).</span><br></pre></td></tr></table></figure>
+<p>先说如何解决 当我们生成了自己的.xcconfig文件后默认是cocoapods的配置,让我们改成了自己的并没有管理cocoapod.所以cocoapods对工程的build setting有可能因为我们的改动而不生效,为了解决这个问题我们需要在自己的xcconfig中导入cocoapods的 xcconfig</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig5.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig6.png"></p>
+<p>这里我顺便声明了2个变量 在 debug和release配置里,为了下面测试变量在工程中使用.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">// debug</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br><span class="line"></span><br><span class="line">//release</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br></pre></td></tr></table></figure>
+<p>ok 下面 pod install后 警告就没了.</p>
+<h4 id="xcconfig继承-需要注意的点">xcconfig继承 需要注意的点</h4>
+<p>这里我加了一个通用的 DemoCommon.xcconfig 配置,为了向外输出公共的宏变量.</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig7.png"></p>
+<p><code>GCC_PREPROCESSOR_DEFINITIONS</code> . 表示继承通用环境变量 要加入预处理，即加上这句，代码中才可以调到相关的宏定义</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited) SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span> SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
+<p>这里需要注意多个变量的格式:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited)空格(不能加换行)+SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span>+空格(不能加换行)SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
+<p>我这里遇到的坑是加了20多个变量, 写了一堆.最后发现不像上边的格式那样就编译不过找不到变量.</p>
+<h4 id="解决完警告-编译打印问题">解决完警告 编译打印问题</h4>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig8.png"></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Unexpected <span class="string">'@'</span> <span class="keyword">in</span> program</span><br></pre></td></tr></table></figure>
+<p>出现这个问题是因为宏变量没有转义</p>
+<p>必须将下面的变量</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">//转换前</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"></span><br><span class="line">//转换后</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https:\/\/www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https:\/\/xxxxx.com/"</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig9.png"></p>
+<p>转换完能编译过了 但是还是有警告,应该是没转义对 不过 能正常输出了. 哪位高手如果知道可以留言给我 多谢！</p>
 <h1 id="总结">总结</h1>
-<p>性能优化部分 并没有标准的答案,所以分享给大家一篇重要的文章作为抓手和参考,只要达到预期的优化目的并保证程序稳定即可.</p>
+<p>有些知识不经常使用容易忘记, xcconfig就是这样.工程 demo我已经附在了下方 感兴趣的同学可以下载.</p>
+<p><a href="https://github.com/sunyazhou13/XcodeConfigDemo" target="_blank" rel="noopener">本文demo</a></p>
+<p><a href="https://nshipster.com/xcconfig/" target="_blank" rel="noopener">参考Mattt 大佬的 Xcode Build Configuration Files</a><br>
+<a href="https://www.appcoda.com/xcconfig-guide/" target="_blank" rel="noopener">Using Xcode Configuration (.xcconfig) to Manage Different Build Settings</a></p>
 
   </section>
 
@@ -265,31 +286,11 @@
 <section class="read-more">
      
         
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2020/10/04/20201004XcodeBuildXcconfigFile/" title="使用Xcode配置文件来管理不同的环境设置">使用Xcode配置文件来管理不同的环境设置</a></h2>
-                <p class="excerpt">
-                
-                
-前言
-本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
-背景
-最近工程遇到了一个环境切换
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2020-10-04T03:58:03.000Z" class="post-list__meta--date date">2020-10-04</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2020/10/04/20201004XcodeBuildXcconfigFile/">继续阅读</a></div>
-
-            </div>
-        
 
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2020/09/20/20200920UIViewGraphic/" title="阿里、字节：一套高效的iOS面试题之视图&amp;图形">阿里、字节：一套高效的iOS面试题之视图&amp;图形</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2020/09/22/20200922iOSinterviewPerformanceOptimization/" title="阿里、字节：一套高效的iOS面试题之性能优化">阿里、字节：一套高效的iOS面试题之性能优化</a></h2>
                 <p class="excerpt">
                 
                 
@@ -298,11 +299,11 @@
 本篇我们来讲一下 阿里、字节：一
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2020-09-20T03:40:47.000Z" class="post-list__meta--date date">2020-09-20</time>
+                <div class="post-list__meta"><time datetime="2020-09-22T01:42:48.000Z" class="post-list__meta--date date">2020-09-22</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
 
-</span><a class="btn-border-small" href="/2020/09/20/20200920UIViewGraphic/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2020/09/22/20200922iOSinterviewPerformanceOptimization/">继续阅读</a></div>
 
             </div>
         
@@ -324,7 +325,7 @@
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Tue Sep 22 2020 09:42:48 GMT+0800',
+      id: 'Sun Oct 04 2020 11:58:03 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-09-22T01:51:26.889Z</updated>
+  <updated>2020-10-04T06:48:31.121Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Xcode配置文件来管理不同的环境设置</title>
+    <link href="https://www.sunyazhou.com/2020/10/04/20201004XcodeBuildXcconfigFile/"/>
+    <id>https://www.sunyazhou.com/2020/10/04/20201004XcodeBuildXcconfigFile/</id>
+    <published>2020-10-04T03:58:03.000Z</published>
+    <updated>2020-10-04T06:48:31.121Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.png"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<h2 id="背景">背景</h2>
+<p>最近工程遇到了一个环境切换的问题,想到了 *.xcconfig 文件的用处. 查了一圈搜索引擎大家的搞法真是各种抄袭.遇到的问题没有一个能正式解决的</p>
+<p>下面是我遇到的问题,我尝试解决一下.</p>
+<ul>
+<li>创建xcconfig后 cocoapods有警告</li>
+<li>xcconfig继承 需要注意的点</li>
+<li>解决完警告 编译打印问题</li>
+</ul>
+<h3 id="创建">创建</h3>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig1.png"></p>
+<p>下面这里默认勾选tagget (Xcode 不会默认勾选) <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig2.png"></p>
+<p>创建完了 选择我们自己的配置 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig3.png"></p>
+<h4 id="先说第一个警告问题">先说第一个警告问题</h4>
+<p>搞完后我们来看下pod install后出现的警告</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig4.png"></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoDebug.xcconfig`).</span><br><span class="line"></span><br><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoRelease.xcconfig`).</span><br></pre></td></tr></table></figure>
+<p>先说如何解决 当我们生成了自己的.xcconfig文件后默认是cocoapods的配置,让我们改成了自己的并没有管理cocoapod.所以cocoapods对工程的build setting有可能因为我们的改动而不生效,为了解决这个问题我们需要在自己的xcconfig中导入cocoapods的 xcconfig</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig5.png"></p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig6.png"></p>
+<p>这里我顺便声明了2个变量 在 debug和release配置里,为了下面测试变量在工程中使用.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">// debug</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br><span class="line"></span><br><span class="line">//release</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br></pre></td></tr></table></figure>
+<p>ok 下面 pod install后 警告就没了.</p>
+<h4 id="xcconfig继承-需要注意的点">xcconfig继承 需要注意的点</h4>
+<p>这里我加了一个通用的 DemoCommon.xcconfig 配置,为了向外输出公共的宏变量.</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig7.png"></p>
+<p><code>GCC_PREPROCESSOR_DEFINITIONS</code> . 表示继承通用环境变量 要加入预处理，即加上这句，代码中才可以调到相关的宏定义</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited) SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span> SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
+<p>这里需要注意多个变量的格式:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited)空格(不能加换行)+SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span>+空格(不能加换行)SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
+<p>我这里遇到的坑是加了20多个变量, 写了一堆.最后发现不像上边的格式那样就编译不过找不到变量.</p>
+<h4 id="解决完警告-编译打印问题">解决完警告 编译打印问题</h4>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig8.png"></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Unexpected <span class="string">'@'</span> <span class="keyword">in</span> program</span><br></pre></td></tr></table></figure>
+<p>出现这个问题是因为宏变量没有转义</p>
+<p>必须将下面的变量</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">//转换前</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"></span><br><span class="line">//转换后</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https:\/\/www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https:\/\/xxxxx.com/"</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig9.png"></p>
+<p>转换完能编译过了 但是还是有警告,应该是没转义对 不过 能正常输出了. 哪位高手如果知道可以留言给我 多谢！</p>
+<h1 id="总结">总结</h1>
+<p>有些知识不经常使用容易忘记, xcconfig就是这样.工程 demo我已经附在了下方 感兴趣的同学可以下载.</p>
+<p><a href="https://github.com/sunyazhou13/XcodeConfigDemo" target="_blank" rel="noopener">本文demo</a></p>
+<p><a href="https://nshipster.com/xcconfig/" target="_blank" rel="noopener">参考Mattt 大佬的 Xcode Build Configuration Files</a><br>
+<a href="https://www.appcoda.com/xcconfig-guide/" target="_blank" rel="noopener">Using Xcode Configuration (.xcconfig) to Manage Different Build Settings</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>阿里、字节：一套高效的iOS面试题之性能优化</title>
@@ -3004,77 +3074,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
       <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
     
       <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>做一个简单的Loading动画</title>
-    <link href="https://www.sunyazhou.com/2019/07/26/20190726LoadingAnimationI/"/>
-    <id>https://www.sunyazhou.com/2019/07/26/20190726LoadingAnimationI/</id>
-    <published>2019-07-26T03:13:44.000Z</published>
-    <updated>2020-09-15T02:30:09.140Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190726LoadingAnimationI/CircleLoadingAnimation.png"></p>
-<h1 id="前言">前言</h1>
-<p>由于最近工作忙到坐地铁回家都能睡着,博客没能及时更新,今天抽个时间写个加载动画,废话不多说上图.</p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190726LoadingAnimationI/CircleLoadingAnimation.gif"></p>
-<p>(颜色可以自定义哈,非常简单,小白自己可以随便改)</p>
-<h1 id="开始">开始</h1>
-<p>创建一个UIView的子类<code>UILoadingView</code>(名字最好不要带<code>UI</code>开头哈,我这是为了玩 大家理解就行),然后添加两个接口</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UILoadingView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)startLoading; <span class="comment">//1</span></span><br><span class="line">- (<span class="keyword">void</span>)stopLoading;  <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol type="1">
-<li>开始动画</li>
-<li>结束动画</li>
-</ol>
-</blockquote>
-<p>实现的.m文件中我们需要用到<code>CAReplicatorLayer</code>,主要是看上边的小圆点比较多,用<code>CAReplicatorLayer</code>可以帮助我们自动创建多个小圆点实例.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UILoadingView</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">CAReplicatorLayer</span> *replicatorLayer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">UILoadingView</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> setupSubviews];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)awakeFromNib &#123;</span><br><span class="line">    [<span class="keyword">super</span> awakeFromNib];</span><br><span class="line">    [<span class="keyword">self</span> setupSubviews];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setupSubviews &#123;</span><br><span class="line">	<span class="comment">//这里要补全代码 创建需要的视图 继续往下看</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<h3 id="创建子视图">创建子视图</h3>
-<p>首先我们需要创建一个replicatorLayer的实例对象,然后向这个对象上添加一个圆点的,并错开角度.这里用到的知识点基本就是position和bounds啥关系.这里我不想啰嗦了大家自行google就行了.上代码</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setupSubviews &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.replicatorLayer == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer = [<span class="built_in">CAReplicatorLayer</span> layer];</span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.backgroundColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</span><br><span class="line">        [<span class="keyword">self</span>.layer addSublayer:<span class="keyword">self</span>.replicatorLayer];</span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.bounds = <span class="keyword">self</span>.bounds;</span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.position = <span class="keyword">self</span>.center;</span><br><span class="line">        <span class="built_in">NSInteger</span> instanceCount = <span class="number">15</span>;  <span class="comment">//1</span></span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.instanceCount = instanceCount; <span class="comment">//</span></span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.instanceTransform = <span class="built_in">CATransform3DMakeRotation</span>(M_PI * <span class="number">2</span> / instanceCount, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>); <span class="comment">//2</span></span><br><span class="line">        <span class="keyword">self</span>.replicatorLayer.instanceDelay = <span class="number">1</span> / (instanceCount * <span class="number">1.0</span>); <span class="comment">//2</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//圆点</span></span><br><span class="line">    <span class="built_in">CALayer</span> *circle = [<span class="built_in">CALayer</span> layer];</span><br><span class="line">    circle.bounds = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line">    circle.cornerRadius = <span class="number">5</span>;</span><br><span class="line">    circle.position = <span class="built_in">CGPointZero</span>;</span><br><span class="line">    circle.backgroundColor = [<span class="keyword">self</span> randomColor].CGColor;</span><br><span class="line">    circle.name = kCircleName; <span class="comment">//3  设置layer的唯一标识 </span></span><br><span class="line">    [<span class="keyword">self</span>.replicatorLayer addSublayer:circle];</span><br><span class="line">    <span class="comment">//小技巧 刚开始的动画不是很自然，那是因为小圆点的初始比例是1,让小圆点的初始比例为0.01</span></span><br><span class="line">    circle.transform = <span class="built_in">CATransform3DMakeScale</span>(<span class="number">0.01</span>, <span class="number">0.01</span>, <span class="number">0.01</span>); <span class="comment">//5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol type="1">
-<li>1处的代码是让<code>CAReplicatorLayer</code>帮我们创建指定数量的实例对象(我们添加的原点就是它需要的也就是说它帮你创建了instanceCount个实例对象)</li>
-<li>2处代码 是设置错开的角度（2π 是 360°, 如果需要一圈创建指定数量的圆点 那么 instanceCount/2π 就是每个圆的角度,这里很重要 认真学习一下.）</li>
-<li>3处代码是给这个layer设置一个唯一标识 一会儿要通过方法找到它,如果 不这样做你就要搞个成员变量去存一下,如果用成员变量存储的话注意内存引用关系,我这里不推荐成员变量的搞法.</li>
-<li>4处代码主要是解决动画不自然,因为添加动画的圆点的初始比例是1,只有第一次开始的时候很愣.</li>
-</ol>
-</blockquote>
-<h4 id="找到圆点layer">找到圆点layer</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">CALayer</span> *)findCircleLayer &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">CALayer</span> *layer <span class="keyword">in</span> [<span class="keyword">self</span>.replicatorLayer sublayers]) &#123;</span><br><span class="line">        <span class="keyword">if</span> ([[layer name] isEqualToString:kCircleName]) &#123;</span><br><span class="line">            <span class="keyword">return</span> layer;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们用的时候调用这个方法 找一下我们添加上去的layer即可</p>
-<h4 id="实现对外暴露的方法">实现对外暴露的方法</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startLoading &#123;</span><br><span class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</span><br><span class="line">    <span class="keyword">if</span> (circleLayer &amp;&amp; ![[circleLayer animationKeys] containsObject:kScaleAnimationKey]) &#123;</span><br><span class="line">        <span class="comment">//加动画</span></span><br><span class="line">        <span class="built_in">CABasicAnimation</span> *scale = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"transform.scale"</span>];</span><br><span class="line">        scale.fromValue = @(<span class="number">1</span>);</span><br><span class="line">        scale.toValue = @(<span class="number">0.1</span>);</span><br><span class="line">        scale.duration = <span class="number">1</span>;</span><br><span class="line">        scale.repeatCount = HUGE;</span><br><span class="line">        [circleLayer addAnimation:scale forKey:kScaleAnimationKey];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)stopLoading &#123;</span><br><span class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</span><br><span class="line">    <span class="keyword">if</span> (circleLayer &amp;&amp; [[circleLayer animationKeys] containsObject:kScaleAnimationKey]) &#123;</span><br><span class="line">        [circleLayer removeAnimationForKey:kScaleAnimationKey];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>kScaleAnimationKey 常量自行定义即可.</p>
-</blockquote>
-<h4 id="支持autolayout">支持AutoLayout</h4>
-<p>目前大家用的比较多的是<code>Masonry</code>,所以这里使用<code>Masonry</code>自动布局, 使用自动布局主要是是为了方便外部调用的时候外部视图使用了自动布局,那么内部就需要更新相关<code>layer</code>的<code>frame</code>.具体代码如下</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</span><br><span class="line">    [<span class="keyword">super</span> layoutSubviews];</span><br><span class="line">    </span><br><span class="line">    [<span class="built_in">CATransaction</span> begin];</span><br><span class="line">    [<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</span><br><span class="line">    <span class="keyword">self</span>.replicatorLayer.bounds = <span class="keyword">self</span>.bounds;</span><br><span class="line">    <span class="keyword">self</span>.replicatorLayer.position = <span class="built_in">CGPointMake</span>(<span class="built_in">CGRectGetWidth</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span>, <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.bounds)/<span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">CALayer</span> *circleLayer = [<span class="keyword">self</span> findCircleLayer];</span><br><span class="line">    <span class="keyword">if</span> (circleLayer) &#123;</span><br><span class="line">        circleLayer.position = <span class="built_in">CGPointMake</span>(<span class="keyword">self</span>.frame.size.width / <span class="number">2</span>, <span class="keyword">self</span>.frame.size.height/<span class="number">2</span> - <span class="number">40</span>); <span class="comment">//距离圆心 40pt</span></span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="built_in">CATransaction</span> commit];</span><br><span class="line">    [<span class="keyword">self</span>.replicatorLayer layoutSublayers];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用了 隐式动画和显式动画相关的知识</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">CATransaction</span> begin];</span><br><span class="line">[<span class="built_in">CATransaction</span> setDisableActions:<span class="literal">YES</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//... 这里修改相关动画参数 </span></span><br><span class="line"></span><br><span class="line">[<span class="built_in">CATransaction</span> commit];</span><br></pre></td></tr></table></figure>
-<p>因为有可能layer在动画中,如果在动画中一般在这里需要加上<code>事务</code>修改这样才会更顺畅自然. 可以看到我上边的代码注释写的<code>40pt</code>的距离 实际上是圆心距离我们上边做的原点layer的的距离,大家可自行修改.</p>
-<h1 id="总结">总结</h1>
-<p>由于最近在研究一<a href="https://juejin.im/post/5c1bbec66fb9a049cb18b64c" target="_blank" rel="noopener">音频波形</a>的动画效果,想实现一个类似网易云音乐的黑胶唱片效果,可是用到的知识有点忘记,用此片文章来回顾复习一下动画的知识,也是为了很久没更新的博客更新一下,记录一下经常忘记的小技巧</p>
-<p>Demo我给在下面也把相关的文章参考 放在下方,有兴趣大家可以学习一下.</p>
-<p><a href="https://github.com/sunyazhou13/UILoadingView" target="_blank" rel="noopener">loading动画Demo</a></p>
-<p><a href="http://www.devtalking.com/articles/calayer-animation-replicator-animation/" target="_blank" rel="noopener">参考</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190726LoadingAnimationI/CircleLoadingAnimation.png&quot;&gt;&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="iOS动画" scheme="https://www.sunyazhou.com/tags/iOS%E5%8A%A8%E7%94%BB/"/>
     
   </entry>
   

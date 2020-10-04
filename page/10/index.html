@@ -183,6 +183,27 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/02/22/20170222macOSsimulateKeyboradNSEvent/" title="link to post.title">macOS上模拟发送键盘事件</a></h2>
+      <p class="excerpt">
+    
+      
+最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
+
+导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
+创建CGEventSourceRef 事件源对象(注意它不是OC对象,声明的时候对象前边没有*,而且需要用CFRelease()释放内存).
+创建CGEventRef使用CGEventCreateKeyboardEvent,
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/02/22/20170222macOSsimulateKeyboradNSEvent/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/02/20/20170220ClearNSUserDefaultCcontent/" title="link to post.title">使用终端删除NSUserDefault的内容</a></h2>
       <p class="excerpt">
     
@@ -393,32 +414,6 @@ iOS技
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/01/18/20170118iOSDevelopmentKnowledgePointAccumulate/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/01/13/20170113LearningmacOSdevelopmentShortcut/" title="link to post.title">学习macOS开发的路线</a></h2>
-      <p class="excerpt">
-    
-      开发总结
-
-macOS icon
-
-
-学习完所有__raywenderlich__的__macOS__开发教程
-__Cocoa Programming for OS X (5th Edition)__必看(英文版没有中文)
-__[Advanced.Mac.OS.X.Programming(3rd.2011)].Mark.Dalrymple.文字版__必看
-
-以上这些必须看一遍 包括那两本epub的书籍 虽然都是英文的(我本人英语应该不算太好但也不差)看这个很easy
-博客 老谭笔记 这个大牛是原
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-01-13T03:38:30.000Z" class="post-list__meta--date date">2017-01-13</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/01/13/20170113LearningmacOSdevelopmentShortcut/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

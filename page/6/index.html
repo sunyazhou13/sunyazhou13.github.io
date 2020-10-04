@@ -183,6 +183,33 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/07/20180507AudioUnit/" title="link to post.title">AudioUnit</a></h2>
+      <p class="excerpt">
+    
+      
+前言
+声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果....
+今天带领大家深入了解和学习一下这些音效.
+实现iOS变声的背景
+声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声.
+下图是AVAudioSession的工作流 
+大家常用的变声方案有很多:
+
+FFMpeg提供内部效果器 eg:EQ均衡器
+
+AVFoundation底层的Audio Unit eg
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-05-07T06:59:41.000Z" class="post-list__meta--date date">2018-05-07</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/05/07/20180507AudioUnit/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2018/04/02/20180402RunLoop/" title="link to post.title">深入理解RunLoop</a></h2>
       <p class="excerpt">
     
@@ -427,29 +454,6 @@ Web环境: Ap
   <a class="tag-link" href="/tags/年终总结/">年终总结</a>, <a class="tag-link" href="/tags/生活/">生活</a>
 
 </span><a class="btn-border-small" href="/2017/12/31/20171230FinalSummary/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/12/27/20171227markdownAudio/" title="link to post.title">Markdown中插入音频文件</a></h2>
-      <p class="excerpt">
-    
-      前言
-喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章.
-markdown插入音乐
-markdown其实就是 一种html的转换语法,其实内部也同时支持直接写html标签, 如果不了解各种标签请点击w3cschool查看各种 API 的用法,此时要用到的标签为iframe，代码如下所示，其中
-
-div用于控制格式，若无则默认为居左
-frameborder用于规定是否显示框架周围的边框，1为是，0为否
-marginwidth及mar
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-12-27T04:04:07.000Z" class="post-list__meta--date date">2017-12-27</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/12/27/20171227markdownAudio/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

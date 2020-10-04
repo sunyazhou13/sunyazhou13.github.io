@@ -183,6 +183,22 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/05/10/20170510NSTableRowViewMouseTrackColor/" title="link to post.title">自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色</a></h2>
+      <p class="excerpt">
+    
+      #import &quot;BDRowView.h&quot;#define k_NORMAL_COLOR [NSColor colorFromInt:0xfcfdfe]#define k_SELECTED_COLOR [NSColor colorFromInt:0xeff1f3]@interface BDRowView ()@property(strong) NSTrackingArea *trackingArea;@property(assign) BOOL isHovering;@end@implementa
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-05-10T07:24:20.000Z" class="post-list__meta--date date">2017-05-10</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/05/10/20170510NSTableRowViewMouseTrackColor/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/05/09/20170509HowToCreateSymbolicLinkOnMacosInCode/" title="link to post.title">如何在macOS/MAC OS X上创建替身文件</a></h2>
       <p class="excerpt">
     
@@ -404,27 +420,6 @@ Learning AV Foundation: A Hands-on Guide to Mastering the AV Foundation Framewor
   <a class="tag-link" href="/tags/Learning-AV-Foundation/">Learning AV Foundation</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span><a class="btn-border-small" href="/2017/03/11/20170311LearningAVFoundationAVSpeechSynthesizer/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/22/20170222macOSsimulateKeyboradNSEvent/" title="link to post.title">macOS上模拟发送键盘事件</a></h2>
-      <p class="excerpt">
-    
-      
-最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码.
-
-导入#import &amp;lt;Carbon/Carbon.h&amp;gt;
-创建CGEventSourceRef 事件源对象(注意它不是OC对象,声明的时候对象前边没有*,而且需要用CFRelease()释放内存).
-创建CGEventRef使用CGEventCreateKeyboardEvent,
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-22T08:17:00.000Z" class="post-list__meta--date date">2017-02-22</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/02/22/20170222macOSsimulateKeyboradNSEvent/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
