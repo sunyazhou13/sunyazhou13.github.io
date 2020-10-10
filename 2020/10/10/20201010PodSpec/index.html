@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长</title>
+    <title>Pod spec集成第三framework和.a工作记录 | 迈腾大队长</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长">
+    <meta name="twitter:title" content="Pod spec集成第三framework和.a工作记录 | 迈腾大队长">
     <meta name="twitter:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="使用Xcode配置文件来管理不同的环境设置 | 迈腾大队长">
+    <meta property="og:title" content="Pod spec集成第三framework和.a工作记录 | 迈腾大队长">
     <meta property="og:description" content="我是孙亚洲(@sunyazhou13),一名来自北国冰城的iOS开发者,走在成为圣贤的路上.">
 
     
@@ -41,7 +41,7 @@
     <link rel="alternate" type="application/rss+xml" title="迈腾大队长" href="/atom.xml">
     
 
-    <link rel="canonical" href="https://www.sunyazhou.com/2020/10/04/20201004XcodeBuildXcconfigFile/"/>
+    <link rel="canonical" href="https://www.sunyazhou.com/2020/10/10/20201010PodSpec/"/>
 
     
     <link rel="author" href="https://plus.google.com/107423989995616646161"/>
@@ -181,62 +181,38 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2020-10-04T03:58:03.000Z" class="post-list__meta--date date">2020-10-04</time>
+      <time datetime="2020-10-09T23:52:18.000Z" class="post-list__meta--date date">2020-10-10</time>
  &#8226; <span class="post-meta__tags tags">分类&nbsp;
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
 </span>
     </div>
-    <h1 class="post-title">使用Xcode配置文件来管理不同的环境设置</h1>
+    <h1 class="post-title">Pod spec集成第三framework和.a工作记录</h1>
   </header>
 
   <section class="post">
-    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.png"></p>
+    <p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201010PodSpec/cocoapods.png"></p>
 <h1 id="前言">前言</h1>
 <p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
-<h2 id="背景">背景</h2>
-<p>最近工程遇到了一个环境切换的问题,想到了 *.xcconfig 文件的用处. 查了一圈搜索引擎大家的搞法真是各种抄袭.遇到的问题没有一个能正式解决的</p>
-<p>下面是我遇到的问题,我尝试解决一下.</p>
-<ul>
-<li>创建xcconfig后 cocoapods有警告</li>
-<li>xcconfig继承 需要注意的点</li>
-<li>解决完警告 编译打印问题</li>
-</ul>
-<h3 id="创建">创建</h3>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig1.png"></p>
-<p>下面这里默认勾选tagget (Xcode 不会默认勾选) <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig2.png"></p>
-<p>创建完了 选择我们自己的配置 <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig3.png"></p>
-<h4 id="先说第一个警告问题">先说第一个警告问题</h4>
-<p>搞完后我们来看下pod install后出现的警告</p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig4.png"></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoDebug.xcconfig`).</span><br><span class="line"></span><br><span class="line">[!] CocoaPods did not <span class="built_in">set</span> the base configuration of your project because your project already has a custom config <span class="built_in">set</span>. In order <span class="keyword">for</span> CocoaPods integration to work at all, please either <span class="built_in">set</span> the base configurations of the target `XcodeConfigDemo` to `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` or include the `Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig` <span class="keyword">in</span> your build configuration (`XcodeConfigDemo/DemoRelease.xcconfig`).</span><br></pre></td></tr></table></figure>
-<p>先说如何解决 当我们生成了自己的.xcconfig文件后默认是cocoapods的配置,让我们改成了自己的并没有管理cocoapod.所以cocoapods对工程的build setting有可能因为我们的改动而不生效,为了解决这个问题我们需要在自己的xcconfig中导入cocoapods的 xcconfig</p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig5.png"></p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig6.png"></p>
-<p>这里我顺便声明了2个变量 在 debug和release配置里,为了下面测试变量在工程中使用.</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">// debug</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.release.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br><span class="line"></span><br><span class="line">//release</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"><span class="comment">#include "../Pods/Target Support Files/Pods-XcodeConfigDemo/Pods-XcodeConfigDemo.debug.xcconfig"</span></span><br><span class="line"><span class="comment">#include "DemoCommon.xcconfig"</span></span><br></pre></td></tr></table></figure>
-<p>ok 下面 pod install后 警告就没了.</p>
-<h4 id="xcconfig继承-需要注意的点">xcconfig继承 需要注意的点</h4>
-<p>这里我加了一个通用的 DemoCommon.xcconfig 配置,为了向外输出公共的宏变量.</p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig7.png"></p>
-<p><code>GCC_PREPROCESSOR_DEFINITIONS</code> . 表示继承通用环境变量 要加入预处理，即加上这句，代码中才可以调到相关的宏定义</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited) SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span> SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
-<p>这里需要注意多个变量的格式:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">GCC_PREPROCESSOR_DEFINITIONS = $(inherited)空格(不能加换行)+SUNYAZHOU_COM=<span class="string">'$(SUNYAZHOU_COM)'</span>+空格(不能加换行)SYZ_TEST=<span class="string">'$(SYZ_TEST)'</span></span><br></pre></td></tr></table></figure>
-<p>我这里遇到的坑是加了20多个变量, 写了一堆.最后发现不像上边的格式那样就编译不过找不到变量.</p>
-<h4 id="解决完警告-编译打印问题">解决完警告 编译打印问题</h4>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig8.png"></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Unexpected <span class="string">'@'</span> <span class="keyword">in</span> program</span><br></pre></td></tr></table></figure>
-<p>出现这个问题是因为宏变量没有转义</p>
-<p>必须将下面的变量</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">//转换前</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https://xxxxx.com/"</span></span><br><span class="line"></span><br><span class="line">//转换后</span><br><span class="line">SUNYAZHOU_COM = @<span class="string">"https:\/\/www.sunyazhou.com/"</span></span><br><span class="line">SYZ_TEST = @<span class="string">"https:\/\/xxxxx.com/"</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201004XcodeBuildXcconfigFile/xcconfig9.png"></p>
-<p>转换完能编译过了 但是还是有警告,应该是没转义对 不过 能正常输出了. 哪位高手如果知道可以留言给我 多谢！</p>
+<p>最近开发过程经常遇到工程中集成第三方工程中的时候 使用pod的方式集成.总忘记链接 第三方库的方式和podspec的写法.所以记录下来容易忘记的内容</p>
+<h2 id="podspec-创建">podspec 创建</h2>
+<p>我们在测试工程目录下创建一个目录 起名叫 demoframeworks 然后在这个目录下执行如下:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pod spec create spec名称</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>spec名称</code> 自己起个名字哈</p>
+</blockquote>
+<p>本地会生成一个spec模板 然后用文本编辑器编译一下spec文件,这里我们拿声网的sdk举例.</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Pod::Spec.new <span class="keyword">do</span> <span class="params">|spec|</span></span><br><span class="line">  spec.name         = <span class="string">"specdemo"</span></span><br><span class="line">  spec.version      = <span class="string">"0.0.1"</span></span><br><span class="line">  spec.summary      = <span class="string">"test pod spec"</span></span><br><span class="line">  spec.description  = <span class="string">"demo test测试"</span></span><br><span class="line"></span><br><span class="line">  spec.homepage     = <span class="string">"https://www.sunyazhou.com/"</span></span><br><span class="line">  spec.license      = <span class="string">"MIT"</span></span><br><span class="line">  spec.author             = &#123; <span class="string">"東引甌越"</span> =&gt; <span class="string">"https://www.sunyazhou.com/"</span> &#125;</span><br><span class="line">  spec.source       = &#123; <span class="symbol">:git</span> =&gt; <span class="string">"git@gitee.com:sunyazhou/sunyazhou13.github.io-images.git"</span>&#125;</span><br><span class="line">  <span class="comment">#加载第三方framework写法</span></span><br><span class="line">  spec.vendored_frameworks = <span class="string">'AgoraRtcCryptoLoader.framework'</span>,<span class="string">'AgoraRtcEngineKit.framework'</span>,<span class="string">'AgoraRtmKit.framework'</span>,<span class="string">'AgoraSigKit.framework'</span></span><br><span class="line">  <span class="comment">#加载第三方.a</span></span><br><span class="line">  <span class="comment">#spec.vendored_libraries = 'libProj4.a', 'libJavaScriptCore.a'</span></span><br><span class="line">  <span class="comment">#系统内置动态库的依赖</span></span><br><span class="line">  spec.frameworks = <span class="string">'Photos'</span>,<span class="string">'PhotosUI'</span>,<span class="string">'CoreMedia'</span>,<span class="string">'Foundation'</span>,<span class="string">'CoreGraphics'</span>,<span class="string">'CoreMotion'</span>,<span class="string">'QuartzCore'</span>,<span class="string">'MobileCoreServices'</span>,<span class="string">'Security'</span>,<span class="string">'CoreText'</span>,<span class="string">'VideoToolbox'</span>,<span class="string">'CoreTelephony'</span>,<span class="string">'AudioToolbox'</span>,<span class="string">'SystemConfiguration'</span>,<span class="string">'AVFoundation'</span>, <span class="string">'CoreLocation'</span>,<span class="string">'AdSupport'</span>,<span class="string">'OpenGLES'</span>,<span class="string">'CoreML'</span></span><br><span class="line">  <span class="comment">#内置静态库的依赖</span></span><br><span class="line">  spec.libraries = <span class="string">"iconv"</span>, <span class="string">"c++"</span>, <span class="string">"z.1.1.3"</span> ,<span class="string">"z"</span>,<span class="string">"resolv"</span> ,<span class="string">"sqlite3"</span>,<span class="string">"icucore"</span>,<span class="string">"z.1.2.5"</span>  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>然后在Podfile内容里面添加</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">target <span class="string">'PodSpecDemo'</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># Comment the next line if you don't want to use dynamic frameworks</span></span><br><span class="line">  use_frameworks!</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 添加这行</span></span><br><span class="line">  pod <span class="string">'specdemo'</span>, :path=&gt;<span class="string">'./demoframeworks'</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>注意这里的<code>specdemo</code>是我们给集成本地pod起的名字 最好和创建的spec名字保持一致.</p>
+<p>然后 pod install</p>
+<p>最后工程就变成了我们想要的样子</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201010PodSpec/cocoapods1.png"></p>
 <h1 id="总结">总结</h1>
-<p>有些知识不经常使用容易忘记, xcconfig就是这样.工程 demo我已经附在了下方 感兴趣的同学可以下载.</p>
-<p><a href="https://github.com/sunyazhou13/XcodeConfigDemo" target="_blank" rel="noopener">本文demo</a></p>
-<p><a href="https://nshipster.com/xcconfig/" target="_blank" rel="noopener">参考Mattt 大佬的 Xcode Build Configuration Files</a><br>
-<a href="https://www.appcoda.com/xcconfig-guide/" target="_blank" rel="noopener">Using Xcode Configuration (.xcconfig) to Manage Different Build Settings</a></p>
+<p>记录经常忘记的知识点 防止着急用的时候各种找,更多spec的写法 <a href="https://guides.cocoapods.org/syntax/podspec.html#vendored_libraries" target="_blank" rel="noopener">参考官方的api</a></p>
+<p><a href="https://github.com/sunyazhou13/PodSpecDemo" target="_blank" rel="noopener">Demo工程点击这里下载</a></p>
+<p>工程中移除了framework 因为github不允许上传超过100m以上的文件.很坑 大家下载后看下写法就好了.</p>
 
   </section>
 
@@ -286,43 +262,25 @@
 <section class="read-more">
      
         
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2020/10/10/20201010PodSpec/" title="Pod spec集成第三framework和.a工作记录">Pod spec集成第三framework和.a工作记录</a></h2>
-                <p class="excerpt">
-                
-                
-前言
-本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
-最近开发过程经常遇到工程中集成第
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2020-10-09T23:52:18.000Z" class="post-list__meta--date date">2020-10-10</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2020/10/10/20201010PodSpec/">继续阅读</a></div>
-
-            </div>
-        
 
         
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2020/09/22/20200922iOSinterviewPerformanceOptimization/" title="阿里、字节：一套高效的iOS面试题之性能优化">阿里、字节：一套高效的iOS面试题之性能优化</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2020/10/04/20201004XcodeBuildXcconfigFile/" title="使用Xcode配置文件来管理不同的环境设置">使用Xcode配置文件来管理不同的环境设置</a></h2>
                 <p class="excerpt">
                 
                 
 前言
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
-本篇我们来讲一下 阿里、字节：一
+背景
+最近工程遇到了一个环境切换
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2020-09-22T01:42:48.000Z" class="post-list__meta--date date">2020-09-22</time>
+                <div class="post-list__meta"><time datetime="2020-10-04T03:58:03.000Z" class="post-list__meta--date date">2020-10-04</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
 
-</span><a class="btn-border-small" href="/2020/09/22/20200922iOSinterviewPerformanceOptimization/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2020/10/04/20201004XcodeBuildXcconfigFile/">继续阅读</a></div>
 
             </div>
         
@@ -344,7 +302,7 @@
       repo: 'gitment-comments',
       owner: 'sunyazhou13',
       admin: ['sunyazhou13'],
-      id: 'Sun Oct 04 2020 11:58:03 GMT+0800',
+      id: 'Sat Oct 10 2020 07:52:18 GMT+0800',
       distractionFreeMode: 'true'
   })
   gitalk.render('gitalk-container') 
