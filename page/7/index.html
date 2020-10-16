@@ -183,6 +183,32 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/01/12/20180112AVAudioSessionCategory/" title="link to post.title">AVAudioSession-Category各种姿势</a></h2>
+      <p class="excerpt">
+    
+       # 前言
+2018新年第一篇, 梳理AVAudioSession的Category,解决音频开发中的各种播放被打断或者首次启动时无声音的问题
+开篇
+由于iOS系统的特殊性,所有App共用一个AVAudioSession所以这个会话是个单例对象.(macOS是支持同时播放多路音频文件)
+当遇到插拔耳机,接电话,调起 siri,等等,就出现音频会话被系统时间打断等行为表现:
+
+是进行录音还是播放？
+当系统静音键按下时该如何表现？
+是从扬声器还是从听筒里面播放声音？
+插拔耳机后如何表现？
+来电话/闹
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-01-12T02:32:18.000Z" class="post-list__meta--date date">2018-01-12</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2018/01/12/20180112AVAudioSessionCategory/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/12/31/20171230FinalSummary/" title="link to post.title">2017年终总结</a></h2>
       <p class="excerpt">
     
@@ -444,33 +470,6 @@ demo:
   <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
 
 </span><a class="btn-border-small" href="/2017/09/29/20170929MarkdownTable/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/09/01/20170901CharlesCaptureHttps/" title="link to post.title">如何使用Charles截获https请求</a></h2>
-      <p class="excerpt">
-    
-      前言
-
-如何使用charles在iOS设备上截获https的请求
-1.安装Charles
-官网下载就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的
-2.HTTP抓包配置
-(1) 查看电脑IP
-
-(2) 设置手机HTTP代理
-手机连上电脑，点击“设置-&amp;gt;无线局域网-&amp;gt;连接的WiFi”，设置HTTP代理： 服务器为电脑IP地址：如192.168.1.108 端口：8888
-
-注意:这里用我自己电脑的IP举例 红色区域 记得替换成你
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-09-01T15:17:09.000Z" class="post-list__meta--date date">2017-09-01</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
-
-</span><a class="btn-border-small" href="/2017/09/01/20170901CharlesCaptureHttps/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   

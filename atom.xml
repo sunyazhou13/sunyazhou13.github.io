@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-10-10T00:46:45.792Z</updated>
+  <updated>2020-10-16T08:15:07.908Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>修复Xcode Source Editor在masOS的扩展中不显示</title>
+    <link href="https://www.sunyazhou.com/2020/10/16/20201016XcodeSourceEditorNotWork/"/>
+    <id>https://www.sunyazhou.com/2020/10/16/20201016XcodeSourceEditorNotWork/</id>
+    <published>2020-10-16T08:05:42.000Z</published>
+    <updated>2020-10-16T08:15:07.908Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201016XcodeSourceEditorNotWork/XcodeSourceEditorCover.jpg"></p>
+<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<h2 id="问题描述">问题描述</h2>
+<p>这几天要对代码进行对齐发现经常用的 XAlign插件不起作用了,一看设置中发现 扩展中没有了Xcode Source Editor <img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201016XcodeSourceEditorNotWork/XcodeSourceEditor.png"></p>
+<p>通过网络上查询找到一篇靠谱的方式 特记录下来</p>
+<p>终端输入如下 即可出来</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ PATH=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support:<span class="string">"<span class="variable">$PATH</span>"</span></span><br><span class="line">$ lsregister -f /Applications/Xcode.app</span><br></pre></td></tr></table></figure>
+<p>引起的原因</p>
+<p>当Xcode的多个副本在同一台机器上时，扩展可能会完全停止工作。在这种情况下，Apple Developer Relations建议重新注册你的Xcode主拷贝到Launch Services(最简单的方法是暂时将lsregister的位置先添加到PATH中):</p>
+<p>参考 <a href="https://nshipster.com/xcode-source-extensions/" target="_blank" rel="noopener">https://nshipster.com/xcode-source-extensions/</a></p>
+<h1 id="总结">总结</h1>
+<p>记录经常遇到的问题.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20201016XcodeSourceEditorNotWork/XcodeSourceEditorCover.jpg
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Pod spec集成第三framework和.a工作记录</title>
@@ -2997,84 +3034,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
       &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/panviewdemo.gif&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UITraitCollection详解</title>
-    <link href="https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/"/>
-    <id>https://www.sunyazhou.com/2019/09/16/20190916UITraitCollection/</id>
-    <published>2019-09-16T10:49:05.000Z</published>
-    <updated>2020-09-15T02:24:31.017Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection1.png"></p>
-<h1 id="前言">前言</h1>
-<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
-<h2 id="先说问题">先说问题</h2>
-<p>最近在适配iOS13 有个<code>Dark Mode</code>的暗黑模式, 为了适配这个模式不得不在UIView和UIViewController以及UIWindow中复写如下方法</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)traitCollectionDidChange:(<span class="built_in">UITraitCollection</span> *)previousTraitCollection &#123;</span><br><span class="line">    [<span class="keyword">super</span> traitCollectionDidChange:previousTraitCollection];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里有个<code>UITraitCollection</code>的类以前从来没有仔细研究,今天详细研究一下.</p>
-<blockquote>
-<p>Trait 特性 特点</p>
-</blockquote>
-<p>显然 这个类是一个UIKit中用于处理苹果手机的一些特性的储存与UI相关的配置, 大家有没有想过如果你在iOS修改通用中的某些系统设置,比如(下图) 对比度、全局字体大小,这个我们开发人员怎么处理.</p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection2.gif"></p>
-<p>这些系统的特性修改就放到这个<code>UITraitCollection</code>中,这个类也就是我们经常在VC和View中经常用到而大家往往容易忽略的,下面简单记录一下这些特性都有哪些</p>
-<h2 id="uitraitcollection-api介绍">UITraitCollection API介绍</h2>
-<h4 id="判断当前设备时-iphoneipadtvcarplay-的配置">判断当前设备时 iPhone/iPad/tv/carPlay 的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithUserInterfaceIdiom:(<span class="built_in">UIUserInterfaceIdiom</span>)idiom;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceIdiom</span> userInterfaceIdiom; <span class="comment">// unspecified: UIUserInterfaceIdiomUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="关于布局方向的配置">关于布局方向的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithLayoutDirection:(<span class="built_in">UITraitEnvironmentLayoutDirection</span>)layoutDirection API_AVAILABLE(ios(<span class="number">10.0</span>));</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UITraitEnvironmentLayoutDirection</span> layoutDirection API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UITraitEnvironmentLayoutDirectionUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="图片-scale-的配置">图片 Scale 的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithDisplayScale:(<span class="built_in">CGFloat</span>)scale;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">CGFloat</span> displayScale; <span class="comment">// unspecified: 0.0</span></span><br></pre></td></tr></table></figure>
-<h4 id="布局-size-class-的配置">布局 Size Class 的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithHorizontalSizeClass:(<span class="built_in">UIUserInterfaceSizeClass</span>)horizontalSizeClass;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceSizeClass</span> horizontalSizeClass; <span class="comment">// unspecified: UIUserInterfaceSizeClassUnspecified</span></span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithVerticalSizeClass:(<span class="built_in">UIUserInterfaceSizeClass</span>)verticalSizeClass;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceSizeClass</span> verticalSizeClass; <span class="comment">// unspecified: UIUserInterfaceSizeClassUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="force-touch-是否可用的配置">Force Touch 是否可用的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithForceTouchCapability:(<span class="built_in">UIForceTouchCapability</span>)capability API_AVAILABLE(ios(<span class="number">9.0</span>));</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIForceTouchCapability</span> forceTouchCapability API_AVAILABLE(ios(<span class="number">9.0</span>)); <span class="comment">// unspecified: UIForceTouchCapabilityUnknown</span></span><br></pre></td></tr></table></figure>
-<h4 id="全局字体大小的配置">全局字体大小的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithPreferredContentSizeCategory:(<span class="built_in">UIContentSizeCategory</span>)preferredContentSizeCategory API_AVAILABLE(ios(<span class="number">10.0</span>));</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>) <span class="built_in">UIContentSizeCategory</span> preferredContentSizeCategory API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UIContentSizeCategoryUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="色域的配置">色域的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithDisplayGamut:(<span class="built_in">UIDisplayGamut</span>)displayGamut API_AVAILABLE(ios(<span class="number">10.0</span>));</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIDisplayGamut</span> displayGamut API_AVAILABLE(ios(<span class="number">10.0</span>)); <span class="comment">// unspecified: UIDisplayGamutUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="是否开启高对比度的配置">是否开启高对比度的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithAccessibilityContrast:(<span class="built_in">UIAccessibilityContrast</span>)accessibilityContrast API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>)) API_UNAVAILABLE(watchos);</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIAccessibilityContrast</span> accessibilityContrast API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>)) API_UNAVAILABLE(watchos); <span class="comment">// unspecified: UIAccessibilityContrastUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="全局字重的配置">全局字重的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithLegibilityWeight:(<span class="built_in">UILegibilityWeight</span>)legibilityWeight API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>), watchos(<span class="number">6.0</span>));</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UILegibilityWeight</span> legibilityWeight API_AVAILABLE(ios(<span class="number">13.0</span>), tvos(<span class="number">13.0</span>), watchos(<span class="number">6.0</span>)); <span class="comment">// unspecified: UILegibilityWeightUnspecified</span></span><br></pre></td></tr></table></figure>
-<h4 id="主题的配置">主题的配置</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">UITraitCollection</span> *)traitCollectionWithUserInterfaceStyle:(<span class="built_in">UIUserInterfaceStyle</span>)userInterfaceStyle API_AVAILABLE(tvos(<span class="number">10.0</span>)) API_AVAILABLE(ios(<span class="number">12.0</span>)) API_UNAVAILABLE(watchos);</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIUserInterfaceStyle</span> userInterfaceStyle API_AVAILABLE(tvos(<span class="number">10.0</span>)) API_AVAILABLE(ios(<span class="number">12.0</span>)) API_UNAVAILABLE(watchos); <span class="comment">// unspecified: UIUserInterfaceStyleUnspecified</span></span><br></pre></td></tr></table></figure>
-<h3 id="如何获取-uitraitcollection">如何获取 UITraitCollection</h3>
-<p><code>UITraitCollection</code>本身是一个配置的集合，每个 <code>UIView</code>/<code>UIViewController</code>都有自己的 <code>UITraitCollection</code>对象，并将自己的<code>UITraitCollection</code>传递给子<code>UIView</code>/<code>UIViewController</code>作为默认值。</p>
-<ul>
-<li>可以通过 <code>UIView</code>/<code>UIViewController</code>的属性 <code>traitCollection</code> 获取到当前视图的 UITraitCollection 对象</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="keyword">self</span>.traitCollection <span class="comment">//拿到当前得</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>可以通过子类重写如下方法的方式监控 traitCollection 属性的变化</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)traitCollectionDidChange:(<span class="built_in">UITraitCollection</span> *)previousTraitCollection &#123;</span><br><span class="line">    [<span class="keyword">super</span> traitCollectionDidChange:previousTraitCollection];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>获取全局的<code>UITraitCollection</code></li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">UITraitCollection</span> currentTraitCollection];</span><br></pre></td></tr></table></figure>
-<h2 id="技巧">技巧</h2>
-<p>如果要在UIViewController中更新状态栏 当设置完style的时候可以调用</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">self</span> setNeedsStatusBarAppearanceUpdate];</span><br></pre></td></tr></table></figure>
-<h1 id="总结">总结</h1>
-<p>通过简单的学习<code>UITraitCollection</code>又深刻学习了一下这个类,希望以后能记录一下学过的知识.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190916UITraitCollection/UITraitCollection1.png&quot;&gt;&lt;/p&gt;
-&lt;h1 
     
     </summary>
     
