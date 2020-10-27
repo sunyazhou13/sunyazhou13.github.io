@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.sunyazhou.com/"/>
-  <updated>2020-10-16T08:15:07.908Z</updated>
+  <updated>2020-10-27T06:17:29.941Z</updated>
   <id>https://www.sunyazhou.com/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决iOS调用系统相册不显示中文问题</title>
+    <link href="https://www.sunyazhou.com/2020/10/27/2020107WebviewSystemLanguage/"/>
+    <id>https://www.sunyazhou.com/2020/10/27/2020107WebviewSystemLanguage/</id>
+    <published>2020-10-27T05:57:30.000Z</published>
+    <updated>2020-10-27T06:17:29.941Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
+<p>最近开发遇到一个bug,在h5中点击选择iOS系统相册,显示的是英文的</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/2020107WebviewSystemLanguage/WebviewSystemLanguage1.jpeg"></p>
+<h2 id="解决方式">解决方式</h2>
+<p>在Xcode的plist中加入如下代码</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>CFBundleAllowMixedLocalizations<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>也可以 在 info.plist里面添加<code>Localized resources can be mixed</code> <code>YES</code>表示是否允许应用程序获取框架库内语言。</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/2020107WebviewSystemLanguage/WebviewSystemLanguage2.png"></p>
+<p>然后运行效果:</p>
+<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/2020107WebviewSystemLanguage/WebviewSystemLanguage3.jpeg"></p>
+<h1 id="总结">总结</h1>
+<p>感谢大家观看 到位挠挠了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;前言&lt;/h1&gt;
+&lt;p&gt;本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>修复Xcode Source Editor在masOS的扩展中不显示</title>
@@ -2978,62 +3016,6 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
     
       &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20191204MathGraphicTool/MathGraphic.png&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;前
-    
-    </summary>
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="iOS开发" scheme="https://www.sunyazhou.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="macOS开发" scheme="https://www.sunyazhou.com/tags/macOS%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Masonry约束实现简单的高级拖拽视图</title>
-    <link href="https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/"/>
-    <id>https://www.sunyazhou.com/2019/09/26/20190926MasonryPanViewDemo/</id>
-    <published>2019-09-26T12:05:20.000Z</published>
-    <updated>2020-09-15T02:16:11.098Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/panviewdemo.gif"></p>
-<h1 id="前言">前言</h1>
-<p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p>
-<h2 id="背景">背景</h2>
-<p>最近开发遇到一个上图的需求,做一个挂件能四处拖动并且上边还时不时的展示一个tips气泡的<code>Label</code>,在尽量使用少的代码来实现这个功能,作为我手一名iOS开发人员必须严格考究这个需求,显然这有点麻烦,一贯懒惰我的实在不想计算哪个边哪个角甚至滑动到哪里的<code>frame</code>,计算frame这既听起来可笑又觉的没什么技术含量. 为了让代码量少并且能满足需求,我选择使用Masonry来实现这个功能</p>
-<h2 id="开搞">开搞</h2>
-<p>首先我搞起之前我建议大家看下<a href="http://tutuge.me/" target="_blank" rel="noopener">土土哥</a>的<a href="http://tutuge.me/tags/Masonry/" target="_blank" rel="noopener">有趣的Autolayout示例1~5Masonry实现文章</a>,本文也是参考土土哥的文章学习写出的,见笑了各位,个人认为土土哥的文章简直就是Masonry自动布局的样板教程,强烈建议入门的小伙伴或者高手经常复写.</p>
-<p>下面的图是土土哥实现的demo<br>
-<img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/tutugeMasonry1.gif"></p>
-<p><img src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/tutugeMasonry2.gif"></p>
-<p>但我的问题是怎么保证那个tip的气泡label左右拖拽能辗转腾挪的允许logo图像之间有<code>旷量移动</code></p>
-<h2 id="代码实现旷量移动">代码实现旷量移动</h2>
-<p>首先我们创建一个demo,很简单VC的demo就行 创建相关绿色背景视图和图像imageView以及tipLabel的气泡视图,具体代码我贴了出来,我就不啰嗦如何创建其它视图了xib拖拽一下就行了.</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">"ViewController.h"</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;Masonry/Masonry.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UIView</span>        *greenView;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span>   *widgetView;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>  ) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span>       *bubbleTitleLabel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) MASConstraint *leftConstraint; <span class="comment">//左侧约束变量</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) MASConstraint *topConstraint;  <span class="comment">//顶部约束变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>这里可以看到有两个<code>leftConstraint</code>和<code>topConstraint</code>的约束全局变量,这两个就是实现拖拽的时候改变约束的偏移量来实现的.具体代码如下</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> screenWidth = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width;</span><br><span class="line"><span class="built_in">CGFloat</span> screenHeight = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.height;</span><br><span class="line">[<span class="keyword">self</span>.widgetView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">    <span class="comment">// 设置边界条件约束，保证内容可见，优先级1000</span></span><br><span class="line">    make.left.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_left);</span><br><span class="line">    make.right.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_right);</span><br><span class="line">    make.top.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_top);</span><br><span class="line">    make.bottom.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_bottom);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span>.leftConstraint = make.centerX.equalTo(<span class="keyword">self</span>.greenView.mas_left).with.offset(screenWidth - <span class="number">20</span>).priorityHigh(); <span class="comment">// 优先级要比边界条件低</span></span><br><span class="line">    <span class="keyword">self</span>.topConstraint = make.centerY.equalTo(<span class="keyword">self</span>.greenView.mas_top).with.offset(screenHeight - <span class="number">100</span>).priorityHigh(); <span class="comment">// 优先级要比边界条件低</span></span><br><span class="line">    make.width.height.mas_equalTo(@<span class="number">100</span>);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>上边的<code>greaterThanOrEqualTo</code>和<code>lessThanOrEqualTo</code>都是限制挂件的可滑动范围,而最后的<code>make.centerX/Y.equalTo</code>是限制挂件的默认位置,我让它默认在右下角,所以通过偏移量移动过去</p>
-<blockquote>
-<p>注意:这里有个坑就是因为这个东西能四处滑动 所以基本需要锁定<code>left</code>和<code>top</code>,我发现只有通过offset移动才能确定最初位置,如果equalTo直接写成xxxview的bottom或者right是滑动不了的,仔细思考一下masonry就知道为啥了.</p>
-</blockquote>
-<p>然后添加手势并实现相关滑动事件即可实现滑动</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UIPanGestureRecognizer</span> *pan = [[<span class="built_in">UIPanGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(panWithGesture:)];</span><br><span class="line">[<span class="keyword">self</span>.greenView addGestureRecognizer:pan];</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)panWithGesture:(<span class="built_in">UIPanGestureRecognizer</span> *)pan &#123;</span><br><span class="line">    <span class="built_in">CGPoint</span> touchPoint = [pan locationInView:<span class="keyword">self</span>.greenView];</span><br><span class="line">    <span class="keyword">self</span>.leftConstraint.offset = touchPoint.x;</span><br><span class="line">    <span class="keyword">self</span>.topConstraint.offset = touchPoint.y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="旷量label的约束">旷量Label的约束</h4>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">self</span>.bubbleTitleLabel mas_remakeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">	make.height.equalTo(@<span class="number">26</span>);</span><br><span class="line">	make.bottom.equalTo(<span class="keyword">self</span>.widgetView.mas_top);</span><br><span class="line">	make.left.greaterThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_left).offset(<span class="number">0</span>);</span><br><span class="line">	make.right.lessThanOrEqualTo(<span class="keyword">self</span>.greenView.mas_right).offset(<span class="number">0</span>);</span><br><span class="line">	make.centerX.lessThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_right).offset(<span class="number">10</span>);</span><br><span class="line">	make.centerX.greaterThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_left).offset(<span class="number">-10</span>);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>想要实现旷量移动必须增加更多的约束限制</p>
-<p>这里就增加了</p>
-<figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">make.centerX.lessThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_right).offset(<span class="number">10</span>);</span><br><span class="line">make.centerX.greaterThanOrEqualTo(<span class="keyword">self</span>.widgetView.mas_left).offset(<span class="number">-10</span>);</span><br></pre></td></tr></table></figure>
-<p>这样就实现了 左右超过滑动便宜还依然控制着tip的label左右移动范围.</p>
-<h1 id="总结">总结</h1>
-<p>经过工作中遇到的问题实例,学习了一些Masonry的技巧,希望和大家分享,demo我已放到下面 喜欢自行下载学习.</p>
-<p><a href="https://github.com/sunyazhou13/PanViewDemo" target="_blank" rel="noopener">demo下载</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20190926MasonryPanViewDemo/panviewdemo.gif&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言
     
     </summary>
     

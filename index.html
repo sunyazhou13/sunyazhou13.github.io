@@ -183,6 +183,28 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2020/10/27/2020107WebviewSystemLanguage/" title="link to post.title">解决iOS调用系统相册不显示中文问题</a></h2>
+      <p class="excerpt">
+    
+      前言
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
+最近开发遇到一个bug,在h5中点击选择iOS系统相册,显示的是英文的
+
+解决方式
+在Xcode的plist中加入如下代码
+&amp;lt;key&amp;gt;CFBundleAllowMixedLocalizations&amp;lt;/key&amp;gt;&amp;
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2020-10-27T05:57:30.000Z" class="post-list__meta--date date">2020-10-27</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2020/10/27/2020107WebviewSystemLanguage/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2020/10/16/20201016XcodeSourceEditorNotWork/" title="link to post.title">修复Xcode Source Editor在masOS的扩展中不显示</a></h2>
       <p class="excerpt">
     
@@ -394,29 +416,6 @@ app
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2020/08/31/20200831iOSinterviewAnswers/" title="link to post.title">阿里、字节：一套高效的iOS面试题之runtime相关问题3</a></h2>
-      <p class="excerpt">
-    
-      
-前言
-本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.
-runtime相关问题之内存部分的关联属性或者hook相关的Method Swizzle
-经过前两期内容 我们这期来讲一下 内存部分的剩余问题 主要包含如下:
-
-Method Swizzle注意事项
-属性修饰符atomic的内部实现
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2020-08-31T08:52:25.000Z" class="post-list__meta--date date">2020-08-31</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/iOS面试题/">iOS面试题</a>
-
-</span><a class="btn-border-small" href="/2020/08/31/20200831iOSinterviewAnswers/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -478,20 +477,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

@@ -183,6 +183,34 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/06/16/20170616XcodeDebugViaWireless/" title="link to post.title">Xcode9新功能 无线真机调试</a></h2>
+      <p class="excerpt">
+    
+      效果
+今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
+看一张图
+
+配置
+第一步 选择设备选项
+
+第二步 点勾选 via network
+
+剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
+注意:第一次运行的时候比较慢 可以通过数据线插上先运行一次 运行环境: Xcode9 beta 运行设备操作系统: iOS11 beta Macbook+iPhone 最好在同一个局域网
+我估计苹果发布正式版本的时候这个应该比较好用了
+好了 现在可以愉快的
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-06-16T03:07:46.000Z" class="post-list__meta--date date">2017-06-16</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/Xcode/">Xcode</a>, <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/技巧/">技巧</a>
+
+</span><a class="btn-border-small" href="/2017/06/16/20170616XcodeDebugViaWireless/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/06/16/20170616LearningAVFoundationAVAssetBasic/" title="link to post.title">Learning AV Foundation(四)AVAsset元数据(基础篇)</a></h2>
       <p class="excerpt">
     
@@ -403,23 +431,6 @@ comman
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/23/20170323CheckNSWindowisFullScreen/" title="link to post.title">判断NSWindow是否全屏</a></h2>
-      <p class="excerpt">
-    
-      @interface NSWindow (FullScreen)- (BOOL)mn_isFullScreen;@end@implementation NSWindow (FullScreen)- (BOOL)mn_isFullScreen&amp;#123;    return (([self styleMask] &amp;amp; NSFullScreenWindowMask) == NSFullScreenWindowMask);&amp;#125;@end
-refs:How to know if a NSWi
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
-
-</span><a class="btn-border-small" href="/2017/03/23/20170323CheckNSWindowisFullScreen/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -483,20 +494,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

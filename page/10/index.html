@@ -183,6 +183,23 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2017/03/23/20170323CheckNSWindowisFullScreen/" title="link to post.title">判断NSWindow是否全屏</a></h2>
+      <p class="excerpt">
+    
+      @interface NSWindow (FullScreen)- (BOOL)mn_isFullScreen;@end@implementation NSWindow (FullScreen)- (BOOL)mn_isFullScreen&amp;#123;    return (([self styleMask] &amp;amp; NSFullScreenWindowMask) == NSFullScreenWindowMask);&amp;#125;@end
+refs:How to know if a NSWi
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2017-03-23T06:03:32.000Z" class="post-list__meta--date date">2017-03-23</time>
+ &#8226; <span class="post-list__meta--tags tags">
+  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>
+
+</span><a class="btn-border-small" href="/2017/03/23/20170323CheckNSWindowisFullScreen/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/03/17/20170317LearningAVFoundationAVAudioPlayer/" title="link to post.title">Learning AV Foundation(二)AVAudioPlayer</a></h2>
       <p class="excerpt">
     
@@ -408,23 +425,6 @@ $ git clone git@github.com:sunya
       <hr class="post-list__divider" />
     </li>
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/02/09/20170209HowtToDisableWebviewNSScrollViewScroll/" title="link to post.title">Webview的NSScrollView禁用滑动功能</a></h2>
-      <p class="excerpt">
-    
-      在webview的WebFrameLoadDelegate代理里面实现如下代码
-#pragma mark -#pragma mark - WebViewDelegate- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame&amp;#123;    [sender stringByEvaluatingJavaScriptFromString:@&quot;document.documentElement.style.ove
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-02-09T05:37:28.000Z" class="post-list__meta--date date">2017-02-09</time>
- &#8226; <span class="post-list__meta--tags tags">
-  <a class="tag-link" href="/tags/iOS开发/">iOS开发</a>, <a class="tag-link" href="/tags/macOS开发/">macOS开发</a>, <a class="tag-link" href="/tags/如何/">如何</a>
-
-</span><a class="btn-border-small" href="/2017/02/09/20170209HowtToDisableWebviewNSScrollViewScroll/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
 
   </ol>
 
@@ -488,20 +488,5 @@ root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 </script>
 
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
