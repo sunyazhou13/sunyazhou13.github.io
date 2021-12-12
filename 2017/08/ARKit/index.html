@@ -1,0 +1,959 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.2.1" /><meta property="og:title" content="ARKit" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="en_US" /><meta name="description" content="前言" /><meta property="og:description" content="前言" /><link rel="canonical" href="https://www.sunyazhou.com/2017/08/ARKit/" /><meta property="og:url" content="https://www.sunyazhou.com/2017/08/ARKit/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-08-30T22:50:43+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ARKit" /><meta name="twitter:site" content="@sunyazhou13" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2017/08/ARKit/"},"url":"https://www.sunyazhou.com/2017/08/ARKit/","headline":"ARKit","dateModified":"2017-08-30T22:50:43+08:00","datePublished":"2017-08-30T22:50:43+08:00","@type":"BlogPosting","author":{"@type":"Person","name":"孙亚洲"},"description":"前言","@context":"https://schema.org"}</script><title>ARKit | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不断学习, 与时俱进.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3 unloaded"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou13" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>ARKit</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>ARKit</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Aug 30, 2017, 10:50 PM +0800" > 2017-08-30 <i class="unloaded">2017-08-30T22:50:43+08:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sat, Feb 6, 2021, 7:25 PM +0800" > 02-06 <i class="unloaded">2021-02-06T19:25:27+08:00</i> </span></div></div><div class="post-content"><h1 id="前言">前言</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitPreview.png" alt="" /></p><p>本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解. 期间有任何问题请大家集思广益,多多指教.</p><h1 id="主要内容">主要内容</h1><ul><li><strong>AR技术介绍</strong><li><strong>ARKit工作原理及流程介绍</strong><li><strong>ARKit简单代码实现</strong><li><strong>ARKit框架所有API介绍</strong><li><strong>ARScnView介绍</strong><li><strong>ARSession介绍</strong><li><strong>ARCamera介绍</strong><li><strong>ARKit捕捉平地</strong><li><strong>AR代码demo实现</strong></ul><h2 id="ar技术介绍">AR技术介绍</h2><h4 id="ar技术简介">AR技术简介</h4><ul><li>增强现实技术（Augmented Reality，简称 AR），是一种实时的计算摄影机影像的位置及角度并加上相应图像、视频、3D模型的技术，这种技术的目标是在屏幕上把虚拟世界套在现实世界并进行互动<li>AR场景实现技术要素<ol><li>多媒体捕捉现实图像：如摄像头<li>三维建模:3D立体模型<li>传感器追踪:主要追踪现实世界动态物体的六轴变化，这六轴分别是X、Y、Z轴位移及旋转。其中位移三轴决定物体的方位和大小，旋转三轴决定物体显示的区域<li>坐标识别及转换：3D模型显示在现实图像中不是单纯的frame坐标点，而是一个三维的矩阵坐标<li>AR还可以与虚拟物体进行一些交互(optional)<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDirection.png" alt="" /></ol></ul><h4 id="arkit概述及特点">ARKit概述及特点</h4><ul><li><code class="language-plaintext highlighter-rouge">ARKit</code> 框架(framework)提供 两种 AR 技术<ul><li><strong>基于3D 场景(<code class="language-plaintext highlighter-rouge">SceneKit</code>) 实现的增强现实</strong><li><strong>基于2D 场景(<code class="language-plaintext highlighter-rouge">SpriktKit</code>) 实现的增强现实</strong></ul><blockquote><p>一般主流都是基于3D 实现,<code class="language-plaintext highlighter-rouge">ARkit</code>兼容 <code class="language-plaintext highlighter-rouge">SceneKit</code>和 <code class="language-plaintext highlighter-rouge">SpriktKit</code> (苹果推出游戏引擎)framework</p></blockquote><li>显示AR 效果为什么依赖 <strong>3D引擎<code class="language-plaintext highlighter-rouge">SceneKit</code>和 2D 引擎<code class="language-plaintext highlighter-rouge">SpriktKit</code> 苹果的游戏引擎框架? 原因是游戏引擎才可以加载物体模型。</strong><blockquote><p>虽然<code class="language-plaintext highlighter-rouge">ARKit</code>中的视图<strong>(<code class="language-plaintext highlighter-rouge">ARSCNView</code>)继承自<code class="language-plaintext highlighter-rouge">SCNView</code>,<code class="language-plaintext highlighter-rouge">SCNView</code>继承自<code class="language-plaintext highlighter-rouge">UIView</code></strong>, 但是目前<code class="language-plaintext highlighter-rouge">ARKit </code>框架本身只包含相机追踪, 不能直接加载物体模型, 所以只能依赖游戏引擎加载 ARKit (我觉得苹果是在充分利用和整合现有资源并推广自己的 framework 一石二鸟) 因为就目前我没有看到 任何<code class="language-plaintext highlighter-rouge">ARKit</code>支持 <code class="language-plaintext highlighter-rouge">Unity3D</code>或者 <code class="language-plaintext highlighter-rouge">Cocoas2D</code></p></blockquote></ul><h4 id="ios11-如何支持arkit">iOS11 如何支持<code class="language-plaintext highlighter-rouge">ARKit</code></h4><p>iOS11虽然推出了 <code class="language-plaintext highlighter-rouge">ARKit</code> 但不是所有 iOS11系统都支持</p><ul><li>必须 CPU A9以上(iPhone 6s 以上 还有 iPhone SE)</ul><p>开发环境</p><ul><li>Xcode版本:Xcode9及以上<li>系统: iOS11及以上<li>iOS设备：处理器A9及 以上（6S机型及以上)<li>macOS系统: 10.12.4及以上</ul><h4 id="xcode-自带创建模板多数都不用">Xcode 自带创建模板(多数都不用)</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitModel.png" alt="" /></p><p>demo 演示</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">ARSCNViewDelegate</span><span class="o">&gt;</span>
+<span class="c1">//AR视图：展示3D界面</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">ARSCNView</span> <span class="o">*</span><span class="n">sceneView</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+    
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+
+    <span class="c1">//场景代理</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+    
+    <span class="c1">// 显示帧率</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">showsStatistics</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+    
+    <span class="c1">// 创建一个场景</span>
+    <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"art.scnassets/ship.scn"</span><span class="p">];</span>
+    
+    <span class="c1">// Set the scene to the view</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">scene</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewWillAppear</span><span class="p">:</span><span class="n">animated</span><span class="p">];</span>
+    
+    <span class="c1">// 世界坐标系配置</span>
+    <span class="n">ARWorldTrackingSessionConfiguration</span> <span class="o">*</span><span class="n">configuration</span> <span class="o">=</span> <span class="p">[</span><span class="n">ARWorldTrackingSessionConfiguration</span> <span class="nf">new</span><span class="p">];</span>
+    
+    <span class="c1">// 运行3D 场景的 会话</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">session</span> <span class="nf">runWithConfiguration</span><span class="p">:</span><span class="n">configuration</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewWillDisappear</span><span class="p">:</span><span class="n">animated</span><span class="p">];</span>
+    
+    <span class="c1">// 暂停</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">session</span> <span class="nf">pause</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">didReceiveMemoryWarning</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">didReceiveMemoryWarning</span><span class="p">];</span>
+    <span class="c1">// Release any cached data, images, etc that aren't in use.</span>
+<span class="p">}</span>
+
+<span class="cp">#pragma mark - ARSCNViewDelegate
+</span>
+
+<span class="c1">//给当前锚点创建一个节点 (node 可以理解成 UIView)</span>
+<span class="cm">/*
+// Override to create and configure nodes for anchors added to the view's session.
+- (SCNNode *)renderer:(id&lt;SCNSceneRenderer&gt;)renderer nodeForAnchor:(ARAnchor *)anchor {
+    SCNNode *node = [SCNNode new];
+ 
+    // Add geometry to the node...
+ 
+    return node;
+}
+*/</span>
+
+<span class="c1">//会话有错误</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didFailWithError</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span> <span class="p">{</span>
+    <span class="c1">// Present an error message to the user</span>
+    
+<span class="p">}</span>
+
+<span class="c1">//被打断  类似音频播放的时候被打断 eg:前后台切换 来电话  siri</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionWasInterrupted</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="p">{</span>
+    <span class="c1">// Inform the user that the session has been interrupted, for example, by presenting an overlay</span>
+    
+<span class="p">}</span>
+
+<span class="c1">//会话结束</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionInterruptionEnded</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="p">{</span>
+    <span class="c1">// Reset tracking and/or remove existing anchors if consistent tracking is required</span>
+    
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="arkit工作原理及流程介绍">ARKit工作原理及流程介绍</h2><h3 id="主要内容-1">主要内容</h3><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/RenderingARKit.png" alt="" /></p><p><code class="language-plaintext highlighter-rouge">ARKit</code> 并不是一个独立运行的框架 必须要配合<code class="language-plaintext highlighter-rouge">SceneKit</code>,没有<code class="language-plaintext highlighter-rouge">SceneKit</code> <code class="language-plaintext highlighter-rouge">ARKit</code>和普通相机没有任何区别</p><blockquote><p><em>难点:3D坐标的矩阵转换</em> (3D X/Y/Z, 4x4坐标)</p></blockquote><p>下面是一张图 ARKit 的所有.h 头文件 (没有列出派生的子类)</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDefines.png" alt="" /></p><ul><li>ARKit框架中的核心类<li><strong><code class="language-plaintext highlighter-rouge">ARScnView</code></strong><li><strong><code class="language-plaintext highlighter-rouge">ARSession</code></strong><li><p><strong><code class="language-plaintext highlighter-rouge">ARCamera</code></strong></p><li><p><code class="language-plaintext highlighter-rouge">ARKit</code>demo 示例 实现</p><ul><li>捕捉平面 添加物体</ul><li>AR虚拟增强现实就是指在相机捕捉到的现实世界图像中显示一个虚拟的3D模型,这个过程可以分为两个步骤<ol><li>相机捕捉现实世界图像 (由ARKit 实现)<li>在图像中现实虚拟3D 模型(由SceneKit 实现)</ol><li><code class="language-plaintext highlighter-rouge">ARKit</code>与<code class="language-plaintext highlighter-rouge">SceneKit</code>框架关系图</ul><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitUML.png" alt="" /></p><ol><li><code class="language-plaintext highlighter-rouge">ARSCNView</code> –&gt; <code class="language-plaintext highlighter-rouge">SCNView</code>(SceneKit.framework)–&gt;<code class="language-plaintext highlighter-rouge">UIView</code>(UIKit.framework)<li>ARSCNView视图容器,它管理一个 <code class="language-plaintext highlighter-rouge">ARSession</code><li>在一个完整的虚拟增强现实体验中,<code class="language-plaintext highlighter-rouge">ARKit</code>只负责把真实世界画面转变为一个3D 场景, 这个过程主要分为两个环节：<ul><li>ARCamera 负责捕捉摄像头画面<li>ARSession 负责搭建3D 场景</ul><li><p>在一个完整的虚拟增强现实体验中,将虚拟物体展现在3D场景中是由<code class="language-plaintext highlighter-rouge">SceneKit</code>框架来完成的</p><blockquote><p>每一个虚拟的物体都是一个节点SCNNode,每一个节点构成了一个场景SCNScene,无数个场景构成了3D世界</p></blockquote><blockquote><p>可以理解UIViewController 的[view addSubview:xxxView];</p></blockquote></ol><h3 id="arkit工作原理">ARKit工作原理</h3><h4 id="arscnview与-arsession关系">ARSCNView与 ARSession关系</h4><p>说之前先了解一下这个<code class="language-plaintext highlighter-rouge">Session</code> 和<code class="language-plaintext highlighter-rouge">Context</code>命名以及含义</p><p><code class="language-plaintext highlighter-rouge">Session</code> 直译: 会话<br /> <code class="language-plaintext highlighter-rouge">Context</code> 直译: 上下文</p><p><em>在iOS框架中，凡是带session或者context后缀的，这种类一般自己不干活，作用一般都是两个</em>:</p><ul><li><strong>管理其他类，帮助他们搭建沟通桥梁，好处就是解耦</strong><li><strong>负责帮助我们管理复杂环境下的内存</strong></ul><p><em><code class="language-plaintext highlighter-rouge">Session</code> 和<code class="language-plaintext highlighter-rouge">Context</code>不同点</em></p><ul><li>session 有硬件参与的(一般与硬件打交道), eg: 摄像头捕捉 <code class="language-plaintext highlighter-rouge">ARSession</code>、音频 <code class="language-plaintext highlighter-rouge">AVAudioSession</code>, 网卡相关的<code class="language-plaintext highlighter-rouge">NSURLSession</code> …. 等等.<li>context 一般没有硬件参与的, eg: <code class="language-plaintext highlighter-rouge">CGGraphicContext</code>、<code class="language-plaintext highlighter-rouge">EAGLContext</code> 绘图上下文, 以及自定义转场里面的那个 Context 就不详细列举了.</ul><p>回到正题, 如上所说 我们要想实现一个</p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> 与<code class="language-plaintext highlighter-rouge">ARCamera</code> 之间相互协同配合 (<code class="language-plaintext highlighter-rouge">ARSCNView</code> 与<code class="language-plaintext highlighter-rouge">ARCamera</code> 两者之间没有直接关系)</p><ul><li><strong>ARSCNView —–&gt; ARCamera 或</strong><li><strong>ARSCNView &lt;—– ARCamera</strong></ul><blockquote><p><strong>ARSCNView里有个 ARFrame(属性 成员变量), ARFrame 里面包含 ARCamera(属性 成员变量)</strong></p></blockquote><p>就需要一个沟通的桥梁 进行调度配合协作完成 图像捕捉到视觉渲染的过程__这个桥梁 就是 <code class="language-plaintext highlighter-rouge">ARSession</code>__</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARKitSession.png" alt="" /></p><p>如果想运行一个 <code class="language-plaintext highlighter-rouge">ARSession</code>会话,必须指定一个叫<code class="language-plaintext highlighter-rouge">会话追踪配置</code>的对象<code class="language-plaintext highlighter-rouge">ARConfiguration</code>,<code class="language-plaintext highlighter-rouge">ARConfiguration</code>主要目的负责追踪相机在3D 世界中的位置以及一些特征场景的捕捉,<strong>比如捕捉平面</strong>,这个类 作用很大</p><ul><li><code class="language-plaintext highlighter-rouge">ARConfiguration</code>是个父类,为了更好实现增强现实的效果,苹果建议我们使用派生自它的子类<code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration </code>(这个类仅支持<code class="language-plaintext highlighter-rouge">A9</code>芯片之后的机型).</ul><p>注意: <em>原来是这个<code class="language-plaintext highlighter-rouge">ARWorldTrackingSessionConfiguration</code>现在被弃用了.</em></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARWorldTrackingConfiguration.png" alt="" /></p><h4 id="arframe-与-arworldtrackingconfiguration">ARFrame 与 ARWorldTrackingConfiguration</h4><p><code class="language-plaintext highlighter-rouge">ARSession</code> 搭建沟通的桥梁的参与者有两个</p><ol><li>ARFrame<li>ARWorldTrackingConfiguration</ol><p><code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration</code> （3D世界追踪配置) 的作用是跟踪设备的__方向、位置、检测摄像头捕捉到的内容__.</p><p>它的内部实现了一系列庞大的算法和调用iPhone 上必要的传感器来检测手机的 <strong>移动、旋转、平移</strong>(六轴位置方向变化)</p><p>当<code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration</code>计算出相机在3D 世界中的位置时,会把这个<strong>位置数据</strong> 交个<code class="language-plaintext highlighter-rouge">ARSession</code>去管理, 而相机的<strong>位置数据</strong>对应的类就是<code class="language-plaintext highlighter-rouge">ARFrame</code></p><blockquote><p><code class="language-plaintext highlighter-rouge">ARSession</code>类一个属性叫<code class="language-plaintext highlighter-rouge">currentFrame</code> 就是 ARFrame 的实例变量</p></blockquote><p><code class="language-plaintext highlighter-rouge">ARCamera</code>只负责捕捉图像,不参与数据的处理. 它属于3D 场景中的一个环节, 每个3D Scene 都会有一个 Camera, 这个 Camera 决定了我们看到物体的视野.</p><p>这三者关系如下:</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/RelationshipARFrame.png" alt="" /></p><blockquote><p><code class="language-plaintext highlighter-rouge">ARFrame</code>里面有我们需要的<code class="language-plaintext highlighter-rouge">CVPixelBufferRef</code>(capturedImage) 和 <code class="language-plaintext highlighter-rouge">ARCamera</code> 也就是我们需要的图像的原始数据</p></blockquote><p><strong>ARCamera在3D世界的位置</strong></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/Coordinate.png" alt="" /></p><h3 id="arkit-工作流程">ARKit 工作流程</h3><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARWorkflow.png" alt="" /> 图片来自:<a href="http://www.jianshu.com/p/0492c7122d2f">坤小</a></p><ol><li><code class="language-plaintext highlighter-rouge">ARSCNView</code>加载场景<code class="language-plaintext highlighter-rouge">SCNScene</code><li><code class="language-plaintext highlighter-rouge">SCNScene</code> 启动相机<code class="language-plaintext highlighter-rouge">ARCamera</code>开始捕捉场景<li><code class="language-plaintext highlighter-rouge">ARCamera</code> 捕捉场景后 <code class="language-plaintext highlighter-rouge">ARSCNView</code>开始将场景数据给<code class="language-plaintext highlighter-rouge">ARSession</code><li><code class="language-plaintext highlighter-rouge">ARSession</code> 通过<code class="language-plaintext highlighter-rouge">ARConfiguration</code>(或者它的派生子类) 实现场景的追踪并返回一个<code class="language-plaintext highlighter-rouge">ARFrame</code>.<li>给<code class="language-plaintext highlighter-rouge">ARSCNView</code>的 scene 添加一个子节点(3D物体模型)</ol><blockquote><p><code class="language-plaintext highlighter-rouge">ARConfiguration</code> 捕捉相机的位置的目的是__能够在添加的3D 物体模型的时候计算出3D 物体模型相对于相机的真实矩阵位置__</p></blockquote><p>注意:<strong>在3D坐标系统中</strong></p><ul><li>世界坐标系 相当于 UIView 的 <code class="language-plaintext highlighter-rouge">Frame</code><li>本地坐标系 相当于 UIView 的 <code class="language-plaintext highlighter-rouge">bounds</code></ul><blockquote><p>坐标系的转换在 ARKit 中是比较难部分</p></blockquote><h2 id="arkit简单代码实现">ARKit简单代码实现</h2><p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemo1.zip">代码ARKitDemo1</a></p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">touchesBegan</span><span class="p">:(</span><span class="n">NSSet</span><span class="o">&lt;</span><span class="n">UITouch</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">touches</span> <span class="nf">withEvent</span><span class="p">:(</span><span class="n">UIEvent</span> <span class="o">*</span><span class="p">)</span><span class="nv">event</span><span class="p">{</span>
+    <span class="c1">//1. 使用场景加载 scn 文件</span>
+    
+    <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"Models.scnassets/vase/vase.scn"</span><span class="p">];</span>
+    <span class="n">SCNNode</span> <span class="o">*</span><span class="n">plantNode</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    
+    <span class="c1">//2. 调整位置 将节点添加到当前屏幕中</span>
+    <span class="n">plantNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    
+    
+    <span class="c1">//3. 将飞机节点添加到当前屏幕</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">arSceneView</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">plantNode</span><span class="p">];</span>
+    
+<span class="p">}</span>
+</pre></table></code></div></div><p>这里需要补充一点</p><blockquote><p>我们先抛开<code class="language-plaintext highlighter-rouge">ARSCNView</code>和 <code class="language-plaintext highlighter-rouge">UIViewController</code> 以及<code class="language-plaintext highlighter-rouge">UIView</code>的关系</p></blockquote><p><strong>我们只说一下<code class="language-plaintext highlighter-rouge">ARSCNView</code>,<code class="language-plaintext highlighter-rouge">scene</code>,<code class="language-plaintext highlighter-rouge">node</code>啥关系</strong></p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> 是个集成自 UIView 的视图</p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> 有个属性(成员变量)叫<code class="language-plaintext highlighter-rouge">scene</code> 这就相当于 VC</p><p><code class="language-plaintext highlighter-rouge">scene</code>有 <code class="language-plaintext highlighter-rouge">rootNode</code> 相当于 VC 有<code class="language-plaintext highlighter-rouge">self.view</code></p><p><strong>可以把<code class="language-plaintext highlighter-rouge">scene</code>理解为 VC</strong><br /> <strong>把<code class="language-plaintext highlighter-rouge">rootNode</code>理解为 <code class="language-plaintext highlighter-rouge">self.view</code></strong></p><p>我们知道 self.view 可以添加 子 view 通过</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nf">addSubview</span><span class="p">:</span><span class="n">xxx</span><span class="p">];</span>
+</pre></table></code></div></div><p>那么 node 也就有了相应的方法</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">xxxNode</span><span class="p">];</span>
+</pre></table></code></div></div><blockquote><p>注意:<em><strong>所有的场景有且只有一个根节点，其他所有节点都是根节点的子节点</strong></em></p></blockquote><h2 id="arkit框架所有api介绍">ARKit框架所有API介绍</h2><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/ARDefines.png" alt="" /></p><p>还是拿上边这张图说一下 这里我们诉求剖析所有 API 从而达到大家都了解 ARKit的内容</p><h4 id="aranchor">ARAnchor</h4><p><code class="language-plaintext highlighter-rouge">ARAnchor</code>表示一个物体在3D 空间的位置和方向(ARAnchor 俗称 3D 锚点, 类似 UIKit 框架中 CALayer的 Anchor)</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARAnchor</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//锚点唯一标识</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUUID</span> <span class="o">*</span><span class="n">identifier</span><span class="p">;</span>
+
+<span class="c1">//锚点的旋转变换矩阵，定义了锚点的旋转、位置、缩放。是一个4x4的矩阵</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">transform</span><span class="p">;</span>
+
+<span class="c1">//构造方法,一般我们无需构造。因为添加一个3D物体时ARKit会有代理告知我们物体的锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithTransform</span><span class="p">:(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nv">transform</span><span class="p">;</span>
+
+</pre></table></code></div></div><blockquote><p><code class="language-plaintext highlighter-rouge">ARFrame</code>表示的也是物体的位置和方向,但是<code class="language-plaintext highlighter-rouge">ARFrame</code>通常标识的是 AR 相机的<strong>位置</strong>和<strong>方向</strong>以及追踪相机的时间戳,还有捕捉到相机的图片帧(CVPixelBufferRef)</p></blockquote><h4 id="arerror">ARError</h4><p><code class="language-plaintext highlighter-rouge">ARError</code> 错误描述类, eg: 设备不支持, 常驻后台的会话中断…等</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="n">FOUNDATION_EXTERN</span> <span class="n">NSString</span> <span class="o">*</span><span class="k">const</span> <span class="n">ARErrorDomain</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="nf">NS_ERROR_ENUM</span><span class="p">(</span><span class="n">ARErrorDomain</span><span class="p">,</span> <span class="n">ARErrorCode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/** Unsupported session configuration. */</span>
+    <span class="n">ARErrorCodeUnsupportedConfiguration</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    
+    <span class="cm">/** A sensor required to run the session is not available. */</span>
+    <span class="n">ARErrorCodeSensorUnavailable</span>          <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
+    
+    <span class="cm">/** A sensor failed to provide the required input. */</span>
+    <span class="n">ARErrorCodeSensorFailed</span>               <span class="o">=</span> <span class="mi">102</span><span class="p">,</span>
+    
+    <span class="cm">/** App does not have permission to use the camera. The user may change this in settings. */</span>
+    <span class="n">ARErrorCodeCameraUnauthorized</span>         <span class="o">=</span> <span class="mi">103</span><span class="p">,</span>
+    
+    <span class="cm">/** World tracking has encountered a fatal error. */</span>
+    <span class="n">ARErrorCodeWorldTrackingFailed</span>        <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></table></code></div></div><h4 id="arframe">ARFrame</h4><p><code class="language-plaintext highlighter-rouge">ARFrame</code> 主要是追踪当前的状态 eg: 图片帧, 时间戳,位置方向等参数.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARFrame</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//时间戳</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSTimeInterval</span> <span class="n">timestamp</span><span class="p">;</span>
+
+<span class="c1">//图片帧</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CVPixelBufferRef</span> <span class="n">capturedImage</span><span class="p">;</span>
+
+<span class="c1">//相机（表示这个ARFrame是哪一个相机的，iPhone7plus有两个摄像机）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARCamera</span> <span class="o">*</span><span class="n">camera</span><span class="p">;</span>
+
+<span class="c1">//返回当前相机捕捉到的锚点数据（当一个3D虚拟模型加入到ARKit中时，锚点值得就是这个模型在AR中的位置）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">anchors</span><span class="p">;</span>
+
+<span class="c1">//灯光 指的是灯光强度 一般是0-2000，系统默认1000</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARLightEstimate</span> <span class="o">*</span><span class="n">lightEstimate</span><span class="p">;</span>
+
+<span class="c1">//特征点（应该是捕捉平地或者人脸的，比较苹果有自带的人脸识别功能） 仅限 world 的追踪配置可用</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARPointCloud</span> <span class="o">*</span><span class="n">rawFeaturePoints</span><span class="p">;</span>
+
+<span class="c1">//根据2D坐标点搜索3D模型，这个方法通常用于，当我们在手机屏幕点击某一个点的时候，可以捕捉到这一个点所在的3D模型的位置，至于为什么是一个数组非常好理解。手机屏幕一个是长方形，这是一个二维空间。而相机捕捉到的是一个由这个二维空间射出去的长方体，我们点击屏幕一个点可以理解为在这个长方体的边缘射出一条线，这一条线上可能会有多个3D物体模型</span>
+<span class="n">point</span><span class="err">：</span><span class="mi">2</span><span class="n">D</span><span class="err">坐标点（手机屏幕某一点）</span>
+<span class="n">ARHitTestResultType</span><span class="err">：捕捉类型</span>  <span class="err">点还是面</span>
+<span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="err">：追踪结果数组</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">hitTest</span><span class="p">:(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span> <span class="nf">types</span><span class="p">:(</span><span class="n">ARHitTestResultType</span><span class="p">)</span><span class="nv">types</span><span class="p">;</span>
+
+<span class="c1">//相机窗口的的坐标变换（可用于相机横竖屏的旋转适配）</span>
+<span class="k">-</span><span class="p">(</span><span class="n">CGAffineTransform</span><span class="p">)</span><span class="nf">displayTransformWithViewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span> <span class="nf">orientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>这里说一下一个技巧 如果在一个类里面我们不想提供<code class="language-plaintext highlighter-rouge">init:</code>方法的话 该如何写？</p><p>我们都知道<code class="language-plaintext highlighter-rouge">OC</code>里面所有的<code class="language-plaintext highlighter-rouge">class</code>都是继承 自<code class="language-plaintext highlighter-rouge">NSObject</code>,<code class="language-plaintext highlighter-rouge">NSObject</code>里面有<code class="language-plaintext highlighter-rouge">init:</code>、<code class="language-plaintext highlighter-rouge">dealloc:</code>等方法.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARAnchor</span> <span class="p">(</span><span class="nl">Unavailable</span><span class="p">)</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">new</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>这里用到的技巧就是 写个 Category 并复写该方法后边标注为<code class="language-plaintext highlighter-rouge">NS_UNAVAILABLE</code></p></blockquote><h4 id="arhittestresult">ARHitTestResult</h4><p><code class="language-plaintext highlighter-rouge">ARHitTestResult</code> 点击回调结果,这个类主要用于AR 技术中 <strong>现实世界与3D 场景中虚拟物体的交互.</strong> eg:在相机中移动、拖拽3D 虚拟物体,都可以通过这个类来获取 ARKit 所捕捉的结果.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARHitTestResultType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//点</span>
+    <span class="n">ARHitTestResultTypeFeaturePoint</span>              <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span>
+	<span class="c1">//水平面 y为0.    </span>
+    <span class="n">ARHitTestResultTypeEstimatedHorizontalPlane</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">),</span>
+    
+    <span class="c1">//已结存在的平面</span>
+    <span class="n">ARHitTestResultTypeExistingPlane</span>             <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">),</span>
+    
+    <span class="c1">//已结存在的锚点和平面</span>
+    <span class="n">ARHitTestResultTypeExistingPlaneUsingExtent</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">),</span>
+<span class="p">}</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">ARHitTestResult</span><span class="p">.</span><span class="n">ResultType</span><span class="p">);</span>
+
+<span class="k">@interface</span> <span class="nc">ARHitTestResult</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//捕捉类型</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARHitTestResultType</span> <span class="n">type</span><span class="p">;</span>
+
+<span class="c1">//3D虚拟物体与相机的距离（单位：米）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">distance</span><span class="p">;</span>
+
+<span class="c1">//本地坐标矩阵（世界坐标指的是相机为场景原点的坐标，而每一个3D物体自身有一个场景，本地坐标就是相对于这个场景的坐标）类似于frame和bounds的区别</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">localTransform</span><span class="p">;</span>
+
+<span class="c1">//世界坐标矩阵</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">worldTransform</span><span class="p">;</span>
+
+<span class="c1">//锚点（3D虚拟物体，在虚拟世界有一个位置，这个位置参数是SceneKit中的SCNVector3：三维矢量），而锚点anchor是这个物体在AR现实场景中的位置，是一个4x4的矩阵</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARAnchor</span> <span class="o">*</span><span class="n">anchor</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>这里需要了解一下:</p><ul><li><p><strong>matrix_float4x4</strong> <strong>worldTransform</strong>; 世界坐标系 <strong>以相机为场景的原点开始(0,0,0,0)</strong> 也就是以相机为圆心向外,参照这个原点 3D 物体的位置信息. 这就相当于2D 的 UIView 的 frame (绝对坐标)</p><li><p><strong>matrix_float4x4</strong> <strong>localTransform</strong>; 本地坐标系 以一个 node 为父节点为参照,相当于距离这个父场景的坐标.</p><li><p><strong>matrix_float4x4</strong> <a href="http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/">4x4 矩阵请参考这里</a></p></ul><h4 id="arlightestimate">ARLightEstimate</h4><p><code class="language-plaintext highlighter-rouge">ARLightEstimate</code></p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARLightEstimate</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//环境灯光强度  范围0-2000 默认1000</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">ambientIntensity</span><span class="p">;</span>
+
+<span class="c1">//环境光温度</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">ambientColorTemperature</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><h4 id="arplaneanchor">ARPlaneAnchor</h4><p><code class="language-plaintext highlighter-rouge">ARPlaneAnchor</code>派生自<code class="language-plaintext highlighter-rouge">ARAnchor</code>的子类, 平面锚点.<code class="language-plaintext highlighter-rouge">ARKit</code>能自动识别平地,并且添加一个锚点到场景中,当然要想看到真实世界中的平地效果需要我们自己使用 <code class="language-plaintext highlighter-rouge">SCNNode</code>渲染一个锚点.</p><blockquote><p>锚点只是一个位置</p></blockquote><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARPlaneAnchor</span> <span class="p">:</span> <span class="nc">ARAnchor</span>
+
+<span class="c1">//平地类型，目前只有一个，就是水平面 </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARPlaneAnchorAlignment</span> <span class="n">alignment</span><span class="p">;</span>
+
+<span class="c1">//3轴矢量结构体，表示平地的中心点  x/y/z</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">center</span><span class="p">;</span>
+
+<span class="c1">//3轴矢量结构体，表示平地的大小（宽度和高度）  x/y/z</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">extent</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arpointcloud">ARPointCloud</h4><p><code class="language-plaintext highlighter-rouge">ARPointCloud</code> 点状渲染</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARPointCloud</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//点数</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUInteger</span> <span class="n">count</span><span class="p">;</span>
+
+<span class="c1">//每一个点的位置的集合（结构体带*表示的是结构体数组）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="k">const</span> <span class="n">vector_float3</span> <span class="o">*</span><span class="n">points</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arconfiguration">ARConfiguration</h4><p><code class="language-plaintext highlighter-rouge">ARConfiguration</code> 会话追踪配置</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="c1">//追踪对其方式</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARWorldAlignment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* 相机位置 vector (0, -1, 0) /
+    ARWorldAlignmentGravity,
+    /* 相机位置及方向. vector (0, -1, 0)    heading ：(0, 0, -1) */</span>
+    <span class="n">ARWorldAlignmentGravityAndHeading</span><span class="p">,</span>
+    <span class="cm">/* 相机方向. */</span>
+    <span class="n">ARWorldAlignmentCamera</span>
+<span class="p">}</span> <span class="p">;</span>
+
+<span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARPlaneDetection</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ARPlaneDetectionNone</span>        <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">ARPlaneDetectionHorizontal</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span> <span class="c1">//探测平面是水平横向</span>
+<span class="p">}</span> <span class="p">;</span>
+
+
+<span class="k">@interface</span> <span class="nc">ARConfiguration</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//当前设备是否支持，一般A9芯片以下设备不支持</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isSupported</span><span class="p">;</span>
+
+<span class="c1">//世界坐标的对齐方式 </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">ARWorldAlignment</span> <span class="n">worldAlignment</span><span class="p">;</span>
+
+<span class="c1">//是否需要自适应灯光效果，默认是YES</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="n">isLightEstimationEnabled</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">lightEstimationEnabled</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="c1">//世界会话追踪配置，苹果建议我们使用这个类，这个子类只有一个属性，也就是可以帮助我们追踪相机捕捉到的平地</span>
+<span class="k">@interface</span> <span class="nc">ARWorldTrackingSessionConfiguration</span> <span class="p">:</span> <span class="nc">ARConfiguration</span>
+
+<span class="c1">//探测的类型</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">ARPlaneDetection</span> <span class="n">planeDetection</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>会话配置的恩子类:ARWorldTrackingSessionConfiguration，它们在同一个API文件中</p></blockquote><h4 id="arskview">ARSKView</h4><p><code class="language-plaintext highlighter-rouge">ARSKView</code>是2D 的 AR 视图 这个基本就不需要讲了 和 <code class="language-plaintext highlighter-rouge">ARSCNView</code>一样,就不重复介绍了</p><h4 id="arscnview-重点介绍">ARScnView 重点介绍</h4><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARSCNView</span> <span class="p">:</span> <span class="nc">SCNView</span>
+
+<span class="c1">//代理</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">ARSCNViewDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+
+<span class="c1">//AR 会话</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">ARSession</span> <span class="o">*</span><span class="n">session</span><span class="p">;</span>
+
+<span class="c1">//场景</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span><span class="p">;</span>
+
+<span class="c1">//是否自动适应灯光</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">automaticallyUpdatesLighting</span><span class="p">;</span>
+
+<span class="c1">//返回对应节点的锚点，节点是一个3D虚拟物体，它的坐标是虚拟场景中的坐标，而锚点ARAnchor是ARKit中现实世界的坐标</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nf">anchorForNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span><span class="p">;</span>
+
+<span class="c1">//返回对应锚点的物体</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">nodeForAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="cm">/**
+
+
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">hitTest</span><span class="p">:(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span> <span class="nf">types</span><span class="p">:(</span><span class="n">ARHitTestResultType</span><span class="p">)</span><span class="nv">types</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><blockquote><p>根据2D坐标点搜索3D模型，这个方法通常用于，当我们在手机屏幕点击某一个点的时候，可以捕捉到这一个点所在的3D模型的位置，至于为什么是一个数组非常好理解。手机屏幕一个是长方形，这是一个二维空间。而相机捕捉到的是一个由这个二维空间射出去的长方体，我们点击屏幕一个点可以理解为在这个长方体的边缘射出一条线，这一条线上可能会有多个3D物体模型,point：2D坐标点（手机屏幕某一点） ARHitTestResultType：捕捉类型 点还是面 (NSArray&lt;ARHitTestResult *&gt; *)：追踪结果数组 详情见本章节ARHitTestResult类介绍 数组的结果排序是由近到远</p></blockquote><p>代理方法</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="c1">//代理的内部实现了SCNSceneRendererDelegate：scenekit代理 和ARSessionObserver：ARSession监听（KVO机制）</span>
+<span class="cp">#pragma mark - ARSCNViewDelegate
+</span><span class="k">@protocol</span> <span class="nc">ARSCNViewDelegate</span> <span class="o">&lt;</span><span class="n">SCNSceneRendererDelegate</span><span class="p">,</span> <span class="n">ARSessionObserver</span><span class="o">&gt;</span>
+<span class="k">@optional</span>
+
+<span class="c1">//自定义节点的锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">nodeForAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//当添加节点是会调用，我们可以通过这个代理方法得知我们添加一个虚拟物体到AR场景下的锚点（AR现实世界中的坐标）</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didAddNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//将要刷新节点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">willUpdateNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//已经刷新节点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didUpdateNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//移除节点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didRemoveNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arsesson-重点介绍">ARSesson 重点介绍</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/SessionBridge.png" alt="" /></p><p><code class="language-plaintext highlighter-rouge">ARSesson</code> 是一个连接底层与 AR 视图之间的桥梁, <code class="language-plaintext highlighter-rouge">ARSCNView</code>里的所有方法都是又<code class="language-plaintext highlighter-rouge">ARSession</code>提供的</p><p><strong><code class="language-plaintext highlighter-rouge">ARSesson</code>获取相机位置数据主要由两种方式</strong></p><ul><li>push 通过实现 Session 的代理<code class="language-plaintext highlighter-rouge">session:didUpdateFrame:</code>告知用户<li>pull 用户想要可主动去取 <code class="language-plaintext highlighter-rouge">ARSession</code>的<code class="language-plaintext highlighter-rouge">currentFrame</code>属性</ul><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARSession</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//代理</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span> <span class="n">id</span> <span class="o">&lt;</span><span class="n">ARSessionDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+
+<span class="c1">//指定代理执行的线程（主线程不会有延迟，子线程会有延迟），不指定的话默认主线程</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">dispatch_queue_t</span> <span class="n">delegateQueue</span><span class="p">;</span>
+
+<span class="c1">//相机当前的位置（是由会话追踪配置计算出来的）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARFrame</span> <span class="o">*</span><span class="n">currentFrame</span><span class="p">;</span>
+
+<span class="c1">//会话配置</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARConfiguration</span> <span class="o">*</span><span class="n">configuration</span><span class="p">;</span>
+
+<span class="c1">//运行会话（这行代码就是开启AR的关键所在）</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">runWithConfiguration</span><span class="p">:(</span><span class="n">ARConfiguration</span> <span class="o">*</span><span class="p">)</span><span class="nv">configuration</span> <span class="n">NS_SWIFT_UNAVAILABLE</span><span class="p">(</span><span class="s">"Use run(_:options:) instead"</span><span class="p">);</span>
+
+<span class="c1">//运行会话，只是多了一个参数ARSessionRunOptions：作用就是会话断开重连时的行为。</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">runWithConfiguration</span><span class="p">:(</span><span class="n">ARConfiguration</span> <span class="o">*</span><span class="p">)</span><span class="nv">configuration</span> <span class="nf">options</span><span class="p">:(</span><span class="n">ARSessionRunOptions</span><span class="p">)</span><span class="nv">options</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">run</span><span class="p">(</span><span class="n">_</span><span class="o">:</span><span class="n">options</span><span class="o">:</span><span class="p">));</span>
+
+<span class="c1">//暂停会话</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">pause</span><span class="p">;</span>
+
+<span class="c1">//添加锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">anchor</span><span class="o">:</span><span class="p">));</span>
+
+<span class="c1">//移除锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">removeAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">remove</span><span class="p">(</span><span class="n">anchor</span><span class="o">:</span><span class="p">));</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><blockquote><p>运行会话__runWithConfiguration:options:__ options 是个<code class="language-plaintext highlighter-rouge">ARSessionRunOptions</code>枚举<br /> 这个方法的作用就是会话断开重连时的行为</p></blockquote><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARSessionRunOptions</span><span class="p">)</span> <span class="p">{</span>
+	 <span class="c1">//表示重置追踪</span>
+    <span class="n">ARSessionRunOptionResetTracking</span>           <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span>
+    
+    <span class="c1">//移除现有锚点</span>
+    <span class="n">ARSessionRunOptionRemoveExistingAnchors</span>   <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>下面来看下<code class="language-plaintext highlighter-rouge">ARSession</code>的代理</p><p><code class="language-plaintext highlighter-rouge">ARSession</code> 分 两种</p><ul><li>KVO 观察者 ARSessionObserver<li>delegate 委托代理 ARSessionDelegate</ul><blockquote><p>看到这我也很奇怪这个玩法</p></blockquote><p>ARSessionObserver如下</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="k">@protocol</span> <span class="nc">ARSessionObserver</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="k">@optional</span>
+
+<span class="c1">//session 失败</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didFailWithError</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+<span class="c1">//相机追踪状态发生改变</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">cameraDidChangeTrackingState</span><span class="p">:(</span><span class="n">ARCamera</span> <span class="o">*</span><span class="p">)</span><span class="nv">camera</span><span class="p">;</span>
+
+<span class="c1">//session 意外断开（如果开启ARSession之后，APP退到后台就有可能导致会话断开）</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionWasInterrupted</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+
+<span class="c1">//session 会话断开后 恢复(短时间退到后台再进入APP会自动恢复）</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionInterruptionEnded</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+
+<span class="c1">//session 已经输出了一个 音频数据 `CMSampleBufferRef` </span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didOutputAudioSampleBuffer</span><span class="p">:(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">audioSampleBuffer</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>ARSessionDelegate 如下</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="err">相机位置发生改变</span> <span class="err">就是相机的位置有变动</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didUpdateFrame</span><span class="p">:(</span><span class="n">ARFrame</span> <span class="o">*</span><span class="p">)</span><span class="nv">frame</span><span class="p">;</span>
+
+<span class="c1">// 已添加锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didAddAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="c1">//刷新锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didUpdateAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="c1">//移除锚点</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didRemoveAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>以上是 <code class="language-plaintext highlighter-rouge">ARSession</code></p><h4 id="arcamera-重点介绍">ARCamera 重点介绍</h4><p><code class="language-plaintext highlighter-rouge">ARCamera</code>是个相机, 它是链接虚拟场景和现实场景的之间的枢纽.</p><p>在<code class="language-plaintext highlighter-rouge">ARKit</code>中,它是捕捉现实图像的相机,在 SceneKit 中它是3D 虚拟世界中的相机</p><blockquote><p>游戏里一般第一人称3D 游戏, 英雄就是一个3D 相机, 我们电脑屏幕看到的画面就是这个相机捕捉到的画面</p></blockquote><p>一般情况下我们不需要自己去创建一个<code class="language-plaintext highlighter-rouge">ARCamera</code>实例, 因为每次初始化一个 <code class="language-plaintext highlighter-rouge">ARSCNView</code>的时候,它会默认为我们创建一个<code class="language-plaintext highlighter-rouge">ARCamera</code>实例,而且这个相机就是摄像头的位置,同时也是3D 世界中的原点所在 <strong>(0,0,0)</strong></p><p>至于<code class="language-plaintext highlighter-rouge">ARCamera</code> 的 api 一般我们也不用 care,<code class="language-plaintext highlighter-rouge">ARKit</code>默认会配置好.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARCamera</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//4x4矩阵表示相机位置 跟锚点类似</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">transform</span><span class="p">;</span>
+
+<span class="c1">//相机方向（旋转）的矢量欧拉角 分别是x/y/z</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">eulerAngles</span><span class="p">;</span>
+
+<span class="c1">//相机追踪状态（在下方会有枚举值介绍）</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARTrackingState</span> <span class="n">trackingState</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">//追踪运动类型</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARTrackingStateReason</span> <span class="n">trackingStateReason</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">//相机曲率 3x3矩阵  </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float3x3</span> <span class="n">intrinsics</span><span class="p">;</span>
+
+<span class="c1">//摄像头分辨率</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGSize</span> <span class="n">imageResolution</span><span class="p">;</span>
+
+<span class="c1">//投影矩阵</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">projectionMatrix</span><span class="p">;</span>
+
+
+<span class="c1">//创建相机 使用x,y,z 位置 </span>
+<span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nf">projectPoint</span><span class="p">:(</span><span class="n">vector_float3</span><span class="p">)</span><span class="nv">point</span> <span class="nf">orientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span> <span class="nf">viewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span><span class="p">;</span>
+ 
+<span class="c1">//创建相机投影矩阵 近面距离  远面距离</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nf">projectionMatrixForOrientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span> <span class="nf">viewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span> <span class="nf">zNear</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">zNear</span> <span class="nf">zFar</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">zFar</span><span class="p">;</span>
+
+<span class="c1">//创建相机投影矩阵</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nf">viewMatrixForOrientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>上边提到的远面和近面距离 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/distance.png" alt="" /> 可以参考这张图 摘自<a href="http://www.jianshu.com/p/bc151ff65cef">投影变换</a> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/distance2.png" alt="" /> 这属于 OpenGL的学习范畴.有兴趣可以学习一下</p></blockquote><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="c1">//相机追踪状态枚举</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARTrackingState</span><span class="p">)</span> <span class="p">{</span>
+	 <span class="cm">/* 不被允许 */</span>
+    <span class="n">ARTrackingStateNotAvailable</span><span class="p">,</span>
+    
+    <span class="cm">/* 最小 */</span>
+    <span class="n">ARTrackingStateLimited</span><span class="p">,</span>
+    
+    <span class="cm">/* 正常. */</span>
+    <span class="n">ARTrackingStateNormal</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">//追踪运动类型</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARTrackingStateReason</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* 无. */</span>
+    <span class="n">ARTrackingStateReasonNone</span><span class="p">,</span>
+    
+    <span class="c1">//初始化</span>
+    <span class="n">ARTrackingStateReasonInitializing</span><span class="p">,</span>
+    
+    <span class="cm">/* 运动. */</span>
+    <span class="n">ARTrackingStateReasonExcessiveMotion</span><span class="p">,</span>
+    
+    <span class="cm">/** 脸部捕捉. */</span>
+    <span class="n">ARTrackingStateReasonInsufficientFeatures</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>这里面涉及到的 一个叫做<code class="language-plaintext highlighter-rouge">eulerAngles</code><a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92">欧拉角</a> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/EulerAngles.png" alt="" /> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑)</p></blockquote><h4 id="arkit捕捉平地">ARKit捕捉平地</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="https://gitee.com/sunyazhou/sunyazhou13.github.io-images/raw/master/20170830ARKit/PlaneDetective.gif" alt="" /></p><p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemoPlaneDetective.zip">探测平地demo</a></p><p>贴一下核心代码</p><p>添加节点时候调用（当开启平地捕捉模式之后，如果捕捉到平地，ARKit会自动添加一个平地节点）</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre><span class="cp">#pragma mark -
+#pragma mark - ARSCNViewDelegate 代理
+</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didAddNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">anchor</span> <span class="nf">isMemberOfClass</span><span class="p">:[</span><span class="n">ARPlaneAnchor</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"捕捉到平地"</span><span class="p">);</span>
+        <span class="c1">//添加一个3D 平面模型,ARKit 只有捕捉能力,锚点是一个空间位置,要想更加清楚的看到这个空间,我们需要给空间添加一个平地的3D模型来渲染他</span>
+        <span class="c1">//1. 获取扑捉到的平地锚点</span>
+        <span class="n">ARPlaneAnchor</span> <span class="o">*</span><span class="n">planeAnchor</span> <span class="o">=</span> <span class="p">(</span><span class="n">ARPlaneAnchor</span> <span class="o">*</span><span class="p">)</span><span class="n">anchor</span><span class="p">;</span>
+        <span class="c1">//2. 创建一个3D物体模型 (系统捕捉到的平地是一个不规则大小的长方形，这里我们将其变成一个长方形，并且对平地做一次缩放）</span>
+        <span class="c1">//创建长方形  参数:长,宽,高,圆角</span>
+        <span class="n">SCNBox</span> <span class="o">*</span><span class="n">plane</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNBox</span> <span class="nf">boxWithWidth</span><span class="p">:</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">3</span> <span class="nf">height</span><span class="p">:</span><span class="mi">0</span> <span class="n">length</span><span class="o">:</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">3</span> <span class="n">chamferRadius</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+        <span class="c1">//3. 使用Material渲染3D模型 默认模型是白色的</span>
+        <span class="n">plane</span><span class="p">.</span><span class="n">firstMaterial</span><span class="p">.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">cyanColor</span><span class="p">];</span>
+        
+        <span class="c1">//4. 创建一个基于3D 物体模型的节点</span>
+        <span class="n">SCNNode</span> <span class="o">*</span><span class="n">planeNode</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNNode</span> <span class="nf">nodeWithGeometry</span><span class="p">:</span><span class="n">plane</span><span class="p">];</span>
+        <span class="c1">//5. 设置节点的位置为捕捉到的平地的锚点和中心位置 SceneKit框架中节点的位置position是一个基于3D坐标系的矢量坐标SCNVector3Make</span>
+        <span class="n">planeNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+        
+        <span class="p">[</span><span class="n">node</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">planeNode</span><span class="p">];</span>
+        
+        <span class="c1">//6. 当捕捉到平地时，2s之后开始在平地上添加一个3D模型</span>
+        
+        <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="c1">//1.创建一个花瓶场景</span>
+            <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"Models.scnassets/vase/vase.scn"</span><span class="p">];</span>
+            <span class="c1">//2.获取花瓶节点（一个场景会有多个节点，此处我们只写，花瓶节点则默认是场景子节点的第一个）</span>
+            <span class="c1">//所有的场景有且只有一个根节点，其他所有节点都是根节点的子节点</span>
+            <span class="n">SCNNode</span> <span class="o">*</span><span class="n">vaseNode</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            
+            <span class="c1">//4.设置花瓶节点的位置为捕捉到的平地的位置，如果不设置，则默认为原点位置，也就是相机位置</span>
+            <span class="n">vaseNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+            
+            <span class="c1">//5.将花瓶节点添加到当前屏幕中</span>
+            <span class="c1">//!!!此处一定要注意：花瓶节点是添加到代理捕捉到的节点中，而不是AR试图的根节点。因为捕捉到的平地锚点是一个本地坐标系，而不是世界坐标系</span>
+            <span class="p">[</span><span class="n">node</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">vaseNode</span><span class="p">];</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><h4 id="ar代码demo实现">AR代码demo实现</h4><p><a href="https://github.com/sunyazhou13/ARDemos">所有相关的 demos 仓库</a></p><p>参考文献</p><p><a href="http://metalkit.org/2017/07/29/using-arkit-with-metal.html">Using ARKit with Metal</a></p><p><a href="http://www.jianshu.com/p/c97b230fa391">坤小1~10篇</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios%E5%BC%80%E5%8F%91/'>ios开发</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ios/" class="post-tag no-text-decoration" >ios</a> <a href="/tags/macos/" class="post-tag no-text-decoration" >macos</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=ARKit - 迈腾大队长&u=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2021/01/TextGradient/">滚动文本设置渐变颜色</a><li><a href="/2021/01/SafeAreaEdges/">获取UIWindow的边界距离</a><li><a href="/2020/12/iOSsynchronousTimeWithServer/">解决iOS系统时间被修改的问题</a><li><a href="/2020/12/FinalSummary/">2020年终总结</a><li><a href="/2020/10/XcodeSourceEditorNotWork/">修复Xcode Source Editor在masOS的扩展中不显示</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">iOS开发</a> <a class="post-tag" href="/tags/macos%E5%BC%80%E5%8F%91/">macOS开发</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2019/04/AVRoutePickerView/"><div class="card-body"> <span class="timeago small" > 2019-04-17 <i class="unloaded">2019-04-17T23:19:52+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>AVRoutePickerView</h3><div class="text-muted small"><p> 前言 最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个AVRoutePickerView的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候. 这里网易云音乐中有实践的例子 这个控件主要用于AirPlay投屏 和音频的线路切换 那么我今天就跟大家一起学习一下这个新的控件 代码实现 导入#im...</p></div></div></a></div><div class="card"> <a href="/2017/03/LearningAVFoundationAVAudioRecorder/"><div class="card-body"> <span class="timeago small" > 2017-03-28 <i class="unloaded">2017-03-28T17:40:18+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Learning AV Foundation(三)AVAudioRecorder</h3><div class="text-muted small"><p> 前言 在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和iOS平台.可以从内置麦克风录制音频,也可以支持数字音频接口或USB外接麦克风录制. 主要内容如下: 如何创建AVAudioRecorder 1. 音频格式 2...</p></div></div></a></div><div class="card"> <a href="/2017/03/AccessPrivacySensitive/"><div class="card-body"> <span class="timeago small" > 2017-03-29 <i class="unloaded">2017-03-29T18:54:40+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>隐私及敏感数据访问权限(Access privacy-sensitive data)</h3><div class="text-muted small"><p> 在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist m...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2017/08/LearningAVFoundationAVAssetSenior/" class="btn btn-outline-primary"><p>Learning AV Foundation(四)AVAsset元数据(高级篇)</p></a> <a href="/2017/09/CharlesCaptureHttps/" class="btn btn-outline-primary"><p>如何使用Charles截获https请求</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://github.com/sunyazhou13">sunyazhou13</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">iOS开发</a> <a class="post-tag" href="/tags/macos%E5%BC%80%E5%8F%91/">macOS开发</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">试试百度搜索"迈腾大队长".</p>' }); </script>
