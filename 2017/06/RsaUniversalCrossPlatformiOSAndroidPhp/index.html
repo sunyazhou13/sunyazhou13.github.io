@@ -1,0 +1,829 @@
+<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="iOS Android Php RSA加密解密通配方案" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" /><meta property="og:url" content="https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-06-26T18:42:47+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="iOS Android Php RSA加密解密通配方案" /><meta name="twitter:site" content="@sunyazhou13" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"url":"https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/","@type":"BlogPosting","headline":"iOS Android Php RSA加密解密通配方案","dateModified":"2017-06-26T18:42:47+08:00","datePublished":"2017-06-26T18:42:47+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/"},"author":{"@type":"Person","name":"孙亚洲"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","@context":"https://schema.org"}</script><title>iOS Android Php RSA加密解密通配方案 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不断学习, 与时俱进.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3 unloaded"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou13" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>iOS Android Php RSA加密解密通配方案</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>iOS Android Php RSA加密解密通配方案</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Jun 26, 2017, 6:42 PM +0800" > 2017-06-26 <i class="unloaded">2017-06-26T18:42:47+08:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170626RsaUniversalCrossPlatformiOSAndroidPhp/RSALogo.png" alt="" /></p><h1 id="前言">前言</h1><p>先膜拜一下 RSA的作者</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170626RsaUniversalCrossPlatformiOSAndroidPhp/RSATeam.jpg" alt="" /></p><p>RSA非对称加密 原理 各种。。。 请自行百度</p><h2 id="弯路">弯路</h2><p>最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客 把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾)</p><h1 id="代码实现">代码实现</h1><h2 id="第一步-生成公私钥对">第一步 生成公私钥对</h2><h3 id="命令生成原始-rsa私钥文件-rsa_private_keypem">命令生成原始 RSA私钥文件 rsa_private_key.pem</h3><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>openssl genrsa <span class="nt">-out</span> rsa_private_key.pem 1024
+</pre></table></code></div></div><h3 id="命令将原始-rsa私钥转换为-pkcs8格式">命令将原始 RSA私钥转换为 pkcs8格式</h3><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>openssl pkcs8 <span class="nt">-topk8</span> <span class="nt">-inform</span> PEM <span class="nt">-in</span> rsa_private_key.pem <span class="nt">-outform</span> PEM <span class="nt">-nocrypt</span> <span class="nt">-out</span> private_key.pem
+</pre></table></code></div></div><h3 id="生成rsa公钥-rsa_public_keypem">生成RSA公钥 rsa_public_key.pem</h3><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>openssl rsa <span class="nt">-in</span> rsa_private_key.pem <span class="nt">-pubout</span> <span class="nt">-out</span> rsa_public_key.pem
+</pre></table></code></div></div><blockquote><p>从上面看出通过私钥能生成对应的公钥，因此我们将私钥<code class="language-plaintext highlighter-rouge">private_key.pem</code>用在<em>服务器端</em>，<em>公钥</em>发放给<code class="language-plaintext highlighter-rouge">android</code>跟<code class="language-plaintext highlighter-rouge">ios</code>等前端</p></blockquote><h2 id="第二步-php代码实现">第二步 php代码实现</h2><div class="language-php highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+</pre><td class="rouge-code"><pre><span class="cp">&lt;?php</span>
+<span class="cd">/**
+ * @author sunyazhou (http://www.sunyazhou.com/)
+ * @version 1.0
+ * @created 2017-6-25
+ */</span>
+ 
+<span class="kd">class</span> <span class="nc">Rsa</span>
+<span class="p">{</span>
+<span class="k">private</span> <span class="k">static</span> <span class="nv">$PRIVATE_KEY</span> <span class="o">=</span> <span class="s1">'-----BEGIN PRIVATE KEY-----
+xxxxxxxxxxxxxxxxxxxxx
+/xxxxxxxxxxxxxxxxxxxxx
+y4dDpCOn
+A4tBsIdpMMoT+w==
+-----END PRIVATE KEY-----'</span><span class="p">;</span>
+    <span class="cd">/**
+    *返回对应的私钥
+    */</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">function</span> <span class="n">getPrivateKey</span><span class="p">(){</span>
+    
+        <span class="nv">$privKey</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="nv">$PRIVATE_KEY</span><span class="p">;</span>
+         
+        <span class="k">return</span> <span class="nb">openssl_pkey_get_private</span><span class="p">(</span><span class="nv">$privKey</span><span class="p">);</span>      
+    <span class="p">}</span>
+ 
+    <span class="cd">/**
+     * 私钥加密
+     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">privEncrypt</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">is_string</span><span class="p">(</span><span class="nv">$data</span><span class="p">)){</span>
+                <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>           
+        <span class="k">return</span> <span class="nb">openssl_private_encrypt</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span><span class="nv">$encrypted</span><span class="p">,</span><span class="k">self</span><span class="o">::</span><span class="nf">getPrivateKey</span><span class="p">())</span><span class="o">?</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nv">$encrypted</span><span class="p">)</span> <span class="o">:</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    
+    <span class="cd">/**
+     * 私钥解密
+     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">privDecrypt</span><span class="p">(</span><span class="nv">$encrypted</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">is_string</span><span class="p">(</span><span class="nv">$encrypted</span><span class="p">)){</span>
+                <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">openssl_private_decrypt</span><span class="p">(</span><span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$encrypted</span><span class="p">),</span> <span class="nv">$decrypted</span><span class="p">,</span> <span class="k">self</span><span class="o">::</span><span class="nf">getPrivateKey</span><span class="p">()))</span><span class="o">?</span> <span class="nv">$decrypted</span> <span class="o">:</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="cp">?&gt;</span>
+
+</pre></table></code></div></div><p>打开<code class="language-plaintext highlighter-rouge">private_key.pem</code>，将上面的$PRIVATE_KEY，替换成private_key.pem的内容即可，服务器端我们只需要使用私钥来加密解密。</p><h2 id="第三步-android端-代码实现">第三步 android端 代码实现</h2><p>使用java的Cipher类来实现加密解密类，代码如下:</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.ByteArrayOutputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.KeyFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.NoSuchAlgorithmException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.PublicKey</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.spec.X509EncodedKeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.Cipher</span><span class="o">;</span>
+ 
+<span class="kn">import</span> <span class="nn">android.util.Base64</span><span class="o">;</span>
+ 
+<span class="cm">/**
+ * @author alun (http://alunblog.duapp.com)
+ * @version 1.0
+ * @created 2013-5-17
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Rsa</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">RSA_PUBLICE</span> <span class="o">=</span>
+            <span class="s">"xxxxxxxxxxxxxxxxC"</span> <span class="o">+</span> <span class="s">"\r"</span> <span class="o">+</span>
+            <span class="s">"Qf/xxxxxxxhVuwdNH6aRFE0ms3bkpp/WL4cfVDgnCO"</span> <span class="o">+</span> <span class="s">"\r"</span> <span class="o">+</span>
+            <span class="s">"+W9J6vRVpuTuD/xxxxxxxxbJeO74fYnYqo/mmyJSeLE5iZg4I"</span> <span class="o">+</span> <span class="s">"\r"</span> <span class="o">+</span>
+            <span class="s">"Zm5LPWBZWUp3ULCAZQIDAQAB"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">ALGORITHM</span> <span class="o">=</span> <span class="s">"RSA"</span><span class="o">;</span>
+ 
+    <span class="cm">/**
+     * 得到公钥
+     * @param algorithm
+     * @param bysKey
+     * @return
+     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">PublicKey</span> <span class="nf">getPublicKeyFromX509</span><span class="o">(</span><span class="nc">String</span> <span class="n">algorithm</span><span class="o">,</span>
+            <span class="nc">String</span> <span class="n">bysKey</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">NoSuchAlgorithmException</span><span class="o">,</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">decodedKey</span> <span class="o">=</span> <span class="nc">Base64</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">bysKey</span><span class="o">,</span><span class="nc">Base64</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="nc">X509EncodedKeySpec</span> <span class="n">x509</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">X509EncodedKeySpec</span><span class="o">(</span><span class="n">decodedKey</span><span class="o">);</span>
+ 
+        <span class="nc">KeyFactory</span> <span class="n">keyFactory</span> <span class="o">=</span> <span class="nc">KeyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">algorithm</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">keyFactory</span><span class="o">.</span><span class="na">generatePublic</span><span class="o">(</span><span class="n">x509</span><span class="o">);</span>
+    <span class="o">}</span>
+ 
+    <span class="cm">/**
+     * 使用公钥加密
+     * @param content
+     * @param key
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">encryptByPublic</span><span class="o">(</span><span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">PublicKey</span> <span class="n">pubkey</span> <span class="o">=</span> <span class="n">getPublicKeyFromX509</span><span class="o">(</span><span class="no">ALGORITHM</span><span class="o">,</span> <span class="no">RSA_PUBLICE</span><span class="o">);</span>
+ 
+            <span class="nc">Cipher</span> <span class="n">cipher</span> <span class="o">=</span> <span class="nc">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"RSA/ECB/PKCS1Padding"</span><span class="o">);</span>
+            <span class="n">cipher</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="nc">Cipher</span><span class="o">.</span><span class="na">ENCRYPT_MODE</span><span class="o">,</span> <span class="n">pubkey</span><span class="o">);</span>
+ 
+            <span class="kt">byte</span> <span class="n">plaintext</span><span class="o">[]</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
+            <span class="kt">byte</span><span class="o">[]</span> <span class="n">output</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">plaintext</span><span class="o">);</span>
+ 
+            <span class="nc">String</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="nc">Base64</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">output</span><span class="o">,</span><span class="nc">Base64</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">));</span>
+ 
+            <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+ 
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+ 
+    <span class="cm">/**
+    * 使用公钥解密
+    * @param content 密文
+    * @param key 商户私钥
+    * @return 解密后的字符串
+    */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">decryptByPublic</span><span class="o">(</span><span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">PublicKey</span> <span class="n">pubkey</span> <span class="o">=</span> <span class="n">getPublicKeyFromX509</span><span class="o">(</span><span class="no">ALGORITHM</span><span class="o">,</span> <span class="no">RSA_PUBLICE</span><span class="o">);</span>
+            <span class="nc">Cipher</span> <span class="n">cipher</span> <span class="o">=</span> <span class="nc">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"RSA/ECB/PKCS1Padding"</span><span class="o">);</span>
+            <span class="n">cipher</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="nc">Cipher</span><span class="o">.</span><span class="na">DECRYPT_MODE</span><span class="o">,</span> <span class="n">pubkey</span><span class="o">);</span>
+            <span class="nc">InputStream</span> <span class="n">ins</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ByteArrayInputStream</span><span class="o">(</span><span class="nc">Base64</span><span class="o">.</span><span class="na">decode</span><span class="o">(</span><span class="n">content</span><span class="o">,</span><span class="nc">Base64</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">));</span>
+            <span class="nc">ByteArrayOutputStream</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ByteArrayOutputStream</span><span class="o">();</span>
+            <span class="kt">byte</span><span class="o">[]</span> <span class="n">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">128</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">bufl</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">((</span><span class="n">bufl</span> <span class="o">=</span> <span class="n">ins</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buf</span><span class="o">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">byte</span><span class="o">[]</span> <span class="n">block</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">buf</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">bufl</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">block</span> <span class="o">=</span> <span class="n">buf</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">block</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">bufl</span><span class="o">];</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bufl</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">block</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">buf</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="n">writer</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">cipher</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">block</span><span class="o">));</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(),</span> <span class="s">"utf-8"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+ 
+<span class="o">}</span>
+
+</pre></table></code></div></div><p>__<em>注意:</em>__在初始化<code class="language-plaintext highlighter-rouge">Cipher</code>对象时，一定要指明使用<code class="language-plaintext highlighter-rouge">"RSA/ECB/PKCS1Padding"</code>格式如<code class="language-plaintext highlighter-rouge">Cipher.getInstance("RSA/ECB/PKCS1Padding");</code> 打开<code class="language-plaintext highlighter-rouge">rsa_public_key.pem</code>文件，将上面代码的<code class="language-plaintext highlighter-rouge">RSA_PUBLICE</code>替换成其中内容即可.</p><h2 id="第四步-ios端代码实现">第四步 iOS端代码实现</h2><p>iOS上没有直接处理RSA加密的API，网上说的大多数也是处理X.509的证书的方法来实现，不过X.509证书是带签名的，在php端<code class="language-plaintext highlighter-rouge">openssl_pkey_get_private</code>方法获取密钥时，第二个参数需要传签名，而android端实现X.509证书加密解密较为不易，在这里我们利用ios兼容c程序的特点，利用openssl的api实现rsa的加密解密，代码如下：</p><p>CRSA.h代码</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre><td class="rouge-code"><pre><span class="c1">//</span>
+<span class="c1">//  CRSA.h</span>
+<span class="c1">//  RSA_C_demo</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by sunyazhou on 2017/6/25.</span>
+<span class="c1">//  Copyright © 2017年 Kingsoft, Inc. All rights reserved.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;
+</span>
+<span class="cp">#import &lt;openssl/rsa.h&gt;
+#import &lt;openssl/pem.h&gt;
+#import &lt;openssl/err.h&gt;
+</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">KeyTypePublic</span><span class="p">,</span>
+    <span class="n">KeyTypePrivate</span>
+<span class="p">}</span><span class="n">KeyType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">RSA_PADDING_TYPE_NONE</span>       <span class="o">=</span> <span class="n">RSA_NO_PADDING</span><span class="p">,</span>
+    <span class="n">RSA_PADDING_TYPE_PKCS1</span>      <span class="o">=</span> <span class="n">RSA_PKCS1_PADDING</span><span class="p">,</span>
+    <span class="n">RSA_PADDING_TYPE_SSLV23</span>     <span class="o">=</span> <span class="n">RSA_SSLV23_PADDING</span>
+<span class="p">}</span><span class="n">RSA_PADDING_TYPE</span><span class="p">;</span>
+
+<span class="k">@interface</span> <span class="nc">CRSA</span> <span class="p">:</span> <span class="nc">NSObject</span><span class="p">{</span>
+    <span class="n">RSA</span> <span class="o">*</span><span class="n">_rsa</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span><span class="n">NSString</span> <span class="o">*</span><span class="n">rsaKeyPath</span><span class="p">;</span> <span class="c1">//证书路径</span>
+
+<span class="k">+</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">shareInstance</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">importRSAKeyFromeStringWithType</span><span class="p">:(</span><span class="n">KeyType</span><span class="p">)</span><span class="nv">type</span> <span class="nf">andKey</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">keyPath</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">importRSAKeyWithType</span><span class="p">:(</span><span class="n">KeyType</span><span class="p">)</span><span class="nv">type</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nf">getBlockSizeWithRSA_PADDING_TYPE</span><span class="p">:(</span><span class="n">RSA_PADDING_TYPE</span><span class="p">)</span><span class="nv">padding_type</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">encryptByRsa</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">content</span> <span class="nf">withKeyType</span><span class="p">:(</span><span class="n">KeyType</span><span class="p">)</span><span class="nv">keyType</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">decryptByRsa</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">content</span> <span class="nf">withKeyType</span><span class="p">:(</span><span class="n">KeyType</span><span class="p">)</span><span class="nv">keyType</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+
+</pre></table></code></div></div><p>CRSA.m</p><pre><code class="language-obj">
+//  CRSA.m
+//  RSA_C_demo
+//
+//  Created by sunyazhou on 2017/6/25.
+//  Copyright © 2017年 Kingsoft, Inc. All rights reserved.
+//
+
+#import "CRSA.h"
+
+#define BUFFSIZE  1024
+//#import "NSString+Base64.h"
+//#import "NSData+Base64.h"
+
+#define PADDING RSA_PADDING_TYPE_PKCS1
+@implementation CRSA
+
++ (id)shareInstance
+{
+    static KSYCRSA *_crsa = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        _crsa = [[self alloc] init];
+    });
+    return _crsa;
+}
+- (BOOL)importRSAKeyWithType:(KeyType)type
+{
+    FILE *file;
+    NSString *keyName = type == KeyTypePublic ? @"public_key" : @"private_key";
+    NSString *keyPath = [[NSBundle mainBundle] pathForResource:keyName ofType:@"pem"];
+    
+    file = fopen([keyPath UTF8String], "rb");
+    
+    if (NULL != file)
+    {
+        if (type == KeyTypePublic)
+        {
+            _rsa = PEM_read_RSA_PUBKEY(file, NULL, NULL, NULL);
+            assert(_rsa != NULL);
+        }
+        else
+        {
+            _rsa = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
+            assert(_rsa != NULL);
+        }
+        
+        fclose(file);
+        
+        return (_rsa != NULL) ? YES : NO;
+    }
+    
+    return NO;
+}
+
+- (BOOL)importRSAKeyWithPath:(KeyType)type
+{
+    FILE *file;
+    NSString *keyName = type == KeyTypePublic ? @"public_key.pem" : @"private_key.pem";
+    NSString *keyPath = [self.rsaKeyPath stringByAppendingPathComponent:keyName];
+    file = fopen([keyPath UTF8String], "rb");
+    
+    if (NULL != file)
+    {
+        if (type == KeyTypePublic)
+        {
+            _rsa = PEM_read_RSA_PUBKEY(file, NULL, NULL, NULL);
+            assert(_rsa != NULL);
+        }
+        else
+        {
+            _rsa = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
+            assert(_rsa != NULL);
+        }
+        
+        fclose(file);
+        
+        return (_rsa != NULL) ? YES : NO;
+    }
+    
+    return NO;
+}
+
+
+- (BOOL)importRSAKeyFromeStringWithType:(KeyType)type andKey:(NSString *)key{
+    if (key.length == 0) { return NO; }
+    
+    
+    BIO *keybio ;
+    keybio = BIO_new_mem_buf((__bridge void *)(key), -1);
+    if (keybio==NULL)
+    {
+        printf( "Failed to create key BIO");
+        return 0;
+    }
+    if(type == KeyTypePublic)
+    {
+        _rsa = PEM_read_bio_RSA_PUBKEY(keybio, &amp;_rsa,NULL, NULL);
+    }
+    else
+    {
+        _rsa = PEM_read_bio_RSAPrivateKey(keybio, &amp;_rsa,NULL, NULL);
+    }
+    BIO_free(keybio);
+    return (_rsa != NULL) ? YES : NO;
+}
+
+- (NSString *) encryptByRsa:(NSString*)content withKeyType:(KeyType)keyType
+{
+    if (![self importRSAKeyWithPath:keyType])
+        return nil;
+//    if (![self importRSAKeyWithType:keyType])
+//        return nil;
+    
+    int status;
+    NSUInteger length  = [content length];
+    unsigned char input[length + 1];
+    bzero(input, length + 1);
+    int i = 0;
+    for (; i &lt; length; i++)
+    {
+        input[i] = [content characterAtIndex:i];
+    }
+    
+    NSInteger  flen = [self getBlockSizeWithRSA_PADDING_TYPE:PADDING];
+    
+    char *encData = (char*)malloc(flen);
+    bzero(encData, flen);
+    
+    switch (keyType) {
+        case KeyTypePublic:
+            status = RSA_public_encrypt(length, (unsigned char*)input, (unsigned char*)encData, _rsa, PADDING);
+            break;
+            
+        default:
+            status = RSA_private_encrypt(length, (unsigned char*)input, (unsigned char*)encData, _rsa, PADDING);
+            break;
+    }
+    
+    if (status)
+    {
+        NSData *returnData = [NSData dataWithBytes:encData length:status];
+        free(encData);
+        encData = NULL;
+        
+        NSString *ret = [self base64EncodedStringForData:returnData ];
+        return ret;
+    }
+    
+    free(encData);
+    encData = NULL;
+    
+    return nil;
+}
+
+- (NSString *) decryptByRsa:(NSString*)content withKeyType:(KeyType)keyType
+{
+    if (![self importRSAKeyWithPath:keyType])
+        return nil;
+//    if (![self importRSAKeyWithType:keyType])
+//        return nil;
+    
+    int status;
+    
+    NSData *data = [self base64DecodedDataForString:content];
+    NSUInteger length = [data length];
+    
+    NSInteger flen = [self getBlockSizeWithRSA_PADDING_TYPE:PADDING];
+    char *decData = (char*)malloc(flen);
+    bzero(decData, flen);
+    
+    switch (keyType) {
+        case KeyTypePublic:
+            status = RSA_public_decrypt(length, (unsigned char*)[data bytes], (unsigned char*)decData, _rsa, PADDING);
+            break;
+            
+        default:
+            status = RSA_private_decrypt(length, (unsigned char*)[data bytes], (unsigned char*)decData, _rsa, PADDING);
+            break;
+    }
+    
+    if (status)
+    {
+        NSMutableString *decryptString = [[NSMutableString alloc] initWithBytes:decData length:strlen(decData) encoding:NSASCIIStringEncoding];
+        free(decData);
+        decData = NULL;
+        
+        return decryptString;
+    }
+    
+    free(decData);
+    decData = NULL;
+    
+    return nil;
+}
+
+- (int)getBlockSizeWithRSA_PADDING_TYPE:(RSA_PADDING_TYPE)padding_type
+{
+    int len = RSA_size(_rsa);
+    
+    if (padding_type == RSA_PADDING_TYPE_PKCS1 || padding_type == RSA_PADDING_TYPE_SSLV23) {
+        len -= 11;
+    }
+    
+    return len;
+}
+
+
+//---------------加密工具方法
+- (NSString *)base64EncodedStringForData:(NSData *)data
+{
+    return [self base64EncodedStringWithWrapWidth:0 data:data];
+}
+
+- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth data:(NSData *)data
+{
+    //ensure wrapWidth is a multiple of 4
+    wrapWidth = (wrapWidth / 4) * 4;
+    
+    const char lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    
+    long long inputLength = [data length];
+    const unsigned char *inputBytes = [data bytes];
+    
+    long long maxOutputLength = (inputLength / 3 + 1) * 4;
+    maxOutputLength += wrapWidth? (maxOutputLength / wrapWidth) * 2: 0;
+    unsigned char *outputBytes = (unsigned char *)malloc(maxOutputLength);
+    
+    long long i;
+    long long outputLength = 0;
+    for (i = 0; i &lt; inputLength - 2; i += 3)
+    {
+        outputBytes[outputLength++] = lookup[(inputBytes[i] &amp; 0xFC) &gt;&gt; 2];
+        outputBytes[outputLength++] = lookup[((inputBytes[i] &amp; 0x03) &lt;&lt; 4) | ((inputBytes[i + 1] &amp; 0xF0) &gt;&gt; 4)];
+        outputBytes[outputLength++] = lookup[((inputBytes[i + 1] &amp; 0x0F) &lt;&lt; 2) | ((inputBytes[i + 2] &amp; 0xC0) &gt;&gt; 6)];
+        outputBytes[outputLength++] = lookup[inputBytes[i + 2] &amp; 0x3F];
+        
+        //add line break
+        if (wrapWidth &amp;&amp; (outputLength + 2) % (wrapWidth + 2) == 0)
+        {
+            outputBytes[outputLength++] = '\r';
+            outputBytes[outputLength++] = '\n';
+        }
+    }
+    
+    //handle left-over data
+    if (i == inputLength - 2)
+    {
+        // = terminator
+        outputBytes[outputLength++] = lookup[(inputBytes[i] &amp; 0xFC) &gt;&gt; 2];
+        outputBytes[outputLength++] = lookup[((inputBytes[i] &amp; 0x03) &lt;&lt; 4) | ((inputBytes[i + 1] &amp; 0xF0) &gt;&gt; 4)];
+        outputBytes[outputLength++] = lookup[(inputBytes[i + 1] &amp; 0x0F) &lt;&lt; 2];
+        outputBytes[outputLength++] =   '=';
+    }
+    else if (i == inputLength - 1)
+    {
+        // == terminator
+        outputBytes[outputLength++] = lookup[(inputBytes[i] &amp; 0xFC) &gt;&gt; 2];
+        outputBytes[outputLength++] = lookup[(inputBytes[i] &amp; 0x03) &lt;&lt; 4];
+        outputBytes[outputLength++] = '=';
+        outputBytes[outputLength++] = '=';
+    }
+    
+    //truncate data to match actual output length
+    outputBytes = realloc(outputBytes, outputLength);
+    NSString *result = [[NSString alloc] initWithBytesNoCopy:outputBytes length:outputLength encoding:NSASCIIStringEncoding freeWhenDone:YES];
+    
+#if !__has_feature(objc_arc)
+    [result autorelease];
+#endif
+    
+    return (outputLength &gt;= 4)? result: nil;
+}
+
+
+- (NSData *)base64DecodedDataForString:(NSString *)string
+{
+    return [self dataWithBase64EncodedString:string];
+}
+
+
+- (NSData *)dataWithBase64EncodedString:(NSString *)string
+{
+    const char lookup[] =
+    {
+        99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+        99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+        99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 62, 99, 99, 99, 63,
+        52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 99, 99, 99, 99, 99, 99,
+        99,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+        15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 99, 99, 99, 99, 99,
+        99, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 99, 99, 99, 99, 99
+    };
+    
+    NSData *inputData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    long long inputLength = [inputData length];
+    const unsigned char *inputBytes = [inputData bytes];
+    
+    long long maxOutputLength = (inputLength / 4 + 1) * 3;
+    NSMutableData *outputData = [NSMutableData dataWithLength:maxOutputLength];
+    unsigned char *outputBytes = (unsigned char *)[outputData mutableBytes];
+    
+    int accumulator = 0;
+    long long outputLength = 0;
+    unsigned char accumulated[] = {0, 0, 0, 0};
+    for (long long i = 0; i &lt; inputLength; i++)
+    {
+        unsigned char decoded = lookup[inputBytes[i] &amp; 0x7F];
+        if (decoded != 99)
+        {
+            accumulated[accumulator] = decoded;
+            if (accumulator == 3)
+            {
+                outputBytes[outputLength++] = (accumulated[0] &lt;&lt; 2) | (accumulated[1] &gt;&gt; 4);
+                outputBytes[outputLength++] = (accumulated[1] &lt;&lt; 4) | (accumulated[2] &gt;&gt; 2);
+                outputBytes[outputLength++] = (accumulated[2] &lt;&lt; 6) | accumulated[3];
+            }
+            accumulator = (accumulator + 1) % 4;
+        }
+    }
+    
+    //handle left-over data
+    if (accumulator &gt; 0) outputBytes[outputLength] = (accumulated[0] &lt;&lt; 2) | (accumulated[1] &gt;&gt; 4);
+    if (accumulator &gt; 1) outputBytes[++outputLength] = (accumulated[1] &lt;&lt; 4) | (accumulated[2] &gt;&gt; 2);
+    if (accumulator &gt; 2) outputLength++;
+    
+    //truncate data to match actual output length
+    outputData.length = outputLength;
+    return outputLength? outputData: nil;
+}
+
+</code></pre><blockquote><p>这里面我增加了 密钥直接从字符串读取的方法 原来方法是 从<code class="language-plaintext highlighter-rouge">NSBundle</code>读取private_key.pem和 public_key.pem 但是考虑到被篡改 我增加了 密钥直接搞成字符串(把字符串写到本地沙盒然后加载文件的方式) 这样代码 安全就提高了一些 如果能破译.m的话 拿到的也只能是 publicKey(公钥) 只要不能篡改 就是安全的</p></blockquote><h3 id="外部调用">外部调用</h3><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre><td class="rouge-code"><pre><span class="n">NSString</span> <span class="o">*</span><span class="n">publicKey</span> <span class="o">=</span> <span class="s">@"-----BEGIN PUBLIC KEY-----</span><span class="se">\n</span><span class="s">此处替换生成的公钥 记得换行 按照一定规则加'</span><span class="se">\n</span><span class="s">'  </span><span class="se">\n</span><span class="s">-----END PUBLIC KEY-----"</span><span class="p">;</span>
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">privateKey</span> <span class="o">=</span> <span class="s">@"-----BEGIN PRIVATE KEY-----</span><span class="se">\n</span><span class="s">  此处替换生成的私钥 </span><span class="se">\n</span><span class="s">-----END PRIVATE KEY-----"</span><span class="p">;</span>
+    
+    <span class="n">NSFileManager</span> <span class="o">*</span><span class="n">fm</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSFileManager</span> <span class="nf">defaultManager</span><span class="p">];</span>
+    
+    <span class="c1">// 获取Documents目录路径</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">docDir</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">)</span> <span class="nf">firstObject</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">bundleIdentifier</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="nf">mainBundle</span><span class="p">]</span> <span class="nf">bundleIdentifier</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">docDir</span> <span class="nf">stringByAppendingFormat</span><span class="p">:</span><span class="s">@"/%@"</span><span class="p">,</span><span class="n">bundleIdentifier</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">publicKeyPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="s">@"public_key.pem"</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">privateKeyPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="s">@"private_key.pem"</span><span class="p">];</span>
+    
+    <span class="n">BOOL</span> <span class="n">isDir</span><span class="p">;</span>
+    <span class="n">BOOL</span> <span class="n">exists</span> <span class="o">=</span> <span class="p">[</span><span class="n">fm</span> <span class="nf">fileExistsAtPath</span><span class="p">:</span><span class="n">path</span> <span class="nf">isDirectory</span><span class="p">:</span><span class="o">&amp;</span><span class="n">isDir</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">exists</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* file exists */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isDir</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+            <span class="n">BOOL</span> <span class="n">pubResult</span> <span class="o">=</span> <span class="p">[</span><span class="n">publicKey</span> <span class="nf">writeToFile</span><span class="p">:</span><span class="n">publicKeyPath</span> <span class="nf">atomically</span><span class="p">:</span><span class="nb">YES</span> <span class="n">encoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+            <span class="p">}</span>
+            <span class="n">BOOL</span> <span class="n">privateResult</span> <span class="o">=</span> <span class="p">[</span><span class="n">privateKey</span> <span class="nf">writeToFile</span><span class="p">:</span><span class="n">privateKeyPath</span> <span class="nf">atomically</span><span class="p">:</span><span class="nb">YES</span> <span class="n">encoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">fm</span> <span class="nf">createDirectoryAtPath</span><span class="p">:</span><span class="n">path</span> <span class="nf">withIntermediateDirectories</span><span class="p">:</span><span class="nb">YES</span> <span class="n">attributes</span><span class="o">:</span><span class="nb">nil</span> <span class="n">error</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+        <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+        <span class="n">BOOL</span> <span class="n">pubResult</span> <span class="o">=</span> <span class="p">[</span><span class="n">publicKey</span> <span class="nf">writeToFile</span><span class="p">:</span><span class="n">publicKeyPath</span> <span class="nf">atomically</span><span class="p">:</span><span class="nb">YES</span> <span class="n">encoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="n">BOOL</span> <span class="n">privateResult</span> <span class="o">=</span> <span class="p">[</span><span class="n">privateKey</span> <span class="nf">writeToFile</span><span class="p">:</span><span class="n">privateKeyPath</span> <span class="nf">atomically</span><span class="p">:</span><span class="nb">YES</span> <span class="n">encoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="n">rsa</span><span class="p">.</span><span class="n">rsaKeyPath</span> <span class="o">=</span> <span class="n">path</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">rsa</span> <span class="nf">importRSAKeyFromeStringWithType</span><span class="p">:</span><span class="n">KeyTypePublic</span> <span class="nf">andKey</span><span class="p">:</span><span class="n">publicKeyPath</span><span class="p">];</span>
+    
+    <span class="p">[</span><span class="n">rsa</span> <span class="nf">importRSAKeyFromeStringWithType</span><span class="p">:</span><span class="n">KeyTypePrivate</span> <span class="nf">andKey</span><span class="p">:</span><span class="n">privateKeyPath</span><span class="p">];</span>
+    
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">pubDesc</span> <span class="o">=</span> <span class="p">[</span><span class="n">rsa</span> <span class="nf">encryptByRsa</span><span class="p">:</span><span class="s">@"需要加密的字符串"</span> <span class="nf">withKeyType</span><span class="p">:</span><span class="n">KeyTypePrivate</span><span class="p">];</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"加密内容:%@</span><span class="se">\n</span><span class="s">--------</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">encryptString</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"摘要:</span><span class="se">\n</span><span class="s">---------</span><span class="se">\n</span><span class="s">%@</span><span class="se">\n</span><span class="s">--------</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">pubDesc</span><span class="p">);</span>
+    
+    <span class="c1">//剩下的大家自己探索一下 没什么难度  </span>
+</pre></table></code></div></div><p>其中openssl api包，我们可以在第一步RSA密钥生成工具openssl的include文件夹中得到</p><p>下面我说一下如何集成openssl到 iOS工程</p><h3 id="1下载-openssl-library">1.下载 openssl library</h3><p><a href="https://github.com/st3fan/ios-openssl">openssl ios下载</a></p><h3 id="2导入到工程中">2.导入到工程中</h3><p>拖拽 openssl的库 _(包含 <code class="language-plaintext highlighter-rouge">include</code> &amp; <code class="language-plaintext highlighter-rouge">lib</code> 的文件夹 )_到工程中</p><p>然后 去 project targets -&gt; <code class="language-plaintext highlighter-rouge">Build Settings</code></p><ul><li>找到 <strong>Header Search Paths</strong>, 添加 <code class="language-plaintext highlighter-rouge">"${SRCROOT}/Libraries/openssl/include"</code> 为你的工程<li>找到 <strong>Library Search Paths</strong>, 添加 <code class="language-plaintext highlighter-rouge">"${SRCROOT}/Libraries/openssl/lib"</code></ul><p>然后就可以了如果中间出问题 请检查一下目录是否正确理论上应该是OK的</p><p>–</p><h2 id="最后说一下我遇到rsa加密的坑">最后说一下我遇到RSA加密的坑</h2><p>在iOS端加密 生成摘要到android的时候 android解析不出来(有时候解析出结果前面 一堆乱码) 这是base64有问题 建议 android使用原生的恩</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">android.util.Base64</span><span class="o">;</span>
+</pre></table></code></div></div><p>如果是iOS 请使用 如下 Base64 <a href="https://github.com/nicklockwood/Base64">base64来源</a></p><p>上边的ios 的base64和android一一对应 不要理解错了 随便搞个Base64就行了 不信我 你可以试试</p><p>base64的代码我已经把代码实现写到<code class="language-plaintext highlighter-rouge">CRSA.m</code>了 如果像剥离很简单</p><p>好 demo我就不写了 已经把所有实现都搞上去了</p><p>希望大家找到 好使的RSA方法实现 如果有问题 随时留言</p><p>最后我说一句 很简单的一个RSA跨平台方案 那些抄袭CSDN的文章小伙伴 少坑点人 连搜索引擎都不会放过你</p><p>全文完</p><p><a href="https://www.lvtao.net/dev/android_ios_php_openssl.html">参考</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios%E5%BC%80%E5%8F%91/'>ios开发</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ios/" class="post-tag no-text-decoration" >ios</a> <a href="/tags/macos/" class="post-tag no-text-decoration" >macos</a> <a href="/tags/%E5%AE%89%E5%85%A8/" class="post-tag no-text-decoration" >安全</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=iOS Android Php RSA加密解密通配方案 - 迈腾大队长&url=https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=iOS Android Php RSA加密解密通配方案 - 迈腾大队长&u=https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=iOS Android Php RSA加密解密通配方案 - 迈腾大队长&url=https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=iOS Android Php RSA加密解密通配方案 - 迈腾大队长&url=https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2017/06/GetSandboxPathios/"><div class="card-body"> <span class="timeago small" > 2017-06-27 <i class="unloaded">2017-06-27T00:44:22+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>iOS获取各种文件目录的路径</h3><div class="text-muted small"><p> 1 2 3 4 5 6 7 8 9 10 // 获取沙盒主目录路径 NSString *homeDir = NSHomeDirectory(); // 获取Documents目录路径 NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) first...</p></div></div></a></div><div class="card"> <a href="/2019/04/AVRoutePickerView/"><div class="card-body"> <span class="timeago small" > 2019-04-17 <i class="unloaded">2019-04-17T23:19:52+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>AVRoutePickerView</h3><div class="text-muted small"><p> 前言 最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个AVRoutePickerView的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候. 这里网易云音乐中有实践的例子 这个控件主要用于AirPlay投屏 和音频的线路切换 那么我今天就跟大家一起学习一下这个新的控件 代码实现 导入#im...</p></div></div></a></div><div class="card"> <a href="/2017/03/AccessPrivacySensitive/"><div class="card-body"> <span class="timeago small" > 2017-03-29 <i class="unloaded">2017-03-29T18:54:40+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>隐私及敏感数据访问权限(Access privacy-sensitive data)</h3><div class="text-muted small"><p> 在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist m...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2017/06/EnableStaticAnalyer/" class="btn btn-outline-primary"><p>Xcode开启静态分析器</p></a> <a href="/2017/06/GetSandboxPathios/" class="btn btn-outline-primary"><p>iOS获取各种文件目录的路径</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/sunyazhou13">sunyazhou13</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
