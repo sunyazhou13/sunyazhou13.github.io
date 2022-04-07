@@ -1,1 +1,105 @@
-const include = [ /*--- CSS ---*/ '/assets/css/home.css', '/assets/css/categories.css', '/assets/css/tags.css', '/assets/css/archives.css', '/assets/css/page.css', '/assets/css/post.css', '/assets/css/category-tag.css', '/assets/css/lib/bootstrap-toc.min.css', /*--- Javascripts ---*/ '/assets/js/home.min.js', '/assets/js/page.min.js', '/assets/js/post.min.js', /*--- HTML ---*/ /* Tabs */ '/tabs/%E4%B8%BB%E9%A1%B5/', '/tabs/%E5%BD%92%E6%A1%A3/', '/tabs/%E5%88%86%E7%B1%BB/', '/tabs/%E6%A0%87%E7%AD%BE/', '/tabs/%E4%BD%9C%E5%93%81/', '/tabs/%E5%85%B3%E4%BA%8E/', /* The posts of first Home page and recent update list */ '/2022/04/CVPixelBufferRef/', '/2021/12/FinalSummary/', '/2021/12/iOSLessonsStudyNotes1/', '/2021/12/WordFrepuency/', '/2021/10/SwiftSubSets/', '/2021/06/CheckNSStringIsPureInteger/', '/2021/04/WCDBPractice/', '/2021/02/UTIsOfficalFileExtensionName/', '/2021/01/TextGradient/', '/2021/01/SafeAreaEdges/', /* Trending tags */ '/tags/ios/', '/tags/macos/', '/tags/ios%E5%BC%80%E5%8F%91/', '/tags/ios/', '/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/', '/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/', '/tags/%E7%94%9F%E6%B4%BB/', '/tags/learning-av-foundation/', '/tags/%E6%8A%80%E5%B7%A7/', '/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/', /*--- Icons ---*/'/assets/img/favicons/favicon.ico', '/assets/img/favicons/apple-icon.png', '/assets/img/favicons/apple-icon-precomposed.png', '/assets/img/favicons/apple-icon-57x57.png', '/assets/img/favicons/apple-icon-60x60.png', '/assets/img/favicons/apple-icon-72x72.png', '/assets/img/favicons/apple-icon-76x76.png', '/assets/img/favicons/apple-icon-114x114.png', '/assets/img/favicons/apple-icon-120x120.png', '/assets/img/favicons/apple-icon-144x144.png', '/assets/img/favicons/apple-icon-152x152.png', '/assets/img/favicons/apple-icon-180x180.png', '/assets/img/favicons/android-icon-192x192.png', '/assets/img/favicons/favicon-32x32.png', '/assets/img/favicons/favicon-96x96.png', '/assets/img/favicons/favicon-16x16.png', '/assets/img/favicons/ms-icon-144x144.png', '/assets/img/favicons/manifest.json', '/assets/img/favicons/browserconfig.xml', /*--- Others ---*/ '/assets/js/data/search.json', '/404.html', ]; const exclude = [ '/assets/js/data/pageviews.json', '/img.shields.io/' ];
+---
+layout: compress
+
+# The list to be cached by PWA
+# Chirpy v2.2
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2020 Cotes Chung
+# MIT Licensed
+---
+
+const include = [
+
+  /*--- CSS ---*/
+
+  '{{ "/assets/css/home.css" | relative_url }}',
+  '{{ "/assets/css/categories.css" | relative_url }}',
+  '{{ "/assets/css/tags.css" | relative_url }}',
+  '{{ "/assets/css/archives.css" | relative_url }}',
+  '{{ "/assets/css/page.css" | relative_url }}',
+  '{{ "/assets/css/post.css" | relative_url }}',
+  '{{ "/assets/css/category-tag.css" | relative_url }}',
+  '{{ "/assets/css/lib/bootstrap-toc.min.css" | relative_url }}',
+
+  /*--- Javascripts ---*/
+
+  '{{ "/assets/js/home.min.js" | relative_url }}',
+  '{{ "/assets/js/page.min.js" | relative_url }}',
+  '{{ "/assets/js/post.min.js" | relative_url }}',
+
+  /*--- HTML ---*/
+
+  /* Tabs */
+  {% for tab in site.data.tabs %}
+    {% capture item %}
+      {%- unless tab.name == 'Home' -%}
+        /tabs/{{ tab.name | downcase }}
+      {%- endunless -%}
+      {{- "/" -}}
+    {% endcapture %}
+    '{{ item | relative_url }}',
+  {% endfor %}
+
+  /* The posts of first Home page and recent update list */
+  {% assign post_list = "" | split: "" %}
+
+  {% for post in site.posts limit: site.paginate %}
+    {% capture post_url %}{{ post.url | relative_url }}{% endcapture %}
+    {% assign post_list = post_list | push: post_url %}
+  {% endfor %}
+
+  {% include update-list.html %}
+
+  {% for item in update_list %}
+    {% assign url = item | split: "::" | last | url_encode | prepend: "/posts/" | append: "/" | relative_url %}
+    {% assign post_list = post_list | push: url %}
+  {% endfor %}
+
+  {% assign post_list = post_list | uniq %}
+
+  {% for url in post_list %}
+    '{{ url }}',
+  {% endfor %}
+
+  /* Trending tags */
+  {% include trending-tags.html %}
+  {% for tag in trending_tags %}
+    {% capture tag_url %}/tags/{{ tag | downcase | url_encode }}/{% endcapture %}
+    '{{ tag_url | relative_url }}',
+  {% endfor %}
+
+  /*--- Icons ---*/
+
+  {%- capture icon_url -%}
+    {{ "/assets/img/favicons" | relative_url }}
+  {%- endcapture -%}
+  '{{ icon_url }}/favicon.ico',
+  '{{ icon_url }}/apple-icon.png',
+  '{{ icon_url }}/apple-icon-precomposed.png',
+  '{{ icon_url }}/apple-icon-57x57.png',
+  '{{ icon_url }}/apple-icon-60x60.png',
+  '{{ icon_url }}/apple-icon-72x72.png',
+  '{{ icon_url }}/apple-icon-76x76.png',
+  '{{ icon_url }}/apple-icon-114x114.png',
+  '{{ icon_url }}/apple-icon-120x120.png',
+  '{{ icon_url }}/apple-icon-144x144.png',
+  '{{ icon_url }}/apple-icon-152x152.png',
+  '{{ icon_url }}/apple-icon-180x180.png',
+  '{{ icon_url }}/android-icon-192x192.png',
+  '{{ icon_url }}/favicon-32x32.png',
+  '{{ icon_url }}/favicon-96x96.png',
+  '{{ icon_url }}/favicon-16x16.png',
+  '{{ icon_url }}/ms-icon-144x144.png',
+  '{{ icon_url }}/manifest.json',
+  '{{ icon_url }}/browserconfig.xml',
+
+  /*--- Others ---*/
+
+  '{{ "/assets/js/data/search.json" | relative_url }}',
+  '{{ "/404.html" | relative_url }}',
+];
+
+const exclude = [
+  '/assets/js/data/pageviews.json',
+  '/img.shields.io/'
+];
