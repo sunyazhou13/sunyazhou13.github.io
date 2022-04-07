@@ -1,0 +1,792 @@
+<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="阿里、字节：一套高效的iOS面试题之runtime相关问题1" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" /><meta property="og:url" content="https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-07-06T17:52:47+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="阿里、字节：一套高效的iOS面试题之runtime相关问题1" /><meta name="twitter:site" content="@sunyazhou13" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"url":"https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/","@type":"BlogPosting","headline":"阿里、字节：一套高效的iOS面试题之runtime相关问题1","dateModified":"2020-07-06T17:52:47+08:00","datePublished":"2020-07-06T17:52:47+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/"},"author":{"@type":"Person","name":"孙亚洲"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","@context":"https://schema.org"}</script><title>阿里、字节：一套高效的iOS面试题之runtime相关问题1 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不断学习, 与时俱进.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3 unloaded"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou13" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>阿里、字节：一套高效的iOS面试题之runtime相关问题1</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>阿里、字节：一套高效的iOS面试题之runtime相关问题1</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Jul 6, 2020, 5:52 PM +0800" > 2020-07-06 <i class="unloaded">2020-07-06T17:52:47+08:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.jpeg" alt="" /></p><h1 id="前言">前言</h1><blockquote><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p></blockquote><p>记得过年时候 <a href="https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w">有一个微信公众号</a> 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时长关注.期间如果有解答不清楚或者不对之处还请各位指正.</p><h1 id="面试题的结构分类和细化">面试题的结构分类和细化</h1><ul><li>runtime相关问题<ol><li>runtime结构模型<li>内存管理<li>关联属性或者hook相关的Method Swizzle</ol><li>NSNotification相关<ol><li>参考GNUStep源码<li>NSNotification实现原理 相关</ol><li>Runloop &amp; KVO<ol><li>runloop<li>KVO</ol><li>Block<ol><li>Block实现原理和注意事项相关</ol><li>多线程<ol><li>GCD相关和一些多线程概念</ol><li>视图&amp;图像相关<ol><li>视图UI布局方案<li>视图渲染相关</ol><li>性能优化<li>开发证书<li>架构设计<ol><li>各种设计模式<li>自己的设计</ol><li>其他问题<ol><li>方法调用和切面编程等</ol><li>系统基础知识<li>数据结构与算法</ul><h2 id="runtime相关问题">runtime相关问题</h2><p><a href="https://github.com/RetVal/objc-runtime">objc-runtime源码地址</a> <br /> <a href="https://opensource.apple.com/tarballs/objc4/">objc4官方源码地址</a></p><h3 id="结构模型">结构模型</h3><h4 id="介绍下runtime的内存模型isa对象类metaclass结构体的存储信息等">介绍下runtime的内存模型（isa、对象、类、metaclass、结构体的存储信息等）</h4><h5 id="对象">对象</h5><p>OC中的对象指向的是一个<code class="language-plaintext highlighter-rouge">objc_object</code>指针类型，<code class="language-plaintext highlighter-rouge">typedef struct objc_object *id;</code>从它的结构体中可以看出，它包括一个isa指针，指向的是这个对象的类对象,一个对象实例就是通过这个isa找到它自己的Class，而这个Class中存储的就是这个实例的方法列表、属性列表、成员变量列表等相关信息的。</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="c1">/// Represents an instance of a class.</span>
+<span class="k">struct</span> <span class="n">objc_object</span> <span class="p">{</span>
+    <span class="n">Class</span> <span class="n">_Nonnull</span> <span class="n">isa</span>  <span class="n">OBJC_ISA_AVAILABILITY</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">/// A pointer to an instance of a class.</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">objc_object</span> <span class="o">*</span><span class="n">id</span><span class="p">;</span>
+</pre></table></code></div></div><p>这个objc_object 的实现比较长 在这里<a href="https://github.com/RetVal/objc-runtime/blob/master/runtime/objc-private.h">查看</a></p><h4 id="类">类</h4><p>在OC中的类是用Class来表示的，实际上它指向的是一个<code class="language-plaintext highlighter-rouge">objc_class</code>的指针类型，<code class="language-plaintext highlighter-rouge">typedef struct objc_class *Class;</code><br /> 对应的结构体如下：</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">objc_class</span> <span class="p">{</span>
+    <span class="n">Class</span> <span class="n">_Nonnull</span> <span class="n">isa</span>  <span class="n">OBJC_ISA_AVAILABILITY</span><span class="p">;</span>
+
+<span class="cp">#if !__OBJC2__
+</span>    <span class="n">Class</span> <span class="n">_Nullable</span> <span class="n">super_class</span>                              <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">name</span>                               <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">version</span>                                             <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">info</span>                                                <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">instance_size</span>                                       <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">objc_ivar_list</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">ivars</span>                  <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">objc_method_list</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">methodLists</span>                    <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">objc_cache</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">cache</span>                       <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">objc_protocol_list</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">protocols</span>          <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#endif
+</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h5 id="class和-object--小结">class和 object 小结</h5><p>从结构体中定义的变量可知，OC的<code class="language-plaintext highlighter-rouge">Class</code>类型包括如下</p><p>数据（即：元数据<code class="language-plaintext highlighter-rouge">metadata</code>）：<code class="language-plaintext highlighter-rouge">super_class</code>（父类类对象）;<br /> name（类对象的名称）; <br /> version、info（版本和相关信息）;<br /> instance_size（实例内存大小）;<br /> ivars（实例变量列表）；<br /> methodLists（方法列表）；<br /> cache（缓存）；<br /> protocols（实现的协议列表）;<br /> 当然也包括一个isa指针，这说明Class也是一个对象类型，所以我们称之为类对象， 这里的isa指向的是元类对象（metaclass），元类中保存了创建类对象（Class）的类方法的全部信息。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/class_inherit.png" alt="Objective-C的对象原型继承链" /> <a href="">Objective-C的对象原型继承链</a></p><p>从图中可知，最终的基类<code class="language-plaintext highlighter-rouge">NSObject</code>的元类对象<code class="language-plaintext highlighter-rouge">isa</code>指向的是自己本身，从而形成一个闭环。<br /> 元类（<code class="language-plaintext highlighter-rouge">Meta Class</code>）：是一个类对象的类，即：Class的类，这里保存了类方法等相关信息。<br /> 我们再看一下类对象中存储的方法、属性、成员变量等信息的结构体<br /> <code class="language-plaintext highlighter-rouge">objc_ivar_list</code>：存储了类的成员变量，<br /> 可以通过<code class="language-plaintext highlighter-rouge">object_getIvar</code>或<code class="language-plaintext highlighter-rouge">class_copyIvarList</code>获取；<br /> 另外这两个方法是用来获取类的属性列表的<code class="language-plaintext highlighter-rouge">class_getProperty</code>和<code class="language-plaintext highlighter-rouge">class_copyPropertyList</code>，属性和成员变量是有区别的。</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">objc_ivar</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">ivar_name</span>                               <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">ivar_type</span>                               <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ivar_offset</span>                                          <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#ifdef __LP64__
+</span>    <span class="kt">int</span> <span class="n">space</span>                                                <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#endif
+</span><span class="p">}</span>                                                            <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">objc_ivar_list</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ivar_count</span>                                           <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#ifdef __LP64__
+</span>    <span class="kt">int</span> <span class="n">space</span>                                                <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#endif
+</span>    <span class="cm">/* variable length structure */</span>
+    <span class="k">struct</span> <span class="n">objc_ivar</span> <span class="n">ivar_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>                            <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">objc_method_list</code>：存储了类的方法列表，可以通过<code class="language-plaintext highlighter-rouge">class_copyMethodList</code>获取。</p><p>结构体如下:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">objc_method</span> <span class="p">{</span>
+    <span class="n">SEL</span> <span class="n">_Nonnull</span> <span class="n">method_name</span>                                 <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">method_types</span>                            <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+    <span class="n">IMP</span> <span class="n">_Nonnull</span> <span class="n">method_imp</span>                                  <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="p">}</span>                                                            <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">objc_method_list</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">objc_method_list</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">obsolete</span>             <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">method_count</span>                                         <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#ifdef __LP64__
+</span>    <span class="kt">int</span> <span class="n">space</span>                                                <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="cp">#endif
+</span>    <span class="cm">/* variable length structure */</span>
+    <span class="k">struct</span> <span class="n">objc_method</span> <span class="n">method_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>                        <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">objc_protocol_list</code>：储存了类的协议列表，可以通过<code class="language-plaintext highlighter-rouge">class_copyProtocolList</code>获取。</p><p>结构体如下：</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">objc_protocol_list</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">objc_protocol_list</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">next</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">count</span><span class="p">;</span>
+    <span class="n">__unsafe_unretained</span> <span class="n">Protocol</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">list</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>此问题参考<a href="https://developer.aliyun.com/ask/282811">介绍下runtime的内存模型（isa、对象、类、metaclass、结构体的存储信息等）</a></p><h4 id="为什么要设计metaclass">为什么要设计metaclass?</h4><p>先说结论: 为了更好的<strong>复用传递消息</strong>.metaclass只是需要<strong>实现复用消息传递</strong>为目的工具.而Objective-C所有的类默认都是同一个MetaClass(通过isa指针最终指向metaclass). 因为Objective-C的特性基本上是照搬的Smalltalk,Smalltalk中的MetaClass的设计是Smalltalk-80加入的.所以Objective-C也就有了metaclass的设计.</p><blockquote><p>本质上因为Smalltalk的面向对象的亮点是它的<strong>消息发送机制</strong>.</p></blockquote><p>回答这个问题之前我们先回看一下上边的Objective-C的对象原型继承链<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/class_inherit2.jpg" alt="Objective-C的对象原型继承链" /></p><p>通过上图我们明白如下 重点内容:</p><ul><li><strong>实例的实例方法函数存在类结构体中</strong><li><strong>类方法函数存在metaclass结构体中</strong></ul><p>而Objective-C的方法调用（消息）就会根据对象去找isa指针指向的Class对象中的方法列表找到对应的方法。</p><blockquote><p>isa 指向的类就是我们创建实例的类型.</p></blockquote><p>通过<a href="https://www.jianshu.com/p/ea7c42e16da8">Why is MetaClass in Objective-C？</a>文章我们了解到一个十分重要的概念,python和<strong>Objective-C不太一样的是,并不是每一个类都有一个MetaClass,而是Objective-C所有的类默认都是同一个MetaClass.</strong></p><h5 id="smalltalk中的metaclass">Smalltalk中的metaclass</h5><p>Smalltalk，被公认为历史上第二个面向对象的语言，其亮点是它的<strong>消息发送机制</strong>。<br /> Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltalk-76，并不是每个类有一个MetaClass，而是所有类的isa指针都指向一个特殊的类，叫做Class(这种设计之后也被Java借鉴了）。<br /> 而每个类都有自己MetaClass的设计，加入的原因是，因为Smalltalk里面，类是对象，而对象就可以响应消息，那么类的消息的响应的方法就应该由类的类去存储，而每个MetaClass就持有每个类的类方法。</p><h6 id="每个metaclass的isa指针指向什么">每个MetaClass的isa指针指向什么？</h6><p>如果MetaClass再有MetaClass，那么这个关系将无穷无尽。Smalltalk里的解决方案是，指向同一个叫MetaClass的类。</p><h6 id="metaclass的isa指针指向什么">MetaClass的isa指针指向什么？</h6><p>指向他的实例，也就是实例的isa指向MetaClass，同时MetaClassisa指向实例，相互指着。</p><p>那么Smalltalk的继承关系，其实和Objective-C的很像了（后面有class的是前者的MetaClass）。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/class_inherit2_smaltalk.png" alt="" /></p><h6 id="这时候产生了一个重要的问题假如去掉metaclass把类方法放到也类里面是否可行">这时候产生了一个重要的问题，假如去掉MetaClass，把类方法放到也类里面是否可行？</h6><p>这个问题，我思索许久，发现其实是一个对面向对象的哲学思想问题，要对这个问题下结论，不得不重新讲讲面向对象</p><h5 id="从smalltalk重新认识面向对象">从Smalltalk重新认识面向对象</h5><p>以前谈到面向对象，总会提到，面向对象三特征：封装、继承、多态。但其实，面向对象中也分流派，如C++这种来自Simula的设计思想的，更注重的是类的划分，因为方法调用是静态的。而如Objective-C这种借鉴Smalltalk的，更注重的是消息传递，是动态响应消息。</p><p>而面向对象三种特征，更基于的是类的划分而提出的。</p><p>这两种思想最大的不同，我认为是自上而下和自下而上的思考方式。</p><ul><li>类的划分，要求类的设计者是以一个很高的层次去设计这个类，提取出类的特性和本质，进行类的构建。知道类型才可以去发送消息给对象。<li>消息传递，要求的是类的设计者以消息为起点去构建类，也就是对外界的变化进行响应，而不关心自身的类型，设计接口。尝试理解消息，无法处理则进行特殊处理。 在此不讨论两种方式的优劣之分，而着重讲讲Smalltalk这种设计。</ul><p>消息传递对于面向对象的设计，其实在于给出一种对消息的解决方案。而面向对象优点之一的复用，在这种设计里，更多在于复用解决方案，而不是单纯的类本身。这种思想就如设计组件一般，关心接口，关心组合而非类本身。其实之所以有MetaClass这种设计，我的理解并不是先有MetaClass，而是在万物都是对象的Smalltalk里，向对象发送消息的基本解决方案是统一的，希望复用的。而实例和类之间用的这一套通过isa指针指向的Class单例中存储方法列表和查询方法的解决方案的流程，是应该在类上复用的，而MetaClass就顺理成章出现罢了。</p><h5 id="为什么要设计metaclass小结">为什么要设计metaclass小结</h5><h6 id="回到一开始那个问题为什么要设计metaclass去掉把类方法放到类里面行不行">回到一开始那个问题，为什么要设计MetaClass，去掉把类方法放到类里面行不行？</h6><p>我的理解是，可以，但不Smalltalk。这样的设计是C++那种自上而下的设计方式，类方法也是类的一种特征描述。而Smalltalk的精髓正在于消息传递，复用消息传递才是根本目的，而MetaClass只不过是因此需要的一个工具罢了。</p><p>参考<a href="https://www.jianshu.com/p/ea7c42e16da8">Why is MetaClass in Objective-C？</a></p><h4 id="class_copyivarlist--class_copypropertylist区别"><strong>class_copyIvarList()</strong> &amp; <strong>class_copyPropertyList()</strong>区别</h4><p>先说结论:</p><ul><li><strong>class_copyIvarList()</strong> 能获取到所有的成员变量,包括 花括号内的变量(<code class="language-plaintext highlighter-rouge">.h</code>和<code class="language-plaintext highlighter-rouge">.m</code>都包括).<li><strong>class_copyPropertyList()</strong> 只能获取到 以<code class="language-plaintext highlighter-rouge">@property</code>关键字 声明的中属性(<code class="language-plaintext highlighter-rouge">.h</code>和<code class="language-plaintext highlighter-rouge">.m</code>都包括)</ul><p>区别:</p><ul><li><code class="language-plaintext highlighter-rouge">class_copyIvarList()</code>获取默认是带下划线的变量<li><code class="language-plaintext highlighter-rouge">class_copyPropertyList()</code>获取默认是不带下划线的变量名称.</ul><blockquote><p>但是以上两个方法都只能获取到当前类的属性和变量（也就是说获取不到父类的属性和变量）</p></blockquote><hr /><p>举例说明:</p><p>我们声明一个<code class="language-plaintext highlighter-rouge">ClassA</code> 通过 调试代码实现</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;
+#import &lt;objc/runtime.h&gt;
+</span>
+<span class="k">@interface</span> <span class="nc">ClassA</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_b</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_c</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">d</span><span class="p">;</span> <span class="c1">//不推荐这样写</span>
+<span class="p">}</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSArray</span>          <span class="o">*</span><span class="n">arrayA</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span>  <span class="p">)</span> <span class="n">NSString</span>         <span class="o">*</span><span class="n">stringA</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">dispatch_queue_t</span> <span class="n">testQueue</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ClassA</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><p>如果是通过<code class="language-plaintext highlighter-rouge">class_copyIvarList()</code>函数获取则打印如下结果.</p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre> <span class="nt">---</span> class_copyIvarList ↓↓↓---
+ _a
+ _b
+ _c
+ d
+ _arrayA
+ _stringA
+ _testQueue
+ <span class="nt">--------------END----------------</span>
+</pre></table></code></div></div><p>如果是通过<code class="language-plaintext highlighter-rouge">class_copyPropertyList()</code>函数获取则打印如下结果.</p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre> <span class="nt">---</span> class_copyPropertyList ↓↓↓---
+ arrayA
+ stringA
+ testQueue
+ <span class="nt">--------------END----------------</span>
+</pre></table></code></div></div><p>debug代码如下:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">printIvarOrProperty</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"--- class_copyPropertyList ↓↓↓---"</span><span class="p">);</span>
+    <span class="n">ClassA</span> <span class="o">*</span><span class="n">classA</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ClassA</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">propertyCount</span><span class="p">;</span>
+    <span class="n">objc_property_t</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="n">class_copyPropertyList</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">classA</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">propertyCount</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">propertyCount</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">objc_property_t</span> <span class="n">objc_property_name</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nf">i</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"%s"</span><span class="p">,</span> <span class="n">property_getName</span><span class="p">(</span><span class="n">objc_property_name</span><span class="p">)]);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"--------------END----------------"</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"--- class_copyIvarList ↓↓↓---"</span><span class="p">);</span>
+    <span class="n">Ivar</span> <span class="o">*</span><span class="n">iv</span> <span class="o">=</span> <span class="n">class_copyIvarList</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">classA</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">propertyCount</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">propertyCount</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Ivar</span> <span class="n">ivar</span> <span class="o">=</span> <span class="n">iv</span><span class="p">[</span><span class="nf">i</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"%s"</span><span class="p">,</span> <span class="n">ivar_getName</span><span class="p">(</span><span class="n">ivar</span><span class="p">)]);</span>
+    <span class="p">}</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">iv</span><span class="p">);</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"--------------END----------------"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>以上<a href="https://github.com/sunyazhou13/IvarAndPropertyDemo">demo点击这里下载</a></p><hr /><p>下面我们看下<a href="https://github.com/sunyazhou13/objc-runtime">objc的源码</a></p><p>以下代码位于<code class="language-plaintext highlighter-rouge">objc-runtime-new.mm</code>中</p><div class="language-c++ highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre><td class="rouge-code"><pre><span class="cm">/***********************************************************************
+* class_copyPropertyList. Returns a heap block containing the 
+* properties declared in the class, or nil if the class 
+* declares no properties. Caller must free the block.
+* Does not copy any superclass's properties.
+* Locking: read-locks runtimeLock
+**********************************************************************/</span>
+<span class="n">objc_property_t</span> <span class="o">*</span>
+<span class="nf">class_copyPropertyList</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outCount</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cls</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">outCount</span><span class="p">)</span> <span class="o">*</span><span class="n">outCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">mutex_locker_t</span> <span class="n">lock</span><span class="p">(</span><span class="n">runtimeLock</span><span class="p">);</span>
+
+    <span class="n">checkIsKnownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">);</span>
+    <span class="n">ASSERT</span><span class="p">(</span><span class="n">cls</span><span class="o">-&gt;</span><span class="n">isRealized</span><span class="p">());</span>
+    
+    <span class="k">auto</span> <span class="n">rw</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">();</span>
+
+    <span class="n">property_t</span> <span class="o">**</span><span class="n">result</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">.</span><span class="n">count</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">property_t</span> <span class="o">**</span><span class="p">)</span><span class="n">malloc</span><span class="p">((</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">property_t</span> <span class="o">*</span><span class="p">));</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">prop</span> <span class="o">:</span> <span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">prop</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">outCount</span><span class="p">)</span> <span class="o">*</span><span class="n">outCount</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">objc_property_t</span> <span class="o">*</span><span class="p">)</span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>通过源码我们可以看到</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">auto</span> <span class="n">rw</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">();</span>
+<span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">;</span> <span class="c1">//通过rw直接拿到properties</span>
+</pre></table></code></div></div><p>通过rw直接拿到properties,然后便利拿出想要的 以<code class="language-plaintext highlighter-rouge">@property</code>关键字 声明变量名称.</p><p><code class="language-plaintext highlighter-rouge">properties </code>详细内容 还请异步运行时源码看下这里篇幅限制就不啰嗦了.</p><hr /><div class="language-c++ highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="cm">/***********************************************************************
+* class_copyIvarList
+* fixme
+* Locking: read-locks runtimeLock
+**********************************************************************/</span>
+<span class="n">Ivar</span> <span class="o">*</span>
+<span class="nf">class_copyIvarList</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outCount</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="n">ivar_list_t</span> <span class="o">*</span><span class="n">ivars</span><span class="p">;</span>
+    <span class="n">Ivar</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cls</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">outCount</span><span class="p">)</span> <span class="o">*</span><span class="n">outCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">mutex_locker_t</span> <span class="n">lock</span><span class="p">(</span><span class="n">runtimeLock</span><span class="p">);</span>
+
+    <span class="n">ASSERT</span><span class="p">(</span><span class="n">cls</span><span class="o">-&gt;</span><span class="n">isRealized</span><span class="p">());</span>
+    
+    <span class="k">if</span> <span class="p">((</span><span class="n">ivars</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ro</span><span class="o">-&gt;</span><span class="n">ivars</span><span class="p">)</span>  <span class="o">&amp;&amp;</span>  <span class="n">ivars</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">Ivar</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">((</span><span class="n">ivars</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Ivar</span><span class="p">));</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">ivar</span> <span class="o">:</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ivar</span><span class="p">.</span><span class="n">offset</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>  <span class="c1">// anonymous bitfield</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ivar</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">outCount</span><span class="p">)</span> <span class="o">*</span><span class="n">outCount</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这里就一个关键点</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">ivars</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ro</span><span class="o">-&gt;</span><span class="n">ivars</span>
+</pre></table></code></div></div><p>拿到ivars.</p><p>由于这两者拿到的成员不一样所以两个API就会有区别.</p><h4 id="class_rw_t-和-class_ro_t-的区别"><code class="language-plaintext highlighter-rouge">class_rw_t</code> 和 <code class="language-plaintext highlighter-rouge">class_ro_t</code> 的区别</h4><p>先说结论:</p><ul><li>两个结构体都存放着当前类的属性、实例变量、方法、协议等.<li><code class="language-plaintext highlighter-rouge">class_ro_t</code>存放的是编译期间就确定的.<li>而<code class="language-plaintext highlighter-rouge">class_rw_t</code>是在runtime时才确定，它会先将<code class="language-plaintext highlighter-rouge">class_ro_t</code>的内容拷贝过去，然后再将当前类的分类的这些属性、方法等拷贝到其中。所以可以说<code class="language-plaintext highlighter-rouge">class_rw_t</code>是<code class="language-plaintext highlighter-rouge">class_ro_t</code>的超集，当然实际访问类的方法、属性等也都是访问的<code class="language-plaintext highlighter-rouge">class_rw_t</code>中的内容.</ul><hr /><h5 id="下面我来深入了解两者具体是什么">下面我来深入了解两者具体是什么</h5><p>首先我们需要了解它俩的由来,在<code class="language-plaintext highlighter-rouge">objc_class</code>我们知道有一个成员变量叫<code class="language-plaintext highlighter-rouge">isa</code>,我们这里要介绍的是<code class="language-plaintext highlighter-rouge">objc_class</code>的另一成员变量<code class="language-plaintext highlighter-rouge">bits</code>.</p><p><code class="language-plaintext highlighter-rouge">objc_class</code>的结构如下:</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/objc_class_struct.png" alt="objc_class的结构" /></p><p><code class="language-plaintext highlighter-rouge">bits</code> 用来存储类的属性，方法，协议等信息。它是一个<code class="language-plaintext highlighter-rouge">class_data_bits_t</code>类型</p><p><code class="language-plaintext highlighter-rouge">class_data_bits_t</code> 如下:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">class_data_bits_t</span> <span class="p">{</span>
+    <span class="kt">uintptr_t</span> <span class="n">bits</span><span class="p">;</span>
+    <span class="c1">// method here</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这个结构体只有一个<code class="language-plaintext highlighter-rouge">64bit</code>的成员变量<code class="language-plaintext highlighter-rouge">bits</code>，先来看看这<code class="language-plaintext highlighter-rouge">64bit</code>分别存放的什么信息：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/objc_class_bits.png" alt="" /></p><ul><li><code class="language-plaintext highlighter-rouge">is_swift</code> : 第一个bit，判断类是否是Swift类<li><code class="language-plaintext highlighter-rouge">has_default_rr</code> ：第二个bit，判断当前类或者父类含有默认的<code class="language-plaintext highlighter-rouge">retain/release/autorelease/retainCount/_tryRetain/_isDeallocating/retainWeakReference/allowsWeakReference</code> 方法<li><code class="language-plaintext highlighter-rouge">require_raw_isa</code> ：第三个bit， 判断当前类的实例是否需要<code class="language-plaintext highlighter-rouge">raw_isa</code><li><code class="language-plaintext highlighter-rouge">data</code> : 第4-48位，存放一个指向class_rw_t结构体的指针，该结构体包含了该类的属性，方法，协议等信息。至于为何只用44bit来存放地址</ul><h5 id="class_rw_t-和-class_ro_t"><code class="language-plaintext highlighter-rouge">class_rw_t</code> 和<code class="language-plaintext highlighter-rouge"> class_ro_t</code></h5><p>先来看看两个结构体的内部成员变量</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">class_rw_t</span> <span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="n">class_ro_t</span> <span class="o">*</span><span class="n">ro</span><span class="p">;</span>
+
+    <span class="n">method_array_t</span> <span class="n">methods</span><span class="p">;</span>
+    <span class="n">property_array_t</span> <span class="n">properties</span><span class="p">;</span>
+    <span class="n">protocol_array_t</span> <span class="n">protocols</span><span class="p">;</span>
+
+    <span class="n">Class</span> <span class="n">firstSubclass</span><span class="p">;</span>
+    <span class="n">Class</span> <span class="n">nextSiblingClass</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></table></code></div></div><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">class_ro_t</span> <span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">instanceStart</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">instanceSize</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">reserved</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">ivarLayout</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">method_list_t</span> <span class="o">*</span> <span class="n">baseMethodList</span><span class="p">;</span>
+    <span class="n">protocol_list_t</span> <span class="o">*</span> <span class="n">baseProtocols</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">ivar_list_t</span> <span class="o">*</span> <span class="n">ivars</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">weakIvarLayout</span><span class="p">;</span>
+    <span class="n">property_list_t</span> <span class="o">*</span><span class="n">baseProperties</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">class_rw_t</code>结构体内有一个指向<code class="language-plaintext highlighter-rouge">class_ro_t</code>结构体的指针.</p><p>每个类都对应有一个<code class="language-plaintext highlighter-rouge">class_ro_t</code>结构体和一个<code class="language-plaintext highlighter-rouge">class_rw_t</code>结构体。在编译期间，<code class="language-plaintext highlighter-rouge">class_ro_t</code>结构体就已经确定，<code class="language-plaintext highlighter-rouge">objc_class</code>中的<code class="language-plaintext highlighter-rouge">bits</code>的<code class="language-plaintext highlighter-rouge">data</code>部分存放着该结构体的地址。在<code class="language-plaintext highlighter-rouge">runtime</code>运行之后，具体说来是在运行<code class="language-plaintext highlighter-rouge">runtime</code>的<code class="language-plaintext highlighter-rouge">realizeClass</code> 方法时，会生成<code class="language-plaintext highlighter-rouge">class_rw_t</code>结构体，该结构体包含了<code class="language-plaintext highlighter-rouge">class_ro_t</code>，并且更新<code class="language-plaintext highlighter-rouge">data</code>部分，换成<code class="language-plaintext highlighter-rouge">class_rw_t</code>结构体的地址。</p><p>用两张图来说明这个过程：</p><p>类的<code class="language-plaintext highlighter-rouge">realizeClass</code>运行之前：<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/before_bits.png" alt="" /></p><p>类的<code class="language-plaintext highlighter-rouge">realizeClass</code>运行之后：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/after_bits.png" alt="" /></p><p>细看两个结构体的成员变量会发现很多相同的地方，他们都存放着当前类的属性、实例变量、方法、协议等等。区别在于：<code class="language-plaintext highlighter-rouge">class_ro_t</code>存放的是编译期间就确定的；而<code class="language-plaintext highlighter-rouge">class_rw_t</code>是在<code class="language-plaintext highlighter-rouge">runtime</code>时才确定，它会先将<code class="language-plaintext highlighter-rouge">class_ro_t</code>的内容拷贝过去，然后再将当前类的分类的这些属性、方法等拷贝到其中。所以可以说<code class="language-plaintext highlighter-rouge">class_rw_t</code>是<code class="language-plaintext highlighter-rouge">class_ro_t</code>的超集，当然实际访问类的方法、属性等也都是访问的<code class="language-plaintext highlighter-rouge">class_rw_t</code>中的内容</p><p>属性(property)存放在<code class="language-plaintext highlighter-rouge">class_rw_t</code>中，实例变量(ivar)存放在<code class="language-plaintext highlighter-rouge">class_ro_t</code>中。</p><p>详细内容请 参考资料<a href="http://vanney9.com/2017/06/05/objective-c-runtime-property-method/">Objective-C runtime - 属性与方法</a></p><h4 id="category如何被加载的两个category的load方法的加载顺序两个category的同名方法的加载顺序">category如何被加载的,两个category的load方法的加载顺序，两个category的同名方法的加载顺序</h4><p>结论:</p><ol><li>category 是 这样 <code class="language-plaintext highlighter-rouge">realizeClass </code> -&gt; <code class="language-plaintext highlighter-rouge">methodizeClass()</code> -&gt; <code class="language-plaintext highlighter-rouge">attachCategories()</code> 一步步被加载的.<li>主类与分类的加载顺序是:<strong>主类优先于分类加载,无关编译顺序</strong>.<li>分类间的加载顺序取决于编译的顺序:<strong>编译在前则先加载,编译在后则后加载</strong>.</ol><hr /><h5 id="category如何被加载的">category如何被加载的</h5><p>我在运行时的源码 <code class="language-plaintext highlighter-rouge">objc-runtime-new.mm</code>中找到如下:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="n">Class</span> <span class="nf">realizeClassWithoutSwift</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">,</span> <span class="n">Class</span> <span class="n">previously</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="p">...</span>
+	<span class="c1">// Attach categories  被加载</span>
+	<span class="n">methodizeClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">previously</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">cls</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">realizeClass </code> -&gt; <code class="language-plaintext highlighter-rouge">methodizeClass()</code> -&gt; <code class="language-plaintext highlighter-rouge">attachCategories()</code></p><p>核心是在methodizeClass()函数中实现的.</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">methodizeClass</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">runtimeLock</span><span class="p">.</span><span class="n">assertLocked</span><span class="p">();</span>
+    <span class="n">bool</span> <span class="n">isMeta</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">isMetaClass</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">rw</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">ro</span> <span class="o">=</span> <span class="n">rw</span><span class="o">-&gt;</span><span class="n">ro</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="n">property_list_t</span> <span class="o">*</span><span class="n">proplist</span> <span class="o">=</span> <span class="n">ro</span><span class="o">-&gt;</span><span class="n">baseProperties</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">proplist</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">.</span><span class="n">attachLists</span><span class="p">(</span><span class="o">&amp;</span><span class="n">proplist</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+    <span class="c1">// Attach categories.</span>
+    <span class="n">category_list</span> <span class="o">*</span><span class="n">cats</span> <span class="o">=</span> <span class="n">unattachedCategoriesForClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">true</span> <span class="cm">/*realizing*/</span><span class="p">);</span>
+    <span class="n">attachCategories</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="nb">false</span> <span class="cm">/*don't flush caches*/</span><span class="p">);</span>
+    <span class="p">...</span>    
+    <span class="k">if</span> <span class="p">(</span><span class="n">cats</span><span class="p">)</span> <span class="n">free</span><span class="p">(</span><span class="n">cats</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></table></code></div></div><p>通过上述代码我们发现<code class="language-plaintext highlighter-rouge">ro-&gt;baseProperties;</code> , baseProperties 在前，category 在后,</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">property_list_t</span> <span class="o">*</span><span class="n">proplist</span> <span class="o">=</span> <span class="n">ro</span><span class="o">-&gt;</span><span class="n">baseProperties</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">proplist</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">.</span><span class="n">attachLists</span><span class="p">(</span><span class="o">&amp;</span><span class="n">proplist</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>但决定顺序的是 rw-&gt;<code class="language-plaintext highlighter-rouge">properties.attachLists ()</code>这个方法.</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre><td class="rouge-code"><pre><span class="c1">/// category 被附加进去</span>
+<span class="kt">void</span> <span class="nf">attachLists</span><span class="p">(</span><span class="n">List</span><span class="o">*</span> <span class="k">const</span> <span class="o">*</span> <span class="n">addedLists</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">addedCount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">addedCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hasArray</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// many lists -&gt; many lists</span>
+        <span class="kt">uint32_t</span> <span class="n">oldCount</span> <span class="o">=</span> <span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">newCount</span> <span class="o">=</span> <span class="n">oldCount</span> <span class="o">+</span> <span class="n">addedCount</span><span class="p">;</span>
+        <span class="n">setArray</span><span class="p">((</span><span class="n">array_t</span> <span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">array</span><span class="p">(),</span> <span class="n">array_t</span><span class="o">::</span><span class="n">byteSize</span><span class="p">(</span><span class="n">newCount</span><span class="p">)));</span>
+        <span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">=</span> <span class="n">newCount</span><span class="p">;</span>
+        <span class="c1">// 将旧内容移动偏移量 addedCount 然后将 addedLists copy 到起始位置</span>
+        <span class="cm">/*
+            struct array_t {
+                    uint32_t count;
+                    List* lists[0];
+                    };
+        */</span>
+        <span class="n">memmove</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span> <span class="o">+</span> <span class="n">addedCount</span><span class="p">,</span> <span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">,</span> 
+                <span class="n">oldCount</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">,</span> <span class="n">addedLists</span><span class="p">,</span> 
+               <span class="n">addedCount</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span>  <span class="o">&amp;&amp;</span>  <span class="n">addedCount</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 0 lists -&gt; 1 list</span>
+        <span class="n">list</span> <span class="o">=</span> <span class="n">addedLists</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span> 
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 1 list -&gt; many lists</span>
+        <span class="n">List</span><span class="o">*</span> <span class="n">oldList</span> <span class="o">=</span> <span class="n">list</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">oldCount</span> <span class="o">=</span> <span class="n">oldList</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">newCount</span> <span class="o">=</span> <span class="n">oldCount</span> <span class="o">+</span> <span class="n">addedCount</span><span class="p">;</span>
+        <span class="n">setArray</span><span class="p">((</span><span class="n">array_t</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">array_t</span><span class="o">::</span><span class="n">byteSize</span><span class="p">(</span><span class="n">newCount</span><span class="p">)));</span>
+        <span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">=</span> <span class="n">newCount</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">oldList</span><span class="p">)</span> <span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">[</span><span class="n">addedCount</span><span class="p">]</span> <span class="o">=</span> <span class="n">oldList</span><span class="p">;</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">,</span> <span class="n">addedLists</span><span class="p">,</span> 
+        <span class="n">addedCount</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">lists</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>所以 category 的属性总是在前面的，baseClass的属性被往后偏移了。</p><h5 id="两个category的load方法的加载顺序">两个category的load方法的加载顺序</h5><pre><code class="language-txt">A class’s +load method is called after all of its superclasses’ +load methods.
+一个类的+load方法在其父类的+load方法后调用
+
+A category +load method is called after the class’s own +load method.
+一个Category的+load方法在被其扩展的类的自有+load方法后调用
+</code></pre><p>结论: 主类与分类的加载顺序是:<strong>主类优先于分类加载,无关编译顺序</strong>.</p><h5 id="两个category的同名方法的加载顺序">两个category的同名方法的加载顺序</h5><p>应用程序 image 镜像加载到内存中时， <code class="language-plaintext highlighter-rouge">Category</code> 解析的过程，注意下面的 <code class="language-plaintext highlighter-rouge">while(i--)</code> 循环 这里倒序将 <code class="language-plaintext highlighter-rouge">category</code> 中的协议 方法 属性添加到了<code class="language-plaintext highlighter-rouge"> rw = cls-&gt;data() </code>中的 <code class="language-plaintext highlighter-rouge">methods/properties/protocols</code>中。</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="kt">void</span> 
+<span class="nf">attachCategories</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">,</span> <span class="n">category_list</span> <span class="o">*</span><span class="n">cats</span><span class="p">,</span> <span class="n">bool</span> <span class="n">flush_caches</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cats</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PrintReplacedMethods</span><span class="p">)</span> <span class="n">printReplacements</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">cats</span><span class="p">);</span>
+
+    <span class="n">bool</span> <span class="n">isMeta</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">isMetaClass</span><span class="p">();</span>
+
+    <span class="c1">// fixme rearrange to remove these intermediate allocations</span>
+    <span class="n">method_list_t</span> <span class="o">**</span><span class="n">mlists</span> <span class="o">=</span> <span class="p">(</span><span class="n">method_list_t</span> <span class="o">**</span><span class="p">)</span>
+        <span class="n">malloc</span><span class="p">(</span><span class="n">cats</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mlists</span><span class="p">));</span>
+    <span class="n">property_list_t</span> <span class="o">**</span><span class="n">proplists</span> <span class="o">=</span> <span class="p">(</span><span class="n">property_list_t</span> <span class="o">**</span><span class="p">)</span>
+        <span class="n">malloc</span><span class="p">(</span><span class="n">cats</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">proplists</span><span class="p">));</span>
+    <span class="n">protocol_list_t</span> <span class="o">**</span><span class="n">protolists</span> <span class="o">=</span> <span class="p">(</span><span class="n">protocol_list_t</span> <span class="o">**</span><span class="p">)</span>
+        <span class="n">malloc</span><span class="p">(</span><span class="n">cats</span><span class="o">-&gt;</span><span class="n">count</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">protolists</span><span class="p">));</span>
+
+    <span class="c1">// Count backwards through cats to get newest categories first</span>
+    <span class="kt">int</span> <span class="n">mcount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">propcount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">protocount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">cats</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span>
+    <span class="n">bool</span> <span class="n">fromBundle</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span><span class="o">&amp;</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">cats</span><span class="o">-&gt;</span><span class="n">list</span><span class="p">[</span><span class="nf">i</span><span class="p">];</span>
+
+        <span class="n">method_list_t</span> <span class="o">*</span><span class="n">mlist</span> <span class="o">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">cat</span><span class="o">-&gt;</span><span class="n">methodsForMeta</span><span class="p">(</span><span class="n">isMeta</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mlist</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">mlists</span><span class="p">[</span><span class="n">mcount</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">mlist</span><span class="p">;</span>
+            <span class="n">fromBundle</span> <span class="o">|=</span> <span class="n">entry</span><span class="p">.</span><span class="n">hi</span><span class="o">-&gt;</span><span class="n">isBundle</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="n">property_list_t</span> <span class="o">*</span><span class="n">proplist</span> <span class="o">=</span> 
+            <span class="n">entry</span><span class="p">.</span><span class="n">cat</span><span class="o">-&gt;</span><span class="n">propertiesForMeta</span><span class="p">(</span><span class="n">isMeta</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">hi</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">proplist</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">proplists</span><span class="p">[</span><span class="n">propcount</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">proplist</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">protocol_list_t</span> <span class="o">*</span><span class="n">protolist</span> <span class="o">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">cat</span><span class="o">-&gt;</span><span class="n">protocols</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">protolist</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">protolists</span><span class="p">[</span><span class="n">protocount</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">protolist</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">auto</span> <span class="n">rw</span> <span class="o">=</span> <span class="n">cls</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">();</span>
+        
+    <span class="c1">// 注意下面的代码，上面采用倒叙遍历方式，所以后编译的 category 会先add到数组的前部</span>
+    <span class="n">prepareMethodLists</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mlists</span><span class="p">,</span> <span class="n">mcount</span><span class="p">,</span> <span class="nb">NO</span><span class="p">,</span> <span class="n">fromBundle</span><span class="p">);</span>
+    <span class="n">rw</span><span class="o">-&gt;</span><span class="n">methods</span><span class="p">.</span><span class="n">attachLists</span><span class="p">(</span><span class="n">mlists</span><span class="p">,</span> <span class="n">mcount</span><span class="p">);</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">mlists</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">flush_caches</span>  <span class="o">&amp;&amp;</span>  <span class="n">mcount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">flushCaches</span><span class="p">(</span><span class="n">cls</span><span class="p">);</span>
+
+    <span class="n">rw</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">.</span><span class="n">attachLists</span><span class="p">(</span><span class="n">proplists</span><span class="p">,</span> <span class="n">propcount</span><span class="p">);</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">proplists</span><span class="p">);</span>
+
+    <span class="n">rw</span><span class="o">-&gt;</span><span class="n">protocols</span><span class="p">.</span><span class="n">attachLists</span><span class="p">(</span><span class="n">protolists</span><span class="p">,</span> <span class="n">protocount</span><span class="p">);</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">protolists</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>所以结论是:分类间的加载顺序取决于编译的顺序:编译在前则先加载,编译在后则后加载</p><p>这个问题网上有很多例子 就不多在这举例了.</p><h4 id="category--extension区别能给nsobject添加extension吗结果如何"><code class="language-plaintext highlighter-rouge">category</code> &amp; <code class="language-plaintext highlighter-rouge">extension</code>区别，能给NSObject添加Extension吗，结果如何</h4><h5 id="category"><code class="language-plaintext highlighter-rouge">category</code></h5><ul><li>运行时添加分类属性/协议/方法<li>分类添加的方法会“覆盖”原类方法，因为方法查找的话是从头至尾，一旦查找到了就停止了<li>同名分类方法谁生效取决于编译顺序，image 读取的信息是倒叙的，所以编译越靠后的越先读入<li>名字相同的分类会引起编译报错；</ul><h5 id="extension"><code class="language-plaintext highlighter-rouge">extension</code></h5><ul><li>编译时决议<li>只以声明的形式存在，多数情况下就存在于 .m 文件中；<li>不能为系统类添加扩展</ul><p>可以给类添加成员变量，但是是私有的 可以給类添加方法，但是是私有的 添加的属性和方法是类的一部分，在编译期就决定的。在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。 伴随着类的产生而产生，也随着类的消失而消失</p><blockquote><p><strong>必须有类的源码才可以给类添加extension</strong>!!!</p></blockquote><h5 id="category--extension区别"><code class="language-plaintext highlighter-rouge">category</code> &amp; <code class="language-plaintext highlighter-rouge">extension</code>区别</h5><ul><li>Category的小括号中有名字,而Extension没有;<li>Category只能扩充方法,不能扩充成员变量和属性;<li>如果Category声明了声明了一个属性,那么Category只会生成这个属性的set,get方法的声明,也就不是会实现.所以对于系统一些类，如nsstring，就无法添加类扩展 不能给NSObject添加Extension，因为在extension中添加的方法或属性必须在源类的文件的.m文件中实现才可以，即：你必须有一个类的源码才能添加一个类的<code class="language-plaintext highlighter-rouge">extension</code></ul><h5 id="能给nsobject添加extension吗结果如何">能给NSObject添加Extension吗，结果如何?</h5><p>不能 因为没有NSObject的.m源码文件.</p><blockquote><p>如果能的话那应该不叫Extension.或者我们自己通过运行时的api自己造一套ExtensionDIY.结果就是你用的根本不能称为<code class="language-plaintext highlighter-rouge">Extension</code>,而是api调用而已.</p></blockquote><h4 id="消息转发机制消息转发机制和其他语言的消息机制优劣对比">消息转发机制，消息转发机制和其他语言的消息机制优劣对比</h4><blockquote><p>前言: 了解消息转发之前我们有必要了解一些Objectivce-C中的消息传递机制</p></blockquote><h5 id="消息传递机制">消息传递机制</h5><p>在Objectivce-C中,我们通过<code class="language-plaintext highlighter-rouge">实例变量(对象)</code>或者<code class="language-plaintext highlighter-rouge">类方法名</code>调用一个方法,那么我们实际上是在发送一条消息</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="p">[</span><span class="n">someObject</span> <span class="nf">messageName</span><span class="p">:</span><span class="n">parameter</span><span class="p">];</span>  <span class="c1">//实例调用方式</span>
+<span class="n">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassA</span> <span class="nf">messageName</span><span class="p">:</span><span class="n">parameter</span><span class="p">];</span>  <span class="c1">//类调用方式</span>
+</pre></table></code></div></div><p>上述<code class="language-plaintext highlighter-rouge">someObject</code>和<code class="language-plaintext highlighter-rouge">ClassA</code>是接受者(receiver)，<code class="language-plaintext highlighter-rouge">messageName:</code>是选择器(<code class="language-plaintext highlighter-rouge">selector</code>),选择器和参数合起来称为消息(<code class="language-plaintext highlighter-rouge">message</code>)。编译器看到此消息后，将其转换为一条标准的c语言函数调用，所调用的函数乃是消息传递机制中的核心函数：<code class="language-plaintext highlighter-rouge">objc_msgSend()</code>。</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kt">void</span> <span class="n">objc_msgSend</span><span class="p">(</span><span class="n">id</span> <span class="n">self</span><span class="p">,</span> <span class="n">SEL</span> <span class="n">cmd</span><span class="p">,</span> <span class="p">...)</span>
+</pre></table></code></div></div><p>第一个参数代表接受者，第二个参数代表选择子，后续参数就是消息中的那些参数 编译器会把刚才的那个例子中的消息转换为如下函数：</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="n">objc_msgSend</span><span class="p">(</span><span class="n">someObject</span><span class="p">,</span> <span class="k">@selector</span><span class="p">(</span><span class="n">messageName</span><span class="o">:</span><span class="p">),</span><span class="n">parameter</span><span class="p">);</span>
+<span class="n">id</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="n">objc_msgSend</span><span class="p">(</span><span class="n">ClassA</span><span class="p">,</span> <span class="k">@selector</span><span class="p">(</span><span class="n">messageName</span><span class="o">:</span><span class="p">),</span><span class="n">parameter</span><span class="p">);</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">objc_msgSend()</code>函数会依据接受者与选择器的类型来调用适当的方法.为来完成此操作，该方法需要在接受者所属的类中搜寻其“方法列表”(也就是上文我们说的<code class="language-plaintext highlighter-rouge">class_ro_t</code>中的method_list)。找到则跳到现实代码，否则，就沿着继承体系继续向上查找，如果还没有则执行消息转发操作。对于其他的“边界情况”，则需要交由Objective-c运行环境的另一些函数来处理：</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">objc_msgSend_stret</span>  <span class="c1">//待发送的消息返回结构体时</span>
+<span class="n">objc_msgSend_fpret</span>  <span class="c1">//消息返回的是浮点型</span>
+<span class="n">objc_msgSendSuper</span>   <span class="c1">//如果要给超类发送消息</span>
+</pre></table></code></div></div><h5 id="消息转发机制">消息转发机制</h5><p>结合上边的消息传递机制,在Objective-C中如果给一个对象发送一条它无法处理的消息，就会进入下图描述的消息转发(Message Forwarding)流程</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20200721iOSinterviewAnswers/methodforward.jpg" alt="" /></p><p>在objc中消息转发需要经历3个阶段 <code class="language-plaintext highlighter-rouge">resolveInstanceMethod</code> -&gt; <code class="language-plaintext highlighter-rouge">forwardingTargetForSelectoer</code> -&gt; <code class="language-plaintext highlighter-rouge">forwardInvocation</code> -&gt;<code class="language-plaintext highlighter-rouge">消息未能处理</code>。</p><ul><li>第一阶段:<strong>动态方法解析(Dynamic Method Resolution)</strong>也就是在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个<strong>未知选择器</strong><li>第二阶段:<strong>替换消息接收者快速转发</strong><li>第三阶段:<strong>完全消息转发机制</strong></ul><h5 id="第一阶段动态方法解析dynamic-method-resolution">第一阶段:<strong>动态方法解析(Dynamic Method Resolution)</strong></h5><p>对象在受到无法解读的消息后，首先将调用其所属类的下列类方法:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">resolveClassMethod</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">sel</span> <span class="n">OBJC_AVAILABLE</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">resolveInstanceMethod</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">sel</span> <span class="n">OBJC_AVAILABLE</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+</pre></table></code></div></div><blockquote><p>这俩方法在NSObject.h中</p></blockquote><p>返回一个<code class="language-plaintext highlighter-rouge">Boolean</code>类型，表示这个类是否能新增一个实例方法以处理选择器.</p><p>在 消息转发过程中,我们可以使用<code class="language-plaintext highlighter-rouge">resolveInstanceMethod:</code>动态的将一个方法添加到一个类中.</p><p>例下面示例代码:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">@implementation</span> <span class="nc">MyClass</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">resolveInstanceMethod</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">aSEL</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">aSEL</span> <span class="o">==</span> <span class="k">@selector</span><span class="p">(</span><span class="n">resolveThisMethodDynamically</span><span class="p">))</span> <span class="p">{</span>
+          <span class="n">class_addMethod</span><span class="p">([</span><span class="n">self</span> <span class="nf">class</span><span class="p">],</span> <span class="n">aSEL</span><span class="p">,</span> <span class="p">(</span><span class="n">IMP</span><span class="p">)</span> <span class="n">dynamicMethodIMP</span><span class="p">,</span> <span class="s">"v@:"</span><span class="p">);</span>
+          <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">super</span> <span class="nf">resolveInstanceMethod</span><span class="p">:</span><span class="n">aSEL</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><p>这里我们用到一个运行时函数<code class="language-plaintext highlighter-rouge">class_addMethod()</code>.</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">BOOL</span> 
+<span class="nf">class_addMethod</span><span class="p">(</span><span class="n">Class</span> <span class="n">cls</span><span class="p">,</span> <span class="n">SEL</span> <span class="n">name</span><span class="p">,</span> <span class="n">IMP</span> <span class="n">imp</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">types</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cls</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+
+    <span class="n">mutex_locker_t</span> <span class="n">lock</span><span class="p">(</span><span class="n">runtimeLock</span><span class="p">);</span>
+    <span class="k">return</span> <span class="o">!</span> <span class="n">addMethod</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">imp</span><span class="p">,</span> <span class="n">types</span> <span class="o">?:</span> <span class="s">""</span><span class="p">,</span> <span class="n">NO</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">class_addMethod()</code>最后一个参数叫做<code class="language-plaintext highlighter-rouge">types</code>，是一个描述方法的参数类型的字符串.<li><code class="language-plaintext highlighter-rouge">v</code>代表<code class="language-plaintext highlighter-rouge">void</code><li><code class="language-plaintext highlighter-rouge">@</code>代表对象或者说<code class="language-plaintext highlighter-rouge">id类型</code><li><code class="language-plaintext highlighter-rouge">:</code>(这个冒号)代表方法选择器SEL</ul><p>具体代表什么不是我们瞎写的,得按照苹果的这个标准 <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1">Objective-C Runtime Programming Guide-&gt;Type Encodings</a></p><p>上面的<code class="language-plaintext highlighter-rouge">dynamicMethodIMP</code>，返回值是<code class="language-plaintext highlighter-rouge">void</code>，两个入参分别是<code class="language-plaintext highlighter-rouge">id</code>和<code class="language-plaintext highlighter-rouge">SEL</code>，所以描述这个方法的参数类型的字符串就是<code class="language-plaintext highlighter-rouge">v@:</code></p><p>这个阶段的意义是为一个类动态提供方法实现,严格来说，还没进入消息转发流程。</p><p><code class="language-plaintext highlighter-rouge">resolveInstanceMethod:</code> 控制这下面两个方法是否会被调用</p><ul><li><code class="language-plaintext highlighter-rouge">respondsToSelector:</code><li><code class="language-plaintext highlighter-rouge">instancesRespondToSelector:</code></ul><blockquote><p>也就是说，如果<code class="language-plaintext highlighter-rouge">resolveInstanceMethod:</code>返回了<code class="language-plaintext highlighter-rouge">YES</code>，那么<code class="language-plaintext highlighter-rouge">respondsToSelector:</code>和<code class="language-plaintext highlighter-rouge">instancesRespondToSelector:</code>都会返回<code class="language-plaintext highlighter-rouge">YES</code>.</p></blockquote><h5 id="第二阶段替换消息接收者快速转发">第二阶段：替换消息接收者(快速转发)</h5><p>如果第一阶段中<code class="language-plaintext highlighter-rouge">resolveInstanceMethod:</code>返回NO,就会调用<code class="language-plaintext highlighter-rouge">forwardingTargetForSelector:</code>询问是否把消息转发给另一个对象.消息的接收者就改变了。</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">forwardingTargetForSelector</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">aSelector</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">someOtherObject</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h5 id="第三阶段完全消息转发机制">第三阶段：完全消息转发机制</h5><p>如果第二阶段的<code class="language-plaintext highlighter-rouge">forwardingTargetForSelector:</code>返回了<code class="language-plaintext highlighter-rouge">nil</code>，这就进入了所谓完全消息转发的机制。</p><p>首先调用<code class="language-plaintext highlighter-rouge">methodSignatureForSelector:</code>为要转发的消息返回正确的签名：</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">forwardInvocation</span><span class="p">:(</span><span class="n">NSInvocation</span> <span class="o">*</span><span class="p">)</span><span class="nv">anInvocation</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"forwardInvocation"</span><span class="p">);</span>
+    <span class="n">SomeOtherObject</span> <span class="o">*</span><span class="n">someOtherObject</span> <span class="o">=</span> <span class="p">[</span><span class="n">SomeOtherObject</span> <span class="nf">new</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">someOtherObject</span> <span class="nf">respondsToSelector</span><span class="p">:[</span><span class="n">anInvocation</span> <span class="nf">selector</span><span class="p">]])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">anInvocation</span> <span class="nf">invokeWithTarget</span><span class="p">:</span><span class="n">someOtherObject</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">super</span> <span class="nf">forwardInvocation</span><span class="p">:</span><span class="n">anInvocation</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>上面代码是将消息转发给其他对象，其实这与第二阶段中示例代码做的事情是一样的。区别就在于这个阶段会有一个<code class="language-plaintext highlighter-rouge">NSInvocation</code>对象。<a href="https://developer.apple.com/documentation/foundation/nsinvocation?language=objc"><code class="language-plaintext highlighter-rouge">NSInvocation</code></a>是一个用来存储和转发消息的对象。它包含了一个Objective-C消息的所有元素：一个target，一个selector，参数和返回值。每个元素都可以被直接设置。</p><blockquote><p><code class="language-plaintext highlighter-rouge">NSInvocation</code>可以简单理解为一个对象把我们用到 selector方法和对象都存储了一下,然后哪个是指向我们需要调用的指针对象.</p></blockquote><p>所以不同与第二阶段，在这个阶段你可以：</p><ul><li>把消息存储，在你觉得合适的时机转发出去，或者不处理这个消息。<li>修改消息的target，selector，参数等<li>多次转发这个消息，转发给多个对象</ul><p>显然在这个阶段，你可以对一个OC消息做更多的事情</p><hr /><h5 id="消息转发机制和其他语言的消息机制优劣对比">消息转发机制和其他语言的消息机制优劣对比</h5><p>这个目前没有深入其它编程语言的运行时层面,比如C的底层或者C++的底层或者Java的底层消息传递这里提供 <a href="探索 Android App Bundle">一个android的类似消息转发的文章</a></p><h4 id="在方法调用的时候方法查询--动态解析--消息转发-之前做了什么">在方法调用的时候，方法查询-&gt; 动态解析-&gt; 消息转发 之前做了什么</h4><p>Objective-C 实例对象执行方法步骤</p><ol><li>获取 receiver 对应的类 Class<li>在 Class 缓存列表中(就是<code class="language-plaintext highlighter-rouge">objc_class</code>里的<code class="language-plaintext highlighter-rouge">cache_t</code>到<code class="language-plaintext highlighter-rouge">class_ro_t</code>的方法list)根据选择子<code class="language-plaintext highlighter-rouge">selector</code>查找<code class="language-plaintext highlighter-rouge">IMP</code><li>若缓存中没有找到，则在方法列表中继续查找.<li>若方法列表没有，则从父类查找，重复以上步骤.<li>若最终没有找到，则进行消息转发操作.</ol><ul><li>方法查询之前 要知道 receiver和 selector.主要是要明确我们是哪个实例调用了哪个方法.<li>动态解析解析之前要 在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个未知选择器.<li>消息转发 之前 要询问是否把消息转发给另一个对象.</ul><blockquote><p>如果更深入的而理解 那应该是 objc_msgSend() 为啥是汇编实现的,上面的那些方法 调用之前 汇编的哪些指令被执行</p></blockquote><p>这里找到两篇文章可以参考一下<br /> <a href="https://chipengliu.github.io/2019/06/02/objc-msgSend-forward/">深入了解Objective-C消息发送与转发过程</a> <br /> <a href="https://chipengliu.github.io/2019/04/07/objc-msg-armd64/">汇编语言编写的，其中具体过程细节</a></p><h4 id="impselmethod的区别和使用场景"><code class="language-plaintext highlighter-rouge">IMP</code>、<code class="language-plaintext highlighter-rouge">SEL</code>、<code class="language-plaintext highlighter-rouge">Method</code>的区别和使用场景</h4><ul><li><code class="language-plaintext highlighter-rouge">IMP</code> : 是方法的具体实现(指针)<li><code class="language-plaintext highlighter-rouge">SEL</code> :方法名称<li><p><code class="language-plaintext highlighter-rouge">Method </code>:是objc_method类型指针，它是一个结构体 ,如下:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="k">struct</span> <span class="n">objc_method</span> <span class="p">{</span>
+      <span class="n">SEL</span> <span class="n">_Nonnull</span> <span class="n">method_name</span>                                 <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+      <span class="kt">char</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">method_types</span>                            <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+      <span class="n">IMP</span> <span class="n">_Nonnull</span> <span class="n">method_imp</span>                                  <span class="n">OBJC2_UNAVAILABLE</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></table></code></div></div></ul><p>使用场景</p><ul><li><p>例如 Button添加Target和Selector的时候.或者 实现类的<code class="language-plaintext highlighter-rouge">swizzle</code>的时候会用到，通过<code class="language-plaintext highlighter-rouge">class_getInstanceMethod(class, SEL)</code>来获取类的方法<code class="language-plaintext highlighter-rouge">Method</code>，其中用到了SEL作为方法名</p><li><p>例如 给类动态添加方法，此时我们需要调用class_addMethod(Class, SEL, IMP, types)，该方法需要我们传递一个方法的实现函数IMP，例如:</p></ul><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">funcName</span><span class="p">(</span><span class="n">id</span> <span class="n">receiver</span><span class="p">,</span> <span class="n">SEL</span> <span class="n">cmd</span><span class="p">,</span> <span class="err">方法参数</span><span class="p">...)</span> <span class="p">{</span>
+   <span class="c1">// 方法具体的实现   </span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>SEL相当于 方法的类型 关键字.</p></blockquote><h4 id="loadinitialize方法的区别什么在继承关系中他们有什么区别"><code class="language-plaintext highlighter-rouge">load</code>、<code class="language-plaintext highlighter-rouge">initialize</code>方法的区别什么？在继承关系中他们有什么区别</h4><p>在Objective-C的类被加载和初始化的时候, 类 是 可以收到 方法回调的.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">load</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">initialize</span><span class="p">;</span>
+</pre></table></code></div></div><h5 id="load"><code class="language-plaintext highlighter-rouge">+load</code></h5><p><code class="language-plaintext highlighter-rouge">+ load</code>方法是在这个文件(就是你复写的子类化的class)被程序装载时调用,只要是在Xcode <code class="language-plaintext highlighter-rouge">Compile Sources</code>中出现的文件总是会被装载，这与这个类是否被用到无关，因此+load方法总是在<code class="language-plaintext highlighter-rouge">main()</code>函数之前调用.</p><p>调用时机比较早，运行环境有不确定因素。具体说来，在iOS上通常就是App启动时进行加载，但当load调用的时候，并不能保证所有类都加载完成且可用，必要时还要自己负责做auto release处理。</p><blockquote><p>补充上面一点，对于有依赖关系的两个库中，被依赖的类的+load会优先调用。但在一个库之内，父、子类、类别之间调用有顺序，不同类之间调用顺序是不确定的。</p></blockquote><ul><li>关于继承：对于一个类而言，没有+load方法实现就不会调用，不会考虑对NSObject的继承，就是不会沿用父类的+load。<li>父类和本类的调用：父类的方法优先于子类的方法。一个类的+load方法不用写明<code class="language-plaintext highlighter-rouge">[super load]</code>，父类就会收到调用。<li>本类和Category的调用：本类的方法优先于类别(Category)中的方法。Category的+load也会收到调用，但顺序上在本类的+load调用之后。<li>不会直接触发initialize的调用。</ul><h4 id="initialize"><code class="language-plaintext highlighter-rouge">+initialize</code></h4><p><code class="language-plaintext highlighter-rouge">+initialize</code>方法是在类或它的子类收到第一条消息之前被调用的，这里所指的消息包括实例方法和类方法的调用，并且只会调用一次。<code class="language-plaintext highlighter-rouge">initialize</code>方法实际上是一种惰性(lazy load)调用，也就是说如果一个类一直没被用到，那它的initialize方法也不会被调用，这一点有利于节约资源.</p><p>runtime 使用了发送消息 <code class="language-plaintext highlighter-rouge">objc_msgSend</code> 的方式对 <code class="language-plaintext highlighter-rouge">+initialize</code> 方法进行调用。也就是说 <code class="language-plaintext highlighter-rouge">+initialize</code> 方法的调用与普通方法的调用是一样的，走的都是<code class="language-plaintext highlighter-rouge">发送消息的流程</code>。换言之，如果子类没有实现 +initialize 方法，那么继承自父类的实现会被调用；如果一个类的分类实现了 <code class="language-plaintext highlighter-rouge">+initialize</code> 方法，那么就会对这个类中的实现造成覆盖(override)。</p><ul><li>initialize的自然调用是在第一次主动使用当前类的时候。<li>在initialize方法收到调用时，运行环境基本健全。<li>关于继承：和load不同，即使子类不实现initialize方法，会把父类的实现继承过来调用一遍，就是会沿用父类的+initialize。（沿用父类的方法中，self还是指子类）<li>父类和本类的调用：子类的+initialize将要调用时会激发父类调用的+initialize方法，所以也不需要在子类写明[super initialize]。(本着除主动调用外，只会调用一次的原则，如果父类的+initialize方法调用过了，则不会再调用)<li>本类和Category的调用：Category中的+initialize方法会覆盖本类的方法，只执行一个Category的+initialize方法。</ul><p>下面是我整理的一个表格希望对解释这俩方法有帮助:</p><div class="table-wrapper"><table><thead><tr><th> <th>+ load<th>+ initialize<tbody><tr><td>调用方式<td>直接使用函数内存地址<td>objc_msgSend()方式<tr><td>调用时机<td>被程序装载时调用main()函数之前,就是被添加到runtime时<td>在本类或它的子类收到第一条消息之前被调用<tr><td>是否被系统单次调用(除主动调用外)<td>是<td>是<tr><td>运行时环境是否稳定<td>不确定<td>稳定<tr><td>线程是否安全<td>默认是安全的(已加锁)<td>安全(已加锁 )<tr><td>特性<td>由于非<code class="language-plaintext highlighter-rouge">objc_msgSend()</code>方式调用就使得 +load 方法拥有了一个非常有趣的特性，那就是子类、父类和分类中的 +load 方法的实现是被区别对待的。也就是说如果子类没有实现 +load 方法，那么当它被加载时 runtime 是不会去调用父类的 +load 方法的。同理，当一个类和它的分类都实现了 +load 方法时，两个方法都会被调用<td>+initialize 方法的调用与普通方法的调用是一样的，如果子类没有实现 +initialize 方法，那么继承自父类的实现会被调用；如果一个类的分类实现了 +initialize 方法，那么就会对这个类中的实现造成覆盖</table></div><p>参考<a href="https://cloud.tencent.com/developer/article/1355957">类方法load和initialize的区别</a></p><h5 id="在继承关系中他们有什么区别">在继承关系中他们有什么区别</h5><p>super的方法会成功调用，但是这是多余的，因为runtime会自动对父类的+load方法进行调用，而+initialize则会随子类自动激发父类的方法（如Apple文档中所言）不需要显示调用。另一方面，如果父类中的方法用到的self（像示例中的方法），其指代的依然是类自身，而不是父类</p><h4 id="说说消息转发机制的优劣">说说消息转发机制的优劣</h4><p>优点:</p><ul><li>利用消息转发机制可以无代码侵入的实现多重代理，让不同对象可以同时代理同个回调，然后在各自负责的区域进行相应的处理，降低了代码的耦合程度。<li>使用 @synthesize 可以为 @property 自动生成 getter 和 setter 方法（现 Xcode 版本中，会自动生成），而 @dynamic 则是告诉编译器，不用生成 getter 和 setter 方法。当使用 @dynamic 时，我们可以使用消息转发机制，来动态添加 getter 和 setter 方法。当然你也用其他的方法来实现。</ul><p>缺点:</p><ul><li>Objective-C本身不支持多继承，这是因为消息机制名称查找发生在运行时而非编译时，很难解决多个基类可能导致的二义性问题，但是可以通过消息转发机制在内部创建多个功能的对象，把不能实现的功能给转发到其他对象上去，这样就做出来一种多继承的假象。转发和继承相似，可用于为OC编程添加一些多继承的效果，一个对象把消息转发出去，就好像他把另一个对象中放法接过来或者“继承”一样。消息转发弥补了objc不支持多继承的性质，也避免了因为多继承导致单个类变得臃肿复杂。</ul><h1 id="总结">总结</h1><p>本篇讲述的面试题中的<strong>runtime相关问题</strong>之<strong>结构模型</strong>部分。下一章打算继续讲一下 <strong>runtime相关问题</strong>之<strong>内存管理</strong>,这样循序渐进把相关面试的文章都讲完.</p><p>这里不得不说 这样的面试确实很有挑战,顺便 我也喷一下阿里 头条希望厚道一点,有问题可以但是也要有答案.这件事 让我观察出 这两家公司干事 有头没尾,能善始未能善终.</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios%E5%BC%80%E5%8F%91/'>ios开发</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ios/" class="post-tag no-text-decoration" >ios</a> <a href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-tag no-text-decoration" >ios面试题</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=阿里、字节：一套高效的iOS面试题之runtime相关问题1 - 迈腾大队长&url=https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=阿里、字节：一套高效的iOS面试题之runtime相关问题1 - 迈腾大队长&u=https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=阿里、字节：一套高效的iOS面试题之runtime相关问题1 - 迈腾大队长&url=https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=阿里、字节：一套高效的iOS面试题之runtime相关问题1 - 迈腾大队长&url=https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2020/08/iOSinterviewAnswers2/"><div class="card-body"> <span class="timeago small" > 2020-08-08 <i class="unloaded">2020-08-08T22:54:07+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>阿里、字节：一套高效的iOS面试题之runtime相关问题2</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 本篇我们来讲一下 阿里、字节：一套高效的iOS面试题 中的runtime相关问题部分的内存管理相关的内容. r...</p></div></div></a></div><div class="card"> <a href="/2019/02/Tools/"><div class="card-body"> <span class="timeago small" > 2019-02-15 <i class="unloaded">2019-02-15T18:40:15+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Mac上的一些好软件推荐</h3><div class="text-muted small"><p> 前言 新年第一篇 把自己用的比较好的工具都记录下来 截屏 Snipaste 没当没有网络的时候 或者拿到新mac的时候由于没有什么软件截屏,不得不用QQ或者微信自带的截屏.这就逼着我不得不安装这两个app，有了Snipaste 跟截屏说再见吧 Snipaste是一个小巧强大的截图软件，可以直接对截图进行打码、标注、分享，而不用先保存到本地. 使用方法是按住Fn+F1 就出现了截...</p></div></div></a></div><div class="card"> <a href="/2019/04/AVRoutePickerView/"><div class="card-body"> <span class="timeago small" > 2019-04-17 <i class="unloaded">2019-04-17T23:19:52+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>AVRoutePickerView</h3><div class="text-muted small"><p> 前言 最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个AVRoutePickerView的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候. 这里网易云音乐中有实践的例子 这个控件主要用于AirPlay投屏 和音频的线路切换 那么我今天就跟大家一起学习一下这个新的控件 代码实现 导入#im...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2020/04/CocoapodsProblems/" class="btn btn-outline-primary"><p>Cocoapods清华镜像</p></a> <a href="/2020/08/iOSinterviewAnswers2/" class="btn btn-outline-primary"><p>阿里、字节：一套高效的iOS面试题之runtime相关问题2</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/sunyazhou13">sunyazhou13</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/ios/">ios</a> <a class="post-tag" href="/tags/macos/">macos</a> <a class="post-tag" href="/tags/ios%E5%BC%80%E5%8F%91/">ios开发</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/ios%E9%9D%A2%E8%AF%95%E9%A2%98/">ios面试题</a> <a class="post-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a> <a class="post-tag" href="/tags/%E7%94%9F%E6%B4%BB/">生活</a> <a class="post-tag" href="/tags/learning-av-foundation/">learning av foundation</a> <a class="post-tag" href="/tags/%E6%8A%80%E5%B7%A7/">技巧</a> <a class="post-tag" href="/tags/%E6%8A%96%E9%9F%B3%E5%8A%A8%E7%94%BB%E7%B3%BB%E5%88%97/">抖音动画系列</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
