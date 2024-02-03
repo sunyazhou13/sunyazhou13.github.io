@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.3.2" /><meta property="og:title" content="ArkTS和ArkUI基础语法" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/2024/01/arktsbasic/" /><meta property="og:url" content="https://www.sunyazhou.com/2024/01/arktsbasic/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-01-19T10:19:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ArkTS和ArkUI基础语法" /><meta name="twitter:site" content="@sunyazhou" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@type":"BlogPosting","url":"https://www.sunyazhou.com/2024/01/arktsbasic/","headline":"ArkTS和ArkUI基础语法","dateModified":"2024-01-19T10:19:00+08:00","datePublished":"2024-01-19T10:19:00+08:00","author":{"@type":"Person","name":"孙亚洲"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2024/01/arktsbasic/"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","@context":"https://schema.org"}</script><title>ArkTS和ArkUI基础语法 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3 unloaded"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>ArkTS和ArkUI基础语法</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>ArkTS和ArkUI基础语法</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Jan 19, 2024, 10:19 AM +0800" > 01-19 <i class="unloaded">2024-01-19T10:19:00+08:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Wed, Jan 31, 2024, 1:16 PM +0800" > 01-31 <i class="unloaded">2024-01-31T13:16:21+08:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp" alt="" /></p><h1 id="前言">前言</h1><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p><p>以下内容是学习记录</p><h2 id="deveco-studio快捷键">DevEco Studio快捷键</h2><div class="table-wrapper"><table><thead><tr><th>快捷键<th>用途<th>备注<tbody><tr><td>⌘(Command) + <code class="language-plaintext highlighter-rouge">B</code><td>进入到类或者对象的定义文件中中<td>类似Xcode中的 ⌘(Command) + <code class="language-plaintext highlighter-rouge">→</code><tr><td>⌘(Command) + ⇧(Shift) + ⌫(Back)<td>与上面相反,返回上一级<td>类似Xcode中的 ⌘(Command) + <code class="language-plaintext highlighter-rouge">←</code><tr><td> <td> <td> <tr><td> <td> <td> </table></div><p>在看过几遍鸿蒙教程视频和文档后,我觉得把容易遗忘的基础都记录下来,以备后续使用的时候随时查找.</p><h2 id="arkts基础部分">ArkTS基础部分</h2><h3 id="页面和自定义组件组成生命周期">页面和自定义组件组成生命周期</h3><p>首先我们要了解一下一个组件是组成UI的基本单元,我们要明确自定义组件和页面的关系</p><ul><li>自定义组件：<code class="language-plaintext highlighter-rouge">@Component</code>装饰的UI单元，可以组合多个系统组件实现UI的复用，可以调用组件的生命周期。<li>页面：即应用的UI页面。可以由一个或者多个自定义组件组成，<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-create-custom-components-0000001580025742-V2#ZH-CN_TOPIC_0000001711026924__%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">@Entry</a>装饰的自定义组件为页面的入口组件，即页面的根节点，一个页面有且仅能有一个@Entry。只有被@Entry装饰的组件才可以调用页面的生命周期。</ul><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="ArkTS和ArkUI基础语法" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/2024/01/arktsbasic/" /><meta property="og:url" content="https://www.sunyazhou.com/2024/01/arktsbasic/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2024-01-19T02:19:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ArkTS和ArkUI基础语法" /><meta name="twitter:site" content="@sunyazhou" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"url":"https://www.sunyazhou.com/2024/01/arktsbasic/","@type":"BlogPosting","headline":"ArkTS和ArkUI基础语法","dateModified":"2024-01-19T02:19:00+00:00","datePublished":"2024-01-19T02:19:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2024/01/arktsbasic/"},"author":{"@type":"Person","name":"孙亚洲"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","@context":"https://schema.org"}</script><title>ArkTS和ArkUI基础语法 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3 unloaded"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>ArkTS和ArkUI基础语法</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>ArkTS和ArkUI基础语法</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Jan 19, 2024, 2:19 AM +0000" > 01-19 <i class="unloaded">2024-01-19T02:19:00+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Thu, Feb 1, 2024, 11:22 AM +0800" > 02-01 <i class="unloaded">2024-02-01T03:22:59+00:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp" alt="" /></p><h1 id="前言">前言</h1><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息.</p><p>以下内容是学习记录</p><h2 id="deveco-studio快捷键">DevEco Studio快捷键</h2><div class="table-wrapper"><table><thead><tr><th>快捷键<th>用途<th>备注<tbody><tr><td>⌘(Command) + <code class="language-plaintext highlighter-rouge">B</code><td>进入到类或者对象的定义文件中中<td>类似Xcode中的 ⌘(Command) + <code class="language-plaintext highlighter-rouge">→</code><tr><td>⌘(Command) + ⇧(Shift) + ⌫(Back)<td>与上面相反,返回上一级<td>类似Xcode中的 ⌘(Command) + <code class="language-plaintext highlighter-rouge">←</code><tr><td> <td> <td> <tr><td> <td> <td> </table></div><p>在看过几遍鸿蒙教程视频和文档后,我觉得把容易遗忘的基础都记录下来,以备后续使用的时候随时查找.</p><h2 id="arkts基础部分">ArkTS基础部分</h2><h3 id="页面和自定义组件组成生命周期">页面和自定义组件组成生命周期</h3><p>首先我们要了解一下一个组件是组成UI的基本单元,我们要明确自定义组件和页面的关系</p><ul><li>自定义组件：<code class="language-plaintext highlighter-rouge">@Component</code>装饰的UI单元，可以组合多个系统组件实现UI的复用，可以调用组件的生命周期。<li>页面：即应用的UI页面。可以由一个或者多个自定义组件组成，<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-create-custom-components-0000001580025742-V2#ZH-CN_TOPIC_0000001711026924__%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">@Entry</a>装饰的自定义组件为页面的入口组件，即页面的根节点，一个页面有且仅能有一个@Entry。只有被@Entry装饰的组件才可以调用页面的生命周期。</ul><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -8,7 +8,7 @@
 </pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">Entry</span>
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">LiftCycle</span> <span class="p">{</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
    	<span class="p">...</span> 
    <span class="p">}</span>
 <span class="p">}</span>
@@ -44,17 +44,17 @@
 12
 13
 </pre><td class="rouge-code"><pre><span class="c1">//页面每次显示的时候被触发</span>
-<span class="nx">onPageShow</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onPageShow</span><span class="dl">"</span><span class="p">)</span>
+<span class="nf">onPageShow</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onPageShow</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="c1">//页面每次隐藏的时候被触发</span>
-<span class="nx">onPageHide</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onPageHide</span><span class="dl">"</span><span class="p">)</span>
+<span class="nf">onPageHide</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onPageHide</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">//点击返回按钮时触发</span>
-<span class="nx">onBackPress</span><span class="p">():</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="k">void</span> <span class="p">{</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onBackPress</span><span class="dl">"</span><span class="p">)</span>
+<span class="nf">onBackPress</span><span class="p">():</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="k">void</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle onBackPress</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>组件生命周期，即一般用<strong>@Component</strong>装饰的自定义组件的生命周期，提供以下生命周期接口：</p><ul><li><code class="language-plaintext highlighter-rouge">aboutToAppear</code>：组件即将出现时回调该接口，具体时机为在创建自定义组件的新实例后，在执行其build()函数之前执行。<li><code class="language-plaintext highlighter-rouge">aboutToDisappear</code>：aboutToDisappear函数在自定义组件析构销毁之前执行。不允许在aboutToDisappear函数中改变状态变量，特别是@Link变量的修改可能会导致应用程序行为不稳定</ul><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -65,12 +65,12 @@
 7
 8
 </pre><td class="rouge-code"><pre><span class="c1">//被@Component修饰的 自定义组件的生命周期</span>
-<span class="nx">aboutToAppear</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle aboutToAppear</span><span class="dl">"</span><span class="p">)</span>
+<span class="nf">aboutToAppear</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle aboutToAppear</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">}</span>
   
-<span class="nx">aboutToDisappear</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle aboutToDisappear</span><span class="dl">"</span><span class="p">)</span>
+<span class="nf">aboutToDisappear</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LiftCycle aboutToDisappear</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>生命周期流程如下图所示，下图展示的是被<strong>@Entry装饰的组件（首页）生命周期。<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/EntryLifeCycle.webp" alt="" /><br /> **由此可知, @Component组件的声明周期方法 中间包含了@Entry方法全部生命周期方法调用.</strong></p><p>示例代码演示了一个LifeCycle中 添加一个Child子组件,点击按钮push到新页面LifeCycleDetail</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -159,48 +159,48 @@
   <span class="p">@</span><span class="nd">State</span> <span class="nx">btnColor</span><span class="p">:</span><span class="kr">string</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">#FF007DFF</span><span class="dl">"</span>
 
   <span class="c1">// 组件生命周期</span>
-  <span class="nx">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle aboutToAppear</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle aboutToAppear</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="c1">// 只有被@Entry装饰的组件才可以调用页面的生命周期</span>
-  <span class="nx">onPageShow</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onPageShow</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">onPageShow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onPageShow</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="c1">// 只有被@Entry装饰的组件才可以调用页面的生命周期</span>
-  <span class="nx">onPageHide</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onPageHide</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">onPageHide</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onPageHide</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="c1">// 只有被@Entry装饰的组件才可以调用页面的生命周期</span>
-  <span class="nx">onBackPress</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onBackPress</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">onBackPress</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle onBackPress</span><span class="dl">'</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">btnColor</span> <span class="o">=</span><span class="dl">"</span><span class="s2">#FFEE0606</span><span class="dl">"</span>
     <span class="k">return</span> <span class="kc">true</span> <span class="c1">// 返回true表示页面自己处理返回逻辑，不进行页面路由；返回false表示使用默认的路由返回逻辑，不设置返回值按照false处理</span>
   <span class="p">}</span>
 
   <span class="c1">// 组件生命周期</span>
-  <span class="nx">aboutToDisappear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle aboutToDisappear</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nf">aboutToDisappear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">LiftCycle aboutToDisappear</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
       <span class="c1">// this.showChild为true，创建Child子组件，执行Child aboutToAppear</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">showChild</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">Child</span><span class="p">()</span>
+      <span class="k">if </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">showChild</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nc">Child</span><span class="p">()</span>
       <span class="p">}</span>
       <span class="c1">// this.showChild为false，删除Child子组件，执行Child aboutToDisappear</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">'</span><span class="s1">delete Child</span><span class="dl">'</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">btnColor</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">'</span><span class="s1">delete Child</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">btnColor</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">showChild</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
         <span class="p">})</span>
       <span class="c1">// push到page页面，执行onPageHide</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">'</span><span class="s1">push to next page</span><span class="dl">'</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="nx">router</span><span class="p">.</span><span class="nx">pushUrl</span><span class="p">({</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">pages/LifeCycleDetail</span><span class="dl">'</span> <span class="p">});</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">'</span><span class="s1">push to next page</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="nx">router</span><span class="p">.</span><span class="nf">pushUrl</span><span class="p">({</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">pages/LifeCycleDetail</span><span class="dl">'</span> <span class="p">});</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
@@ -211,17 +211,17 @@
 <span class="nx">struct</span> <span class="nx">Child</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">title</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">SUNYAZHOU.COM</span><span class="dl">'</span><span class="p">;</span>
   <span class="c1">// 组件生命周期</span>
-  <span class="nx">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Child aboutToAppear</span><span class="dl">'</span><span class="p">)</span>
+  <span class="nf">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Child aboutToAppear</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 
   <span class="c1">// 组件生命周期</span>
-  <span class="nx">aboutToDisappear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Child aboutToDisappear</span><span class="dl">'</span><span class="p">)</span>
+  <span class="nf">aboutToDisappear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Child aboutToDisappear</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">).</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">).</span><span class="nx">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">).</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">).</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">).</span><span class="nf">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">).</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">SUNYAZHOU.COM ArkUI</span><span class="dl">'</span><span class="p">;</span>
     <span class="p">})</span>
   <span class="p">}</span>
@@ -271,37 +271,37 @@
   <span class="p">@</span><span class="nd">State</span> <span class="nx">textColor</span><span class="p">:</span> <span class="nx">Color</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Black</span><span class="p">;</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">num</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">0</span>
 
-  <span class="nx">onPageShow</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">onPageShow</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">num</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onPageShow</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onPageShow</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">onPageHide</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onPageHide</span><span class="dl">"</span><span class="p">);</span>
+  <span class="nf">onPageHide</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onPageHide</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">onBackPress</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 不设置返回值按照false处理</span>
+  <span class="nf">onBackPress</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 不设置返回值按照false处理</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">textColor</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Grey</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">num</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onBackPress</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">LifeCycleDetail onBackPress</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">aboutToAppear</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">textColor</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Blue</span>
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="s2">`num 的值为：</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">textColor</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="s2">`num 的值为：</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">textColor</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">margin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">num</span> <span class="o">+=</span> <span class="mi">5</span>
         <span class="p">})</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>当我们启动预览的时候声明周期函数如下:</p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -388,7 +388,7 @@ LiftCycle onPageShow
 <span class="nx">name1</span> <span class="o">=</span> <span class="p">[@</span><span class="dl">"</span><span class="s2">孙先生</span><span class="dl">"</span><span class="p">,</span> <span class="mi">20</span><span class="p">];</span> <span class="c1">//必须按照规定顺序和类型写内容</span>
 
 <span class="c1">// TODO void 无返回类型型</span>
-<span class="kd">function</span> <span class="nx">name</span><span class="p">(</span><span class="nx">params</span><span class="p">):</span> <span class="k">void</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nf">name</span><span class="p">(</span><span class="nx">params</span><span class="p">):</span> <span class="k">void</span> <span class="p">{}</span>
 
 <span class="c1">// Null</span>
 <span class="kd">let</span> <span class="nx">str1</span><span class="p">:</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span>
@@ -422,33 +422,33 @@ LiftCycle onPageShow
   <span class="c1">// 里面不加let,外面的成员需要加let</span>
   <span class="nl">number1</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">99</span>
   
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></table></code></div></div><h2 id="arkui部分">ArkUI部分</h2><h3 id="图片控件">图片控件</h3><p>加载 常规本地资源</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre><td class="rouge-code"><pre><span class="nx">Image</span><span class="p">(</span><span class="nx">$r</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">media</span><span class="p">.</span><span class="nx">icon</span><span class="p">))</span>
+</pre><td class="rouge-code"><pre><span class="nc">Image</span><span class="p">(</span><span class="nf">$r</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">media</span><span class="p">.</span><span class="nx">icon</span><span class="p">))</span>
 </pre></table></code></div></div><p>加载 网络资源</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre><td class="rouge-code"><pre><span class="nx">Image</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://www.sunyazhou.com/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp</span><span class="dl">"</span><span class="p">)</span>
+</pre><td class="rouge-code"><pre><span class="nc">Image</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://www.sunyazhou.com/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp</span><span class="dl">"</span><span class="p">)</span>
 </pre></table></code></div></div><p>加载 本地任何资源</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre><td class="rouge-code"><pre><span class="nx">Image</span><span class="p">(</span><span class="nx">$rawfile</span><span class="p">(</span><span class="dl">"</span><span class="s2">sunyazhou.png</span><span class="dl">"</span><span class="p">))</span>
+</pre><td class="rouge-code"><pre><span class="nc">Image</span><span class="p">(</span><span class="nf">$rawfile</span><span class="p">(</span><span class="dl">"</span><span class="s2">sunyazhou.png</span><span class="dl">"</span><span class="p">))</span>
 </pre></table></code></div></div><h3 id="装饰器styles">装饰器@Styles</h3><p>@Styles装饰器可以将多条样式设置提炼成一个方法，直接在组件声明的位置调用。通过@Styles装饰器可以快速定义并复用自定义样式。用于快速定义并复用自定义样式.</p><ul><li>当前@Styles仅支持通用属性和通用事件。<li>@Styles方法不支持参数</ul><blockquote><p>从API version 9开始，该装饰器支持在ArkTS卡片中使用。</p></blockquote><p>使用全局的@Styles封装的样式</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-</pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">Styles</span> <span class="kd">function</span> <span class="nx">globalStyles</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Pink</span><span class="p">)</span>
+</pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">Styles</span> <span class="kd">function</span> <span class="nf">globalStyles</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Pink</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>定义在组件内的@Styles封装的样式</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -469,16 +469,16 @@ LiftCycle onPageShow
 </pre><td class="rouge-code"><pre><span class="nx">struct</span> <span class="nx">LearnDetail</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">heightValue</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">100</span>
   <span class="c1">// 定义在组件内的@Styles封装的样式</span>
-  <span class="p">@</span><span class="nd">Styles</span> <span class="nx">innerStyle</span><span class="p">()</span> <span class="p">{</span>
-    <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Yellow</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">@</span><span class="nd">Styles</span> <span class="nf">innerStyle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Yellow</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span> <span class="o">=</span> <span class="mi">200</span>
     <span class="p">})</span>
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
     <span class="p">...</span>  
   <span class="p">}</span>
 <span class="p">}</span>
@@ -524,40 +524,40 @@ LiftCycle onPageShow
 <span class="nx">struct</span> <span class="nx">LearnDetail</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">heightValue</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">100</span>
   <span class="c1">// 定义在组件内的@Styles封装的样式</span>
-  <span class="p">@</span><span class="nd">Styles</span> <span class="nx">innerStyle</span><span class="p">()</span> <span class="p">{</span>
-    <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Yellow</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">@</span><span class="nd">Styles</span> <span class="nf">innerStyle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Yellow</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">heightValue</span> <span class="o">=</span> <span class="mi">200</span>
     <span class="p">})</span>
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// 使用全局的@Styles封装的样式</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="dl">'</span><span class="s1">sunyazhou.com</span><span class="dl">'</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">globalStyles</span> <span class="p">()</span>
-          <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="dl">'</span><span class="s1">sunyazhou.com</span><span class="dl">'</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">globalStyles </span><span class="p">()</span>
+          <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
         <span class="c1">// 使用组件内的@Styles封装的样式</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="dl">'</span><span class="s1">迈腾大队长</span><span class="dl">'</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">innerStyle</span><span class="p">()</span>
-          <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="dl">'</span><span class="s1">迈腾大队长</span><span class="dl">'</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">innerStyle</span><span class="p">()</span>
+          <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Styles</span> <span class="kd">function</span> <span class="nx">globalStyles</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Pink</span><span class="p">)</span>
+<span class="p">@</span><span class="nd">Styles</span> <span class="kd">function</span> <span class="nf">globalStyles</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Pink</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>以上是是如何使用 @Styles装饰器的代码, <a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2">参考官方@Styles文档</a></p><h3 id="extend装饰器-定义扩展组件样式">@Extend装饰器: 定义扩展组件样式</h3><p>装饰器使用语法</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">UIComponentName</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">functionName</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">UIComponentName</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">functionName</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
 </pre></table></code></div></div><ul><li><p>和@Styles不同，@Extend仅支持在全局定义，不支持在组件内部定义。</p><li>和@Styles不同，@Extend支持封装指定的组件的私有属性和私有事件，以及预定义相同组件的@Extend的方法。<li>和@Styles不同，@Extend装饰的方法支持参数，开发者可以在调用时传递参数，调用遵循TS方法传值调用。<li>@Extend装饰的方法的参数可以为function，作为Event事件的句柄<li>@Extend的参数可以为状态变量，当状态变量改变时，UI可以正常的被刷新渲染。<li>@Extend可以协变调用</ul><p>如下调用协变调用</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -568,13 +568,13 @@ LiftCycle onPageShow
 8
 9
 </pre><td class="rouge-code"><pre><span class="c1">// @Extend(Text)可以支持Text的私有属性fontColor</span>
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">fancy</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Red</span><span class="p">)</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">fancy</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="nx">Color</span><span class="p">.</span><span class="nx">Red</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// superFancyText可以调用预定义的fancy</span>
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">superFancyText</span><span class="p">(</span><span class="nx">size</span><span class="p">:</span><span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">fancy</span><span class="p">()</span> <span class="c1">//这里调用的是上方定义的@extend</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">superFancyText</span><span class="p">(</span><span class="nx">size</span><span class="p">:</span><span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">fancy</span><span class="p">()</span> <span class="c1">//这里调用的是上方定义的@extend</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p>使用@Extend示例代码如下:</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -613,31 +613,31 @@ LiftCycle onPageShow
 <span class="nx">struct</span> <span class="nx">LearnDetail</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">heightValue</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">100</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span><span class="p">).</span><span class="nx">textExtend1</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">textExtend1</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Blue</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span><span class="p">).</span><span class="nf">textExtend1</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">textExtend1</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Blue</span><span class="p">)</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textStyles1</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">decoration</span><span class="p">({</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textStyles1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">decoration</span><span class="p">({</span>
     <span class="na">type</span><span class="p">:</span> <span class="nx">TextDecorationType</span><span class="p">.</span><span class="nx">Underline</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">textStyles1</span><span class="p">()</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">textStyles1</span><span class="p">()</span>
 <span class="p">}</span>
 
 </pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/extend_example.webp" alt="" /></p><p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-extend-0000001580345074-V2">参考@Extend官方文档</a></p><h3 id="prop装饰器父子单向同步">@Prop装饰器:父子单向同步</h3><p>初始化规则图示<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/rules.webp" alt="" /></p><p>下面是单向传递示例代码</p><ul><li>Prop不能赋值</ul><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -705,24 +705,24 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">LearnDetail</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">msg</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">).</span><span class="nx">textExtend1</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
-        <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">点击修改传透到子组件</span><span class="dl">"</span><span class="p">,{</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">})</span>
-          <span class="p">.</span><span class="nx">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
-              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">点击修改传透到子组件</span><span class="dl">'</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">).</span><span class="nf">textExtend1</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
+        <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">点击修改传透到子组件</span><span class="dl">"</span><span class="p">,{</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">})</span>
+          <span class="p">.</span><span class="nf">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">点击修改传透到子组件</span><span class="dl">'</span><span class="p">)</span>
               <span class="k">this</span><span class="p">.</span><span class="nx">msg</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">msg</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span>
           <span class="p">})</span>
-        <span class="nx">LearnDetailProp1</span><span class="p">({</span><span class="na">name</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
+        <span class="nc">LearnDetailProp1</span><span class="p">({</span><span class="na">name</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
@@ -730,37 +730,37 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">LearnDetailProp1</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Prop</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span> <span class="c1">//Prop不能赋值</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">www.</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">textStyles1</span><span class="p">()</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">单向传递</span><span class="dl">"</span><span class="p">).</span><span class="nx">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">www.</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nf">textStyles1</span><span class="p">()</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">单向传递</span><span class="dl">"</span><span class="p">).</span><span class="nf">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Prop修饰器修改内容</span><span class="dl">"</span>
         <span class="p">})</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">buttonStyle1</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="kd">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">buttonStyle1</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textStyles1</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">decoration</span><span class="p">({</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textStyles1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">decoration</span><span class="p">({</span>
     <span class="na">type</span><span class="p">:</span> <span class="nx">TextDecorationType</span><span class="p">.</span><span class="nx">Underline</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">textStyles1</span><span class="p">()</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">textStyles1</span><span class="p">()</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/prop.gif" alt="" /></p><p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-prop-0000001580185150-V2">@Prop参考文档</a></p><h3 id="link装饰器父子双向同步">@Link装饰器:父子双向同步</h3><p>示例代码如果</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -780,11 +780,11 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span>  <span class="nx">LearnDetailLink1</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Link</span> <span class="nx">lineName</span><span class="p">:</span> <span class="kr">string</span> <span class="c1">//@Link不能赋值</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Link数据:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span><span class="p">).</span><span class="nx">textStyles1</span><span class="p">()</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">双向传递</span><span class="dl">"</span><span class="p">).</span><span class="nx">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Link数据:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span><span class="p">).</span><span class="nf">textStyles1</span><span class="p">()</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">双向传递</span><span class="dl">"</span><span class="p">).</span><span class="nf">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">被修改的 Link数据</span><span class="dl">"</span>
         <span class="p">})</span>
     <span class="p">}</span>
@@ -871,38 +871,38 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">LearnDetail</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">msg</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">).</span><span class="nx">textExtend1</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
-        <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">点击修改传透到子组件</span><span class="dl">"</span><span class="p">,{</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">})</span>
-          <span class="p">.</span><span class="nx">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
-              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">点击修改传透到子组件</span><span class="dl">'</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">).</span><span class="nf">textExtend1</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
+        <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">点击修改传透到子组件</span><span class="dl">"</span><span class="p">,{</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">})</span>
+          <span class="p">.</span><span class="nf">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">点击修改传透到子组件</span><span class="dl">'</span><span class="p">)</span>
               <span class="k">this</span><span class="p">.</span><span class="nx">msg</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">msg</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span>
           <span class="p">})</span>
-        <span class="nx">Divider</span><span class="p">()</span>
-        <span class="nx">LearnDetailProp1</span><span class="p">({</span><span class="na">name</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
-        <span class="nx">Divider</span><span class="p">()</span>
-        <span class="nx">LearnDetailLink1</span><span class="p">({</span><span class="na">lineName</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
+        <span class="nc">Divider</span><span class="p">()</span>
+        <span class="nc">LearnDetailProp1</span><span class="p">({</span><span class="na">name</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
+        <span class="nc">Divider</span><span class="p">()</span>
+        <span class="nc">LearnDetailLink1</span><span class="p">({</span><span class="na">lineName</span> <span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">msg</span><span class="p">})</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">LearnDetailProp1</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Prop</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span> <span class="c1">//Prop不能赋值</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">www.</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">textStyles1</span><span class="p">()</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">单向传递</span><span class="dl">"</span><span class="p">).</span><span class="nx">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">www.</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nf">textStyles1</span><span class="p">()</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">单向传递</span><span class="dl">"</span><span class="p">).</span><span class="nf">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span><span class="p">{</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Prop修饰器修改内容</span><span class="dl">"</span>
         <span class="p">})</span>
     <span class="p">}</span>
@@ -912,37 +912,37 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span>  <span class="nx">LearnDetailLink1</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Link</span> <span class="nx">lineName</span><span class="p">:</span> <span class="kr">string</span> <span class="c1">//@Link不能赋值</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Link数据:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span><span class="p">).</span><span class="nx">textStyles1</span><span class="p">()</span>
-      <span class="nx">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">双向传递</span><span class="dl">"</span><span class="p">).</span><span class="nx">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
-        <span class="p">.</span><span class="nx">onClick</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Link数据:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span><span class="p">).</span><span class="nf">textStyles1</span><span class="p">()</span>
+      <span class="nc">Button</span><span class="p">(</span><span class="dl">"</span><span class="s2">双向传递</span><span class="dl">"</span><span class="p">).</span><span class="nf">buttonStyle1</span><span class="p">(</span><span class="nx">ButtonType</span><span class="p">.</span><span class="nx">Normal</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">onClick</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">lineName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">被修改的 Link数据</span><span class="dl">"</span>
         <span class="p">})</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">buttonStyle1</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="kd">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">buttonStyle1</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textStyles1</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">decoration</span><span class="p">({</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textStyles1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">decoration</span><span class="p">({</span>
     <span class="na">type</span><span class="p">:</span> <span class="nx">TextDecorationType</span><span class="p">.</span><span class="nx">Underline</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">textStyles1</span><span class="p">()</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textExtend1</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">textStyles1</span><span class="p">()</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-link-0000001630145733-V2">@Link参考文档</a></p><h2 id="provide装饰器和consume装饰器与后代组件双向同步">@Provide装饰器和@Consume装饰器:与后代组件双向同步</h2><p>@Provide和@Consume，应用于与后代组件的双向数据同步，应用于状态数据在多个层级之间传递的场景。不同于上文提到的父子组件之间通过命名参数机制传递，@Provide和@Consume摆脱参数传递机制的束缚，实现跨层级传递。</p><p>其中@Provide装饰的变量是在祖先组件中，可以理解为被“提供”给后代的状态变量。@Consume装饰的变量是在后代组件中，去“消费（绑定）”祖先组件提供的变量。</p><h4 id="provideconsume装饰的状态变量有以下特性">@Provide/@Consume装饰的状态变量有以下特性：</h4><ul><li><p>@Provide装饰的状态变量自动对其所有后代组件可用，即该变量被“provide”给他的后代组件。由此可见，@Provide的方便之处在于，开发者不需要多次在组件之间传递变量。</p><li><p>后代通过使用@Consume去获取@Provide提供的变量，建立在@Provide和@Consume之间的双向数据同步，与@State/@Link不同的是，前者可以在多层级的父子组件之间传递。</p><li><p>@Provide和@Consume可以通过相同的变量名或者相同的变量别名绑定，建议类型相同，否则会发生类型隐式转换，从而导致应用行为异常。</p></ul><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -1014,61 +1014,61 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">ProvideConsumeDemo</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Provide</span><span class="p">(</span><span class="dl">"</span><span class="s2">com.sunyazhou.message.provide_consume</span><span class="dl">"</span><span class="p">)</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">).</span><span class="nx">textExtend2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Black</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">onClick</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">).</span><span class="nf">textExtend2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Black</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">onClick</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span><span class="p">?</span> <span class="dl">"</span><span class="s2">sunyazhou.com</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">迈腾大队长</span><span class="dl">"</span>
           <span class="p">})</span>
-        <span class="nx">Divider</span><span class="p">()</span>
+        <span class="nc">Divider</span><span class="p">()</span>
         <span class="c1">//... 假设这里中间有 100层Component创建和使用</span>
-        <span class="nx">ProvideConsumeDemo2</span><span class="p">()</span>
+        <span class="nc">ProvideConsumeDemo2</span><span class="p">()</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span>  <span class="nx">ProvideConsumeDemo2</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">Consume</span><span class="p">(</span><span class="dl">"</span><span class="s2">com.sunyazhou.message.provide_consume</span><span class="dl">"</span><span class="p">)</span> <span class="nx">info</span><span class="p">:</span> <span class="kr">string</span> <span class="c1">//和之前介绍的@Prop @Link一样 consume不能赋值</span>
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">info</span><span class="p">).</span><span class="nx">textExtend2</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">info</span><span class="p">).</span><span class="nf">textExtend2</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">buttonStyle2</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="kd">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Button</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">buttonStyle2</span> <span class="p">(</span><span class="kd">type</span> <span class="p">:</span><span class="nx">ButtonType</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">type</span><span class="p">(</span><span class="kd">type</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">borderRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="mh">0x317aff</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textStyles2</span><span class="p">()</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">decoration</span><span class="p">({</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textStyles2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Center</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontStyle</span><span class="p">(</span><span class="nx">FontStyle</span><span class="p">.</span><span class="nx">Italic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">decoration</span><span class="p">({</span>
     <span class="na">type</span><span class="p">:</span> <span class="nx">TextDecorationType</span><span class="p">.</span><span class="nx">Underline</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
-<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nx">textExtend2</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">textStyles2</span><span class="p">()</span>
+<span class="p">@</span><span class="nd">Extend</span><span class="p">(</span><span class="nx">Text</span><span class="p">)</span> <span class="kd">function</span> <span class="nf">textExtend2</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">fontColor</span><span class="p">:</span> <span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="nx">fontSize</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">fontColor</span><span class="p">(</span><span class="nx">fontColor</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">textStyles2</span><span class="p">()</span>
 
 </pre></table></code></div></div><p>效果如下:</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/provideconsume.gif" alt="" /></p><p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-provide-and-consume-0000001580345078-V2">@Provide装饰器和@Consume装饰器官网文档</a></p><h2 id="watch修饰器-用于监听状态变量更改通知">@Watch修饰器 用于监听状态变量更改通知</h2><p>@Watch应用于对状态变量的监听。如果开发者需要关注某个状态变量的值是否改变，可以使用@Watch为状态变量设置回调函数。</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 </pre><td class="rouge-code"><pre><span class="p">@</span><span class="nd">State</span> <span class="p">@</span><span class="nd">Watch</span><span class="p">(</span><span class="dl">"</span><span class="s2">didMessageChanged</span><span class="dl">"</span><span class="p">)</span> <span class="nx">num1</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="nx">didMessageChanged</span> <span class="p">()</span> <span class="p">{</span>  <span class="c1">//此方法被触发,代表其它地方修改了 @Watch 修饰的变量</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">num1</span><span class="p">)</span>
+<span class="nf">didMessageChanged </span><span class="p">()</span> <span class="p">{</span>  <span class="c1">//此方法被触发,代表其它地方修改了 @Watch 修饰的变量</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">num1</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/watch.gif" alt="" /></p><p>完整示例代码</p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -1103,29 +1103,29 @@ LiftCycle onPageShow
 <span class="p">@</span><span class="nd">Component</span>
 <span class="nx">struct</span> <span class="nx">WatchDemo</span> <span class="p">{</span>
   <span class="p">@</span><span class="nd">State</span> <span class="p">@</span><span class="nd">Watch</span><span class="p">(</span><span class="dl">"</span><span class="s2">didMessageChanged</span><span class="dl">"</span><span class="p">)</span> <span class="nx">price</span><span class="p">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="nx">didMessageChanged</span> <span class="p">()</span> <span class="p">{</span>  <span class="c1">//此方法被触发,代表其它地方修改了 @Watch 修饰的变量</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">price</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">didMessageChanged </span><span class="p">()</span> <span class="p">{</span>  <span class="c1">//此方法被触发,代表其它地方修改了 @Watch 修饰的变量</span>
+    <span class="k">if </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">price</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">//TODO: 处理享受9折...</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">)</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听到消息发生变化:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span><span class="p">)</span>
     <span class="p">}</span>
 
   <span class="p">}</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">测试值</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">onClick</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">测试值</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">onClick</span><span class="p">(</span> <span class="p">()</span><span class="o">=&gt;</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">price</span> <span class="o">++</span>
           <span class="p">})</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-watch-0000001630305681-V2">@Watch装饰器官方文档</a></p><h2 id="foreach循环渲染">ForEach:循环渲染</h2><p>假设我们要做一个像iOS中的UITableView列表我们可以使用ArkUI中的<code class="language-plaintext highlighter-rouge">ForEach</code></p><div class="language-ts highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -1162,28 +1162,28 @@ LiftCycle onPageShow
   <span class="p">@</span><span class="nd">State</span> <span class="nx">message</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">sunyazhou.com</span><span class="dl">'</span><span class="p">;</span>
   <span class="p">@</span><span class="nd">State</span> <span class="nx">tags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Algorithm29</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">ArkTS1</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">AVFoundation15</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">AVKit1</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">C++19</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">Cocoapods5</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">Dart2</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">Git3</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">HarmonyOS3</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">iOS119</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">]</span>
 
-  <span class="nx">build</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">Row</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Column</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">38</span><span class="p">)</span>
-          <span class="p">.</span><span class="nx">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
-        <span class="nx">Divider</span><span class="p">()</span>
-        <span class="nx">ForEach</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tags</span><span class="p">,</span> <span class="p">(</span><span class="nx">tag</span> <span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-            <span class="nx">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Blog tag has </span><span class="dl">"</span><span class="o">+</span> <span class="nx">tag</span><span class="p">)</span>
-              <span class="p">.</span><span class="nx">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Start</span><span class="p">)</span>
-              <span class="p">.</span><span class="nx">fontSize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
-              <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">80%</span><span class="dl">'</span><span class="p">)</span>
-              <span class="p">.</span><span class="nx">backgroundColor</span><span class="p">(</span><span class="dl">'</span><span class="s1">#00E5EE</span><span class="dl">'</span><span class="p">)</span>
+  <span class="nf">build</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nc">Row</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nc">Column</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">Text</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">38</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">fontWeight</span><span class="p">(</span><span class="nx">FontWeight</span><span class="p">.</span><span class="nx">Bold</span><span class="p">)</span>
+        <span class="nc">Divider</span><span class="p">()</span>
+        <span class="nc">ForEach</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tags</span><span class="p">,</span> <span class="p">(</span><span class="nx">tag</span> <span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nc">Text</span><span class="p">(</span><span class="dl">"</span><span class="s2">Blog tag has </span><span class="dl">"</span><span class="o">+</span> <span class="nx">tag</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">textAlign</span><span class="p">(</span><span class="nx">TextAlign</span><span class="p">.</span><span class="nx">Start</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">fontSize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">80%</span><span class="dl">'</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">backgroundColor</span><span class="p">(</span><span class="dl">'</span><span class="s1">#00E5EE</span><span class="dl">'</span><span class="p">)</span>
         <span class="p">},</span> <span class="p">(</span><span class="nx">tag</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
           <span class="k">return</span> <span class="nx">tag</span>
         <span class="p">})</span>
       <span class="p">}</span>
-      <span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">width</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="p">.</span><span class="nx">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">height</span><span class="p">(</span><span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/ForEach.webp" alt="" /></p><p>这里有个坑, <strong>ForEach(this.tags, (tag : string<em>这里必须标注类型在Harmonry4.1中</em>) =&gt; {}</strong></p><p>如果不标注类型就容易报错</p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre><td class="rouge-code"><pre>Use explicit types instead of <span class="s2">"any"</span>, <span class="s2">"unknown"</span> <span class="o">(</span>arkts-no-any-unknown<span class="o">)</span> &lt;ArkTSCheck&gt;
-</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/ForEachError.webp" alt="" /></p><p><a href="官方文档">ForEach:循环渲染</a></p><h1 id="总结">总结</h1><p>随时积累记录</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/arkui/'>ArkUI</a>, <a href='/categories/harmonyos/'>HarmonyOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/%E9%B8%BF%E8%92%99os%E5%BC%80%E5%8F%91/" class="post-tag no-text-decoration" >鸿蒙OS开发</a> <a href="/tags/harmonyos/" class="post-tag no-text-decoration" >HarmonyOS</a> <a href="/tags/arkts/" class="post-tag no-text-decoration" >ArkTS</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=ArkTS和ArkUI基础语法 - 迈腾大队长&u=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2024/01/arktsbasic/">ArkTS和ArkUI基础语法</a><li><a href="/2024/01/mpremotecommandlikecommand/">iOS控制中心收藏按钮likeCommand动画</a><li><a href="/2024/01/HarmonyPhoneSendFileTomacOS/">解决如何从鸿蒙手机传文件到macOS</a><li><a href="/2024/01/harmonyoslaunchpage/">鸿蒙启动页面开发</a><li><a href="/2022/11/swiftuipropertywrapper/">SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2024/01/harmonyoslaunchpage/"><div class="card-body"> <span class="timeago small" > 01-15 <i class="unloaded">2024-01-15T20:55:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>鸿蒙启动页面开发</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 鸿蒙OS开发 2024年技术不能只停留在嘴上,行胜于言,经过几个月的鸿蒙开发的学习,觉得还是要把容易忘记的内容记录下来...</p></div></div></a></div><div class="card"> <a href="/2024/01/HarmonyPhoneSendFileTomacOS/"><div class="card-body"> <span class="timeago small" > 01-16 <i class="unloaded">2024-01-16T09:49:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>解决如何从鸿蒙手机传文件到macOS</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 问题描述 最近学习中遇到了一个问题,用mac电脑开发鸿蒙, 公司内部的测试机是HUAWEI Mate 60 Pro, ...</p></div></div></a></div><div class="card"> <a href="/2024/01/mpremotecommandlikecommand/"><div class="card-body"> <span class="timeago small" > 01-25 <i class="unloaded">2024-01-25T13:03:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>iOS控制中心收藏按钮likeCommand动画</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 背景描述 最近开发中,产品要求在音频播放控制中心中增加 收藏按钮, 查看了QQ音乐和网易云音乐发现他们都已经有了此按钮,然...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2024/01/HarmonyPhoneSendFileTomacOS/" class="btn btn-outline-primary"><p>解决如何从鸿蒙手机传文件到macOS</p></a> <a href="/2024/01/mpremotecommandlikecommand/" class="btn btn-outline-primary"><p>iOS控制中心收藏按钮likeCommand动画</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20240119ArkTSBasic/ForEachError.webp" alt="" /></p><p><a href="官方文档">ForEach:循环渲染</a></p><h1 id="总结">总结</h1><p>随时积累记录</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/arkui/'>ArkUI</a>, <a href='/categories/harmonyos/'>HarmonyOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/%E9%B8%BF%E8%92%99os%E5%BC%80%E5%8F%91/" class="post-tag no-text-decoration" >鸿蒙OS开发</a> <a href="/tags/harmonyos/" class="post-tag no-text-decoration" >HarmonyOS</a> <a href="/tags/arkts/" class="post-tag no-text-decoration" >ArkTS</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=ArkTS和ArkUI基础语法 - 迈腾大队长&u=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=ArkTS和ArkUI基础语法 - 迈腾大队长&url=https://www.sunyazhou.com/2024/01/arktsbasic/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2024/01/arktsbasic/">ArkTS和ArkUI基础语法</a><li><a href="/2024/01/mpremotecommandlikecommand/">iOS控制中心收藏按钮likeCommand动画</a><li><a href="/2024/01/HarmonyPhoneSendFileTomacOS/">解决如何从鸿蒙手机传文件到macOS</a><li><a href="/2024/01/harmonyoslaunchpage/">鸿蒙启动页面开发</a><li><a href="/2022/11/swiftuipropertywrapper/">SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2024/01/harmonyoslaunchpage/"><div class="card-body"> <span class="timeago small" > 01-15 <i class="unloaded">2024-01-15T12:55:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>鸿蒙启动页面开发</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 鸿蒙OS开发 2024年技术不能只停留在嘴上,行胜于言,经过几个月的鸿蒙开发的学习,觉得还是要把容易忘记的内容记录下来...</p></div></div></a></div><div class="card"> <a href="/2024/01/HarmonyPhoneSendFileTomacOS/"><div class="card-body"> <span class="timeago small" > 01-16 <i class="unloaded">2024-01-16T01:49:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>解决如何从鸿蒙手机传文件到macOS</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 问题描述 最近学习中遇到了一个问题,用mac电脑开发鸿蒙, 公司内部的测试机是HUAWEI Mate 60 Pro, ...</p></div></div></a></div><div class="card"> <a href="/2024/01/mpremotecommandlikecommand/"><div class="card-body"> <span class="timeago small" > 01-25 <i class="unloaded">2024-01-25T05:03:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>iOS控制中心收藏按钮likeCommand动画</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或使用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,这样您将能在第一时间获取本站信息. 背景描述 最近开发中,产品要求在音频播放控制中心中增加 收藏按钮, 查看了QQ音乐和网易云音乐发现他们都已经有了此按钮,然...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2024/01/HarmonyPhoneSendFileTomacOS/" class="btn btn-outline-primary"><p>解决如何从鸿蒙手机传文件到macOS</p></a> <a href="/2024/01/mpremotecommandlikecommand/" class="btn btn-outline-primary"><p>iOS控制中心收藏按钮likeCommand动画</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2024 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
