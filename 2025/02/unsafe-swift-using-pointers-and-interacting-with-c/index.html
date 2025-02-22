@@ -1,0 +1,829 @@
+<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.3.3" /><meta property="og:title" content="如何使用unsafe Swift指针类型直接访问内存并与C交互" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="前言" /><meta property="og:description" content="前言" /><link rel="canonical" href="https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" /><meta property="og:url" content="https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2025-02-22T14:15:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="如何使用unsafe Swift指针类型直接访问内存并与C交互" /><meta name="twitter:site" content="@sunyazhou" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"datePublished":"2025-02-22T14:15:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/"},"headline":"如何使用unsafe Swift指针类型直接访问内存并与C交互","author":{"@type":"Person","name":"孙亚洲"},"url":"https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/","description":"前言","dateModified":"2025-02-22T14:15:00+00:00","@context":"https://schema.org"}</script><title>如何使用unsafe Swift指针类型直接访问内存并与C交互 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>如何使用unsafe Swift指针类型直接访问内存并与C交互</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>如何使用unsafe Swift指针类型直接访问内存并与C交互</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Sat, Feb 22, 2025, 2:15 PM +0000" > 02-22 <i class="unloaded">2025-02-22T14:15:00+00:00</i> </span></div></div><div class="post-content"><h1 id="前言">前言</h1><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!</p><h3 id="背景介绍">背景介绍</h3><p>2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到如何使用<code class="language-plaintext highlighter-rouge">Unsafe Swift</code> 指针和C交互,主要是在内存中如何标识C的内容,下面这篇文章是书中介绍的英文文章我看了以后觉得消化吸收一下,整理成中文版供各位参考.</p><p>在本教程中，您将学习如何使用unsafe Swift 通过各种指针类型直接访问内存。作者：Brody Eller。</p><blockquote><p>更新说明：Brody Eller 为 Swift 5.1 更新了本教程。原始版本由 Ray Fix 编写。</p></blockquote><p>默认情况下，Swift 是内存安全的：它防止直接访问内存，并确保在使用之前初始化所有内容。关键短语是“默认情况下”。你也可以使用不安全的 Swift，它允许你通过指针直接访问内存。</p><p>本教程将带你快速了解 Swift 中所谓的“不安全”特性。</p><p>“不安全”并不意味着代码可能会出错或危险。相反，它指的是需要额外小心的代码，因为它限制了编译器在防止你犯错方面的能力。</p><p>如果你需要与不安全的语言（如 C）进行交互、需要提高运行时性能，或者只是想探索 Swift 的内部机制，这些特性会非常有用。在本教程中，你将学习如何使用指针并直接与内存系统交互。</p><blockquote><p>注意：虽然这是一个高级主题，但如果你对 Swift 有一定的掌握能力，就可以跟上本教程的内容。如果你需要复习 Swift 技能，请查<a href="https://www.kodeco.com/ios/learn"> iOS 和 Swift 初学者系列</a>。有 C 语言经验会有所帮助，但不是必需的。</p></blockquote><h3 id="开始前可以下载本篇文章涉及到的demo">开始前可以下载本篇文章涉及到的demo</h3><p><a href="https://github.com/sunyazhou13/Using-Pointers-and-Interacting-With-C">Download Materials下载初始项目</a>。</p><p>本教程包含三个空的 Swift Playground 文件：</p><h3 id="探索unsafe-swift内存布局">探索Unsafe Swift内存布局</h3><p>首先打开 UnsafeSwift Playground。由于本教程中的所有代码都是跨平台的，你可以选择任意平台</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20250222UnsafeSwift/memory1.webp" alt="" /></p><p>不安全的 Swift 直接与内存系统交互。你可以将内存想象成一系列盒子——实际上有数十亿个盒子——每个盒子里都包含一个数字。</p><p>每个盒子都有一个唯一的内存地址。最小的可寻址存储单元是一个字节（byte），通常由 8 个比特（bit）组成。</p><p>8 比特的字节可以存储 0 到 255 之间的值。处理器还可以高效地访问内存中的字（word），字通常由多个字节组成。</p><p>例如，在 64 位系统上，一个字是 8 个字节（64 比特）。为了更直观地理解这一点，你可以使用 <code class="language-plaintext highlighter-rouge">MemoryLayout</code> 来查看一些原生 Swift 类型的大小和对齐方式。</p><p>将以下代码添加到你的 Playground 中：</p><ul><li>在第一个 Playground 中，你将使用几段简短的代码来探索内存布局，并尝试使用不安全的指针。<li>在第二个 Playground 中，你将使用一个低级的 C API 来执行流式数据压缩，并将其封装为 Swift 风格的接口。<li>在最后一个 Playground 中，你将创建一个跨平台的替代 <code class="language-plaintext highlighter-rouge">arc4random</code> 的随机数生成器。它内部使用了不安全的 Swift，但对用户隐藏了这一细节。</ul><p>首先打开 <strong>UnsafeSwift</strong> Playground。由于本教程中的所有代码都是跨平台的，你可以选择任意平台。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20250222UnsafeSwift/memory2.webp" alt="" /></p><p>不安全的 Swift 直接与内存系统交互。你可以将内存想象成一系列盒子——实际上有数十亿个盒子——每个盒子里都包含一个数字。</p><p>每个盒子都有一个唯一的内存地址。最小的可寻址存储单元是一个字节（byte），通常由 8 个比特（bit）组成。</p><p>8 比特的字节可以存储 0 到 255 之间的值。处理器还可以高效地访问内存中的字（word），字通常由多个字节组成。</p><p>例如，在 64 位系统上，一个字是 8 个字节（64 比特）。为了更直观地理解这一点，你可以使用 <code class="language-plaintext highlighter-rouge">MemoryLayout</code> 来查看一些原生 Swift 类型的大小和对齐方式。</p><p>将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="n">size</span>          <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="n">alignment</span>     <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="n">stride</span>        <span class="c1">// returns 8 (on 64-bit)</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">size</span>        <span class="c1">// returns 2</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">alignment</span>   <span class="c1">// returns 2</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">stride</span>      <span class="c1">// returns 2</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;.</span><span class="n">size</span>         <span class="c1">// returns 1</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;.</span><span class="n">alignment</span>    <span class="c1">// returns 1</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;.</span><span class="n">stride</span>       <span class="c1">// returns 1</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;.</span><span class="n">size</span>        <span class="c1">// returns 4</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;.</span><span class="n">alignment</span>   <span class="c1">// returns 4</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;.</span><span class="n">stride</span>      <span class="c1">// returns 4</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;.</span><span class="n">size</span>       <span class="c1">// returns 8</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;.</span><span class="n">alignment</span>  <span class="c1">// returns 8</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;.</span><span class="n">stride</span>     <span class="c1">// returns 8</span>
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">MemoryLayout&lt;Type&gt;</code> 是一个在编译时评估的泛型类型。它用于确定指定 <code class="language-plaintext highlighter-rouge">Type</code> 的大小（size）、对齐方式（alignment）和步长（stride），并返回以字节为单位的值。</p><p>例如，<code class="language-plaintext highlighter-rouge">Int16</code> 的大小为 2 个字节，对齐方式也是 2。这意味着它必须从偶数地址开始——即地址可以被 2 整除。</p><p>例如，可以在地址 100 分配一个 <code class="language-plaintext highlighter-rouge">Int16</code>，但不能在地址 101 分配——奇数地址违反了所需的对齐要求。</p><p>当你将一堆 <code class="language-plaintext highlighter-rouge">Int16</code> 打包在一起时，它们会按照步长（stride）的间隔排列。对于这些基本类型，步长与大小是相同的。</p><h3 id="检查结构体的内存布局">检查结构体的内存布局</h3><p>接下来，通过将以下代码添加到 Playground 中，查看一些用户定义的结构体<code class="language-plaintext highlighter-rouge">user-defined struct</code>的内存布局：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">EmptyStruct</span> <span class="p">{}</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyStruct</span><span class="o">&gt;.</span><span class="n">size</span>      <span class="c1">// returns 0</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyStruct</span><span class="o">&gt;.</span><span class="n">alignment</span> <span class="c1">// returns 1</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyStruct</span><span class="o">&gt;.</span><span class="n">stride</span>    <span class="c1">// returns 1</span>
+
+<span class="kd">struct</span> <span class="kt">SampleStruct</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">number</span><span class="p">:</span> <span class="kt">UInt32</span>
+  <span class="k">let</span> <span class="nv">flag</span><span class="p">:</span> <span class="kt">Bool</span>
+<span class="p">}</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleStruct</span><span class="o">&gt;.</span><span class="n">size</span>       <span class="c1">// returns 5</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleStruct</span><span class="o">&gt;.</span><span class="n">alignment</span>  <span class="c1">// returns 4</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleStruct</span><span class="o">&gt;.</span><span class="n">stride</span>     <span class="c1">// returns 8</span>
+
+</pre></table></code></div></div><p>空结构体的大小为零。由于对齐方式为 1，它可以存在于任何地址，因为所有数字都可以被 1 整除。</p><p>有趣的是，步长（<code class="language-plaintext highlighter-rouge">stride</code>）为 1。这是因为即使 <code class="language-plaintext highlighter-rouge">EmptyStruct</code> 的大小为零，你创建的每个 <code class="language-plaintext highlighter-rouge">EmptyStruct</code> 都必须有一个唯一的内存地址。</p><p>对于 <code class="language-plaintext highlighter-rouge">SampleStruct</code>，其大小为 5，但步长为 8。这是因为它的对齐要求它必须位于 4 字节的边界上。在这种情况下，Swift 能做到的最佳打包间隔是 8 个字节。</p><p>为了查看类（class）和结构体（struct）在内存布局上的区别，请添加以下代码：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="kt">EmptyClass</span> <span class="p">{}</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyClass</span><span class="o">&gt;.</span><span class="n">size</span>      <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyClass</span><span class="o">&gt;.</span><span class="n">stride</span>    <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">EmptyClass</span><span class="o">&gt;.</span><span class="n">alignment</span> <span class="c1">// returns 8 (on 64-bit)</span>
+
+<span class="kd">class</span> <span class="kt">SampleClass</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">number</span><span class="p">:</span> <span class="kt">Int64</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">let</span> <span class="nv">flag</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleClass</span><span class="o">&gt;.</span><span class="n">size</span>      <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleClass</span><span class="o">&gt;.</span><span class="n">stride</span>    <span class="c1">// returns 8 (on 64-bit)</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">SampleClass</span><span class="o">&gt;.</span><span class="n">alignment</span> <span class="c1">// returns 8 (on 64-bit)</span>
+
+</pre></table></code></div></div><p>类是引用类型，因此 <code class="language-plaintext highlighter-rouge">MemoryLayout</code> 报告的是引用的大小：8 个字节。</p><p>如果你想更详细地探索内存布局，可以查看 Mike Ash 的精彩演讲：<a href="https://mikeash.com/pyblog/friday-qa-2014-07-18-exploring-swift-memory-layout.html">Exploring Swift Memory Layout</a>。</p><h3 id="using-pointers-in-unsafe-swift在不安全的-swift-中使用指针">Using Pointers in Unsafe Swift在不安全的 Swift 中使用指针</h3><p>指针封装了一个内存地址。</p><p>涉及直接内存访问的类型会带有 <code class="language-plaintext highlighter-rouge">unsafe</code> 前缀，因此指针类型的名称为 <code class="language-plaintext highlighter-rouge">UnsafePointer</code>。</p><p>额外的输入可能看起来有些烦人，但它提醒你正在访问编译器未检查的内存。如果操作不当，可能会导致未定义行为，而不仅仅是一个可预测的崩溃。</p><p>Swift 并不像 C 语言中的 <code class="language-plaintext highlighter-rouge">char *</code> 那样，只提供一种非结构化的 <code class="language-plaintext highlighter-rouge">UnsafePointer</code> 类型来访问内存。Swift 提供了近十种指针类型，每种类型都有不同的功能和用途。</p><p>你应该始终根据需求选择最合适的指针类型。这不仅能更好地表达意图，还能减少错误并避免未定义行为。</p><p>不安全的 Swift 指针使用一种可预测的命名方案来描述指针的特性：可变的（mutable）或不可变的（immutable）、原始的（raw）或类型化的（typed）、缓冲区风格（buffer style）或非缓冲区风格。总共有八种指针组合。你将在接下来的部分中了解更多关于它们的内容。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20250222UnsafeSwift/pointers1.webp" alt="" /></p><h3 id="using-raw-pointers-使用原始指针">Using Raw Pointers 使用原始指针</h3><p>在本节中，你将使用不安全的 Swift 指针来存储和加载两个整数。将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre><td class="rouge-code"><pre><span class="c1">// 1</span>
+<span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">let</span> <span class="nv">stride</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="n">stride</span>
+<span class="k">let</span> <span class="nv">alignment</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="n">alignment</span>
+<span class="k">let</span> <span class="nv">byteCount</span> <span class="o">=</span> <span class="n">stride</span> <span class="o">*</span> <span class="n">count</span>
+
+<span class="c1">// 2</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Raw pointers"</span><span class="p">)</span>
+  
+  <span class="c1">// 3</span>
+  <span class="k">let</span> <span class="nv">pointer</span> <span class="o">=</span> <span class="kt">UnsafeMutableRawPointer</span><span class="o">.</span><span class="nf">allocate</span><span class="p">(</span>
+    <span class="nv">byteCount</span><span class="p">:</span> <span class="n">byteCount</span><span class="p">,</span>
+    <span class="nv">alignment</span><span class="p">:</span> <span class="n">alignment</span><span class="p">)</span>
+  <span class="c1">// 4</span>
+  <span class="k">defer</span> <span class="p">{</span>
+    <span class="n">pointer</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// 5</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">storeBytes</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="kt">Int</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">stride</span><span class="p">)</span><span class="o">.</span><span class="nf">storeBytes</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="kt">Int</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">as</span><span class="p">:</span> <span class="kt">Int</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">stride</span><span class="p">)</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">as</span><span class="p">:</span> <span class="kt">Int</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  
+  <span class="c1">// 6</span>
+  <span class="k">let</span> <span class="nv">bufferPointer</span> <span class="o">=</span> <span class="kt">UnsafeRawBufferPointer</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">pointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">byteCount</span><span class="p">)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">byte</span><span class="p">)</span> <span class="k">in</span> <span class="n">bufferPointer</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"byte </span><span class="se">\(</span><span class="n">index</span><span class="se">)</span><span class="s">: </span><span class="se">\(</span><span class="n">byte</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>以下是代码的详细说明：</p><ul><li>1.这些常量保存了常用的值：<ul><li><code class="language-plaintext highlighter-rouge">count</code> 保存要存储的整数的数量。<li><code class="language-plaintext highlighter-rouge">stride</code> 保存 <code class="language-plaintext highlighter-rouge">Int</code> 类型的步长（stride）。<li><code class="language-plaintext highlighter-rouge">alignment</code> 保存 <code class="language-plaintext highlighter-rouge">Int</code> 类型的对齐方式。<li><code class="language-plaintext highlighter-rouge">byteCount</code> 保存所需的总字节数。</ul><li><p>2.一个 <code class="language-plaintext highlighter-rouge">do</code> 块添加了一个作用域级别，这样你可以在接下来的示例中重用变量名。</p><li><p>3.<code class="language-plaintext highlighter-rouge">UnsafeMutableRawPointer.allocate</code> 分配所需的字节。此方法返回一个 <code class="language-plaintext highlighter-rouge">UnsafeMutableRawPointer</code>。该类型的名称告诉你，该指针可以加载和存储（或修改）原始字节。</p><li><p>4.<code class="language-plaintext highlighter-rouge">defer</code> 块确保你正确地释放指针。ARC（自动引用计数）在这里不会帮助你——你需要自己管理内存！你可以在 <a href="https://docs.swift.org/swift-book/LanguageGuide/ErrorHandling.html#ID514">官方 Swift 文档</a> 中阅读更多关于 <code class="language-plaintext highlighter-rouge">defer</code> 语句的内容。</p><li><p>5.<code class="language-plaintext highlighter-rouge">storeBytes</code> 和 <code class="language-plaintext highlighter-rouge">load</code> 方法用于存储和加载字节。你可以通过将指针前进 <code class="language-plaintext highlighter-rouge">stride</code> 个字节来计算第二个整数的内存地址。由于指针是 <code class="language-plaintext highlighter-rouge">Strideable</code> 的，你也可以使用指针算术，例如：<code class="language-plaintext highlighter-rouge">(pointer+stride).storeBytes(of: 6, as: Int.self)</code>。</p><li>6.<code class="language-plaintext highlighter-rouge">UnsafeRawBufferPointer</code> 允许你将内存视为字节集合来访问。这意味着你可以迭代字节并使用下标访问它们。你还可以使用像 <code class="language-plaintext highlighter-rouge">filter</code>、<code class="language-plaintext highlighter-rouge">map</code> 和 <code class="language-plaintext highlighter-rouge">reduce</code> 这样的方法。你可以使用原始指针初始化缓冲区指针。</ul><p>尽管 <code class="language-plaintext highlighter-rouge">UnsafeRawBufferPointer</code> 是不安全的，但你仍然可以通过将其约束为特定类型来使其更安全。</p><h3 id="using-typed-pointers-使用类型化的指针">Using Typed Pointers 使用类型化的指针</h3><p>你可以通过使用类型化指针来简化前面的示例。将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Typed pointers"</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">pointer</span> <span class="o">=</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="nf">allocate</span><span class="p">(</span><span class="nv">capacity</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nv">repeating</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="k">defer</span> <span class="p">{</span>
+    <span class="n">pointer</span><span class="o">.</span><span class="nf">deinitialize</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+    <span class="n">pointer</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+  <span class="p">}</span>
+  
+  <span class="n">pointer</span><span class="o">.</span><span class="n">pointee</span> <span class="o">=</span> <span class="mi">42</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pointee</span> <span class="o">=</span> <span class="mi">6</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="n">pointee</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pointee</span>
+  
+  <span class="k">let</span> <span class="nv">bufferPointer</span> <span class="o">=</span> <span class="kt">UnsafeBufferPointer</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">pointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">bufferPointer</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"value </span><span class="se">\(</span><span class="n">index</span><span class="se">)</span><span class="s">: </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>注意以下区别：</p><ol><li>你使用 <code class="language-plaintext highlighter-rouge">UnsafeMutablePointer.allocate</code> 分配内存。泛型参数让 Swift 知道你将使用该指针来加载和存储 <code class="language-plaintext highlighter-rouge">Int</code> 类型的值。<li>在使用类型化内存之前，必须先初始化它，并在使用后反初始化它。你可以分别使用 <code class="language-plaintext highlighter-rouge">initialize</code> 和 <code class="language-plaintext highlighter-rouge">deinitialize</code> 方法来完成这些操作。反初始化仅对非平凡类型（non-trivial types）是必需的。然而，包含反初始化操作是一种很好的方式，可以确保代码在未来切换到非平凡类型时仍然有效。通常这不会带来任何开销，因为编译器会将其优化掉。<li>类型化指针有一个 <code class="language-plaintext highlighter-rouge">pointee</code> 属性，它提供了一种类型安全的方式来加载和存储值。<li>当推进类型化指针时，你可以简单地指定你想要推进的值的数量。指针可以根据它指向的值的类型计算出正确的步长（stride）。同样，指针算术也适用。你也可以写成 <code class="language-plaintext highlighter-rouge">(pointer+1).pointee = 6</code>。<li>对于类型化的缓冲区指针也是如此：它们迭代的是值而不是字节。</ol><p>接下来，你将学习如何从无约束的 <code class="language-plaintext highlighter-rouge">UnsafeRawBufferPointer</code> 转换为更安全的、类型约束的 <code class="language-plaintext highlighter-rouge">UnsafeRawBufferPointer</code>。</p><h3 id="converting-raw-pointers-to-typed-pointers转换原始指针类型到类型化的指针">Converting Raw Pointers to Typed Pointers转换原始指针类型到类型化的指针</h3><p>你并不总是需要直接初始化类型化指针。你也可以从原始指针中派生出它们。</p><p>将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Converting raw pointers to typed pointers"</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">rawPointer</span> <span class="o">=</span> <span class="kt">UnsafeMutableRawPointer</span><span class="o">.</span><span class="nf">allocate</span><span class="p">(</span>
+    <span class="nv">byteCount</span><span class="p">:</span> <span class="n">byteCount</span><span class="p">,</span>
+    <span class="nv">alignment</span><span class="p">:</span> <span class="n">alignment</span><span class="p">)</span>
+  <span class="k">defer</span> <span class="p">{</span>
+    <span class="n">rawPointer</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+  <span class="p">}</span>
+  
+  <span class="k">let</span> <span class="nv">typedPointer</span> <span class="o">=</span> <span class="n">rawPointer</span><span class="o">.</span><span class="nf">bindMemory</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">Int</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">capacity</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="n">typedPointer</span><span class="o">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nv">repeating</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="k">defer</span> <span class="p">{</span>
+    <span class="n">typedPointer</span><span class="o">.</span><span class="nf">deinitialize</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="n">typedPointer</span><span class="o">.</span><span class="n">pointee</span> <span class="o">=</span> <span class="mi">42</span>
+  <span class="n">typedPointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pointee</span> <span class="o">=</span> <span class="mi">6</span>
+  <span class="n">typedPointer</span><span class="o">.</span><span class="n">pointee</span>
+  <span class="n">typedPointer</span><span class="o">.</span><span class="nf">advanced</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pointee</span>
+  
+  <span class="k">let</span> <span class="nv">bufferPointer</span> <span class="o">=</span> <span class="kt">UnsafeBufferPointer</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">typedPointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">bufferPointer</span><span class="o">.</span><span class="nf">enumerated</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"value </span><span class="se">\(</span><span class="n">index</span><span class="se">)</span><span class="s">: </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>这个示例与之前的示例类似，不同之处在于它首先创建了一个原始指针。你通过将内存绑定到所需的类型 <code class="language-plaintext highlighter-rouge">Int</code> 来创建类型化指针。</p><p>通过绑定内存，你可以以类型安全的方式访问它。当你创建类型化指针时，内存绑定会在幕后进行。</p><p>这个示例的其余部分也与之前的示例相同。一旦你进入类型化指针的领域，就可以使用 <code class="language-plaintext highlighter-rouge">pointee</code> 等特性。</p><h3 id="获取实例的字节">获取实例的字节</h3><p>通常，你已经有一个类型的实例，并且想要检查构成它的字节。你可以使用 <code class="language-plaintext highlighter-rouge">withUnsafeBytes(of:)</code> 方法来实现这一点。</p><p>为此，将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Getting the bytes of an instance"</span><span class="p">)</span>
+  
+  <span class="k">var</span> <span class="nv">sampleStruct</span> <span class="o">=</span> <span class="kt">SampleStruct</span><span class="p">(</span><span class="nv">number</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="nv">flag</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+  <span class="nf">withUnsafeBytes</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">sampleStruct</span><span class="p">)</span> <span class="p">{</span> <span class="n">bytes</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="n">byte</span> <span class="k">in</span> <span class="n">bytes</span> <span class="p">{</span>
+      <span class="nf">print</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>这会打印出 <code class="language-plaintext highlighter-rouge">SampleStruct</code> 实例的原始字节。</p><p><code class="language-plaintext highlighter-rouge">withUnsafeBytes(of:)</code> 允许你访问一个 <code class="language-plaintext highlighter-rouge">UnsafeRawBufferPointer</code>，你可以在闭包中使用它。</p><p><code class="language-plaintext highlighter-rouge">withUnsafeBytes</code> 也可以作为 <code class="language-plaintext highlighter-rouge">Array</code> 和 <code class="language-plaintext highlighter-rouge">Data</code> 的实例方法使用。</p><h3 id="computing-a-checksum计算校验和">Computing a Checksum计算校验和</h3><p>使用 <code class="language-plaintext highlighter-rouge">withUnsafeBytes(of:)</code>，你可以返回一个结果。例如，你可以使用它来计算结构中字节的 32 位校验和。</p><p>将以下代码添加到你的 Playground 中：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Checksum the bytes of a struct"</span><span class="p">)</span>
+  
+  <span class="k">var</span> <span class="nv">sampleStruct</span> <span class="o">=</span> <span class="kt">SampleStruct</span><span class="p">(</span><span class="nv">number</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="nv">flag</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">checksum</span> <span class="o">=</span> <span class="nf">withUnsafeBytes</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">sampleStruct</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UInt32</span> <span class="k">in</span>
+    <span class="k">return</span> <span class="o">~</span><span class="n">bytes</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="kt">UInt32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">+</span> <span class="nf">numericCast</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="nf">print</span><span class="p">(</span><span class="s">"checksum"</span><span class="p">,</span> <span class="n">checksum</span><span class="p">)</span> <span class="c1">// prints checksum 4294967269</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">reduce</code> 调用将字节相加，然后 <code class="language-plaintext highlighter-rouge">~</code> 翻转位。虽然这不是最强大的错误检测方法，但它展示了这个概念。</p><p>现在你已经了解了如何使用不安全的 Swift，接下来是时候学习一些你绝对不应该用它做的事情了。</p><h3 id="不安全代码的三条规则">不安全代码的三条规则</h3><p>在编写不安全代码时，务必小心避免未定义行为。以下是一些错误代码的示例：</p><h4 id="不要从-withunsafebytes-返回指针">不要从 <code class="language-plaintext highlighter-rouge">withUnsafeBytes</code> 返回指针！</h4><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="c1">// Rule #1</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"1. Don't return the pointer from withUnsafeBytes!"</span><span class="p">)</span>
+  
+  <span class="k">var</span> <span class="nv">sampleStruct</span> <span class="o">=</span> <span class="kt">SampleStruct</span><span class="p">(</span><span class="nv">number</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="nv">flag</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">bytes</span> <span class="o">=</span> <span class="nf">withUnsafeBytes</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">sampleStruct</span><span class="p">)</span> <span class="p">{</span> <span class="n">bytes</span> <span class="k">in</span>
+    <span class="k">return</span> <span class="n">bytes</span> <span class="c1">// strange bugs here we come ☠️☠️☠️</span>
+  <span class="p">}</span>
+  
+  <span class="nf">print</span><span class="p">(</span><span class="s">"Horse is out of the barn!"</span><span class="p">,</span> <span class="n">bytes</span><span class="p">)</span> <span class="c1">// undefined!!!</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>你绝不应该让指针逃逸出 <code class="language-plaintext highlighter-rouge">withUnsafeBytes(of:)</code> 闭包。即使你的代码现在可以运行，未来也可能会导致奇怪的错误。</p><h4 id="一次只绑定一种类型">一次只绑定一种类型！</h4><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="c1">// Rule #2</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"2. Only bind to one type at a time!"</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="k">let</span> <span class="nv">stride</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">stride</span>
+  <span class="k">let</span> <span class="nv">alignment</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">alignment</span>
+  <span class="k">let</span> <span class="nv">byteCount</span> <span class="o">=</span> <span class="n">count</span> <span class="o">*</span> <span class="n">stride</span>
+  
+  <span class="k">let</span> <span class="nv">pointer</span> <span class="o">=</span> <span class="kt">UnsafeMutableRawPointer</span><span class="o">.</span><span class="nf">allocate</span><span class="p">(</span>
+    <span class="nv">byteCount</span><span class="p">:</span> <span class="n">byteCount</span><span class="p">,</span>
+    <span class="nv">alignment</span><span class="p">:</span> <span class="n">alignment</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">typedPointer1</span> <span class="o">=</span> <span class="n">pointer</span><span class="o">.</span><span class="nf">bindMemory</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">UInt16</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">capacity</span><span class="p">:</span> <span class="n">count</span><span class="p">)</span>
+  
+  <span class="c1">// Breakin' the Law... Breakin' the Law (Undefined behavior)</span>
+  <span class="k">let</span> <span class="nv">typedPointer2</span> <span class="o">=</span> <span class="n">pointer</span><span class="o">.</span><span class="nf">bindMemory</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">capacity</span><span class="p">:</span> <span class="n">count</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+  
+  <span class="c1">// If you must, do it this way:</span>
+  <span class="n">typedPointer1</span><span class="o">.</span><span class="nf">withMemoryRebound</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">Bool</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">capacity</span><span class="p">:</span> <span class="n">count</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="nv">boolPointer</span><span class="p">:</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">boolPointer</span><span class="o">.</span><span class="n">pointee</span><span class="p">)</span> <span class="c1">// See Rule #1, don't return the pointer</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>永远不要将内存同时绑定到两种不相关的类型。这被称为 <strong>类型双关（Type Punning）</strong>，而 Swift 不喜欢双关。:]</p><p>相反，可以使用 <code class="language-plaintext highlighter-rouge">withMemoryRebound(to:capacity:)</code> 等方法临时重新绑定内存。</p><p>此外，从平凡类型（如 <code class="language-plaintext highlighter-rouge">Int</code>）重新绑定到非平凡类型（如类）是非法的。不要这样做。</p><h4 id="不要越界哎呀">不要越界……哎呀！</h4><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="c1">// Rule #3... wait</span>
+<span class="k">do</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"3. Don't walk off the end... whoops!"</span><span class="p">)</span>
+  
+  <span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="k">let</span> <span class="nv">stride</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">stride</span>
+  <span class="k">let</span> <span class="nv">alignment</span> <span class="o">=</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Int16</span><span class="o">&gt;.</span><span class="n">alignment</span>
+  <span class="k">let</span> <span class="nv">byteCount</span> <span class="o">=</span>  <span class="n">count</span> <span class="o">*</span> <span class="n">stride</span>
+  
+  <span class="k">let</span> <span class="nv">pointer</span> <span class="o">=</span> <span class="kt">UnsafeMutableRawPointer</span><span class="o">.</span><span class="nf">allocate</span><span class="p">(</span>
+    <span class="nv">byteCount</span><span class="p">:</span> <span class="n">byteCount</span><span class="p">,</span>
+    <span class="nv">alignment</span><span class="p">:</span> <span class="n">alignment</span><span class="p">)</span>
+  <span class="k">let</span> <span class="nv">bufferPointer</span> <span class="o">=</span> <span class="kt">UnsafeRawBufferPointer</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">pointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">byteCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> 
+  <span class="c1">// OMG +1????</span>
+  
+  <span class="k">for</span> <span class="n">byte</span> <span class="k">in</span> <span class="n">bufferPointer</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span> <span class="c1">// pawing through memory like an animal</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>在编写不安全代码时，<strong>越界错误</strong>（off-by-one errors）的问题会更加严重。务必小心，仔细检查并测试你的代码！</p><h3 id="不安全的-swift-示例-1压缩">不安全的 Swift 示例 1：压缩</h3><p>是时候运用你所学到的知识来封装一个 C API 了。Cocoa 包含一个实现了常见数据压缩算法的 C 模块。这些算法包括：</p><ul><li><strong>LZ4</strong>：适用于速度至关重要的情况。<li><strong>LZ4A</strong>：适用于需要最高压缩比且不关心速度的情况。<li><strong>ZLIB</strong>：在空间和速度之间取得平衡。<li><strong>LZFSE</strong>：新的开源算法，在空间和速度之间取得了更好的平衡。</ul><p>现在，打开初始项目中的 <strong>Compression</strong> Playground。</p><p>首先，你将使用 <code class="language-plaintext highlighter-rouge">Data</code> 定义一个纯 Swift API，将 Playground 的内容替换为以下代码：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Compression</span>
+
+<span class="kd">enum</span> <span class="kt">CompressionAlgorithm</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="n">lz4</span>   <span class="c1">// speed is critical</span>
+  <span class="k">case</span> <span class="n">lz4a</span>  <span class="c1">// space is critical</span>
+  <span class="k">case</span> <span class="n">zlib</span>  <span class="c1">// reasonable speed and space</span>
+  <span class="k">case</span> <span class="n">lzfse</span> <span class="c1">// better speed and space</span>
+<span class="p">}</span>
+
+<span class="kd">enum</span> <span class="kt">CompressionOperation</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="n">compression</span><span class="p">,</span> <span class="n">decompression</span>
+<span class="p">}</span>
+
+<span class="c1">/// return compressed or uncompressed data depending on the operation</span>
+<span class="kd">func</span> <span class="nf">perform</span><span class="p">(</span>
+  <span class="n">_</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt">CompressionOperation</span><span class="p">,</span>
+  <span class="n">on</span> <span class="nv">input</span><span class="p">:</span> <span class="kt">Data</span><span class="p">,</span>
+  <span class="n">using</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="kt">CompressionAlgorithm</span><span class="p">,</span>
+  <span class="nv">workingBufferSize</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">)</span> 
+    <span class="o">-&gt;</span> <span class="kt">Data</span><span class="p">?</span>  <span class="p">{</span>
+  <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>执行压缩和解压缩的函数是 <code class="language-plaintext highlighter-rouge">perform</code>，目前它被存根化（stubbed out）并返回 <code class="language-plaintext highlighter-rouge">nil</code>。稍后你将为其添加一些不安全的代码。</p><p>接下来，将以下代码添加到 Playground 的末尾：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="c1">/// Compressed keeps the compressed data and the algorithm</span>
+<span class="c1">/// together as one unit, so you never forget how the data was</span>
+<span class="c1">/// compressed.</span>
+<span class="kd">struct</span> <span class="kt">Compressed</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span>
+  <span class="k">let</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="kt">CompressionAlgorithm</span>
+  
+  <span class="nf">init</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">,</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="kt">CompressionAlgorithm</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithm</span>
+  <span class="p">}</span>
+  
+  <span class="c1">/// Compresses the input with the specified algorithm. Returns nil if it fails.</span>
+  <span class="kd">static</span> <span class="kd">func</span> <span class="nf">compress</span><span class="p">(</span>
+    <span class="nv">input</span><span class="p">:</span> <span class="kt">Data</span><span class="p">,</span><span class="n">with</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="kt">CompressionAlgorithm</span><span class="p">)</span> 
+      <span class="o">-&gt;</span> <span class="kt">Compressed</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="nf">perform</span><span class="p">(</span><span class="o">.</span><span class="n">compression</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="n">input</span><span class="p">,</span> <span class="nv">using</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kt">Compressed</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">)</span>
+  <span class="p">}</span>
+  
+  <span class="c1">/// Uncompressed data. Returns nil if the data cannot be decompressed.</span>
+ <span class="kd">func</span> <span class="nf">decompressed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Data</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">perform</span><span class="p">(</span><span class="o">.</span><span class="n">decompression</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">using</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">Compressed</code> 结构体存储了压缩后的数据以及用于创建它的算法。这使得在决定使用哪种解压缩算法时，代码更不容易出错。</p><p>接下来，将以下代码添加到 Playground 的末尾：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="c1">/// For discoverability, adds a compressed method to Data</span>
+<span class="kd">extension</span> <span class="kt">Data</span> <span class="p">{</span>
+  <span class="c1">/// Returns compressed data or nil if compression fails.</span>
+  <span class="kd">func</span> <span class="nf">compressed</span><span class="p">(</span><span class="n">with</span> <span class="nv">algorithm</span><span class="p">:</span> <span class="kt">CompressionAlgorithm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Compressed</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">Compressed</span><span class="o">.</span><span class="nf">compress</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Example usage:</span>
+
+<span class="k">let</span> <span class="nv">input</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">(</span><span class="kt">Array</span><span class="p">(</span><span class="nv">repeating</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">(</span><span class="mi">123</span><span class="p">),</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">10000</span><span class="p">))</span>
+
+<span class="k">let</span> <span class="nv">compressed</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="nf">compressed</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">lzfse</span><span class="p">)</span>
+<span class="n">compressed</span><span class="p">?</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">count</span> <span class="c1">// in most cases much less than original input count</span>
+
+<span class="k">let</span> <span class="nv">restoredInput</span> <span class="o">=</span> <span class="n">compressed</span><span class="p">?</span><span class="o">.</span><span class="nf">decompressed</span><span class="p">()</span>
+<span class="n">input</span> <span class="o">==</span> <span class="n">restoredInput</span> <span class="c1">// true</span>
+
+</pre></table></code></div></div><p>主要的入口点是 <code class="language-plaintext highlighter-rouge">Data</code> 类型的扩展。你添加了一个名为 <code class="language-plaintext highlighter-rouge">compressed(with:)</code> 的方法，它返回一个可选的 <code class="language-plaintext highlighter-rouge">Compressed</code> 结构体。该方法简单地调用了 <code class="language-plaintext highlighter-rouge">Compressed</code> 上的静态方法 <code class="language-plaintext highlighter-rouge">compress(input:with:)</code>。</p><p>最后有一个示例，但目前它还不能正常工作。是时候修复它了！</p><p>滚动到你输入的第一个代码块，并开始实现 <code class="language-plaintext highlighter-rouge">perform(_:on:using:workingBufferSize:)</code>，在 <code class="language-plaintext highlighter-rouge">return nil</code> 之前插入以下代码：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="c1">// set the algorithm</span>
+<span class="k">let</span> <span class="nv">streamAlgorithm</span><span class="p">:</span> <span class="n">compression_algorithm</span>
+<span class="k">switch</span> <span class="n">algorithm</span> <span class="p">{</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">lz4</span><span class="p">:</span>   <span class="n">streamAlgorithm</span> <span class="o">=</span> <span class="kt">COMPRESSION_LZ4</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">lz4a</span><span class="p">:</span>  <span class="n">streamAlgorithm</span> <span class="o">=</span> <span class="kt">COMPRESSION_LZMA</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">zlib</span><span class="p">:</span>  <span class="n">streamAlgorithm</span> <span class="o">=</span> <span class="kt">COMPRESSION_ZLIB</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">lzfse</span><span class="p">:</span> <span class="n">streamAlgorithm</span> <span class="o">=</span> <span class="kt">COMPRESSION_LZFSE</span>
+<span class="p">}</span>
+  
+<span class="c1">// set the stream operation and flags</span>
+<span class="k">let</span> <span class="nv">streamOperation</span><span class="p">:</span> <span class="n">compression_stream_operation</span>
+<span class="k">let</span> <span class="nv">flags</span><span class="p">:</span> <span class="kt">Int32</span>
+<span class="k">switch</span> <span class="n">operation</span> <span class="p">{</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">compression</span><span class="p">:</span>
+  <span class="n">streamOperation</span> <span class="o">=</span> <span class="kt">COMPRESSION_STREAM_ENCODE</span>
+  <span class="n">flags</span> <span class="o">=</span> <span class="kt">Int32</span><span class="p">(</span><span class="kt">COMPRESSION_STREAM_FINALIZE</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span>
+<span class="k">case</span> <span class="o">.</span><span class="nv">decompression</span><span class="p">:</span>
+  <span class="n">streamOperation</span> <span class="o">=</span> <span class="kt">COMPRESSION_STREAM_DECODE</span>
+  <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>这将你的 Swift 类型转换为压缩算法所需的 C 类型。</p><p>接下来，将 <code class="language-plaintext highlighter-rouge">return nil</code> 替换为：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="c1">// 1: create a stream</span>
+<span class="k">var</span> <span class="nv">streamPointer</span> <span class="o">=</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="n">compression_stream</span><span class="o">&gt;.</span><span class="nf">allocate</span><span class="p">(</span><span class="nv">capacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">defer</span> <span class="p">{</span>
+  <span class="n">streamPointer</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1">// 2: initialize the stream</span>
+<span class="k">var</span> <span class="nv">stream</span> <span class="o">=</span> <span class="n">streamPointer</span><span class="o">.</span><span class="n">pointee</span>
+<span class="k">var</span> <span class="nv">status</span> <span class="o">=</span> <span class="nf">compression_stream_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stream</span><span class="p">,</span> <span class="n">streamOperation</span><span class="p">,</span> <span class="n">streamAlgorithm</span><span class="p">)</span>
+<span class="k">guard</span> <span class="n">status</span> <span class="o">!=</span> <span class="kt">COMPRESSION_STATUS_ERROR</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+<span class="k">defer</span> <span class="p">{</span>
+  <span class="nf">compression_stream_destroy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stream</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 3: set up a destination buffer</span>
+<span class="k">let</span> <span class="nv">dstSize</span> <span class="o">=</span> <span class="n">workingBufferSize</span>
+<span class="k">let</span> <span class="nv">dstPointer</span> <span class="o">=</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">UInt8</span><span class="o">&gt;.</span><span class="nf">allocate</span><span class="p">(</span><span class="nv">capacity</span><span class="p">:</span> <span class="n">dstSize</span><span class="p">)</span>
+<span class="k">defer</span> <span class="p">{</span>
+  <span class="n">dstPointer</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="kc">nil</span> <span class="c1">// To be continued</span>
+
+</pre></table></code></div></div><p>以下是正在发生的事情：</p><p>编译器在这里做了一些特殊的事情：它使用了 <code class="language-plaintext highlighter-rouge">in-out</code> 的 <code class="language-plaintext highlighter-rouge">&amp;</code> 标记，将你的 <code class="language-plaintext highlighter-rouge">compression_stream</code> 转换为一个 <code class="language-plaintext highlighter-rouge">UnsafeMutablePointer&lt;compression_stream&gt;</code> 类型。或者，你也可以直接传递 <code class="language-plaintext highlighter-rouge">streamPointer</code>，这样就不需要这种特殊的转换了。</p><p>分配一个 <code class="language-plaintext highlighter-rouge">compression_stream</code> 并使用 <code class="language-plaintext highlighter-rouge">defer</code> 块安排其释放。 然后，通过 <code class="language-plaintext highlighter-rouge">pointee</code> 属性获取流，并将其传递给 <code class="language-plaintext highlighter-rouge">compression_stream_init</code> 函数。</p><p>编译器在这里做了一些特殊的事情：它使用了 <code class="language-plaintext highlighter-rouge">in-out</code> 的 <code class="language-plaintext highlighter-rouge">&amp;</code> 标记，将你的 <code class="language-plaintext highlighter-rouge">compression_stream</code> 转换为一个 <code class="language-plaintext highlighter-rouge">UnsafeMutablePointer&lt;compression_stream&gt;</code> 类型。或者，你也可以直接传递 <code class="language-plaintext highlighter-rouge">streamPointer</code>，这样就不需要这种特殊的转换了。</p><p>最后，创建一个目标缓冲区作为你的工作缓冲区。 接下来，通过将最终的 <code class="language-plaintext highlighter-rouge">return nil</code> 替换为：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre><span class="c1">// process the input</span>
+<span class="k">return</span> <span class="n">input</span><span class="o">.</span><span class="n">withUnsafeBytes</span> <span class="p">{</span> <span class="n">srcRawBufferPointer</span> <span class="k">in</span>
+  <span class="c1">// 1</span>
+  <span class="k">var</span> <span class="nv">output</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">()</span>
+  
+  <span class="c1">// 2</span>
+  <span class="k">let</span> <span class="nv">srcBufferPointer</span> <span class="o">=</span> <span class="n">srcRawBufferPointer</span><span class="o">.</span><span class="nf">bindMemory</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">UInt8</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="k">guard</span> <span class="k">let</span> <span class="nv">srcPointer</span> <span class="o">=</span> <span class="n">srcBufferPointer</span><span class="o">.</span><span class="n">baseAddress</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+  <span class="p">}</span>
+  <span class="n">stream</span><span class="o">.</span><span class="n">src_ptr</span> <span class="o">=</span> <span class="n">srcPointer</span>
+  <span class="n">stream</span><span class="o">.</span><span class="n">src_size</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="n">count</span>
+  <span class="n">stream</span><span class="o">.</span><span class="n">dst_ptr</span> <span class="o">=</span> <span class="n">dstPointer</span>
+  <span class="n">stream</span><span class="o">.</span><span class="n">dst_size</span> <span class="o">=</span> <span class="n">dstSize</span>
+  
+  <span class="c1">// 3</span>
+  <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="kt">COMPRESSION_STATUS_OK</span> <span class="p">{</span>
+    <span class="c1">// process the stream</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="nf">compression_stream_process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stream</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+    
+    <span class="c1">// collect bytes from the stream and reset</span>
+    <span class="k">switch</span> <span class="n">status</span> <span class="p">{</span>
+      
+    <span class="k">case</span> <span class="kt">COMPRESSION_STATUS_OK</span><span class="p">:</span>
+      <span class="c1">// 4</span>
+      <span class="n">output</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">dstPointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">dstSize</span><span class="p">)</span>
+      <span class="n">stream</span><span class="o">.</span><span class="n">dst_ptr</span> <span class="o">=</span> <span class="n">dstPointer</span>
+      <span class="n">stream</span><span class="o">.</span><span class="n">dst_size</span> <span class="o">=</span> <span class="n">dstSize</span>
+      
+    <span class="k">case</span> <span class="kt">COMPRESSION_STATUS_ERROR</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">nil</span>
+      
+    <span class="k">case</span> <span class="kt">COMPRESSION_STATUS_END</span><span class="p">:</span>
+      <span class="c1">// 5</span>
+      <span class="n">output</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">dstPointer</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">stream</span><span class="o">.</span><span class="n">dst_ptr</span> <span class="o">-</span> <span class="n">dstPointer</span><span class="p">)</span>
+      
+    <span class="k">default</span><span class="p">:</span>
+      <span class="nf">fatalError</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">output</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>这是真正执行工作的地方。以下是它的具体操作：</p><ul><li>创建一个 <code class="language-plaintext highlighter-rouge">Data</code> 对象，用于存放输出内容——这可能是压缩后的数据，也可能是解压缩后的数据，具体取决于当前执行的操作。<li>使用你分配的指针及其大小设置源缓冲区和目标缓冲区。<li>在这里，只要 <code class="language-plaintext highlighter-rouge">compression_stream_process</code> 返回 <code class="language-plaintext highlighter-rouge">COMPRESSION_STATUS_OK</code>，就会持续调用它。<li>然后，将目标缓冲区的内容复制到输出中，最终从这个函数返回。<li>当最后一个数据包到达时，它会被标记为 <code class="language-plaintext highlighter-rouge">COMPRESSION_STATUS_END</code>，此时你可能只需要复制目标缓冲区的一部分内容。<li>在这个例子中，你可以看到一个包含 10,000 个元素的数组被压缩到了 153 字节。效果还不错。</ul><h3 id="unsafe-swift-示例-2随机数生成器">Unsafe Swift 示例 2：随机数生成器</h3><p>随机数对于许多应用来说非常重要，从游戏到机器学习都有广泛用途。</p><p>macOS 提供了 <code class="language-plaintext highlighter-rouge">arc4random</code>，它可以生成密码学安全的随机数。不幸的是，这个函数在 Linux 上不可用。此外，<code class="language-plaintext highlighter-rouge">arc4random</code> 只能提供 <code class="language-plaintext highlighter-rouge">UInt32</code> 类型的随机数。然而，<code class="language-plaintext highlighter-rouge">/dev/urandom</code> 提供了一个无限的、高质量的随机数来源。</p><p>在本节中，你将利用新学到的知识来读取这个文件，并生成类型安全的随机数。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20250222UnsafeSwift/hexdump.webp" alt="" /></p><p>首先，创建一个新的 Playground，命名为 RandomNumbers，或者打开项目中的初始 Playground。</p><p>确保这次选择的是 macOS 平台。</p><p>准备就绪后，将默认内容替换为：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+
+<span class="kd">enum</span> <span class="kt">RandomSource</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="k">let</span> <span class="nv">file</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="s">"/dev/urandom"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span><span class="o">!</span>
+  <span class="kd">static</span> <span class="k">let</span> <span class="nv">queue</span> <span class="o">=</span> <span class="kt">DispatchQueue</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="s">"random"</span><span class="p">)</span>
+  
+  <span class="kd">static</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int8</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">capacity</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">// fgets adds null termination</span>
+    <span class="k">var</span> <span class="nv">data</span> <span class="o">=</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">Int8</span><span class="o">&gt;.</span><span class="nf">allocate</span><span class="p">(</span><span class="nv">capacity</span><span class="p">:</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="p">{</span>
+      <span class="n">data</span><span class="o">.</span><span class="nf">deallocate</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">sync</span> <span class="p">{</span>
+      <span class="nf">fgets</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kt">Int32</span><span class="p">(</span><span class="n">capacity</span><span class="p">),</span> <span class="n">file</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kt">Array</span><span class="p">(</span><span class="kt">UnsafeMutableBufferPointer</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="n">count</span><span class="p">))</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>你将文件变量声明为 <code class="language-plaintext highlighter-rouge">static</code>，这样系统中就只会存在一个实例。你将依赖系统在进程退出时关闭它。</p><p>由于多个线程可能需要随机数，你需要通过一个串行的 GCD 队列来保护对它的访问。</p><p><code class="language-plaintext highlighter-rouge">get</code> 函数是实际执行工作的地方。</p><p>首先，创建一个未分配的存储空间，其大小比你需要的多一个，因为 <code class="language-plaintext highlighter-rouge">fgets</code> 总是以 <code class="language-plaintext highlighter-rouge">\0</code>（空字符）结尾。</p><p>接下来，在 GCD 队列中操作，从文件中获取数据。</p><p>最后，通过将数据包装在 <code class="language-plaintext highlighter-rouge">UnsafeMutableBufferPointer</code> 中（它可以作为一个序列），将其复制到标准数组中。</p><p>到目前为止，这只能安全地为你提供一个 <code class="language-plaintext highlighter-rouge">Int8</code> 类型的数组。现在，你将对其进行扩展。</p><p>在你的 Playground 的末尾添加以下内容：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="kd">extension</span> <span class="kt">BinaryInteger</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="k">var</span> <span class="nv">randomized</span><span class="p">:</span> <span class="k">Self</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">numbers</span> <span class="o">=</span> <span class="kt">RandomSource</span><span class="o">.</span><span class="nf">get</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;.</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numbers</span><span class="o">.</span><span class="n">withUnsafeBufferPointer</span> <span class="p">{</span> <span class="n">bufferPointer</span> <span class="k">in</span>
+      <span class="k">return</span> <span class="n">bufferPointer</span><span class="o">.</span><span class="n">baseAddress</span><span class="o">!.</span><span class="nf">withMemoryRebound</span><span class="p">(</span>
+        <span class="nv">to</span><span class="p">:</span> <span class="k">Self</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+        <span class="nv">capacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$0</span><span class="o">.</span><span class="n">pointee</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">Int8</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">UInt8</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">Int16</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">UInt16</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">Int16</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">UInt32</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">Int64</span><span class="o">.</span><span class="n">randomized</span>
+<span class="kt">UInt64</span><span class="o">.</span><span class="n">randomized</span>
+
+</pre></table></code></div></div><p>这为 <code class="language-plaintext highlighter-rouge">BinaryInteger</code> 协议的所有子类型添加了一个静态的 <code class="language-plaintext highlighter-rouge">randomized</code> 属性。关于这方面的更多内容，可以查看我们关于协议导向编程的教程。</p><p>首先，你获取随机数。然后，使用返回的数组的字节，将 <code class="language-plaintext highlighter-rouge">Int8</code> 值重新绑定为请求的类型，并返回一个副本。</p><p>至此，一切都完成了！你现在以一种安全的方式生成随机数，而这一切的背后正是利用了 Swift 的不安全特性。</p><h3 id="下一步要做这么">下一步要做这么？</h3><p>恭喜你完成了本教程！你可以通过本教程顶部或底部的“<a href="https://github.com/sunyazhou13/Using-Pointers-and-Interacting-With-C">下载材料</a>”链接下载完整的项目文件。</p><p>如果你想进一步了解 Swift 的不安全特性，还有很多额外的资源可以探索：</p><ul><li><p><strong><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0107-unsaferawpointer.md">Swift Evolution 0107: UnsafeRawPointer API</a></strong><br /> 这篇文章详细介绍了 Swift 的内存模型，帮助你更好地理解 API 文档。</p><li><p><strong><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0138-unsaferawbufferpointer.md">Swift Evolution 0138: UnsafeRawBufferPointer API</a></strong><br /> 这篇文章深入探讨了如何处理未类型化的内存，并提供了从中受益的开源项目的链接。</p><li><p><strong><a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis">导入的 C 和 Objective-C API</a></strong><br /> 这部分内容可以帮助你了解 Swift 是如何与 C 语言交互的。</p></ul><p>希望你喜欢这个教程！如果你有任何问题或想要分享的经验，请随时在论坛中讨论！</p><h1 id="总结">总结</h1><p>以上是去年欠下的技术债.今天要还上,这里介绍的额unsafe swift中操作内存的方函数方法 值得大家深入学习,虽然翻译的过于机器化,等抽空我重新整理一下.</p><p><a href="https://www.kodeco.com/7181017-">原文链接Unsafe Swift: Using Pointers and Interacting With C</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a>, <a href='/categories/swiftui/'>SwiftUI</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/tags/swiftui/" class="post-tag no-text-decoration" >SwiftUI</a> <a href="/tags/swift/" class="post-tag no-text-decoration" >Swift</a> <a href="/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=如何使用unsafe Swift指针类型直接访问内存并与C交互 - 迈腾大队长&url=https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=如何使用unsafe Swift指针类型直接访问内存并与C交互 - 迈腾大队长&u=https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=如何使用unsafe Swift指针类型直接访问内存并与C交互 - 迈腾大队长&url=https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=如何使用unsafe Swift指针类型直接访问内存并与C交互 - 迈腾大队长&url=https://www.sunyazhou.com/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2017/02/HowToUseGitManageCode/">如何使用git管理代码</a><li><a href="/2017/01/UIViewControllerCodeStandard/">UIViewController代码规范</a><li><a href="/2024/11/coretextcalculatedheight/">CoreText渲染字体的时如何计算字体所需要的高度?</a><li><a href="/2024/10/uiimagemirror/">UIImage镜像</a><li><a href="/2024/09/cfnotificationprocesscommunication/">CFNotification进程间通讯</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2024/08/dispatchafternsintegermax/"><div class="card-body"> <span class="timeago small" > 2024-08-19 <i class="unloaded">2024-08-19T01:50:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>NSIntegerMax整数溢出问题记录</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 开发中遇到的问题 最近开发 测试同学提了一个bug, 首页底部tab的气泡一闪而过瞬间消失,认真追踪代码后发现,配置后台下发-1,客户端同学把...</p></div></div></a></div><div class="card"> <a href="/2024/08/multiblockembedded/"><div class="card-body"> <span class="timeago small" > 2024-08-22 <i class="unloaded">2024-08-22T12:32:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>在Objective-C中多层block嵌套时如何使用weak self和strong self</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 开发中遇到的问题 在Objective-C中如何 正确的使用 block的 weakSelf和 strongSelf在 多层blokc 在O...</p></div></div></a></div><div class="card"> <a href="/2024/09/cfnotificationprocesscommunication/"><div class="card-body"> <span class="timeago small" > 2024-09-02 <i class="unloaded">2024-09-02T12:08:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>CFNotification进程间通讯</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 背景 在iOS开发中，应用扩展（App Extensions）与其容器应用（Containing App）在不同的进程中运行。这种隔离带来了一...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2024/12/FinalSummary/" class="btn btn-outline-primary"><p>2024年终总结</p></a> <span class="btn btn-outline-primary disabled"><p>-</p></span></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
