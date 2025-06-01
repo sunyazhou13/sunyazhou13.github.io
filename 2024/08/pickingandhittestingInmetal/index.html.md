@@ -24,7 +24,7 @@ typora-root-url: ..
 ![](/assets/images/20240813PickingAndHitTestinginMetal/Metal.by.Tutorials.4th.2023.12.webp)
 
 
-``` txt
+``` sh
 To get started with multipass rendering, you’ll create a simple render pass that adds object picking to your app. When you click a model in your scene, that model will render in a slightly different shade.
 There are several ways to hit-test rendered objects. For example, you could do the math to convert the 2D touch location to a 3D ray and then perform ray intersection to see which object intersects the ray. Warren Moore describes this method in his Picking and Hit-Testing in Metal (https://bit.ly/3rlzm9b) article. Alternatively, you could render a texture where each object is rendered in a different color or object ID. Then, you calculate the texture coordinate from the screen touch location and read the texture to see which object was hit.
 You’re going to store the model’s object ID into a texture in one render pass. You’ll then send the touch location to the fragment shader in the second render pass and read the texture from the first pass. If the fragment being rendered is from the selected object, you’ll render that fragment in a different color.
@@ -44,7 +44,7 @@ You’re going to store the model’s object ID into a texture in one render pas
 
 和之前图形学同事探讨,他给我一些学习vulkan的方向资料,我整理到这里 
 
-``` txt
+``` sh
 https://github.com/KhronosGroup/Vulkan-Guide
 https://github.com/KhronosGroup/Khronosdotorg/blob/main/api/vulkan/resources.md
 
