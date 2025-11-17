@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-Hans" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="揭秘 AI 编码代理：用 Swift 构建你自己的Agent" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="前言" /><meta property="og:description" content="前言" /><link rel="canonical" href="https://www.sunyazhou.com/2025/11/swiftaiagent/" /><meta property="og:url" content="https://www.sunyazhou.com/2025/11/swiftaiagent/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2025-11-17T05:09:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="揭秘 AI 编码代理：用 Swift 构建你自己的Agent" /><meta name="twitter:site" content="@sunyazhou" /><meta name="twitter:creator" content="@孙亚洲" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@type":"BlogPosting","url":"https://www.sunyazhou.com/2025/11/swiftaiagent/","headline":"揭秘 AI 编码代理：用 Swift 构建你自己的Agent","dateModified":"2025-11-17T05:09:00+00:00","datePublished":"2025-11-17T05:09:00+00:00","author":{"@type":"Person","name":"孙亚洲"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2025/11/swiftaiagent/"},"description":"前言","@context":"https://schema.org"}</script><title>揭秘 AI 编码代理：用 Swift 构建你自己的Agent | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/sunyazhou" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="https://www.weibo.com/sunyazhou13" aria-label="" target="_blank" rel="noopener"> <i class="fab fa-weibo"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>揭秘 AI 编码代理：用 Swift 构建你自己的Agent</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>揭秘 AI 编码代理：用 Swift 构建你自己的Agent</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Nov 17, 2025, 5:09 AM +0000" > 11-17 <i class="unloaded">2025-11-17T05:09:00+00:00</i> </span></div></div><div class="post-content"><h1 id="前言">前言</h1><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!</p><h1 id="揭秘-ai-编码代理用-swift-构建你自己的代理">揭秘 AI 编码代理：用 Swift 构建你自己的代理</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/hero.webp" alt="Hero Image" /></p><h2 id="并非魔法的魔术">并非魔法的魔术</h2><p>AI 编码代理感觉像魔法一样。你输入一个请求，它们就会搜索文件、编写代码、重构函数，并且似乎”知道”下一步该做什么。很神奇，对吧？</p><p>但秘密在于：<strong>这个概念其实出奇地简单</strong>。</p><p>我一直相信，真正理解某件事的最好方法就是亲自构建它。这正是我在阅读 Amp 的优秀文章<a href="https://ampcode.com/how-to-build-an-agent">“如何构建一个代理”</a>后所做的。我想看看能否用 Swift 重现这种魔法，你猜怎么着？你绝对可以做到。</p><p>今天，我们将用 Swift 构建一个真正的 AI 编码代理，它可以读取文件、列出目录，甚至编辑代码。没有烟雾，没有镜子。只有一个循环、一些工具和一个有主见的语言模型。</p><p>读完这篇文章后，你将确切地知道像 Claude Code、Cursor 或 GitHub Copilot Workspace 这样的工具是如何工作的。剧透：它比你想象的要简单。</p><h2 id="ai-编码代理到底是什么">AI 编码代理到底是什么？</h2><p>AI 编码代理归结为三件事：</p><ol><li><strong>一个语言模型</strong>（如 GPT-5、Claude 或 Gemini）<li><strong>一组工具</strong>，它可以调用（执行实际工作的函数）<li><strong>一个循环</strong>，保持对话继续进行</ol><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/agent-loop.webp" alt="Agent Loop Image" /></p><p>把它想象成有一位聪明的科学家，但他不能离开办公室。你（代理循环）不断询问他们下一步该做什么，他们告诉你，你去做，然后报告回来，他们再想出下一步。冲洗并重复，直到工作完成。</p><h3 id="上下文窗口你的代理的工作记忆">上下文窗口：你的代理的工作记忆</h3><p>这里事情变得有趣了。语言模型实际上不会像人类那样”记住”之前的对话。每次你发送消息时，实际上是将_整个对话历史_一起发送。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/context-window.webp" alt="Context Window" /></p><p>这个”工作记忆”被称为<strong>上下文窗口</strong>。现代模型通常有 128K 到 200K 个 token 的上下文窗口（大约 100,000-150,000 个单词）。</p><p><strong>为什么这很重要？</strong></p><p>因为随着你的代理运行时间越长：</p><ul><li>它读取的每个文件都会添加到历史记录中。<li>每个工具调用和结果都会占用空间。<li>模型每次需要处理越来越多的文本。<li>最终，你会达到限制。</ul><p>当上下文填满时，会发生三件事：</p><ol><li><strong>性能下降</strong>，因为模型难以”关注”所有内容。<li><strong>成本飙升</strong>，因为你是按 token 付费的，记得吗？<li><strong>你达到硬限制</strong>，API 会直接拒绝你的请求。</ol><p>这就是为什么生产环境的代理使用诸如摘要、选择性记忆和上下文修剪等巧妙技巧。但对于我们的学习之旅，我们会保持简单。</p><h2 id="游戏计划通往代理启蒙的五个步骤">游戏计划：通往代理启蒙的五个步骤</h2><p>我们将构建 <strong>Nimbo</strong>，一个基于 Swift 的编码代理，可以帮助你处理文件。这是我们的路线图：</p><ol><li><strong>基础：</strong> 设置一个基本的聊天循环。<li><strong>教授工具：</strong> 定义我们的代理可以做什么。<li><strong>工具执行：</strong> 让这些工具真正工作。<li><strong>循环：</strong> 将所有内容连接在一起。<li><strong>终点线：</strong> 处理边缘情况和错误。</ol><p>我们讨论的所有代码都在 <a href="https://github.com/gscalzo/Nimbo">Nimbo 仓库</a>中。随时克隆它并跟着做！</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/agent-interaction.webp" alt="Agent Interaction" /></p><h2 id="步骤-1基础构建聊天循环">步骤 1：基础（构建聊天循环）</h2><p>每个代理都需要一个对话循环。在我们的例子中，我们正在构建一个 CLI 工具，感觉就像与一个有帮助的助手聊天。</p><p>这是来自 <a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/main.swift">main.swift</a> 的核心结构：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">// main.swift</span>
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">runLoop</span><span class="p">()</span> <span class="k">async</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Chat with Nimbo (use 'ctrl-c' to quit)</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">agent</span> <span class="o">=</span> <span class="kt">Agent</span><span class="p">(</span>
+        <span class="nv">apiKey</span><span class="p">:</span> <span class="n">apiKey</span><span class="p">,</span>
+        <span class="nv">system</span><span class="p">:</span> <span class="s">"You are Nimbo, a concise CLI assistant."</span>
+    <span class="p">)</span>
+
+    <span class="k">while</span> <span class="k">let</span> <span class="nv">line</span> <span class="o">=</span> <span class="nf">input</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span> <span class="k">continue</span> <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">answer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="nf">respond</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="nf">display</span><span class="p">(</span><span class="s">"Nimbo"</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="o">.</span><span class="n">green</span><span class="p">)</span><span class="se">)</span><span class="s">: </span><span class="se">\(</span><span class="n">answer</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>很简单，对吧？我们：</p><ol><li>使用系统提示创建一个代理。<li>在循环中获取用户输入。<li>要求代理响应。<li>打印响应。</ol><p>真正的魔法发生在 <code class="language-plaintext highlighter-rouge">agent.respond()</code> 调用内部。让我们看看底层。</p><p><a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Agent.swift">Agent 类</a>维护对话历史：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="c1">// Agent.swift</span>
+<span class="kd">final</span> <span class="kd">class</span> <span class="kt">Agent</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">client</span><span class="p">:</span> <span class="kt">OpenAIService</span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">history</span><span class="p">:</span> <span class="p">[</span><span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Message</span><span class="p">]</span>
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">tools</span><span class="p">:</span> <span class="p">[</span><span class="kt">Tool</span><span class="p">]</span>
+
+    <span class="nf">init</span><span class="p">(</span><span class="nv">apiKey</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">system</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="kt">OpenAIServiceFactory</span><span class="o">.</span><span class="nf">service</span><span class="p">(</span><span class="nv">apiKey</span><span class="p">:</span> <span class="n">apiKey</span><span class="p">)</span>
+        <span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">role</span><span class="p">:</span> <span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="o">.</span><span class="nf">text</span><span class="p">(</span><span class="n">system</span><span class="p">))]</span>
+        <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="kt">ListFiles</span><span class="p">(),</span> <span class="kt">ReadFile</span><span class="p">(),</span> <span class="kt">EditFile</span><span class="p">()]</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">respond</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="n">history</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">role</span><span class="p">:</span> <span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="o">.</span><span class="nf">text</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+        <span class="c1">// ... 魔法发生在这里 ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>注意到那个 <code class="language-plaintext highlighter-rouge">history</code> 数组了吗？那就是我们的上下文窗口在填充。每条消息（你的、模型的和工具结果）都会被追加到它。</p><h3 id="我们目前拥有的">我们目前拥有的</h3><p>此时，我们有一个基本的聊天循环，但<strong>还没有工具</strong>。代理只能进行对话。它实际上不能对文件做任何事情。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-1.webp" alt="Nimbo Basic" /></p><h2 id="步骤-2教授工具定义能力">步骤 2：教授工具（定义能力）</h2><p>工具只是带有花哨描述的函数。LLM 实际上不执行代码；它只是告诉我们_调用哪个_工具以及_使用什么参数_。</p><p>在 Swift 中，我们使用协议定义工具（<a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Tools/Tool.swift">Tool.swift</a>）：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="c1">// Tool.swift</span>
+<span class="kd">protocol</span> <span class="kt">Tool</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="k">var</span> <span class="nv">chatTool</span><span class="p">:</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Tool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="k">var</span> <span class="nv">exec</span><span class="p">:</span> <span class="p">(</span><span class="kt">Data</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>让我们看一个具体的例子：<a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Tools/ReadFile.swift">ReadFile 工具</a>：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="c1">// ReadFile.swift</span>
+<span class="kd">struct</span> <span class="kt">ReadFile</span><span class="p">:</span> <span class="kt">Tool</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"read_file"</span>
+
+    <span class="k">var</span> <span class="nv">chatTool</span><span class="p">:</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Tool</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">schema</span> <span class="o">=</span> <span class="kt">JSONSchema</span><span class="p">(</span>
+            <span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">object</span><span class="p">,</span>
+            <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="s">"path"</span><span class="p">:</span> <span class="kt">JSONSchema</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="o">.</span><span class="n">string</span><span class="p">)]</span>
+        <span class="p">)</span>
+
+        <span class="k">let</span> <span class="nv">function</span> <span class="o">=</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">ChatFunction</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"read_file"</span><span class="p">,</span>
+            <span class="nv">description</span><span class="p">:</span> <span class="s">"""
+                读取给定相对文件路径的内容。
+                当你想查看文件内部内容时使用此工具。
+                """</span><span class="p">,</span>
+            <span class="nv">parameters</span><span class="p">:</span> <span class="n">schema</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">function</span><span class="p">:</span> <span class="n">function</span><span class="p">)</span>
+    <span class="p">}()</span>
+
+    <span class="k">var</span> <span class="nv">exec</span><span class="p">:</span> <span class="p">(</span><span class="kt">Data</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">{</span> <span class="n">input</span> <span class="k">in</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">path</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="nf">asPath</span><span class="p">(</span><span class="n">defaultPath</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">"&lt;error&gt; 无效的 JSON 参数"</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">ReadFile</span><span class="o">.</span><span class="nf">readFile</span><span class="p">(</span><span class="nv">atPath</span><span class="p">:</span> <span class="n">path</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>三个关键部分：</p><ol><li><strong>名称</strong>：工具的名称。<li><strong>描述</strong>：给 LLM 的指令，说明何时使用它。<li><strong>执行</strong>：实际执行工作的 Swift 函数。</ol><p>LLM 看到描述并决定，”哦，用户想查看一个文件。我应该用路径 <code class="language-plaintext highlighter-rouge">foo.txt</code> 调用 <code class="language-plaintext highlighter-rouge">read_file</code>！”</p><h3 id="我们目前拥有的-1">我们目前拥有的</h3><p>现在我们已经定义了我们的工具！代理知道<strong>存在哪些工具</strong>以及<strong>何时使用它们</strong>，但它仍然无法执行它们。如果你要求它读取文件，它会尝试调用工具，但还不会发生任何事情。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-3.webp" alt="Nimbo Basic" /></p><h2 id="步骤-3工具执行让它们工作">步骤 3：工具执行（让它们工作）</h2><p>这里事情变得有趣了。当模型响应时，它可能：</p><ul><li>返回文本答案（我们完成了！）。<li>请求调用一个或多个工具（继续！）。</ul><p>我们的代理需要检测工具调用并执行它们（<a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Agent.swift">Agent.swift</a>）：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="c1">// Agent.swift</span>
+<span class="kd">func</span> <span class="nf">respond</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+    <span class="n">history</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">role</span><span class="p">:</span> <span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="o">.</span><span class="nf">text</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..&lt;</span><span class="kt">Agent</span><span class="o">.</span><span class="n">maxToolIterations</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">response</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="nf">requestCompletion</span><span class="p">()</span>
+            <span class="k">let</span> <span class="nv">assistantMessage</span> <span class="o">=</span> <span class="k">try</span> <span class="nf">firstAssistantMessage</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">response</span><span class="p">)</span>
+            <span class="nf">appendAssistantMessage</span><span class="p">(</span><span class="n">assistantMessage</span><span class="p">)</span>
+
+            <span class="c1">// 检查模型是否想使用工具</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">calls</span> <span class="o">=</span> <span class="n">assistantMessage</span><span class="o">.</span><span class="n">toolCalls</span><span class="p">,</span> <span class="o">!</span><span class="n">calls</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+                <span class="nf">executeToolCalls</span><span class="p">(</span><span class="n">calls</span><span class="p">)</span>
+                <span class="k">continue</span>  <span class="c1">// 循环回去再次询问模型</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 没有请求工具，我们有答案了！</span>
+            <span class="k">return</span> <span class="n">assistantMessage</span><span class="o">.</span><span class="n">content</span> <span class="p">??</span> <span class="s">""</span>
+        <span class="p">}</span>
+
+        <span class="k">throw</span> <span class="kt">AgentError</span><span class="o">.</span><span class="n">toolIterationLimitReached</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">"&lt;error&gt; </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>注意到那个 <code class="language-plaintext highlighter-rouge">maxToolIterations</code> 常量了吗？那是我们的安全网。没有它，代理理论上可以永远循环。</p><p><code class="language-plaintext highlighter-rouge">executeToolCalls</code> 方法很简单：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre><span class="c1">// Agent.swift</span>
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">executeToolCalls</span><span class="p">(</span><span class="n">_</span> <span class="nv">calls</span><span class="p">:</span> <span class="p">[</span><span class="kt">ToolCall</span><span class="p">])</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">call</span> <span class="k">in</span> <span class="n">calls</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">toolMessage</span> <span class="o">=</span> <span class="nf">perform</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+        <span class="n">history</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">toolMessage</span><span class="p">)</span>  <span class="c1">// 将结果添加到历史记录！</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">perform</span><span class="p">(</span><span class="n">_</span> <span class="nv">call</span><span class="p">:</span> <span class="kt">ToolCall</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Message</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">toolName</span> <span class="o">=</span> <span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span> <span class="p">??</span> <span class="s">"&lt;nil&gt;"</span>
+    <span class="k">let</span> <span class="nv">rawArgs</span> <span class="o">=</span> <span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">arguments</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="s">"tool: </span><span class="se">\(</span><span class="n">toolName</span><span class="se">)</span><span class="s">(</span><span class="se">\(</span><span class="n">rawArgs</span><span class="se">)</span><span class="s">)"</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">tool</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">toolName</span> <span class="p">})</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="nf">exec</span><span class="p">(</span><span class="n">rawArgs</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">))</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">"&lt;error&gt; 未知工具: </span><span class="se">\(</span><span class="n">toolName</span><span class="se">)</span><span class="s">"</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="k">return</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">role</span><span class="p">:</span> <span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="nv">content</span><span class="p">:</span> <span class="o">.</span><span class="nf">text</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="nv">toolCallID</span><span class="p">:</span> <span class="n">call</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>我们：</p><ol><li>按名称查找匹配的工具。<li>使用提供的参数执行它。<li>将结果打包为消息。<li>将其添加到历史记录。</ol><p>模型在下一次迭代中看到这个结果，并可以决定下一步做什么。</p><h3 id="我们目前拥有的-2">我们目前拥有的</h3><p>现在代理可以<strong>执行单个工具</strong>了！它可以调用 <code class="language-plaintext highlighter-rouge">read_file</code> 或 <code class="language-plaintext highlighter-rouge">list_files</code> 并实际获得结果。但它就此停止。它还不能将多个工具链接在一起。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-4.webp" alt="Nimbo Basic" /></p><h3 id="其他工具listfiles-和-editfile">其他工具：ListFiles 和 EditFile</h3><p>遵循与 <code class="language-plaintext highlighter-rouge">ReadFile</code> 相同的模式，Nimbo 包含另外两个基本工具，完善了其功能：</p><p><strong><a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Tools/ListFiles.swift">ListFiles</a></strong> - 导航目录结构：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="c1">// ListFiles.swift</span>
+<span class="kd">struct</span> <span class="kt">ListFiles</span><span class="p">:</span> <span class="kt">Tool</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"list_files"</span>
+
+    <span class="k">var</span> <span class="nv">chatTool</span><span class="p">:</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Tool</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">function</span> <span class="o">=</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">ChatFunction</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"list_files"</span><span class="p">,</span>
+            <span class="nv">description</span><span class="p">:</span> <span class="s">"""
+                列出给定相对路径下的文件和目录。
+                当你需要检查项目结构时使用此工具。
+                当没有提供路径时，默认为当前工作目录。
+                """</span><span class="p">,</span>
+            <span class="nv">parameters</span><span class="p">:</span> <span class="n">schema</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">function</span><span class="p">:</span> <span class="n">function</span><span class="p">)</span>
+    <span class="p">}()</span>
+
+    <span class="k">var</span> <span class="nv">exec</span><span class="p">:</span> <span class="p">(</span><span class="kt">Data</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">{</span> <span class="n">input</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="nv">path</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="nf">asPath</span><span class="p">(</span><span class="n">defaultPath</span><span class="p">:</span> <span class="s">"."</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kt">ListFiles</span><span class="o">.</span><span class="nf">listDirectory</span><span class="p">(</span><span class="nv">atPath</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">asURL</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>该工具将结果限制为 200 个条目，以防止上下文窗口过载。当目录有更多文件时，它会显示一个截断的列表，并显示剩余项目的计数。</p><p><strong><a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Tools/EditFile.swift">EditFile</a></strong> - 对文件进行精确更改：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="c1">// EditFile.swift</span>
+<span class="kd">struct</span> <span class="kt">EditFile</span><span class="p">:</span> <span class="kt">Tool</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"edit_file"</span>
+
+    <span class="k">var</span> <span class="nv">chatTool</span><span class="p">:</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">Tool</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">function</span> <span class="o">=</span> <span class="kt">ChatCompletionParameters</span><span class="o">.</span><span class="kt">ChatFunction</span><span class="p">(</span>
+            <span class="nv">name</span><span class="p">:</span> <span class="s">"edit_file"</span><span class="p">,</span>
+            <span class="nv">description</span><span class="p">:</span> <span class="s">"""
+                通过将 `old_str` 的精确匹配替换为 `new_str` 来编辑文本文件。
+                替换必须是唯一的，`old_str` 必须与 `new_str` 不同。
+                当文件不存在且 `old_str` 为空时创建文件。
+                """</span><span class="p">,</span>
+            <span class="nv">parameters</span><span class="p">:</span> <span class="n">schema</span>  <span class="c1">// 期望：path, old_str, new_str</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">function</span><span class="p">:</span> <span class="n">function</span><span class="p">)</span>
+    <span class="p">}()</span>
+
+    <span class="k">var</span> <span class="nv">exec</span><span class="p">:</span> <span class="p">(</span><span class="kt">Data</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">=</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="nv">arguments</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">Arguments</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kt">EditFile</span><span class="o">.</span><span class="nf">process</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">EditFile</code> 工具很聪明。它：</p><ul><li><strong>创建新文件</strong>，当 <code class="language-plaintext highlighter-rouge">old_str</code> 为空时。<li><strong>更新现有文件</strong>，通过替换精确匹配。<li><strong>验证唯一性</strong> - <code class="language-plaintext highlighter-rouge">old_str</code> 必须在文件中精确匹配一次。<li><strong>防止意外</strong> - <code class="language-plaintext highlighter-rouge">old_str</code> 和 <code class="language-plaintext highlighter-rouge">new_str</code> 必须不同。</ul><p>这种设计迫使代理精确。它不能进行模糊的编辑或意外替换错误的文本。如果模式匹配多次，工具会返回错误，要求模型更具体。</p><p>这三个工具（<code class="language-plaintext highlighter-rouge">ListFiles</code>、<code class="language-plaintext highlighter-rouge">ReadFile</code>、<code class="language-plaintext highlighter-rouge">EditFile</code>）一起为代理提供了探索和修改代码库所需的一切。模型决定使用哪些工具以及以什么顺序使用。我们所做的只是描述它们的作用。</p><h2 id="步骤-4保持对话继续">步骤 4：保持对话继续</h2><p>还记得我们的上下文窗口讨论吗？每个工具调用都会添加到它：</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>用户："你能检查一下 src 文件夹里有什么吗？"
+→ 历史记录增加 1 条消息
+
+代理：（调用 list_files 工具）
+→ 历史记录增加 1 条消息（工具调用）
+
+工具结果：[长文件列表]
+→ 历史记录增加 1 条消息（结果）
+
+代理："当然！src 文件夹包含..."
+→ 历史记录增加 1 条消息（响应）
+</pre></table></code></div></div><p>一个简单的请求就有四条消息！现在想象：</p><ul><li>读取一个 500 行的文件。<li>编辑多个文件。<li>来回运行 20 次。</ul><p>你的上下文窗口很快就会填满。这就是为什么 <a href="https://github.com/gscalzo/Nimbo/blob/main/Sources/NimboCLI/Tools/ReadFile.swift">ReadFile 工具</a>将文件内容限制为 100KB：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">let</span> <span class="nv">capped</span> <span class="o">=</span> <span class="n">fileData</span><span class="o">.</span><span class="nf">prefix</span><span class="p">(</span><span class="mi">100_000</span><span class="p">)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">text</span> <span class="o">=</span> <span class="kt">String</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">capped</span><span class="p">,</span> <span class="nv">encoding</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">text</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这是一个平衡：给模型足够的上下文以便有用，但不要太多以至于我们耗尽预算或达到限制。</p><h2 id="步骤-5将所有内容整合在一起">步骤 5：将所有内容整合在一起</h2><p>让我们追踪一个真实的交互，看看所有内容是如何连接的：</p><p><strong>用户输入：</strong> <code class="language-plaintext highlighter-rouge">"创建一个 hello.txt 文件，内容为 'Hello, Nimbo!'"</code></p><ol><li><strong>输入被添加到历史记录</strong> - <code class="language-plaintext highlighter-rouge">history.append(userMessage)</code><li><strong>代理调用 LLM</strong> - 发送带有工具定义的整个历史记录。<li><strong>LLM 响应</strong> - “我将使用 <code class="language-plaintext highlighter-rouge">edit_file</code> 工具。”<li><strong>代理执行工具</strong> - 创建文件。<li><strong>工具结果添加到历史记录</strong> - <code class="language-plaintext highlighter-rouge">"&lt;success&gt; 文件已创建"</code><li><strong>代理再次调用 LLM</strong> - 使用更新的历史记录。<li><strong>LLM 响应</strong> - “完成！我用你的消息创建了 hello.txt。”<li><strong>用户看到响应</strong> - 任务完成！</ol><p>这里最美妙的部分：<strong>你从未教过模型何时使用哪个工具</strong>。你只是描述了每个工具的作用，它自己找出了正确的顺序。</p><p>这种涌现行为就是让代理感觉神奇的原因。模型将工具链接在一起，处理错误，并调整其策略，所有这些都来自自然语言描述。</p><h3 id="我们现在拥有的一个完整的代理">我们现在拥有的：一个完整的代理！</h3><p>此时，我们有一个<strong>功能齐全的代理</strong>。它可以：</p><ul><li>与用户聊天。<li>理解何时使用工具。<li>执行工具并获得结果。<li>将多个工具调用链接在一起。<li>循环直到任务完成。</ul><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-5.webp" alt="Nimbo Basic" /></p><h2 id="实际考虑">实际考虑</h2><p>我们的 Nimbo 代理是教育性的，但生产环境的代理需要更多的润色。</p><h3 id="安全第一">安全第一</h3><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">maxToolIterations</span> <span class="o">=</span> <span class="mi">8</span>
+</pre></table></code></div></div><p>我们限制迭代次数以防止无限循环。生产系统使用更复杂的安全措施：</p><ul><li>每次对话的 token 预算。<li>工具调用的速率限制。<li>危险操作的沙箱。</ul><h3 id="错误处理">错误处理</h3><p>注意到我们的工具如何返回 <code class="language-plaintext highlighter-rouge">&lt;error&gt;</code> 字符串吗？模型实际上可以读取这些并进行调整：</p><div class="language-swift highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">return</span> <span class="s">"&lt;error&gt; 无法读取路径下的文件: </span><span class="se">\(</span><span class="n">path</span><span class="se">)</span><span class="s">"</span>
+</pre></table></code></div></div><p>LLM 看到这个，可能会尝试不同的路径或要求用户澄清。</p><h3 id="上下文管理">上下文管理</h3><p>生产环境的代理采用以下技巧：</p><ul><li><strong>摘要</strong> - 压缩旧消息。<li><strong>选择性遗忘</strong> - 删除不太重要的上下文。<li><strong>RAG（检索增强生成）</strong> - 将上下文存储在数据库中，仅检索所需内容。</ul><h2 id="让我们看看它的实际效果">让我们看看它的实际效果</h2><p>想运行 Nimbo？方法如下：</p><div class="language-bash highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>git clone https://github.com/gscalzo/Nimbo.git
+<span class="nb">cd </span>Nimbo
+<span class="nb">export </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">"your-key-here"</span>
+swift run
+</pre></table></code></div></div><p>现在让我们通过一个真实的例子来看看代理如何将工具链接在一起。</p><h3 id="示例-1丢失的-todo-的奇怪案例">示例 1：丢失的 TODO 的奇怪案例</h3><p>让我们要求我们的代理帮助我们在一个混乱的项目中找到一些东西：</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre><td class="rouge-code"><pre>你：我想我在某个地方留下了一个关于重构身份验证的 TODO 注释。
+    你能帮我找到它吗？
+
+tool: list_files({"path": "."})
+
+Nimbo：我将搜索你的 Swift 文件。让我检查 Sources 目录。
+
+tool: list_files({"path": "Sources"})
+
+tool: read_file({"path": "Sources/AuthManager.swift"})
+
+Nimbo：找到了！在 AuthManager.swift 的第 42 行：
+
+      // TODO: 重构此代码以使用 async/await 而不是完成处理程序
+      func login(email: String, password: String, completion: @escaping (Result&lt;User, Error&gt;) -&gt; Void) {
+          // ... 旧式回调代码 ...
+      }
+
+      看起来你想将其现代化以使用 Swift 并发。想让我
+      创建一个使用 async/await 的新版本吗？
+
+你：是的，请！给我看看那会是什么样子。
+
+tool: edit_file({"path": "AuthManager_v2.swift", "old_content": "", "new_content": "..."})
+
+Nimbo：完成！我创建了带有现代化版本的 AuthManager_v2.swift：
+
+      func login(email: String, password: String) async throws -&gt; User {
+          // ... 干净的 async/await 代码 ...
+      }
+
+      干净多了！不再有回调地狱。
+</pre></table></code></div></div><p>注意发生了什么？代理：</p><ol><li><strong>理解了模糊的意图</strong>：”关于身份验证的 TODO”相当模糊。<li><strong>系统地探索</strong>：列出目录，然后是文件。<li><strong>实际读取代码</strong>：找到了特定的 TODO 注释。<li><strong>提供价值</strong>：建议创建重构版本。<li><strong>创造性地执行</strong>：主动编写现代 Swift 代码。</ol><p>代理不仅仅是找到文本。它理解上下文并预测你的下一个需求。</p><h3 id="示例-2构建一个有趣的游戏">示例 2：构建一个有趣的游戏</h3><p>现在让我们玩点有趣的，要求它从头开始创建一些东西：</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre>你：创建一个命令行游戏，让我猜一个随机表情符号。
+    让它有趣一点！
+
+tool: edit_file({"path": "EmojiGuesser.swift", "old_content": "", "new_content": "..."})
+
+Nimbo：创建了 EmojiGuesser.swift！这是你的游戏：
+
+      import Foundation
+
+      let emojiSet = ["🎸", "🦖", "🌮", "🚀", "🎨", "🎪", "🦄", "🌈"]
+
+      func playEmojiGame() {
+          let secret = emojiSet.randomElement()!
+          print("🎮 我在想这个集合中的一个表情符号: \(emojiSet.joined())")
+          print("你能猜出是哪一个吗？输入它！")
+
+          while let guess = readLine() {
+              if guess == secret {
+                  print("🎉 是的！你找到了！你是表情符号低语者！")
+                  break
+              } else if emojiSet.contains(guess) {
+                  print("❌ 不对！再试一次，侦探！")
+              } else {
+                  print("🤔 那甚至不在集合中！从这里选择: \(emojiSet.joined())")
+              }
+          }
+      }
+
+      playEmojiGame()
+
+      尝试运行它：swift EmojiGuesser.swift
+
+你：这很有趣，但你能在 3 次错误猜测后添加一个提示系统吗？
+
+tool: read_file({"path": "EmojiGuesser.swift"})
+
+tool: edit_file({"path": "EmojiGuesser.swift", "old_content": "...", "new_content": "..."})
+
+Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，比如：
+      "🕵️ 提示：它押韵... 开玩笑的，表情符号不押韵！
+       但它以 🎯 类别开始：有趣！"
+
+      游戏跟踪尝试次数并提供鼓励。好多了！
+</pre></table></code></div></div><p>更令人印象深刻！代理：</p><ol><li><strong>有创意</strong>：在没有被要求的情况下为游戏添加了个性。<li><strong>做出了好的选择</strong>：选择了有趣的表情符号，编写了有趣的字符串。<li><strong>理解迭代</strong>：在修改之前读取现有文件。<li><strong>正确应用编辑</strong>：用增强版本替换了旧的游戏逻辑。<li><strong>解释了改进</strong>：告诉你发生了什么变化。</ol><h3 id="这说明了什么">这说明了什么</h3><p>这些例子展示了 AI 代理的三个关键超能力：</p><ol><li><strong>工具链接</strong>：代理决定使用哪些工具以及以什么顺序使用。<li><strong>上下文意识</strong>：它记得它做了什么（因为这都在历史记录中！）。<li><strong>创造性推理</strong>：它不仅仅执行命令；它思考什么会使结果更好。</ol><p>真正的魔法？<strong>你没有编程任何这些逻辑</strong>。你只是：</p><ul><li>描述了每个工具的作用。<li>给代理访问它们的权限。<li>让语言模型找出其余部分。</ul><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-6.webp" alt="Nimbo Basic" /></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20251117SwiftAIAgent/nimbo-7.webp" alt="Nimbo Basic" /></p><h2 id="简单的力量">简单的力量</h2><p>这是我们学到的：</p><ol><li><strong>代理是循环</strong>：只需不断询问模型”下一步是什么？”<li><strong>工具是描述</strong>：LLM 选择，你执行。<li><strong>上下文很宝贵</strong>：每条消息都会消耗 token 和注意力。<li><strong>涌现行为是真实的</strong>：复杂的行为源于简单的规则。</ol><p>整个 Nimbo 代理不到 300 行 Swift 代码。然而它可以：</p><ul><li>导航文件系统。<li>读取和修改文件。<li>链接多个操作。<li>优雅地处理错误。</ul><p>这就是在语言模型之上构建的力量。你不是编码每种可能性；你正在创建一个模型可以思考和行动的空间。</p><h2 id="下一步是什么">下一步是什么？</h2><p>现在你理解了基础知识，你可以：</p><ul><li><strong>添加更多工具</strong>：网络搜索、API 调用、数据库查询。<li><strong>改进上下文管理</strong>：实现摘要或 RAG。<li><strong>构建特定领域的代理</strong>：专注于你的特定用例。<li><strong>创建代理网络</strong>：让多个代理协作。</ul><p>代码都在 <a href="https://github.com/gscalzo/Nimbo">GitHub</a> 上。Fork 它，破坏它，改进它。</p><p>下次你使用 Claude Code 或 Cursor 时，你会确切地知道底层发生了什么：一个循环、一些工具和一个非常聪明的实习生在做决定。</p><hr /><h2 id="延伸阅读">延伸阅读</h2><p><strong>想深入了解？</strong> 查看：</p><ul><li><a href="https://github.com/gscalzo/Nimbo">完整的 Nimbo 源代码</a><li><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use">Anthropic 的工具使用指南</a><li><a href="https://platform.openai.com/docs/guides/function-calling">OpenAI 的函数调用文档</a></ul><p><strong>有问题？有想法？</strong> 在 <a href="https://twitter.com/giordanoscalzo">Twitter</a> 或 <a href="https://linkedin.com/in/giordanoscalzo">LinkedIn</a> 上联系我。我很想看看你构建了什么！</p><hr /><p><strong>原文链接：</strong> https://gioscalzo.com/blog/demystifying-ai-coding-agents-in-swift/</p><p><strong>作者：</strong> Giordano Scalzo</p><p><strong>译者注：</strong> 本文翻译自 Giordano Scalzo 的博客文章，介绍了如何用 Swift 从零开始构建一个 AI 编码代理。通过这篇文章，你将理解 AI 代理的核心原理，并能够自己动手实现一个功能完整的代理系统。</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a>, <a href='/categories/swiftui/'>SwiftUI</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/tags/swiftui/" class="post-tag no-text-decoration" >SwiftUI</a> <a href="/tags/swift/" class="post-tag no-text-decoration" >Swift</a> <a href="/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=揭秘 AI 编码代理：用 Swift 构建你自己的Agent - 迈腾大队长&url=https://www.sunyazhou.com/2025/11/swiftaiagent/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=揭秘 AI 编码代理：用 Swift 构建你自己的Agent - 迈腾大队长&u=https://www.sunyazhou.com/2025/11/swiftaiagent/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=揭秘 AI 编码代理：用 Swift 构建你自己的Agent - 迈腾大队长&url=https://www.sunyazhou.com/2025/11/swiftaiagent/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=揭秘 AI 编码代理：用 Swift 构建你自己的Agent - 迈腾大队长&url=https://www.sunyazhou.com/2025/11/swiftaiagent/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2018/05/ManualControlUIViewControllerLifeCycle/">手动管理UIViewController的生命周期</a><li><a href="/2025/05/MemoryAlignmentAlgorithm/">GPU内存对齐算法</a><li><a href="/2017/02/HowToUseGitManageCode/">如何使用git管理代码</a><li><a href="/2025/02/the-basics-on-the-memory-layout-of-swift-struct-instances/">Swift结构体实例内存布局的基础知识</a><li><a href="/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/">如何使用unsafe Swift指针类型直接访问内存并与C交互</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2022/11/swiftuipropertywrapper/"><div class="card-body"> <span class="timeago small" > 2022-11-25 <i class="unloaded">2022-11-25T10:45:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 主要内容 本文主要讲述SwiftUI中的属性包装器，这些包装器都是用来数据绑定的，作为视图的唯一真值来源，四种方式在实现功能上有细微差别。最后...</p></div></div></a></div><div class="card"> <a href="/2023/03/circularsliderview/"><div class="card-body"> <span class="timeago small" > 2023-03-17 <i class="unloaded">2023-03-17T12:38:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>使用SwiftUI绘制环形 Slider</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! SwiftUI绘制环形 Slider 最近看到一篇文章讲述简单的用SwiftUI绘制一个圆形Slider,经过亲手实践果然很简单,记录一下代码实现...</p></div></div></a></div><div class="card"> <a href="/2025/02/unsafe-swift-using-pointers-and-interacting-with-c/"><div class="card-body"> <span class="timeago small" > 02-22 <i class="unloaded">2025-02-22T14:15:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>如何使用unsafe Swift指针类型直接访问内存并与C交互</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 背景介绍 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到如何使用Unsafe Swift 指针和C交互...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2025/10/interpolating-points-in-ios-with-uibezierpath/" class="btn btn-outline-primary"><p>在 iOS 中使用 UIBezierPath 插值点</p></a> <span class="btn btn-outline-primary disabled"><p>-</p></span></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
