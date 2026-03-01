@@ -10,3 +10,5 @@ echo "即将推送目标仓库:`git remote -v`"
 sh push.sh 
 echo "Done!"
 popd
+
+echo "已经部署sunyazhou13.github.io,无需手动执行sunyazhou13.github.io目录下的push.sh脚本."
