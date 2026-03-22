@@ -8,7 +8,7 @@ tags: [skills]
 
 # 前言
 
-![](/assets/images/20170929MarkdownTable/table.webp)
+![](/assets/images/20170929MarkdownTable/table.avif)
 
 以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, Swift, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20190517CleanerForXcodeBuild/CleanerForXcode.webp)
+![](/assets/images/20190517CleanerForXcodeBuild/CleanerForXcode.avif)
 
 # 前言
 

@@ -25,11 +25,11 @@ $ defaults delete com.baidu.demo
 > 实际的的路径(把 my app和前后剪头 换成自己的应用的包名)
 
 macOS应用非沙盒权限(如下图) `~/Library/Preferences/<my app>.plist  <my app>`  eg:QQ
-![非沙盒路径](/assets/images/20170220ClearNSUserDefaultCcontent/NonSandBoxPermission.webp)
+![非沙盒路径](/assets/images/20170220ClearNSUserDefaultCcontent/NonSandBoxPermission.avif)
 
 macOS应用沙盒权限(如下图)  `~/Library/Containers/<my app>/Data/Library/Preferences/<my app>.plist` eg:qq  
 
-![](/assets/images/20170220ClearNSUserDefaultCcontent/SandBoxPermission.webp)
+![](/assets/images/20170220ClearNSUserDefaultCcontent/SandBoxPermission.avif)
 
 
 总结

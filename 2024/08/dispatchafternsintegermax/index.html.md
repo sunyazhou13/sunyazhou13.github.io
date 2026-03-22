@@ -38,7 +38,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySeconds * NSEC_PE
 
 ### 为什么会立即执行?
 
-![](/assets/images/20240819dispatchafterNSIntegermax/NSIntegerMax1.webp)
+![](/assets/images/20240819dispatchafterNSIntegermax/NSIntegerMax1.avif)
 
  `NSIntegerMax * NSEC_PER_SEC`= -10亿
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20170713ios11NewSkills/whatisnewsinios11.webp)
+![](/assets/images/20170713ios11NewSkills/whatisnewsinios11.avif)
 
 
 ## 可用性检查API
@@ -79,7 +79,7 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 如果就工程想使用这种llvm新版特性的话 需要修改 `buid setting`里面的 `Unguarded availability`  如下图:
 
-![](/assets/images/20170713ios11NewSkills/availability.webp)
+![](/assets/images/20170713ios11NewSkills/availability.avif)
 
 
 ## 静态分析
@@ -92,12 +92,12 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 当我们错误的判断 NSNumber时  静态分析 则给出了提示 
 
-![](/assets/images/20170713ios11NewSkills/error.webp)
+![](/assets/images/20170713ios11NewSkills/error.avif)
  
 
 在Xcode9 中可以直接把这种倍忽视 的问题改成 当错误处理
 
-![](/assets/images/20170713ios11NewSkills/static.webp)
+![](/assets/images/20170713ios11NewSkills/static.avif)
 
 
 ## 开启 LTO 并设置为 Incremental 模式 
@@ -108,13 +108,13 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 对于 LTO，Xcode 9 做出的改进主要是在进一步优化了编译速度。 苹果演示的例子是以某个大型 C++ 工程为参考，对于一次完整链接，Xcode 9 比 Xcode 8 提升了 35%；对于一次增量链接，Xcode 9 比 Xcode 8 提升了近 60%。
 
-![](/assets/images/20170713ios11NewSkills/lto1.webp)
+![](/assets/images/20170713ios11NewSkills/lto1.avif)
 
-![](/assets/images/20170713ios11NewSkills/lto2.webp)
+![](/assets/images/20170713ios11NewSkills/lto2.avif)
 
 开启LTO
 
-![](/assets/images/20170713ios11NewSkills/LTO.webp)
+![](/assets/images/20170713ios11NewSkills/LTO.avif)
 
 据说对包大小和运行时速度有 10% 左右的优化
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.webp)
+![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.avif)
 
 
 # 前言
@@ -61,7 +61,7 @@ typora-root-url: ..
 
 `AVAsset`本身不是媒体资源. 可以把它理解成承载`timed media(时基媒体)`的容器类。它有很多描述自身元数据的媒体组成. `AVAssetTrack`才是我们真正存储媒体资源的统一媒体类型。并对每个资源建立相应的model.  `AVAssetTrack`最常见的形式就是 音频流和视频流, 但是他还可以用于表示诸如__文本__、__副标题__、__隐藏字幕__等媒体类型. 如下示意图理解`AVAsset` 和 `AVAssetTrack`
 
-![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AVAssetTrack.webp)
+![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AVAssetTrack.avif)
 
 _**`AVAsset.tracks`**_ 如下
 
@@ -259,18 +259,18 @@ typedef enum AVKeyValueStatus : NSInteger {
 	`QuickTime`是苹果自己开发的一种跨平台媒体架构, 其中一部分是Quick File Format规范, 定义了 .mov文件的内部结构.`QuickTime`文件由一种称为`atom`的数据结构组成. 一般规则是这样的:
 	一个`atom`包含了描述媒体资源的某一方面的数据, 或者嵌套包含其它`atom`,但不能两者都包含.有时候苹果自己的方法实现可能会违背这一规则.`atom`以一种复杂的树状结构组合在一起, 详细的对布局、音频样本格式、视频帧信息乃至需要呈现的元数据信息(作者,版权等)做了描述.   
 
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/atom.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/atom.avif)
 	*为了能记住`atom`我把它戏称为`阿童木`哈哈-跟阿童木压根没啥关系*.  
 	
 	了解`QuickTime`的一个好办法是用十六进制编辑器中打开一个.mov格式的文件.(常见的十六进制编辑器有Hex Fiend或Synalyze It! Pro).典型的十六进制工具会将一个真实的`QuickTime`文件的数据显示出来,但其中的结构和`atom`间的关系不是很直观能理解,推荐苹果有一个`Atom Inspector`工具.这个工具将atom结构以`NSOutlineView`(树形UI控件类似UITableView)方式显示.所以`atom`的树形瓜西会很清晰的看到,这个工具还提供一个小型的十六进制查看器,可以从中查看到__实际字节布局__.
 	
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AtomInspector.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AtomInspector.avif)
 	
 	下载地址:[Atom Inspector 猛击这里](http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg)  貌似需要登录开发者帐号
 	下载中心:[苹果官方软件下载中心](https://developer.apple.com/download/more/)  貌似需要登录开发者帐号 
 	
 	下图就是atom格式
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureNew.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureNew.avif)
 	
 	*atom格式*
 	
@@ -281,7 +281,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	* __moov atom(moo-vee) 媒体资源的所有细节做了完整描述包括原始的二进制数据__
 	
 	下图是我实际测试一个mov文件的atom
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureReal.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureReal.avif)
 	*实测*
 	
 	当处理QuickTime电影时会遇到两种类型的元数据. 标准的`QuickTime`元数据由`Final Cut Pro X`这样的工具编写, 位于/moov/meta/plist中, 它的key几乎都具有com.apple.quicktime前缀. 其它类型的数据被认为是`QuickTime`用户数据, 保存在/moov/udta/中.`QuickTime`用户数据可以包含播放器需要查找的标准数据,eg: 歌曲的演唱者或版权信息, 除此之外还可以包含任何对应用程序有帮助的信息.  上述两种元数据类型在	`AV Foundation`中都是可以读写的.  
@@ -291,10 +291,10 @@ typedef enum AVKeyValueStatus : NSInteger {
 2. __MPEG-4 (MP4)音频和视频__
 
 	MPEG-4 Part 14是定义MP4文件格式的规范. `MP4`直接派生自`QuickTime`文件格式,所以`MP4`文件格式与`QuickTime`文件结构很类似. 其实有时候能解析一种文件类型的工具也适用于其它文件类型.`MP4`文件也由成为`atom`的数据结构组成.技术上讲,`MPEG-4`规范将这些称为`boxes`,因为其大部分来自于`QuickTime`所以大家都还是把它成为`atom`.  
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4AtomBook.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4AtomBook.avif)
 	*MPEG-4 atom结构*
 	
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4Atom.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4Atom.avif)
 	*MPEG-4 atom结构 实测结果*
 	
 	`MPEG-4`文件的元数据保存在`/moov/udat/meta/ilst`中. 对于`atom`中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考[mp4v2库](https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki)文档了解更多mp4内容.
@@ -311,7 +311,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	
 	`MP3`文件和`MPEG-4 (.mp4)`、`QuickTime(.mov)`有显著区别,`MP3`不使用容器格式,而使用__编码音频数据__,文件开头通常包含可选元数据的结构块.`mp3`文件使用一种称为ID3v2的格式来保存关于音频内容的描述信息,包含: artist(艺术家)、演唱者、album(所属专辑)、音乐风格等.  
 	`ID3`数据很easy,`mp3`前10个字节带有嵌入的元数据, 这10个字节定义了`ID3`块的头部.10个字节中的前三个字节始终为'49 44 33'(ID3,用于表示一个`ID3v2标签`,后面两个字姐用于定义主版本信息,既`2、3、4`和版本号.剩余字节用于定义标志集合及ID3快的大小.
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/ID3Header.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/ID3Header.avif)
 	*ID3 header*
 	
 	`ID3`块中剩下的数据都是用于描述不同元数据的的key-value键值对的帧.每一帧都有一个__实际标签名称的10字节的头__,之后的4字节表示尺寸,再之后的两个字节用来定义选项标志.
@@ -322,7 +322,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	帧剩下的字节包含了实际的元数据值.如果值是文本类型tag中的第一个字节包含了实际的元数据值.如果值是文本类型,tag中的第一个字节用来定义编码类型. eg:Ox00, 代表:`ISO-8859=1`,也支持其它类型的编码。如下图ID3结构示意图.
 	__`AV Foundation`支持读取`ID3v2`标签的的所有版本, 但不支持写入.MP3格式收到专利限制.所以`AV Foundation`无法支持对MP3或ID3数据进行编码.__ 不过最近听说德国的MP3专利研究所说专利打算撤销因为`AAC`格式将有更好的效果相对于MP3而言.看看后续苹果API变动会不会增加修改MP3的数据吧.
 	
-	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/ID3Structure.webp)
+	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/ID3Structure.avif)
 	*ID3v2 结构图*
 	
 > `AV Foundation`支持所有`ID3v2`标签格式的读取操作,但是`ID3v2`是要加星号的.`ID3v2.2`的布局和`ID3v2.3`及之后版本的布局不同. 需要注意:有些标签由3个字符组成,而不是4个字符, 比如一首歌曲的标注信息, 当标签为`ID3v2.2`时,是被保存到COM帧中,但当同一首歌使用`ID3v2.3`标签或更新版本的标签时,歌曲的标注信息会被保存在COMM帧中,框架定义的字符常量只适用于`ID3v2.3`及以后版本,后续demo中我们通过代码演示如何向前兼容`ID3v2.2`.
@@ -338,7 +338,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 
 读取具体资源元数据的接口可以使用`AVMetadataItem`类提供的方法访问`QuickTime`、`MPEG-4 atom`和`ID3`帧中的元数据进行访问. 
 `AVAsset`和`AVAssetTrack`提供了两种方法可以获取相关元数据.但是有各自的适用范围.了解适用范围之前首先要知道 __键空间__(key space)的含义. `AV Foundation`使用__键空间(key space)__作为将相关键组合在一起的方法, 可以实现对`AVMetadataItem`实例集合的筛选.每个资源至少包含两个键空间,以便从中获取元数据.
-![](/assets/images/20170616LearningAVFoundationAVAssetBasic/keyspace.webp)
+![](/assets/images/20170616LearningAVFoundationAVAssetBasic/keyspace.avif)
 
 `Common`键空间用来定义所有支持媒体类型的键, 包括: 曲名、歌手、插图信息等常见元素. 这提供了一种对所有支持的媒体格式进行一定级别的元数据标准化过程.我们可以从`Common`键空间查询 资源或者曲目的`commonMetadata`属性来获取元数据 这个属性会返回一个包含所有可用元数据的数组
 

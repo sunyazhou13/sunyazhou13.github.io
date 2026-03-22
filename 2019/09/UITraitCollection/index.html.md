@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190916UITraitCollection/UITraitCollection1.webp)
+![](/assets/images/20190916UITraitCollection/UITraitCollection1.avif)
 
 # 前言
 

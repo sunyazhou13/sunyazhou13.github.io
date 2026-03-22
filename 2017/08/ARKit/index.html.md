@@ -10,7 +10,7 @@ typora-root-url: ..
 
 # 前言
 
-![](/assets/images/20170830ARKit/ARKitPreview.webp)
+![](/assets/images/20170830ARKit/ARKitPreview.avif)
 
 本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.
 期间有任何问题请大家集思广益,多多指教. 
@@ -37,7 +37,7 @@ typora-root-url: ..
 	3. 传感器追踪:主要追踪现实世界动态物体的六轴变化，这六轴分别是X、Y、Z轴位移及旋转。其中位移三轴决定物体的方位和大小，旋转三轴决定物体显示的区域
 	4. 坐标识别及转换：3D模型显示在现实图像中不是单纯的frame坐标点，而是一个三维的矩阵坐标
 	5. AR还可以与虚拟物体进行一些交互(optional)  
-![](/assets/images/20170830ARKit/ARDirection.webp)
+![](/assets/images/20170830ARKit/ARDirection.avif)
 
 
 
@@ -70,7 +70,7 @@ iOS11虽然推出了 `ARKit` 但不是所有 iOS11系统都支持
 
 #### Xcode 自带创建模板(多数都不用)
 
-![](/assets/images/20170830ARKit/ARKitModel.webp)
+![](/assets/images/20170830ARKit/ARKitModel.avif)
 
 demo 演示
 
@@ -161,7 +161,7 @@ demo 演示
 
 ### 主要内容
 
-![](/assets/images/20170830ARKit/RenderingARKit.webp)
+![](/assets/images/20170830ARKit/RenderingARKit.avif)
 
 `ARKit` 并不是一个独立运行的框架 必须要配合`SceneKit`,没有`SceneKit` `ARKit`和普通相机没有任何区别
  
@@ -169,7 +169,7 @@ demo 演示
 
 下面是一张图 ARKit 的所有.h 头文件 (没有列出派生的子类)
 
-![](/assets/images/20170830ARKit/ARDefines.webp)
+![](/assets/images/20170830ARKit/ARDefines.avif)
 
 * ARKit框架中的核心类
  * __`ARScnView`__
@@ -186,7 +186,7 @@ demo 演示
 
 * `ARKit`与`SceneKit`框架关系图
 
-![](/assets/images/20170830ARKit/ARKitUML.webp)
+![](/assets/images/20170830ARKit/ARKitUML.avif)
 
 1. `ARSCNView` --> `SCNView`(SceneKit.framework)-->`UIView`(UIKit.framework)
 2. ARSCNView视图容器,它管理一个 `ARSession`
@@ -232,7 +232,7 @@ _`Session` 和`Context`不同点_
 
 就需要一个沟通的桥梁 进行调度配合协作完成 图像捕捉到视觉渲染的过程__这个桥梁 就是 `ARSession`__
 
-![](/assets/images/20170830ARKit/ARKitSession.webp)
+![](/assets/images/20170830ARKit/ARKitSession.avif)
 
 
 如果想运行一个 `ARSession`会话,必须指定一个叫`会话追踪配置`的对象`ARConfiguration`,`ARConfiguration`主要目的负责追踪相机在3D 世界中的位置以及一些特征场景的捕捉,__比如捕捉平面__,这个类 作用很大
@@ -242,7 +242,7 @@ _`Session` 和`Context`不同点_
 注意: _原来是这个`ARWorldTrackingSessionConfiguration`现在被弃用了._
 
 
-![](/assets/images/20170830ARKit/ARWorldTrackingConfiguration.webp)
+![](/assets/images/20170830ARKit/ARWorldTrackingConfiguration.avif)
 
 #### ARFrame 与 ARWorldTrackingConfiguration
 
@@ -264,20 +264,20 @@ _`Session` 和`Context`不同点_
 
 这三者关系如下:
 
-![](/assets/images/20170830ARKit/RelationshipARFrame.webp)
+![](/assets/images/20170830ARKit/RelationshipARFrame.avif)
 
 
 > `ARFrame`里面有我们需要的`CVPixelBufferRef`(capturedImage) 和 `ARCamera` 也就是我们需要的图像的原始数据
 
 __ARCamera在3D世界的位置__
 
-![](/assets/images/20170830ARKit/Coordinate.webp)
+![](/assets/images/20170830ARKit/Coordinate.avif)
 
 
 ### ARKit 工作流程
 
 
-![](/assets/images/20170830ARKit/ARWorkflow.webp) 图片来自:[坤小](http://www.jianshu.com/p/0492c7122d2f)
+![](/assets/images/20170830ARKit/ARWorkflow.avif) 图片来自:[坤小](http://www.jianshu.com/p/0492c7122d2f)
 
 1. `ARSCNView`加载场景`SCNScene`
 2. `SCNScene` 启动相机`ARCamera`开始捕捉场景
@@ -349,7 +349,7 @@ __把`rootNode`理解为 `self.view`__
 ## ARKit框架所有API介绍
 
 
-![](/assets/images/20170830ARKit/ARDefines.webp)
+![](/assets/images/20170830ARKit/ARDefines.avif)
 
 还是拿上边这张图说一下 这里我们诉求剖析所有 API 从而达到大家都了解 ARKit的内容
 
@@ -669,7 +669,7 @@ ARHitTestResultType：捕捉类型  点还是面
 
 #### ARSesson 重点介绍
 
-![](/assets/images/20170830ARKit/SessionBridge.webp)
+![](/assets/images/20170830ARKit/SessionBridge.avif)
 
 `ARSesson` 是一个连接底层与 AR 视图之间的桥梁, `ARSCNView`里的所有方法都是又`ARSession`提供的
 
@@ -829,8 +829,8 @@ ARSessionDelegate 如下
 @end
 ```
 
-> 上边提到的远面和近面距离 ![](/assets/images/20170830ARKit/distance.webp)  可以参考这张图 摘自[投影变换](http://www.jianshu.com/p/bc151ff65cef)
-> ![](/assets/images/20170830ARKit/distance2.webp)
+> 上边提到的远面和近面距离 ![](/assets/images/20170830ARKit/distance.avif)  可以参考这张图 摘自[投影变换](http://www.jianshu.com/p/bc151ff65cef)
+> ![](/assets/images/20170830ARKit/distance2.avif)
 >  这属于 OpenGL的学习范畴.有兴趣可以学习一下
 
 ``` objc
@@ -863,7 +863,7 @@ typedef NS_ENUM(NSInteger, ARTrackingStateReason) {
 ```
 
 > 这里面涉及到的 一个叫做`eulerAngles`[欧拉角](https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92) 
-> ![](/assets/images/20170830ARKit/EulerAngles.webp)
+> ![](/assets/images/20170830ARKit/EulerAngles.avif)
 > 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) 
 
 

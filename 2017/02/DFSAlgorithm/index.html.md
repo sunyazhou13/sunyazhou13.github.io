@@ -16,7 +16,7 @@ DFS需求背景
 	3. 如何处理根层文件夹没有文件那么文件目录也需要创建
 	
 举例例子
-![](/assets/images/20170210DFSAlgorithm/DFS1.webp)
+![](/assets/images/20170210DFSAlgorithm/DFS1.avif)
 
 这种文件夹如何 `此文件夹为空且是叶子结点` 走上传逻辑(就是发个 http请求 create一下 dir就行了) 我们要的结果是 过滤出这个路径走上传逻辑 创建一下这个最深处目录 那么下次再遇到它的父目录 `/1/` 的话应该就不用创建了.
 
@@ -52,7 +52,7 @@ DFS需求背景
     }];
 }
 ```
-![](/assets/images/20170210DFSAlgorithm/DFS2.webp)
+![](/assets/images/20170210DFSAlgorithm/DFS2.avif)
 
 然后  
 
@@ -159,9 +159,9 @@ DFS需求背景
 > talk is cheap, show me the result.  
 
 下面是我扫描本地`下载`目录的结果
-![](/assets/images/20170210DFSAlgorithm/DFS3.webp)
+![](/assets/images/20170210DFSAlgorithm/DFS3.avif)
 
-![](/assets/images/20170210DFSAlgorithm/Result.webp)
+![](/assets/images/20170210DFSAlgorithm/Result.avif)
 
 结果还是比较快的 
 

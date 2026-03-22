@@ -7,7 +7,7 @@ tags: [python]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180113PythonMySQL/MysqlPython.webp)
+![](/assets/images/20180113PythonMySQL/MysqlPython.avif)
 
 
 # 前言
@@ -46,17 +46,17 @@ typora-root-url: ..
 
 我这里用`MAMP`举例说明一下
 
-![](/assets/images/20180113PythonMySQL/mamp1.webp)
+![](/assets/images/20180113PythonMySQL/mamp1.avif)
 
 打开之后  
-![](/assets/images/20180113PythonMySQL/mamp2.webp)
+![](/assets/images/20180113PythonMySQL/mamp2.avif)
 
 #### Web服务启动中相关配置
 
 开启`Apatch Server`和`MySQL Server`服务(右上角).
 然后点击`Perferences`,进行本地端口配置.
 
-![](/assets/images/20180113PythonMySQL/mamp3.webp)
+![](/assets/images/20180113PythonMySQL/mamp3.avif)
 
 这里有两种默认配置(红色框选部分) 
 
@@ -66,31 +66,31 @@ typora-root-url: ..
 `8888`是服务的端口
 
 下面这张图可以选择文件根目录
-![](/assets/images/20180113PythonMySQL/mamp4.webp)
+![](/assets/images/20180113PythonMySQL/mamp4.avif)
 
 什么意思呢?
 
 就是你把网页的相关文件放到 这个文件夹的话
 就会在浏览器上直接浏览.
 
-![](/assets/images/20180113PythonMySQL/mamp2.webp)
+![](/assets/images/20180113PythonMySQL/mamp2.avif)
 
 这张图中间的`Open Start Page`. 
 
-![](/assets/images/20180113PythonMySQL/sql1.webp)
+![](/assets/images/20180113PythonMySQL/sql1.avif)
 
 
 进入到数据库配置相关
 
 配置数据库名称
-![](/assets/images/20180113PythonMySQL/sql2.webp)
+![](/assets/images/20180113PythonMySQL/sql2.avif)
 
 输入表名
 
-![](/assets/images/20180113PythonMySQL/sql3.webp)
+![](/assets/images/20180113PythonMySQL/sql3.avif)
 
 配置数据库表
-![](/assets/images/20180113PythonMySQL/sql4.webp)
+![](/assets/images/20180113PythonMySQL/sql4.avif)
 
 配置完右侧完成
 
@@ -121,7 +121,7 @@ pip install MySQL-python
 ```
 我安装的时候出错了
 
-![](/assets/images/20180113PythonMySQL/PipInstallMysqlPython.webp)
+![](/assets/images/20180113PythonMySQL/PipInstallMysqlPython.avif)
 
 最后执行
 
@@ -134,7 +134,7 @@ brew install mysql-python
 
 在shell中输入`python`
 
-![](/assets/images/20180113PythonMySQL/pythonshell1.webp)
+![](/assets/images/20180113PythonMySQL/pythonshell1.avif)
 
 执行
 
@@ -149,14 +149,14 @@ import MySQLdb
 #### Navicat 数据的导出导入
 
 这个数据库可视化操作软件大家自行下载吧  
-![](/assets/images/20180113PythonMySQL/navicat1.webp)
+![](/assets/images/20180113PythonMySQL/navicat1.avif)
 
 
 打开之后点击左上角点击新建connect 选择MySQL
-![](/assets/images/20180113PythonMySQL/navicat2.webp)
+![](/assets/images/20180113PythonMySQL/navicat2.avif)
 
 接着配置数据库的信息
-![](/assets/images/20180113PythonMySQL/navicat3.webp)
+![](/assets/images/20180113PythonMySQL/navicat3.avif)
 
 这里的名称就是__数据库名称__
 `host`地方本地,如果是远程的话,填写`ip`或者`url`  
@@ -166,12 +166,12 @@ import MySQLdb
 
 下面就是连接数据库
 
-![](/assets/images/20180113PythonMySQL/navicat4.webp)
+![](/assets/images/20180113PythonMySQL/navicat4.avif)
 
 
 下面这张图就是
 
-![](/assets/images/20180113PythonMySQL/navicat5.webp)
+![](/assets/images/20180113PythonMySQL/navicat5.avif)
 
 __数据库导出和导入,当然也可以导出导入数据表.__
 
@@ -206,7 +206,7 @@ import MySQLdb
 import MySQLdb.cursors
 ```
 
-![](/assets/images/20180113PythonMySQL/Pythoncode1.webp)
+![](/assets/images/20180113PythonMySQL/Pythoncode1.avif)
 
 
 > 注意:_test.py最好和douban_movie_clean.txt保持在同一个目录这样就不用写路径了_
@@ -270,10 +270,10 @@ fr.close()
 
 通过我们拿到的`cursor`连接实例来执行`cursor.execute()`函数进行`sql`的插入操作.
 
-![](/assets/images/20180113PythonMySQL/Pythoncode2.webp)
+![](/assets/images/20180113PythonMySQL/Pythoncode2.avif)
 
 来看下结果
-![](/assets/images/20180113PythonMySQL/sqlresult.webp)
+![](/assets/images/20180113PythonMySQL/sqlresult.avif)
 
 
 #### 更新数据

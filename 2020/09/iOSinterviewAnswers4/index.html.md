@@ -7,7 +7,7 @@ tags: [Algorithm, Objective-C]
 typora-root-url: ..
 ---
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.webp)
+![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 # 前言
 
@@ -67,8 +67,8 @@ typedef	struct	Obs {
 ```
 主要是以`key` `value`的形式存储,这里需要重点强调一下 通知以 `name`和`object`两个纬度来存储相关通知内容,也就是我们添加通知的时候传入的两个不同的方法.
 
-![](/assets/images/20200901iOSinterviewAnswers/NCTable.webp)  
-![](/assets/images/20200901iOSinterviewAnswers/NCTable2.webp)  
+![](/assets/images/20200901iOSinterviewAnswers/NCTable.avif)  
+![](/assets/images/20200901iOSinterviewAnswers/NCTable2.avif)  
 
 简单理解`name`&`observer`&`SEL`之间的关系就是`name`作为`key`, `observer`作为观察者对象,当合适时机触发就会调用`observer`的`SEL`.这基本很简单,如果觉得我说的不准确可以看下文章开头的文章.
 
@@ -169,8 +169,8 @@ typedef	struct Obs {
 ```
 `nameless`与`named`的具体数据结构如下:
 
-![](/assets/images/20200901iOSinterviewAnswers/NCTable.webp)  
-![](/assets/images/20200901iOSinterviewAnswers/NCTable2.webp)  
+![](/assets/images/20200901iOSinterviewAnswers/NCTable.avif)  
+![](/assets/images/20200901iOSinterviewAnswers/NCTable2.avif)  
 
 当添加通知监听的时候，我们传入了`name`和`object`，所以，观察者的存储链表是这样的：
 

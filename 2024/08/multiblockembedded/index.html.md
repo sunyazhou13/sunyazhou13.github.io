@@ -7,7 +7,7 @@ tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20240822MultiBlockEmbedded/Objective-C.webp)
+![](/assets/images/20240822MultiBlockEmbedded/Objective-C.avif)
 
 # 前言
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190906OpenGLESDemo1/sunyazhou_logo_glsl.webp)
+![](/assets/images/20190906OpenGLESDemo1/sunyazhou_logo_glsl.avif)
 
 
 # 前言
@@ -75,7 +75,7 @@ typedef struct {
     [self bindRenderLayer:layer];
     
     // 读取纹理
-    NSString *imagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"logo.webp"];
+    NSString *imagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"logo.avif"];
     UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
     GLuint textureID = [self createTextureWithImage:image];
     

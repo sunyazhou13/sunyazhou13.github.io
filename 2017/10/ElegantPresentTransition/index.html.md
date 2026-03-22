@@ -28,7 +28,7 @@ typora-root-url: ..
 不是这个问题不行就那个问题不能满足 
 
 
-![](/assets/images/20171031ElegantPresentTransition/demo1.webp)
+![](/assets/images/20171031ElegantPresentTransition/demo1.avif)
 
 
 根据`Raywenderrich`的教程 我翻译成了 OC 版本 并加了一些小改动 

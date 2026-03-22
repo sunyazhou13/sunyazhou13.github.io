@@ -40,7 +40,7 @@ hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动
 
 从上述两张图中,我们可以看到 它是一个 三角形的贝塞尔曲线 
 
-![](/assets/images/20181127LikeAnimation/likeAnimation4.webp)
+![](/assets/images/20181127LikeAnimation/likeAnimation4.avif)
 
 
 这样的动画需要经过:
@@ -111,7 +111,7 @@ UIBezierPath *startPath = [UIBezierPath bezierPath];
 
 这行代码加完就是这样的图形
 
-![](/assets/images/20181127LikeAnimation/likeAnimation4.webp)
+![](/assets/images/20181127LikeAnimation/likeAnimation4.avif)
 
 然后创建完成我们需要把path给layer.path. 记得转成CGPath
 

@@ -24,7 +24,7 @@ HSV即Hue, Saturation, Value.
 什么意思呢？
 先看一张图
 
-![](/assets/images/20170704Arc4RandomColor/hsv.webp)
+![](/assets/images/20170704Arc4RandomColor/hsv.avif)
 
 HSV这个color space可以用上图的圆柱体来表示。
 Hue代表从0°到360°的不同颜色.

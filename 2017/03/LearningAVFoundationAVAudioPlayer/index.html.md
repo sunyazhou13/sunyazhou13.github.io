@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
 ---
 
-![AVAudioPlayer](/assets/images/20170317LearningAVFoundationAVAudioPlayer/cover.webp)
+![AVAudioPlayer](/assets/images/20170317LearningAVFoundationAVAudioPlayer/cover.avif)
 
 开篇
 --
@@ -34,7 +34,7 @@ typora-root-url: ..
 7. 重复1-6步直到播放完成
 
 在iOS系统中apple对上述的流程进行了封装并提供了不同层次的接口 
-![](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.webp)  
+![](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.avif)  
 > 这是CoreAudio的接口层次  
 
 下面对其中的中高层接口进行功能说明：
@@ -57,7 +57,7 @@ typora-root-url: ..
 * 如果你的app需要对音频进行流播放并且同时存储，那么AudioFileStreamer加AudioQueue能够帮到你，你可以先把音频数据下载到本地，一边下载一边用NSFileHandler等接口读取本地音频文件并交给AudioFileStreamer或者AudioFile解析分离音频帧，分离出来的音频帧可以送给AudioQueue进行解码和播放。如果是本地文件直接读取文件解析即可。（这两个都是比较直接的做法，这类需求也可以用AVFoundation+本地server的方式实现，AVAudioPlayer会把请求发送给本地server，由本地server转发出去，获取数据后在本地server中存储并转送给AVAudioPlayer。另一个比较trick的做法是先把音频下载到文件中，在下载到一定量的数据后把文件路径给AVAudioPlayer播放，当然这种做法在音频seek后就回有问题了。）
 * 如果你正在开发一个专业的音乐播放软件，需要对音频施加音效（均衡器、混响器），那么除了数据的读取和解析以外还需要用到AudioConverter来把音频数据转换成PCM数据，再由AudioUnit+AUGraph来进行音效处理和播放（但目前多数带音效的app都是自己开发音效模块来坐PCM数据的处理，这部分功能自行开发在自定义性和扩展性上会比较强一些。PCM数据通过音效器处理完成后就可以使用AudioUnit播放了，当然AudioQueue也支持直接使对PCM数据进行播放。）。下图描述的就是使用AudioFile + AudioConverter + AudioUnit进行音频播放的流程
 
-![](http://msching.github.io/images/iOS-audio/audioUnitPlay.webp)
+![](http://msching.github.io/images/iOS-audio/audioUnitPlay.avif)
 
 以上内容均转自[码农人生](http://msching.github.io/blog/2014/07/07/audio-in-ios/) 希望大神不要介意 如果有问题 我可立即清除
 
@@ -74,7 +74,7 @@ typora-root-url: ..
 * 控制协调app输入输出设备（比如 麦克风，耳机、手机外放比如蓝牙连接一个外置音响 或airplay）
 * 协调你的app的音频播放和系统以及其他app行为（例如有电话时需要打断，电话结束时需要恢复，按下静音按钮时是否歌曲也要静音等）
 
-![](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.webp)
+![](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.avif)
 
 *注：AVAudioSession iOS6以后使用 以前叫AudioSession*
 
@@ -108,14 +108,14 @@ typora-root-url: ..
 
 这里面说一下`[session setCategory:AVAudioSessionCategoryPlayback error:&error]` 里面的`AVAudioSessionCategoryPlayback`
 
-![音频会话分类](/assets/images/20170317LearningAVFoundationAVAudioPlayer/AVAudioPlayerCategory.webp)
+![音频会话分类](/assets/images/20170317LearningAVFoundationAVAudioPlayer/AVAudioPlayerCategory.avif)
 
 这是这几种分类的列表大家可以看下
 
 记得开启后台播放
-![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.webp)  
+![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.avif)  
 或者在plist里面修改
-![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/PlistModify.webp)  
+![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/PlistModify.avif)  
 
 
 下面就是创建音频播放器代码
@@ -153,7 +153,7 @@ typora-root-url: ..
 
 > 导入几个第三方控件的类用于音乐播放
 
-![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/Buttons.webp)
+![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/Buttons.avif)
 
 这上边的三个旋钮就是导入的开源库
 
@@ -464,7 +464,7 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRouteChangeReason)
 
 下面我介绍一些好玩的
 
-![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/demo.webp)
+![](/assets/images/20170317LearningAVFoundationAVAudioPlayer/demo.avif)
 
 前面说的一些后台设置信息显示的内容就是上图所示 在锁屏的时候显示
 

@@ -21,7 +21,7 @@ typora-root-url: ..
 
 在Metal.by.Tutorials.4th.2023.12.pdf这本书中我找到了答案-`Object Picking`
 
-![](/assets/images/20240813PickingAndHitTestinginMetal/Metal.by.Tutorials.4th.2023.12.webp)
+![](/assets/images/20240813PickingAndHitTestinginMetal/Metal.by.Tutorials.4th.2023.12.avif)
 
 
 ``` sh

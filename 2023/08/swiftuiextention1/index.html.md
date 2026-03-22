@@ -14,7 +14,7 @@ typora-root-url: ..
 
 # 问题
 
-![](/assets/images/20230802swiftuiextention1/WidgetiOS17.webp)
+![](/assets/images/20230802swiftuiextention1/WidgetiOS17.avif)
 
 最近在开发iOS17上的小组件使用SwiftUI框架,第一次进行工程化遇到一个 api可用性检测问题
 

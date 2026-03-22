@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230306SafeCast/cast.webp)
+![](/assets/images/20230306SafeCast/cast.avif)
 
 # 前言
 

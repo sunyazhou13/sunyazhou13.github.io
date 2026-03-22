@@ -51,11 +51,11 @@ https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66
 
 这个接口的`id=34341360`是从这里获取的
 
-![](/assets/images/20171227MarkdownAudio/markdownAudio1.webp)
+![](/assets/images/20171227MarkdownAudio/markdownAudio1.avif)
 
 找到`复制链接`,然后用浏览器打开.
 
-![](/assets/images/20171227MarkdownAudio/markdownAudio2.webp)
+![](/assets/images/20171227MarkdownAudio/markdownAudio2.avif)
 
 后边的 `id=34341360`就是我们要的 `id` 然后接口替换就可以了
 

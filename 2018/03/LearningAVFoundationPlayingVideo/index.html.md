@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/5kAirplay.webp)
+![](/assets/images/20180304LearningAVFoundationPlayingVideo/5kAirplay.avif)
 
 # 前言
 
@@ -17,7 +17,7 @@ typora-root-url: ..
 了解视频播放之前我们来看戏`AVPlayer`需要的一些组件模型
 
 
-![AVPlayer组件模型](/assets/images/20180304LearningAVFoundationPlayingVideo/AVPlayer.webp)
+![AVPlayer组件模型](/assets/images/20180304LearningAVFoundationPlayingVideo/AVPlayer.avif)
 
 
 ## AVPlayer
@@ -53,15 +53,15 @@ typora-root-url: ..
 如下图:
 
 __AVLayerVideoGravityResizeAspect__保持缩放比例
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspect.webp)
+![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspect.avif)
 
 __AVLayerVideoGravityResizeAspectFill__填充
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspectFill.webp)
+![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspectFill.avif)
 
 
 __AVLayerVideoGravityResize__拉伸
 
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResize.webp)
+![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResize.avif)
 
 
 

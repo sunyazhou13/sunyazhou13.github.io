@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20180918KeyboardAnimation/keyboard1.webp)
+![](/assets/images/20180918KeyboardAnimation/keyboard1.avif)
 
 
 # 前言

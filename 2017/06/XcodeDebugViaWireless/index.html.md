@@ -19,11 +19,11 @@ typora-root-url: ..
 
 第一步 选择设备选项
 
-![](/assets/images/20170616XcodeDebugViaWireless/setting1.webp)
+![](/assets/images/20170616XcodeDebugViaWireless/setting1.avif)
 
 第二步 点勾选 via network
 
-![](/assets/images/20170616XcodeDebugViaWireless/setting2.webp)
+![](/assets/images/20170616XcodeDebugViaWireless/setting2.avif)
 
 剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
 

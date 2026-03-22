@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, OpenGL, 图形图象, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20191204MathGraphicTool/MathGraphic.webp)
+![](/assets/images/20191204MathGraphicTool/MathGraphic.avif)
 
 # 前言
 

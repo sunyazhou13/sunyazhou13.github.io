@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220711iOSCrashType/kernel.webp)
+![](/assets/images/20220711iOSCrashType/kernel.avif)
 
 # 前言
 

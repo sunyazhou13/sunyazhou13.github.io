@@ -24,7 +24,7 @@ typora-root-url: ..
 
 * build setting中开启符号表
 
-![](/assets/images/20180817CPUThreadDebug/enableDysm.webp)
+![](/assets/images/20180817CPUThreadDebug/enableDysm.avif)
 
 
 
@@ -68,20 +68,20 @@ for (int i = 0; i < count; i++) {
 
 然后看下控制台 过滤一下 ASLR我们log中的键入内容
 
-![](/assets/images/20180817CPUThreadDebug/consoloDebug.webp)
+![](/assets/images/20180817CPUThreadDebug/consoloDebug.avif)
 
 
 然后 点击 工程中的Product 
 
-![](/assets/images/20180817CPUThreadDebug/products.webp)
+![](/assets/images/20180817CPUThreadDebug/products.avif)
 
 右键 show in finder
 
-![](/assets/images/20180817CPUThreadDebug/productDir.webp)
+![](/assets/images/20180817CPUThreadDebug/productDir.avif)
 
 下一步骤 打开终端 cd 到这这个目录(可以打开终端 输入 cd 空格 拖拽那个文件夹)
 
-![](/assets/images/20180817CPUThreadDebug/dirFinal.webp)
+![](/assets/images/20180817CPUThreadDebug/dirFinal.avif)
 
 然后 `pwd`一下 看看
 
@@ -90,7 +90,7 @@ for (int i = 0; i < count; i++) {
 
 找到我们第一条首地址
 
-![](/assets/images/20180817CPUThreadDebug/importent.webp)
+![](/assets/images/20180817CPUThreadDebug/importent.avif)
 
 > 注意:__这一步非常重要 如果不好使,请重试几次.__
 
@@ -106,32 +106,32 @@ atos -arch arm64 -o com_kwai_gif.app.dSYM/Contents/Resources/DWARF/com_kwai_gif 
 
 首先在控制台顶部的面板点击
 
-![](/assets/images/20180817CPUThreadDebug/breakpoint1.webp)
+![](/assets/images/20180817CPUThreadDebug/breakpoint1.avif)
 
 
 然后 在 consolo中输入 `bt` 
 
-![](/assets/images/20180817CPUThreadDebug/main.webp)
+![](/assets/images/20180817CPUThreadDebug/main.avif)
 
 
 
 如果看到 如下内容说明已经成功.
 
-![](/assets/images/20180817CPUThreadDebug/mainResult.webp)
+![](/assets/images/20180817CPUThreadDebug/mainResult.avif)
 
 ## 4.真机运行 找出未知线程
 
 首先点击Xcode工程中的Profile运行`instruments`,我这里是运行工程之后 Xcode9.4可以无缝转换到`instruments`
 
-![](/assets/images/20180817CPUThreadDebug/instruments0.webp)
+![](/assets/images/20180817CPUThreadDebug/instruments0.avif)
 
 我们找到相关线程 没有名称也不知道对象叫什么 就一个十六进制地址
 
-![](/assets/images/20180817CPUThreadDebug/instruments2.webp)
+![](/assets/images/20180817CPUThreadDebug/instruments2.avif)
 
 我们随便找个地址 在终端中输入 
 
-![](/assets/images/20180817CPUThreadDebug/instruments3.webp)
+![](/assets/images/20180817CPUThreadDebug/instruments3.avif)
 
 
 好了 如果有问题 请删除product和符号表重新编译

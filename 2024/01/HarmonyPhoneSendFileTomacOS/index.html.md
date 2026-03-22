@@ -7,7 +7,7 @@ tags: [鸿蒙OS开发, HarmonyOS]
 typora-root-url: ..
 ---  
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)
 
 # 前言
 
@@ -20,7 +20,7 @@ typora-root-url: ..
 
 对于一个新式手机需要和它进行内部文件互传成了痛点,最近开发总需要从手机录屏中获取mp4视频文件和截图,因为鸿蒙是完全脱离了Android, 找了一些手机助手根本识别不到此手机,包括官方推荐使用的[HiSuite华为手机助手](https://consumer.huawei.com/cn/support/hisuite/)
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/HiSuite.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/HiSuite.avif)
 
 鸿蒙系统并不想苹果电脑, 一套通用的AirDrop可以 自由传输于 自家生态下的大部分设备,鸿蒙目前的阶段还实现不了,鸿蒙的AirDrop叫 `华为共享`, 也需要华为生态体系下的设备才能共享文件无缝传输,但是macOS显然不是华为生态下的产品,那怎么解决此问题呢?
 
@@ -36,7 +36,7 @@ hdc（HarmonyOS Device Connector）是HarmonyOS为开发人员提供的用于调
 
 通过usb数据线连接到mac电脑,
 下面是我电脑的配置
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/systeminfo.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/systeminfo.avif)
 
 然后安装hdc环境到电脑上,上述文档都有说明这里不再赘述,假设你成功安装并运行.
 
@@ -121,7 +121,7 @@ hdc file recv /storage/media/100/local/files/Photo/4/VID_1705287805_004.mp4 ~/Do
 FileTransfer finish, Size:1823388, File count = 1, time:140ms rate:13024.20kB/s
 ```
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/file.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/file.avif)
 
 通过上述操作我们就从华为的鸿蒙手机中把相应的文件传到了我们的macOS上了
 
@@ -137,8 +137,8 @@ FileTransfer finish, Size:1823388, File count = 1, time:140ms rate:13024.20kB/s
 在最新版本的Dev-Eco Studio(DevEco Studio NEXT Developer Preview2)中,加入了新的设备信息浏览工具
 
 位置在IDE的右下角
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/DeviceFileBrowserEntry.webp),
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/DeviceFileBrowser.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/DeviceFileBrowserEntry.avif),
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/DeviceFileBrowser.avif)
 
 这里拿截图举个例子,上述是截图的图片保存路径.
 

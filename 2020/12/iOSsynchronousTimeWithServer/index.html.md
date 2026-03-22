@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20201206iOSsynchronousTimeWithServer/iOSsynchronousTimeWithServerCover.webp)
+![](/assets/images/20201206iOSsynchronousTimeWithServer/iOSsynchronousTimeWithServerCover.avif)
 
 # 前言
 
@@ -72,7 +72,7 @@ NSLog(@"%@",date);
 
 可见NSDate输出的是绝对的UTC时间，而北京时间的时区为UTC+8，上面的输出+8个小时，刚好就是我当前的时间了。所以正常`UTC + 时区`才是真正的时间日期. 至于时区加减请参考下图. 
 
-![](/assets/images/20201206iOSsynchronousTimeWithServer/iOSsynchronousTimeWithServerZone.webp)
+![](/assets/images/20201206iOSsynchronousTimeWithServer/iOSsynchronousTimeWithServerZone.avif)
 
 
  **注意: NSDate是受手机系统时间控制的,当你修改了手机上的时间显示，NSDate获取当前时间的输出也会随之改变。在我们做App的时候，明白这一点，就知道NSDate并不可靠，因为用户可能会修改它的值**.

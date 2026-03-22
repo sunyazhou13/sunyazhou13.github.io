@@ -7,7 +7,7 @@ tags: [iOS, macOS, Git, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170209HowToUseGitManageCode/guide.webp)
+![](/assets/images/20170209HowToUseGitManageCode/guide.avif)
 
 
 # 全局配置git

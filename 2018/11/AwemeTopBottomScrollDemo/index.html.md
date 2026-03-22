@@ -37,7 +37,7 @@ _tableView.contentInset = UIEdgeInsetsMake(SCREEN_HEIGHT, 0, SCREEN_HEIGHT * 3, 
 
 我画个图演示一下.
 
-![](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo2.webp)
+![](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo2.avif)
 
 
 

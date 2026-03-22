@@ -7,7 +7,7 @@ tags: [年终总结]
 typora-root-url: ..
 ---
 
-![](/assets/images/20221231FinalSummary/2022F1.webp)
+![](/assets/images/20221231FinalSummary/2022F1.avif)
 
 
 # 前言
@@ -57,7 +57,7 @@ typora-root-url: ..
 
 在之前我承诺过英镑发行后,我会买几张收藏用以纪念推动计算机行业发展的先驱-阿兰图灵.
 
-![](/assets/images/20221231FinalSummary/2022F2.webp)
+![](/assets/images/20221231FinalSummary/2022F2.avif)
 
 是他鼓励了我的灵魂,让我对计算机科学的发展不断开拓进取,努力革新.
 
@@ -78,10 +78,10 @@ typora-root-url: ..
 好吃就是标准.现在都流行老菜新做,有的说锅包肉橙汁好吃,有的说番茄汁好吃,最原始的锅包肉做法是咸鲜口的不是糖醋口的.不管啥汁啥口味,您觉得好吃就好.
 
 这是第一次试验的样子.  
-![](/assets/images/20221231FinalSummary/2022F3.webp)
+![](/assets/images/20221231FinalSummary/2022F3.avif)
 
 这是第二次实验的样子.  
-![](/assets/images/20221231FinalSummary/2022F4.webp)
+![](/assets/images/20221231FinalSummary/2022F4.avif)
 
 ...
 
@@ -98,17 +98,17 @@ typora-root-url: ..
 
 在这里我推荐大家买一种叫做风车牌的淀粉
 
-![](/assets/images/20221231FinalSummary/2022F5.webp)
+![](/assets/images/20221231FinalSummary/2022F5.avif)
 
 如果经常做建议买2.5KG以上的,这道菜十分费淀粉.别问为什么,这都是交的学费.别的淀粉基本都没有它纯度高.
 
 由于我的勤加练习我在一次同事钓鱼活动娱乐后去吃饭,席间有一道菜叫做`那年秋天的茄子`
 
 吃完我感觉不错我要回去复刻出来.下面是饭店的样子  
-![](/assets/images/20221231FinalSummary/2022F7.webp)
+![](/assets/images/20221231FinalSummary/2022F7.avif)
 
 下面是我复刻后的样子.  
-![](/assets/images/20221231FinalSummary/2022F6.webp)
+![](/assets/images/20221231FinalSummary/2022F6.avif)
 
 这道菜很好吃,成本非常廉价,我可以非常负责告诉你这盘菜食材+调料成本不超过10元,麻烦就麻烦在如何熬制那个拔丝状态的糊. 吃过就知道了,一点不油腻,我做的很油腻不是很成功还得多练练.
 
@@ -150,7 +150,7 @@ TME下面的产品
 
 在TME虽然情况也是这样,但相对有很多改善,Q音的功能我们可以随时拿来,Q音提供内部技术支持,能保证技术共享,我想也许这就是腾讯为什么能比百度强的原因吧!
 
-![](/assets/images/20221231FinalSummary/2022F8.webp)
+![](/assets/images/20221231FinalSummary/2022F8.avif)
 
 这已经是职业生涯里赶上的第二家上市公司了.我没股票哈.
 
@@ -190,7 +190,7 @@ TME下面的产品
 
 所以我在B站上学花了点时间学习完了一门 数字信号处理的课程
 
-![](/assets/images/20221231FinalSummary/2022F9.webp)
+![](/assets/images/20221231FinalSummary/2022F9.avif)
 
 这门课程学完之后感觉和没学一样,因为它全是各种公式推导并没有代码也没有工具的使用教程,只是能作为一个入门的基础知识参考,比如低通滤波器、高通滤波器、带通滤波器、带阻滤波器、FIR滤波器、BF半带滤波器等等各种滤波算法、再比如一些拉普拉斯定理,希尔波特定理等等都是偏学术和基础,根本不适合一个实战程序员学习.
 
@@ -201,8 +201,8 @@ TME下面的产品
 
 这两门课程我都保证100%学完,但是学完并不代表就会了,还得变战斗边学习.
 
-![](/assets/images/20221231FinalSummary/2022F10.webp)  
-![](/assets/images/20221231FinalSummary/2022F11.webp)
+![](/assets/images/20221231FinalSummary/2022F10.avif)  
+![](/assets/images/20221231FinalSummary/2022F11.avif)
 
 学完的证书留个纪念,虽然这说明不了什么,
 
@@ -212,13 +212,13 @@ TME下面的产品
 
 侯捷C++
 
-![](/assets/images/20221231FinalSummary/2022F12.webp)
+![](/assets/images/20221231FinalSummary/2022F12.avif)
 
 因为音视频入门的门槛就是C/C++，为了能和技术契合我这边正在努力跟进学习.
 
 #### 看书
 
-![](/assets/images/20221231FinalSummary/2022Books.webp)
+![](/assets/images/20221231FinalSummary/2022Books.avif)
 
 这一年都在学习这两本书. 毛爷爷写的挺好,我找工作的时候时常翻看,他鼓舞了我的信心.
 那本就是工具书,时常翻阅细节.没啥可说的,在一项技术面前,如果没有灵活掌控驾驭它,千万不要说自己会了,承认吧你不会.
@@ -231,7 +231,7 @@ TME下面的产品
 
 回首面试的时候自己复习了算法复习N遍.发一张图聊表纪念.
 
-![](/assets/images/20221231FinalSummary/2022F13.webp)
+![](/assets/images/20221231FinalSummary/2022F13.avif)
 
 ## 关于理想
 
@@ -241,7 +241,7 @@ TME下面的产品
 
 我记得去年我就说许家印花重金造车,我说这有钱人有钱吧他不会花.王思聪有钱也不会花.就解决卡中国脖子这事你花一个100w都比王健林的小目标牛逼多了.不知道这帮人有钱的想法和世界都是啥样的.
 
-![](/assets/images/20221231FinalSummary/2022F14.webp)
+![](/assets/images/20221231FinalSummary/2022F14.avif)
 
 总之希望曹德旺的人设不会崩塌,希望他把大学办好,他办不好我来办,在我有生之年一定解决卡中国脖子的34项技术.[34项技术点击这里查看](https://www.sunyazhou.com/2019/12/FinalSummary/)
 
@@ -249,7 +249,7 @@ TME下面的产品
 
 这里我不得不拿出咱曹大爷说的话
 
-![](/assets/images/20221231FinalSummary/2022F15.webp)
+![](/assets/images/20221231FinalSummary/2022F15.avif)
 
 没有消费能力+1
 
@@ -258,22 +258,22 @@ TME下面的产品
 
 #### MagSafe磁吸充电宝  
 
-![](/assets/images/20221231FinalSummary/2022F16.webp)  
+![](/assets/images/20221231FinalSummary/2022F16.avif)  
 如果你经常出门,拥有iPhone12 以上机型,我建议买个这玩意,不用繁琐的充电线,直接吸在手机背面无线充电.这玩意出门绝对使用.
 
 #### 8位堂游戏手柄
 
-![](/assets/images/20221231FinalSummary/2022F17.webp)  
+![](/assets/images/20221231FinalSummary/2022F17.avif)  
 
 在业余时间我经常喜欢玩玩益智游戏和原始的街机游戏,有一个模拟器叫做[RetroArch](https://www.retroarch.com/)
 
-![](/assets/images/20221231FinalSummary/2022F18.webp)  
+![](/assets/images/20221231FinalSummary/2022F18.avif)  
 
 这个模拟器可以在各种平台玩,就是配置起来很麻烦,你需要先去西瓜视频或者B站看看配置教程.业余时间玩玩游戏还是很不错的有益于身心健康的事情,当然还是工作和家庭重要,分清主次就好.合理安排时间.
 
 #### 稚晖君发明的Quark-N
 
-![](/assets/images/20221231FinalSummary/2022F19.webp)  
+![](/assets/images/20221231FinalSummary/2022F19.avif)  
 
 这玩意是最小的卡片电脑你信吗.这来自于华为的天才少年出品.[稚晖君的B站主页](https://space.bilibili.com/20259914),喜欢的可以点开看看.全是稚晖君的出品,如果我告诉你他开源了全部硬件和原软件包含硬件的设计图纸和电路你也很难造出来你相信吗?
 

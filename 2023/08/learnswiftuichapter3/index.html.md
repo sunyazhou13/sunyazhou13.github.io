@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, SwiftUI]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.webp)
+![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
 
 # 前言
 
@@ -141,11 +141,11 @@ func maxWidth() -> some View {
 
 你发现没有注释默认支持了markdown
 
-![](/assets/images/20230805LearnSwiftUIChapter3/note1.webp)
+![](/assets/images/20230805LearnSwiftUIChapter3/note1.avif)
 
 蓝色跳转拦截的函数声明 `/// - Tag:push`, `Tag`必须大小写写清楚,不能有空格,使用`x-source-tag`的`scheme`跳转至`push`
 
-![](/assets/images/20230805LearnSwiftUIChapter3/note2.webp)
+![](/assets/images/20230805LearnSwiftUIChapter3/note2.avif)
 
 ### extension写法
 
@@ -155,7 +155,7 @@ func maxWidth() -> some View {
 
 如下图:  
 
-![](/assets/images/20230805LearnSwiftUIChapter3/extension.webp)
+![](/assets/images/20230805LearnSwiftUIChapter3/extension.avif)
 
 # 总结
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, AVKit, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20190417AVRoutePickerView/cover_album.webp)
+![](/assets/images/20190417AVRoutePickerView/cover_album.avif)
 
 
 # 前言

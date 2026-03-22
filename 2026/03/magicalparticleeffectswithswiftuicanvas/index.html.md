@@ -65,7 +65,7 @@ struct SingleParticleView: View {
 }
 ```
 
-![静态粒子效果](/assets/images/20260316MagicalParticleEffectsWithSwiftUICanvas/16_01.webp)
+![静态粒子效果](/assets/images/20260316MagicalParticleEffectsWithSwiftUICanvas/16_01.avif)
 
 ---
 

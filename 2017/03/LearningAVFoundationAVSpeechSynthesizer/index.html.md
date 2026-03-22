@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![AVSpeechSynthesizer](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/Cover.webp)
+![AVSpeechSynthesizer](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/Cover.avif)
 
 前言
 
@@ -25,10 +25,10 @@ AVFoundation整体架构
 
 研究这个功能之前先介绍一下`AV Foundation`整体架构
 
-![iOS](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/frameworksBlockDiagram.webp)  
+![iOS](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/frameworksBlockDiagram.avif)  
 这是iOS上的架构设计 (上图)  
 
-![iOS](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/frameworksBlockDiagramOSX.webp)  
+![iOS](/assets/images/20170311LearningAVFoundationAVSpeechSynthesizer/frameworksBlockDiagramOSX.avif)  
 这是macOS上的架构设计(上图)
 
 

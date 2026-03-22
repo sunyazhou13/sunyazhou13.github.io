@@ -7,7 +7,7 @@ tags: [iOS, Dart, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230312FlutterLifeCycle/flutter0.webp)
+![](/assets/images/20230312FlutterLifeCycle/flutter0.avif)
 
 # 前言
 
@@ -230,7 +230,7 @@ class AssertImageDemo extends StatelessWidget
 {
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/3.webp");
+    return Image.asset("assets/images/3.avif");
   }
 }
 
@@ -243,7 +243,7 @@ class NetworkImageDemo extends StatelessWidget
         width: 300,
         height: 300,
         color: Colors.red,
-        child: Image.network("https://www.sunyazhou.com/assets/images/20230312FlutterLifeCycle/flutter3.webp",
+        child: Image.network("https://www.sunyazhou.com/assets/images/20230312FlutterLifeCycle/flutter3.avif",
           // fit: BoxFit.cover,
           repeat: ImageRepeat.repeatY,
         ),

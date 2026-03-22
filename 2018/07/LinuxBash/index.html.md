@@ -7,7 +7,7 @@ tags: [系统理论实践, macOS, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180718LinuxBash/20130520LinuxLogoOnCentos5.webp)
+![](/assets/images/20180718LinuxBash/20130520LinuxLogoOnCentos5.avif)
 
 
 # bash及其特性

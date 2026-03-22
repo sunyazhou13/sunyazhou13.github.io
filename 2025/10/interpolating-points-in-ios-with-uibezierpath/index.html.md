@@ -13,7 +13,7 @@ typora-root-url: ..
 
 ## Interpolating Points in iOS with UIBezierPath
 
-![自然曲线](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/NatureCurves3.webp)
+![自然曲线](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/NatureCurves3.avif)
 
 最近，我一直在开发一个移动应用，其中包含一个可视化组件，该组件由平滑曲线组成，这些曲线穿过任意的、变化的二维点集。在 iOS 中实现这一功能最直接的方法是使用由 UIBezierPath 定义的平滑曲线序列，但开发人员需要以这样一种方式构造路径中的三次贝塞尔曲线：它们是平滑的并且恰好通过数据点。
 
@@ -25,7 +25,7 @@ typora-root-url: ..
 
 可以通过在路径中添加<i>三次贝塞尔曲线</i>来绘制曲线段。三次贝塞尔曲线由四个控制点定义——这四个点的位置定义了曲线的形状。在下图中，每个点都是欧几里得空间中的 2D (x,y) 点。
 
-![Apple文档中的贝塞尔曲线](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/AppleDocBezier.webp)
+![Apple文档中的贝塞尔曲线](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/AppleDocBezier.avif)
 
 向 UIBezierPath 添加贝塞尔曲线很简单：
 
@@ -37,7 +37,7 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 ```
 
 在上面的代码中，UIBezierPath 从 (77.5, 36.5) 开始，并使用 <code>addCurveToPoint:controlPoint1:controlPoint2</code> 添加了两条三次贝塞尔曲线。这两条曲线的样子如下：
-![贝塞尔曲线示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/BezierExample.webp)
+![贝塞尔曲线示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/BezierExample.avif)
 
 我已经用红色标记了第一条曲线 (C1) 的四个控制点，用蓝色标记了第二条曲线 (C2) 的四个控制点。两条曲线共享一个控制点（C1 P3 和 C2 P0）。C1 的第一个控制点对应于 UIBezierPath 的起点 P0=(77.5, 36.5)，其第一个控制点 (67.78, 56.83) 对应于 P1，依此类推。
 
@@ -49,19 +49,19 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 
 插值最简单的方法可能是使用 <a href="https://en.wikipedia.org/wiki/Cubic_Hermite_spline" title="三次 Hermite 样条">三次 Hermite 样条</a>。计算 Hermite 曲线对应的三次贝塞尔控制点非常简单（请参阅下面示例项目中链接的代码），但当点不规则分布时，它们会表现出极高曲率的"扭结"和环路等问题：
 
-![Hermite 示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/HermiteExamples.webp)
+![Hermite 示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/HermiteExamples.avif)
 
 曲线 <b>A</b> 和 <b>B</b> 都是通过 Hermite 插值创建的。曲线 <b>A</b> 看起来很好——点大致均匀分布。然而，曲线 <b>B</b> 由于点的不规则分布而出现扭结和自相交。
 
 另一种用曲线拟合点的选择是使用 <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom 样条曲线</a>。与 Hermite 曲线一样，Catmull-Rom 曲线会穿过插值点并生成平滑结果，但它们还提供额外的控制——一个标量 alpha 值（在 0.0 和 1.0 之间），用于控制切线幅度。有关详细信息，请参阅这篇出色的论文，标题为 <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCsQFjAA&amp;url=http%3A%2F%2Fwww.cemyuksel.com%2Fresearch%2Fcatmullrom_param%2Fcatmullrom.pdf&amp;ei=FSdcU47DE-mfyQGgzYDYDQ&amp;usg=AFQjCNHa0SzJ9H6nSDAdCt9GD9jAkFnvMg&amp;sig2=hbl_LJtItSnusxWD-nhzKQ&amp;bvm=bv.65397613,d.aWc">关于 Catmull-Rom 曲线的参数化</a>，其中讨论了 alpha 的影响。
 
 常用的 alpha 值为 0.0、0.5 和 1.0，分别对应曲线的<i>均匀</i>、<i>向心</i>和<i>弦长</i>参数化。
-![均匀、弦长和向心参数化](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/UniformChordalCentripetal.webp)
+![均匀、弦长和向心参数化](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/UniformChordalCentripetal.avif)
 
 改变 alpha 值对曲线形状有显著影响，尤其是在高曲率区域。需要注意的是，表示 Catmull-Rom 曲线的分段三次贝塞尔曲线在给定插值点<i>Pn</i>处的计算考虑了点<i>Pn-1、Pn、Pn+1 和 Pn+2</i>，因此生成的三次贝塞尔曲线不会穿过第一个和最后一个拟合点。可以添加额外的点，或者将曲线创建为闭合环。
 
 我们可以重新审视之前的曲线 <b>B</b>，看看它作为 alpha=0.5 的 Catmull-Rom 曲线是什么样子：
-![Catmull 曲线示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/Catmull2.webp)
+![Catmull 曲线示例](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/Catmull2.avif)
 好多了（但是，请注意它不会穿过第一个和最后一个点）！
 
 ## 代码和示例项目
@@ -78,7 +78,7 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 +(UIBezierPath *)interpolateCGPointsWithHermite:(NSArray *)pointsAsNSValues closed:(BOOL)closed;
 ```
 
-![曲线插值应用](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/CurveInterpolationApp.webp)
+![曲线插值应用](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/CurveInterpolationApp.avif)
 
 这两种方法都可以传递一个标志 <code>closed</code>，用于确定曲线在其端点处是闭合的还是开放的。此外，Catmull-Rom 方法还传递一个介于 0.0 和 1.0 之间的 alpha 值。Hermite 插值方法使用有限差分法计算切线。
 

@@ -7,7 +7,7 @@ tags: [iOS, SwiftUI, Swift, Objective-C]
 typora-root-url: ..
 ---
 
-![](/assets/images/20240727Magnificationgesture/SwiftUI.webp)
+![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
 
 # 前言
@@ -17,7 +17,7 @@ typora-root-url: ..
 
 ## 背景介绍
 
-![](/assets/images/20250223SwiftStructMemoryLayout/VerTexBufferLayout.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/VerTexBufferLayout.avif)
 
 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到swift中的结构体实例的内存布局,我把这些整理了一下.
 
@@ -97,7 +97,7 @@ MemoryLayout<Puppy>.size
 
 如果我们有一个连续的小狗数组，每只小狗的大小为 9 字节，那么它在内存中会是什么样子呢？
 
-![](/assets/images/20250223SwiftStructMemoryLayout/stride-nopadding.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/stride-nopadding.avif)
 
 事实证明，并非如此。❌
 
@@ -113,7 +113,7 @@ MemoryLayout<Puppy>.stride
 
 因此，实际的布局看起来是这样的：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/stride-padding.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/stride-padding.avif)
 
 也就是说，如果你有一个指向第一个元素的字节指针，并希望移动到第二个元素，步长就是你需要将指针前进的字节距离。
 
@@ -124,17 +124,17 @@ MemoryLayout<Puppy>.stride
 
 想象一下，计算机一次获取 8 位（即 1 字节）的内存。无论是获取第 1 个字节还是第 7 个字节，所需的时间是相同的。
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-byte8.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-byte8.avif)
 
 然后你升级到了一台 16 位计算机，它以 16 位的字（word）为单位访问数据。你仍然有一些旧的软件希望以字节为单位访问数据，但想象一下这里可能发生的魔法：如果软件请求字节 0 和字节 1，计算机现在可以一次性访问字 0，然后将 16 位的结果拆分。
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-byte16.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-byte16.avif)
 
 在这种理想情况下，字节级的内存访问速度提高了一倍！🎉
 
 现在假设一个不守规矩的程序像这样放入一个 16 位的值：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-misaligned16.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-misaligned16.avif)
 
 然后你要求计算机从字节位置 3 读取 16 位的字（word）。问题在于，这个值是对齐不当的。为了读取它，计算机需要读取位置 1 的字，将其切半，再读取位置 2 的字，将其切半，然后将两半拼接在一起。这意味着访问一个 16 位的值需要两次独立的 16 位内存读取——比应有的速度慢了两倍！😭
 
@@ -159,13 +159,13 @@ MemoryLayout<Int32>.stride
 
 现在回到我们的 `Puppy` 结构体，它有一个 `Int` 和一个 `Bool` 属性。再次考虑值在缓冲区中紧挨在一起的情况：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-nopadding-bytes.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-nopadding-bytes.avif)
 
 `Bool` 值的位置没有问题，因为它们的对齐值为 1 (`alignment=1`)。但第二个整数是对齐不当的。它是一个 64 位（8 字节）的值，对齐值为 8(`alignment=8`)，而它的字节位置不是 8 的倍数。❌
 
 记住，这种类型的步长是 16，这意味着缓冲区实际上看起来是这样的：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-padding-bytes.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-padding-bytes.avif)
 
 我们保留了结构体内所有值的对齐要求：第二个整数位于字节 16，这是 8 的倍数。
 
@@ -215,11 +215,11 @@ MemoryLayout<AlternatePuppy>.size
 
 什么？！我们只是改变了属性的顺序。为什么现在大小不一样了？它应该仍然是9，不是吗？一个布尔值后面跟着一个整数，就像这样：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-internal-1.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-internal-1.avif)
 
 也许你看到了问题所在：8字节的整数不再对齐了！它在内存中实际看起来是这样的：
 
-![](/assets/images/20250223SwiftStructMemoryLayout/alignment-internal-2.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/alignment-internal-2.avif)
 
 结构体本身必须对齐，结构体内部的属性也必须保持对齐。填充字节会插入到元素之间，整个结构体的大小也会随之扩展。
 
@@ -249,7 +249,7 @@ struct CertifiedPuppy2 {
 - **步长（Stride）**：是向前移动以到达缓冲区中下一个项目的字节数。
 - **对齐方式（Alignment）**：是每个实例必须位于的“能被整除的”数字。如果你正在分配内存以复制数据，你需要指定正确的对齐方式（例如：`allocate(byteCount: 100, alignment: 4)`）。
 
-![](/assets/images/20250223SwiftStructMemoryLayout/size-stride-alignment-summary.webp)
+![](/assets/images/20250223SwiftStructMemoryLayout/size-stride-alignment-summary.avif)
 
 
 对于我们大多数人来说，大多数时候，我们处理的都是高级集合，比如数组和集合，不需要考虑底层的内存布局。

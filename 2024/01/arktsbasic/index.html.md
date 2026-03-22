@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)
 
 # 前言
 
@@ -122,7 +122,7 @@ aboutToDisappear(): void {
 ```
 
 生命周期流程如下图所示，下图展示的是被**@Entry装饰的组件（首页）生命周期。  
-![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.webp)  
+![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)  
 **由此可知, @Component组件的声明周期方法 中间包含了@Entry方法全部生命周期方法调用.**
 
 示例代码演示了一个LifeCycle中 添加一个Child子组件,点击按钮push到新页面LifeCycleDetail
@@ -363,7 +363,7 @@ Image($r(app.media.icon))
 加载 网络资源
 
 ``` ts
-Image("https://www.sunyazhou.com/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp")
+Image("https://www.sunyazhou.com/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif")
 ```
 加载 本地任何资源
 
@@ -522,14 +522,14 @@ struct LearnDetail {
 
 ```
 
-![](/assets/images/20240119ArkTSBasic/extend_example.webp)
+![](/assets/images/20240119ArkTSBasic/extend_example.avif)
 
 [参考@Extend官方文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-extend-0000001580345074-V2)
 
 ### @Prop装饰器:父子单向同步
 
 初始化规则图示  
-![](/assets/images/20240119ArkTSBasic/rules.webp)
+![](/assets/images/20240119ArkTSBasic/rules.avif)
 
 下面是单向传递示例代码
 
@@ -892,7 +892,7 @@ struct ForEachDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/ForEach.webp)
+![](/assets/images/20240119ArkTSBasic/ForEach.avif)
 
 这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在Harmonry4.1中*) => {}__
 
@@ -901,7 +901,7 @@ struct ForEachDemo {
 ``` sh
 Use explicit types instead of "any", "unknown" (arkts-no-any-unknown) <ArkTSCheck>
 ```
-![](/assets/images/20240119ArkTSBasic/ForEachError.webp)  
+![](/assets/images/20240119ArkTSBasic/ForEachError.avif)  
 
 
 [ForEach:循环渲染](官方文档)
@@ -933,7 +933,7 @@ struct UniversalEventDemo {
 
 `ClickEvent `类可以拿到如下各种变量
 
-![](/assets/images/20240119ArkTSBasic/ClickEvent.webp)  
+![](/assets/images/20240119ArkTSBasic/ClickEvent.avif)  
 
 ## 组件通用特性-触摸事件
 
@@ -1021,7 +1021,7 @@ struct LayoutDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy1.webp) 
+![](/assets/images/20240119ArkTSBasic/LayoutStudy1.avif) 
 
 `position`和`markAnchor`,以及`offset`的使用如下.
 
@@ -1077,7 +1077,7 @@ struct LayoutDemo2 {
 }
 ```  
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy2.webp) 
+![](/assets/images/20240119ArkTSBasic/LayoutStudy2.avif) 
 
 ``` ts
 //当前 offset
@@ -1096,7 +1096,7 @@ Column({ space: 8}) {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy3.webp) 
+![](/assets/images/20240119ArkTSBasic/LayoutStudy3.avif) 
 
 ### 组件的对齐方式
 
@@ -1143,11 +1143,11 @@ struct FlexPage {
 
 下面是Column的对齐方向
 
-![](/assets/images/20240119ArkTSBasic/FlexColumn.webp) 
+![](/assets/images/20240119ArkTSBasic/FlexColumn.avif) 
 
 下面是Row的对齐方向
 
-![](/assets/images/20240119ArkTSBasic/FlexRow.webp) 
+![](/assets/images/20240119ArkTSBasic/FlexRow.avif) 
 
 
 # 总结

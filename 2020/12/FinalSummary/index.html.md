@@ -7,7 +7,7 @@ tags: [年终总结]
 typora-root-url: ..
 ---
 
-![](/assets/images/20201231FinalSummary/ShulanServiceArea.webp)
+![](/assets/images/20201231FinalSummary/ShulanServiceArea.avif)
 2020年8月 舒兰服务区.结束北漂回家的路上.
 
 # 前言
@@ -46,11 +46,11 @@ typora-root-url: ..
 
 ### 疫情
 
-![](/assets/images/20201231FinalSummary/vaccine.webp)
+![](/assets/images/20201231FinalSummary/vaccine.avif)
 
 从2019年我写完年终总结不久,一种疫情疾病开始成扩散的形式在中华大地上快速传播,最后才知道是新冠肺炎病毒,2020年初愈加严重,记得当时我们X6团队去[唇辣号重庆老火锅(上地七街店)]()聚餐吃火锅,大家讨论的话题是如何买口罩.过年回家的时候开车回家路过京哈高速沿线,各个服务区人心慌慌. 直到正月初四 城市小区以及乡镇村屯开始封路,口罩,消毒液,一次性手套,护目镜等医疗防疫用品紧俏脱销.
 
-![](/assets/images/20201231FinalSummary/epidemicpreventionmaterials.webp)
+![](/assets/images/20201231FinalSummary/epidemicpreventionmaterials.avif)
 
 事态发展较为严重,初八开始小区全面封锁,就这样这一年开始了漫长防疫战争拉开了序幕,直至本文书写之时,全球除中国外,还有很多国家依然陷入疫情防疫不利甚至失控的局面,美国较为严重、英国新冠病毒变异传播、冷冻食品频频检车出病毒附着、环境传染成为可能.面对着种种不利的消息使疫情严重拖累导致工业生产迟滞,影响我们生活中的方方面面,对我们直接的影响是一些依赖进口物资短缺,生活成本上升,就业压力增加,经济发展下行,人均收入减少明显.
 
@@ -78,11 +78,11 @@ typora-root-url: ..
 
 下面这张图片是我度过漫长的隔离期复工的第一天拍摄的图片
 
-![](/assets/images/20201231FinalSummary/returntowork1.webp)
+![](/assets/images/20201231FinalSummary/returntowork1.avif)
 
 公司上班的人很少
 
-![](/assets/images/20201231FinalSummary/returntowork2.webp)
+![](/assets/images/20201231FinalSummary/returntowork2.avif)
 
 以往我都是去公司吃早餐.疫情 的时候公司给每位同学配发了一个隔离罩,要把工作餐拿到工位吃.
 
@@ -94,7 +94,7 @@ typora-root-url: ..
 
 开始承接春晚项目前夕的动员大会上我是这样的.
 
-![](/assets/images/20201231FinalSummary/meeting.webp)
+![](/assets/images/20201231FinalSummary/meeting.avif)
 
 干活的时候是这样的
 
@@ -102,15 +102,15 @@ typora-root-url: ..
 
 最后元旦还算比较成功
 
-![](/assets/images/20201231FinalSummary/meetingresult.webp)
+![](/assets/images/20201231FinalSummary/meetingresult.avif)
 
 我希望这些照片能经得起时光的沉淀.虽然啥用没有,全当博客里不可或缺的材料吧.
 
 ### 卖摩托车
 
 在北京工作这么多年我是一路换了N辆电动车,要么是电动车总坏,要么是充电比较费事.导致我最后下决心买一辆好的摩托车代步来缓解北漂生活的压抑感.  
-![](/assets/images/20201231FinalSummary/motor1.webp)  
-![](/assets/images/20201231FinalSummary/motor2.webp)  
+![](/assets/images/20201231FinalSummary/motor1.avif)  
+![](/assets/images/20201231FinalSummary/motor2.avif)  
 这辆摩托车是我买过最好的一辆没有之一,无奈只骑了3000多公里后卖了.因为老家不允许摩托车上路.没办法把它带回去.不过还好最后成交价没赔多少.自己也算对它有个交代.
 
 ### 离职结束北漂
@@ -119,14 +119,14 @@ typora-root-url: ..
 
 2018年我入职了快手.负责直播iOS开发.在就职期间我遇到了很多不一样的同事,每个人都技术出色.参加快手十三期入职培训(快手中学),CEO宿华 给我们讲述创业的艰辛,以及背后不出名却又默默支持快手的投资人.我也许清楚的记得华哥说:"快手要做一家有温度的公司,要让每个人像阳光一样得到普惠."华哥的朴实感有一种人格魅力,我希望能传承一下华哥的这种朴实无华,即便他依然是中国2018年胡润富豪榜排行84位的富翁,我也会有时候在电梯里看到这位CEO,即便他如何有钱却依然开着一辆别克GL6老实商务车办公,有时候下班也经常能在后厂村路上看到他骑车摩拜单车回家.这也导致我经常穿着华瑞棉林甸鞋的主要原因.不是因为低调的学习这位CEO,而是因为我穷.
 
-现在浮躁的我只有一个![](/assets/images/20201231FinalSummary/getrich.webp)想法
+现在浮躁的我只有一个![](/assets/images/20201231FinalSummary/getrich.avif)想法
 
 
 印象中最深刻的是server端的leader 李伟博大佬给大家分享 一个视频从用户手机到观看者能看到的视频内容中间都经历了哪些处理过程. 因为这是每一个快手员工应该了解的过程.从视频生产到后端处理,再到消费视频.让我们每个人都储备好未来在快手工作的基础知识.我受益匪浅,我进入百度的工作3年的时间里除了志波大概给新人讲解一下百度网盘的app端设计外,没有人愿意讲述一下一个关键字搜索到自然语言分析再到后端搜索引擎处理再到返回给用户能看到的信息内容是怎么样的处理过程.从这一点上看百度还是需要向后来者学习借鉴一下经验.
 
 由于工作团队经常变动,自己总被安排(技术不出众),想想自己的7年北漂生涯,晚上经常睡不着觉.由于加班没有充足的时间睡觉,头发开始逐渐变白.加之北京政府一直对外埠人来京就业持高压打击态度,人权不平等、路权不平等、但是纳税很平等、反正就是各种好事外埠人员几乎都没有北京人同等权利,区别对待.如此种种,房价持续高位不下,户口问题一直很难落实,在北京除了枯燥996上班以外任何自驾旅游的权利对我们都是奢侈的.毕竟没有**对价**我承认,可是也不能让我们连个车都没有就有点过分了,上班我们租房、放假都没有心情消费、北漂被当成**人肉干电池**对待.我最担心的就是每年租房换地儿,连个车都没有着实不方便.这种被压迫的生活状态持续了多年.终于今年我无法承受北京不允许外地车进入,每年只允许办理12次进京证.这让我备受煎熬,我依然清楚的记得下班后打羽毛球打到很晚打不到车回家的场面. 渐渐地各种事情会引发我对**在北京工作的思考**,思考自己到底想得到什么.不就是为了得到自己想要的生活吗?目前这种形势持续下去,钱可能很多但是也是会被国家的高房价一举收割回到解放前的状态.虽然北京生活的大家都这样,但这不是我想要的生活.权衡了很久加上工作上的变动让我失望,于是提了离职申请开始休假回老家.
 
-![](/assets/images/20201231FinalSummary/JinghaExpressway.webp)  
+![](/assets/images/20201231FinalSummary/JinghaExpressway.avif)  
 我原来从未像离开北京这样的开心,那种喜悦前所未有.
 
 > 回首北漂的每一步,我都走的好孤独.
@@ -135,25 +135,25 @@ typora-root-url: ..
 
 沿着京哈高速, 开着我的战车,一路向祖国的东北方向.
 
-![](/assets/images/20201231FinalSummary/route1.webp)
+![](/assets/images/20201231FinalSummary/route1.avif)
 
 回家行程前段目的地是辽宁省沈阳市铁西区北大营附近的同学家,经过这一年的疫情防控,全国的小区控制比较严格,严禁外地人员流动,我出发前计划问好了小区可以进出,才动身出发. 辽宁省真的是风光无限.路过 绥中、兴城、塔山等服务区的时候 我记录下了这一路的美好记忆,最后在盘锦服务区休息时拍下了下面这张照片. 路过塔山服务区,那座双塔造型的建筑横跨京哈高速也许是这一路唯一一座地标吧!
 
-![](/assets/images/20201231FinalSummary/panjinservicearea.webp)
+![](/assets/images/20201231FinalSummary/panjinservicearea.avif)
 
 回家行程后段路程需要从吉林方向绕行,走吉黑高速,舒兰、五常 然后回冰城哈尔滨. 中途路过 开源、铁岭服务区很好、服务区建设的很现代化,如果大家有自驾经过的话一定要到这两个服务区看一看.
 
-![](/assets/images/20201231FinalSummary/route2.webp)
+![](/assets/images/20201231FinalSummary/route2.avif)
 
 这中途会路过美丽的长白山脚下**雾凇岛**,风景很好.以后有机会了一定自驾去仔细看看.
 
-![](/assets/images/20201231FinalSummary/provincialtollstations.webp)
+![](/assets/images/20201231FinalSummary/provincialtollstations.avif)
 
 最后途径新发省界收费站进入哈尔滨市,这一路走了2天.行程大概1500公里.
 
 ### 回家
 
-![秋天的哈尔滨清晨](/assets/images/20201231FinalSummary/home1.webp)
+![秋天的哈尔滨清晨](/assets/images/20201231FinalSummary/home1.avif)
 
 回家后的第一件事是整理一下家里物品.房子入户很久了没人打理.下一步的计划是复习基础知识准备面试找工作.在离职后的一段时间微信上经常收到前同事和同行的微信,大家问我同一个问题,为啥放弃北京这么好的工作和待遇回老家？我其实想在这里正面回复一下,每个人都要经历或多或少的换工作经历,IT这一行从来都是一个高风险、高收益、高失业率的行业,**我牺牲了高薪和好的待遇换来了自己想要的生活**,所以付出这些都是值得的.即便回家后的公司都很low,待遇很差,甚至曾经在北京不需要考虑的问题回家后都是很难的事情,但是三线城市就这样,纵然下这个决定不是很明智,但和在北京比起来好多了,再也不租房子了,幸福感指数高了,下午5点多可以下班了,挣的钱甚至不如北京的1/3、1/4,我有更多的时间在自己的爱好上了.当然也失去了和很多优秀的杰出的同事一起工作的机会, 每个人都有选择自己生活的方式,也许这就是我愚蠢的选择方式吧! 希望自己把业余时间放在学习和爱好上,保持持续学习的热情和不断更新博客写出更多优秀的文章.
 
@@ -169,7 +169,7 @@ typora-root-url: ..
 
 年少不听李宗盛，听懂已是不惑年. 他的歌声经得起时光的沉淀,唱出了我心目中的痛.
 
-![](/assets/images/20201231FinalSummary/JonathanLee.webp)
+![](/assets/images/20201231FinalSummary/JonathanLee.avif)
 
 其实有些歌的歌词写得太真实又有诗意,让我这个伪歌迷听的深入人心.
 
@@ -208,7 +208,7 @@ typora-root-url: ..
 ##### 书法桌
 
 疫情期间买了一套北美黑桃木的[书法桌](https://detail.tmall.com/item.htm?id=592669199819&spm=a1z09.2.0.0.248d2e8dpNMOm5&_u=v2qkte5648b&sku_properties=10187648:21959)用于学习.我比较喜欢那把太师椅.坐起来并不舒服是为了提醒自己生活总是这样让我们不舒服.  
-![](/assets/images/20201231FinalSummary/tablesandchairs.webp)
+![](/assets/images/20201231FinalSummary/tablesandchairs.avif)
 
 实木的家具会有点稍贵,太师椅+书法桌 大概花费 ￥5000+ RMB.
 
@@ -216,9 +216,9 @@ typora-root-url: ..
 
 由于去年买了一辆破车,开高速的时候夜晚灯光很差劲,差点压倒轮胎,比较危险,所以建议开大众车的小伙伴可以看看升级一下灯光,这种升级是完全符合验车法规的放心.[大众氙气灯光升级](https://detail.tmall.com/item.htm?id=562699335539&spm=a1z09.2.0.0.248d2e8dCkJmgu&_u=v2qkte5851d&sku_properties=3986737:6070426;122216751:20213),我升级了进口海拉5透镜,这玩意非常贵.还有欧司朗顶级D1s  6000K色温的氙气灯泡,以及海拉4安定器.
 
-![](/assets/images/20201231FinalSummary/autobulb.webp)
+![](/assets/images/20201231FinalSummary/autobulb.avif)
 
-![](/assets/images/20201231FinalSummary/magotan1990.webp)
+![](/assets/images/20201231FinalSummary/magotan1990.avif)
 
 升级灯光绝对是出于不得已为之的操作,这辆战车虽然老旧一些,也陪我两次往返老家和北京.在长达6000+公里零事故的安全驾驶区间确实没有把我扔到路上我对此感到很欣慰.今年五一换了4只马牌轮胎,和一个mib 682E的车机,希望它未来照顾好这辆战车的主人.
 
@@ -226,7 +226,7 @@ typora-root-url: ..
 
 解放双手扫地神器,我比较辣不愿意打扫屋子,作为热爱3C的 程序员来说,一个电动的扫地机器人居家必不可少.方便打扫房间.
 
-![](/assets/images/20201231FinalSummary/floormoppingrobot.webp)
+![](/assets/images/20201231FinalSummary/floormoppingrobot.avif)
 
 ### 总结
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
 ---
 
-![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.webp)
+![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.avif)
 # 前言
 
 
@@ -375,7 +375,7 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 同样`AVAudioSession`也是通过`Notifications`来进行此类状况的通知。
 
 假设有这样的App
-![](/assets/images/20180112AVAudioSessionCategory/RouteChange.webp)
+![](/assets/images/20180112AVAudioSessionCategory/RouteChange.avif)
 
 最开始在录音时，用户插入和拔出耳机我们都停止录音，这里通过`Notification`来通知有新设备了，或者设备被退出了，然后我们控制停止录音。或者在播放时，当耳机被拔出出时，`Notification`给了通知，我们先暂停音乐播放，待耳机插回时，在继续播放。
 

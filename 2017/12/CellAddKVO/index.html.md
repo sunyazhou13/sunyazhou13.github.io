@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20171215CellAddKVO/UICollectionViewCell.webp)
+![](/assets/images/20171215CellAddKVO/UICollectionViewCell.avif)
 
 
 # 前言

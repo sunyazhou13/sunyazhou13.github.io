@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditorCover.webp)
+![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditorCover.avif)
 
 # 前言
 
@@ -17,7 +17,7 @@ typora-root-url: ..
 ## 问题描述
 
 这几天要对代码进行对齐发现经常用的 XAlign插件不起作用了,一看设置中发现 扩展中没有了Xcode Source Editor
-![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditor.webp)
+![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditor.avif)
 
 通过网络上查询找到一篇靠谱的方式 特记录下来
 

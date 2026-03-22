@@ -53,7 +53,7 @@ do
     then     
         echo $dir     
         cd $dir     
-            `for file in *.png *.jp*g *.PNG ; do cwebp -q 80 "$file" -o "${file%.*}.webp"; done`
+            `for file in *.png *.jp*g *.PNG ; do cwebp -q 80 "$file" -o "${file%.*}.avif"; done`
             rm -rf *.png *.jp*g 
         cd ..   
     fi
@@ -62,20 +62,20 @@ done
 #读取第一个参数
 read_dir $1
 
-#for file in *.png *.jp*g *.PNG ; do cwebp -q 80 "$file" -o "${file%.*}.webp"; done
+#for file in *.png *.jp*g *.PNG ; do cwebp -q 80 "$file" -o "${file%.*}.avif"; done
 
 ```
 
 这个脚本放到`/assets/images`目录执行
 
-![](/assets/images/20230205WebpEnhancement/webp1.webp)
+![](/assets/images/20230205WebpEnhancement/webp1.avif)
 
 剩下的工作就是找到左右post文章的markdown统一更改图片后缀
 
-![](/assets/images/20230205WebpEnhancement/webp2.webp)
+![](/assets/images/20230205WebpEnhancement/webp2.avif)
 
 然后通过sourceTree进行最后的校对 review一遍改动防止改错,这个过程很快,虽然很多 但是图片的后缀修改十分简单容易识别.
-![](/assets/images/20230205WebpEnhancement/webp3.webp)
+![](/assets/images/20230205WebpEnhancement/webp3.avif)
 
 最后build博客 部署到远端即可
 

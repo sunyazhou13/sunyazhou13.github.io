@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170620EnableStaticAnalyer/static.webp)
+![](/assets/images/20170620EnableStaticAnalyer/static.avif)
 
 
 
@@ -29,7 +29,7 @@ Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器
 
 把 `build setting` 里的 “Mode of Analysis for `‘Build’`” 设为 `Shallow` (faster)
 
-![](/assets/images/20170620EnableStaticAnalyer/EnableSStaticAnalyer.webp)
+![](/assets/images/20170620EnableStaticAnalyer/EnableSStaticAnalyer.avif)
 
 全文完
 

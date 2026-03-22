@@ -39,8 +39,8 @@ The widget ecosystem is expanding: Discover how you can use the latest WidgetKit
 
 ![](/assets/images/20230804iOS17Widget/widget1.gif)
 
-![](/assets/images/20230804iOS17Widget/widget2.webp)
-![](/assets/images/20230804iOS17Widget/widget3.webp)
+![](/assets/images/20230804iOS17Widget/widget2.avif)
+![](/assets/images/20230804iOS17Widget/widget3.avif)
 
 ### Add a removable background
 

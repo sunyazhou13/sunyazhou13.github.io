@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190321UIScrollTextDemo/CAGradientCover.webp)
+![](/assets/images/20190321UIScrollTextDemo/CAGradientCover.avif)
 
 # 前言
 

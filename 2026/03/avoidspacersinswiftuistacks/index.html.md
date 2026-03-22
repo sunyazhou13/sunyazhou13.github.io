@@ -37,7 +37,7 @@ HStack(spacing: 12) {
 
 这是个很自然的布局思路——用 `Spacer()` 把左侧文字和右侧图标分开。但当文本内容较长时，文字和图标之间的间距会**比预期的 12pt 大得多**。
 
-![典型视图布局示例](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_cell.webp)
+![典型视图布局示例](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_cell.avif)
 
 ---
 
@@ -55,7 +55,7 @@ HStack(spacing: 12) {
 
 `Spacer` 本身虽然不占宽度，但 Stack 仍然会在它的**两侧各加一个 12pt 间距**，导致实际间距变成 24pt——翻倍了。
 
-![期望布局与实际问题对比](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_colors.webp)
+![期望布局与实际问题对比](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_colors.avif)
 
 ---
 
@@ -75,7 +75,7 @@ HStack(spacing: 12) {
 }
 ```
 
-![两种解决方案对比](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_comparison.webp)
+![两种解决方案对比](/assets/images/20260316AvoidSpacersInSwiftUIStacks/14_comparison.avif)
 
 ---
 

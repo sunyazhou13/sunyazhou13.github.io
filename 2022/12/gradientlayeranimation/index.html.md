@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20221207RadialGradientlayer/RadialCenter.webp)
+![](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
 
 # 前言
 
@@ -46,7 +46,7 @@ open var type: CAGradientLayerType  //swift中的成员变量
 #### kCAGradientLayerAxial
 
 这种Linear (Axial) Gradients 如图
-![](/assets/images/20221207RadialGradientlayer/linear.webp)
+![](/assets/images/20221207RadialGradientlayer/linear.avif)
 
 ``` objc
 // Objective C
@@ -82,8 +82,8 @@ gradientLayer.colors =
 
 可以参考下图  
 
-![](/assets/images/20221207RadialGradientlayer/corners.webp)  
-![](/assets/images/20221207RadialGradientlayer/LinearHorizontal.webp)
+![](/assets/images/20221207RadialGradientlayer/corners.avif)  
+![](/assets/images/20221207RadialGradientlayer/LinearHorizontal.avif)
 
 示例代码如下:
 
@@ -126,7 +126,7 @@ gradientLayer.endPoint = CGPoint(x: 1, y: 0)
 gradientLayer的成员变量`colors`是个数组,可以接收多个颜色值.通常我们使用2个颜色做渐变,如果复杂的话可以设置多个
 
 下面代码示例多种颜色渐变和响应的代码  
-![](/assets/images/20221207RadialGradientlayer/rainbow.webp)  
+![](/assets/images/20221207RadialGradientlayer/rainbow.avif)  
 
 ``` objc
 gradientLayer.colors =
@@ -140,7 +140,7 @@ gradientLayer.colors =
 ```
 
 下图是演示关键渐变的位置设置
-![](/assets/images/20221207RadialGradientlayer/locations.webp)  
+![](/assets/images/20221207RadialGradientlayer/locations.avif)  
 
 位置设置代码如下
 
@@ -173,7 +173,7 @@ gradientLayer.locations = [
 
 当我们使用`kCAGradientLayerRadial `类型的时候 我们需要关注一下径向渐变需要的开始点和结束点. 下图演示的是一个椭圆的渐变layer.当然可以设置圆形.
 
-![](/assets/images/20221207RadialGradientlayer/RadialCenter.webp)
+![](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
 
 ``` objc
 // Objective C
@@ -212,7 +212,7 @@ gradientLayer.endPoint = CGPoint(x: 0, y: 0.75)
 
 > 锥形渐变仅支持`@available(iOS 12.0, *)`
 
-![](/assets/images/20221207RadialGradientlayer/conic.webp)
+![](/assets/images/20221207RadialGradientlayer/conic.avif)
 
 注意观察开始点和结束点位置
 
@@ -247,7 +247,7 @@ gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
 gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
 ```
 
-![](/assets/images/20221207RadialGradientlayer/finaldemo.webp)
+![](/assets/images/20221207RadialGradientlayer/finaldemo.avif)
 
 #### 实现Q音效果的思路
 

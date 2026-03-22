@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170420UniqueFilenameInSystem/StockPhoto.webp)
+![](/assets/images/20170420UniqueFilenameInSystem/StockPhoto.avif)
 
 ## 前言
 
@@ -34,13 +34,13 @@ typora-root-url: ..
 ```  
 
 使用前
-![](/assets/images/20170420UniqueFilenameInSystem/before.webp)
+![](/assets/images/20170420UniqueFilenameInSystem/before.avif)
 
 过程中
-![](/assets/images/20170420UniqueFilenameInSystem/after.webp)
+![](/assets/images/20170420UniqueFilenameInSystem/after.avif)
 
 完成之后
-![](/assets/images/20170420UniqueFilenameInSystem/done.webp)
+![](/assets/images/20170420UniqueFilenameInSystem/done.avif)
 
 
 

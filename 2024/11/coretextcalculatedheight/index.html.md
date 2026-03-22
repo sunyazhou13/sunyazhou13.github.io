@@ -7,7 +7,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20240727Magnificationgesture/SwiftUI.webp)
+![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
 # 前言
 

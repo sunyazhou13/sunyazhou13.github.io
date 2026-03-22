@@ -7,7 +7,7 @@ tags: [鸿蒙OS开发, HarmonyOS]
 typora-root-url: ..
 ---
 
-![](/assets/images/20240115HarmonyOSLaunchPage/HarmonyLogo.webp)
+![](/assets/images/20240115HarmonyOSLaunchPage/HarmonyLogo.avif)
 
 # 前言
 

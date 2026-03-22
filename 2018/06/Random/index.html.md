@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20180601Random/SwiftRandomNumbers.webp)
+![](/assets/images/20180601Random/SwiftRandomNumbers.avif)
 
 # 前言
 

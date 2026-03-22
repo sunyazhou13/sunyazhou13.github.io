@@ -7,7 +7,7 @@ tags: [iOS, macOS,iPadOS,watchOS, SwiftUI]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230912iOS17WidgetURL/banner.webp)
+![](/assets/images/20230912iOS17WidgetURL/banner.avif)
 
 # 前言
 
@@ -44,7 +44,7 @@ HStack(alignment: .bottom) {
 }
 ```
 
-![](/assets/images/20230912iOS17WidgetURL/widget1.webp)
+![](/assets/images/20230912iOS17WidgetURL/widget1.avif)
 
 也就是这三个按钮我点击哪个都是最后一个Image生效,我认真翻阅了一下文档,只能说太坑了
 

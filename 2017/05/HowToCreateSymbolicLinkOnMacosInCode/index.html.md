@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/symboliclink.webp)
+![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/symboliclink.avif)
 
 ### 前言
 
@@ -33,11 +33,11 @@ typora-root-url: ..
 
 
 如下图:
-![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step1.webp)
+![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step1.avif)
 
 本想把它直接copy过去, 但可能存在以后升级问题,后续判断各种版本 删除旧的版本逻辑处理比较麻烦,于是想到用替身的方式实现
 
-![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step2.webp)
+![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step2.avif)
 
 使用这种方式创建替身:
 
@@ -56,7 +56,7 @@ typora-root-url: ..
 *注意:`createSymbolicLinkAtPath:withDestinationPath:error:`方法 第一个参数`LinkAtPath`是`desc`,它是放替身文件的位置. 第二个参数`DestinationPath`是`homePath`代表本地文件的原始路径,这里用工程目录的文件是为了方便,切记不要和 copyItem方法搞混*
 
 
-![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step3.webp)
+![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/step3.avif)
 
 
 ### 总结

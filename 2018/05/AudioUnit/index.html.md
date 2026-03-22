@@ -10,7 +10,7 @@ typora-root-url: ..
 
 
 
-![](/assets/images/20180507AudioUnit/auHostApp.webp)
+![](/assets/images/20180507AudioUnit/auHostApp.avif)
 
 # 前言
 
@@ -25,7 +25,7 @@ typora-root-url: ..
 声音变声一般都是发生在 一端采集录制另一端播放音频, 忽略中间的转码过程,在输入输出的中间过程中进行相应的音频参数就实现了变声. 
 
 下图是AVAudioSession的工作流
-![](/assets/images/20180507AudioUnit/ASPGIntro.webp)
+![](/assets/images/20180507AudioUnit/ASPGIntro.avif)
 
 大家常用的变声方案有很多:
 
@@ -46,20 +46,20 @@ typora-root-url: ..
 
 下图是KX 驱动连线图 windows平台 
 
-![](/assets/images/20180507AudioUnit/kx.webp)
+![](/assets/images/20180507AudioUnit/kx.avif)
 
 ## AudioUnit介绍
 
 
 #### iOS层级架构图
 
-![](/assets/images/20180507AudioUnit/iPhone0sAudioArchitecture.webp)
+![](/assets/images/20180507AudioUnit/iPhone0sAudioArchitecture.avif)
 
-![](/assets/images/20180507AudioUnit/AboutAudioUnitHosting.webp)
+![](/assets/images/20180507AudioUnit/AboutAudioUnitHosting.avif)
 
 > 声音的处理过程, 首先需要认识一下`AUGraph`
 
-![](/assets/images/20180507AudioUnit/simpleAuChain.webp)
+![](/assets/images/20180507AudioUnit/simpleAuChain.avif)
 
 > **audio processing graph**:  A representation of a signal chain comprising an interconnection of audio units. Also called an AUGraph or graph. Core Audio represents such an interconnected network as a software object of typeAUGraph. Audio processing graphs must end in an output unit. See also audio unit.  
 > 一种信号链的表示，包括音频单元的互连。也称为AUGraph或graph。Core Audio代表着这样一个相互连接的网络，它是一个`AUGraph`类型的对象。
@@ -68,11 +68,11 @@ typora-root-url: ..
 
 #### audio unit 结构图(工作流)
 
-![](/assets/images/20180507AudioUnit/auArchitecture.webp)
+![](/assets/images/20180507AudioUnit/auArchitecture.avif)
 
 #### Audio Unit 构成图
 
-![](/assets/images/20180507AudioUnit/AudioUnitScopes.webp)
+![](/assets/images/20180507AudioUnit/AudioUnitScopes.avif)
 
 Unit 一般 分为 Element0 和  Element1
 
@@ -89,7 +89,7 @@ RemoteIO 这个Unit是和硬件IO相关的Unit，它分为输入端和输出端,
 > 整个Render过程就是一次RenderCycle
   
 
-![](/assets/images/20180507AudioUnit/IOUnit.webp)
+![](/assets/images/20180507AudioUnit/IOUnit.avif)
 
 __同时每个Element分为Input Scope 和 Output Scope.如果我们想使用扬声器的声音播放功能,必须需将这个Unit的`Element0`的`OutputScope`和Speak进行连接. 如果想使用麦克风录音功能,那么必须将这个Unit的`Element1`的`InputScope`和麦克风进行连接.__
 
@@ -191,7 +191,7 @@ __同时每个Element分为Input Scope 和 Output Scope.如果我们想使用扬
 
 如下图 ：Remote I/O Unit 
 
-![](/assets/images/20180507AudioUnit/IOUnit.webp)
+![](/assets/images/20180507AudioUnit/IOUnit.avif)
 
 > 麦克风或者扬声器在Audio Unit中有相应的枚举.  
 > 直播中的`耳返`就是用的这个把麦克风采集的数据直接扔给扬声器 这样就能做到 低延迟的实时听到麦克风的声音.  
@@ -251,7 +251,7 @@ static void CheckStatus(OSStatus status, NSString *message, BOOL fatal) {
 举个例子:我们变声实现的流程大概是这个样子 __AVAudioPlayer -> AVPlayerItem -> AVAudioMixer-> AUGraph -> AUNode + AudioUnit__
 
 
-![](/assets/images/20180507AudioUnit/AVAudioMixClass.webp)
+![](/assets/images/20180507AudioUnit/AVAudioMixClass.avif)
 
 #### AudioStreamBasicDescription 配置麦克风输入的参数
 

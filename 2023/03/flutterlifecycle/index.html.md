@@ -7,7 +7,7 @@ tags: [iOS, Dart, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230312FlutterLifeCycle/flutter0.webp)
+![](/assets/images/20230312FlutterLifeCycle/flutter0.avif)
 
 
 # 前言
@@ -107,7 +107,7 @@ class ContentWidgetState extends State<ContentWidget>
 
 ```
 
-![](/assets/images/20230312FlutterLifeCycle/flutter1.webp)
+![](/assets/images/20230312FlutterLifeCycle/flutter1.avif)
 
 打印如下:
 
@@ -146,7 +146,7 @@ flutter: ContentWidgetState的 build被调用
 
 下面是flutter的生命周期函数图
 
-![](/assets/images/20230312FlutterLifeCycle/flutter3.webp)
+![](/assets/images/20230312FlutterLifeCycle/flutter3.avif)
 
 > 图片引用自[Flutter(七)之有状态的StatefulWidget](https://zhuanlan.zhihu.com/p/83782208),如果有版权问题请联系我.
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190726LoadingAnimationI/CircleLoadingAnimation.webp)
+![](/assets/images/20190726LoadingAnimationI/CircleLoadingAnimation.avif)
 
 
 # 前言

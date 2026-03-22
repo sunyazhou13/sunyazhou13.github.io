@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180402RunLoop/RunLoop6.webp)
+![](/assets/images/20180402RunLoop/RunLoop6.avif)
 
 
 # 前言
@@ -132,7 +132,7 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 
 其中 `CFRunLoopModeRef` 类并没有对外暴露，只是通过 `CFRunLoopRef` 的接口进行了封装。他们的关系如下:
 
-![](/assets/images/20180402RunLoop/RunLoop0.webp)
+![](/assets/images/20180402RunLoop/RunLoop0.avif)
 
 
 一个 `RunLoop` 包含若干个 `Mode`，每个 `Mode `又包含若干个 `Source`/`Timer`/`Observer`。每次调用 `RunLoop` 的主函数时，只能指定其中一个 `Mode`，这个`Mode`被称作 `CurrentMode`。如果需要切换 `Mode`，只能退出 `Loop`，再重新指定一个 `Mode` 进入。这样做主要是为了分隔开不同组的 `Source`/`Timer`/`Observer`，让其互不影响。
@@ -219,7 +219,7 @@ CFRunLoopRemoveTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode)
 
 根据苹果在[文档](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW23)里的说明，`RunLoop` 内部的逻辑大致如下:
 
-![](/assets/images/20180402RunLoop/RunLoop1.webp)
+![](/assets/images/20180402RunLoop/RunLoop1.avif)
 
 其内部代码整理如下 (太长了不想看可以直接跳过去，后面会有说明)
 
@@ -343,7 +343,7 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
 
 从上面代码可以看到，`RunLoop` 的核心是基于 `mach port` 的，其进入休眠时调用的函数是 `mach_msg()`。为了解释这个逻辑，下面稍微介绍一下 `OSX/iOS` 的系统架构。
 
-![](/assets/images/20180402RunLoop/RunLoop3.webp)
+![](/assets/images/20180402RunLoop/RunLoop3.avif)
 
 
 苹果官方将整个系统大致划分为上述4个层次：
@@ -354,7 +354,7 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
 
 __我们在深入看一下 Darwin 这个核心的架构：__
 
-![](/assets/images/20180402RunLoop/RunLoop4.webp)
+![](/assets/images/20180402RunLoop/RunLoop4.avif)
 
 
 其中，在硬件层上面的三个组成部分：`Mach`、`BSD`、`IOKit` (还包括一些上面没标注的内容)，共同组成了 `XNU` 内核。
@@ -399,7 +399,7 @@ mach_msg_return_t mach_msg(
 
 为了实现消息的发送和接收，`mach_msg()` 函数实际上是调用了一个 `Mach` 陷阱 `(trap)`，即函数`mach_msg_trap()`，陷阱这个概念在 `Mach` 中等同于系统调用。当你在用户态调用`mach_msg_trap()` 时会触发陷阱机制，切换到内核态；内核态中内核实现的 `mach_msg()` 函数会完成实际的工作，如下图：
 
-![](/assets/images/20180402RunLoop/RunLoop5.webp)
+![](/assets/images/20180402RunLoop/RunLoop5.avif)
 
 这些概念可以参考维基百科: [System_call](http://en.wikipedia.org/wiki/System_call)、[Trap_(computing)](http://en.wikipedia.org/wiki/Trap_(computing))。
 
@@ -679,7 +679,7 @@ NSURLSession    ->AFNetworking2, Alamofire
 
 当开始网络传输时，我们可以看到 `NSURLConnection` 创建了两个新线程：`com.apple.NSURLConnectionLoader` 和 `com.apple.CFSocket.private`。其中 `CFSocket` 线程是处理底层 `socket` 连接的。`NSURLConnectionLoader` 这个线程内部会使用 `RunLoop` 来接收底层 `socket` 的事件，并通过之前添加的 `Source0` 通知到上层的 `Delegate`。
 
-![](/assets/images/20180402RunLoop/RunLoopNetwork.webp)
+![](/assets/images/20180402RunLoop/RunLoopNetwork.avif)
 
 `NSURLConnectionLoader` 中的 `RunLoop` 通过一些基于 `mach port` 的`Source` 接收来自底层 `CFSocket` 的通知。当收到通知后，其会在合适的时机向 `CFMultiplexerSource` 等 `Source0` 发送通知，同时唤醒 `Delegate` 线程的 `RunLoop` 来让其处理这些通知。`CFMultiplexerSource` 会在 `Delegate` 线程的 `RunLoop` 对 `Delegate` 执行实际的回调。
 

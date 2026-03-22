@@ -7,7 +7,7 @@ tags: [iOS, Swift, Objective-C, Cocoapods,skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20201010PodSpec/cocoapods.webp)
+![](/assets/images/20201010PodSpec/cocoapods.avif)
 
 # 前言
 
@@ -69,7 +69,7 @@ end
 
 最后工程就变成了我们想要的样子
 
-![](/assets/images/20201010PodSpec/cocoapods1.webp)
+![](/assets/images/20201010PodSpec/cocoapods1.avif)
 
 
 # 总结

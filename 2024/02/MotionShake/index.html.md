@@ -7,7 +7,7 @@ tags: [iOS, macOS,iPadOS,watchOS, SwiftUI]
 typora-root-url: ..
 ---
 
-![](/assets/images/20240222MotionShake/CMMotion.webp)
+![](/assets/images/20240222MotionShake/CMMotion.avif)
 
 # 前言
 

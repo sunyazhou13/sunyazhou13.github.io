@@ -25,9 +25,9 @@ typora-root-url: ..
 修改scheme切换启动语言
 --
 
-![图1](/assets/images/20170217iOSInternationalizationLanguageSkills/AppleLanguages1.webp)
+![图1](/assets/images/20170217iOSInternationalizationLanguageSkills/AppleLanguages1.avif)
 
-![图2](/assets/images/20170217iOSInternationalizationLanguageSkills/AppleLanguages2.webp)
+![图2](/assets/images/20170217iOSInternationalizationLanguageSkills/AppleLanguages2.avif)
 
 > `-AppleLanguages (zh-Hans)` 代表简体中文  
 > `-AppleLanguages (zh-Hant)` 代表繁体中文  

@@ -10,7 +10,7 @@ typora-root-url: ..
 
 ## 开发总结
 
-![macOS icon](/assets/images/20170113LearningmacOSdevelopmentShortcut/CocoaProgrammingForOSX.webp)
+![macOS icon](/assets/images/20170113LearningmacOSdevelopmentShortcut/CocoaProgrammingForOSX.avif)
 
 1. 学习完所有__[raywenderlich](https://www.raywenderlich.com/category/macos)__的__macOS__开发教程
 2. __[Cocoa Programming for OS X (5th Edition)](https://pan.baidu.com/s/1nuMnePj)__必看(英文版没有中文)

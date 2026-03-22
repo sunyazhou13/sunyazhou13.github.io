@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20220701ReverseList/algorithm.webp)
+![](/assets/images/20220701ReverseList/algorithm.avif)
 
 # 前言
 
@@ -23,7 +23,7 @@ typora-root-url: ..
 
 #### 示例1
 
-![](/assets/images/20220704CommonAncestor/1.webp)
+![](/assets/images/20220704CommonAncestor/1.avif)
 
 ``` sh 
 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
@@ -34,7 +34,7 @@ typora-root-url: ..
 
 #### 示例2
 
-![](/assets/images/20220704CommonAncestor/2.webp)
+![](/assets/images/20220704CommonAncestor/2.avif)
 
 ``` sh 
 输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4

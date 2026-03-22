@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220916FBMemoryCheckTool/FBMemoryProfiler.webp)
+![](/assets/images/20220916FBMemoryCheckTool/FBMemoryProfiler.avif)
 
 # 前言
 
@@ -94,7 +94,7 @@ NSLog(@"%@", retainCycles);
 
 示例场景分析
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle2.webp)
+![](/assets/images/20220916FBMemoryCheckTool/retainCycle2.avif)
 
 示例代码
 

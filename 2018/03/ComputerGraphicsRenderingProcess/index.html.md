@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, OpenGL, 图形图象, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180305ComputerGraphicsRenderingProcess/IvanSutherland.webp)
+![](/assets/images/20180305ComputerGraphicsRenderingProcess/IvanSutherland.avif)
 
 # 前言
 
@@ -22,7 +22,7 @@ typora-root-url: ..
 * 着色指定：当座标系统生成出带座标的绘图数据后就需要送入着色器，着色器指定了这些线框的填充颜色或纹理。
 * 渲染：着色器将绘图数据加上着色数据后就被送入渲染器，渲染器根据绘图数据描述，将像素填充到描述的线框组里并送入帧缓存，然后然后送入显示器，显示器获取到帧缓存的数据后再根据数据的描述来绘图到屏幕上。
 
-![](/assets/images/20180305ComputerGraphicsRenderingProcess/render1.webp)
+![](/assets/images/20180305ComputerGraphicsRenderingProcess/render1.avif)
 
 
 ## 像素与点（point）与点（dot）
@@ -52,7 +52,7 @@ HiDPI是苹果的一项绘图技术，结合这种技术，计算机座标系统
 由于像素是一组色彩数据，所以绘图数据在经过着色器后才包含了它。举个例子，绘图数据在送入着色器前是描述一个100x100的矩形，经过着色器指定色彩属性后会被送入一个HiDPI系统，这个系统将200x200个像素的数据添加到绘图数据里。在经过渲染器后，相当于将200x200个像素填充进100x100这个矩形线框。
 
 
-![](/assets/images/20180305ComputerGraphicsRenderingProcess/render2.webp)
+![](/assets/images/20180305ComputerGraphicsRenderingProcess/render2.avif)
 
 ## 帧缓存与显示器屏幕
 

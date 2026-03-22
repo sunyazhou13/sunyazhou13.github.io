@@ -7,7 +7,7 @@ tags: [年终总结]
 typora-root-url: ..
 ---
 
-![](/assets/images/20231231FinalSummary/banner.webp)  
+![](/assets/images/20231231FinalSummary/banner.avif)  
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="去打台球的路上">繁华的北京二环东四十条天桥夜景</button>
 
 
@@ -49,7 +49,7 @@ typora-root-url: ..
 
 ### 地球的和平
 
-![](/assets/images/20231231FinalSummary/peace.webp)
+![](/assets/images/20231231FinalSummary/peace.avif)
 
 今年真的不堪回首,三年的疫情终于落下来帷幕,大家都敢摘掉口罩了,每个人都有了抗体(直到本文撰写的现在2023年12月份大家又把口罩戴上了,甲流乙流支原体等感染的胁迫下不得不防范起来). 从俄乌开战至今都没有停战的迹象的同时,巴以冲突又重蹈俄乌的覆辙.活在和平国度的我们也未尝幸福,也许和平真的只在大炮射程范围之内,真理真的只在剑锋之间吧! 和平终将还得我们中华崛起才能实现.
 
@@ -77,13 +77,13 @@ typora-root-url: ..
 
 #### 房子解限购
 
-![](/assets/images/20231231FinalSummary/policy.webp)
+![](/assets/images/20231231FinalSummary/policy.avif)
 
 北京买房终于解开了限房不限贷了,不再被外地买房贷款记录所困扰了,北京的房产解限购也许就从今年开始,首都的底牌也没有几张好牌了,为了挽回经济下行的颓势, 公积金今年11月份终于实现了认房不认商贷,也就是说像我这种2017年买老家的房子没有机会使用北京公积金用商贷贷款,这种情况在北京还算首套房,还能享受公积金首套房贷款. 
 
 这是今年也许最好的政策了,然而好像也没啥卵用,工作不稳定的大家觉得政府这是挠痒痒,工作不稳定企业裁员,谁都不敢轻易买房,是呀!经过3年的疫情消耗,大家也认清了现实,攒钱不消费,少消费,买东西够用就行,不用追求多好,消费观念很务实.这是好事也是坏事,好事是大家都懂了勤俭节约,坏事是消费低迷后经济增速放缓,就业就更难了, 经济的三驾马车中的一架不灵了,带来的副作用可是大家非常难以承受的.
 
-![](/assets/images/20231231FinalSummary/policynew.webp)
+![](/assets/images/20231231FinalSummary/policynew.avif)
 
 好政策一个接着一个,首付降至30%了,贷款商贷也降到4.2%的利率了.在我看来这是房子卖不动,为了刺激经济,割韭菜都割到韭菜根了.
 
@@ -115,8 +115,8 @@ typora-root-url: ..
 #### 共产房
 
 有了工作居住证第一时间安排上北京的共产房, 北京的公产房是我等唯一有可能性上车的房子,户型和面积都需要做相应的取舍,甚至后续的卖房和出租.  
-![](/assets/images/20231231FinalSummary/gongchanfang1.webp)  
-![](/assets/images/20231231FinalSummary/gongchanfang2.webp)  
+![](/assets/images/20231231FinalSummary/gongchanfang1.avif)  
+![](/assets/images/20231231FinalSummary/gongchanfang2.avif)  
 这个共产房对购买的购房者要求非常苛刻,不是有钱就行,你得从未在北京有过任何房屋住宅交易记录,单身人士还得30周岁以上,自从北京解开限房不限贷,这几天有出来个降低首付比例到30%的政策后,买房者可能会多那么一点自信, 非京籍买共产房还分好几组, 主要是看申购人数和供应套数. 总之一堆条条框框如果你感兴趣可以参考[大兴区亦生悦小区共有产权住房项目申购登记公告](https://www.bjdx.gov.cn/bjsdxqrmzf/zwxx/ztfw/zfbzztfw/tzgg3442/2101376/index.html)看看这个共产房在北京咋回事. 基本大概率外地非京籍买房限制 五年连续社保之类的、工作地点、社保缴纳区域、是否是区引进人才之类的人优先组.像我这种社保在海淀区只能沦为非京籍最后一组选房, 好房子得先可着北京人、和供应地块的区 社保人群, 城六区基本就是凑热闹. 
 
 通过一个共产房我发现两个事情:
@@ -134,7 +134,7 @@ typora-root-url: ..
 
 ### 努力的工作
 
-![](/assets/images/20231231FinalSummary/work.webp)  
+![](/assets/images/20231231FinalSummary/work.avif)  
 
 最近这一年半时间里,几乎都是在腾讯音乐娱乐-酷我音乐团队效力并苟活, 公司之前在国家会议中心办公, 今年7月份搬到了东四十条,从4环外搬到了2环里,带来最直接的痛点是上班时间从30分钟摩托车到1个小时地铁的差距,最主要的是摩托车骑不了了.很忧伤,但也有好处,好处就是我每天在地铁上的时间多了就有了很多时间学习,每天都在地铁上下班的时间多有2个小时的学习时间,当然条件艰苦一些,需要人挤人,一路几乎都是站着.
 
@@ -145,7 +145,7 @@ typora-root-url: ..
 不过我还是能在一些技术的开发上做一些技术沉淀.保留曾经那份对技术的热爱和影响力的提升.
 
 10月份开发的小组件,我向腾讯音乐技术团队的公众号投了一篇文章,介绍一些开发细节
-![](/assets/images/20231231FinalSummary/article.webp) 
+![](/assets/images/20231231FinalSummary/article.avif) 
 
 当内部审核稿件的时候被砍掉的只剩下一些没什么技术含量的细节,核心的内容不允许被public出来,主要是为了保持业界的领先性.我希望在这里记录一下我对文章投稿被删减引发的思考:
 
@@ -166,13 +166,13 @@ typora-root-url: ..
 
 年初的时候为了拯救公司即将增速放缓的app 波点音乐,我这边被抽调过去支援flutter开发,主要工作就是迁移集团提供的直播SDK,和flutter交互,缺基建就搞基建,缺持续集成就搞持续集成,缺跳转库就开发集成混合导航栈.趁着这个时间我业余的周末都在学习flutter,大概用了6个周末就把整套教程看完了,也明白咋回事了,剩下的工作就是给波点干活搞flutter.
 
-![](/assets/images/20231231FinalSummary/flutter.webp)   
+![](/assets/images/20231231FinalSummary/flutter.avif)   
 上面是B站上的flutter教程分享给大家[最新Dart、Flutter教程-带你进入Flutter的世界](https://www.bilibili.com/video/BV1KE41117XV?p=1)
 
 学习了一段时间发现,它的框架太好了,基本都把所有的工作都做了.
 
 下半年 接到任务,开发iOS17小组件,而且这小组件还必须用SwiftUI.从学习完Flutter立马用至少10几个周末的时间学习SwiftUI.
-![](/assets/images/20231231FinalSummary/swiftUI.webp)   
+![](/assets/images/20231231FinalSummary/swiftUI.avif)   
 
 [SwiftUI开发教程](https://www.bilibili.com/video/BV1pW4y1j7MC/?spm_id_from=333.999.0.0&vd_source=9309f71afe97e633abeadc8407870e76)
 
@@ -196,7 +196,7 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 现在的B站太好了,能学习各种课程还没有广告还免费.真的良心.还记得去年学习完成swift的课程,感觉也没什么,但是swift和SwiftUI每年发布一版我就得学习一遍,每次的改动太多了,根本跟不过来.
 
 就这样学习的时间经常被打乱节奏,由于经常被抢占式调度学习任务,导致没能持续不断的把这本书看完.这是目前的进度  
-![](/assets/images/20231231FinalSummary/cxxprmerplus.webp) 
+![](/assets/images/20231231FinalSummary/cxxprmerplus.avif) 
 我解释一下啥是`抢占式调度`,就是原计划我是按照每天的上下班时间看这本书,但是往往都是看到一半或者其他进度过程中被一些新技术例如鸿蒙开发教程的视频打断,导致我只能先把工作相关的技术学习任务先学习完,再抽时间学习剩余的任务.就这样反反复复被各种抢占式调度占用了很多业余时间.  
 如果你和我一样,那么恭喜你,目前我没有找到最优解去解决，时间如何被抢占式调度,我只能说财富自由的时候我也许会有.
 
@@ -207,7 +207,7 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 
 ### 肤浅的爱好-台球  
 
-![](/assets/images/20231231FinalSummary/cueball.webp)  
+![](/assets/images/20231231FinalSummary/cueball.avif)  
 最近这一年时间里,公司有社团活动,我跟同事一起逐渐的学起了台球,直到现在我还一直组织公司的台球活动.台球有一种魔力,能让我这个没有任何业余爱好的人爱不释手,我的球技也日益增进,每次看见绿色台尼眼睛很舒服,拿起球杆时会把工作和生活上的一些不愉快遗忘.
 
 以前自己对台球的理解只能说浮皮潦草,这一年里自己通过观看B站的台球教学和比赛逐渐对这个球体撞击运动产生了浓厚的兴趣, 从退台、占位、入位、姿势、握杆、瞄点、运杆、发力, 下杆法、高中低杆、左右旋转、大中小力的掌控. 五分点、跳球、加塞让点、清台思路、K球、等全都一一尝试并训练.
@@ -254,62 +254,62 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 
 #### 威联通NAS  464C-8G
 
-![](/assets/images/20231231FinalSummary/nas1.webp)  
-![](/assets/images/20231231FinalSummary/nas2.webp)  
+![](/assets/images/20231231FinalSummary/nas1.avif)  
+![](/assets/images/20231231FinalSummary/nas2.avif)  
 这装备可以说存储一生的资料都够用了吧. 双11前夕京东特价促销 会员价1823买的.
 买到手加了4块4T希捷酷狼Nas专用硬盘.主要是存储资料和学习的一些内容.可以用这个架设git服务器,用这个开设个人博客网站作为云存储等等,这个也许只有开发人员才懂它的作用,以后再也不用担心换电脑了,资料云端本地传到nas上,其它电脑轻松访问.
 
 #### 台球杆
 
-![](/assets/images/20231231FinalSummary/cue.webp) 
+![](/assets/images/20231231FinalSummary/cue.avif) 
 
 这个台球杆可以说1倍的价钱双倍的快乐,我选的是几百块钱的手工杆,不是很出名,是一个广东台山的很古老的手工杆品牌.白沙.用着质感和使用体验非常好.我很喜欢这只球杆.它陪伴我打球的过程中有很多运气加持.
 
 
 #### HomePod
 
-![](/assets/images/20231231FinalSummary/homepod.webp)
+![](/assets/images/20231231FinalSummary/homepod.avif)
 
 双12 遛货遛了好几个月,观察它的价格低于常规价格后果断下手,音质非常好,就是延迟太高,没有蓝牙延迟低.这个性价比不高哈,不推荐大家买,因为这个一个很贵,有钱的小伙伴都买好几个组装成立体声播放,好处就是它可以单独控制也可以集群控制,亦可以 单独分开控制,控制很简单跟它说 "hi siri ..."
      
 ####  Apple Watch
 
-![](/assets/images/20231231FinalSummary/applewatch.webp)
+![](/assets/images/20231231FinalSummary/applewatch.avif)
 
 之前的手表电池不行了,pdd买了一块电池,结果自己动手的时候发现,屏幕线圈有一层nfc接触电路,导致把之前的手表弄坏了,查了一下维修比买二手价格还贵,果断放弃,pdd买个最便宜的se.
 
 #### 苹果触摸板
 
-![](/assets/images/20231231FinalSummary/trackpad.webp)
+![](/assets/images/20231231FinalSummary/trackpad.avif)
 
 苹果的设备还是触摸板比较好用,学习工作写代码,还是触摸板比妙控鼠标要好很多,于是淘汰了旧的妙控鼠标,换成了触摸板.
 
 #### PS5游戏光盘
 
-![](/assets/images/20231231FinalSummary/games.webp)
+![](/assets/images/20231231FinalSummary/games.avif)
 
 业余败家买了几本DVD光盘碟片游戏.当做收藏吧！
 
 #### 摩托车头盔
 
-![](/assets/images/20231231FinalSummary/helmet.webp)
+![](/assets/images/20231231FinalSummary/helmet.avif)
 
 骑摩托车的时候比较不安全,买了一个好一些的.安全重要
 
 #### 挎包
 
-![](/assets/images/20231231FinalSummary/bags.webp)
+![](/assets/images/20231231FinalSummary/bags.avif)
 
 为了解决每次出门带各种东西弄得裤兜非常难看,鼓鼓的一点都不优雅,岁数大了,渐渐地变得注意自己的体面和形象,自己买了一个挎包, 实际上是买了3个,其余两个送给了同学和朋友,在我父亲去世的时候我借哥们的车用了好几天,兄弟一分钱都没收,为了表达我的感谢,我送他们两个人一人一个挎包.
 
 #### 显示器总成
 
-![](/assets/images/20231231FinalSummary/lcd.webp)
+![](/assets/images/20231231FinalSummary/lcd.avif)
 之前有一个旧的苹果电脑,太老了很卡,于是把电脑拆了之后发现屏幕是好的,上网上搜了一下可以买个mvds驱动板可以改成 显示器,于是花了200多买了驱动板安装上果然不错,变废为宝合理利用家里的电器.
 
 #### 刨丝器
 
-![](/assets/images/20231231FinalSummary/grater.webp)
+![](/assets/images/20231231FinalSummary/grater.avif)
 
 我相信这个如果你不做饭根本不会意识到它的重要性,我经常下厨做饭,对厨房工具比较重视,切土豆丝是一件很麻烦的事,如果不是为了练习技术,我建议还是买一个饭店用的刨丝器,就是上图的工具,买回来发现,饭店的厨师好像也不香了,工具切的非常好.
 

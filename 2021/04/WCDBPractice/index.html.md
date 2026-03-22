@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20210406WCDBPractice/wcdb.webp)
+![](/assets/images/20210406WCDBPractice/wcdb.avif)
 
 # 前言
 

@@ -7,7 +7,7 @@ tags: [鸿蒙OS开发, HarmonyOS, ArkTS, Ark动画]
 typora-root-url: ..
 ---
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.webp)
+![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)
 
 # 前言
 

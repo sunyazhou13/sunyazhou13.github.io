@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, Swift, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180608SwiftRandom/whatisnewinswift.webp)
+![](/assets/images/20180608SwiftRandom/whatisnewinswift.avif)
 
 # 前言
 

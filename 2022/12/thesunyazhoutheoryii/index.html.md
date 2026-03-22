@@ -7,7 +7,7 @@ tags: [理论]
 typora-root-url: ..
 ---
 
-![](/assets/images/20221203TheSunyazhouTheoryII/thesunyazhoutheoryii.webp)
+![](/assets/images/20221203TheSunyazhouTheoryII/thesunyazhoutheoryii.avif)
 
 # 前言
 
@@ -27,7 +27,7 @@ typora-root-url: ..
 
 * `TSTⅡCVLRS` (The Sunyazhou Theory Ⅱ Computer Vision Laser Radar System) 孙亚洲第二理论计算机视觉激光雷达系统.
 
-![](/assets/images/20221203TheSunyazhouTheoryII/laserladar1.webp)
+![](/assets/images/20221203TheSunyazhouTheoryII/laserladar1.avif)
 
 
 > 注:  
@@ -46,7 +46,7 @@ typora-root-url: ..
 附: 目前国内各家造车新势力雷达使用情况
 
 
-![](/assets/images/20221203TheSunyazhouTheoryII/laserladar2.webp)
+![](/assets/images/20221203TheSunyazhouTheoryII/laserladar2.avif)
 
 
 [参考自 中国市场教激光雷达公司做生意](https://www.ithome.com/0/658/343.htm)  

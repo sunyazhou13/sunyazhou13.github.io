@@ -15,7 +15,7 @@ typora-root-url: ..
 
 # 揭秘 AI 编码代理：用 Swift 构建你自己的代理
 
-![Hero Image](/assets/images/20251117SwiftAIAgent/hero.webp)
+![Hero Image](/assets/images/20251117SwiftAIAgent/hero.avif)
 
 ## 并非魔法的魔术
 
@@ -37,7 +37,7 @@ AI 编码代理归结为三件事：
 2. **一组工具**，它可以调用（执行实际工作的函数）
 3. **一个循环**，保持对话继续进行
 
-![Agent Loop Image](/assets/images/20251117SwiftAIAgent/agent-loop.webp)
+![Agent Loop Image](/assets/images/20251117SwiftAIAgent/agent-loop.avif)
 
 把它想象成有一位聪明的科学家，但他不能离开办公室。你（代理循环）不断询问他们下一步该做什么，他们告诉你，你去做，然后报告回来，他们再想出下一步。冲洗并重复，直到工作完成。
 
@@ -45,7 +45,7 @@ AI 编码代理归结为三件事：
 
 这里事情变得有趣了。语言模型实际上不会像人类那样"记住"之前的对话。每次你发送消息时，实际上是将_整个对话历史_一起发送。
 
-![Context Window](/assets/images/20251117SwiftAIAgent/context-window.webp)
+![Context Window](/assets/images/20251117SwiftAIAgent/context-window.avif)
 
 这个"工作记忆"被称为**上下文窗口**。现代模型通常有 128K 到 200K 个 token 的上下文窗口（大约 100,000-150,000 个单词）。
 
@@ -78,7 +78,7 @@ AI 编码代理归结为三件事：
 
 我们讨论的所有代码都在 [Nimbo 仓库](https://github.com/gscalzo/Nimbo)中。随时克隆它并跟着做！
 
-![Agent Interaction](/assets/images/20251117SwiftAIAgent/agent-interaction.webp)
+![Agent Interaction](/assets/images/20251117SwiftAIAgent/agent-interaction.avif)
 
 ## 步骤 1：基础（构建聊天循环）
 
@@ -141,7 +141,7 @@ final class Agent {
 
 此时，我们有一个基本的聊天循环，但**还没有工具**。代理只能进行对话。它实际上不能对文件做任何事情。
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-1.webp)
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-1.avif)
 
 ## 步骤 2：教授工具（定义能力）
 
@@ -204,7 +204,7 @@ LLM 看到描述并决定，"哦，用户想查看一个文件。我应该用路
 
 现在我们已经定义了我们的工具！代理知道**存在哪些工具**以及**何时使用它们**，但它仍然无法执行它们。如果你要求它读取文件，它会尝试调用工具，但还不会发生任何事情。
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-3.webp)
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-3.avif)
 
 ## 步骤 3：工具执行（让它们工作）
 
@@ -287,7 +287,7 @@ private func perform(_ call: ToolCall) -> ChatCompletionParameters.Message {
 
 现在代理可以**执行单个工具**了！它可以调用 `read_file` 或 `list_files` 并实际获得结果。但它就此停止。它还不能将多个工具链接在一起。
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-4.webp)
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-4.avif)
 
 ### 其他工具：ListFiles 和 EditFile
 
@@ -424,7 +424,7 @@ if let text = String(data: capped, encoding: .utf8) {
 * 将多个工具调用链接在一起。
 * 循环直到任务完成。
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-5.webp)
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-5.avif)
 
 ## 实际考虑
 
@@ -594,9 +594,9 @@ Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，
 * 给代理访问它们的权限。
 * 让语言模型找出其余部分。
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-6.webp) 
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-6.avif) 
 
-![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-7.webp)
+![Nimbo Basic](/assets/images/20251117SwiftAIAgent/nimbo-7.avif)
 
 ## 简单的力量
 

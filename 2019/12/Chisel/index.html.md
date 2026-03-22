@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, Swift, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20191206Chisel/lldb1.webp)
+![](/assets/images/20191206Chisel/lldb1.avif)
 
 
 # 前言
@@ -43,14 +43,14 @@ open .lldbinit
 
 ```
 
-![](/assets/images/20191206Chisel/lldbinit.webp)
+![](/assets/images/20191206Chisel/lldbinit.avif)
 
 创建完 把脚本命令搞进去  这里我就不说官方的写法了 跟屎一样一点不好使
 
 
 我贴一下我的添加方法.
 
-![](/assets/images/20191206Chisel/lldb2.webp)
+![](/assets/images/20191206Chisel/lldb2.avif)
 
 这是我用本地电脑安装完成之后的路径图
 
@@ -106,7 +106,7 @@ command script import /Users/sunyazhou/Library/Application\ Support/Reveal/Revea
 
 演示效果
 
-![](/assets/images/20191206Chisel/lldb3_chisel.webp)
+![](/assets/images/20191206Chisel/lldb3_chisel.avif)
 
 ##  其它调试lldb有哪些？
 

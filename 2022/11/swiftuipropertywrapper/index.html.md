@@ -7,7 +7,7 @@ tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20221125SwiftUIPropertyWrapper/swiftUIPropertyWrappers.webp)
+![](/assets/images/20221125SwiftUIPropertyWrapper/swiftUIPropertyWrappers.avif)
 
 # 前言
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180515HowToCreateTopBottomRoundedCornersForViews/TopBottomCornerDemo.webp)
+![](/assets/images/20180515HowToCreateTopBottomRoundedCornersForViews/TopBottomCornerDemo.avif)
 
 # 前言
 

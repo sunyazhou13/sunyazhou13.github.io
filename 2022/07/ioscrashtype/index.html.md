@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220711iOSCrashType/kernel.webp)
+![](/assets/images/20220711iOSCrashType/kernel.avif)
 
 # 前言
 
@@ -28,7 +28,7 @@ typora-root-url: ..
 
 所以，当在应用中启用`NSZombie`而不是让应用直接崩溃时，一个错误的内存访问就会变成一条无法识别的消息发送给僵尸对象。僵尸对象会显示接收到的消息，然后跳入调试器，这样你就可以查看到底哪时出了问题。 可以在`Xcode`的`scheme`页面中设置`NSZombieEnabled`环境变量。点击`Product`的`Edit Scheme`打开该页面，然后勾选`Enable Zombie Objects`复选框，如图所示：
 
-![](/assets/images/20220711iOSCrashType/1.webp)
+![](/assets/images/20220711iOSCrashType/1.avif)
 
 僵尸在RAC出现以前作用很大。但自从有了ARC，如果你在对象的所有权方面比较注意，那么通常不会碰到内存相关的崩溃。
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220701ReverseList/algorithm.webp)
+![](/assets/images/20220701ReverseList/algorithm.avif)
 
 # 前言
 

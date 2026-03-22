@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20171230FinalSummary/2017FinalSummart1.webp)
+![](/assets/images/20171230FinalSummary/2017FinalSummart1.avif)
 
 # 前言
 
@@ -41,11 +41,11 @@ typora-root-url: ..
 
 从年初我搭建博客开始至今已发表整整45篇.
 
-![blog](/assets/images/20171230FinalSummary/2017FinalSummaryBlog1.webp)
+![blog](/assets/images/20171230FinalSummary/2017FinalSummaryBlog1.avif)
 
 正如我的**关于**页面说的,我并没有对它的品质太过于苛求,尽量记录一下容易忘记的技术和生活经验. 虽然大家看到这些并没有太过留意,但我自己确觉得如数家珍,毕竟这是一笔财富.当我几年后会看这篇年终总结的时候,希望自己**没有因为虚度年华而悔恨,也没有因为碌碌无为而羞耻**.
 
-![](/assets/images/20171230FinalSummary/2017FinalSummaryBlog2.webp)
+![](/assets/images/20171230FinalSummary/2017FinalSummaryBlog2.avif)
 
 我是一个不喜欢玩各种游戏的90后,每天看着统计后台才找回一点干活的心情.
 
@@ -70,7 +70,7 @@ typora-root-url: ..
 
 大概的路线是这样的:
 
-![看房](/assets/images/20171230FinalSummary/2017FinalSummaryFindHouse.webp)
+![看房](/assets/images/20171230FinalSummary/2017FinalSummaryFindHouse.avif)
 
 
 据我后来统计 每天至少步行18公里以上. 
@@ -129,9 +129,9 @@ typora-root-url: ..
 
 #### 过年筹划买房
 
-![](/assets/images/20171230FinalSummary/HaerbinFuture.webp)
+![](/assets/images/20171230FinalSummary/HaerbinFuture.avif)
 
-[原图清晰](/assets/images/20171230FinalSummary/HaerbinFutureBig.webp)
+[原图清晰](/assets/images/20171230FinalSummary/HaerbinFutureBig.avif)
 
 回家过年,这年过得我心情都不在年上,心情很矛盾,过了初七就上班回北京了.我的家在绥化市海伦市.
 
@@ -248,23 +248,23 @@ typora-root-url: ..
 
 > 看到这里提醒一下大家,事后我发现我选的户型没有阳台,是飘窗那种看样子.
 
-![](/assets/images/20171230FinalSummary/2017FinalSummaryHouseLayout.webp)
+![](/assets/images/20171230FinalSummary/2017FinalSummaryHouseLayout.avif)
 
 爱达88-1单元-12楼-三室两厅一卫-`124.7`平,当时的价格 10800/平 
 
 
 来张封顶的照片 感谢__红姐__提供:
-![](/assets/images/20171230FinalSummary/Aida88Contructing.webp) 
+![](/assets/images/20171230FinalSummary/Aida88Contructing.avif) 
 
 
 在过去的几年我回家的路线是这样的:
-![](/assets/images/20171230FinalSummary/HailunPath.webp)
+![](/assets/images/20171230FinalSummary/HailunPath.avif)
 
 从`北京坐地铁`到`北京站`-->`哈尔滨站`-->`海伦站`-->`大客(大巴)`-->`第二良种场`  
 全程`1455`公里左右,说的凄惨一些坐大巴回农村地图都没有导航.压根都没有这个路线,到海伦`40公里左右`
 
 如果说交房以后我的路线应该是这样的:  
-![](/assets/images/20171230FinalSummary/HaerbinPath.webp)  
+![](/assets/images/20171230FinalSummary/HaerbinPath.avif)  
 从`北京坐地铁`到`北京站`-->`哈尔滨西站` 完事 走5分钟我到家了.
 
 > 为了这`265`公里(哈尔滨减去到海伦农村的公里)我已为之奋斗了至少`4`年,未来还会继续奋斗到把房贷还完.
@@ -342,11 +342,11 @@ typora-root-url: ..
 
 #### 离开中国互联网之巅-百度
 
-![](/assets/images/20171230FinalSummary/2017FinalSummaryWork1.webp)
+![](/assets/images/20171230FinalSummary/2017FinalSummaryWork1.avif)
 
 如果你是一个年轻需要锻炼的程序员我建议你去百度,那里有你成长所需要的土壤
 
-![](/assets/images/20171230FinalSummary/2017FinalSummaryWork2.webp)
+![](/assets/images/20171230FinalSummary/2017FinalSummaryWork2.avif)
 
 上边这张是办公环境,可以说确实很好.
 
@@ -385,16 +385,16 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 
 这一年买了两只毛笔花了大概200多
 
-![](/assets/images/20171230FinalSummary/Brush.webp)
+![](/assets/images/20171230FinalSummary/Brush.avif)
 
 
 不过用起来确实很好,好马配好鞍,好笔配毛毡.
 
-![](/assets/images/20171230FinalSummary/calligraphy.webp)
+![](/assets/images/20171230FinalSummary/calligraphy.avif)
 
 有幸在百度碰到书法高手-老乡`潘旭`,这个绥棱人真是干啥啥行,写代码飞驰电掣.还有一手好书法.让我这个海伦人很佩服.
 
-![](/assets/images/20171230FinalSummary/Linzexu.webp)
+![](/assets/images/20171230FinalSummary/Linzexu.avif)
 
 这是林则徐当年写给皇帝的虎门销烟奏折.是我学习书法的最终目标.
 
@@ -407,22 +407,22 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 
 * 《卑鄙的圣人曹操》1~10部全听完 
 
-![](/assets/images/20171230FinalSummary/Novel1.webp)
+![](/assets/images/20171230FinalSummary/Novel1.avif)
 
 * 《知行合一 王阳明 》
 
-![](/assets/images/20171230FinalSummary/Novel2.webp)
+![](/assets/images/20171230FinalSummary/Novel2.avif)
 
 * 《大清相国》 陈廷敬   
-![](/assets/images/20171230FinalSummary/Novel3.webp)
+![](/assets/images/20171230FinalSummary/Novel3.avif)
 
 * 《晚清的最后十八年》1~3部
 
-![](/assets/images/20171230FinalSummary/Novel4.webp)
+![](/assets/images/20171230FinalSummary/Novel4.avif)
 
 * 《Learn AV Foundation》
 
-![](/assets/images/20171230FinalSummary/LearnAvFoundation.webp)
+![](/assets/images/20171230FinalSummary/LearnAvFoundation.avif)
 
 
 
@@ -432,13 +432,13 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 
 #### 读《晚清最后的十八年》中有一个故事值得学习
 
-![](/assets/images/20171230FinalSummary/FuDaoAnZheng.webp)
+![](/assets/images/20171230FinalSummary/FuDaoAnZheng.avif)
 
 > 福岛安正（1852一1919）日本信州人．日本殖民机构关东都督府都督。陆军大将。有“日本情报战之父”之称。他是一个具有超前眼光的阴谋家、战略家.  
 
 > 1887年，福岛安正被任命为日本驻德国武官。在德国的五年中，他详细的考察了欧洲各国的情况，其中俄国的动向引起了他的极大关注。迫于英国的牵制，俄国传统的南进政策被迫放缓，福岛安正正确预测俄国必然会转向东进。果然，1891年1月，俄国公布了建造西伯利亚大铁路的计划，并立即动工。这条连接俄国首都圣彼得堡和符拉迪沃斯托克（海参崴），横穿欧亚大陆的铁路，可以说是俄国侵略亚洲的最大武器。西伯利亚铁路横穿中国东北部，从哈尔滨向南有一分支，直达旅顺、大连，可以使俄国轻而易举的进入亚洲。福岛预测这条铁路大约要耗时十年，他认为这十年是关系日本生死存亡的十年，日本对此绝不能袖手旁观。  
 
-![](/assets/images/20171230FinalSummary/Russia.webp)
+![](/assets/images/20171230FinalSummary/Russia.avif)
 
 > __为了掌握俄国东进政策的实际情况，福岛决定亲自沿着西伯利亚铁路进行实地侦察。这个大胆的计划立即得到了参谋次长川上操六的大力支持。由于福岛的军人身份会暴露穿越计划的目的，于是福岛对外宣布要进行一次单骑穿越严寒时期西伯利亚的探险旅行。即使是土生土长的俄国人，也不敢轻言在严冬时期穿越西伯利亚，更何况是一个没有严寒地区生活经历的外国人。福岛此言一出，世界哗然，西方探险家对他的“穿越”计划嗤之以鼻，大家都等着看这个日本人的笑话。但福岛安正极为坚定，他深知这个计划对日本意味着什么__。  
 > __1892年2月11日，福岛和爱骑“凯旋”从德国踏上穿越之旅，在零下20摄氏度的严寒中北上。3月下旬，到达圣彼得堡后，福岛向日本参谋本部发去了第一份关于俄国陆军的调查报告。此时，俄方也隐约觉察到福岛的此次“旅行”是项庄舞剑，意在沛公。4月9日，福岛离开圣彼得堡，于当月下旬抵达莫斯科。在那里受到了沙皇和皇后的接见和赐宴。经过细致考察，福岛向日本参谋本部提交了关于西伯利亚铁路建设方面的报告。9月下旬，福岛到达中俄两国的界山―海拔3000多米的阿尔泰山。从阿尔泰山极目远望，满目皑皑白雪。至此，福岛已经走了7000公里，完成一半路程。
@@ -453,7 +453,7 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 这个人的意志深深的鼓舞了我,如果一个国家想侵略另一个国家,出一两个这样的人才就差不多够了.
 
 下图是晚清的东北军
-![](/assets/images/20171230FinalSummary/ManqingDongbeijun.webp)
+![](/assets/images/20171230FinalSummary/ManqingDongbeijun.avif)
 
 这些书多数都是听的少数用kindle看的.2018年会再接再厉.
 
@@ -462,11 +462,11 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 ### 运动
 
 这一年一直坚持打羽毛球
-![](/assets/images/20171230FinalSummary/BadmintonTeam2.webp)
+![](/assets/images/20171230FinalSummary/BadmintonTeam2.avif)
 
 参加了金山的羽毛球比赛拿了一个季军 老实说纯打酱油哈见笑见笑 
-![](/assets/images/20171230FinalSummary/Awards1.webp)
-![](/assets/images/20171230FinalSummary/Awards2.webp)  
+![](/assets/images/20171230FinalSummary/Awards1.avif)
+![](/assets/images/20171230FinalSummary/Awards2.avif)  
 
 金山的小伙伴们还是不错的团队  
 ![](/assets/images/20171230FinalSummary/BadmintonTeam1.gif)
@@ -480,7 +480,7 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 
 
 来张海淀驾校的照片.   
-![](/assets/images/20171230FinalSummary/DrivingLicence.webp)
+![](/assets/images/20171230FinalSummary/DrivingLicence.avif)
 
 说一下考驾照的感触
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20200207SunyazhouTheory/thesunyazhoutheory.webp)
+![](/assets/images/20200207SunyazhouTheory/thesunyazhoutheory.avif)
 
 # 前言
 

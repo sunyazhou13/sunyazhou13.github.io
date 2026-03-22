@@ -7,7 +7,7 @@ date: 2017-02-22 16:17:00
 typora-root-url: ..
 ---
 
-![](/assets/images/20170222macOSsimulateKeyboradNSEvent/Cover.webp)
+![](/assets/images/20170222macOSsimulateKeyboradNSEvent/Cover.avif)
 
 
 

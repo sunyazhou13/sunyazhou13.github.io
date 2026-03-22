@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20210623CheckNSStringIsPureInteger/pureinteger.webp)
+![](/assets/images/20210623CheckNSStringIsPureInteger/pureinteger.avif)
 
 # 前言
 

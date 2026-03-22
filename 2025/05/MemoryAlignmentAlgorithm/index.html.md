@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20240727Magnificationgesture/SwiftUI.webp)
+![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
 # 前言
 
@@ -119,6 +119,6 @@ let aligned = alignedSizeGeneric(size: 250, align: 100) // 结果为 300
 \]  
 ```
 
-![](/assets/images/20250511MemoryAlignmentAlgorithm/AlignedSize.webp)
+![](/assets/images/20250511MemoryAlignmentAlgorithm/AlignedSize.avif)
 
 其中 `%` 可通过 `& (align - 1)` 优化（当 `align` 是 2 的幂时）。

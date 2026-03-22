@@ -30,11 +30,11 @@ hexo new "202300202XXXPaper"
 
 经过和喵神邮件请教
 
-![](/assets/images/20230202JekyllPost/email.webp)
+![](/assets/images/20230202JekyllPost/email.avif)
 
 喵神不但回复了我并表示 他不是很经常写文章,这种操作他都是复制一下原来的也不麻烦.邮件末尾喵神给出来一个非常实用的 stackoverflow的答案.
 
-![](/assets/images/20230202JekyllPost/answer.webp)
+![](/assets/images/20230202JekyllPost/answer.avif)
 
 在我的博客中有一个`Gemfile`文件 
 
@@ -78,7 +78,7 @@ $ bundle exec jekyll post "My New Post"
 bundle exec jekyll post "jekyllpost"
 ```
 
-![](/assets/images/20230202JekyllPost/post.webp)
+![](/assets/images/20230202JekyllPost/post.avif)
 
 ### 疑问
 

@@ -7,7 +7,7 @@ tags: [iOS, Swift, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230213NSDateIsToday/date.webp)
+![](/assets/images/20230213NSDateIsToday/date.avif)
 
 # 前言
 
@@ -73,7 +73,7 @@ BOOL inToday = [[NSCalendar currentCalendar] isDateInToday:date]
 
 我选中了 第一种和第三种做测试.代码如下:
 
-![](/assets/images/20230213NSDateIsToday/result.webp)
+![](/assets/images/20230213NSDateIsToday/result.avif)
 
 ``` sh
 2023-02-13 19:59:08.855078+0800 NSDateSpeedDemo[1837:197213] NSCalendar耗时:0.011064

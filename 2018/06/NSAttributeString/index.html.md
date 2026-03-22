@@ -7,12 +7,12 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20180615NSAttributeString/richtext.webp)
+![](/assets/images/20180615NSAttributeString/richtext.avif)
 # 前言
 
 最近开发需求遇到一个比较简单但又棘手的问题.先看需求
 
-![](/assets/images/20180615NSAttributeString/NSAttributeString1.webp)
+![](/assets/images/20180615NSAttributeString/NSAttributeString1.avif)
 
 一个`UILabel`显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说：
 
@@ -99,7 +99,7 @@ typora-root-url: ..
 
 看下显示结果
 
-![](/assets/images/20180615NSAttributeString/arrtributestring1.webp)
+![](/assets/images/20180615NSAttributeString/arrtributestring1.avif)
 
 > 是不是看上去很好
 
@@ -118,7 +118,7 @@ if (@available(iOS 9.0, *)) {
 
 但是这么实现有个Bug 当遇到同样字符串的时候就会匹配错位, 如图
 
-![](/assets/images/20180615NSAttributeString/NSAttributeStringBug1.webp)
+![](/assets/images/20180615NSAttributeString/NSAttributeStringBug1.avif)
 
 错误的原因显然大家都了解
 
@@ -177,7 +177,7 @@ if (@available(iOS 9.0, *)) {
 
 看下显示结果
 
-![](/assets/images/20180615NSAttributeString/attributestring2.webp)
+![](/assets/images/20180615NSAttributeString/attributestring2.avif)
 
 完美实现
 

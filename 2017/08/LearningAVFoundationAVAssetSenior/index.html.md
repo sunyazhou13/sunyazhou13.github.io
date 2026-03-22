@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
 ---
 
-![](/assets/images/20170807LearningAVFoundationAVAssetSenior/AudioArtwork.webp)
+![](/assets/images/20170807LearningAVFoundationAVAssetSenior/AudioArtwork.avif)
 
 # 前言
 
@@ -20,7 +20,7 @@ typora-root-url: ..
 ## 内容介绍
 
 结构图
-![](/assets/images/20170807LearningAVFoundationAVAssetSenior/MetaDataModel.webp)
+![](/assets/images/20170807LearningAVFoundationAVAssetSenior/MetaDataModel.avif)
  
 --- 
 
@@ -381,7 +381,7 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 数字音频使用的标准风格最初来自 MP3. ID3 规范定义了80个默认的风格类型及 另外46个 WinAmp 扩展,共计 126个风格. 不过这些都不属于正式格式. 由于 mp3风格的主导地位比较明显, iTunes 没有另造轮子,而是基本遵循 ID3 的风格分类,不过做了点小变化。**iTunes 音乐风格的标号比响应的 ID3标识符大 `1` .**
 
-![](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.webp)
+![](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif)
 
 
 虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)

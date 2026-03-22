@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20241231FinalSummary/banner.webp)
+![](/assets/images/20241231FinalSummary/banner.avif)
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="去打台球的路上">将一切困难踩在脚下</button>
 
 # 前言
@@ -94,8 +94,8 @@ typora-root-url: ..
 
 今年Q1拿了一个 卓越个人逐光奖勉勉强强能在年终总结提一提
 
-![](/assets/images/20241231FinalSummary/award1.webp)  
-![](/assets/images/20241231FinalSummary/award2.webp)
+![](/assets/images/20241231FinalSummary/award1.avif)  
+![](/assets/images/20241231FinalSummary/award2.avif)
 
 给的经费也就2k 请大家吃了顿饭胡乱的报销了,啥用没有. 哦 还给一捆鲜花 仅此而已.
 
@@ -108,11 +108,11 @@ typora-root-url: ..
 
 几年前在得物上买了 一双AJ1 球鞋,因为常年的穿着,导致前头皮质材料老化, 问了各种修鞋店都弄不了,无奈拼多多找个专业维修aj1球鞋的师傅,花了150元左右修好了,效果不错
 
-![](/assets/images/20241231FinalSummary/aj1.webp)
+![](/assets/images/20241231FinalSummary/aj1.avif)
 
 还有一个AirPod Pro耳机还是快手2019年春晚直播活动时 配发的,这么多年过去,内部扬声器喇叭好像脱落开胶了一样,在地铁学习时总响,于是拼多多找了个专业维修师傅 50元搞定,找苹果官方答复是要么直接换新,否则无法维修.
 
-![](/assets/images/20241231FinalSummary/airpod.webp)
+![](/assets/images/20241231FinalSummary/airpod.avif)
 
 这两件个人物品完全提现了2024年的我缝缝补补,没办法消费降级,我的全部财富都被政府一次性收割换房了,穷人的无奈...
 
@@ -120,7 +120,7 @@ typora-root-url: ..
 
 ### C++的持续学习
 
-![](/assets/images/20241231FinalSummary/Cplusplus.webp)    
+![](/assets/images/20241231FinalSummary/Cplusplus.avif)    
 
 在地铁上的零碎时间里，我竟然意外地完成了一整本C++的学习。合上书的那一刻，我仿佛站在了一座宏伟的知识殿堂的门前，门后是无数条蜿蜒的通道，每一条都通向更深的学问，每一条都需要我投入更多的时间和精力去探索。我感觉自己正站在一棵大树的根节点上，正准备沿着树的分支，一步步深入到每一个子节点，甚至是最末端的叶子节点。在这个过程中，我只有前驱和后继的指引，它们将带领我继续在编程的世界中前行和探索。
 
@@ -128,14 +128,14 @@ typora-root-url: ..
 
 当完成了上一本,紧接着就开始下一本《Metal.by.Tutorials.4th.2023.12》Apple平台的图形图像.
 
-![](/assets/images/20241231FinalSummary/Metal.webp)    
+![](/assets/images/20241231FinalSummary/Metal.avif)    
 
 当我读到这本《Metal》计算机图形学书籍的一半时，我深刻地意识到，我在大学时期所学的计算机知识不过是浅尝辄止、浮皮潦草，对于图形学这一领域更是未曾深入探究，这让我感到自己浪费了宝贵的时光。现在，我才明白，这才是真正的计算机技术精髓。如果在我的职业生涯早期，能有一位导师为我指引方向，或许我就不会像现在这样，时刻担心着被裁员的命运。
 
 为了弄清楚Metal提供的API,我尝试写了几篇纸,弄清楚 queu、command buffer、 command encoder、pipeline buffer object... 
 
-![](/assets/images/20241231FinalSummary/Metal01.webp)   
-![](/assets/images/20241231FinalSummary/Metal02.webp) 
+![](/assets/images/20241231FinalSummary/Metal01.avif)   
+![](/assets/images/20241231FinalSummary/Metal02.avif) 
 > 画的过于潦草献丑了.
 
 正如牛顿所说，他之所以能看得更远，是因为他站在了巨人的肩膀上。我渴望努力成为那个巨人，让更多的牛顿看的更远。
@@ -169,11 +169,11 @@ typora-root-url: ..
 
 因为现在经济形势较差,当工作不稳定时收入变的非常重要,大家不敢消费,只能用少的钱满足消费需求,这种台球经济非常符合这种经济背景下的消费方式.花一点钱能带来很多快乐那种.
 
-![](/assets/images/20241231FinalSummary/daiyong.webp)  
+![](/assets/images/20241231FinalSummary/daiyong.avif)  
 
 台球对我来说非常治愈,当我工作压力很大时这种运动非常优雅,经过了2年多的练习,对台球有个基本认识,前同事从新加坡回国我用台球跟他分享了一下一个人如何战胜背井离乡举目无亲的孤独感.
 
-![](/assets/images/20241231FinalSummary/wufendian.webp)  
+![](/assets/images/20241231FinalSummary/wufendian.avif)  
 
 人生如同那颗白色的母球，在五分点的挑战中，三点一线，瞄准袋口。当我们击球的质量不佳，或是击球点不准确时，这些失误都会反馈到白球的轨迹上。随着我们不断寻找正确的击球点，纠正自己的错误，我们就能调整正确的生活方向，使人生重回正轨。
 
@@ -220,7 +220,7 @@ typora-root-url: ..
 
 这种方式我认为可以给国家提提意见,这种方式对失业群体非常不友好,谁能保证自己工作很稳定,在当下没有人能敢保证自己稳定, 这种状态下去买房谁会去买那不有病吗? 工作收入不稳定有几个人愿意冒险一试找刺激.
 
-![](/assets/images/20241231FinalSummary/gjj.webp)  
+![](/assets/images/20241231FinalSummary/gjj.avif)  
 
 经过此次买房让我觉得好险好险,没钱的穷人在北京买房真的是一项巨大的挑战. 真的不知道失业和明天哪个先来!没有父母为自己生活兜底,这个国家又一次性拿走年轻人的全部收入甚至掏空父母的钱包,就这样还能有什么消费,经济岂能向好，经济只能停滞不前.
 
@@ -237,6 +237,6 @@ typora-root-url: ..
 
 最后放上我在《盐铁论》读到最有用的两句话吧!
 
-![](/assets/images/20241231FinalSummary/yantielun.webp)  
+![](/assets/images/20241231FinalSummary/yantielun.avif)  
 
 2024再见.

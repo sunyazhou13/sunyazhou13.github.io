@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20210121TextGradient/gradientcover.webp)
+![](/assets/images/20210121TextGradient/gradientcover.avif)
 
 # 前言
 

@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, Cocoapods, skills]
 typora-root-url: ..
 ---
 
-![](/assets/images/20201010PodSpec/cocoapods.webp)
+![](/assets/images/20201010PodSpec/cocoapods.avif)
 
 # 前言
 

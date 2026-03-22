@@ -7,7 +7,7 @@ tags: [iOS, macOS, Objective-C, SwiftUI]
 typora-root-url: ..
 ---
 
-![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.webp)
+![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
 
 # 前言
 
