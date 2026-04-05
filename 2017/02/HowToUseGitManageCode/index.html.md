@@ -279,7 +279,7 @@ git rebase -i HEAD~3
 
 请注意，变基是一个破坏性操作，它会改变历史提交的哈希值。因此，只有在你确定不会影响其他人的工作时才应该使用它，特别是在公共分支上。如果你在团队中工作，最好在进行这样的操作之前与团队成员沟通。
 
-# 大文件处理
+## 大文件处理
 
 ``` sh
 brew install git-lfs                                 # install via homebrew
@@ -290,3 +290,27 @@ git commit -m "Added files to git lfs"               # commit
 git lfs ls-files
 git push
 ```
+
+
+## GIT访问凭证
+
+可以用下面任一方式解决：
+
+方案一：开启系统凭据管理（推荐）
+
+* macOS：  
+
+``` bash
+	git config --global credential.helper osxkeychain
+```
+
+* Windows：
+
+``` bash
+git config --global credential.helper manager
+```
+
+> 2026年4月4日更新
+
+--
+
