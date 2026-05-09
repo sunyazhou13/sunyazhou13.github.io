@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190926MasonryPanViewDemo/panviewdemo.gif)
+![](/assets/images/20190926MasonryPanViewDemo/panviewdemo.avif)
 
 
 # 前言
@@ -28,9 +28,9 @@ typora-root-url: ..
 
 
 下面的图是土土哥实现的demo  
-![](/assets/images/20190926MasonryPanViewDemo/tutugeMasonry1.gif)
+![](/assets/images/20190926MasonryPanViewDemo/tutugeMasonry1.avif)
 
-![](/assets/images/20190926MasonryPanViewDemo/tutugeMasonry2.gif)
+![](/assets/images/20190926MasonryPanViewDemo/tutugeMasonry2.avif)
 
 
 但我的问题是怎么保证那个tip的气泡label左右拖拽能辗转腾挪的允许logo图像之间有`旷量移动`

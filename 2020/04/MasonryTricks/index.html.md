@@ -17,7 +17,7 @@ typora-root-url: ..
 
 iOS11之后推出的safeArea 用于处理刘海屏幕的问题.如果自己处理起来可能比较 麻烦  又需要判断 版本又需要判断  API的可用性. 清明假期 在家没事写个demo  解决如何更快捷处理屏幕的边界问题,比如 视图要布局在iOS导航栏底部 和 `Home Indicator`. 先看下图:
 
-![](/assets/images/20200407MasonryTricks/SafeArea1.gif)
+![](/assets/images/20200407MasonryTricks/SafeArea1.avif)
 
 如果使用更少的代码实现在安全区域内部 展示某个View.
 

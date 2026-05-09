@@ -33,7 +33,7 @@ typora-root-url: ..
 
 ## 属性动画animation
 
-![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimation.gif)
+![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimation.avif)
 
 ``` ts
 import { SizeT } from '@ohos.arkui.node';
@@ -102,7 +102,7 @@ CGAffineTransformIdentity;
 
 ```
 
-![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo.gif)
+![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo.avif)
 
 这里 HarmonyOS的ArkUI示例代码演示:
 
@@ -158,10 +158,10 @@ struct MTAnimation2 {
 ```
 如果把`.rotate`中的x,y,z,都改成1并旋转625度的话是这样的
 
-![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo2.gif)
+![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo2.avif)
 
 当我们在动画中连续点击动画的时候它很跟手,和iOS中的UIView Animation一样中间被打断直接执行下次显式动画,下图演示跟手效果.
-![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo3.gif)
+![](/assets/images/20240505ArkTSAnimation/HarmonyOSAnimateTo3.avif)
 
 [更多细节请访问 HarmonyOS官方文档 显式动画 (animateTo)](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/ts-explicit-animation-0000001862687717)
 
@@ -169,7 +169,7 @@ struct MTAnimation2 {
 
 关键帧动画在鸿蒙开发中是借助`UIContext`实现
 
-![](/assets/images/20240505ArkTSAnimation/HarmonyOSKeyframeAnimation.gif)
+![](/assets/images/20240505ArkTSAnimation/HarmonyOSKeyframeAnimation.avif)
 
 ``` ts
 // xxx.ets
@@ -227,7 +227,7 @@ struct KeyframeDemo {
 组件内转场动画
 
 如下图:
-![](/assets/images/20240505ArkTSAnimation/transition1.gif)
+![](/assets/images/20240505ArkTSAnimation/transition1.avif)
 
 实现代码
 

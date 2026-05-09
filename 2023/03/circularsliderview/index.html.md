@@ -18,7 +18,7 @@ typora-root-url: ..
 最近看到一篇文章讲述简单的用SwiftUI绘制一个圆形Slider,经过亲手实践果然很简单,记录一下代码实现和效果.
 
 
-![](/assets/images/20230317CircularSliderView/slider.gif)
+![](/assets/images/20230317CircularSliderView/slider.avif)
 
 ``` swift
 //

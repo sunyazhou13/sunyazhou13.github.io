@@ -27,8 +27,8 @@ typora-root-url: ..
 
 用SwiftUI写完各种UI后发现 tabbar的视图被遮挡,
 
-![](/assets/images/20230805LearnSwiftUIChapter5/before.gif)
-![](/assets/images/20230805LearnSwiftUIChapter5/after.gif)
+![](/assets/images/20230805LearnSwiftUIChapter5/before.avif)
+![](/assets/images/20230805LearnSwiftUIChapter5/after.avif)
 
 需要启动app的时候使用如下函数`applyTabbarBackground()`
 

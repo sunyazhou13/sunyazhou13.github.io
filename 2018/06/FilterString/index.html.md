@@ -11,7 +11,7 @@ typora-root-url: ..
 
 今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入.
 
-![](/assets/images/20180625FilterString/RegularExpressDemo.gif)
+![](/assets/images/20180625FilterString/RegularExpressDemo.avif)
 
 带着这个疑问开始今天的文章
 

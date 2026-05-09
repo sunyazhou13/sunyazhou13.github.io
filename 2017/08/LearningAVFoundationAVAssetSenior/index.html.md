@@ -13,7 +13,7 @@ typora-root-url: ..
 
 先上图 
 
-![](/assets/images/20170807LearningAVFoundationAVAssetSenior/metadata.gif)
+![](/assets/images/20170807LearningAVFoundationAVAssetSenior/metadata.avif)
 
 这一篇 **我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化**
 

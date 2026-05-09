@@ -21,7 +21,7 @@ typora-root-url: ..
 下面是 UI 演示.
 
 
-![](/assets/images/20171219AudioPan/AudioPanDemo.gif)
+![](/assets/images/20171219AudioPan/AudioPanDemo.avif)
 
 
 这里其实修改的类似 `AVAudioPlayer`里面的`pan`值修改

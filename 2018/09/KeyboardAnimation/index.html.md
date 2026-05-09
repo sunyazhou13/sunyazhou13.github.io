@@ -18,7 +18,7 @@ typora-root-url: ..
 
 上图
 
-![](/assets/images/20180918KeyboardAnimation/keyboardAnimation.gif)
+![](/assets/images/20180918KeyboardAnimation/keyboardAnimation.avif)
 
 
 

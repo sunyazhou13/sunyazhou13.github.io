@@ -469,7 +469,7 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 ![](/assets/images/20171230FinalSummary/Awards2.avif)  
 
 金山的小伙伴们还是不错的团队  
-![](/assets/images/20171230FinalSummary/BadmintonTeam1.gif)
+![](/assets/images/20171230FinalSummary/BadmintonTeam1.avif)
 
 --- 
 

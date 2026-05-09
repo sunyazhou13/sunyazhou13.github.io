@@ -15,8 +15,8 @@ typora-root-url: ..
 
 上图先看效果
 
-![开源项目](/assets/images/20220413YZ3DMenu/3DMenuDemo1.gif) 
-![实践完成](/assets/images/20220413YZ3DMenu/3DMenuDemo2.gif)
+![开源项目](/assets/images/20220413YZ3DMenu/3DMenuDemo1.avif) 
+![实践完成](/assets/images/20220413YZ3DMenu/3DMenuDemo2.avif)
 
 这个菜单是个3D菜单,之前在一个叫cosmos的app中出现,之前一直想找个时间把这个功能搞出来开源.之后出现了一个类似微博的开源项目[Cosmos](https://github.com/zhnnnnn/ZHNCosmos) 这一阵子有时间 把这个组件重写一遍.
 
@@ -26,7 +26,7 @@ typora-root-url: ..
 * 添加新window 并在window上覆盖了 Blur模糊和容器,以及封装的仪表盘菜单视图
 * 滑动过程中改动菜单视图(仪表盘菜单)的m34动画属性实现 倾斜滑动.
 
-![内部变量](/assets/images/20220413YZ3DMenu/3DMenuDemo3.gif) 
+![内部变量](/assets/images/20220413YZ3DMenu/3DMenuDemo3.avif) 
 
 下面是框架的代码结构设计
 

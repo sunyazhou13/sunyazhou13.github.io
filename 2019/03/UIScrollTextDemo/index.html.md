@@ -15,14 +15,14 @@ typora-root-url: ..
 很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图
 
 抖音如下  
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo0.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo0.avif)
 
 系统的滚动字幕如下
 
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo4.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo4.avif)
 
 本篇完成之后如下  
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo5.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo5.avif)
 
 
 * 支持蒙版渐变模糊 可调节
@@ -33,7 +33,7 @@ typora-root-url: ..
 
 整个实现比较简单 不超过 200行代码
 
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo1.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo1.avif)
 
 首先我们要用到两个CALayer
 
@@ -158,7 +158,7 @@ typora-root-url: ..
 
 我们可以把代码去掉运行看下不加蒙版的效果图 如下:
 
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo2.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo2.avif)
 
 这里我用cyan颜色区域代表视图的大小,文本不加蒙版实际上超出显示范围的. 
 
@@ -170,7 +170,7 @@ typora-root-url: ..
 
 代码`7`处 对应 代码`6`处 配合使用,就做到了我们两边渐变遮盖的效果
 
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo3.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo3.avif)
 
 上图就是我们下面代码的效果,我们加了4个点
 
@@ -292,7 +292,7 @@ NSString * const kSeparateText          = @"   ";   //3个空格
 
 
 最终效果  
-![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo5.gif)
+![](/assets/images/20190321UIScrollTextDemo/scrolltextdemo5.avif)
 
 # 总结
 

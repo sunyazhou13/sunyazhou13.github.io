@@ -18,7 +18,7 @@ typora-root-url: ..
 > Objective-C 点击这里直达[demo](https://github.com/sunyazhou13/SlideInPresentation)
 
 
-![](/assets/images/20171031ElegantPresentTransition/ElegantPresentTransition.gif)
+![](/assets/images/20171031ElegantPresentTransition/ElegantPresentTransition.avif)
 
 
 ### 需求背景

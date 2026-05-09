@@ -190,7 +190,7 @@ Xcode14以后会自动帮我们生成一个struct的编码和解码方式
 
 如下图:
 
-![](/assets/images/20230805LearnSwiftUIChapter4/RawRepresentable.gif)
+![](/assets/images/20230805LearnSwiftUIChapter4/RawRepresentable.avif)
 
 点击AddExplicitCodableImplementation选项会自动帮我们为Person生成如下.
 

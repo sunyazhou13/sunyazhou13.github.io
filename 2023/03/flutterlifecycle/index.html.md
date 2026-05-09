@@ -131,7 +131,7 @@ flutter: ContentWidgetState的 build被调用
 
 当每次点击就会每次都调用 build
 
-![](/assets/images/20230312FlutterLifeCycle/flutter2.gif)
+![](/assets/images/20230312FlutterLifeCycle/flutter2.avif)
 
 ``` sh
 flutter: ContentWidgetState的 build被调用

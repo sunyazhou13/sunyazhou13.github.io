@@ -37,7 +37,7 @@ The widget ecosystem is expanding: Discover how you can use the latest WidgetKit
 * watchOS9 and below: 使用了system-defined 的 safe area 以避免小组件太贴边。但开发者可以通过`Color.blue.ignoresSafeArea()` 来忽略它
 * watchOS10 and above: 方法`ignoresSafeArea()`不在起作用，而应该对 `widget configuration` 应用 `contentMarginsDisabled`修改器来实现这一目的
 
-![](/assets/images/20230804iOS17Widget/widget1.gif)
+![](/assets/images/20230804iOS17Widget/widget1.avif)
 
 ![](/assets/images/20230804iOS17Widget/widget2.avif)
 ![](/assets/images/20230804iOS17Widget/widget3.avif)

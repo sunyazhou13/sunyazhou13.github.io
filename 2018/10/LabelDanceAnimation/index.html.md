@@ -12,7 +12,7 @@ typora-root-url: ..
 
 写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画 
 
-![demo](/assets/images/20181029LabelDanceAnimation/danceLabel.gif)
+![demo](/assets/images/20181029LabelDanceAnimation/danceLabel.avif)
 
 
 # 实现思路

@@ -34,7 +34,7 @@ typora-root-url: ..
 
 显然 这个类是一个UIKit中用于处理苹果手机的一些特性的储存与UI相关的配置, 大家有没有想过如果你在iOS修改通用中的某些系统设置,比如(下图) 对比度、全局字体大小,这个我们开发人员怎么处理.
 
-![](/assets/images/20190916UITraitCollection/UITraitCollection2.gif)
+![](/assets/images/20190916UITraitCollection/UITraitCollection2.avif)
 
 
 这些系统的特性修改就放到这个`UITraitCollection`中,这个类也就是我们经常在VC和View中经常用到而大家往往容易忽略的,下面简单记录一下这些特性都有哪些

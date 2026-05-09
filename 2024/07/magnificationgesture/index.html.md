@@ -18,7 +18,7 @@ typora-root-url: ..
 
 `MagnificationGesture` 是SwiftUI中用于处理缩放手势的手势识别器。它允许用户通过捏合（即两个手指靠近或远离）的手势来放大或缩小视图中的元素。这种手势在多种应用场景中都非常有用，如图片缩放、地图缩放、用户界面缩放等。
 
-![](/assets/images/20240727Magnificationgesture/MagnificationGesture.gif)
+![](/assets/images/20240727Magnificationgesture/MagnificationGesture.avif)
 
 ## 主要特点
 

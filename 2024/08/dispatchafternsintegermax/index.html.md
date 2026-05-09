@@ -15,7 +15,7 @@ typora-root-url: ..
 
 ## 开发中遇到的问题
 
-![](/assets/images/20240819dispatchafterNSIntegermax/popup.gif)
+![](/assets/images/20240819dispatchafterNSIntegermax/popup.avif)
 
 最近开发 测试同学提了一个bug, 首页底部tab的气泡一闪而过瞬间消失,认真追踪代码后发现,配置后台下发`-1`,客户端同学把这个`-1`替换成了NSIntegerMax
 

@@ -13,7 +13,7 @@ typora-root-url: ..
 
 上图
 
-![](/assets/images/20180929BreathAnimation/breathAnimation.gif)
+![](/assets/images/20180929BreathAnimation/breathAnimation.avif)
 
 大概是这个样子 
 

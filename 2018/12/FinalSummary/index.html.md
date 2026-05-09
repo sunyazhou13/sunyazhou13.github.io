@@ -16,7 +16,7 @@ typora-root-url: ..
 **仿佛回到一三年,北京站前望着天.**  
 **北漂掘金那刻起,人生已无再少年.**
 
-![](/assets/images/20181231FinalSummary/yingxiongbense.gif)
+![](/assets/images/20181231FinalSummary/yingxiongbense.avif)
 
 _我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我..._
 
@@ -114,12 +114,12 @@ __杭州之旅我路过了钱塘江__
 
 我记得第一次听伍佰的歌的时候是2000年左右,那时候我寄人篱下在我舅家东胜村,去双胜去上初中初一,有一次去一个叫镇东的地方全班同学都去听文艺演出,我坐在拖拉机的后车斗上,唱着伍佰的《白鸽》那时候还不知道MP3是什么东西,能听上这首录用磁带已经很满足了
 
-![](/assets/images/20181231FinalSummary/opentheshow.gif)
+![](/assets/images/20181231FinalSummary/opentheshow.avif)
 
 
 在伍佰的演唱会上开场的第二首想起的就是这首《白鸽》,唱出我的初中回忆,那个时候很穷,后来才知道还有一首成名曲叫《挪威的森林》.
 
-![](/assets/images/20181231FinalSummary/chinablue1.gif)
+![](/assets/images/20181231FinalSummary/chinablue1.avif)
 
 当全场一起演唱挪威的森林的时候 那种场合的效果,绝对比KTV好多了.真的是前所未有,老实说 现场的声音算是原声了,这场演唱会真的值得.
 

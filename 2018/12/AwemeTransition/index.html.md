@@ -12,7 +12,7 @@ typora-root-url: ..
 
 这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图
 
-![](/assets/images/20181221AwemeTransition/transition.gif)
+![](/assets/images/20181221AwemeTransition/transition.avif)
 
 这里需要用到前一篇文章的上下滑[demo](https://github.com/sunyazhou13/AwemeDemo)
 

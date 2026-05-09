@@ -60,7 +60,7 @@ CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)grad
 
 下面是我这边实现的逻辑展示 demo我会放到下面大家自行下载.
 
-![](/assets/images/20210121TextGradient/gradienttextscroll.gif)
+![](/assets/images/20210121TextGradient/gradienttextscroll.avif)
 
 # 总结
 

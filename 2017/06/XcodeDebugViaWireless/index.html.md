@@ -12,7 +12,7 @@ typora-root-url: ..
 今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
 
 看一张图  
-![](/assets/images/20170616XcodeDebugViaWireless/debug.gif)
+![](/assets/images/20170616XcodeDebugViaWireless/debug.avif)
 
 
 ### 配置

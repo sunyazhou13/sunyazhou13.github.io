@@ -15,13 +15,13 @@ typora-root-url: ..
 
 先上成品看看效果
 
-![](/assets/images/20221207RadialGradientlayer/final.gif)
+![](/assets/images/20221207RadialGradientlayer/final.avif)
 
 # 深入CAGradientLayer 
 
 最近开发功能,视觉设计同学对QQ音乐的桌面歌词预览图的流体渐变动画很感兴趣,想让开发这边实现这个效果.
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.gif)
+![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
 
 仔细观察歌词背景( 若不是我左右眼都是5.0 我第一次看到QQ音乐的效果我以为没动画.幼稚被教育了),会有一个类似柔光的效果像个灯光一样照射并移动.视觉设计同学把这个效果称为`流体过渡动画`.
 
@@ -253,11 +253,11 @@ gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
 
 我们先观察一下QQ音乐的效果
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.gif)
+![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
 
 我们的思路
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation2.gif)
+![](/assets/images/20221207RadialGradientlayer/qqmusicanimation2.avif)
 
 * 创建一个径向渐变图层
 * 放在视图外部通过加`CABasicAnimation`实现`position.x`从右向左移动动画
@@ -265,7 +265,7 @@ gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
 * 移动结束为止一定要在屏幕外部
 
 下面看下 实现思路示意图  
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation3.gif)
+![](/assets/images/20221207RadialGradientlayer/qqmusicanimation3.avif)
 
 代码如下
 
@@ -355,7 +355,7 @@ self.backgroundView.layer.masksToBounds = true //超出屏幕截掉
 
 下面看下做完的效果
 
-![](/assets/images/20221207RadialGradientlayer/final.gif)
+![](/assets/images/20221207RadialGradientlayer/final.avif)
 
 ## 总结
 

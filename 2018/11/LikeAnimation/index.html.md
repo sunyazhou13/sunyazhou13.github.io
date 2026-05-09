@@ -11,7 +11,7 @@ typora-root-url: ..
 
 hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图
 
-![](/assets/images/20181127LikeAnimation/likeAnimation1.gif)
+![](/assets/images/20181127LikeAnimation/likeAnimation1.avif)
 
 
 本篇文章主要包含技术点:
@@ -26,13 +26,13 @@ hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动
 
 首先 我们来详细分解一下这个动画 
 
-![](/assets/images/20181127LikeAnimation/likeAnimation2.gif)
+![](/assets/images/20181127LikeAnimation/likeAnimation2.avif)
 > 请仔细观察
 
 
 我们来看单独的一个动画 
 
-![](/assets/images/20181127LikeAnimation/likeAnimation3.gif)
+![](/assets/images/20181127LikeAnimation/likeAnimation3.avif)
 
 > 请仔细观看 我设置10秒的duration 以便于大家能看清楚
 
@@ -54,7 +54,7 @@ hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动
 
 结束的时候大概是这样的
 
-![](/assets/images/20181127LikeAnimation/likeAnimation5.gif)
+![](/assets/images/20181127LikeAnimation/likeAnimation5.avif)
 
 结束的时候实际上是一个从 上一次动画执行完成的path向 一条线上三个点的path过渡的过程,直到最后隐藏消失.
 
@@ -166,7 +166,7 @@ pathAnim.duration = duration * 0.8f;
 
 下图是从开始到结束点过渡的动画.
 
-![](/assets/images/20181127LikeAnimation/likeAnimation5.gif)
+![](/assets/images/20181127LikeAnimation/likeAnimation5.avif)
 
 剩余的工作就是做个普通的动画的 基本没什么了.
 

@@ -869,7 +869,7 @@ typedef NS_ENUM(NSInteger, ARTrackingStateReason) {
 
 #### ARKit捕捉平地
 
-![](/assets/images/20170830ARKit/PlaneDetective.gif)
+![](/assets/images/20170830ARKit/PlaneDetective.avif)
 
 [探测平地demo](https://github.com/sunyazhou13/ARDemos/blob/master/ARDemoPlaneDetective.zip)
 

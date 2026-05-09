@@ -19,7 +19,7 @@ typora-root-url: ..
 
 比如:
 
-![喵神文章中的](/assets/images/20171025MarkdownSkill/MarkdownSkill.gif)
+![喵神文章中的](/assets/images/20171025MarkdownSkill/MarkdownSkill.avif)
 
 
 第一眼我震撼了 原来 markdown 里面还能嵌入这么多好玩的 就这个问题 问了一下喵神

@@ -19,7 +19,7 @@ typora-root-url: ..
 
 ## 主要内容包含
 
-![](/assets/images/20230604LearnSwiftUIChapter1/finalproject.gif)
+![](/assets/images/20230604LearnSwiftUIChapter1/finalproject.avif)
 
 1-5 第一章补充：some View、排版规则、设计细节 - SwiftUI 新手入门
 

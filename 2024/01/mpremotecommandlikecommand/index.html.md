@@ -19,7 +19,7 @@ typora-root-url: ..
 
 先看看做完啥效果,
 
-![](/assets/images/20240125MPRemoteCommandLikecommand/MPRemoteCommand.gif)
+![](/assets/images/20240125MPRemoteCommandLikecommand/MPRemoteCommand.avif)
 
 这里要用到的关键代码api如下:
 

@@ -38,13 +38,13 @@ typora-root-url: ..
 }
 ```
 
-![](/assets/images/20210406WCDBPractice/chatlist.gif)
+![](/assets/images/20210406WCDBPractice/chatlist.avif)
 
 `cell`的高度不对劲
 
 经过 [FLEX工具](https://github.com/FLEXTool/FLEX) 查看数据库文件,发现数据库中的`chatMsgHeight`值都是一样的.
 
-![](/assets/images/20210406WCDBPractice/chatlist2.gif)
+![](/assets/images/20210406WCDBPractice/chatlist2.avif)
 
 经过我仔细排查了所有 SQL 语句发现有一处这样的调用 在控制台.
 

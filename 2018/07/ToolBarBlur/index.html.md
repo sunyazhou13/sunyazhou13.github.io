@@ -8,7 +8,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20180723ToolBarBlur/blur.gif)
+![](/assets/images/20180723ToolBarBlur/blur.avif)
 
 ``` objc
 - (UIView *)containerBackgroundView {

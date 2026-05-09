@@ -85,12 +85,12 @@ NSLog(@"%@", retainCycles);
 
 这里查找对象的方式用的是深度优先遍历搜索
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle.gif)
+![](/assets/images/20220916FBMemoryCheckTool/retainCycle.avif)
 
 
 ## 如何使用
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle1.gif)
+![](/assets/images/20220916FBMemoryCheckTool/retainCycle1.avif)
 
 示例场景分析
 

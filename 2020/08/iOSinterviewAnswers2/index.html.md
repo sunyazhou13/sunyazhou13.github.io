@@ -956,7 +956,7 @@ class AutoreleasePoolPage {
 
 下面看下工作机制图
 
-![](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolworkflow.gif)
+![](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolworkflow.avif)
 
 > 这张图来自快手同事 周学运,如果大佬看到这张图的话希望能允许授权给我使用哈.
 

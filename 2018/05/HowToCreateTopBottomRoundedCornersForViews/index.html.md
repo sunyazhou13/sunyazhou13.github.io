@@ -199,7 +199,7 @@ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animatio
 
 最终的效果
 
-![](/assets/images/20180515HowToCreateTopBottomRoundedCornersForViews/TopBottomCornerDemo.gif)
+![](/assets/images/20180515HowToCreateTopBottomRoundedCornersForViews/TopBottomCornerDemo.avif)
 
 
 

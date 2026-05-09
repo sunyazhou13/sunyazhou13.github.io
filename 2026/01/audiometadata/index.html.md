@@ -13,7 +13,7 @@ typora-root-url: ..
 
 # 背景
 
-![](/assets/images/20260123AudioMetaData/libtagdemo.gif)
+![](/assets/images/20260123AudioMetaData/libtagdemo.avif)
 
 最近开发一个功能需要获取音频文件的原始数据,需要支持大部分市面上的音频文件,于是找AI帮忙发现一个叫`[libtag](https://taglib.org/)`目前最新版本是2.1.1,这是一个C++的库,需要objc++混编.
 

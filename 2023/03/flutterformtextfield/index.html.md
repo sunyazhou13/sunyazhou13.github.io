@@ -19,7 +19,7 @@ typora-root-url: ..
 
 在学习flutter中处理用户名和密码输入的问题时,Flutter这边轻松搞定,学完后发现flutter内置的能力非常强大.下面是记录用户名密码输入的简单demo.
 
-![](/assets/images/20230318FlutterFormTextfield/flutterInput.gif)
+![](/assets/images/20230318FlutterFormTextfield/flutterInput.avif)
 
 ``` dart
 import 'package:flutter/material.dart';

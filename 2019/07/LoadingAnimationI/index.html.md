@@ -16,7 +16,7 @@ typora-root-url: ..
 
 由于最近工作忙到坐地铁回家都能睡着,博客没能及时更新,今天抽个时间写个加载动画,废话不多说上图.
 
-![](/assets/images/20190726LoadingAnimationI/CircleLoadingAnimation.gif)
+![](/assets/images/20190726LoadingAnimationI/CircleLoadingAnimation.avif)
 
 
 (颜色可以自定义哈,非常简单,小白自己可以随便改)

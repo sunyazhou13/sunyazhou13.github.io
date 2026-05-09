@@ -21,7 +21,7 @@ typora-root-url: ..
 
 ### 先看下实现效果
 
-![](/assets/images/20240115HarmonyOSLaunchPage/launch.gif)
+![](/assets/images/20240115HarmonyOSLaunchPage/launch.avif)
 
 ### 这里使用的HarmonyOS4.1环境
 

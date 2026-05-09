@@ -55,7 +55,7 @@ func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects m
 `qrCodeFrameView?.frame = barCodeObject!.bounds`
 这行代码最核心 就是拿到barCodeObject.bounds 给我们自己创建透明的那个view就行了 **[最终项目](https://github.com/sunyazhou13/QRCodeReader)**
 
-![QRCode 跟踪](/assets/images/20170218ScanBoundsTracking/ScanBoundsTracking.gif)
+![QRCode 跟踪](/assets/images/20170218ScanBoundsTracking/ScanBoundsTracking.avif)
 
 
 

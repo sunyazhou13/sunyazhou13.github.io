@@ -16,7 +16,7 @@ typora-root-url: ..
 ## 背景介绍
 
 
-![](/assets/images/20240322MasonryRelayoutViews/MasonryRelayout.gif)
+![](/assets/images/20240322MasonryRelayoutViews/MasonryRelayout.avif)
 
 在开发过程中,经常遇到某些入口的出现和消失不是按照指定的时序发生,比如 上面这三个入口,出现的时机不区分先后,但是出现的顺序是固定的, 这里就存在一些很不好处理的问题, 比如A视图出现 依赖B视图的位置,如果B不在那要继续向上或者向下依赖. 
 
@@ -263,7 +263,7 @@ CGFloat leadSpace = CGRectGetWidth(self.frame) - allEntries.count * MTContainerS
 
 通过上述实现我们就有了如下的demo
 
-![](/assets/images/20240322MasonryRelayoutViews/MasonryRelayoutDemo.gif)
+![](/assets/images/20240322MasonryRelayoutViews/MasonryRelayoutDemo.avif)
 
 这里的核心代码是Masonry提供的数组扩展方法
 

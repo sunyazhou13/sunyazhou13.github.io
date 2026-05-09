@@ -279,7 +279,7 @@ LiftCycle onPageShow
 app Log: Child aboutToDisappear
 ```
 
-![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.gif)
+![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)
 
 [页面和自定义组件生命周期 官方文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-page-custom-components-lifecycle-0000001630265125-V2)
 
@@ -599,7 +599,7 @@ struct LearnDetailProp1 {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/prop.gif)
+![](/assets/images/20240119ArkTSBasic/prop.avif)
 
 [@Prop参考文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-prop-0000001580185150-V2)
 
@@ -626,7 +626,7 @@ struct  LearnDetailLink1 {
 
 效果展示
 
-![](/assets/images/20240119ArkTSBasic/link.gif)
+![](/assets/images/20240119ArkTSBasic/link.avif)
 
 基于上述@Prop代码完整展示
 
@@ -803,7 +803,7 @@ struct  ProvideConsumeDemo2 {
 
 效果如下:
 
-![](/assets/images/20240119ArkTSBasic/provideconsume.gif)
+![](/assets/images/20240119ArkTSBasic/provideconsume.avif)
 
 [@Provide装饰器和@Consume装饰器官网文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-provide-and-consume-0000001580345078-V2)
 
@@ -818,7 +818,7 @@ didMessageChanged () {  //此方法被触发,代表其它地方修改了 @Watch 
 	console.log("监听到消息发生变化:" + this.num1)
 }
 ```
-![](/assets/images/20240119ArkTSBasic/watch.gif)
+![](/assets/images/20240119ArkTSBasic/watch.avif)
 
 完整示例代码
 
@@ -970,7 +970,7 @@ struct UniversalEventDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/TouchEvent.gif)  
+![](/assets/images/20240119ArkTSBasic/TouchEvent.avif)  
 
 ## 组件通用的尺寸排版学习
 

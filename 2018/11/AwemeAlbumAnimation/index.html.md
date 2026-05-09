@@ -14,11 +14,11 @@ typora-root-url: ..
 
 上图看下
 
-![](/assets/images/20181108AwemeAlbumAnimation/final.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/final.avif)
 
 再看下抖音的
 
-![](/assets/images/20181108AwemeAlbumAnimation/AlbumAnimation.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/AlbumAnimation.avif)
 
 # 具体实现思路
 
@@ -138,7 +138,7 @@ self.album.layer.masksToBounds = YES;
 
 加完效果是这样的
 
-![](/assets/images/20181108AwemeAlbumAnimation/album2.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/album2.avif)
 
 
 #### 如何实现弧度动画
@@ -147,7 +147,7 @@ self.album.layer.masksToBounds = YES;
 
 现仔细观察一下动画的音符
 
-![](/assets/images/20181108AwemeAlbumAnimation/album3.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/album3.avif)
 
 
 这是一张音符动画 它的运动轨迹大概是这样的
@@ -255,7 +255,7 @@ layer.frame = CGRectMake(beginPoint.x, beginPoint.y, 10, 10);
 
 我们来看下 简单一个音符 沿着贝塞尔曲线运动
 
-![](/assets/images/20181108AwemeAlbumAnimation/album4.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/album4.avif)
 
 好下面的工作就是 加旋转 透明 缩放动画
 
@@ -402,7 +402,7 @@ animationGroup.beginTime = CACurrentMediaTime() + delayTime;
 完成之后 就是这样了
 
 
-![](/assets/images/20181108AwemeAlbumAnimation/final.gif)
+![](/assets/images/20181108AwemeAlbumAnimation/final.avif)
 
 
 # 总结

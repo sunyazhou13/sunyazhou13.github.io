@@ -98,7 +98,7 @@ typora-root-url: ..
 
 干活的时候是这样的
 
-![](/assets/images/20201231FinalSummary/NewYearsDay.gif)
+![](/assets/images/20201231FinalSummary/NewYearsDay.avif)
 
 最后元旦还算比较成功
 

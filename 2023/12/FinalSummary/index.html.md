@@ -201,7 +201,7 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 如果你和我一样,那么恭喜你,目前我没有找到最优解去解决，时间如何被抢占式调度,我只能说财富自由的时候我也许会有.
 
 一堆没有时间看的书,堆起来都快有PS5高了吧!
-![](/assets/images/20231231FinalSummary/books.gif)  
+![](/assets/images/20231231FinalSummary/books.avif)  
 
 这一年感觉很累,学习的东西越来越多,从flutter到SwiftUI,从SwiftUI到HarmonyOS然后再到一堆没有看完的iBook.以及自己喜欢的无人机开发方向都还未启动学习计划. 从事计算机行业本来也许就需要这么累.总有一堆学习不完的课程、书籍、文章、教程、等等.
 

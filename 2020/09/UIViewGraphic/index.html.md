@@ -51,7 +51,7 @@ typora-root-url: ..
 
 下面是[WWDC2018 High Performance Auto Layout](https://developer.apple.com/videos/play/wwdc2018/220/)中对比的iOS12和iOS11下分别使用自动布局的性能对比现场.
 
-![](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutiOS11iOS12Compare.gif)
+![](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutiOS11iOS12Compare.avif)
 
 经过实验得出如下图标结论:
 
