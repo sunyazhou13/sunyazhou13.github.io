@@ -1,6 +1,6 @@
 ---
 layout: post
-title: LLVMAttributeCompleteGuide
+title: LLVM `__attribute__` 完全指南.
 date: 2026-07-01 02:58 +0000
 categories: [iOS, SwiftUI]
 tags: [skills, iOS, Swift, Objective-C, LLVM]
@@ -14,7 +14,7 @@ typora-root-url: ..
 
 ---
 
-# LLVM `__attribute__` 完全指南 —— iOS / macOS 开发者的必修课
+## LLVM `__attribute__` 完全指南 —— iOS / macOS 开发者的必修课
 
 > 覆盖 Objective-C、C、Swift 互操作场景，从基础到系统框架内部用法，尽量不遗漏细节。
 
