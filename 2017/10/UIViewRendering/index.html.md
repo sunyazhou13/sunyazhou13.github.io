@@ -5,6 +5,7 @@ date: 2017-10-16 13:00:30
 categories: [iOS]
 tags: [iOS, Objective-C]
 typora-root-url: ..
+math: true
 ---
 
 ![UIView渲染](/assets/images/20171016UIViewRendering/UIViewRendering.avif)

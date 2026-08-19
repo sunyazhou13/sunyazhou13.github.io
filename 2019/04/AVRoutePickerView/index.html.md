@@ -5,6 +5,7 @@ date: 2019-04-17 15:19:52
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, AVFoundation, AVKit, 音视频]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20190417AVRoutePickerView/cover_album.avif)

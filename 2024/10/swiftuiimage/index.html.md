@@ -4,6 +4,7 @@ title: SwiftUI中的Image修改器(视图修饰符)有哪些？
 date: 2024-10-28 10:35 +0000
 tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)

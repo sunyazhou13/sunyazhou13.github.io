@@ -4,6 +4,7 @@ title: UIImage镜像
 date: 2024-10-16 01:46 +0000
 tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 

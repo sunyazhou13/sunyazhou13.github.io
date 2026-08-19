@@ -5,6 +5,7 @@ date: 2017-02-09 19:35:45
 categories: [Git]
 tags: [iOS, macOS, Git, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20170209HowToUseGitManageCode/guide.avif)

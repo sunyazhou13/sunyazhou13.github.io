@@ -5,6 +5,7 @@ date: 2023-02-05 17:09 +0800
 categories: [系统理论实践]
 tags: [Linux, shell]
 typora-root-url: ..
+math: true
 ---
 
 

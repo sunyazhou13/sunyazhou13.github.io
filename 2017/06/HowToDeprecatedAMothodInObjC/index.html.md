@@ -5,6 +5,7 @@ date: 2017-06-16 16:40:26
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
+math: true
 ---
 # 前言
 ![](/assets/images/20170616HowToDeprecatedAMothodInObjC/deprecated.avif)

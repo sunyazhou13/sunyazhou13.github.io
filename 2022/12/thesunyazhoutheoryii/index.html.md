@@ -5,6 +5,7 @@ date: 2022-12-03 11:32 +0800
 categories: [系统理论实践]
 tags: [理论]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20221203TheSunyazhouTheoryII/thesunyazhoutheoryii.avif)

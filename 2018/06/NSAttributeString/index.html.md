@@ -5,6 +5,7 @@ date: 2018-06-15 10:10:58
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20180615NSAttributeString/richtext.avif)

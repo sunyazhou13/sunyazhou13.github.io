@@ -5,6 +5,7 @@ date: 2024-01-16 09:49 +0800
 categories: [ArkUI, HarmonyOS]
 tags: [鸿蒙OS开发, HarmonyOS]
 typora-root-url: ..
+math: true
 ---  
 
 ![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)

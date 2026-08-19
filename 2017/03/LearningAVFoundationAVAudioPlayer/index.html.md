@@ -5,6 +5,7 @@ date: 2017-03-17 10:26:06
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
+math: true
 ---
 
 ![AVAudioPlayer](/assets/images/20170317LearningAVFoundationAVAudioPlayer/cover.avif)

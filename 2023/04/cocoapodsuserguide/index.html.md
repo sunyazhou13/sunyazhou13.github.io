@@ -6,6 +6,7 @@ categories: [iOS]
 tags: [iOS, macOS, Objective-C, Cocoapods, skills]
 typora-root-url: ..
 
+math: true
 ---
 
 

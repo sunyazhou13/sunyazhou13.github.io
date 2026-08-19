@@ -5,6 +5,7 @@ date: 2024-02-21 06:56 +0000
 categories: [iOS, SwiftUI]
 tags: [iOS, macOS,iPadOS,watchOS, SwiftUI]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20240222MotionShake/CMMotion.avif)

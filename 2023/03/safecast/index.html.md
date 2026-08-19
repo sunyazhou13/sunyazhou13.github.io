@@ -5,6 +5,7 @@ date: 2023-03-06 10:28 +0800
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20230306SafeCast/cast.avif)

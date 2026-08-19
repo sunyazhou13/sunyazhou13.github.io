@@ -5,6 +5,7 @@ date: 2017-06-20 15:07:33
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20170620EnableStaticAnalyer/static.avif)

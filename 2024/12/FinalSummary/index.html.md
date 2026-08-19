@@ -5,6 +5,7 @@ date: 2024-12-31 23:53 +0000
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
+math: true
 ---
 
 

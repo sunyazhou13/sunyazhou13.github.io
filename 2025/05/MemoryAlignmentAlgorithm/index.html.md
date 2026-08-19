@@ -5,6 +5,7 @@ date: 2025-05-11 07:30 +0000
 categories: [iOS, SwiftUI]
 tags: [iOS, SwiftUI, Swift, Objective-C]
 typora-root-url: ..
+math: true
 ---
 
 
@@ -54,7 +55,7 @@ size - (size & (align - 1)) + align:
 示例计算
 对于 size = 129，align = 128：
 
-``` math
+$$
 \begin{align*}
 \text{余数} &= 129 \ \% \ 128 \\
 &= 129 \ \& \ (128 - 1) \\
@@ -62,7 +63,7 @@ size - (size & (align - 1)) + align:
 &= \text{二进制} \ 10000001 \ \& \ 01111111 \\
 &= 00000001 \quad (\text{即十进制 1})
 \end{align*}
-```
+$$
 
 #### 2. 与传统模运算的对比
 
@@ -113,11 +114,9 @@ let aligned = alignedSizeGeneric(size: 250, align: 100) // 结果为 300
 - **适用场景**：GPU 内存对齐、高性能计算中优化取模操作。
 - **核心公式**：  
 	
-``` math
-  \[
+$$
 \text{AlignedSize} = \text{size} - (\text{size} \ \% \ \text{align}) + \text{align}
-\]  
-```
+$$
 
 ![](/assets/images/20250511MemoryAlignmentAlgorithm/AlignedSize.avif)
 

@@ -5,6 +5,7 @@ date: 2018-03-05 12:11:41
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, OpenGL, 图形图象, 音视频]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20180305ComputerGraphicsRenderingProcess/IvanSutherland.avif)

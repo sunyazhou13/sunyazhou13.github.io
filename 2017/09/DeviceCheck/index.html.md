@@ -5,6 +5,7 @@ date: 2017-09-30 09:45:25
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20170930DeviceCheck/DeviceCheck.avif)

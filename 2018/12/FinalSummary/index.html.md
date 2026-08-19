@@ -5,6 +5,7 @@ date: 2018-12-28 23:04:41
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20181231FinalSummary/banner.avif)

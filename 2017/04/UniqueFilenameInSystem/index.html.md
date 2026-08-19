@@ -5,6 +5,7 @@ date: 2017-04-20 16:35:42
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20170420UniqueFilenameInSystem/StockPhoto.avif)

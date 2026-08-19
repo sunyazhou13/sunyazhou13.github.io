@@ -5,6 +5,7 @@ date: 2020-08-31 16:52:25
 categories: [iOS, 系统理论实践]
 tags: [Algorithm, Objective-C]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)

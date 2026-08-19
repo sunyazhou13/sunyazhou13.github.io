@@ -5,6 +5,7 @@ date: 2025-12-31 01:00 +0000
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20251231FinalSummary/banner.avif)

@@ -5,6 +5,7 @@ date: 2018-07-18 09:29:39
 categories: [Linux]
 tags: [系统理论实践, macOS, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20180718LinuxBash/20130520LinuxLogoOnCentos5.avif)

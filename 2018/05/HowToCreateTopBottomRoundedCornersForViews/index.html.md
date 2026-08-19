@@ -5,6 +5,7 @@ date: 2018-05-15 09:58:00
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20180515HowToCreateTopBottomRoundedCornersForViews/TopBottomCornerDemo.avif)

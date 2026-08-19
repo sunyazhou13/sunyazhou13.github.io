@@ -5,6 +5,7 @@ date: 2018-02-04 12:24:30
 categories: [系统理论实践]
 tags: [python]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20180204WordEmbeding/wordembeding.avif)

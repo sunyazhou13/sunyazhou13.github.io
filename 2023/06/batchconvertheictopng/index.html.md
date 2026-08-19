@@ -5,6 +5,7 @@ date: 2023-06-07 10:01 +0800
 categories: [shell]
 tags: [macOS, Xcode, skills]
 typora-root-url: ..
+math: true
 ---
 
 # 前言

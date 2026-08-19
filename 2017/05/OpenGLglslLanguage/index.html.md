@@ -5,6 +5,7 @@ date: 2017-05-30 20:32:33
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, OpenGL, 图形图象, 音视频]
 typora-root-url: ..
+math: true
 ---
 
 # 前言  

@@ -5,6 +5,7 @@ date: 2017-02-10 10:24:25
 categories: [系统理论实践]
 tags: [skills]
 typora-root-url: ..
+math: true
 ---
 
 

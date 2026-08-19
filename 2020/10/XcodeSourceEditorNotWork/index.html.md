@@ -5,6 +5,7 @@ date: 2020-10-16 16:05:42
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditorCover.avif)

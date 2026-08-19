@@ -5,6 +5,7 @@ date: 2018-01-12 10:32:18
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
+math: true
 ---
 
 ![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.avif)

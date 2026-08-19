@@ -5,6 +5,7 @@ date: 2023-03-22 10:08 +0800
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, Cocoapods, skills]
 typora-root-url: ..
+math: true
 ---
 
 ![](/assets/images/20201010PodSpec/cocoapods.avif)
