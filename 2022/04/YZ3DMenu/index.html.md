@@ -5,7 +5,7 @@ date: 2022-04-13 09:50:00.000000000 +08:00
 categories: [iOS, Swift]
 tags: [Swift, AVFoundation]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20220413YZ3DMenu/3dmenu.avif)

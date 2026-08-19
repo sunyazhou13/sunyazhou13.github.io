@@ -4,7 +4,7 @@ title: "跨平台桌面框架选型深度对比：一个 iOS 开发者的 Qt6 �
 date: 2026-07-03 02:45 +0000
 categories: [跨平台, AI Agent, 移动开发, 小程序, 鸿蒙]
 tags: [Electron, Tauri, Qt6, Flutter, React Native, uni-app, Taro, Python, LangChain, Deno, 鸿蒙, 微信小程序, AI Agent]
-math: true
+
 ---
 
 ![](/assets/images/20260703CrossPlatformDesktopFrameworkComparison/banner.avif)

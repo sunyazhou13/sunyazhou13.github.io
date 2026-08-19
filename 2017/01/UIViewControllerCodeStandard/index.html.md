@@ -5,7 +5,7 @@ date: 2017-01-13 11:18:07
 categories: [iOS]
 tags: [iOS, Swift, macOS]
 typora-root-url: ..
-math: true
+
 ---
 
 # pragma 标准写法

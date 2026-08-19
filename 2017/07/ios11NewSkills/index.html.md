@@ -6,7 +6,7 @@ categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
 
-math: true
+
 ---
 
 ![](/assets/images/20170713ios11NewSkills/whatisnewsinios11.avif)

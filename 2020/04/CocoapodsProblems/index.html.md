@@ -5,7 +5,7 @@ date: 2020-04-10 07:13:59
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills, Cocoapods]
 typora-root-url: ..
-math: true
+
 ---
 
 

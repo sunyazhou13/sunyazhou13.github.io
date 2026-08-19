@@ -5,7 +5,7 @@ date: 2022-04-06 09:50:00.000000000 +08:00
 categories: [iOS, Swift]
 tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20220406CVPixelBufferRef/Cover.avif)

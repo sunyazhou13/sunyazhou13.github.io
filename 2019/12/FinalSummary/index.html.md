@@ -5,7 +5,7 @@ date: 2019-12-30 23:30:00
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20191231FinalSummary/AlanTuring.avif)

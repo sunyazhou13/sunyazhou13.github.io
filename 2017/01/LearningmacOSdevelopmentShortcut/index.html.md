@@ -5,7 +5,7 @@ date: 2017-01-13 11:38:30
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 

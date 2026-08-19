@@ -5,7 +5,7 @@ date: 2018-01-13 22:27:18
 categories: [系统理论实践]
 tags: [python]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20180113PythonMySQL/MysqlPython.avif)

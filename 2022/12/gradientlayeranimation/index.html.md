@@ -5,7 +5,7 @@ date: 2022-12-07 16:00 +0800
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)

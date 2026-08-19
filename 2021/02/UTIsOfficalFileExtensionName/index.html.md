@@ -5,7 +5,7 @@ date: 2021-02-21 10:40:31
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20210221UTIsOfficalFileExtensionName/UTIs.avif)

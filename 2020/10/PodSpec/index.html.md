@@ -5,7 +5,7 @@ date: 2020-10-10 07:52:18
 categories: [iOS, Swift]  
 tags: [iOS, Swift, Objective-C, Cocoapods,skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20201010PodSpec/cocoapods.avif)

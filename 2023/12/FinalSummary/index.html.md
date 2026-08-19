@@ -5,7 +5,7 @@ date: 2023-12-31 16:02 +0800
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20231231FinalSummary/banner.avif)  

@@ -6,7 +6,7 @@ categories: [系统理论实践]
 tags: [Algorithm, C++]
 typora-root-url: ..
 
-math: true
+
 ---
 
 ![](/assets/images/20220701ReverseList/algorithm.avif)

@@ -5,7 +5,7 @@ date: 2022-11-25 18:45 +0800
 categories: [iOS, SwiftUI]
 tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20221125SwiftUIPropertyWrapper/swiftUIPropertyWrappers.avif)

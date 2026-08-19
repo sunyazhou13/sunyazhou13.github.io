@@ -5,7 +5,7 @@ date: 2017-02-17 10:01:19
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
-math: true
+
 ---
 
 代码获取国际化语言数组  

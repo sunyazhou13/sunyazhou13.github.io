@@ -5,7 +5,7 @@ date: 2021-01-21 20:00:29
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20210121TextGradient/gradientcover.avif)

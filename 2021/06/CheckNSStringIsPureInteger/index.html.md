@@ -5,7 +5,7 @@ date: 2021-06-23 00:30:00
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20210623CheckNSStringIsPureInteger/pureinteger.avif)

@@ -5,7 +5,7 @@ categories: [macOS]
 tags: [iOS, macOS, Objective-C]
 date: 2017-02-22 16:17:00
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20170222macOSsimulateKeyboradNSEvent/Cover.avif)

@@ -5,7 +5,7 @@ date: 2017-03-23 14:03:32
 categories: [macOS]
 tags: [macOS, Objective-C]
 typora-root-url: ..
-math: true
+
 ---
 
 ``` objc

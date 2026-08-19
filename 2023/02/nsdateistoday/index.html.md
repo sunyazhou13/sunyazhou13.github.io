@@ -5,7 +5,7 @@ date: 2023-02-13 19:39 +0800
 categories: [iOS, Swift]
 tags: [iOS, Swift, Objective-C, skills]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20230213NSDateIsToday/date.avif)

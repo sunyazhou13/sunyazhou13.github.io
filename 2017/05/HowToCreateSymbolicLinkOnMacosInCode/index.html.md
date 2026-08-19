@@ -5,7 +5,7 @@ date: 2017-05-09 17:41:17
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
-math: true
+
 ---
 
 ![](/assets/images/20170509HowToCreateSymbolicLinkOnMacosInCode/symboliclink.avif)

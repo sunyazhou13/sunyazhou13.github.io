@@ -6,7 +6,7 @@ categories: [iOS, Swift]
 tags: [Swift, AVFoundation, Git]
 typora-root-url: ..
 
-math: true
+
 ---
 
 ![](/assets/images/20220425Mos/mos.avif)
