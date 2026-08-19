@@ -1,0 +1,635 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="AudioUnit" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/en/2018/05/AudioUnit/" /><meta property="og:url" content="https://www.sunyazhou.com/2018/05/AudioUnit/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2018-05-07T14:59:41+00:00" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@type":"BlogPosting","url":"https://www.sunyazhou.com/2018/05/AudioUnit/","headline":"AudioUnit","dateModified":"2018-05-07T14:59:41+00:00","datePublished":"2018-05-07T14:59:41+00:00","author":{"@type":"Person","name":"孙亚洲"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2018/05/AudioUnit/"},"@context":"https://schema.org"}</script><title>AudioUnit | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/en/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/en/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/en/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/archives/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/categories/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tags/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/projects/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>PROJECTS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/about/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/2018/05/AudioUnit/" title="中文" aria-label="切换到中文"> <i class="lang-toggle-icon fas fa-language lang-invisible"></i> <i class="lang-toggle-icon fas fa-earth-asia "></i> </a> <span class="icon-border"></span> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/en/"> 主页 </a> </span> <span>AudioUnit</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>AudioUnit</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, May 7, 2018, 2:59 PM +0000" > 2018-05-07 <i class="unloaded">2018-05-07T14:59:41+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sun, Mar 22, 2026, 11:53 PM +0800" > 03-22 <i class="unloaded">2026-03-22T15:53:55+00:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/auHostApp.avif" alt="" /></p><h1 id="preface">Preface</h1><p>On the iOS platform, audio rendering is done directly through the <code class="language-plaintext highlighter-rouge">AudioUnit</code> API. It is used to implement effects like “uncle voice”, “KTV”, “monitor return” and so on…</p><p>Today I’ll take you through an in-depth understanding and study of these audio effects.</p><h2 id="background-of-implementing-voice-changing-on-ios">Background of Implementing Voice Changing on iOS</h2><p>Voice changing generally happens between one end that captures/records audio and the other end that plays it. Ignoring the transcoding in between, you change the voice by adjusting the corresponding audio parameters in the middle of the input/output pipeline.</p><p>The following image shows the workflow of AVAudioSession <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/ASPGIntro.avif" alt="" /></p><p>There are many commonly used voice changing solutions:</p><ol><li>FFMpeg’s built-in effects, e.g. EQ equalizer<li><code class="language-plaintext highlighter-rouge">Audio Unit</code> at the bottom of AVFoundation, e.g. reverb<li>SoundTouch<li>Other solutions…</ol><p>Here we choose the audio processing unit <code class="language-plaintext highlighter-rouge">Audio Unit</code> provided by iOS AVFoundation itself.</p><p><code class="language-plaintext highlighter-rouge">Audio Unit</code> provides the following features:</p><ul><li>Low-latency audio I/O, e.g. voip<li>Mixing and playing back multiple audio tracks, e.g. music synthesizers in games<li>Audio Unit itself provides: echo cancellation, mixing two audio tracks, equalizers, compressors, reverb effects, etc.<li>A graph-like structure is needed to process audio, e.g. somewhat similar to the KX driver that streamers in the PC era often used.</ul><p>The image below shows the KX driver connection diagram on the Windows platform</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/kx.avif" alt="" /></p><h2 id="audiounit-introduction">AudioUnit Introduction</h2><h4 id="ios-layered-architecture-diagram">iOS Layered Architecture Diagram</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/iPhone0sAudioArchitecture.avif" alt="" /></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/AboutAudioUnitHosting.avif" alt="" /></p><blockquote><p>To understand the audio processing flow, you first need to know about <code class="language-plaintext highlighter-rouge">AUGraph</code></p></blockquote><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/simpleAuChain.avif" alt="" /></p><blockquote><p><strong>audio processing graph</strong>: A representation of a signal chain comprising an interconnection of audio units. Also called an AUGraph or graph. Core Audio represents such an interconnected network as a software object of typeAUGraph. Audio processing graphs must end in an output unit. See also audio unit.<br /> A representation of a signal chain, including the interconnection of audio units. Also called an AUGraph or graph. Core Audio represents such an interconnected network as a software object of type <code class="language-plaintext highlighter-rouge">AUGraph</code>.</p></blockquote><h4 id="audio-unit-structure-diagram-workflow">audio unit structure diagram (workflow)</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/auArchitecture.avif" alt="" /></p><h4 id="audio-unit-composition-diagram">Audio Unit composition diagram</h4><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/AudioUnitScopes.avif" alt="" /></p><p>A Unit is generally divided into Element0 and Element1</p><p>Below we’ll take the Remote I/O Unit as an example:</p><p>The RemoteIO unit is the unit related to hardware I/O. It has an input end and an output end. The input end generally refers to the microphone, and the output end generally refers to the speaker.</p><blockquote><p><code class="language-plaintext highlighter-rouge">Element0</code> controls output<br /> <code class="language-plaintext highlighter-rouge">Element1</code> controls input <br /> In the diagram, Element is also called bus;<br /> The audio stream comes in from the input scope and goes out from the output scope The whole Render process is one RenderCycle</p></blockquote><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/IOUnit.avif" alt="" /></p><p><strong>At the same time, each Element is divided into an Input Scope and an Output Scope. If we want to use the speaker’s playback function, we must connect the <code class="language-plaintext highlighter-rouge">OutputScope</code> of this Unit’s <code class="language-plaintext highlighter-rouge">Element0</code> to the speaker. If we want to use the microphone for recording, we must connect the <code class="language-plaintext highlighter-rouge">InputScope</code> of this Unit’s <code class="language-plaintext highlighter-rouge">Element1</code> to the microphone.</strong></p><h3 id="building-an-audio-unit">Building an Audio Unit</h3><p>First you need to enable the audio session — you can configure that part yourself.</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>	//Pseudo-code for configuring the session
+	[[AVAudioSession sharedInstance].xxxxx xxxxx];
+</pre></table></code></div></div><p>How do you build an Audio Unit with code? Here we’ll use the Remote I/O Unit as an example:</p><p>There are two ways to create an AudioUnit:</p><ol><li>Create it directly with the bare AudioUnit API<li>Build it using AUGraph and AUNode</ol><ul><li>The first way: bare creation</ul><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="cp">#import "ViewController.h"
+#import &lt;AudioUnit/AudioUnit.h&gt;
+</span><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">AudioUnit</span> <span class="n">ioUnitInstance</span><span class="p">;</span> <span class="c1">//声明一变量</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    <span class="c1">//First build the struct needed to create the Unit</span>
+    <span class="n">AudioComponentDescription</span> <span class="n">ioUnitDescription</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentType</span> <span class="o">=</span> <span class="n">kAudioUnitType_Output</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentSubType</span> <span class="o">=</span> <span class="n">kAudioUnitSubType_RemoteIO</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentManufacturer</span> <span class="o">=</span> <span class="n">kAudioUnitManufacturer_Apple</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentFlags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentFlagsMask</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="n">AudioComponent</span> <span class="n">ioUnitRef</span> <span class="o">=</span> <span class="n">AudioComponentFindNext</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ioUnitDescription</span><span class="p">);</span>
+    <span class="c1">//Create the AudioUnit instance</span>
+    <span class="n">AudioComponentInstanceNew</span><span class="p">(</span><span class="n">ioUnitRef</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ioUnitInstance</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><ul><li>The second way: using AUGraph and AUNode</ul><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="cp">#import "ViewController.h"
+#import &lt;AudioUnit/AudioUnit.h&gt;
+#import &lt;AudioToolbox/AudioToolbox.h&gt;
+</span><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">AUGraph</span>     <span class="n">processingGraph</span><span class="p">;</span>
+    <span class="n">AUNode</span>      <span class="n">ioNode</span><span class="p">;</span>
+    <span class="n">AudioUnit</span>   <span class="n">ioUnit</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    <span class="c1">//First build the struct needed to create the Unit</span>
+    <span class="n">AudioComponentDescription</span> <span class="n">ioUnitDescription</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentType</span> <span class="o">=</span> <span class="n">kAudioUnitType_Output</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentSubType</span> <span class="o">=</span> <span class="n">kAudioUnitSubType_RemoteIO</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentManufacturer</span> <span class="o">=</span> <span class="n">kAudioUnitManufacturer_Apple</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentFlags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">ioUnitDescription</span><span class="p">.</span><span class="n">componentFlagsMask</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="c1">//1 new</span>
+    <span class="n">NewAUGraph</span><span class="p">(</span><span class="o">&amp;</span><span class="n">processingGraph</span><span class="p">);</span>
+    <span class="n">AUGraphAddNode</span><span class="p">(</span><span class="n">processingGraph</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ioUnitDescription</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ioNode</span><span class="p">);</span>
+    
+    <span class="c1">//2 open</span>
+    <span class="n">AUGraphOpen</span><span class="p">(</span><span class="n">processingGraph</span><span class="p">);</span>
+    
+    <span class="c1">//3 Get the AudioUnit from the corresponding Node</span>
+    <span class="n">AUGraphNodeInfo</span><span class="p">(</span><span class="n">processingGraph</span><span class="p">,</span> <span class="n">ioNode</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ioUnit</span><span class="p">);</span>
+    
+<span class="p">}</span>
+
+</pre></table></code></div></div><blockquote><p>The second way is recommended because it’s more extensible.<br /> Note: <strong><em>AUNode and AudioUnit must appear in pairs</em></strong></p></blockquote><p>As shown below: Remote I/O Unit</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/IOUnit.avif" alt="" /></p><blockquote><p>The microphone and speaker have corresponding enums in the Audio Unit.<br /> The “monitor return” (<code class="language-plaintext highlighter-rouge">耳返</code>) used in live streaming does exactly this — it feeds the data captured by the microphone directly to the speaker, so you can hear the microphone in real time with low latency.<br /> Live streaming generally uses the <code class="language-plaintext highlighter-rouge">Remote I/O</code> unit to do the capturing</p></blockquote><p>Using AudioUnit to connect to the speaker</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="n">OSStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">noErr</span><span class="p">;</span>
+<span class="n">UInt32</span> <span class="n">onFlag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">UInt32</span> <span class="n">busZero</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//Element0  就是bus0</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">remoteIOUnit</span><span class="p">,</span> <span class="n">kAudioOutputUnitProperty_EnableIO</span><span class="p">,</span> <span class="n">kAudioUnitScope_Output</span><span class="p">,</span> <span class="n">busZero</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">onFlag</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">onFlag</span><span class="p">));</span>
+<span class="n">CheckStatus</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s">@"不能连接扬声器"</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+    
+</pre></table></code></div></div><blockquote><p>Note: kAudioUnitScope_Output is the key for connecting to the speaker</p></blockquote><p>Connecting the microphone</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">OSStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">noErr</span><span class="p">;</span>
+<span class="n">UInt32</span> <span class="n">busOne</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//Element1 就是bus1 接麦克风输入</span>
+<span class="n">UInt32</span> <span class="n">oneFlag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">status</span> <span class="o">=</span>  <span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">remoteIOUnit</span><span class="p">,</span> <span class="n">kAudioOutputUnitProperty_EnableIO</span><span class="p">,</span> <span class="n">kAudioUnitScope_Input</span><span class="p">,</span> <span class="n">busOne</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">oneFlag</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">oneFlag</span><span class="p">));</span>
+<span class="n">CheckStatus</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s">@"不能连接麦克风"</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+</pre></table></code></div></div><p>You can use the following code to debug each step when an error occurs.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">CheckStatus</span><span class="p">(</span><span class="n">OSStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">message</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">fatal</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="n">noErr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="n">fourCC</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">UInt32</span> <span class="o">*</span><span class="p">)</span><span class="n">fourCC</span> <span class="o">=</span> <span class="n">CFSwapInt32HostToBig</span><span class="p">(</span><span class="n">status</span><span class="p">);</span>
+        <span class="n">fourCC</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isprint</span><span class="p">(</span><span class="n">fourCC</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">isprint</span><span class="p">(</span><span class="n">fourCC</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&amp;&amp;</span>
+            <span class="n">isprint</span><span class="p">(</span><span class="n">fourCC</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">isprint</span><span class="p">(</span><span class="n">fourCC</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@:%s"</span><span class="p">,</span><span class="n">message</span><span class="p">,</span> <span class="n">fourCC</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@:%d"</span><span class="p">,</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">status</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">fatal</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>Since status prints a related number on every error, and you may not understand it, you can click <a href="https://www.osstatus.com/">OSStatus</a> to look up the error code.</p></blockquote><h4 id="avaudiomix">AVAudioMix</h4><p>We generally use AVAudioMixer in the classes for capturing, recording, or editing audio/video.</p><p>For example: the flow of our voice changing implementation is roughly like this: <strong>AVAudioPlayer -&gt; AVPlayerItem -&gt; AVAudioMixer-&gt; AUGraph -&gt; AUNode + AudioUnit</strong></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180507AudioUnit/AVAudioMixClass.avif" alt="" /></p><h4 id="configuring-the-microphone-input-parameters-with-audiostreambasicdescription">Configuring the microphone input parameters with AudioStreamBasicDescription</h4><p>When we control the Remote IO Unit and want to tell the microphone the various input parameters, we can use a struct data description called ASBD to set them on the corresponding Unit.</p><h5 id="audio-stream-format-describes-the-asbd">Audio Stream Format describes the ASBD</h5><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">UInt32</span> <span class="n">bytePerSample</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Float32</span><span class="p">);</span>
+<span class="n">AudioStreamBasicDescription</span> <span class="n">asbd</span><span class="p">;</span>
+<span class="n">bzero</span><span class="p">(</span><span class="o">&amp;</span><span class="n">asbd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">asbd</span><span class="p">));</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mFormatID</span> <span class="o">=</span> <span class="n">kAudioFormatLinearPCM</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mSampleRate</span> <span class="o">=</span> <span class="mi">44100</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mChannelsPerFrame</span> <span class="o">=</span> <span class="n">channels</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mFramesPerPacket</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mFormatFlags</span> <span class="o">=</span> <span class="n">kAudioFormatFlagsNativeFloatPacked</span> <span class="o">|</span> <span class="n">kAudioFormatFlagIsNonInterleaved</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mBitsPerChannel</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">bytePerSample</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mBytesPerFrame</span> <span class="o">=</span> <span class="n">bytePerSample</span><span class="p">;</span>
+<span class="n">asbd</span><span class="p">.</span><span class="n">mBytesPerPacket</span> <span class="o">=</span> <span class="n">bytePerSample</span><span class="p">;</span>
+    
+</pre></table></code></div></div><blockquote><p>The code above shows how to fill in the ASBD struct, which describes the specific format of the audio/video.</p></blockquote><p>Below is a detailed introduction of what each parameter means:</p><ul><li>mFormatID is used to specify the encoding format, e.g. PCM<li>mSampleRate the sample rate<li>mChannelsPerFrame how many channels each Frame has<li>mFramesPerPacket how many Frames each Packet has<li>mFormatFlags this is the parameter that describes how the sound format is represented. In the code above, we specified that each sample is represented as a Float, somewhat similar to SInt16. If it’s followed by NonInterleaved, it means non-interleaved. For this audio, the left and right channels are stored non-interleaved. The actual audio data is stored in the mBuffers variable of an AudioBufferList struct. If mFormatFlags is set to NonInterleaved, the left channel goes into mBuffers[0] and the right channel goes into mBuffers[1].<li>mBitsPerChannel indicates how many bits are used to represent one channel of audio data. Above we used Float, so this is assigned 8 multiplied by the number of bytes per sample.<li>mBytesPerFrame and mBytesPerPacket — these two values are assigned according to the value of mFormatFlags. In the non-interleaved case, they are assigned bytePerSample (because the left and right channels are separate). But if it’s Interleaved, it should be bytePerSample * channels (because the left and right channels are stored interleaved). Only then can you represent how many bytes are in one Frame.</ul><p>With all that said, how do we give this ASBD to the Unit?</p><p>The following code sets the ASBD on the corresponding Audio Unit:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">remoteIOUnit</span><span class="p">,</span> <span class="n">kAudioUnitProperty_StreamFormat</span><span class="p">,</span> <span class="n">kAudioUnitScope_Output</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">asbd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">asbd</span><span class="p">));</span>
+</pre></table></code></div></div><p>The complete code is as follows:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="c1">//Set ASBD</span>
+<span class="n">AudioStreamBasicDescription</span> <span class="n">inputFormat</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mSampleRate</span> <span class="o">=</span> <span class="mi">44100</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mFormatID</span> <span class="o">=</span> <span class="n">kAudioFormatLinearPCM</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mFormatFlags</span> <span class="o">=</span> <span class="n">kAudioFormatFlagIsSignedInteger</span> <span class="o">|</span> <span class="n">kAudioFormatFlagIsNonInterleaved</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mFramesPerPacket</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mChannelsPerFrame</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mBytesPerPacket</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mBytesPerFrame</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">inputFormat</span><span class="p">.</span><span class="n">mBitsPerChannel</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="c1">//Set it on the input side to configure what format the microphone output data is in</span>
+<span class="n">OSStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">noErr</span><span class="p">;</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">audioUnit</span><span class="p">,</span>
+                              <span class="n">kAudioUnitProperty_StreamFormat</span><span class="p">,</span>
+                              <span class="n">kAudioUnitScope_Output</span><span class="p">,</span>
+                              <span class="n">InputBus</span><span class="p">,</span>
+                              <span class="o">&amp;</span><span class="n">inputFormat</span><span class="p">,</span>
+                              <span class="k">sizeof</span><span class="p">(</span><span class="n">inputFormat</span><span class="p">));</span>
+<span class="n">CheckStatus</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s">@"AudioUnitGetProperty bus1 output ASBD error"</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+</pre></table></code></div></div><h3 id="audio-unit-categories">Audio Unit Categories</h3><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">CF_ENUM</span><span class="p">(</span><span class="n">UInt32</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">kAudioUnitType_Output</span>					<span class="o">=</span> <span class="err">'</span><span class="n">auou</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_MusicDevice</span>				<span class="o">=</span> <span class="err">'</span><span class="n">aumu</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_MusicEffect</span>				<span class="o">=</span> <span class="err">'</span><span class="n">aumf</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_FormatConverter</span>			<span class="o">=</span> <span class="err">'</span><span class="n">aufc</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_Effect</span>					<span class="o">=</span> <span class="err">'</span><span class="n">aufx</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_Mixer</span>					<span class="o">=</span> <span class="err">'</span><span class="n">aumx</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_Panner</span>					<span class="o">=</span> <span class="err">'</span><span class="n">aupn</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_Generator</span>				<span class="o">=</span> <span class="err">'</span><span class="n">augn</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_OfflineEffect</span>			<span class="o">=</span> <span class="err">'</span><span class="n">auol</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitType_MIDIProcessor</span>			<span class="o">=</span> <span class="err">'</span><span class="n">aumi</span><span class="err">'</span>
+<span class="p">};</span>
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Category<th style="text-align: left">Function/Role<th style="text-align: left">Type<tbody><tr><td style="text-align: left">Effect Unit<td style="text-align: left">Provides sound effect processing<td style="text-align: left">kAudioUnitType_Effect<tr><td style="text-align: left">Mixer Units<td style="text-align: left">Provides the ability to mix multiple audio tracks<td style="text-align: left">kAudioUnitType_Mixer<tr><td style="text-align: left">I/O Units<td style="text-align: left">I/O — captures audio and plays audio<td style="text-align: left">kAudioUnitType_Output<tr><td style="text-align: left">AUConverter Units<td style="text-align: left">Format conversion, e.g. converting the sample format from Float to SInt16, interleaved or deinterleaved, mono/stereo conversion<td style="text-align: left">kAudioUnitType_FormatConverter<tr><td style="text-align: left">Generator Units<td style="text-align: left">Provides player functionality<td style="text-align: left">kAudioUnitType_Generator</table></div><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="n">CF_ENUM</span><span class="p">(</span><span class="n">UInt32</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">kAudioUnitSubType_PeakLimiter</span>			<span class="o">=</span> <span class="err">'</span><span class="n">lmtr</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_DynamicsProcessor</span>		<span class="o">=</span> <span class="err">'</span><span class="n">dcmp</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_LowPassFilter</span>			<span class="o">=</span> <span class="err">'</span><span class="n">lpas</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_HighPassFilter</span>		<span class="o">=</span> <span class="err">'</span><span class="n">hpas</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_BandPassFilter</span>		<span class="o">=</span> <span class="err">'</span><span class="n">bpas</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_HighShelfFilter</span>		<span class="o">=</span> <span class="err">'</span><span class="n">hshf</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_LowShelfFilter</span>		<span class="o">=</span> <span class="err">'</span><span class="n">lshf</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_ParametricEQ</span>			<span class="o">=</span> <span class="err">'</span><span class="n">pmeq</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_Distortion</span>			<span class="o">=</span> <span class="err">'</span><span class="n">dist</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_Delay</span>					<span class="o">=</span> <span class="err">'</span><span class="n">dely</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_SampleDelay</span>			<span class="o">=</span> <span class="err">'</span><span class="n">sdly</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_NBandEQ</span>				<span class="o">=</span> <span class="err">'</span><span class="n">nbeq</span><span class="err">'</span>
+<span class="p">};</span>
+
+
+<span class="n">CF_ENUM</span><span class="p">(</span><span class="n">UInt32</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">kAudioUnitSubType_Reverb2</span>				<span class="o">=</span> <span class="err">'</span><span class="n">rvb2</span><span class="err">'</span><span class="p">,</span>
+	<span class="n">kAudioUnitSubType_AUiPodEQ</span>				<span class="o">=</span> <span class="err">'</span><span class="n">ipeq</span><span class="err">'</span>
+<span class="p">};</span>
+
+</pre></table></code></div></div><h4 id="effect-unit-subtypes-and-their-usage">Effect Unit subtypes and their usage</h4><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Subtype<th style="text-align: left">Usage Description<th style="text-align: left">Sub-enum Type<tbody><tr><td style="text-align: left">Equalizer<td style="text-align: left">Boosts or attenuates the energy of certain <a href="https://baike.baidu.com/item/%E9%A2%91%E5%B8%A6">frequency bands</a> of the sound. The effect unit requires you to specify multiple frequency bands, then set a gain for each band, ultimately changing the sound’s energy distribution across the spectrum<td style="text-align: left">kAudioUnitSubType_NBandEQ<tr><td style="text-align: left">Compressor<td style="text-align: left">When the sound is too quiet or too loud, raises or lowers the sound energy by setting a threshold, e.g. attack time, release time, and threshold value, ultimately controlling the sound’s energy range in the time domain<td style="text-align: left">kAudioUnitSubType_DynamicsProcessor<tr><td style="text-align: left">Reverb<td style="text-align: left">Controls the sound effect through the delay of sound reflections<td style="text-align: left">kAudioUnitSubType_Reverb2</table></div><blockquote><p>The three most commonly used effects under Effect Unit are the ones above. High Pass, Low Pass, Band Pass, Delay, Limiter, etc. are not used very often. If you’re familiar with them, feel free to give them a try.</p></blockquote><h4 id="mixer-units-subtypes-and-their-usage">Mixer Units subtypes and their usage</h4><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Subtype<th style="text-align: left">Usage Description<th style="text-align: left">Sub-enum Type<tbody><tr><td style="text-align: left">3D Mixer<td style="text-align: left">Only supported on macOS<td style="text-align: left"> <tr><td style="text-align: left">MultiChannelMixer<td style="text-align: left">Multi-track mixing effect unit. It can accept multiple audio inputs, separately adjust the gain and on/off of each track, and mix multiple tracks into one<td style="text-align: left">kAudioUnitSubType_MultiChannelMixer</table></div><h4 id="io-units-subtypes-and-their-usage">I/O Units subtypes and their usage</h4><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Subtype<th style="text-align: left">Usage Description<th style="text-align: left">Sub-enum Type<tbody><tr><td style="text-align: left">Remote I/O<td style="text-align: left">Captures audio and plays audio. This is the Unit you use when working with the microphone and speaker in an Audio Unit<td style="text-align: left">kAudioUnitType_Output<tr><td style="text-align: left">Generic Output<td style="text-align: left">For offline processing, or when the AUGraph doesn’t want to drive the whole data flow with a speaker but with an output (which can go into an in-memory queue or disk I/O)<td style="text-align: left">kAudioUnitSubType_GenericOutput</table></div><h4 id="auconverter-units-subtypes-and-their-usage">AUConverter Units subtypes and their usage</h4><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Subtype<th style="text-align: left">Usage Description<th style="text-align: left">Sub-enum Type<tbody><tr><td style="text-align: left">AUConverter<td style="text-align: left">Format conversion. When some effects have strict requirements on the input audio format, or when we feed the audio data to other encoders for encoding…<td style="text-align: left">kAudioUnitSubType_AUConverter<tr><td style="text-align: left">Time Pitch<td style="text-align: left">Pitch/speed shifting effect that adjusts the pitch of the sound, e.g. the talking Tom cat<td style="text-align: left">kAudioUnitSubType_NewTimePitch</table></div><blockquote><p>Note: if the PCM decoded by FFMpeg is in SInt16 format, it must be converted to Float32 before it can be used with the format converter effect unit.</p></blockquote><h4 id="generator-units-subtypes-and-their-usage">Generator Units subtypes and their usage</h4><div class="table-wrapper"><table><thead><tr><th style="text-align: left">Subtype<th style="text-align: left">Usage Description<th style="text-align: left">Sub-enum Type<tbody><tr><td style="text-align: left">AudioFilePlayer<td style="text-align: left">Receives raw PCM and plays it. You can generally use this together with Remote I/O to build a player<td style="text-align: left">kAudioUnitSubType_AudioFilePlayer</table></div><p>Related shell command: <strong>convert an audio file to pcm</strong></p><div class="language-sh highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>ffmpeg <span class="nt">-i</span> test.mp3 <span class="nt">-acodec</span> pcm_s16le <span class="nt">-f</span> s16le output.pcm
+</pre></table></code></div></div><blockquote><p>brew install ffmpeg</p></blockquote><p><a href="https://github.com/sunyazhou13/AduioUnitDemo">Demo implementing monitor return (ear return)</a><br /> <a href="https://github.com/sunyazhou13/AudioUnitDemo2">Demo2 implementing monitor return + accompaniment playback</a></p><h4 id="below-ill-share-some-reverb-effect-code-for-voice-changing">Below I’ll share some reverb effect code for voice changing</h4><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+</pre><td class="rouge-code"><pre>
+<span class="c1">//Declaration part  .h</span>
+<span class="k">@interface</span> <span class="nc">KSYAudioReverbFilter</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+
+<span class="k">-</span><span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setupWithAUGraph</span><span class="p">:(</span><span class="n">AUGraph</span><span class="p">)</span><span class="nv">auGraph</span> <span class="nf">asbd</span><span class="p">:(</span><span class="k">const</span> <span class="n">AudioStreamBasicDescription</span> <span class="o">*</span><span class="p">)</span><span class="nv">asbd</span> <span class="nf">maxFrame</span><span class="p">:(</span><span class="n">CMItemCount</span><span class="p">)</span><span class="nv">max</span><span class="p">;</span>
+
+<span class="c1">// Global, CrossFade, 0-&gt;100, 100</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">dryWetMix</span><span class="p">;</span>
+<span class="c1">// Global, Decibels, -20-&gt;20, 0dB.</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">gain</span><span class="p">;</span>
+<span class="c1">// Global, Secs, 0.0001-&gt;1.0, 0.008</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">minDelayTime</span><span class="p">;</span>
+<span class="c1">// Global, Secs, 0.0001-&gt;1.0, 0.050</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">maxDelayTime</span><span class="p">;</span>
+<span class="c1">// Global, Secs, 0.001-&gt;20.0, 1.0</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">decayTimeAt0Hz</span><span class="p">;</span>
+<span class="c1">// Global, Secs, 0.001-&gt;20.0, 0.5</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">decayTimeAtNyquist</span><span class="p">;</span>
+<span class="c1">// Global, Integer, 1-&gt;1000, 1</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="kt">double</span> <span class="n">randomizeReflections</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+
+<span class="c1">//Implementation part</span>
+
+<span class="c1">//Common macro</span>
+<span class="cp">#define RC_CHECK(rc, str) if (rc != noErr) \
+{ \
+NSLog(@"Err :%@ %@ %@", @(rc), str, @(__func__)); \
+}
+</span>
+<span class="k">@implementation</span> <span class="nc">KSYAudioReverbFilter</span>
+
+<span class="k">-</span><span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span><span class="p">{</span>
+    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">){</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">acDes</span> <span class="o">=</span> <span class="p">(</span><span class="n">AudioComponentDescription</span><span class="p">){</span><span class="n">kAudioUnitType_Effect</span><span class="p">,</span> <span class="n">kAudioUnitSubType_Reverb2</span><span class="p">,</span> <span class="n">kAudioUnitManufacturer_Apple</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setupWithAUGraph</span><span class="p">:(</span><span class="n">AUGraph</span><span class="p">)</span><span class="nv">auGraph</span> <span class="nf">asbd</span><span class="p">:(</span><span class="k">const</span> <span class="n">AudioStreamBasicDescription</span> <span class="o">*</span><span class="p">)</span><span class="nv">asbd</span> <span class="nf">maxFrame</span><span class="p">:(</span><span class="n">CMItemCount</span><span class="p">)</span><span class="nv">maxFrame</span>
+<span class="p">{</span>
+    <span class="c1">//</span>
+    <span class="n">OSStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">noErr</span><span class="p">;</span>
+    <span class="n">NSAssert</span><span class="p">(</span><span class="n">auGraph</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">,</span> <span class="s">@"auGraph is null"</span><span class="p">);</span>
+    <span class="n">audioGraph</span> <span class="o">=</span> <span class="n">auGraph</span><span class="p">;</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"setup :%@"</span><span class="p">,</span> <span class="n">NSStringFromCode</span><span class="p">(</span><span class="n">_acDes</span><span class="p">.</span><span class="n">componentSubType</span><span class="p">));</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">AUGraphAddNode</span><span class="p">(</span><span class="n">auGraph</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_acDes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_node</span><span class="p">);</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">noErr</span> <span class="o">!=</span> <span class="n">status</span><span class="p">){</span>
+        
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"add node with type %u failed"</span><span class="p">,</span> <span class="n">_acDes</span><span class="p">.</span><span class="n">componentType</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">AUGraphNodeInfo</span><span class="p">(</span><span class="n">auGraph</span><span class="p">,</span> <span class="n">_node</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_audioUnit</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">noErr</span> <span class="o">!=</span> <span class="n">status</span><span class="p">){</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"create audiouinit failed err:%@"</span><span class="p">,</span> <span class="err">@</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+        <span class="k">return</span> <span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">RC_CHECK</span><span class="p">(</span><span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">_audioUnit</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitProperty_StreamFormat</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitScope_Input</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">asbd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">AudioStreamBasicDescription</span><span class="p">)),</span>
+             <span class="s">@"kAudioUnitProperty_StreamFormat kAudioUnitScope_Input err"</span><span class="p">);</span>
+    
+    <span class="n">RC_CHECK</span><span class="p">(</span><span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">_audioUnit</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitProperty_StreamFormat</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitScope_Output</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">asbd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">AudioStreamBasicDescription</span><span class="p">)),</span>
+             <span class="s">@"kAudioUnitProperty_StreamFormat kAudioUnitScope_Output err"</span><span class="p">);</span>
+    
+    <span class="c1">// Set audio unit maximum frames per slice to max frames.</span>
+    <span class="n">RC_CHECK</span><span class="p">(</span><span class="n">AudioUnitSetProperty</span><span class="p">(</span><span class="n">_audioUnit</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitProperty_MaximumFramesPerSlice</span><span class="p">,</span>
+                                  <span class="n">kAudioUnitScope_Global</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">maxFrame</span><span class="p">,</span> <span class="p">(</span><span class="n">UInt32</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">UInt32</span><span class="p">)),</span>
+             <span class="s">@"set kAudioUnitProperty_MaximumFramesPerSlice err"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#pragma mark - Setters
+</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDryWetMix</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">dryWetMix</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_DryWetMix</span> <span class="nf">value</span><span class="p">:</span><span class="n">dryWetMix</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setGain</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">gain</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_Gain</span> <span class="nf">value</span><span class="p">:</span><span class="n">gain</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setMinDelayTime</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">minDelayTime</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_MinDelayTime</span> <span class="nf">value</span><span class="p">:</span><span class="n">minDelayTime</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setMaxDelayTime</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">maxDelayTime</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_MaxDelayTime</span> <span class="nf">value</span><span class="p">:</span><span class="n">maxDelayTime</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDecayTimeAt0Hz</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">decayTimeAt0Hz</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_DecayTimeAt0Hz</span> <span class="nf">value</span><span class="p">:</span><span class="n">decayTimeAt0Hz</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDecayTimeAtNyquist</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">decayTimeAtNyquist</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_DecayTimeAtNyquist</span> <span class="nf">value</span><span class="p">:</span><span class="n">decayTimeAtNyquist</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setRandomizeReflections</span><span class="p">:(</span><span class="kt">double</span><span class="p">)</span><span class="nv">randomizeReflections</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setGlobalParam</span><span class="p">:</span><span class="n">kReverb2Param_RandomizeReflections</span> <span class="nf">value</span><span class="p">:</span><span class="n">randomizeReflections</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="c1">//Common method</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setGlobalParam</span><span class="p">:(</span><span class="n">AudioUnitParameterID</span><span class="p">)</span><span class="nv">paramId</span> <span class="nf">value</span><span class="p">:(</span><span class="n">AudioUnitParameterValue</span><span class="p">)</span><span class="nv">value</span>
+<span class="p">{</span>
+
+    <span class="n">RC_CHECK</span><span class="p">(</span><span class="n">AudioUnitSetParameter</span><span class="p">(</span><span class="n">_audioUnit</span><span class="p">,</span>
+                                   <span class="n">paramId</span><span class="p">,</span>
+                                   <span class="n">kAudioUnitScope_Global</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="p">([</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"set %u value %f err"</span><span class="p">,</span> <span class="n">paramId</span><span class="p">,</span> <span class="n">value</span><span class="p">]));</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+
+
+</pre></table></code></div></div><p>The external call looks like this:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">AURenderCallbackStruct</span> <span class="n">renderCallbackStruct</span><span class="p">;</span>
+<span class="n">renderCallbackStruct</span><span class="p">.</span><span class="n">inputProc</span> <span class="o">=</span> <span class="n">ksyme_RenderCallback</span><span class="p">;</span>
+<span class="n">renderCallbackStruct</span><span class="p">.</span><span class="n">inputProcRefCon</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">apt</span><span class="p">;</span>
+    
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_reverbFilter</span><span class="p">){</span>
+    <span class="n">_reverbFilter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">KSYAudioReverbFilter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">_reverbFilter</span> <span class="nf">setupWithAUGraph</span><span class="p">:</span><span class="n">auGraph</span> <span class="nf">asbd</span><span class="p">:</span><span class="n">format</span> <span class="n">maxFrame</span><span class="o">:</span><span class="n">max</span><span class="p">];</span>
+    <span class="n">_reverbFilter</span><span class="p">.</span><span class="n">renderCallBack</span> <span class="o">=</span> <span class="n">renderCallbackStruct</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="connecting-nodes">Connecting Nodes</h3><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">AUGraphClearConnections</span><span class="p">(</span><span class="n">auGraph</span><span class="p">);</span>
+<span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+<span class="p">[</span><span class="n">array</span> <span class="nf">addObject</span><span class="p">:</span><span class="err">@</span><span class="p">(</span><span class="n">_mixFilter</span><span class="p">.</span><span class="n">node</span><span class="p">)];</span>
+
+<span class="p">[</span><span class="n">array</span> <span class="nf">addObjectsFromArray</span><span class="p">:@[</span><span class="err">@</span><span class="p">(</span><span class="n">_reverbFilter</span><span class="p">.</span><span class="n">node</span><span class="p">),</span><span class="err">@</span><span class="p">(</span><span class="n">_delayFilter</span><span class="p">.</span><span class="n">node</span><span class="p">),</span><span class="err">@</span><span class="p">(</span><span class="n">_pitchFilter</span><span class="p">.</span><span class="n">node</span><span class="p">)]];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">.</span><span class="n">count</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">AUGraphConnectNodeInput</span><span class="p">(</span><span class="n">auGraph</span><span class="p">,[</span><span class="n">array</span><span class="p">[</span><span class="nf">i</span><span class="p">]</span> <span class="nf">intValue</span><span class="p">],</span> <span class="mi">0</span><span class="p">,[</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="nf">intValue</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+    
+</pre></table></code></div></div><p>The core code is how to connect Nodes</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">AUGraphConnectNodeInput</span><span class="p">(</span><span class="n">auGraph</span><span class="p">,</span><span class="n">reverbNode</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">remoteIONode</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></table></code></div></div><blockquote><p>0 stands for bus0</p></blockquote><p>The system-defined API looks like this:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="k">extern</span> <span class="n">OSStatus</span>
+<span class="nf">AUGraphConnectNodeInput</span><span class="p">(</span>	<span class="n">AUGraph</span>			<span class="n">inGraph</span><span class="p">,</span>
+						<span class="n">AUNode</span>			<span class="n">inSourceNode</span><span class="p">,</span>
+						<span class="n">UInt32</span>			<span class="n">inSourceOutputNumber</span><span class="p">,</span>
+						<span class="n">AUNode</span>			<span class="n">inDestNode</span><span class="p">,</span>
+						<span class="n">UInt32</span>			<span class="n">inDestInputNumber</span><span class="p">)</span>		<span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_0</span><span class="p">,</span><span class="n">__IPHONE_2_0</span><span class="p">);</span>
+</pre></table></code></div></div><h2 id="summary">Summary</h2><p>There are quite a lot of learning points in Audio Unit related technologies. Master them flexibly and apply them as needed. If you don’t understand something, that’s fine — start from the simple Units and learn as you go.</p><p>End of article</p><p>Reference list:<br /> <a href="https://developer.apple.com/library/content/documentation/MusicAudio/Reference/CoreAudioGlossary/Glossary/core_audio_glossary.html#//apple_ref/doc/uid/TP40004453-CH210-SW1">iOS Audio related terms (Glossary)</a><br /> <a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitHostingGuide_iOS/Introduction/Introduction.html">Reference</a><br /> <a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitProgrammingGuide/Tutorial-BuildingASimpleEffectUnitWithAGenericView/Tutorial-BuildingASimpleEffectUnitWithAGenericView.html#//apple_ref/doc/uid/TP40003278-CH5-SW4">How to make your own Audio Unit</a><br /> <a href="https://www.jianshu.com/p/05cae433faea">Kingsoft Cloud live streaming audio effects implementation</a><br /> <a href="https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/AudioUnitHostingGuide_iOS/AudioUnitHostingFundamentals/AudioUnitHostingFundamentals.html#//apple_ref/doc/uid/TP40009492-CH3-SW12">Audio Unit official documentation</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/en/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/en/tags/macos/" class="post-tag no-text-decoration" >macOS</a> <a href="/en/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a> <a href="/en/tags/avfoundation/" class="post-tag no-text-decoration" >AVFoundation</a> <a href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/" class="post-tag no-text-decoration" >音视频</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=AudioUnit - 迈腾大队长&url=https://www.sunyazhou.com/2018/05/AudioUnit/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=AudioUnit - 迈腾大队长&u=https://www.sunyazhou.com/2018/05/AudioUnit/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=AudioUnit - 迈腾大队长&url=https://www.sunyazhou.com/2018/05/AudioUnit/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=AudioUnit - 迈腾大队长&url=https://www.sunyazhou.com/2018/05/AudioUnit/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recently Updated</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/en/2022/07/commonsuperview/">iOS - Finding the Nearest Common Superclass of Two UIViews</a><li><a href="/en/2026/07/crossplatformdesktopframeworkcomparison/">Cross-Platform Desktop Framework Selection Deep Dive: An iOS Developer's Qt6 Journey</a><li><a href="/en/2026/07/35ChokePointTechnologies/">A Progress Review of the 35 "Choke Point" Technologies</a><li><a href="/en/2026/07/LLVMAttributeCompleteGuide/">The Complete Guide to LLVM `__attribute__`</a><li><a href="/en/2026/01/audiometadata/">Getting Audio Metadata Using the libtag Library</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Table of Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Keep Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/en/2022/04/CVPixelBufferRef/"><div class="card-body"> <span class="timeago small" > 2022-04-06 <i class="unloaded">2022-04-06T01:50:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Understanding CVPixelBufferRef in Depth</h3><div class="text-muted small"><p> In iOS, we often see the CVPixelBufferRef type. From the data returned by Camera capture, we get a CMSampleBufferRef, and each CMSampleBufferRef contains a CVPixelBufferRef. The data returned by ...</p></div></div></a></div><div class="card"> <a href="/en/2026/01/audiometadata/"><div class="card-body"> <span class="timeago small" > 01-23 <i class="unloaded">2026-01-23T16:06:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Getting Audio Metadata Using the libtag Library</h3><div class="text-muted small"><p> Preface This article contains strong personal opinions. If you find it uncomfortable to read, please close it immediately. This article is for personal learning records only. You are welcome to re...</p></div></div></a></div><div class="card"> <a href="/en/2017/03/LearningAVFoundationAVSpeechSynthesizer/"><div class="card-body"> <span class="timeago small" > 2017-03-11 <i class="unloaded">2017-03-11T12:38:53+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Learning AV Foundation (Part 1) Chinese Text-to-Speech</h3><div class="text-muted small"><p> Preface I’ve been studying the AV Foundation framework recently and found a book called AV Foundation开发秘籍：实践掌握iOS &amp; OS X 应用的视听处理技术 Then I Googled and found the English version is called L...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/en/2018/04/RunLoop/" class="btn btn-outline-primary"><p>Understanding RunLoop in Depth</p></a> <a href="/en/2018/05/ManualControlUIViewControllerLifeCycle/" class="btn btn-outline-primary"><p>Manually Managing the Life Cycle of UIViewController</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

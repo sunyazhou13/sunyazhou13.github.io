@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Learning AV Foundation (4) AVAsset Metadata (Advanced)" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/en/2017/08/LearningAVFoundationAVAssetSenior/" /><meta property="og:url" content="https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-08-07T20:36:46+00:00" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@type":"BlogPosting","url":"https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/","headline":"Learning AV Foundation (4) AVAsset Metadata (Advanced)","dateModified":"2017-08-07T20:36:46+00:00","datePublished":"2017-08-07T20:36:46+00:00","author":{"@type":"Person","name":"孙亚洲"},"description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/"},"@context":"https://schema.org"}</script><title>Learning AV Foundation (4) AVAsset Metadata (Advanced) | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/en/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/en/">迈腾大队长</a></div><div class="site-subtitle font-italic">不斷學習,與時俱進.求真務實,實事求是.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/en/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/archives/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/categories/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tags/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/projects/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>PROJECTS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/about/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/2017/08/LearningAVFoundationAVAssetSenior/" title="中文" aria-label="切换到中文"> <i class="lang-toggle-icon fas fa-language lang-invisible"></i> <i class="lang-toggle-icon fas fa-earth-asia "></i> </a> <span class="icon-border"></span> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/en/"> 主页 </a> </span> <span>Learning AV Foundation (4) AVAsset Metadata (Advanced)</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Learning AV Foundation (4) AVAsset Metadata (Advanced)</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Aug 7, 2017, 8:36 PM +0000" > 2017-08-07 <i class="unloaded">2017-08-07T20:36:46+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sun, May 10, 2026, 5:55 AM +0800" > 05-10 <i class="unloaded">2026-05-09T21:55:54+00:00</i> </span></div></div><div class="post-content"><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170807LearningAVFoundationAVAssetSenior/AudioArtwork.avif" alt="" /></p><h1 id="preface">Preface</h1><p>Here’s the diagram first.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170807LearningAVFoundationAVAssetSenior/metadata.avif" alt="" /></p><p>In this post, <strong>we’ll learn how to parse most multimedia file formats with one set of code and turn them into a common model — a normalized metadata key-value space.</strong></p><h2 id="contents">Contents</h2><p>Structure diagram <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170807LearningAVFoundationAVAssetSenior/MetaDataModel.avif" alt="" /></p><hr /><p>The class code</p><ul><li><strong>MediaItem (a directly exposed interface)</strong><li><strong>MetaData (the metadata model)</strong><li><strong>Genre (genre)</strong><li><strong>AVMetadataItem+Additions</strong><li><strong>MetadataDefines</strong><li><strong>MetadataKit</strong><li><strong>Converters (a folder containing the following:)</strong><ul><li><strong>MetadataConverter (a Protocol that stores/reads <code class="language-plaintext highlighter-rouge">AVMetadataItem</code>)</strong><li><strong>MetadataConverterFactory</strong><li><strong>DefaultMetadataConverter</strong><li><strong>ArtworkMetadataConverter</strong><li><strong>CommentMetadataConverter</strong><li><strong>TrackMetadataConverter</strong><li><strong>DiscMetadataConverter</strong><li><strong>GenreMetadataConverter</strong></ul></ul><hr /><h3 id="mediaitem">MediaItem</h3><p>This class mainly exposes a direct interface to the outside world. You can call and use it with code like this:</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">__weak</span> <span class="n">typeof</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="n">MediaItem</span> <span class="o">*</span><span class="n">item</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MediaItem</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithURL</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">url</span><span class="p">];</span>
+<span class="p">[</span><span class="n">item</span> <span class="nf">prepareWithCompletionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">complete</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">__strong</span> <span class="n">typeof</span><span class="p">(</span><span class="n">weakSelf</span><span class="p">)</span> <span class="n">strongSelf</span> <span class="o">=</span> <span class="n">weakSelf</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">strongSelf</span> <span class="nf">refreshDataByItem</span><span class="p">:</span><span class="n">item</span><span class="p">];</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,[</span><span class="n">item</span> <span class="nf">modelDescription</span><span class="p">]);</span>
+<span class="p">}];</span>
+
+
+</pre></table></code></div></div><p>The implementation part</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+#import "MetaData.h"
+</span><span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">CompletionHandler</span><span class="p">)(</span><span class="n">BOOL</span> <span class="n">complete</span><span class="p">);</span>
+<span class="k">@interface</span> <span class="nc">MediaItem</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">filename</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">filetype</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">MetaData</span> <span class="o">*</span><span class="n">metadata</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">getter</span> <span class="o">=</span> <span class="n">isEditable</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">editable</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">initWithURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span><span class="p">;</span>
+<span class="cm">/**
+ After this method completes, the metadata is available if it succeeds.
+
+ @param handler callback block
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareWithCompletionHandler</span><span class="p">:(</span><span class="n">CompletionHandler</span><span class="p">)</span><span class="nv">handler</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">saveWithCompletionHandler</span><span class="p">:(</span><span class="n">CompletionHandler</span><span class="p">)</span><span class="nv">handler</span><span class="p">;</span>
+<span class="k">@end</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><p>For the <code class="language-plaintext highlighter-rouge">.m</code> file, please refer to the source code — there’s a lot of it, so I won’t go into detail here.</p><p>Used when the block completes. The media formats currently supported for reading metadata are as follows:</p><ul><li>m4a<li>mov<li>mp4<li>mp3</ul><blockquote><p>Note: <em><strong>mp3 files are not editable, so they can’t be modified, such as changing the artist name. If you need to edit them, try other professional software.</strong></em></p></blockquote><p>I tried the demo on macOS and editing files works fine, but on iOS I couldn’t save changes for other formats either. If you find a solution, feel free to leave a comment or email me. Thank you very much.</p><h3 id="metadata">MetaData</h3><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+</span><span class="k">@class</span> <span class="nc">Genre</span><span class="p">;</span> <span class="c1">//风格  eg: 蓝调、 古典 ....</span>
+<span class="k">@interface</span> <span class="nc">MetaData</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">albumArtist</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">album</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">grouping</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">composer</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">comments</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">)</span> <span class="n">UIImage</span> <span class="o">*</span><span class="n">artwork</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">)</span> <span class="n">Genre</span> <span class="o">*</span><span class="n">genre</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">year</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">id</span> <span class="n">bpm</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">trackNumber</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">trackCount</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">discNumber</span><span class="p">;</span>
+<span class="k">@property</span> <span class="n">NSNumber</span> <span class="o">*</span><span class="n">discCount</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="nf">withKey</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">key</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">metadataItems</span><span class="p">;</span>
+<span class="k">@end</span>
+
+
+</pre></table></code></div></div><p>Looking at the code above, you’ve probably guessed it — this is exactly the real model we need, e.g. the model parsed out of an mp3 file.</p><p>There’s a lot here, and some values may be missing, so please do your own checking.</p><h3 id="metadataconverter">MetadataConverter</h3><p>This protocol exists to support unified parsing of all multimedia files. For example, mp3 and mp4 are different file formats — although they share many of the same keys, their data structures are definitely different. This requires a unified protocol: for instance, given a URL, return a model. To solve the problem of uneven key-value layouts, this protocol was created.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="k">@protocol</span> <span class="nc">zh</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+<span class="k">@optional</span>
+<span class="cm">/**
+ Converts AVMetadataItem to a Model for UI display
+
+ @param item AVMetadataItem
+ @return model
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">displayValueFromMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span><span class="p">;</span>
+<span class="cm">/**
+ Maps AVMetadataItem to a common field
+ 
+ @param value the value of a key extracted from the media metadata
+ @param item AVMetadataItem
+ @return AVMetadataItem
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nf">metadataItemFromDisplayValue</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">value</span>
+                                <span class="nf">withMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span><span class="p">;</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><h3 id="metadataconverterfactory">MetadataConverterFactory</h3><p>This class is used to uniformly output models that conform to the <code class="language-plaintext highlighter-rouge">MetadataConverter</code> protocol and to find the appropriate converter for the corresponding format.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">MetadataConverterFactory</span> <span class="p">:</span> <span class="nc">DefaultMetadataConverter</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">MetadataConverter</span><span class="o">&gt;</span><span class="p">)</span><span class="nf">converterForKey</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">key</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">MetadataConverterFactory</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">MetadataConverter</span><span class="o">&gt;</span><span class="p">)</span><span class="nf">converterForKey</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">key</span><span class="p">{</span>
+    <span class="n">id</span> <span class="o">&lt;</span><span class="n">MetadataConverter</span><span class="o">&gt;</span> <span class="n">converter</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="n">MetadataKeyArtwork</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ArtworkMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="n">MetadataKeyTrackNumber</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TrackMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="n">MetadataKeyDiscNumber</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">DiscMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="n">MetadataKeyComments</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CommentMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">key</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="n">MetadataKeyGenre</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">GenreMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">DefaultMetadataConverter</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><h3 id="defaultmetadataconverter">DefaultMetadataConverter</h3><p>A simple implementation of the <code class="language-plaintext highlighter-rouge">MetadataConverter</code> protocol.</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">DefaultMetadataConverter</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MetadataConverter</span><span class="o">&gt;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">DefaultMetadataConverter</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">displayValueFromMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nf">metadataItemFromDisplayValue</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">value</span>
+                                <span class="nf">withMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>    
+    <span class="n">AVMutableMetadataItem</span> <span class="o">*</span><span class="n">metadataItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="nf">mutableCopy</span><span class="p">];</span>
+    <span class="n">metadataItem</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">metadataItem</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+</pre></table></code></div></div><h3 id="artworkmetadataconverter">ArtworkMetadataConverter</h3><p>Implements the <code class="language-plaintext highlighter-rouge">MetadataConverter</code> protocol to extract the album artwork.</p><p>I’ll skip the <code class="language-plaintext highlighter-rouge">.h</code> file here and only show the <code class="language-plaintext highlighter-rouge">.m</code> (the <code class="language-plaintext highlighter-rouge">.h</code> has nothing in it — you can refer to the demo).</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="k">@implementation</span> <span class="nc">ArtworkMetadataConverter</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">displayValueFromMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>  <span class="c1">//下面是核心代码取出图片 </span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSData</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>                        <span class="c1">// 1</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIImage</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithData</span><span class="p">:</span><span class="n">item</span><span class="p">.</span><span class="n">dataValue</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSDictionary</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>             <span class="c1">// 2</span>
+        <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dict</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIImage</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithData</span><span class="p">:</span><span class="n">dict</span><span class="p">[</span><span class="s">@"data"</span><span class="p">]];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">image</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nf">metadataItemFromDisplayValue</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">value</span>
+                                <span class="nf">withMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    
+    <span class="n">AVMutableMetadataItem</span> <span class="o">*</span><span class="n">metadataItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="nf">mutableCopy</span><span class="p">];</span>
+    
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">metadataItem</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">UIImagePNGRepresentation</span><span class="p">(</span><span class="n">image</span><span class="p">);</span>                          <span class="c1">// 3</span>
+    
+    <span class="k">return</span> <span class="n">metadataItem</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><p>For mp3 (ID3v2 format), the way images are extracted may differ. At 1, we determine which format it is; at 3, we convert the <code class="language-plaintext highlighter-rouge">UIImage</code> to <code class="language-plaintext highlighter-rouge">NSData</code> and put it back.</p><p>One thing to note is the type of the returned <code class="language-plaintext highlighter-rouge">AVMetadataItem</code>. Since <code class="language-plaintext highlighter-rouge">AV Foundation</code> can’t write ID3 metadata, <code class="language-plaintext highlighter-rouge">AVMutableMetadataItem</code> is used here to store the artwork.</p><p><code class="language-plaintext highlighter-rouge">AVMutableMetadataItem</code> is a subclass of <code class="language-plaintext highlighter-rouge">AVMetadataItem</code>.</p><h3 id="commentmetadataconverter">CommentMetadataConverter</h3><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="k">@implementation</span> <span class="nc">CommentMetadataConverter</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">displayValueFromMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">value</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSString</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>                      <span class="c1">// 1</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">stringValue</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSDictionary</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>             <span class="c1">// 2</span>
+        <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dict</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span> <span class="n">item</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">([</span><span class="n">dict</span><span class="p">[</span><span class="s">@"identifier"</span><span class="p">]</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@""</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">dict</span><span class="p">[</span><span class="s">@"text"</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nf">metadataItemFromDisplayValue</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">value</span>
+                                <span class="nf">withMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    
+    <span class="n">AVMutableMetadataItem</span> <span class="o">*</span><span class="n">metadataItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="nf">mutableCopy</span><span class="p">];</span>               <span class="c1">// 3</span>
+    <span class="n">metadataItem</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">metadataItem</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><ol><li>The value of <code class="language-plaintext highlighter-rouge">MPEG-4</code> and <code class="language-plaintext highlighter-rouge">QuickTime</code> media is an <code class="language-plaintext highlighter-rouge">NSString</code>.<li>Comments in <code class="language-plaintext highlighter-rouge">MP3</code> are stored in an <code class="language-plaintext highlighter-rouge">NSDictionary</code> that defines an <code class="language-plaintext highlighter-rouge">ID3 COMM frame</code> (or <code class="language-plaintext highlighter-rouge">COM</code> if you’re dealing with <code class="language-plaintext highlighter-rouge">ID3V2.2</code>); all kinds of values are kept in this frame. e.g. iTune stores audio normalization and gapless playback settings in this frame, which means you may receive multiple <code class="language-plaintext highlighter-rouge">COMM frames</code> when requesting <code class="language-plaintext highlighter-rouge">ID3</code> metadata. The specific <code class="language-plaintext highlighter-rouge">COMM frame</code> containing the actual comment text is stored in a frame with an empty string identifier. Once you find the entry you need, you retrieve the comment by requesting the <code class="language-plaintext highlighter-rouge">text</code> key.</ol><h3 id="trackmetadataconverter">TrackMetadataConverter</h3><p>Track: usually contains information such as the number position of a song within the whole record (e.g. the 4th song out of 12, 4/12).</p><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre><td class="rouge-code"><pre><span class="k">@implementation</span> <span class="nc">TrackMetadataConverter</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">displayValueFromMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    
+    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">count</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    
+    <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSString</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>                      <span class="c1">// 1</span>
+        <span class="n">NSArray</span> <span class="o">*</span><span class="n">components</span> <span class="o">=</span>
+        <span class="p">[</span><span class="n">item</span><span class="p">.</span><span class="n">stringValue</span> <span class="nf">componentsSeparatedByString</span><span class="p">:</span><span class="s">@"/"</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">components</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">number</span> <span class="o">=</span> <span class="err">@</span><span class="p">([</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nf">integerValue</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">components</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="err">@</span><span class="p">([</span><span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="nf">integerValue</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">item</span><span class="p">.</span><span class="n">value</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSData</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>                   <span class="c1">// 2</span>
+        <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">dataValue</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">uint16_t</span> <span class="o">*</span><span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="o">*</span><span class="p">)</span> <span class="p">[</span><span class="n">data</span> <span class="nf">bytes</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">CFSwapInt16BigToHost</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>                <span class="c1">// 3</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">CFSwapInt16BigToHost</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>                 <span class="c1">// 4</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">dict</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="nf">dictionary</span><span class="p">];</span>           <span class="c1">// 5</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nf">setObject</span><span class="p">:</span><span class="n">number</span> <span class="p">?:</span> <span class="p">[</span><span class="n">NSNull</span> <span class="nf">null</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span><span class="n">MetadataKeyTrackNumber</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">dict</span> <span class="nf">setObject</span><span class="p">:</span><span class="n">count</span> <span class="p">?:</span> <span class="p">[</span><span class="n">NSNull</span> <span class="nf">null</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span><span class="n">MetadataKeyTrackCount</span><span class="p">];</span>
+    
+    <span class="k">return</span> <span class="n">dict</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nf">metadataItemFromDisplayValue</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">value</span>
+                                <span class="nf">withMetadataItem</span><span class="p">:(</span><span class="n">AVMetadataItem</span> <span class="o">*</span><span class="p">)</span><span class="nv">item</span> <span class="p">{</span>
+    <span class="n">AVMutableMetadataItem</span> <span class="o">*</span><span class="n">metadataItem</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="nf">mutableCopy</span><span class="p">];</span>
+    
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">trackData</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">trackNumber</span> <span class="o">=</span> <span class="n">trackData</span><span class="p">[</span><span class="nf">MetadataKeyTrackNumber</span><span class="p">];</span>
+    <span class="n">NSNumber</span> <span class="o">*</span><span class="n">trackCount</span> <span class="o">=</span> <span class="n">trackData</span><span class="p">[</span><span class="nf">MetadataKeyTrackCount</span><span class="p">];</span>
+    
+    <span class="kt">uint16_t</span> <span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>                                                <span class="c1">// 6</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">trackNumber</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[</span><span class="n">trackNumber</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSNull</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>
+        <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">CFSwapInt16HostToBig</span><span class="p">([</span><span class="n">trackNumber</span> <span class="nf">unsignedIntValue</span><span class="p">]);</span>   <span class="c1">// 7</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">trackCount</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[</span><span class="n">trackCount</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">NSNull</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>
+        <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">CFSwapInt16HostToBig</span><span class="p">([</span><span class="n">trackCount</span> <span class="nf">unsignedIntValue</span><span class="p">]);</span>    <span class="c1">// 8</span>
+    <span class="p">}</span>
+    <span class="kt">size_t</span> <span class="n">length</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">values</span><span class="p">);</span>
+    <span class="n">metadataItem</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nf">dataWithBytes</span><span class="p">:</span><span class="n">values</span> <span class="nf">length</span><span class="p">:</span><span class="n">length</span><span class="p">];</span>       <span class="c1">// 9</span>
+    
+    <span class="k">return</span> <span class="n">metadataItem</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><ol><li>As mentioned, the <code class="language-plaintext highlighter-rouge">mp3</code> format identifies a song’s position in the whole record with a string in <code class="language-plaintext highlighter-rouge">xx/xx</code> format, so we split it with <code class="language-plaintext highlighter-rouge">/</code>.<li>The track info of an iTunes <code class="language-plaintext highlighter-rouge">M4A</code> file is stored in an <code class="language-plaintext highlighter-rouge">NSData</code> that contains three 16-bit <code class="language-plaintext highlighter-rouge">big endian</code> numbers. If you print the NSData directly in the console, you’ll see <strong><code class="language-plaintext highlighter-rouge">&lt;00000008 000a0000&gt;</code>, which is the hexadecimal representation of an array of four 16-bit <code class="language-plaintext highlighter-rouge">big endian</code> numbers</strong>. The 2nd and 3rd elements of the array hold the track number and track count respectively.<li>If the track number != 0, get the value and use the <a href="https://developer.apple.com/documentation/corefoundation/1425282-cfswapint16bigtohost?language=objc"><code class="language-plaintext highlighter-rouge">CFSwapInt16BigToHost()</code></a> function to perform the <code class="language-plaintext highlighter-rouge">endian</code> conversion, converting it to <code class="language-plaintext highlighter-rouge">little endian</code> and packing it into an <code class="language-plaintext highlighter-rouge">NSNumber</code>.<li>Likewise, if the track count is non-zero, get the value, perform the <code class="language-plaintext highlighter-rouge">endian</code> conversion on the bytes, and pack it into an <code class="language-plaintext highlighter-rouge">NSNumber</code>.<li>(The reverse direction is explained below.)<li>Reverse the steps: use three <code class="language-plaintext highlighter-rouge">uint16_t</code> values to hold the track number and count.<li>If the track number is valid, convert the bytes to <code class="language-plaintext highlighter-rouge">big endian</code> format and store them at position 2 of the array.<li>If the track count is valid, convert the bytes to <code class="language-plaintext highlighter-rouge">big endian</code> format and store them at position 3 of the array.<li>Pack them into an <code class="language-plaintext highlighter-rouge">NSData</code> and set it as the value of the metadata item.</ol><h3 id="discmetadataconverter">DiscMetadataConverter</h3><p>The disc count info is used to indicate which CD in a set a song belongs to; it’s usually <code class="language-plaintext highlighter-rouge">1/1</code> (typically one CD holds one album).</p><p>It’s very similar to the track logic above. <code class="language-plaintext highlighter-rouge">4/10</code> means the 4th disc out of 10. Since discs are outdated, you’ll rarely see anyone walking around with a Walkman these days.</p><p>But the logic still exists. Look at the code for the logic — it’s basically identical to the track logic.</p><h3 id="genremetadataconverter">GenreMetadataConverter</h3><p>The standard genres used by digital audio originally came from MP3. The ID3 spec defines 80 default genre types plus another 46 WinAmp extensions, for a total of 126 genres. However, these aren’t part of any formal format. Because of MP3’s clear dominance, iTunes didn’t reinvent the wheel — it basically follows the ID3 genre classification, with a small change. <strong>iTunes genre numbers are <code class="language-plaintext highlighter-rouge">1</code> larger than the corresponding ID3 identifiers.</strong></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif" alt="" /></p><p>Although iTunes uses the predefined genres from the ID3 set, it defines its own genre sets for TV, movies, audiobooks, etc. <a href="https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/">Apple’s Genre IDs Appendix</a></p><p>The example code already includes these genres, so I won’t elaborate further — please refer to the demo.</p><h3 id="saving-metadata">Saving Metadata</h3><p><code class="language-plaintext highlighter-rouge">AVAsset</code> is an immutable type. We can’t modify an <code class="language-plaintext highlighter-rouge">AVAsset</code> directly; instead, we use the <code class="language-plaintext highlighter-rouge">AVAssetExportSession</code> class to export a new copy of the asset along with the metadata changes.</p><h4 id="using-avassetexportsession">Using <code class="language-plaintext highlighter-rouge">AVAssetExportSession</code></h4><div class="language-objc highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">saveWithCompletionHandler</span><span class="p">:(</span><span class="n">CompletionHandler</span><span class="p">)</span><span class="nv">handler</span> <span class="p">{</span>
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">presetName</span> <span class="o">=</span> <span class="n">AVAssetExportPresetPassthrough</span><span class="p">;</span>                  <span class="c1">// 1</span>
+    <span class="n">AVAssetExportSession</span> <span class="o">*</span><span class="n">session</span> <span class="o">=</span>
+    <span class="p">[[</span><span class="n">AVAssetExportSession</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithAsset</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">asset</span>
+                                     <span class="nl">presetName:</span><span class="n">presetName</span><span class="p">];</span>
+    
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">outputURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">tempURL</span><span class="p">];</span>                                      <span class="c1">// 2</span>
+    <span class="n">session</span><span class="p">.</span><span class="n">outputURL</span> <span class="o">=</span> <span class="n">outputURL</span><span class="p">;</span>
+    <span class="n">session</span><span class="p">.</span><span class="n">outputFileType</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">filetype</span><span class="p">;</span>
+    <span class="n">session</span><span class="p">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">metadata</span> <span class="nf">metadataItems</span><span class="p">];</span>                       <span class="c1">// 3</span>
+    
+    <span class="p">[</span><span class="n">session</span> <span class="nf">exportAsynchronouslyWithCompletionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+        <span class="n">AVAssetExportSessionStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
+        <span class="n">BOOL</span> <span class="n">success</span> <span class="o">=</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">AVAssetExportSessionStatusCompleted</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>                                                      <span class="c1">// 4</span>
+            <span class="n">NSURL</span> <span class="o">*</span><span class="n">sourceURL</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">url</span><span class="p">;</span>
+            <span class="n">NSFileManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSFileManager</span> <span class="nf">defaultManager</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">manager</span> <span class="nf">removeItemAtURL</span><span class="p">:</span><span class="n">sourceURL</span> <span class="nf">error</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">manager</span> <span class="nf">moveItemAtURL</span><span class="p">:</span><span class="n">outputURL</span> <span class="nf">toURL</span><span class="p">:</span><span class="n">sourceURL</span> <span class="n">error</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">self</span> <span class="nf">reset</span><span class="p">];</span>                                                   <span class="c1">// 5</span>
+        <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">handler</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+                <span class="n">handler</span><span class="p">(</span><span class="n">success</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"sessionError:%@"</span><span class="p">,</span><span class="n">session</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="n">tempURL</span> <span class="p">{</span>
+    <span class="c1">// Get the Caches directory path</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">cachesDir</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSCachesDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">)</span> <span class="nf">firstObject</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">tempDir</span> <span class="o">=</span> <span class="n">cachesDir</span><span class="p">;</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">ext</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span><span class="p">.</span><span class="n">url</span> <span class="nf">lastPathComponent</span><span class="p">]</span> <span class="nf">pathExtension</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">tempName</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"temp.%@"</span><span class="p">,</span> <span class="n">ext</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">tempPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">tempDir</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="n">tempName</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">tempPath</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>Note: <strong>**The <code class="language-plaintext highlighter-rouge">AVAssetExportPresetPassthrough</code> preset does allow modifying existing metadata in <code class="language-plaintext highlighter-rouge">MPEG-4</code> and <code class="language-plaintext highlighter-rouge">QuickTime</code> containers, but it cannot add new metadata — the only way to add metadata is to use a transcoding preset. Additionally, it can’t modify <code class="language-plaintext highlighter-rouge">ID3</code> (mp3) tags. The framework doesn’t support writing MP3 data.**</strong></p></blockquote><h2 id="summary">Summary</h2><p>Through implementing the code and parsing multimedia metadata with <code class="language-plaintext highlighter-rouge">AVAsset</code>, we’ve also become familiar with the structure of multimedia files and the artwork feature of ID3 (MP3) format files. This improves development efficiency in later work. Finally, here’s the demo code — please feel free to give me your feedback.</p><p><strong><a href="https://github.com/sunyazhou13/MetaDemo">Demo</a></strong></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/en/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/en/tags/macos/" class="post-tag no-text-decoration" >macOS</a> <a href="/en/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a> <a href="/en/tags/avfoundation/" class="post-tag no-text-decoration" >AVFoundation</a> <a href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/" class="post-tag no-text-decoration" >音视频</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Learning AV Foundation (4) AVAsset Metadata (Advanced) - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Learning AV Foundation (4) AVAsset Metadata (Advanced) - 迈腾大队长&u=https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Learning AV Foundation (4) AVAsset Metadata (Advanced) - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=Learning AV Foundation (4) AVAsset Metadata (Advanced) - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recently Updated</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/en/2022/07/commonsuperview/">iOS - Finding the Nearest Common Superclass of Two UIViews</a><li><a href="/en/2026/07/crossplatformdesktopframeworkcomparison/">Cross-Platform Desktop Framework Selection Deep Dive: An iOS Developer's Qt6 Journey</a><li><a href="/en/2026/07/35ChokePointTechnologies/">A Progress Review of the 35 "Choke Point" Technologies</a><li><a href="/en/2026/07/LLVMAttributeCompleteGuide/">The Complete Guide to LLVM `__attribute__`</a><li><a href="/en/2026/01/audiometadata/">Getting Audio Metadata Using the libtag Library</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Table of Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Keep Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/en/2022/04/CVPixelBufferRef/"><div class="card-body"> <span class="timeago small" > 2022-04-06 <i class="unloaded">2022-04-06T01:50:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Understanding CVPixelBufferRef in Depth</h3><div class="text-muted small"><p> In iOS, we often see the CVPixelBufferRef type. From the data returned by Camera capture, we get a CMSampleBufferRef, and each CMSampleBufferRef contains a CVPixelBufferRef. The data returned by ...</p></div></div></a></div><div class="card"> <a href="/en/2026/01/audiometadata/"><div class="card-body"> <span class="timeago small" > 01-23 <i class="unloaded">2026-01-23T16:06:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Getting Audio Metadata Using the libtag Library</h3><div class="text-muted small"><p> Preface This article contains strong personal opinions. If you find it uncomfortable to read, please close it immediately. This article is for personal learning records only. You are welcome to re...</p></div></div></a></div><div class="card"> <a href="/en/2017/03/LearningAVFoundationAVSpeechSynthesizer/"><div class="card-body"> <span class="timeago small" > 2017-03-11 <i class="unloaded">2017-03-11T12:38:53+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Learning AV Foundation (Part 1) Chinese Text-to-Speech</h3><div class="text-muted small"><p> Preface I’ve been studying the AV Foundation framework recently and found a book called AV Foundation开发秘籍：实践掌握iOS &amp; OS X 应用的视听处理技术 Then I Googled and found the English version is called L...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/en/2017/07/ios11NewSkills/" class="btn btn-outline-primary"><p>What's New in iOS 11</p></a> <a href="/en/2017/08/ARKit/" class="btn btn-outline-primary"><p>ARKit</p></a></div><div class="utterances-container"> <script src="https://utteranc.es/client.js" repo="sunyazhou13/gitment-comments" issue-term="pathname" theme="photon-dark" crossorigin="anonymous" async> </script></div><script type="text/javascript"> $(function() { window.onmessage = evt => { if (evt.origin === 'https://utteranc.es') { toggle.updateCommentStyle(); window.onmessage = null; } } }); </script></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
