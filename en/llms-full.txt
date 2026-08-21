@@ -1382,7 +1382,7 @@ Traditional cross-platform comparisons focus on package size and rendering perfo
 
 ## 2. Core Framework Comparison Overview
 
-The following is a quantitative comparison from a pure AI Agent development perspective. It drops the graphics rendering dimension and adds Agent-specific dimensions such as local model deployment and Tool Calling.
+Here's a quantitative comparison from a pure AI Agent development perspective. It drops the graphics rendering dimension and adds Agent-specific dimensions such as local model deployment and Tool Calling.
 
 ### 2.1 Explanation of the Quantitative Scoring System
 
@@ -3671,7 +3671,7 @@ struct ParticleCanvasView: View {
 
 There's an outer `TimelineView` that's responsible for periodically triggering redraws of the inner view. The main content is the `Canvas` view.
 
-For those with a UIKit background, the concept of a drawing context should be familiar: we get a canvas area with size information, then draw various elements on it — shapes, images, and so on.
+For those with a UIKit background, the concept of a drawing context should be familiar: we get a canvas area with size information, then draw various elements on it — shapes, images, and more.
 
 In our example, the particle to be drawn is represented by `SingleParticleView`. Note that it's placed in the `symbols` parameter — this means SwiftUI will **pre-render** it, making each subsequent draw call extremely efficient, which is great for large numbers of particles ;)
 
@@ -4231,7 +4231,7 @@ NSString *filePath = [[NSBundle mainBundle] pathForResource:@"迈腾进行曲_�
 NSDictionary<NSString *, id> *metadata = [MTTagLibHelper readAudioTag:filePath];
 [self printDic:metadata];
 ```
-As follows:
+Here's the output:
 
 ``` sh
 === 字典内容（共9项）===
@@ -4414,7 +4414,7 @@ NS_ASSUME_NONNULL_END
 
 ```
 
-The .m file is as follows:
+Here's the .m file:
 
 ``` objc
 #import "MTTagLibHelper.h"
@@ -5072,7 +5072,7 @@ This article carries strong personal feelings. If you feel uncomfortable reading
 
 This year is the first year of AI-assisted programming, and also the beginning of AI leading the tide of the times.
 
-I'll try to write about 2025 in a continuous narrative from the perspective of a "social scrap" like myself, starting from a few themes that had a big impact this year, in order to prove whether my superficial understanding is indeed superficial.
+I'll try to write about 2025 in a continuous narrative through the eyes of a "social scrap" like myself, starting from a few themes that had a big impact this year, in order to prove whether my superficial understanding is indeed superficial.
 
 # 2025 in Review
 
@@ -5084,7 +5084,7 @@ I'll try to write about 2025 in a continuous narrative from the perspective of a
 * Good Finds
 
 
-Finally, what I want to say is: this year, 92-octane gasoline dropped to 6.8 yuan. It means there are signs our lives are returning to the good.
+One last thing: this year, 92-octane gasoline dropped to 6.8 yuan. It means there are signs our lives are returning to the good.
 
 ---
 
@@ -5166,7 +5166,7 @@ I studied this a few years ago, and this year I reviewed it again. Mainly becaus
 
 ### Linear Algebra
 
-A course I found on Bilibili, because I need to learn to write shaders. To control skeletal animation, I need to understand operations on determinants, vectors, matrices, etc. I had no choice but to review it. Teacher Kong explains it very well — at least it's very down to earth.
+A course I found on Bilibili, because I need to learn to write shaders. To control skeletal animation, I need to understand operations on determinants, vectors, and matrices. I had no choice but to review it. Teacher Kong explains it very well — at least it's very down to earth.
 
 ### Metal by Tutorials (4th Edition, Dec 2023)
 
@@ -5879,7 +5879,7 @@ Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，
       游戏跟踪尝试次数并提供鼓励。好多了！
 ```
 
-Even more impressive! The agent:
+Even better — the agent:
 
 1. **Got creative**: added personality to the game without being asked.
 2. **Made good choices**: picked fun emojis, wrote playful strings.
@@ -5995,9 +5995,9 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 In the code above, the UIBezierPath starts at (77.5, 36.5) and uses <code>addCurveToPoint:controlPoint1:controlPoint2</code> to add two cubic Bezier curves. The two curves look like this:
 ![Bezier curve example](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/BezierExample.avif)
 
-I have marked the four control points of the first curve (C1) in red and those of the second curve (C2) in blue. The two curves share a control point (C1's P3 and C2's P0). The first control point of C1 corresponds to the start point of the UIBezierPath, P0=(77.5, 36.5), and its first control point (67.78, 56.83) corresponds to P1, and so on.
+I have marked the four control points of the first curve (C1) in red and those of the second curve (C2) in blue. The two curves share a control point (C1's P3 and C2's P0). The first control point of C1 corresponds to the start point of the UIBezierPath, P0=(77.5, 36.5), and its first control point (67.78, 56.83) corresponds to P1, and so on for the remaining points.
 
-Obviously, a trivial choice of the two curve endpoints (P0 and P3) forces the curve to pass through exactly two interpolation points. Therefore, for a set of <i>N</i> points, we can create <i>N-1</i> curves that pass through every point. In order for the transition between two adjacent curves to be smooth, the adjacent control points (P2 in the first curve and P1 in the second curve) must be at least collinear, and ideally we would also like them to have the same length. If they are not collinear, the UIBezierPath will have cusps. The question is, how do we position these internal control points?
+A trivial choice of the two curve endpoints (P0 and P3) simply forces the curve to pass through exactly two interpolation points. Therefore, for a set of <i>N</i> points, we can create <i>N-1</i> curves that pass through every point. In order for the transition between two adjacent curves to be smooth, the adjacent control points (P2 in the first curve and P1 in the second curve) must be at least collinear, and ideally we would also like them to have the same length. If they are not collinear, the UIBezierPath will have cusps. The question is, how do we position these internal control points?
 
 ## Smooth Interpolation with Hermite and Catmull-Rom Splines
 
@@ -6038,7 +6038,7 @@ I have created a category on UIBezierPath, <code>UIBezierPath+Interpolation</cod
 
 Both methods accept a flag <code>closed</code> that determines whether the curve is closed or open at its endpoints. In addition, the Catmull-Rom method accepts an alpha value between 0.0 and 1.0. The Hermite interpolation method computes tangents using finite differences.
 
-In addition to the category, I have also created a small iOS application that supports adding points and fitting them with either method, and also allows changing the alpha value of the Catmull-Rom curve. The application allows users to dynamically adjust the values and see their effects.
+Alongside the category, I've also built a small iOS application that supports adding points, fitting them with either method, and changing the alpha value of the Catmull-Rom curve. You can tweak the values dynamically and see the effects right away.
 
 Both the category code and the iOS application can be found in the following public git repository: <a href="https://github.com/jnfisher/ios-curve-interpolation">iOS Curve Interpolation</a>. Ultimately, choosing a fitting technique is more art than science, as the quality of the result is often subjective. I have found the Catmull-Rom results to be reasonable for large datasets.
 
@@ -6057,7 +6057,7 @@ This article carries strong personal sentiment. If you feel uncomfortable readin
 
 ## Background
 
-While studying the GPU shader programming chapter of "Metal", I came across a section about the argument buffer of the GPU resource heap, which needs to send resources from the CPU to the GPU. There I encountered a piece of code that calculates the memory footprint of a resource. It is quite interesting, so I am recording it here.
+While studying the GPU shader programming chapter of "Metal", I came across a section about the argument buffer of the GPU resource heap, which needs to send resources from the CPU to the GPU. There I encountered a piece of code that calculates the memory footprint of a resource. It's quite interesting, so I'm writing it down here.
 
 ``` swift
 let sizeAndAligns = descriptors.map { descriptor in
@@ -6451,7 +6451,7 @@ This article is highly personal in tone. If you find it uncomfortable to read, p
 
 ### Background
 
-While studying *Metal.by.Tutorials.4th.2023.12* in 2024, I came across how to use `Unsafe Swift` pointers and interact with C — mainly how to identify C content in memory. Below is the English article introduced in the book. After reading it, I thought I should digest and absorb it, so I organized it into a Chinese version for your reference.
+While studying *Metal by Tutorials (4th edition, 2023)* in 2024, I hit the chapter on using unsafe Swift pointers and interacting with C — mainly how to work with C data in memory. Below is the tutorial the book introduces. After working through it, I put together this write-up to digest the material.
 
 In this tutorial, you'll learn how to access memory directly through various pointer types using unsafe Swift. By Brody Eller.
 
@@ -6474,8 +6474,13 @@ These features are useful if you need to interact with unsafe languages such as 
 
 This tutorial includes three empty Swift Playground files:
 
+* In the first Playground, you'll use a few short pieces of code to explore memory layout and try using unsafe pointers.
+* In the second Playground, you'll use a low-level C API to perform streaming data compression and wrap it in a Swift-style interface.
+* In the last Playground, you'll create a cross-platform random number generator that replaces `arc4random`. It uses unsafe Swift internally, but hides this detail from users.
+
 ### Explore Unsafe Swift Memory Layout
-First, open the UnsafeSwift Playground. Since all the code in this tutorial is cross-platform, you can choose any platform.
+
+First, open the **UnsafeSwift** Playground. Since all the code in this tutorial is cross-platform, you can choose any platform.
 
 ![](/assets/images/20250222UnsafeSwift/memory1.avif)
 
@@ -6487,23 +6492,7 @@ An 8-bit byte can store values between 0 and 255. The processor can also access 
 
 For example, on a 64-bit system, a word is 8 bytes (64 bits). To understand this more intuitively, you can use `MemoryLayout` to see the size and alignment of some native Swift types.
 
-Add the following code to your Playground:
-
-* In the first Playground, you'll use a few short pieces of code to explore memory layout and try using unsafe pointers.
-* In the second Playground, you'll use a low-level C API to perform streaming data compression and wrap it in a Swift-style interface.
-* In the last Playground, you'll create a cross-platform random number generator that replaces `arc4random`. It uses unsafe Swift internally, but hides this detail from users.
-
-First, open the **UnsafeSwift** Playground. Since all the code in this tutorial is cross-platform, you can choose any platform.
-
 ![](/assets/images/20250222UnsafeSwift/memory2.avif)
-
-Unsafe Swift interacts directly with the memory system. You can think of memory as a series of boxes — actually billions of boxes — each containing a number.
-
-Each box has a unique memory address. The smallest addressable storage unit is a byte, which is usually made up of 8 bits.
-
-An 8-bit byte can store values between 0 and 255. The processor can also access words in memory efficiently; a word usually consists of multiple bytes.
-
-For example, on a 64-bit system, a word is 8 bytes (64 bits). To understand this more intuitively, you can use `MemoryLayout` to see the size and alignment of some native Swift types.
 
 Add the following code to your Playground:
 
@@ -7219,7 +7208,7 @@ We hope you enjoyed this tutorial! If you have any questions or experiences you'
 
 # Summary
 
-The above is the technical debt I owed from last year. Today I'm paying it off. The methods and functions for manipulating memory in unsafe Swift introduced here are worth studying in depth. Although the translation feels a bit machine-like, I'll reorganize it when I have the time.
+This was last year's technical debt — finally paid off. The unsafe Swift memory APIs covered here are well worth studying in depth. The write-up still reads a bit mechanical; I'll polish it when I have time.
 
 [Original article: Unsafe Swift: Using Pointers and Interacting With C](https://www.kodeco.com/7181017-)
 
@@ -7274,7 +7263,7 @@ The end of the pandemic also marked everyone's return to normal life, and it led
 
 ### How Can a Family Be Revitalized?
 	 
-My thoughts are as follows:   
+Here are my thoughts:
 
 **The real reason a family stays poor is that the whole family lacks a broad-minded guide who goes into business or politics. The elders cannot plan for the ignorant younger generation, and they themselves pay no attention to vision and perspective, spending their entire lives working for others. The elders in the family are selfish, attach no importance to the next generation's education, and when they grow old, they use filial piety to bind their children to obligation. Meanwhile, the children each go their own way, never united, quarreling endlessly over the slightest benefit — like a pile of loose sand, never learning to pool their strengths and resources** — Huang Hongsheng
 
@@ -7300,7 +7289,7 @@ Whenever I step onto the subway, pull out my phone, open iBook and read Metal by
 
 ## Work
 
-At this point, work is no longer a question of stability; it's a question of when I'll be laid off, collect my "big severance package," and start figuring out what to do next. Every day I struggle and waver between continuing to dig deeper and preparing to job-hunt. I've lost confidence in work — after all, most people's situations are hardly any better than mine. About my current company, all I can say is that I can still cope with the job, because I can't tell which will come first: the company falling apart or me walking away.
+By now, work is no longer a question of stability; it's a question of when I'll be laid off, collect my "big severance package," and start figuring out what to do next. Every day I struggle and waver between continuing to dig deeper and preparing to job-hunt. I've lost confidence in work — after all, most people's situations are hardly any better than mine. About my current company, all I can say is that I can still cope with the job, because I can't tell which will come first: the company falling apart or me walking away.
 
 The quality of coworkers really gets worse year after year. If it weren't a non-core department, maybe the coworker quality would be low — it's very hard to get back to the awesome colleagues I met at Baidu, the ones who taught me to write articles and blogs, practice calligraphy, and write code in their spare time. Those days aren't coming back. It's probably related to the current economic situation.
 
@@ -7367,7 +7356,7 @@ While studying this book, I had no choice but to pick up some linear algebra alo
 
 At the very beginning, the second-order determinants covered are directly related to the matrix operations we use, because in the 3D world, performing position translation, rotation, and scaling (affine transformations) on an object all requires expressions similar to determinants. You could call this the foundation of graphics: if you don't understand the internal functions when writing shaders later on, you'll be completely lost — linear algebra is the theoretical support behind it all.
 
-The knowledge point — or rather, my blind spot — that impressed me most in this book was my understanding of lighting. It turns out many predecessors did a great deal of research in this area, e.g., the [Phong lighting model](https://www.cs.utexas.edu/~bajaj/graphics2012/cs354/lectures/lect14.pdf) paper, the Fresnel lighting model, and so on.
+The knowledge point — or rather, my blind spot — that impressed me most in this book was my understanding of lighting. It turns out many predecessors did a great deal of research in this area, e.g., the [Phong lighting model](https://www.cs.utexas.edu/~bajaj/graphics2012/cs354/lectures/lect14.pdf) paper, the Fresnel lighting model, and more.
 
 Based on the formulas and theory provided in these papers, you can handle techniques like light reflection and diffusion, as well as ambient occlusion (the code written in shaders is based on these kinds of formulas). For example, lighting models are divided into spotlights, point lights, and directional light (sunlight). On top of these lighting fundamentals were eventually derived `[BPR](物理的渲染技术)` — physically based rendering — and later the ray tracing technology (Ray Tracking) formed by multiple bounces.
 
@@ -7419,7 +7408,7 @@ Once we wore the label of a "hooligan's game," sweating it out on street corners
 
 This sport has shown me a fairness of competition I had never felt before — pure skill does the talking. It contains a great deal of technique and knowledge. To ordinary people it probably looks like nothing more than a few wooden sticks and a tabletop with green cloth, but in fact there are many opportunities here waiting to be unearthed: for example, the best-quality cushion rubber comes from [China's Zhenhong Rubber](http://www.j-hrubber.com/) (the rubber strips along the table rails); the best cloth makers are China's [Liberwintex](https://www.liberwintex.com/) and [UK's Strachan 6811](https://strachan.co/zh-hans/). Cue brands of every kind are endorsed by professional players, though plenty are good — Peri, Lis Billiard Club, Lankou, and all sorts of brands, as plentiful as cars. There are also companies making cue tips and chalk, such as Xiaomai tips and HR chalk. Without going deep into this industry, you'd never understand its supply chain — even the slate suppliers, and the Aramith TV balls imported from Belgium. In recent years, Huyi Lighting (a company specializing in shadowless lamps above billiard tables) has become quite popular, and there's also Shenglizhe, which specializes in sofas made for billiards.
 
-This is an insider's business. We always say that under the current employment pressure it's hard to find our own second curve. What I want to say is: whatever the curve, it takes time and energy to understand and study in depth — every curve is reserved for those who are prepared.
+This is an insider's business. We always say that under the current employment pressure it's hard to find our own second curve. Here's what I'd say: whatever the curve, it takes time and energy to understand and study in depth — every curve is reserved for those who are prepared.
 
 
 ## Buying a Home
@@ -7474,7 +7463,7 @@ Published At: 2024-11-06 02:25:00 +0000
 
 This article carries strong personal sentiment. If you feel uncomfortable reading it, please close it as soon as possible. This article is only used as a personal learning record, and you are also welcome to reprint or share it within the scope of the license agreement. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you think this site is helpful to you, you can subscribe to it via RSS. Thanks for your support!
 
-The main idea is to use `CTFramesetterSuggestFrameSizeWithConstraints` to calculate the height and width of the text. Remember to set the related properties (line spacing and automatic line wrapping) for the `CTFramesetterRef`. The following is an Objective-C code example that uses CoreText to draw text and calculate its height:
+The main idea is to use `CTFramesetterSuggestFrameSizeWithConstraints` to calculate the height and width of the text. Remember to set the related properties (line spacing and automatic line wrapping) for the `CTFramesetterRef`. Here's an Objective-C example that uses CoreText to draw text and calculate its height:
 
 ``` objc
 - (void)calculatedHeight:(CGSize)bounds
@@ -7620,7 +7609,7 @@ Resolving the `pc` (Program Counter) value in the ARM Thread State registers usu
 
  You can use Xcode's debugging tools, or command-line tools such as `atos` (Address to Symbol), to convert the `pc` value into the function name and line number in the source code.
 
-A command-line example using `atos` is as follows:
+Here's a command-line example using `atos`:
 
 ``` bash
 atos -arch arm64 -o YourApp.app.dSYM/Contents/Resources/DWARF/YourApp -l 0xXXXXXXXXXXXXXXXX 0xXXXXXXXXXXXXXXXX   
@@ -8373,11 +8362,11 @@ This article is strongly personal in tone. If it makes you uncomfortable, please
 
 ## A Problem Encountered in Development
 
-How to correctly use a block's weakSelf and strongSelf in Objective-C across multiple nested blocks
+How to correctly use a block's `weakSelf` and `strongSelf` across multiple nested blocks in Objective-C.
 
-In Objective-C, `weak self` and `strong self` are used to solve the problem of retain cycles. When you use `self` as a parameter of a block, you need to use `__weak typeof(self) weakSelf = self;` to create a weak reference in order to avoid a retain cycle. Then, inside the block, you can use `strongSelf` to obtain a strong reference.
+In Objective-C, `weak self` and `strong self` are used to break retain cycles. When you use `self` as a parameter of a block, you need to use `__weak typeof(self) weakSelf = self;` to create a weak reference in order to avoid a retain cycle. Then, inside the block, you can use `strongSelf` to obtain a strong reference.
 
-The following is an example showing how to use `weak self` and `strong self` in a three-layer nested method:
+Here's an example showing how to use `weak self` and `strong self` in a three-layer nested method:
 
 ``` objc
 - (void)outerMethod {
@@ -8603,18 +8592,18 @@ You’re going to store the model’s object ID into a texture in one render pas
 
 ```
 
-This article solved a problem I had been exploring for a long time: how to click elements in 3D space from 2D space. The core idea is a method called **3D ray and object intersection**.
+This chapter finally solved a problem I'd been chasing for a long time: how to pick elements in 3D space from a 2D screen. The core idea is a technique called **3D ray-object intersection**.
 
-The following articles solve this problem. Besides this approach, there is also one that **uses a color/object ID to distinguish which object was clicked**.
+Besides this approach, there's also one that **uses a color/object ID to determine which object was clicked**.
 
-Below is a selection of articles on the picking technique 
+Here are some good articles on picking:
 
 [Picking and Hit-Testing in Metal](https://bit.ly/3rlzm9b)  
 [Picking and Hit-Testing in Metal Demo](https://github.com/metal-by-example/metal-picking)
 
 # Summary
 
-I discussed this with a computer graphics colleague before, and he gave me some resources for learning Vulkan, which I have organized here 
+A computer graphics colleague once shared some Vulkan learning resources with me — collected here for reference
 
 ``` sh
 https://github.com/KhronosGroup/Vulkan-Guide
@@ -8695,7 +8684,7 @@ In this simplified version, we don't specify a particular error type, so it catc
 
 # Summary
 
-I encountered previously forgotten content while working on a Metal learning demo, so I'm recording it here.
+I encountered previously forgotten content while working on a Metal learning demo, so I'm writing it down here.
 
 ``` swift
 do {
@@ -8759,9 +8748,9 @@ Here is an example of how to register:
 
 ```
 
-This method first confirms that the received notification is the significant time change notification we care about. Then it gets the current date and computes yesterday's date. By comparing the two dates, we can determine whether midnight has been crossed. If so, we can perform any operations needed at the start of a new day, such as data backup, refreshing the user interface, and so on.
+This method first confirms that the received notification is the significant time change notification we care about. Then it gets the current date and computes yesterday's date. By comparing the two dates, we can determine whether midnight has been crossed. If so, we can perform any operations needed at the start of a new day, such as data backup or refreshing the user interface.
 
-The official comment for this notification is as follows:
+Here's the official comment for this notification:
 
 ``` txt
 A notification that posts when there is a significant change in time, for example, change to a new day (midnight), carrier time update, and change to or from daylight savings time.
@@ -8982,7 +8971,7 @@ CTFontGetBoundingRectsForGlyphs()
 CTRunGetPositions(run, CFRangeMake(0, 0), glyphPositions);//这个应该拿到的就是带Kerning信息的position
 ```
 
-The above code needs a demo to verify.
+This code still needs a demo to verify.
 
 
 
@@ -9029,7 +9018,7 @@ This article carries strong personal feelings. If you feel uncomfortable reading
 
 # Summary
 
-Recorded a problem that came up during code review; this is the standard way to write hitTest.
+Noting a problem that came up in code review — this is the standard way to write hitTest.
 
 
 
@@ -9042,9 +9031,9 @@ Published At: 2024-05-15 01:42:00 +0000
 
 This article is highly personal in tone. If you find it uncomfortable to read, please close it as soon as possible. This article is only a personal learning record. Reposts and sharing are welcome within the scope of the license agreement. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-# How do you control a value within a certain range so that it never exceeds the upper or lower bounds of the range?
+# How do you keep a value inside a range?
 
-## In development, we often compute range-bounded values, like this:
+## In everyday development we often need to clamp values, like this:
 
 ``` c
 float a = 某个输入值
@@ -9061,9 +9050,9 @@ return a;
 
 ```
 
-Obviously, this is the kind of code with zero technical content I wrote when I first learned C.
+This is the kind of code I wrote when I was first learning C.
 
-## The way I write it after years of working
+## Years later, this is how I write it
 
 ``` c
 //Include the standard library header; the import statement is omitted here...
@@ -9075,17 +9064,17 @@ float a = min(max(0, a), maxValue); // 0 <= a <= 1
 return a;
 ```
 
-This style gets it done in one line and looks much more impressive, clamping the value within the min and max range.
+One line, and it reads much better — the value is clamped between min and max.
 
-I even asked all the technical guys at my previous company about this question. My question was:
+I once asked all the senior engineers at my previous company:
 
 **Is there a function that combines min + max to clamp a value within a certain range?**
 
-Most people weren't sure. Damn.
+Most of them didn't know.
 
 ## smoothstep() — the Hermite smooth interpolation function
 
-However, years later, I realized I wasn't that elegant either. There are many functions in the standard library that you need to improve your awareness of to know what they do.
+Years later, though, I discovered my version wasn't the last word either. The standard library is full of functions you only find once you go looking.
 
 While reading `Metal by Tutorials`, a fragment shader snippet caught my eye.
 
@@ -9110,11 +9099,11 @@ return float4(color, color, color, 1);
 
 ```
 
-Yes — after all these years, this function I've been using is actually called a `smoothstep function`.
+So the function I'd been using all these years actually has a name: `smoothstep`.
 
 # Summary
 
-Obviously, the next step is: define a global inline function wrapping smoothstep().
+The natural next step: wrap `smoothstep()` in a global inline helper.
 
 ``` c
 inline xx_smoothstep(T minEdge, T maxEdge, value) {
@@ -9123,7 +9112,7 @@ inline xx_smoothstep(T minEdge, T maxEdge, value) {
 
 ```
 
-This approach solves all range-value problems in engineering. It turns out that the technology I've been pursuing all these years comes down to a rise in awareness.
+That handles every range-clamping case in real-world code. It turns out what I'd been chasing all these years wasn't fancier techniques — it was simply knowing the right tool exists.
 
 
 
@@ -9473,7 +9462,7 @@ function item(item: string, index: number): string {
 
 ```
 
-The core code is as follows:
+Here's the core code:
 
 ``` ts
 Text(item).ft_text()
@@ -9577,7 +9566,7 @@ During development, we often encounter situations where certain entries appear o
 
 ## The Challenges We Face
 
-Based on the background above, the problems we need to solve are as follows
+Given the background above, here are the problems we need to solve:
 
 * Assume the appearance or disappearance timing of the entry views is not sequential, but random.
 * Each entry view has dependencies, or a fixed order — how should this be handled?
@@ -9864,7 +9853,7 @@ This article carries strong personal sentiment. If it makes you uncomfortable, p
 Recently in development, I received user feedback that when the shake-to-switch-songs feature is enabled, putting the phone in a pants pocket or clothing pocket easily triggers an unwanted song switch. With this problem in mind, I carefully
 studied the existing code.
 
-Obviously, the sensitivity of the shake-to-switch-songs feature is too high. So how do we adjust the sensitivity to a reasonable range?
+Clearly the shake-to-switch-song sensitivity is far too high. So how do we tune it into a reasonable range?
 
 # Several Ways to Implement the Shake Gesture
 
@@ -9916,7 +9905,7 @@ This way, shake gesture detection can be implemented in Objective-C.
 
 ## CMMotionManager
 
-First, let's clarify what's available here. The common sensors in iOS are as follows:
+First, let's clarify what's available here. Here are the common sensors in iOS:
 
 | Type | Function | Notes |
 | ------| ------ | ------ |
@@ -10051,7 +10040,7 @@ This controls the problem of the accelerometer triggering callbacks too frequent
 
 ### Writing a Utility Class - Updated 2024-03-26, optimizing the shake algorithm to prevent false triggers
 
-Then write a utility class, putting all the above content into one utility class for everyone to use. We'll write an MTCMMotionTool class to encapsulate the accelerometer sensor implementation
+Then write a utility class, putting all the above content into one utility class for everyone to use. We'll write an MTCMMotionTool class to wrap up the accelerometer sensor implementation
 
 //.h file
 
@@ -10414,7 +10403,7 @@ First, let's see what the finished effect looks like,
 
 ![](/assets/images/20240125MPRemoteCommandLikecommand/MPRemoteCommand.avif)
 
-The key API code needed here is as follows:
+Here's the key API code needed here:
 
 ``` objc
 @interface MPFeedbackCommand : MPRemoteCommand
@@ -10451,7 +10440,7 @@ if (@available(iOS 17.1, *)) {
 }
 ```
 
-The above is all the code needed to implement the favorite animation.
+That's all the code needed to implement the favorite animation.
 
 ## Pitfall Log
 
@@ -10678,7 +10667,7 @@ struct Child {
 }
 ```
 
-The LifeCycleDetail code is as follows.
+Here's the LifeCycleDetail code.
 
 ``` ts
 @Entry
@@ -10721,7 +10710,7 @@ struct LifeCycleDetail {
   }
 }
 ```
-When we start the preview, the lifecycle functions are as follows:
+When we start the preview, the lifecycle functions run in this order:
 
 ``` sh
 app Log: LiftCycle aboutToAppear
@@ -10924,7 +10913,7 @@ struct LearnDetail {
 }
 ```
 
-The above is the code for using the @Styles decorator. [Refer to the official @Styles documentation](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
+That's how you use the @Styles decorator. [Refer to the official @Styles documentation](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
 
 ### The @Extend Decorator: Defining Extended Component Styles
 
@@ -10956,7 +10945,7 @@ Here's a covariant call:
 }
 ```
 
-Sample code using @Extend is as follows:
+Here's some sample code using @Extend:
 
 ``` ts
 @Entry
@@ -11076,7 +11065,7 @@ struct LearnDetailProp1 {
 
 ### The @Link Decorator: Two-Way Parent-Child Synchronization
 
-The sample code is as follows:
+Here's the sample code:
 
 ``` ts
 // @Link装饰状态数据，方便父与子组件之问进行数据传递与同步 父State <--------->prop 双向传递
@@ -11207,7 +11196,7 @@ The variable decorated with @Provide is in the ancestor component, and can be un
 @Consume('a') c: number;
 ```
 
-Obviously these decorators use a unified identifier and consistent types. According to the documentation, the details are as follows:
+As you can see, these decorators use a unified identifier and consistent types. Here are the details from the documentation:
 
 | @Provide variable decorator | 	Description  |
 | ------| ------ |
@@ -11272,7 +11261,7 @@ struct  ProvideConsumeDemo2 {
 
 ```
 
-The effect is as follows:
+Here's the effect:
 
 ![](/assets/images/20240119ArkTSBasic/provideconsume.avif)
 
@@ -11494,7 +11483,7 @@ struct LayoutDemo {
 
 ![](/assets/images/20240119ArkTSBasic/LayoutStudy1.avif) 
 
-The usage of `position`, `markAnchor`, and `offset` is as follows.
+Here's the usage of `position`, `markAnchor`, and `offset`.
 
 ``` ts
 @Entry
@@ -11697,7 +11686,7 @@ Grant root privileges to the device-side hdc background service process:
 hdc smode
 ```
 
-When connecting devices, if there's only one, no need to specify the device identifier. If there are multiple, you can only connect one at a time, and you need to specify the device identifier each time. The command format is as follows:
+When connecting devices, if there's only one, no need to specify the device identifier. If there are multiple, you can only connect one at a time, and you need to specify the device identifier each time. Here's the command format:
 
 ``` sh
 hdc -t FMR0223823025245 shell
@@ -11735,7 +11724,7 @@ The numbers are the names of the file directories. After finding the relevant di
  
 Assume the absolute path of the file we want to get is `/storage/media/100/local/files/Photo/4/VID_1705287805_004.mp4`
  
-At this point, open a new terminal and enter the following command. (Refer to the documentation for more file operation commands.)
+Now open a new terminal and enter the following command. (Refer to the documentation for more file operation commands.)
 
 ``` sh
 hdc file recv /storage/media/100/local/files/Photo/4/VID_1705287805_004.mp4 ~/Downloads/
@@ -11809,7 +11798,7 @@ In 2024, technology can't just stay on our lips — actions speak louder than wo
 
 ### The Environment Used Here Is HarmonyOS 4.1
 
-The code is as follows:
+Here's the code:
 
 ``` ts
 import router from '@ohos.router'
@@ -11937,7 +11926,7 @@ This year was truly unbearable to look back on. The three-year pandemic finally 
 
 Because the world situation has been turbulent, our lives have become difficult. Corporate layoffs and employee unemployment have become the theme of this era. Consumption is sluggish, the dollar keeps raising interest rates, currency depreciation is severe, and sky-high housing prices have become a luxury my shallow self wouldn't dare to comment on. All because the world has lost peace, and the economy has stalled. Stagnation would be fine, but Robin has also teamed up with Leg-basin Chicken (Japan), Little Creek, and the Little Kangaroo (Australia) to impose indiscriminate sanctions on us across various international trade fronts, pushing us into economic internal circulation. As for our current standard of living, I can only say, "Peaks clustering, billows raging — all my efforts are worth less than dirt (land finance). Rise, the people suffer; fall, the people suffer." Don't laugh at Zhang Yanghao — I know you suffer too, which is exactly why you wrote "Hill Sheep · Recalling the Past at Tong Pass".
 
-Science used to have no borders; now the competition between great powers has given science borders too. If they say you can't produce the RTX 4090 GPU, you can't; if they say they won't sell us the A100 GPU, they won't. Even Musk said buying a GPU is as hard as buying contraband. Without these high-end GPUs, we may not be able to develop artificial intelligence, autonomous driving, facial recognition, computer vision, and medical image processing quickly — and so on. A single lousy GPU can strangle us by the neck; a single GPU can plunge our lives into an endless swamp.
+Science used to have no borders; now the competition between great powers has given science borders too. If they say you can't produce the RTX 4090 GPU, you can't; if they say they won't sell us the A100 GPU, they won't. Even Musk said buying a GPU is as hard as buying contraband. Without these high-end GPUs, we may not be able to develop artificial intelligence, autonomous driving, facial recognition, computer vision, and medical image processing quickly. A single lousy GPU can strangle us by the neck; a single GPU can plunge our lives into an endless swamp.
 
 I like to look past appearances to the essence. The essence is that we still don't have enough fundamental science to back our technological accumulation; the knowledge we possess is still insufficient to beat the world's best chip-making level. The essence is still our ignorance — we cannot arm ourselves with existing knowledge to become top-chip engineers, and that's the only way to maintain the world's peaceful order.
 
@@ -12033,8 +12022,8 @@ When the internal reviewers went through the manuscript, they cut it down to not
 
 Sometimes I feel ashamed to be an iOS developer at TME. It makes me feel selfish — we keep taking in knowledge from the internet without ever contributing valuable content outward, with no open-source spirit. The main reason for this problem is that anything valuable you make isn't allowed to be public, purely to maintain this technology's leading position in the industry — though of course this kind of "technology" is limited to content without much technical substance. This kind of closed leading position strikes me as both laughable and pitiful. Laughable because we always emphasize "leading" in trivial skills and details; pitiful because we all grow in a closed-source environment, building behind closed doors — which is exactly what created today's industry involution, and we've never led in fundamental science. We all know deep down that we stand on the shoulders of open-source giants to be where we are today, yet we have to compromise with the reality forced by today's job market. Being open source means giving up your leading position, means not following orders, means being laid off.
 
-At this moment I understand that the biggest enemy preventing me from becoming a developer with an open-source spirit is "poverty of wealth" — in plain terms, being short on money. In essence, it's poverty that forces us to have no right to choose. In other words, we lack the knowledge to solve the problem of being restricted by poverty.
-So I still need to improve my knowledge and awareness through learning, to solve the problem of financial freedom in the future.
+At this moment I understand that the biggest enemy preventing me from becoming a developer with an open-source spirit is "poverty of wealth" — in plain terms, being short on money. In essence, it's poverty that forces us to have no right to choose. In other words, we lack the knowledge to break out of the restrictions poverty imposes.
+So I still need to improve my knowledge and awareness through learning, to work toward financial freedom down the road.
 
 In 2023, I shallowly believe that the basic content of work is exchanging my cheap technical skills for basic life security. There's nothing much to say — it's all kinds of dazed bewilderment. No career planning, no grand ideals, only the tenacity of burying my head in hard work.
 
@@ -12049,7 +12038,7 @@ Courses I studied in 2023:
 At the beginning of the year, to save Bodian Music, the app whose growth was about to slow down, I was seconded to support Flutter development. The main work was migrating the live-streaming SDK provided by the group and interacting with Flutter. If there was no infrastructure, build infrastructure; no CI/CD, build CI/CD; no routing library, develop and integrate a hybrid navigation stack. Seizing this time, I spent my spare weekends learning Flutter — it took about 6 weekends to finish the whole tutorial and understand what it's all about. The remaining work was doing Flutter work for Bodian.
 
 ![](/assets/images/20231231FinalSummary/flutter.avif)   
-The above is a Flutter tutorial from Bilibili, sharing with everyone — [The latest Dart and Flutter tutorial — take you into the world of Flutter](https://www.bilibili.com/video/BV1KE41117XV?p=1)
+Sharing a Flutter tutorial from Bilibili — [The latest Dart and Flutter tutorial — take you into the world of Flutter](https://www.bilibili.com/video/BV1KE41117XV?p=1)
 
 After studying for a while, I found its framework is too good — it basically does all the work for you.
 
@@ -12085,7 +12074,7 @@ If you're like me, then congratulations — so far I haven't found an optimal so
 A pile of books I have no time to read — stacked up almost as tall as a PS5!
 ![](/assets/images/20231231FinalSummary/books.avif)  
 
-This year felt very tiring. There's more and more to learn — from Flutter to SwiftUI, from SwiftUI to HarmonyOS, and then a pile of unfinished iBooks. And the drone development direction I like hasn't even started its study plan. Working in the computer industry might just inherently require this much exhaustion. There's always an endless pile of courses, books, articles, tutorials, and so on to learn.
+This year felt very tiring. There's more and more to learn — from Flutter to SwiftUI, from SwiftUI to HarmonyOS, and then a pile of unfinished iBooks. And the drone development direction I like hasn't even started its study plan. Working in the computer industry might just inherently require this much exhaustion. There's always an endless pile of courses, books, articles, and tutorials to learn.
 
 ### A shallow hobby — billiards
 
@@ -12181,7 +12170,7 @@ Riding a motorcycle is relatively unsafe, so I bought a better helmet. Safety ma
 
 ![](/assets/images/20231231FinalSummary/bags.avif)
 
-To solve the problem of my pockets looking terrible, bulging and anything but elegant from carrying various things every time I went out, and since I'm getting older and gradually caring more about my appearance and image, I bought myself a messenger bag. Actually, I bought three — the other two went to a classmate and a friend. When my father passed away, I borrowed my buddy's car for several days and he wouldn't take a single cent. To express my gratitude, I gave each of them a bag.
+To fix my pockets — which looked terrible, bulging and anything but elegant from all the stuff I carried every time I went out — and since I'm getting older and gradually caring more about my appearance and image, I bought myself a messenger bag. Actually, I bought three — the other two went to a classmate and a friend. When my father passed away, I borrowed my buddy's car for several days and he wouldn't take a single cent. To express my gratitude, I gave each of them a bag.
 
 #### Monitor retrofit
 
@@ -12270,7 +12259,7 @@ GROUP BY
     props['moduleName']
 ```
 
-And so on.
+You get the idea.
 
 #### Creating a table
 
@@ -12527,7 +12516,7 @@ The video introduces tools that can format data such as dates, units, numbers, a
 
 # Summary
 
-Actually, Chapter 5 talks a lot about the high-level wrapping of property wrappers. I think the content is too long; rather than me recording it here, it's better if you watch the [tutorial video](https://www.bilibili.com/video/BV1bA411y71h/?spm_id_from=333.788&vd_source=9309f71afe97e633abeadc8407870e76) yourself — the explanations are quite thorough.
+Actually, Chapter 5 talks a lot about the high-level wrapping of property wrappers. I think the content is too long; rather than me writing it all out here, you're better off watching the [tutorial video](https://www.bilibili.com/video/BV1bA411y71h/?spm_id_from=333.788&vd_source=9309f71afe97e633abeadc8407870e76) yourself — the explanations are quite thorough.
 
 Secondly, a large portion covers unit testing. Since I'm not too keen on writing unit tests myself, I'll skip it directly...
 
@@ -12719,7 +12708,7 @@ The Toggle here is the switch we learned about in UIKit. The value it triggers i
 
 When this operation is done, it should take effect immediately.
 
-At this point, we need to modify the following code in the project:
+Now we need to modify this code in the project:
 
 ``` swift
 
@@ -12748,7 +12737,7 @@ NavigationStack {
 
 ![](/assets/images/20230805LearnSwiftUIChapter4/darkmode3.avif)
 
-The above is the technique learned in this section.
+That's the technique covered in this section.
 
 Complete code:
 
@@ -12770,7 +12759,7 @@ struct HomeScreen: View {
 
 #### Encoding and Decoding (Serializing to JSON)
 
-The above code all uses @AppStorage to store basic data types. But what if it's a Person object?
+All the code above uses @AppStorage to store basic data types. But what if it's a Person object?
 
 To be used with @AppStorage (i.e., UserDefault), it must implement encoding and decoding. Similar to how NSObject needs to conform to the Copy protocol, in Swift this is a synthesized protocol called `Codable`, which includes Decodable & Encodable.
 
@@ -12871,7 +12860,7 @@ This code is written in an extension, not where Person is declared, so Xcode won
 
 # Summary
 
-The above is the summary of what I learned after finishing Chapter 4. It's a bit rough, but I hope recording it will deepen my impression for future use and make it easier to share with others who need it.
+That's my takeaway after finishing Chapter 4. It's a bit rough, but I hope recording it will deepen my impression for future use and make it easier to share with others who need it.
 
 [Chapter 4 demo](https://github.com/sunyazhou13/FoodPicker)	
 
@@ -13137,7 +13126,7 @@ WidgetFamily.accessoryCircular on iPhone and iPad
 WidgetFamily.accessoryRectangular on iPhone and iPad
 ```
 
-In actual development, you need to implement your own AppIntent object:
+In practice, you need to implement your own AppIntent object:
 
 ``` swift
 struct MyIntent : AppIntent {
@@ -13184,7 +13173,7 @@ It adds timeline support, making it easy to observe animation effects, etc.:
 
 [Animating data updates in widgets and Live Activities](https://developer.apple.com/documentation/WidgetKit/Animating-data-updates-in-widgets-and-live-activities)
 
-The effects in Live Activities have been extended to widgets. The timer-style Text in Live Activities has a built-in page-flip effect; if you don't want it, you can remove it as follows:
+The effects in Live Activities have been extended to widgets. The timer-style Text in Live Activities has a built-in page-flip effect; if you don't want it, here's how to remove it:
 
 ``` swift
 Text(Date.now, style: .timer).contentTransition(.identity)
@@ -13270,7 +13259,7 @@ Then when using it:
 
 Only this way can it compile successfully in SwiftUI's body.
 
-The complete test code is as follows:
+Here's the complete test code:
 
 ``` swift
 struct MomentsWidget: Widget {
@@ -13768,7 +13757,7 @@ This post carries strong personal opinions. If reading it makes you uncomfortabl
 
 ## Getting to Know visionOS
 
-visionOS can be understood as a new iOS-like system that runs on Apple's headset. In Apple's own words, it's all sorts of highfalutin "spatial technology" and so on. It makes use of the SwiftUI, UIKit, RealityKit, and ARKit frameworks. If you want to develop apps for visionOS, it's best to have experience with these various kits; if you don't, I'd still encourage you to learn them, or simply start with SwiftUI.
+Think of visionOS as a new iOS-like system that runs on Apple's headset — what Apple grandly calls "spatial computing". It's built on the SwiftUI, UIKit, RealityKit, and ARKit frameworks. Prior experience with these frameworks helps a lot; if you don't have it, you can pick it up as you go, or simply start with SwiftUI.
 
 * SwiftUI is like the UIKit of before — a new UI framework system for building UI, used for Swift development
 * UIKit is the original Objective-C UI system
@@ -13785,7 +13774,7 @@ Learn the building blocks of spatial computing — windows, volumes, and spaces 
 
 ![](/assets/images/20230609LearnAboutVisionOS/visionos0.avif)
 
-The official explanations are as follows:
+Here are the official explanations:
 
 * windows
 You can create one or more windows in your visionOS app. They're built with SwiftUI, contain traditional views and controls, and you can add depth to the experience by adding 3D content.
@@ -13794,8 +13783,6 @@ You can create one or more windows in your visionOS app. They're built with Swif
 Add depth to your app with a 3D volume. Volumes are SwiftUI scenes that can use RealityKit or Unity to present 3D content, creating experiences viewable from any angle in the Shared Space or an app's Full Space.
 * spaces
 By default, apps launch into the Shared Space, where they exist side by side, like multiple apps on a Mac desktop. Apps can use windows and volumes to display content, and people can reposition these elements wherever they like. For a more immersive experience, an app can open a dedicated Full Space that shows only that app's content. In a Full Space, an app can use windows and volumes, create unbounded 3D content, open portals to different worlds, and even place people fully inside an environment.
-
-Learn the building blocks of spatial computing — windows, volumes, and spaces — and find out how to use these elements to build engaging immersive experiences. We'll walk you through the frameworks used to create apps for visionOS and show you how to design for depth, scale, and immersion. Explore how to use tools from Apple like Xcode and the new Reality Composer Pro, and how to make spatial computing apps that work for everyone.
 
 Here are four videos for learning about this:
 
@@ -13813,7 +13800,7 @@ Once you're familiar with the basics of visionOS, take a deeper look at the fram
 [Meet SwiftUI for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10109/)
 [Meet UIKit for spatial computing](https://developer.apple.com/videos/play/wwdc2023/111215/)
 
-These two are about UIKit and SwiftKit
+These two sessions cover UIKit and SwiftUI.
 
 ## Exploring SwiftUI and RealityKit
 
@@ -13946,12 +13933,12 @@ Learn how to run your existing iPad and iPhone apps in visionOS. Explore how iPa
 * [Run your iPad and iPhone apps in the Shared Space](https://developer.apple.com/videos/play/wwdc2023/10090/)
 * [Enhance your iPad and iPhone apps for the Shared Space](https://developer.apple.com/videos/play/wwdc2023/10094/)
 
-The above is a must-watch for any iOS developer
+These are essential viewing for any iOS developer.
 
 
 # Summary 
 
-I've put together a full collection of materials and videos for learning visionOS. I hope everyone can open up new worlds on this new visionOS, just like we did in the early days of iOS.
+I've collected the full set of visionOS learning materials and videos here. I hope you get to build new worlds on this new platform — just like we did back in the early days of iOS.
 
 [Learn about visionOS official page](https://developer.apple.com/visionos/learn/)
 
@@ -14231,7 +14218,7 @@ This article has a strong personal flavor; if it makes you uncomfortable, please
 
 In my technical understanding, Cocoapods has become one of the essential skills for every iOS developer. Yet, after all these years, just when I thought it had gone out of style, I found that some people still haven't fully mastered it. Today I'm going to share the high-level experience I've accumulated over the years with peers who aren't familiar with this tool.
 
-For most software development teams, a dependency management tool is essential. It installs and manages open-source and private dependencies, thereby improving development efficiency and reducing maintenance costs. Different languages and platforms have their own dependency management tools, such as `npm` for `JavaScript`, `Gradle`, `Maven` for `Jar` packages, `pip` for `Python` packages, `Bundler`, `RubyGems`, and so on. This article focuses on `iOS` and explains the usage and some of the principles behind `CocoaPods`.
+For most software development teams, a dependency management tool is essential. It installs and manages open-source and private dependencies, thereby improving development efficiency and reducing maintenance costs. Different languages and platforms have their own dependency management tools, such as `npm` for `JavaScript`, `Gradle`, `Maven` for `Jar` packages, `pip` for `Python` packages, `Bundler`, `RubyGems`, and more. This article focuses on `iOS` and explains the usage and some of the principles behind `CocoaPods`.
 
 
 ## CocoaPods — Simple and Easy to Use
@@ -14511,7 +14498,7 @@ end
 
 ## podspec Syntax Specification
 
-podspec = pod Specification, meaning pod specification. It's a Ruby file containing detailed info about a pod's library versions, such as where to get the source, which files to use, which build settings to apply, and so on. It can also be seen as the index file for the entire repository. Understanding it helps a lot in knowing how pod libraries are organized and how they work. The podspec DSL offers great flexibility, and a file can be created with `pod spec create`.
+podspec = pod Specification, meaning pod specification. It's a Ruby file containing detailed info about a pod's library versions, such as where to get the source, which files to use, which build settings to apply. It can also be seen as the index file for the entire repository. Understanding it helps a lot in knowing how pod libraries are organized and how they work. The podspec DSL offers great flexibility, and a file can be created with `pod spec create`.
 
 #### Root
 
@@ -14871,7 +14858,7 @@ For example: `md5("CJFoundation") => 044d913fdd5a52b303222c357521f744`; `CJFound
 
 #### Create
 
-You can quickly create your own pod with the  `pod lib create [PodName]` command. After filling in info like the platform, language, whether to include a Demo, the test framework, and so on, CocoaPods pulls a pod template from the default Git address. You can also specify a template address with `--template-url=URL`. After it finishes, the whole file structure looks like this:
+You can quickly create your own pod with the  `pod lib create [PodName]` command. After filling in info like the platform, language, whether to include a Demo, or the test framework, CocoaPods pulls a pod template from the default Git address. You can also specify a template address with `--template-url=URL`. After it finishes, the whole file structure looks like this:
 
 ``` swift
 tree CustomPod -L 2
@@ -14974,7 +14961,7 @@ Pre-release version numbers and build metadata can be appended after `MAJOR.MINO
 
 #### Core Components of CocoaPods
 
-CocoaPods is managed by Ruby, and its core is also divided into individual components. Downloading the source code, you can see the Gemfile as follows — it depends on several `gem`s. Interestingly, the `cp_gem` function uses `SKIP_UNRELEASED_VERSIONS` and `path` to control whether to use local gem paths, enabling switching between DEVELOPMENT and RELEASE environments.
+CocoaPods is managed by Ruby, and its core is also divided into individual components. Downloading the source code, you can see the Gemfile below — it depends on several `gem`s. Interestingly, the `cp_gem` function uses `SKIP_UNRELEASED_VERSIONS` and `path` to control whether to use local gem paths, enabling switching between DEVELOPMENT and RELEASE environments.
 
 ``` ruby
 SKIP_UNRELEASED_VERSIONS = false
@@ -15029,7 +15016,7 @@ These components are relatively independent and split into separate Gem packages
 Running `pod install --verbose` shows more debugging info during the pod install process. The following mainly references [Getting a holistic view of CocoaPods core components
 ](https://www.desgard.com/2020/08/17/cocoapods-story-2.html).
 
-After message forwarding and CLAide command parsing, the `install!` function in CocoaPods/lib/cocoapods/installer.rb is finally called. The main flow is as follows:
+After message forwarding and CLAide command parsing, the `install!` function in CocoaPods/lib/cocoapods/installer.rb is finally called. Here's the main flow:
 
 ![](/assets/images/20230426CocoaPodsUserGuide/3.avif)
 
@@ -15355,13 +15342,13 @@ UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 > 	[resourceBundle pathForResource:@"power@2x" ofType:@"jpg"];
 > ```
 
-The above clearly doesn't meet our needs.
+That clearly doesn't meet our needs.
 
 ![](/assets/images/20230322PodXCAssets/1.avif)
 
 ## Images all have @2x and @3x versions. How do we retrieve the relevant images from a pod?
 
-At this point we need to do a few things:
+Now we need to do a few things:
 
 * 1. Create an XCAssets
 * 2. Declare the relevant name in the podspec
@@ -15388,7 +15375,7 @@ The relevant documentation is shown below
 
 This [podspec documentation](https://guides.cocoapods.org/syntax/podspec.html#resource_bundles) doesn't clearly explain how to add XCAssets. You need to study and explore further.
 
-Obviously, this documentation doesn't explain how to add XCAssets at all.
+As it turns out, this documentation doesn't explain how to add XCAssets at all.
 
 ##### Add a category for image retrieval
 
@@ -15434,7 +15421,7 @@ NSString *kYZToolsAssets = @"YZToolsAssets";
 NS_ASSUME_NONNULL_END
 ```
 
-When using it, the code is as follows:
+Here's the code for using it:
 
 ``` objc
 UIImage *image = [UIImage yzToolsImageNamed:@"power"];
@@ -16008,7 +15995,7 @@ class ContentWidgetState extends State<ContentWidget>
 
 ![](/assets/images/20230312FlutterLifeCycle/flutter1.avif)
 
-The output is as follows:
+Here's the output:
 
 ``` sh
 flutter: ContentWidget构造函数被调用
@@ -16138,7 +16125,7 @@ id YZSafeCast(id obj, Class classType)
 
 ```
 
-Usage is as follows
+Usage looks like this:
 
 ``` objc
 
@@ -16230,7 +16217,7 @@ I chose methods 1 and 3 for testing. Here's the code:
 2023-02-13 19:59:11.108141+0800 NSDateSpeedDemo[1837:197213] NSDate (YZUtils)耗时:0.030793
 ```
 
-The full code is as follows:
+Here's the full code:
 
 ``` objc
 - (IBAction)didSysDateClick:(id)sender {
@@ -16546,7 +16533,7 @@ func processFile(filename: String) throws {
 }
 ```
 
-The above example uses a defer statement to ensure that the `open(_:)` function has a corresponding call to `close(_:)`.
+The example above uses a defer statement to ensure that the `open(_:)` function has a corresponding call to `close(_:)`.
 
 > You can use a defer statement even when no error handling code is involved.
 
@@ -16741,7 +16728,7 @@ This caused the phone to freeze and reboot directly while playing a song. To sol
 
 ## About Learning
 
-In the first half of the year, I got into face recognition and AI, learning some machine learning-related technologies. In the second half, I was working on a music app. Of course, music isn't easy to make — first you need digital signal processing. And when it comes to signal processing, you can't avoid the Fourier transform. Only by understanding these can you build better features: for example, when every song being played is converted to various formats, the format needs to be converted back to raw data samples — say I want to convert AAC or MP3 to lossless quality, which requires converting the containerized format back to PCM (pulse-code modulation), and then wrapping it into other formats through an encoder. In the middle of all this, it's certainly not enough to just know some audio/video technology; you also need to convert data from the frequency domain to the time domain, run an FFT (Fast Fourier Transform), and generate multi-channel signal samples to facilitate audio band animations. There's also the weighted average algorithm, A-weighting algorithm, window-function fitting, filtering, and so on. Most people who aren't in this field would find it rather obscure, and so do I.
+In the first half of the year, I got into face recognition and AI, learning some machine learning-related technologies. In the second half, I was working on a music app. Of course, music isn't easy to make — first you need digital signal processing. And when it comes to signal processing, you can't avoid the Fourier transform. Only by understanding these can you build better features: for example, when every song being played is converted to various formats, the format needs to be converted back to raw data samples — say I want to convert AAC or MP3 to lossless quality, which requires converting the containerized format back to PCM (pulse-code modulation), and then wrapping it into other formats through an encoder. In the middle of all this, it's certainly not enough to just know some audio/video technology; you also need to convert data from the frequency domain to the time domain, run an FFT (Fast Fourier Transform), and generate multi-channel signal samples to facilitate audio band animations. There's also the weighted average algorithm, A-weighting algorithm, window-function fitting, filtering, and more. Most people who aren't in this field would find it rather obscure, and so do I.
 
 #### Digital Signal Processing
 
@@ -16749,7 +16736,7 @@ So I spent some time on Bilibili and finished a course on digital signal process
 
 ![](/assets/images/20221231FinalSummary/2022F9.avif)
 
-After finishing this course, it felt like I hadn't learned anything, because it was all formula derivations — no code, no tutorials on using tools. It can only serve as a basic reference for getting started: things like low-pass filters, high-pass filters, band-pass filters, band-stop filters, FIR filters, BF half-band filters and various other filtering algorithms; or some Laplace theorems, Hilbert theorems, etc. — all rather academic and fundamental, not at all suitable for a hands-on programmer.
+After finishing this course, it felt like I hadn't learned anything, because it was all formula derivations — no code, no tutorials on using tools. It can only serve as a basic reference for getting started: things like low-pass filters, high-pass filters, band-pass filters, band-stop filters, FIR filters, BF half-band filters and various other filtering algorithms; or some Laplace theorems, Hilbert theorems, and the like — all rather academic and fundamental, not at all suitable for a hands-on programmer.
 
 #### Audio & Video Courses
 
@@ -16796,7 +16783,7 @@ My ideal is to build a university that solves the chokepoint technologies constr
 
 The Fuyao University of Science and Technology he founded has almost turned my dream into his reality. I admit that it's laughable for a person who can barely make ends meet to think about building a university that solves China's chokepoint technologies. He invested 10 billion yuan. This is exactly a university designed to my standards. Sigh, I admit I'm too useless.
 
-I remember last year I said Xu Jiayin spent a fortune building cars, and I said these rich people may have money but they don't know how to spend it. Wang Sicong has money and doesn't know how to spend it either. When it comes to solving the chokepoint problems constraining China, spending even 1 million yuan on it is far more impressive than Wang Jianlin's "small goal". I have no idea what the rich think or what their world is like.
+I remember last year I said Xu Jiayin spent a fortune building cars, and I said these rich people may have money but they don't know how to spend it. Wang Sicong has money and doesn't know how to spend it either. When it comes to solving the chokepoint problems constraining China, spending even 1 million yuan on it beats Wang Jianlin's "small goal" by a mile. I have no idea what the rich think or what their world is like.
 
 ![](/assets/images/20221231FinalSummary/2022F14.avif)
 
@@ -16929,7 +16916,7 @@ Refer to the diagram below
 ![](/assets/images/20221207RadialGradientlayer/corners.avif)  
 ![](/assets/images/20221207RadialGradientlayer/LinearHorizontal.avif)
 
-The example code is as follows:
+Here's the example code:
 
 ``` objc
 // Objective C
@@ -16986,7 +16973,7 @@ gradientLayer.colors =
 The diagram below demonstrates the key gradient location settings.
 ![](/assets/images/20221207RadialGradientlayer/locations.avif)  
 
-The location setting code is as follows:
+Here's the location setting code:
 
 ``` objc
 // ObjC
@@ -17231,7 +17218,7 @@ Computer vision can at most recognize the surface of objects. Only by comparing 
 
 --
 
-In summary, I hereby establish the Second Theory of Sunyazhou: in the future, autonomous driving must use eyes and ears together.
+All of which is to say, I hereby establish the Second Theory of Sunyazhou: in the future, autonomous driving must use eyes and ears together.
 
 Based on my superficial understanding, this system hasn't appeared yet, so I should enjoy the `priority naming right`:  
 
@@ -17962,7 +17949,7 @@ It's worth noting that using `framework`s during app execution produces `Dirty M
 
 Due to the limits of flash storage capacity and read/write lifespan, iOS has no `swap space` mechanism; it uses `Compressed memory` instead.
 
-`Compressed memory` compresses recently used memory to below half its original size when memory is tight, and can decompress and reuse it when needed. It saves memory while improving system responsiveness. Its characteristics can be summarized as follows:
+`Compressed memory` compresses recently used memory to below half its original size when memory is tight, and can decompress and reuse it when needed. It saves memory while improving system responsiveness. In short:
 
 * Shrinks memory usage — reduces inactive memory usage
 * Improves power efficiency — reduces the wear caused by disk I/O through compression
@@ -18209,7 +18196,7 @@ Among these, the larger the value, the higher the priority. The background app p
 
 #### How to determine that an OOM occurred
 
-Both Facebook and WeChat's Matrix use the exclusion method. During Matrix initialization, the `checkRebootType` method is called to determine whether an OOM occurred. The specific flow is as follows:
+Both Facebook and WeChat's Matrix use the exclusion method. During Matrix initialization, the `checkRebootType` method is called to determine whether an OOM occurred. Here's the specific flow:
 
 1. If the current device is being DEBUGGED, return directly and don't continue.
 2. Whether a normal crash occurred the last time the app was opened; if not, continue.
@@ -18245,7 +18232,7 @@ This article carries strong personal feelings. If you feel uncomfortable reading
 
 ## Crash Types
 
-A crash usually refers to the operating system sending a signal to a running program, so when looking at crash logs, we often see error summaries like: Application received signal SIGSEGV. Generally speaking, the common crash types are as follows:
+A crash usually refers to the operating system sending a signal to a running program, so when looking at crash logs, we often see error summaries like: Application received signal SIGSEGV. Here are the common crash types:
 
 ### 1.`EXC_BAD_ACCESS`
 
@@ -18300,7 +18287,7 @@ This kind of crash is usually easy to identify because the error code is fixed a
 
 # Summary
 
-Crash log types are not limited to the ones above; combined with actual tracking, you'll find the crash information that matters. This is for reference only. If you want more details, please refer to the GNU [source code](http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24)
+Crash log types are not limited to the ones above; combined with actual tracking, you'll find the crash information that matters. Take it as a rough guide. If you want more details, please refer to the GNU [source code](http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24)
 
 [Reference](https://zhuanlan.zhihu.com/p/269371735)  
 [Understanding iOS exception types](https://juejin.cn/post/6844903866128039944)  
@@ -19851,7 +19838,7 @@ This menu is a 3D menu; it appeared in an app called cosmos. I'd been looking fo
 ## Implementation Principle
 
 * Trigger via the tabbar button (with an internal pan gesture wrapper) at the right time — during dragging, on end or cancel...
-* Add a new window and overlay a Blur blur and container on it, along with the encapsulated dashboard menu view.
+* Add a new window, overlay a blur effect and a container on it, along with the dashboard menu view we wrapped up.
 * During the swipe, modify the `m34` animation property of the menu view (dashboard menu) to achieve the tilted sliding effect.
 
 ![Internal variables](/assets/images/20220413YZ3DMenu/3DMenuDemo3.avif) 
@@ -19941,7 +19928,7 @@ CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
                                              &pixelBufferTexture);
 ```
 
-Here, `_textureCache` represents a `Texture` cache. Each `Texture` produced is obtained from the cache, which avoids the overhead of repeatedly creating `Texture`s. `_textureCache` must be created in advance; the creation method is as follows:
+Here, `_textureCache` represents a `Texture` cache. Each `Texture` produced is obtained from the cache, which avoids the overhead of repeatedly creating `Texture`s. `_textureCache` must be created in advance; here's how:
 
 ``` c
 CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, _context, NULL, &_textureCache);
@@ -19964,7 +19951,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 ```
 
-Of course, this isn't all the code. There's much more to the complete `openGL` drawing code. `openGL` is famously verbose and tedious — there's also the `openGL` `Context` creation, `shader` compilation, `DataBuffer` loading, and so on.
+Of course, this isn't all the code. There's much more to the complete `openGL` drawing code. `openGL` is famously verbose and tedious — there's also the `openGL` `Context` creation, `shader` compilation, `DataBuffer` loading, and more.
 
 Essentially, this code draws the content of the `Texture` into the `openGL`'s frame buffer, and then attaches the frame buffer to a `CAEAGLayer`.
 
@@ -20127,7 +20114,7 @@ Life must go on. After thinking for a long time and recognizing the reality and 
 
 Of course, reading this you might mock my stupidity. That's fine — I also mock my own ignorant recklessness and misjudgment of urban development. But I believe all the above feelings are things that cannot be truly experienced or practiced while sitting in an office. This isn't necessarily a bad thing — it's a practical manifestation of growing up and broadening my horizons. If I had waited until middle age to experience this, I believe it would be even more painful! But I hope you all don't repeat my mistakes. Making wise choices and having a good career development path is what makes you a winner in life.
 
-Even though life has been so rough, my body and mind have achieved an unprecedented level of comfort and improvement. I've become increasingly willing to endure various painful experiences, and my mindset has improved. This is something unprecedented in my 7+ years of working in Beijing. Consumption habits, attitude toward life, psychological expectations, acceptance, acknowledging my own mediocrity, and so on.
+Even though life has been so rough, my body and mind have achieved an unprecedented level of comfort and improvement. I've become increasingly willing to endure various painful experiences, and my mindset has improved. This is something unprecedented in my 7+ years of working in Beijing. Consumption habits, attitude toward life, psychological expectations, acceptance, acknowledging my own mediocrity — all of it.
 
 To experience what everyone often discusses about civil service exams, I gave it a try. The result was as expected — it requires constant practice, not something achievable overnight. But I gained a lot. For example: in the essay section, describing social phenomena and providing reasonable, publicly acceptable, and practical solutions. Although sometimes we can be unbridled when thinking from an ordinary citizen's perspective, thinking from a civil servant's perspective requires following the first principle of `always serving the people`, articulating and writing feasible measures and optimal solutions. And it requires great challenges in writing ability and logical organization for civil servants. It can almost be said to be `one in a thousand`. The official notices or similar text messages we see in our daily lives — these all need to go through professional training and language organization skills, reviewed N times, before being sent out immediately. That's why when we see them, we can't find any problems. But have you ever thought about who writes these? It's civil service staff. You might think it's just a matter of speaking, but you don't know how much effort goes into being able to just speak. For training to write a single statement draft, I practiced 10+ times, and still couldn't write it perfectly! (Maybe I'm just not good at clerical work.) Honestly, from my high school graduation exam to writing the civil service essay, I hadn't written a 1200+ word essay in over a decade. As for structure, writing skills, and techniques — they've long been handed over to Baidu with the development of the internet. But after the exam, I was quite satisfied with my essay overall. Although it was a Category 3 essay, I scored 57 points, which exceeded my own expectations.
 
@@ -20148,7 +20135,7 @@ Rather than saying I returned to Beijing to fight, it's more like my failed esca
 
 Due to the wave of the internet, the "Double Reduction" policy impact, the national anti-monopoly crackdown, the capital market cooling, and the incremental user market turning into a stock market — the IT industry is now struggling. This is both good and bad. The good thing is that this industry will be continuously polished into a scientifically sustainable industry that drives economic development. The bad thing is that the difficulty and standards for finding jobs have become harder and higher.
 
-For an iOS developer, algorithms are not used much in daily work. But somehow this industry has made algorithms a must-ask in interviews.
+For an iOS developer, algorithms don't come up much in day-to-day work. But somehow this industry has made algorithms a must-ask in interviews.
 
 #### My Understanding of Algorithms
 
@@ -20174,7 +20161,7 @@ First, we need to understand why some companies introduce algorithm questions in
 
 Let me also say something about asking algorithms during iOS developer interviews. This is a trend. If the questioning is about solving real engineering problems through algorithms, from a practical perspective, I agree. If it's purely to test whether the interviewee has the ability by asking impractical algorithm questions, I'm opposed and strongly critical. This kind of interview is a waste of time. For an iOS developer who doesn't use this content every day, it's like you two are not on the same channel, deviating from the original purpose of algorithms. I don't recommend this approach.
 
-In summary, learning algorithms is an essential skill for programmers. You regret not having learned enough when you need it, and applying what you've learned is the highest level of mastering it.
+The bottom line: learning algorithms is an essential skill for programmers. You regret not having learned enough when you need it, and applying what you've learned is the highest level of mastering it.
 
 Back to work.
 
@@ -20446,7 +20433,7 @@ The shock springs had been compressed by more than 1cm due to stress. Replaced t
 
 #### Car Repair Summary
 
-The above is the complete list of parts I replaced after buying this used car. Seeing so many parts, you now understand why used cars are sold cheap! These parts were all due for replacement. The total cost of all these parts plus the original purchase price is enough to buy a new top-spec Golf. My current feeling is that this car has been restored to near peak condition. Although it cost a lot of money and time, it also turned me from a programmer into a multi-talented handyman. Sometimes car repair is actually fun. Cultivating it as a hobby is nice.
+That's the complete list of parts I replaced after buying this used car. Seeing so many parts, you now understand why used cars are sold cheap! These parts were all due for replacement. The total cost of all these parts plus the original purchase price is enough to buy a new top-spec Golf. My current feeling is that this car has been restored to near peak condition. Although it cost a lot of money and time, it also turned me from a programmer into a multi-talented handyman. Sometimes car repair is actually fun. Cultivating it as a hobby is nice.
 
 ## Summary
 
@@ -20909,7 +20896,7 @@ SQL: UPDATE msg_10003600 SET chatMsgHeight=? WHERE ((messageId='936542df77de4177
 
 No need to think twice — the condition after `where` in the `SQL` statement was always `true`, which produced this bug so elementary it couldn't get any more elementary.
 
-The corrected code is as follows:
+Here's the corrected code:
 
 ``` objc
 - (BOOL)updateMsgHeight:(SYMessage *)msg toTable:(NSString *)tableName {
@@ -20935,7 +20922,7 @@ So watch out for this `pitfall`, folks. It was clearly caused by me leaving out 
 
 Fast! Convenient! Clean code!
 
-I migrated all the core modules involved in the chat feature — the conversation list, the message list, and so on — to WCDB.
+I migrated all the core modules involved in the chat feature — the conversation list, the message list, all of it — to WCDB.
 
 Another pitfall worth noting for everyone: when migrating from FMDB to WCDB, always remember — `go all the way or don't go at all`: replace everything in one pass, otherwise queue deadlocks and contention can easily occur. Don't believe me? Try it and see.
 
@@ -21397,11 +21384,11 @@ I recently saw an article published by Sohu, which included a section on how to 
 
 ## Implementing Gradient Colors in Scrolling Subtitles
 
-The core implementation is simple. The article [A Complete Guide to iOS Video Danmaku System](https://mp.weixin.qq.com/s/4pWrwmZBEbrca2uxIt3o6w) didn't provide the relevant demo. It only roughly described the implementation approach for the danmaku. So as an iOS developer, you should be proactive in writing code to implement and verify the approach. Honestly, I really dislike this kind of Sohu article that has a beginning but no end — it just talks about the concept without providing any code demo. That's obviously not being straightforward.
+The core implementation is simple. The article [A Complete Guide to iOS Video Danmaku System](https://mp.weixin.qq.com/s/4pWrwmZBEbrca2uxIt3o6w) didn't provide the relevant demo. It only roughly described the implementation approach for the danmaku. So as an iOS developer, you should be proactive in writing code to implement and verify the approach. Honestly, I really dislike this kind of Sohu article that has a beginning but no end — it just talks about the concept without providing any code demo. That's just not being upfront.
 
 Our implementation here is quite simple. Just calculate the size of the text, then use CoreGraphicContext to draw an image.
 
-The core code is as follows:
+Here's the core code:
 
 ``` objc
 + (UIImage *)gradientFromColor:(UIColor *)fromeColor toColor:(UIColor *)toColor andSize:(CGSize)imageSize {
@@ -21575,7 +21562,7 @@ With the pandemic effectively controlled, and based on [Sun Yazhou's Theory](htt
 
 When I returned to Beijing, it was already mid-March. The drive back was exhausting — 18 hours of driving. I couldn't stop at relatives' homes to rest, afraid of causing trouble and being quarantined. Then I had to quarantine for 14 days at my rental. After 14 days, we started going to work in shifts.
 
-During the work-from-home period, there was another team reorganization. Kuaishou co-founder **Yixiao** held a video meeting with all of us Speed Edition colleagues to explain how the company would develop, how Speed Edition would be positioned, personnel arrangements, and so on. Honestly, I had my work laptop on the windowsill, watching a new senior leader introduce himself, while everyone else stayed silent. I just quietly asked a very low question — what's **Thomas**'s Chinese name? I seem to have grown accustomed to this wave-like turnover of leadership in internet companies. Constantly changing upper leadership means having to rebuild trust with superiors, a process that's often quite lengthy.
+During the work-from-home period, there was another team reorganization. Kuaishou co-founder **Yixiao** held a video meeting with all of us Speed Edition colleagues to explain how the company would develop, how Speed Edition would be positioned, personnel arrangements — all of it. Honestly, I had my work laptop on the windowsill, watching a new senior leader introduce himself, while everyone else stayed silent. I just quietly asked a very low question — what's **Thomas**'s Chinese name? I seem to have grown accustomed to this wave-like turnover of leadership in internet companies. Constantly changing upper leadership means having to rebuild trust with superiors, a process that's often quite lengthy.
 
 In my 2.5 years at Kuaishou, I had 3 different bosses. My longest-held desk at Kuaishou was in a remote corner of meeting room D601. The app I worked on from **0.5 to 1** was Kuaishou Speed Edition. At Kuaishou... well, I was fairly happy.
 
@@ -21749,13 +21736,13 @@ Published At: 2020-12-05 21:12:31 +0000
 
 This post carries a strong personal tone. If you find it uncomfortable to read, please close it as soon as possible. This article is only for my personal learning notes. You're welcome to repost or share it within the scope of the license, but please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-The science background knowledge used in this post is as follows:
+Here's the background knowledge used in this post:
 
 * GMT (Greenwich Mean Time): The standard time of Greenwich, UK. This is the time derived from the observations of the Royal Observatory in Greenwich, England — the local time of that place, which was historically treated as the world's standard time.
 * UT (Universal Time): The time calculated based on the [atomic clock](https://baike.baidu.com/item/%E5%8E%9F%E5%AD%90%E9%92%9F/765460).
 * UTC (Coordinated Universal Time): The position of the sun changes with the Earth's rotation. People used to believe the Earth's rotation rate was constant, but in 1960 this belief was overturned — the Earth's rotation rate was found to be slowing down, while the rate at which time moves forward remains constant. So UTC was no longer considered accurate enough for describing time precisely. We need to keep looking for a value that advances at a uniform rate. Looking up at the sky is how we seek answers on a macroscopic scale, while the advancement of science and technology has given us deeper understanding at the microscopic level. So some clever people built atomic clocks based on the physical properties of microscopic particles — atoms — and used them to measure the passage of time. An atomic clock only gains or loses 1 second in 5 billion years, far more precise than GMT. The time reflected by such an atomic clock is what we now use as UTC (Coordinated Universal Time).
 
-The above is excerpted from: [Time Handling in iOS](https://mp.weixin.qq.com/s/cSZUNMuqk6DL3-nctyxzcw?)  
+Excerpted from: [Time Handling in iOS](https://mp.weixin.qq.com/s/cSZUNMuqk6DL3-nctyxzcw?)  
 
 
 ## Scenario Description
@@ -22050,7 +22037,7 @@ These past few days I wanted to align my code and found that the XAlign plugin I
 
 ![](/assets/images/20201016XcodeSourceEditorNotWork/XcodeSourceEditor.avif)
 
-After searching online, I found a reliable solution, so I'm recording it here.
+After searching online, I found a reliable solution, so I'm jotting it down here.
 
 Enter the following in the terminal and it will show up:
 
@@ -22296,7 +22283,7 @@ In this article, we'll talk about the performance optimization related questions
 
 ## Performance Optimization
 
-The main optimizations are as follows:
+Here are the main optimizations:
 
 1. How to optimize startup, and how to monitor it
 2. How to optimize lag, and how to monitor it
@@ -22340,7 +22327,7 @@ In this post, we'll cover the views & graphics related questions from [Alibaba &
 
 ## Views & Graphics Related
 
-The main question list is as follows:
+Here's the main question list:
 
 1. How does AutoLayout work, and how is its performance
 2. Differences between UIView &amp; CALayer
@@ -22477,7 +22464,7 @@ See the open-source [PINRemoteImage](https://github.com/pinterest/PINRemoteImage
 
 ### 11. How to optimize image rendering
 
-You can start with shadows and corner radius. Also frame rate, battery, image aliasing, and so on.
+You can start with shadows and corner radius. Also frame rate, battery, image aliasing, and the like.
 
 
 [iOS Development — View Rendering and Performance Optimization](https://www.jianshu.com/p/748f9abafff8)
@@ -22549,7 +22536,7 @@ I've put together a table below:
 | Custom concurrent queue (Concurrent) | `dispatch_queue_create("com.sunyazhou.self.queue.concurrent", DISPATCH_QUEUE_CONCURRENT)` | Custom | |
 | Custom serial queue (Serial) | `dispatch_queue_create("com.sunyazhou.self.queue.serial", DISPATCH_QUEUE_SERIAL)` | Custom |  |
 
-In `dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)`, the first parameter is the queue's priority. The specifics of the priority QoS are as follows:
+In `dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)`, the first parameter is the queue's priority. Here are the specifics of the priority QoS:
 
 | GCD Global Queue Priority Macro | Corresponding Enum Value | Corresponding QoS |
 | :------| :------: | :------ | 
@@ -22689,7 +22676,7 @@ dispatch_sync(dispatch_get_main_queue(), ^{
 });
 ```
 
-The main thread never finishes executing, so the synchronous task dispatched to the main thread obviously dies a tragic death — jamming the main thread beyond rescue.
+The main thread never finishes executing, so the synchronous task dispatched to the main thread is dead on arrival — it jams the main thread beyond rescue.
 
 Other cases are all caused by resource contention or by calling lock functions without calling unlock — more common with async threads calling in sequence and waiting.
 
@@ -22763,7 +22750,7 @@ Before answering all these questions, we need to understand some background know
 
 #### Converting Objective-C to C++
 
-Below I wrote a sample `TestClass.m` class in which the block code is as follows:
+Below is a sample `TestClass.m` class I wrote, with the block code shown here:
 
 OC code:
 
@@ -22876,7 +22863,7 @@ The other two each have their own scope; once the scope is exceeded, they get de
 
 Now that we've looked at the background knowledge, let's answer this question.
 
-Block's internal implementation is as follows:
+Here's Block's internal implementation:
 
 ``` objc
 struct __TestClass__testMethods_block_impl_0 {
@@ -22951,7 +22938,7 @@ As you can see, `__TestClass__testMethods_block_impl_0` consists of 3 parts:
 	* `struct __TestClass__testMethods_block_impl_0` is equivalent to the struct of an Objective-C class object.
 	* `_NSConcreteStackBlock` is equivalent to the struct instance of a Block — that is, **a Block is actually Objective-C's object-based implementation of closures**.
 
-At this point, do you understand Block's internal implementation? Do you remember what its struct looks like? It may look tedious, but if you observe the code carefully, you'll find it's actually fairly simple.
+So — do you understand Block's internal implementation now? Do you remember what its struct looks like? It may look tedious, but if you observe the code carefully, you'll find it's actually fairly simple.
 
 ### 2. Is Block a class? What types are there?
 
@@ -23130,7 +23117,7 @@ Published At: 2020-09-02 11:23:24 +0000
 
 This post carries strong personal sentiment; if you feel uncomfortable reading it, please close it as soon as possible. This post is only a personal learning record. Reposting or sharing within the license terms is welcome; please respect copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-In [the previous posts](https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/) we covered memory, associated objects, ARC, AutoreleasePool, weak objects, NSNotificationCenter, etc. Today we'll talk about Runloop and KVO.
+In [the previous posts](https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/) we covered memory, associated objects, ARC, AutoreleasePool, weak objects, and NSNotificationCenter. Today we'll talk about Runloop and KVO.
 
 
 The main questions answered in this chapter are:
@@ -23414,7 +23401,7 @@ To put it simply, the relationship among `name` & `observer` & `SEL` is: `name` 
 
 ## Is Notification Posting Synchronous or Asynchronous?
 
-Synchronous. Because message forwarding is invoked. The so-called "asynchronous" here means **not posted in real time** but **posted at an appropriate moment**; no asynchronous thread is spawned.
+Synchronous. Because message forwarding is invoked. The "asynchronous" here means **not posted in real time** but **posted at an appropriate moment**; no asynchronous thread is spawned.
 
 ## Do NSNotificationCenter's Receiving and Posting Happen on the Same Thread? How to Post Asynchronously
 
@@ -23507,7 +23494,7 @@ typedef	struct Obs {
   ...
 } Observation;
 ```
-The concrete data structures of `nameless` and `named` are as follows:
+Here are the concrete data structures of `nameless` and `named`:
 
 ![](/assets/images/20200901iOSinterviewAnswers/NCTable.avif)  
 ![](/assets/images/20200901iOSinterviewAnswers/NCTable2.avif)  
@@ -23704,7 +23691,7 @@ These two methods are very simple and direct — just get the isa pointer and co
 ```
 
 Both methods ultimately get the relevant protocols via isa->data()->protocols, then check whether the protocol exists.  
-The code is as follows:
+Here's the code:
 
 ``` objc
 BOOL class_conformsToProtocol(Class cls, Protocol *proto_gen)
@@ -23830,7 +23817,7 @@ Basic content includes:
 Let's start with the conclusion:
 
 * The `weak table` is actually a hash table. The `Key` is the address of the pointed-to object, and the `Value` is an array of `weak` pointer addresses. The implementation principle is that through the old/new table pointer update mechanism, weak objects are stored separately in the `weak_table_t` (type) `weak_table` table within `SideTable` (struct). This is implemented through the `objc_initWeak()` -> `storeWeak()` function using old and new `SideTable` (struct) tables.
-* `SideTable` is a struct with two main members: a reference count table and a weak reference table. What's stored in memory are actually the object's address, reference count, and weak variable addresses — not the object's own data. Its structure is as follows:
+* `SideTable` is a struct with two main members: a reference count table and a weak reference table. What's stored in memory are actually the object's address, reference count, and weak variable addresses — not the object's own data. Here's its structure:
 
 ``` objc
 struct SideTable {
@@ -23873,7 +23860,7 @@ NSObject *obj = [[NSObject alloc] init];
 id __weak obj1 = obj;
 ```
 
-When we initialize a weak variable, `runtime` calls the `objc_initWeak()` function in `NSObject.mm`. This function's declaration in Clang is as follows:
+When we initialize a weak variable, `runtime` calls the `objc_initWeak()` function in `NSObject.mm`. Here's this function's declaration in Clang:
 
 ``` objc
 id objc_initWeak(id *location, id newObj) {
@@ -24005,7 +23992,7 @@ struct SideTable {
 
 ##### weak table
 
-The weak reference hash table, a struct of type `weak_table_t`, stores all weak reference information related to a particular instance object. Its definition is as follows:
+The weak reference hash table, a struct of type `weak_table_t`, stores all weak reference information related to a particular instance object. Here's its definition:
 
 ``` objc
 struct weak_table_t {
@@ -24017,7 +24004,7 @@ struct weak_table_t {
 ```
 This is a global weak reference hash table. It uses the address of an object of unspecified type as the `key`, and a `weak_entry_t` type struct object as the `value`. The `weak_entries` member is the entry point to the weak reference table.
 
-The `weak_entry_t` is an internal struct stored in the weak reference table, responsible for maintaining and storing all weak reference hash tables pointing to an object. Its definition is as follows:
+The `weak_entry_t` is an internal struct stored in the weak reference table, responsible for maintaining and storing all weak reference hash tables pointing to an object. Here's its definition:
 
 ``` objc
 typedef DisguisedPtr<objc_object *> weak_referrer_t;
@@ -24054,13 +24041,13 @@ So what role do the members `out_of_line`, `num_refs`, `mask`, and `max_hash_dis
 
 > In fact, the value of `out_of_line` is usually zero, so the weak reference table is always a two-dimensional array of `objc_objective` pointers. A one-dimensional `objc_objective` pointer array can form a weak reference hash table. Through the third dimension, multiple hash tables are implemented, and the number of tables is `WEAK_INLINE_COUNT`.
 
-The above is the implementation principle of the weak table.
+That's how the weak table works under the hood.
 
 #### 3. Release
 
 During release, the `clearDeallocating` function is called. The `clearDeallocating` function first gets the array of all `weak` pointer addresses based on the object's address, then iterates through this array setting the data to `nil`, and finally removes this `entry` from the `weak` table, and cleans up the object's record.
 
-##### When the object pointed to by a weak reference is released, how is the weak pointer handled? When an object is released, the basic flow is as follows:
+##### When the object pointed to by a weak reference is released, how is the weak pointer handled? Here's the basic flow when an object is released:
 
 * 1. Call `objc_release`
 * 2. Because the object's reference count is 0, execute `dealloc`
@@ -24069,7 +24056,7 @@ During release, the `clearDeallocating` function is called. The `clearDeallocati
 * 5. Call `objc_destructInstance`
 * 6. Finally call `objc_clear_deallocating`
 
-Let's focus on the `objc_clear_deallocating` function called when the object is released. This function's implementation is as follows:
+Let's focus on the `objc_clear_deallocating` function called when the object is released. Here's this function's implementation:
 
 ``` objc
 void objc_clear_deallocating(id obj)  
@@ -24081,7 +24068,7 @@ void objc_clear_deallocating(id obj)
 ```
 It calls `clearDeallocating()`. Tracing through the source code, it ultimately uses an iterator to get the `value` from the `weak` table, then calls `weak_clear_no_lock()` to find the corresponding `value` and set the `weak` pointer to nil.
 
-The `weak_clear_no_lock()` function's implementation is as follows:
+Here's the `weak_clear_no_lock()` function's implementation:
 
 ``` objc
 void weak_clear_no_lock(weak_table_t *weak_table, id referent_id) 
@@ -24291,7 +24278,7 @@ void _object_set_associative_reference(id object, const void *key, id value, uin
     association.releaseHeldValue();
 }
 ```
-The above code shows the core objects for implementing associated object technology. Let's introduce the internal implementation of each core object separately.
+The code above shows the core objects behind associated objects. Let's walk through the internal implementation of each one.
 
 #####  AssociationsManager
 
@@ -24479,7 +24466,7 @@ It marks the `has_assoc` flag in the `isa` struct as `true`, indicating that the
 
 ##### `objc_getAssociatedObject()`
 
-The call stack of this function is as follows:
+Here's the call stack of this function:
 
 ``` sh
 id objc_getAssociatedObject(id object, const void *key)
@@ -24514,7 +24501,7 @@ _object_get_associative_reference(id object, const void *key)
 
 ##### `objc_removeAssociatedObjects()`
 
-The call stack is as follows:
+Here's the call stack:
 
 ``` sh
 void objc_removeAssociatedObjects(id object)
@@ -24559,7 +24546,7 @@ Through `AssociationsManager` -> `AssociationsHashMap` -> check whether the obje
  
 #### Summary
 
-The general order of associated object applications and how the system implements associated objects is as follows:
+Here's the general order of associated object applications and how the system implements associated objects:
 `AssociationsManager` associated object manager -> `AssociationsHashMap` hash map -> `ObjectAssociationMap` associated object pointer -> `ObjcAssociation` associated object
 
 ## How Are Associated Objects Managed in Memory? How to Implement weak Properties with Associated Objects?
@@ -24688,7 +24675,7 @@ Under ARC, we use the `@autoreleasepool{}` keyword to wrap the code block that n
 	 <#statements#> //代码块
 }
 ```
-The above code is eventually rewritten by the compiler into the following:
+The compiler eventually rewrites that code into:
 
 ``` c
 void *context = objc_autoreleasePoolPush();
@@ -24711,7 +24698,7 @@ Both functions are wrappers for `AutoreleasePoolPage`. The core of the autorelea
 *  **AutoreleasePool** corresponds one-to-one by `thread` (thread member variable)
 *  **AutoreleasePoolPage** is the data structure for the autorelease pool to store objects. Each page occupies `4KB` of memory. Its own member variables occupy `56` bytes. The remaining space is used to store the addresses of objects that called the `autorelease` method. A sentinel is also inserted into the page — this sentinel is actually a nil address.
 *  When a page is full, a new `AutoreleasePoolPage` object is created and a sentinel is inserted.
-The specific code is as follows:
+Here's the specific code:
 
 ``` objc
 class AutoreleasePoolPage {
@@ -24991,7 +24978,7 @@ From this, we can see that reference counts are stored in `isa.extra_rc` and `si
 
 # Summary
 
-The above is our discussion of the runtime-related questions and memory management section from this set of interview questions. The next article will wrap up the remaining questions. Thank you all for your support.
+That wraps up the runtime and memory management questions from this set of interview questions. The next article will wrap up the remaining questions. Thank you all for your support.
 
 
 
@@ -25068,7 +25055,7 @@ The objc_object implementation is quite long; [view it here](https://github.com/
 #### Classes
 
 A class in Objective-C is represented by Class, which is actually a pointer to an `objc_class`: `typedef struct objc_class *Class;`  
-The corresponding struct is as follows:
+Here's the corresponding struct:
 
 ``` objc
 struct objc_class {
@@ -25136,7 +25123,7 @@ struct objc_ivar_list {
 
 `objc_method_list`: stores the class's method list, which can be obtained via `class_copyMethodList`.
 
-The struct is as follows:
+Here's the struct:
 
 ``` objc
 struct objc_method {
@@ -25159,7 +25146,7 @@ struct objc_method_list {
 
 `objc_protocol_list`: stores the class's protocol list, which can be obtained via `class_copyProtocolList`.
 
-The struct is as follows:
+Here's the struct:
 
 ``` objc
 struct objc_protocol_list {
@@ -25274,7 +25261,7 @@ Let's declare a `ClassA` and test it with debug code:
 @implementation ClassA
 @end
 ```
-If obtained via the `class_copyIvarList()` function, the output is as follows:
+If you go through the `class_copyIvarList()` function, the output looks like this:
 
 ``` sh
  --- class_copyIvarList ↓↓↓---
@@ -25288,7 +25275,7 @@ If obtained via the `class_copyIvarList()` function, the output is as follows:
  --------------END----------------
 ```
 
-If obtained via the `class_copyPropertyList()` function, the output is as follows:
+If you go through the `class_copyPropertyList()` function, the output looks like this:
 
 ``` sh
  --- class_copyPropertyList ↓↓↓---
@@ -25298,7 +25285,7 @@ If obtained via the `class_copyPropertyList()` function, the output is as follow
  --------------END----------------
 ```
 
-The debug code is as follows:
+Here's the debug code:
 
 ``` objc
 - (void)printIvarOrProperty {
@@ -25441,14 +25428,14 @@ ___
 
 First, we need to understand where they come from. We know that `objc_class` has a member variable called `isa`; here we're going to introduce another member variable of `objc_class`: `bits`.
 
-The structure of `objc_class` is as follows:
+Here's the structure of `objc_class`:
 
 ![The structure of objc_class](/assets/images/20200721iOSinterviewAnswers/objc_class_struct.avif)
 
 
 `bits` is used to store the class's properties, methods, protocols, and other information. It is of type `class_data_bits_t`.
 
-`class_data_bits_t` is as follows:
+Here's `class_data_bits_t`:
 
 ``` objc
 struct class_data_bits_t {
@@ -25517,7 +25504,7 @@ After the class's `realizeClass` runs:
 
 ![](/assets/images/20200721iOSinterviewAnswers/after_bits.avif)
 
-A close look at the member variables of the two structs reveals many similarities: both store the current class's properties, ivars, methods, protocols, and so on. The difference is that `class_ro_t` stores what is determined at compile time, while `class_rw_t` is determined at `runtime`: it first copies the contents of `class_ro_t`, then copies in the properties, methods, etc., from the class's categories. So `class_rw_t` can be said to be a superset of `class_ro_t`. Of course, actually accessing a class's methods and properties accesses the contents of `class_rw_t`.
+A close look at the member variables of the two structs reveals many similarities: both store the current class's properties, ivars, methods, and protocols. The difference is that `class_ro_t` stores what is determined at compile time, while `class_rw_t` is determined at `runtime`: it first copies the contents of `class_ro_t`, then copies in the properties, methods, etc., from the class's categories. So `class_rw_t` can be said to be a superset of `class_ro_t`. Of course, actually accessing a class's methods and properties accesses the contents of `class_rw_t`.
 
 Properties are stored in `class_rw_t`, while instance variables (ivars) are stored in `class_ro_t`.
 
@@ -25850,7 +25837,7 @@ If `resolveInstanceMethod:` in stage 1 returns NO, `forwardingTargetForSelector:
 
 ##### Stage 3: The Full Message Forwarding Mechanism
 
-If `forwardingTargetForSelector:` in stage 2 returns `nil`, the so-called full message forwarding mechanism kicks in.
+If `forwardingTargetForSelector:` in stage 2 returns `nil`, the full message forwarding mechanism kicks in.
 
 First, `methodSignatureForSelector:` is called to return the correct signature for the message to be forwarded:
 
@@ -25876,7 +25863,7 @@ So unlike stage 2, in this stage you can:
 * Modify the message's target, selector, arguments, etc.
 * Forward the message multiple times, to multiple objects
 
-Obviously, in this stage you can do much more with an OC message.
+At this stage you can do much more with an Objective-C message.
 
 ---
 
@@ -25909,7 +25896,7 @@ Here are two articles for reference:
 
 * `IMP`: the concrete implementation of a method (a pointer)
 * `SEL`: the method name
-* `Method`: a pointer of type objc_method, which is a struct, as follows:
+* `Method`: a pointer of type objc_method, which is a struct, shown below:
 
 	``` objc
 	struct objc_method {
@@ -26526,7 +26513,7 @@ if ([cls respondsToSelector:sel]) {
 ```
 However, since this involves private methods, directly referencing it will not pass Apple's App Store review. So when using it, you need to process the strings, such as encrypting the method name with an algorithm. In practice, it can pass the review.
 
-In summary, NSURLProtocol is very powerful. Whether optimizing app performance or extending functionality, it offers a lot of flexibility. However, while using it, you should also pay attention to the issues it brings. Although it has been applied in many frameworks and well-known projects, its essence is still worth exploring by developers.
+All in all, NSURLProtocol is very powerful. Whether optimizing app performance or extending functionality, it offers a lot of flexibility. However, while using it, you should also pay attention to the issues it brings. Although it has been applied in many frameworks and well-known projects, its essence is still worth exploring by developers.
 
 
 # Summary
@@ -26571,7 +26558,7 @@ I hope that years from now, when people bring up this principle, they'll think: 
 
 # Summary
 
-When going home for the New Year, someone always asks about how high the salary is working in Beijing and so on. I just briefly expressed my views and, half-jokingly, formed my own theoretical doctrine.
+When going home for the New Year, someone always asks how much I make working in Beijing — that kind of thing. I just briefly expressed my views and, half-jokingly, formed my own theoretical doctrine.
 
 
 
@@ -26598,7 +26585,7 @@ The year is over; as usual, I hand in my 2019 year-end summary.
 
 ## 2019 Review
 
-This year's events are as follows:
+Here are this year's events:
 
 
 * Work
@@ -26652,7 +26639,7 @@ The image below shows the scene after the renovation, when the marble casing was
 Below is the final photo after the renovation was completed.  
 ![](/assets/images/20191231FinalSummary/decoration3.avif)
 
-I have a rough idea of the renovation process; here it is for your reference if you renovate later:
+I have a rough idea of the renovation process; here it is in case you renovate later:
 
 1. Planning and design
 2. Re-plumbing and re-wiring
@@ -26662,7 +26649,7 @@ I have a rough idea of the renovation process; here it is for your reference if 
 6. Integrated ceiling
 7. Paint the walls white
 8. Buy appliances: for the kitchen, an integrated stove or a range hood and stove
-9. Kitchen cabinets, bedroom wooden wardrobes, etc. — the carpentry work
+9. Kitchen cabinets, bedroom wooden wardrobes, and the like — the carpentry work
 10. Custom wooden doors
 11. Marble casing, including the kitchen countertop, threshold stones, baseboards, etc.
 12. Wrap up and start buying appliances, sofa, washing machine, refrigerator, TV, etc.
@@ -26817,7 +26804,7 @@ The process of moving the hukou was roughly like this:
 
 The whole hukou process takes about 2 hours; the ID card takes about half a month or more.
 
-After getting the ID card done and returning to Beijing, I updated the identity information for all the documents and accounts I use: bank cards, Alipay, WeChat, work residence permit, residence permit, and so on.
+After getting the ID card done and returning to Beijing, I updated the identity information for all the documents and accounts I use: bank cards, Alipay, WeChat, work residence permit, residence permit — all of it.
 
 Going through all of it, I found that changing your hukou and ID card is really troublesome.
 
@@ -27199,7 +27186,7 @@ If I answered this question wrong, iOS developers would laugh at me to death. Th
 First, the tool's address is [https://github.com/facebook/chisel](https://github.com/facebook/chisel)
 
 
-The installation method it provides is as follows:
+Here's the installation method it provides:
 
 ``` sh
 brew update
@@ -27382,7 +27369,7 @@ First, let's create a demo—a simple VC demo will do. Create the green backgrou
 
 ```
 
-Here you can see two constraint global variables: `leftConstraint` and `topConstraint`. These are used to change the constraint offsets during dragging to implement the functionality. The specific code is as follows:
+Here you can see two constraint global variables: `leftConstraint` and `topConstraint`. These are used to change the constraint offsets during dragging to implement the functionality. Here's the specific code:
 
 
 ``` objc
@@ -27484,7 +27471,7 @@ There's a class called `UITraitCollection` here that I'd never studied carefully
 > Trait: characteristic, feature
 
 
-Obviously, this class is used in UIKit to store some characteristics of the iPhone and the related UI configuration. Have you ever wondered how we developers handle it when you modify certain system settings in iOS's General, such as (see below) contrast and global font size?
+In short, this UIKit class stores device characteristics and related UI configuration. Have you ever wondered how we developers handle it when you modify certain system settings in iOS's General, such as (see below) contrast and global font size?
 
 ![](/assets/images/20190916UITraitCollection/UITraitCollection2.avif)
 
@@ -28093,7 +28080,7 @@ When we need it, we call this method to find the layer we added:
 
 #### Support Auto Layout
 
-Most people use `Masonry` these days, so let's use `Masonry` for auto layout here. The reason for using auto layout is that when external code uses auto layout for its views, the internal code needs to update the relevant `layer`'s `frame`. The code is as follows:
+Most people use `Masonry` these days, so let's use `Masonry` for auto layout here. The reason for using auto layout is that when external code uses auto layout for its views, the internal code needs to update the relevant `layer`'s `frame`. Here's the code:
 
 ``` objc
 - (void)layoutSubviews {
@@ -29012,7 +28999,7 @@ A file management app from Smartisan Technology for managing Android phone conte
 
 ## GIF Brewery 3 — Video to GIF for Mac
 
-The most powerful GIF tool on Mac. It converts videos to GIF and lets you set the dimensions, file size, start/end points, etc. It used to be paid software but is now free.
+The most powerful GIF tool on Mac. It converts videos to GIF and lets you set the dimensions, file size, and start/end points. It used to be paid software but is now free.
 
 ![](/assets/images/20190215Tools/GIFBrewery3.avif)
 
@@ -29625,7 +29612,7 @@ If you're not very familiar with view controller transitions, learning this may 
  `8` Set the modal presentation style of the VC being presented. This is used so that when showing the presented VC, the default background is a blue Gaussian blur at the bottom.  
  `9` Set the current VC's modal presentation style to the current presentation context.  
  
- > The dismiss transition animation set up in steps 5~7 will be explained below.
+ > I'll cover the dismiss transition animation set up in steps 5–7 below.
  
  Here we're reusing the VC from the previous swipe up/down post. Don't worry about it — just treat it as an ordinary `UIViewController`.
  
@@ -30450,7 +30437,7 @@ In most cases we have to use a keypath. I've been studying animations recently a
 # CALayer Properties
 
 
-Without further ado, let's show a code snippet to demonstrate the topic of this post:
+Without further ado, here's a code snippet demonstrating the topic of this post:
 
 ``` objc
 CABasicAnimation * scaleAnimation = [CABasicAnimation animation];
@@ -30606,7 +30593,7 @@ size.height
 > There are also additional animatable properties you can [refer to](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html), and for more details you can check the [official documentation](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514-CH1-SW1), as well as some [structs](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Key-ValueCodingExtensions/Key-ValueCodingExtensions.html#//apple_ref/doc/uid/TP40004514-CH12-SW2).
 
 
-The above are all the animation-related `keypath`s I've found so far.
+Those are all the animation-related `keypath`s I've found so far.
 
 
 ## Animatable Property Descriptions
@@ -30682,7 +30669,7 @@ The above are all the animation-related `keypath`s I've found so far.
 
 # Summary
 
-The above are all the keypaths I've collected and organized, for reference only.
+That's every keypath I've collected so far; hope it saves you some time.
 
 Years ago, walking down the street from Huihuang International to Xi'erqi, I kept wondering why animation keypaths are always strings and so easy to typo. Today this post of mine provides the answer: KVC member variables don't let you access the variable name directly; instead, you have to write the variable name as a string, and the content is manipulated through the string.
 
@@ -30979,7 +30966,7 @@ Finally, add all the animations to the animation group:
 Then wrap up the method and put everything we did above — the Bezier curve, opacity, gradient, scale, and the animation group — into it:
 
 
-The complete code is as follows:
+Here's the complete code:
 
 ``` objc
 - (void)addNotoAnimation:(NSString *)imageName
@@ -31131,7 +31118,7 @@ I've been studying how Douyin's short video app implements the vertical top-to-b
 
 It's actually just a UITableView with its visible display range adjusted. Talk is cheap, show me the code.
 
-I won't beat around the bush — the code is as follows and it's very simple to implement.
+I won't beat around the bush — here's the code, and it's very simple to implement.
 
 ``` objc
 
@@ -31291,7 +31278,7 @@ Here we handle it by resetting to `0`.
 
 # Summary
 
-The above is a simple implementation of Douyin's vertical swiping. The demo is below. In the next post, I'll demonstrate more details — if possible, I'll eventually put a video on the cell to implement the whole vertical swipe control process: video pause, play, stop, etc. Since fully implementing Douyin requires a lot of code, to let everyone learn together, I've split each detail into its own section and written separate articles for discussion and learning.
+That's a simple implementation of Douyin's vertical swiping. The demo is below. In the next post, I'll demonstrate more details — if possible, I'll eventually put a video on the cell to implement the whole vertical swipe control process: video pause, play, stop, and the rest. Since fully implementing Douyin requires a lot of code, to let everyone learn together, I've split each detail into its own section and written separate articles for discussion and learning.
 
 
 [Douyin vertical swiping Demo](https://github.com/sunyazhou13/AwemeDemo)
@@ -31594,7 +31581,7 @@ override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 * 4. If not, let the event continue to propagate.
 
 
-> Note: _the code doesn't check whether theButton.alpha == 0, theButton.userInterface... == YES, or whether it's visible, etc. — add those checks yourself_
+> Note: _the code doesn't check whether theButton.alpha == 0, theButton.userInterface... == YES, or whether it's visible — add those checks yourself_
 
 ## The Second Approach
 
@@ -32550,7 +32537,7 @@ But this implementation has a bug — when it encounters the same string, the ma
 
 ![](/assets/images/20180615NSAttributeString/NSAttributeStringBug1.avif)
 
-Everyone obviously understands why the error occurs.
+It's obvious why the error occurs.
 
 The ranges of the string "0" become identical, but to solve just this problem, you could simply judge the range, then cut the string and skip forward by length to keep extracting — that works, but it's obviously very verbose. And what if one day you run into a string like "`0小时0分12秒`"? How would you write that?
 
@@ -32784,7 +32771,7 @@ Use the [shuffled()](https://developer.apple.com/documentation/swift/sequence/29
 // → numbers is now [16, 9, 2, 18, 5, 13, 8, 11, 17, 3, 6, 1, 14, 7, 10, 15, 20, 19, 12, 4]
 ```
 
-The above implements a shuffle-like sorting of numbers from 1 to 20. Note: both sides are closed ranges (closed ranges include the endpoint) because `...` is used here. If you don't understand, you can look up Swift's range notation.
+That gives you a shuffle-like sorting of numbers from 1 to 20. Note: both sides are closed ranges (closed ranges include the endpoint) because `...` is used here. If you don't understand, you can look up Swift's range notation.
 
 ## Random Number Generator Protocols
 
@@ -32988,7 +32975,7 @@ arc4random(type: UInt8.self)  //183
 
 This function uses `arc4random_buf()` to generate the random number.
 
-This function fills a buffer of the length specified by its second parameter with ARC4-cipher-based random numbers. So if we pass sizeof(UInt64), the function generates a random number filling the 8-byte region and returns it to r. The 64-bit random number generator can then be implemented as follows:
+This function fills a buffer of the length specified by its second parameter with ARC4-cipher-based random numbers. So if we pass sizeof(UInt64), the function generates a random number filling the 8-byte region and returns it to r. You can then implement the 64-bit random number generator like this:
 
 ``` swift 
 extension UInt64 {
@@ -33018,7 +33005,7 @@ UInt64.random()      //9223372036854775807
 
 ## Floating-point Random Numbers
 
-If you need a floating-point random number, you can use the drand48 function, which produces a floating-point number in the interval [0.0, 1.0]. Its return value is of type Double. Usage is as follows:
+If you need a floating-point random number, you can use the drand48 function, which produces a floating-point number in the interval [0.0, 1.0]. Its return value is of type Double. Usage looks like this:
 
 
 ``` swift
@@ -33155,7 +33142,7 @@ extension UIView {
 
 This distinguishes the two approaches before and after iOS 11.
 
-Before iOS 11, we drew a path with a Bezier curve, then created a `CAShapeLayer` to act as a transparent mask on `self.layer.mask`, to solve the problem of rounding different corners.
+Before iOS 11, we drew a path with a Bezier curve, then created a `CAShapeLayer` to act as a transparent mask on `self.layer.mask`, to round different corners.
 
 
 ## Adding Corner Animation
@@ -33163,7 +33150,7 @@ Before iOS 11, we drew a path with a Bezier curve, then created a `CAShapeLayer`
 
 We add a gesture recognizer to the original `viewDidLoad()` method.
 
-And write the triggered event. The complete code is as follows.
+And write the triggered event. Here's the complete code.
 
 ``` swift
 import UIKit
@@ -33268,7 +33255,7 @@ Published At: 2018-05-08 12:01:27 +0000
 
 # Preface
 
-It's been a long time since I used the less common APIs of UIViewController, and I've gradually lost my memory of them. In iOS apps, pages with multiple childViewControllers are a very common interaction design — the early NetEase News, Toutiao, and so on. This post reviews the old APIs for manually controlling the life cycle of view controllers.
+It's been a long time since I used the less common APIs of UIViewController, and I've gradually lost my memory of them. In iOS apps, pages with multiple childViewControllers are a very common interaction design — think the early NetEase News or Toutiao. This post reviews the old APIs for manually controlling the life cycle of view controllers.
 
 # UIViewController
 
@@ -33337,7 +33324,7 @@ You need to override the following method in the parent ViewController and retur
 }
 ```
 
-However, note that you must not call methods like `viewWillAppear`, `viewDidAppear`, etc. manually. Instead, you should call:
+However, note that you must not call methods like `viewWillAppear` or `viewDidAppear` manually. Instead, you should call:
 
 ``` objc
 - (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated;
@@ -33418,7 +33405,7 @@ A minimal working pattern (fromVC is the currently displayed child controller, t
 
 **Use Cases**
 
-This is the utility method for switching between two child controllers in a "custom container controller" — for example, custom Tab switching, paged content switching, and so on.
+This is the utility method for switching between two child controllers in a "custom container controller" — for example, custom Tab switching, paged content switching, that kind of thing.
 
 **Life Cycle**
 
@@ -33467,7 +33454,7 @@ Published At: 2018-05-07 14:59:41 +0000
 # Preface
 
 
-On the iOS platform, audio rendering is done directly through the `AudioUnit` API. It is used to implement effects like "uncle voice", "KTV", "monitor return" and so on...
+On the iOS platform, audio rendering is done directly through the `AudioUnit` API. It is used to implement effects like "uncle voice", "KTV", and "monitor return".
 
 Today I'll take you through an in-depth understanding and study of these audio effects.
 
@@ -33748,7 +33735,7 @@ The following code sets the ASBD on the corresponding Audio Unit:
 AudioUnitSetProperty(remoteIOUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &asbd, sizeof(asbd));
 ```
 
-The complete code is as follows:
+Here's the complete code:
 
 ``` objc
 //Set ASBD
@@ -33832,7 +33819,7 @@ CF_ENUM(UInt32) {
 | Compressor | When the sound is too quiet or too loud, raises or lowers the sound energy by setting a threshold, e.g. attack time, release time, and threshold value, ultimately controlling the sound's energy range in the time domain | kAudioUnitSubType_DynamicsProcessor |
 | Reverb | Controls the sound effect through the delay of sound reflections | kAudioUnitSubType_Reverb2 |
 
-> The three most commonly used effects under Effect Unit are the ones above. High Pass, Low Pass, Band Pass, Delay, Limiter, etc. are not used very often. If you're familiar with them, feel free to give them a try.
+> The three most commonly used effects under Effect Unit are the ones above. High Pass, Low Pass, Band Pass, Delay, and Limiter are not used very often. If you're familiar with them, feel free to give them a try.
 
 #### Mixer Units subtypes and their usage
 
@@ -34152,7 +34139,7 @@ The code of CFRunLoopRef is [open source](http://opensource.apple.com/source/CF/
 
 First, in `iOS` development you'll encounter two thread objects: `pthread_t` and `NSThread`. In the past, Apple had a document stating that `NSThread` was just a wrapper around `pthread_t`, but that document is no longer valid. Now they might both be directly wrapped from the lowest-level `mach thread`. Apple doesn't provide an interface to convert between these two objects, but no matter what, it's certain that `pthread_t` and `NSThread` correspond one-to-one. For example, you can get the main thread via `pthread_main_thread_np()` or `[NSThread mainThread]`; you can also get the current thread via `pthread_self()` or `[NSThread currentThread]`. `CFRunLoop` is managed based on `pthread`.
 
-Apple doesn't allow creating a `RunLoop` directly. It only provides two functions to obtain one automatically: `CFRunLoopGetMain()` and `CFRunLoopGetCurrent()`. The logic inside these two functions is roughly as follows:
+Apple doesn't allow creating a `RunLoop` directly. It only provides two functions to obtain one automatically: `CFRunLoopGetMain()` and `CFRunLoopGetCurrent()`. The logic inside these two functions goes roughly like this:
 
 ``` c
 /// Global dictionary, key is pthread_t, value is CFRunLoopRef
@@ -34222,13 +34209,13 @@ A `RunLoop` contains several `Mode`s, and each `Mode` contains several `Source`s
 **CFRunLoopSourceRef** is where events are generated. There are two versions of `Source`: `Source0` and `Source1`.
 
 * `Source0` only contains a callback (a function pointer), and it can't trigger events by itself. When using it, you need to first call `CFRunLoopSourceSignal(source)` to mark this `Source` as pending, and then manually call `CFRunLoopWakeUp(runloop)` to wake up the `RunLoop` so it can process this event.  
-* `Source1` contains a `mach_port` and a callback (a function pointer), used to send messages between the kernel and other threads. This kind of `Source` can actively wake up the `RunLoop`'s thread. The principle will be explained below.
+* `Source1` contains a `mach_port` and a callback (a function pointer), used to send messages between the kernel and other threads. This kind of `Source` can actively wake up the `RunLoop`'s thread. More on that below.
 
 
 **CFRunLoopTimerRef** is a time-based trigger. It's `toll-free bridged` with `NSTimer`, so they can be used interchangeably. It contains a time interval and a callback (a function pointer). When it's added to the `RunLoop`, the `RunLoop` registers the corresponding time points. When the time arrives, the `RunLoop` is woken up to execute that callback.
 
 
-**CFRunLoopObserverRef** is an observer. Each `Observer` contains a callback (a function pointer). When the state of the `RunLoop` changes, the observer receives the change through the callback. The observable time points are as follows:
+**CFRunLoopObserverRef** is an observer. Each `Observer` contains a callback (a function pointer). When the state of the `RunLoop` changes, the observer receives the change through the callback. Here are the observable time points:
 
 ``` c
 typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) {
@@ -34245,7 +34232,7 @@ The `Source`/`Timer`/`Observer` mentioned above are collectively called `__mode 
 
 ### RunLoop's Mode
 
-The structures of `CFRunLoopMode` and `CFRunLoop` are roughly as follows:
+Here's roughly what the `CFRunLoopMode` and `CFRunLoop` structures look like:
 
 ``` objc
 struct __CFRunLoopMode {
@@ -34280,7 +34267,7 @@ CFRunLoopAddCommonMode(CFRunLoopRef runloop, CFStringRef modeName);
 CFRunLoopRunInMode(CFStringRef modeName, ...);
 ```
 
-The interfaces `Mode` exposes for managing `mode items` are as follows:
+Here are the interfaces `Mode` exposes for managing `mode items`:
 
 ``` c
 CFRunLoopAddSource(CFRunLoopRef rl, CFRunLoopSourceRef source, CFStringRef modeName);
@@ -34299,11 +34286,11 @@ Apple also provides a string for operating the `Common` mark: `kCFRunLoopCommonM
 
 ### RunLoop's Internal Logic
 
-According to Apple's [documentation](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW23), the internal logic of `RunLoop` is roughly as follows:
+According to Apple's [documentation](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW23), here's roughly the internal logic of `RunLoop`:
 
 ![](/assets/images/20180402RunLoop/RunLoop1.avif)
 
-The internal code is organized as follows (if it's too long to read, you can skip it; there will be explanations later)
+The internal code is below (it's long, so feel free to skip it; there will be explanations later)
 
 
 ``` c
@@ -34678,7 +34665,7 @@ Apple registers a `Source1` (based on `mach port`) to receive system events, and
 When a hardware event (touch/lock screen/shake, etc.) occurs, IOKit.framework first generates an `IOHIDEvent` event, which is received by `SpringBoard`. For details of this process, you can refer to [here](http://iphonedevwiki.net/index.php/IOHIDFamily). `SpringBoard` only receives a few kinds of `Event`s such as button presses (lock screen/mute, etc.), touches, acceleration, and proximity sensors, and then forwards them to the required `App` process via `mach port`. The `Source1` Apple registered then triggers the callback and calls `_UIApplicationHandleEventQueue()` for internal distribution within the app.
 
 
-`_UIApplicationHandleEventQueue()` processes `IOHIDEvent` and wraps it into `UIEvent` for processing or distribution, including recognizing `UIGesture`/handling `screen rotation`/sending to `UIWindow`, etc. Common events such as `UIButton` taps and `touchesBegin`/`Move`/`End`/`Cancel` are all completed in this callback.
+`_UIApplicationHandleEventQueue()` processes `IOHIDEvent` and wraps it into `UIEvent` for processing or distribution, including recognizing `UIGesture`/handling `screen rotation`/sending to `UIWindow`. Common events such as `UIButton` taps and `touchesBegin`/`Move`/`End`/`Cancel` are all completed in this callback.
 
 #### Gesture Recognition
 
@@ -34695,7 +34682,7 @@ When you're manipulating the `UI`, such as changing `Frame`s, updating the `UIVi
 Apple registers an `Observer` to listen for the `BeforeWaiting` (about to sleep) and `Exit` (about to exit the `Loop`) events. The callback executes a very long function:
 `_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()`. This function iterates over all pending `UIView`/`CAlayer`s to perform the actual drawing and adjustments, and updates the `UI`.
 
-The call stack inside this function is roughly as follows:
+Here's roughly the call stack inside this function:
 
 ``` c++
 _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
@@ -34813,7 +34800,7 @@ When this background thread needs to execute a task, `AFNetworking` throws the t
 
 #### AsyncDisplayKit
 
-[AsyncDisplayKit](https://github.com/facebook/AsyncDisplayKit) is a framework released by Facebook to keep the UI smooth. Its principle is roughly as follows:
+[AsyncDisplayKit](https://github.com/facebook/AsyncDisplayKit) is a framework released by Facebook to keep the UI smooth. Here's roughly how it works:
 
 Once a heavy task appears on the `UI` thread, the UI stutters. Such tasks are usually divided into 3 categories: `layout`, `drawing`, and `UI object operations`.
 
@@ -34823,7 +34810,7 @@ Drawing generally includes text drawing (e.g. `CoreText`), image drawing (e.g. p
 
 Among these, the first two categories can be pushed to background threads through various methods, while the last category can only be done on the main thread. Sometimes later operations need to depend on the results of earlier operations (for example, creating a `TextView` may require pre-computing the text size). What `ASDK` does is push as many tasks as possible to the background, and delay the ones it can't (such as view creation and property adjustments) as much as possible.
 
-To do this, `ASDK` creates an object called `ASDisplayNode` and wraps `UIView`/`CALayer` inside it. It has properties similar to `UIView`/`CALayer`, such as `frame`, `backgroundColor`, etc. All these properties can be changed on a background thread. Developers can operate the internal `UIView`/`CALayer` only through the `Node`, thus pushing layout and drawing to background threads. But no matter how you operate, these properties always need to be synchronized to the main thread's `UIView`/`CALayer` at some point.
+To do this, `ASDK` creates an object called `ASDisplayNode` and wraps `UIView`/`CALayer` inside it. It has properties similar to `UIView`/`CALayer`, such as `frame` and `backgroundColor`. All these properties can be changed on a background thread. Developers can operate the internal `UIView`/`CALayer` only through the `Node`, thus pushing layout and drawing to background threads. But no matter how you operate, these properties always need to be synchronized to the main thread's `UIView`/`CALayer` at some point.
 
 `ASDK` mimics the pattern of the `QuartzCore`/`UIKit` frameworks and implements a similar UI update mechanism: add an `Observer` to the main thread's `RunLoop`, listen for the `kCFRunLoopBeforeWaiting` and `kCFRunLoopExit` events, and when the callback is received, iterate over all the pending tasks previously put into the queue and execute them one by one.
 The specific code can be seen here: [_ASAsyncTransactionGroup](https://github.com/facebook/AsyncDisplayKit/blob/master/AsyncDisplayKit%2FDetails%2FTransactions%2F_ASAsyncTransactionGroup.m).
@@ -34998,7 +34985,7 @@ We can see the `.dSYM` with the same name as the project `target`.
 
 By default, Xcode generates a `dSYM` file in the `Release` build configuration, but not in the `Debug` build configuration.
 
-If you want it in `Debug`, configure Xcode as follows:
+If you want it in `Debug`, configure Xcode like this:
 
 `XCode -> Build Settings -> Code Generation -> Generate Debug Symbols -> Yes`  
 `XCode -> Build Settings -> Build Option -> Debug Information Format -> DWARF with dSYM File`
@@ -35042,7 +35029,7 @@ There are two ways to retrieve the dSYM file for an `ipa` version:
 ``` sh
 atos -o KWPlayer.app.dSYM/Contents/Resources/DWARF/KWPlayer -arch arm64 -l 0x102100000 0x10720df70 0x10720a5ac 0x10720e13c 0x107211aa0 0x107215574 0x107211aa0 0x10720770c 0x10720772c 0x10720f6ec 0x10720f9e8 0x107208df0 0x1072039b8
 ```
-The output is as follows:
+Here's the output:
 
 ``` objc
 -[LOTLayerContainer display] (in KWPlayer) (LOTLayerContainer.m:385)
@@ -35061,7 +35048,7 @@ LOT_PointInCubicCurve (in KWPlayer) (CGGeometry+LOTAdditions.m:366)
 
 After the `-l` command you can pass multiple addresses, separated by `,` commas or spaces.
 
-The raw file is as follows:
+Here's the raw file:
 
 ``` sh
 Heaviest stack for the target process:
@@ -35162,9 +35149,9 @@ Since a pixel is a set of color data, the drawing data only contains it after pa
 
 ## Frame Buffer and the Display Screen
 
-The frame buffer stores the graphics data rendered by the computer, including coordinates, pixels, resolution, and so on. Simply put, it's the data that describes the image. When this descriptive data is fed into the display, the display knows how to draw.
+The frame buffer stores the graphics data rendered by the computer, including coordinates, pixels, resolution, and the like. Simply put, it's the data that describes the image. When this descriptive data is fed into the display, the display knows how to draw.
 
-The so-called screen resolution generally refers to the arrangement of pixel data produced by the renderer, e.g., 1280x800 pixels. It's worth noting that this screen resolution has nothing to do with the physical dot arrangement of the display screen. Screen resolution is settable, while the display's physical dot arrangement is fixed. For example, if the frame buffer's resolution is 1280x800 pixels but the display screen has a 1920x1200 dot arrangement, how does the display present the frame buffer's data on the screen? The answer is adaptive scaling — it's converted by the display's internal chip.
+Screen resolution generally refers to the arrangement of pixel data produced by the renderer, e.g., 1280x800 pixels. It's worth noting that this screen resolution has nothing to do with the physical dot arrangement of the display screen. Screen resolution is settable, while the display's physical dot arrangement is fixed. For example, if the frame buffer's resolution is 1280x800 pixels but the display screen has a 1920x1200 dot arrangement, how does the display present the frame buffer's data on the screen? The answer is adaptive scaling — it's converted by the display's internal chip.
 
 The 13-inch RMBP describes its resolution settings like this: "looks like 1280x800 pixels," "looks like 1440x900 pixels." We should understand it this way: 1280x800 pixels is relative to the older non-Retina machines — i.e., the coordinate system before the drawing data is fed into the shader corresponds 1:1 to the coordinates after rendering. In reality, after rendering, its actual pixel count is 2560x1600, meaning the data in the frame buffer is 2560x1600 pixels. Likewise, "looks like 1440x900 pixels" actually renders to 2880x1800 pixels. Since the 13-inch screen's actual dot arrangement is 2560x1600, the frame buffer's 2880x1800 pixels get adaptively scaled down when output to the screen.
 
@@ -35413,7 +35400,7 @@ The THOverlayView file is the top-level view with the play button and other cont
 @end
 ```
 
-The player's implementation file is as follows.
+Here's the player's implementation file.
 
 ``` objc
 #import "PlayerController.h"
@@ -35790,7 +35777,7 @@ There are two classes in `AVPlayerLayer` for handling subtitles.
 * AVMediaSelectionGroup
 * AVMediaSelectionOption
 
-`AVMediaSelectionOption` is used to represent the alternate media displays of an `AVAsset`. In earlier posts I mentioned that media metadata can contain `audio tracks`, `video tracks`, `subtitle tracks`, `alternate camera angles`, and so on.
+`AVMediaSelectionOption` is used to represent the alternate media displays of an `AVAsset`. In earlier posts I mentioned that media metadata can contain `audio tracks`, `video tracks`, `subtitle tracks`, `alternate camera angles`, and more.
 
 To find subtitles, we need to use the `availableMediaCharacteristicsWithMediaSelectionOptions` property of `AVAsset`.
 
@@ -35798,7 +35785,7 @@ To find subtitles, we need to use the `availableMediaCharacteristicsWithMediaSel
 @property (nonatomic, readonly) NSArray<AVMediaCharacteristic> *availableMediaCharacteristicsWithMediaSelectionOptions NS_AVAILABLE(10_8, 5_0);
 ```
 
-This property returns an array of `strings` that represent the media characteristics of the available options stored in the asset. In fact, the string values contained in the array are as follows:
+This property returns an array of `strings` that represent the media characteristics of the available options stored in the asset. In fact, the array's string values look like this:
 
 * AVMediaCharacteristicVisual — video
 * AVMediaCharacteristicAudible — audio
@@ -35860,7 +35847,7 @@ The route selection button is only shown when AirPlay is available and a Wi-Fi n
 
 ## Summary
 
-This chapter covered how to use `AVPlayer` and `AVPlayerItem`, observing playback progress callbacks, extracting subtitles, and so on.
+This chapter covered how to use `AVPlayer` and `AVPlayerItem`, observing playback progress callbacks, extracting subtitles, and more.
 
 [Refer to the detailed demo](https://github.com/sunyazhou13/Learning-AV-Foundation-Demos)
 
@@ -36307,7 +36294,7 @@ The first post of the 2018 new year. Let me sort out the `Category` of `AVAudioS
 
 Because of the special nature of the `iOS` system, all `Apps` share a single `AVAudioSession`, so this session is a singleton object. (`macOS` supports playing multiple audio files simultaneously.)
 
-When things like `plugging/unplugging headphones`, `incoming calls`, `invoking siri`, and so on happen, the audio session is interrupted by system events, and you'll see behaviors like the following:
+When things like `plugging/unplugging headphones`, `incoming calls`, or `invoking siri` happen, the audio session is interrupted by system events, and you'll see behaviors like the following:
 
 * Should we record or play?
 * What should happen when the system mute switch is toggled?
@@ -36635,7 +36622,7 @@ But on `iOS9` and below, you can only adjust on the `Category`. In essence it's 
 
 Everything above — `Category`, `Option`, and `Mode` — describes behavior when your app is the playback owner. But suppose something is currently playing and a call suddenly comes in, the alarm goes off, or the user launches another app that affects playback through the methods above — how should our app behave? The most common approach is to pause first, then resume when playback is restored. So how does our app sense this interruption and know when to resume?
 
-`AVAudioSession` provides various `Notifications` for such situations. Incoming calls, alarms, and so on are all categorized as general interruptions.
+`AVAudioSession` provides various `Notifications` for such situations. Incoming calls, alarms, and the like are all categorized as general interruptions.
 
 They are reported via `AVAudioSessionInterruptionNotification`. The `userInfo` returned in the callback mainly contains two keys:
 
@@ -36688,7 +36675,7 @@ Register for `AVAudioSessionRouteChangeNotification` in `NSNotificationCenter`. 
 
 # Summary
 
-`AVAudioSession` builds the context for an audio usage lifecycle. Whether the current state supports recording, what impact it has on other Apps, whether it responds to the system mute switch, how to detect incoming calls — all of these can be implemented through it. What's especially important is that `AVAudioSession` works not only with `AVAudioPlyaer`/`AVAudioRecorder` in `AVFoundation`, but other recording/playback tools such as `AudioUnit` and `AudioQueueService` also need it to provide the context for recording, muting, and so on.
+`AVAudioSession` builds the context for an audio usage lifecycle. Whether the current state supports recording, what impact it has on other Apps, whether it responds to the system mute switch, how to detect incoming calls — all of these can be implemented through it. What's especially important is that `AVAudioSession` works not only with `AVAudioPlyaer`/`AVAudioRecorder` in `AVFoundation`, but other recording/playback tools such as `AudioUnit` and `AudioQueueService` also need it to provide the context for recording, muting, and the like.
 
 
 [Reference](https://www.jianshu.com/p/3e0a399380df)  
@@ -36720,7 +36707,7 @@ Another year has passed, and I have to hand in my year-end summary on schedule a
 
 ## Looking Back at 2017
 
-The key events of this year are mainly as follows:
+Here are the key events of this year:
 
 * Technology
 * Buying an apartment
@@ -36981,7 +36968,7 @@ I got screwed by rule `4`. After paying the down payment, saying I was penniless
 
 I've gone back to pre-liberation days. What more do they want from me?
 
-At this point, I think a country where even the most basic housing for ordinary people is a problem is no longer a good country.
+By this point, I think a country where even the most basic housing for ordinary people is a problem is no longer a good country.
 
 > __Note: After the bank disburses the loan, be sure to go to the sales office and ask for the invoices. Only the down-payment invoice + the balance invoice = the property title. If either of the two invoices is missing, you may not get the title deed. The annoying part is that the salespeople at the office don't tell us owners about this. (Updated 2018/02/28)__
 
@@ -37028,7 +37015,7 @@ After such complicated procedures, I finally managed to buy an apartment. Thinki
 
 If you have any questions about my house-buying experience, please leave a comment at the bottom — I'll answer them one by one.
 
-That's the end of the house-buying story. I believe my future neighbors are no ordinary people — they must have gone through at least part of what I did: income, status, and so on. Because those who can afford a place in the Aida plot are either rich or influential. I hope my experience and house-buying tips can serve as a reference so you can avoid the detours.
+That's the end of the house-buying story. I believe my future neighbors are no ordinary people — they must have gone through at least part of what I did: income, status, all of it. Because those who can afford a place in the Aida plot are either rich or influential. I hope my experience and house-buying tips can serve as a reference so you can avoid the detours.
 
 ---
 
@@ -37399,7 +37386,7 @@ I haven't updated my blog for over a month — I've been way too busy. This post
 
 ## Opening
 
-Since I'm currently developing a [short video](https://github.com/ksvc/KSYMediaEditorKit_iOS) SDK aimed mostly at beginner developers, in order to let beginners understand the SDK's code and usage at the lowest cost, we have to write code in the way that's easiest for beginners to understand — for example, the most basic `MVC` pattern and the most straightforward `Objective-C` (honestly, I'm sick of OC, this super-long, painful-to-look-at programming language — I've long wanted to give Swift a try). So both the technical choices and the code style are tailored to the lowest comprehension level of beginners. But sometimes you inevitably have to compromise between *beginner-friendliness* and *advanced implementation of features*. Recently I ran into a problem in development, as follows:
+Since I'm currently developing a [short video](https://github.com/ksvc/KSYMediaEditorKit_iOS) SDK aimed mostly at beginner developers, in order to let beginners understand the SDK's code and usage at the lowest cost, we have to write code in the way that's easiest for beginners to understand — for example, the most basic `MVC` pattern and the most straightforward `Objective-C` (honestly, I'm sick of OC, this super-long, painful-to-look-at programming language — I've long wanted to give Swift a try). So both the technical choices and the code style are tailored to the lowest comprehension level of beginners. But sometimes you inevitably have to compromise between *beginner-friendliness* and *advanced implementation of features*. Recently I ran into a problem in development:
 
 > The PM has a requirement: within one screen, freely switch the recording view across multiple cells, and allow tapping to cancel at will. In addition, for a recorded video: if the cell is not selected, show the cover image; if it's selected, continue previewing; a cell that has no recorded video and is not previewing should show an add button.
 
@@ -37432,7 +37419,7 @@ The way we implement the recording view is placing it on a subview of the cell. 
 #### Problem 4
 
 The problem of cell selection and deselection. Have you noticed that if the view on the currently recording cell is selected, there's a red border indicating it's currently in focus?
-Then what about when recording finishes? Don't you need to reload the cell again to tell it who's selected and who's deselected? If the tapped cell is the same one, you also need a toggle operation. If it's currently previewing, selecting it again means stopping the preview and showing the plus button or cover image. As you think it through, you realize this thing is a state machine. You must carefully design the model so that its parameters are rich enough to control each cell's current state: selected, deselected, previewing, not previewing, recording, not recording, recorded, stopped recording... The more I thought, the more complicated it got, so I organized a state machine table as follows:
+Then what about when recording finishes? Don't you need to reload the cell again to tell it who's selected and who's deselected? If the tapped cell is the same one, you also need a toggle operation. If it's currently previewing, selecting it again means stopping the preview and showing the plus button or cover image. As you think it through, you realize this thing is a state machine. You must carefully design the model so that its parameters are rich enough to control each cell's current state: selected, deselected, previewing, not previewing, recording, not recording, recorded, stopped recording... The more I thought, the more complicated it got, so I put together a state machine table:
 
 
 | Cell Status | Current cell display | Other cells display | Tap current | Tap other selected |
@@ -38107,7 +38094,7 @@ GPU bound:
 Basically, we control the `GPU` through `OpenGL`, but there needs to be a bridge from `bitmap` to `Texture`, and `Core Animation` happens to play that role:  
 `Core Animation` wraps the `OpenGL` `api`. When the `layer` we want to render already has `bitmap` content — which is generally a `CGImageRef` — `CoreAnimation` creates an `OpenGL` `Texture` and binds the `CGImageRef (bitmap)` to that `Texture`, identified by a `TextureID`.  
 Once this correspondence is established, the remaining task is how the `GPU` renders the `Texture` to the screen.  
-The `GPU`'s general working model is as follows:
+Here's the `GPU`'s general working model:
 
 ![](/assets/images/20171016UIViewRendering/GPUWorkflow.avif)
 
@@ -38134,7 +38121,7 @@ The bottleneck between the two is basically the second one. Rendering `Texture`s
 If `view`s don't overlap, the `GPU` only needs to do ordinary rendering.  
 If multiple `view`s overlap, the `GPU` needs to do `blending`.  
 
-Suppose two `view`s have the same size and one is stacked on top of the other, the calculation formula is as follows:
+Suppose two `view`s have the same size and one is stacked on top of the other. The formula is:
 
 `R` = `S`+`D`*(`1`-`Sa`)  
 
@@ -38312,7 +38299,7 @@ https://api.development.devicecheck.apple.com/v1/query_two_bits
 
 ```
 
-The JSON definition is as follows:
+Here's the JSON definition:
 
 | Field Key | Type | Description | Required |   
 |:------:|:------:| :------:| :------:| 
@@ -38340,7 +38327,7 @@ curl -i --verbose -H "Authorization: Bearer <GeneratedJWT>" \
 https://api.development.devicecheck.apple.com/v1/update_two_bits 
 ```
 
-The JSON definition is as follows:
+Here's the JSON definition:
 
 | Field Key | Type | Description | Required |   
 |:------:|:------:| :------:| :------:| 
@@ -38822,7 +38809,7 @@ When `ARWorldTrackingConfiguration` computes the camera's position in the 3D wor
 
 `ARCamera` is only responsible for capturing images; it doesn't participate in data processing. It's one part of the 3D scene. Every 3D Scene has a Camera, and this Camera determines the field of view in which we see objects.
 
-The relationship among the three is as follows:
+Here's the relationship among the three:
 
 ![](/assets/images/20170830ARKit/RelationshipARFrame.avif)
 
@@ -39583,7 +39570,7 @@ typedef void(^CompletionHandler)(BOOL complete);
 For the `.m` file, please refer to the source code — there's a lot of it, so I won't go into detail here.
 
 Used when the block completes.
-The media formats currently supported for reading metadata are as follows:
+Here are the media formats currently supported for reading metadata:
 
 * m4a
 * mov
@@ -39627,7 +39614,7 @@ Looking at the code above, you've probably guessed it — this is exactly the re
 There's a lot here, and some values may be missing, so please do your own checking.
 
 ### MetadataConverter
-This protocol exists to support unified parsing of all multimedia files. For example, mp3 and mp4 are different file formats — although they share many of the same keys, their data structures are definitely different. This requires a unified protocol: for instance, given a URL, return a model. To solve the problem of uneven key-value layouts, this protocol was created.
+This protocol exists to support unified parsing of all multimedia files. For example, mp3 and mp4 are different file formats — although they share many of the same keys, their data structures are definitely different. This requires a unified protocol: for instance, given a URL, return a model. To deal with uneven key-value layouts, this protocol was created.
 
 ``` objc
 @protocol zh <NSObject>
@@ -39874,7 +39861,7 @@ The standard genres used by digital audio originally came from MP3. The ID3 spec
 ![](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif)
 
 
-Although iTunes uses the predefined genres from the ID3 set, it defines its own genre sets for TV, movies, audiobooks, etc. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
+Although iTunes uses the predefined genres from the ID3 set, it defines its own genre sets for TV, movies, and audiobooks. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
 
 The example code already includes these genres, so I won't elaborate further — please refer to the demo.
 
@@ -40069,7 +40056,7 @@ As in the following code, if the app uses the same string everywhere, efficiency
     });
 ```
 
-> Honestly speaking, in a project it's unavoidable to have file uploads/downloads or time-consuming tasks. Making everything one queue obviously doesn't fit the business requirements. If you want to keep queues with a single identifier as much as possible, you can only do it based on business categories. It's worth trying when you get the chance
+> Honestly speaking, in a project it's unavoidable to have file uploads/downloads or time-consuming tasks. Making everything one queue clearly doesn't fit the business requirements. If you want to keep queues with a single identifier as much as possible, you can only do it based on business categories. It's worth trying when you get the chance
 
 
 End
@@ -40241,7 +40228,7 @@ Open `private_key.pem` and replace the $PRIVATE_KEY above with the content of pr
 
 ## Step 3: Android Implementation
 
-Use Java's Cipher class to implement the encryption/decryption class. The code is as follows:
+Use Java's Cipher class to implement the encryption/decryption class. Here's the code:
 
 ``` java
 import java.io.ByteArrayInputStream;
@@ -40350,7 +40337,7 @@ Open the `rsa_public_key.pem` file and replace `RSA_PUBLICE` in the code above w
 
 ## Step 4: iOS Implementation
 
-iOS doesn't provide a direct API for RSA encryption. Most approaches found online also rely on handling X.509 certificates. However, X.509 certificates are signed — when the `openssl_pkey_get_private` method in PHP obtains the key, the signature must be passed as the second parameter, and implementing X.509 certificate encryption/decryption on Android is not easy either. Here, we take advantage of iOS's compatibility with C programs and use the openssl API to implement RSA encryption and decryption. The code is as follows:
+iOS doesn't provide a direct API for RSA encryption. Most approaches found online also rely on handling X.509 certificates. However, X.509 certificates are signed — when the `openssl_pkey_get_private` method in PHP obtains the key, the signature must be passed as the second parameter, and implementing X.509 certificate encryption/decryption on Android is not easy either. Here, we take advantage of iOS's compatibility with C programs and use the openssl API to implement RSA encryption and decryption. Here's the code:
 
 CRSA.h code
 
@@ -40978,7 +40965,7 @@ Published At: 2017-06-16 10:11:19 +0000
 
 
 # Preface
-This chapter covers `AVAsset` metadata (which can be simply understood as the model information of an audio format such as mp3: title: xxxx, artist: Andy Lau, album: Love You for Ten Thousand Years... and the sources of such data). In this sense, the field information is a property of `AVAsset`. `AV Foundation` handles the metadata of various audio formats through the `AVAsset` wrapper, __such as extracting the cover artwork from an mp3 file__. The specific contents of this chapter are as follows:
+This chapter covers `AVAsset` metadata (which can be simply understood as the model information of an audio format such as mp3: title: xxxx, artist: Andy Lau, album: Love You for Ten Thousand Years... and the sources of such data). In this sense, the field information is a property of `AVAsset`. `AV Foundation` handles the metadata of various audio formats through the `AVAsset` wrapper, __such as extracting the cover artwork from an mp3 file__. Here's what this chapter covers:
 
 ### __Understanding Assets__
 ### __Creating Assets__
@@ -41030,14 +41017,14 @@ This means that whether you're dealing with `Quick Time` movies, `MPEG-4` video,
 
 ![](/assets/images/20170616LearningAVFoundationAVAssetBasic/AVAssetTrack.avif)
 
-_**`AVAsset.tracks`**_ is as follows
+Here's _**`AVAsset.tracks`**_:
 
 ``` objc 
 @property (nonatomic, readonly) NSArray<AVAssetTrack *> *tracks;
 
 ```
 
-Asset tracks can be accessed through the `tracks` property. This property returns an NSArray whose elements are all the tracks contained in the asset. In addition, `AVAsset` can also find the corresponding track by identifier, media type, media characteristics, etc. This makes it easy to retrieve the set of tracks we need in more advanced processing later.
+Asset tracks can be accessed through the `tracks` property. This property returns an NSArray whose elements are all the tracks contained in the asset. In addition, `AVAsset` can also find the corresponding track by identifier, media type, or media characteristics. This makes it easy to retrieve the set of tracks we need in more advanced processing later.
 
 
 
@@ -41276,7 +41263,7 @@ Although there are many media formats, the ones we mainly encounter in the Apple
 
 3. __MP3__
 
-	`MP3` files differ significantly from `MPEG-4 (.mp4)` and `QuickTime (.mov)`: `MP3` doesn't use a container format; it uses __encoded audio data__, and the beginning of the file usually contains an optional block of metadata structures. `mp3` files use a format called ID3v2 to store descriptive information about the audio content, including artist, performer, album, music genre, and so on.
+	`MP3` files differ significantly from `MPEG-4 (.mp4)` and `QuickTime (.mov)`: `MP3` doesn't use a container format; it uses __encoded audio data__, and the beginning of the file usually contains an optional block of metadata structures. `mp3` files use a format called ID3v2 to store descriptive information about the audio content, including the artist, performer, album, and genre.
 	`ID3` data is quite simple. The first 10 bytes of an `mp3` file carry the embedded metadata; those 10 bytes define the header of the `ID3` block. The first three of the 10 bytes are always '49 44 33' (ID3), indicating an `ID3v2 tag`; the next two bytes define the major version — `2`, `3`, `4` — and the revision number. The remaining bytes define a set of flags and the size of the ID3 block.
 	![](/assets/images/20170616LearningAVFoundationAVAssetBasic/ID3Header.avif)
 	*ID3 header*
@@ -41497,7 +41484,7 @@ ivec2, ivec3, ivec4 // Vectors containing 2/3/4 integers (integer type, the 'i' 
 bvec2, bvec3, bvec4 // Vectors containing 2/3/4 booleans (bool, self-explanatory)
 ```
 
-The above are GLSL data types. Simply put, `vec+number` represents an array with that many elements (they're all between vec2~vec4; I've never seen vec5 or above, or anything below vec2 — this probably represents the number of coordinate dimensions). The default element type is float; the `i` prefix means `integer`, and `b` means `bool`.
+Those are the GLSL data types. Simply put, `vec+number` represents an array with that many elements (they're all between vec2~vec4; I've never seen vec5 or above, or anything below vec2 — this probably represents the number of coordinate dimensions). The default element type is float; the `i` prefix means `integer`, and `b` means `bool`.
 
 ### How to declare and use vec?
 
@@ -42107,7 +42094,7 @@ Published At: 2017-04-20 16:35:42 +0000
 
 ## Preface
 
-Having seen countless times how people always create files using a `timestamp + arc4random()`, I felt deeply frustrated. Doesn't the operating system provide a relevant function? So I found the following code to solve the problem of filename conflicts when creating files.
+Having seen countless times how people always create files using a `timestamp + arc4random()`, I felt deeply frustrated. Doesn't the operating system provide a relevant function? So I found the following code to deal with filename conflicts when creating files.
 
 
 ``` objc
@@ -42286,7 +42273,7 @@ Refer to [this great article](https://github.com/ChenYilong/iOS10AdaptationTips)
 	<string>用于保存拍摄完成的视频内容到相册,及选择相册内视频上传</string> 
 
 ```
-The above are commonly used texts that have passed App Store review
+These are commonly used texts that have passed App Store review
 
 Below are privacy description reminders for convenient debugging
 
@@ -42438,7 +42425,7 @@ Delegate methods of `AVAudioRecorder`:
 How to create an `AVAudioRecorder`
 --
 
-The parameters required to create an `AVAudioRecorder` object are as follows:
+Here are the parameters required to create an `AVAudioRecorder` object:
 
 * The path URL on the local disk where the audio stream is written during recording
 * `settings` recording configuration: a dictionary of key-value parameters such as sample rate, audio format, number of channels, etc.
@@ -42852,11 +42839,11 @@ Here we need to override the `formattedCurrentTime` getter to obtain a time form
     return [NSString stringWithFormat:format, hours, minutes, seconds];
 }
 ```
-The above roughly covers the process of wrapping `BDRecorder`.
+That roughly covers the process of wrapping `BDRecorder`.
 
 Below is the UI setup for `ViewController`. After setting up the time format, we need to create a timer in `ViewController` to update the recording time on the UI, because `self.recorder.currentTime` is a read-only property and provides no setter, so we can't observe the recorder's property changes via KVO.
 
-The code is as follows:
+Here's the code:
 
 ``` objc
 //
@@ -43736,7 +43723,7 @@ Creating it requires an `NSURL` representing the path of the file to be played. 
 ```
 
 `numberOfLoops` = -1; means the song loops infinitely. Other constants represent the number of loops.     
-`enableRate` indicates whether speed control is enabled, such as 0.5x, 1.0x, 2.0x, etc. 1.0 means normal speed
+`enableRate` indicates whether speed control is enabled, such as 0.5x, 1.0x, or 2.0x. 1.0 means normal speed
 
 Here let me talk about `[audioPlayer prepareToPlay]`
 __Calling this function is to obtain the required audio hardware and preload the buffer of the `Audio Queue`.__ Of course, you can skip this method and call `[audioPlayer play]` directly, but __calling the `play` method also implicitly activates it__. Calling `prepareToPlay` is to reduce the latency between the preset loading when creating the player and hearing the sound output.
@@ -43770,7 +43757,7 @@ __Calling this function is to obtain the required audio hardware and preload the
 ```
 
 > Call the code that creates the player in `initWithNibName` or `awakeFromNib`  
-`[self setupNotifications];` will be explained later  
+I'll explain `[self setupNotifications];` later  
 
 
 First, let me add some common method wrappers, such as __play, pause, stop__
@@ -43862,7 +43849,7 @@ If you need to continuously refresh the playback progress bar on the lock screen
 
 Below we'll introduce  
 `[self setupNotifications];` which registers observers to pause music playback when the audio is unexpectedly interrupted or the headphones are unplugged
-The implementation code is as follows
+Here's the implementation code:
 
 ``` objc 
 /**
@@ -44145,7 +44132,7 @@ sets up Simplified Chinese speech. A full list of supported speech voices will b
 
 
 
-The delegate methods of `AVSpeechSynthesizer` are as follows — mainly for monitoring speech playback status:
+The delegate methods of `AVSpeechSynthesizer` are listed below — they mainly monitor speech playback status:
 
 
 ``` objc
@@ -44605,7 +44592,7 @@ There's an article that describes the development process, so I won't repeat it 
 
 
 
-*The core code is as follows*, using the `AVCaptureMetadataOutputObjectsDelegate` delegate:
+*Here's the core code*, using the `AVCaptureMetadataOutputObjectsDelegate` delegate:
 
 ```swift  
 
@@ -45257,7 +45244,7 @@ Implement the following code in the `webview`'s `WebFrameLoadDelegate` delegate 
 ```
 
 
-The above code is for `macOS` development.
+Note: the code above is for `macOS` development.
 
 
 
@@ -45356,7 +45343,7 @@ Harbin has something famous that seems to be called red sausage, but if you're n
 This is the place in the photo below.
 ![Markdown](http://p1.bqimg.com/584350/b4c23a2cdd0e057b.avif)
 
-From now on, don't ask anyone where to buy the best red sausage. The above are the most authentic places to buy red sausage.
+From now on, don't ask anyone where to buy the best red sausage. The places listed above are the most authentic.
 
 Going Home
 --
@@ -45372,7 +45359,7 @@ Published At: 2017-01-18 13:44:57 +0000
 
 > I've been working on iOS development for a long time. In the past, I used my brain to memorize technical articles and the code of technical implementations. But when a person's brain exceeds a certain storage limit, stack overflow occurs (actually, I'm just not that smart). Later, I gradually started to remember which blog was written by whom, or the code of how a technique was implemented... But then I found that not only was the stack overflowing, the heap could barely hold the vast number of iOS technical articles anymore... Sigh. So I kept all the classic article bookmarks and browser URLs in my Chrome. Now I want to organize them and put them in my blog, to make it easy to look up the code of a certain technical implementation (in fact, even my former intern colleagues at Baidu Cloud were amazed at how I could store a certain technique in such detail). OK, let's start the iOS knowledge point technical navigation.
 
-The iOS technical categories are as follows:
+Here are the iOS technical categories:
 
 * Audio
 * Camera & Photos
@@ -45428,7 +45415,7 @@ __[A Library Covering All iOS Animation Effects](https://github.com/sunyazhou13/
 __[pop](https://github.com/facebook/pop)__
 
 > To learn animation, the most reliable way is to start with the animation posts of [骑滔(Kitten)](http://kittenyang.com/)  
-> The above are general animation posts, 2 of which are from Kitten  
+> Those are the general animation posts, 2 of which are from Kitten  
 > Continually updated
 
 
@@ -45682,7 +45669,7 @@ Published At: 2017-01-13 11:18:07 +0000
 
 # UIViewController Lifecycle Methods
 
-In Objective-C, the lifecycle methods of `UIViewController` cover the entire process of a view controller from creation to destruction. The following is a comprehensive list of these methods, including when they are called and some details:
+In Objective-C, the lifecycle methods of `UIViewController` cover the entire process of a view controller from creation to destruction. Here's a comprehensive list of these methods, including when they're called and some details:
 
 1. **Initialization and View Loading**
    - `initWithNibName:bundle:`: Initializes the view controller with a nib file.
@@ -45727,7 +45714,7 @@ These methods provide rich control points for the view controller lifecycle, all
 
 ### Example Code for UIViewController
 
-The following is some example code showing how to implement `UIViewController` lifecycle methods in Objective-C:
+Here's some example code showing how to implement `UIViewController` lifecycle methods in Objective-C:
 
 ```objc
 // ViewController.h

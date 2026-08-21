@@ -48,7 +48,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 
-</pre></table></code></div></div><p>This method first confirms that the received notification is the significant time change notification we care about. Then it gets the current date and computes yesterday’s date. By comparing the two dates, we can determine whether midnight has been crossed. If so, we can perform any operations needed at the start of a new day, such as data backup, refreshing the user interface, and so on.</p><p>The official comment for this notification is as follows:</p><pre><code class="language-txt">A notification that posts when there is a significant change in time, for example, change to a new day (midnight), carrier time update, and change to or from daylight savings time.
+</pre></table></code></div></div><p>This method first confirms that the received notification is the significant time change notification we care about. Then it gets the current date and computes yesterday’s date. By comparing the two dates, we can determine whether midnight has been crossed. If so, we can perform any operations needed at the start of a new day, such as data backup or refreshing the user interface.</p><p>Here’s the official comment for this notification:</p><pre><code class="language-txt">A notification that posts when there is a significant change in time, for example, change to a new day (midnight), carrier time update, and change to or from daylight savings time.
 当时间发生重大变化时发布的通知，例如，更改为新的一天（午夜）、运营商时间更新，以及更改为夏令时。
 
 This notification does not contain a userInfo  dictionary.

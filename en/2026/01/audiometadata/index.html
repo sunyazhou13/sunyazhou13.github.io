@@ -4,7 +4,7 @@
 </pre><td class="rouge-code"><pre><span class="n">NSString</span> <span class="o">*</span><span class="n">filePath</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSBundle</span> <span class="nf">mainBundle</span><span class="p">]</span> <span class="nf">pathForResource</span><span class="p">:</span><span class="s">@"迈腾进行曲_整曲"</span> <span class="nf">ofType</span><span class="p">:</span><span class="s">@"m4a"</span><span class="p">];</span>
 <span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">[</span><span class="n">MTTagLibHelper</span> <span class="nf">readAudioTag</span><span class="p">:</span><span class="n">filePath</span><span class="p">];</span>
 <span class="p">[</span><span class="n">self</span> <span class="nf">printDic</span><span class="p">:</span><span class="n">metadata</span><span class="p">];</span>
-</pre></table></code></div></div><p>As follows:</p><div class="language-sh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></table></code></div></div><p>Here’s the output:</p><div class="language-sh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -340,7 +340,7 @@ NSLog(@"声道数: %@", tags[MTTLMetadataChannels]);       // 如: 2
 
 <span class="n">NS_ASSUME_NONNULL_END</span>
 
-</pre></table></code></div></div><p>The .m file is as follows:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></table></code></div></div><p>Here’s the .m file:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4

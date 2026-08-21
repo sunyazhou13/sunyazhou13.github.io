@@ -144,7 +144,7 @@
     <span class="p">}</span>
     <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></table></code></div></div><p>Both methods ultimately get the relevant protocols via isa-&gt;data()-&gt;protocols, then check whether the protocol exists.<br /> The code is as follows:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></table></code></div></div><p>Both methods ultimately get the relevant protocols via isa-&gt;data()-&gt;protocols, then check whether the protocol exists.<br /> Here’s the code:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
