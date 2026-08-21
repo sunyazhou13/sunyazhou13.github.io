@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
+![swiftuilogo](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
 
 # 前言
 

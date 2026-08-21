@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
+![Swift UI](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
 
 # 前言

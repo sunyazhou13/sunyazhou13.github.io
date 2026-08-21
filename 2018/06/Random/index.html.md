@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20180601Random/SwiftRandomNumbers.avif)
+![Swift Random Numbers](/assets/images/20180601Random/SwiftRandomNumbers.avif)
 
 # 前言
 

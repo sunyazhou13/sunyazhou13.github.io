@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20211231FinalSummary/2021F1.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F1.avif)
 
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="2021-7-7 去齐齐哈尔扎龙自然保护区的路上被追尾后,修复完的状态">新一代农民工的至暗时刻</button>
 
@@ -52,7 +52,7 @@ typora-root-url: ..
 后疫情时代的挽歌依然不停地持续发酵,我的生活也随着疫情的波动起起伏伏从未稳定.回家后的我变得沉默寡言,对技术的热爱从未因环境的变化而衰减.
 
 
-![](/assets/images/20211231FinalSummary/2021F2.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F2.avif)
 
 为了应对疫情,国家免费接种疫苗,截止本文撰写时间截止,我已经全部完成了3针的疫苗接种.保护了自身和家人的安全.
 
@@ -60,33 +60,33 @@ typora-root-url: ..
 
 今年最开心的事莫过于拿到新房的房本
 
-![](/assets/images/20211231FinalSummary/2021F3.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F3.avif)
 
 
 
 下班后衣服一扔沙发开始做晚饭, 我没想到厨房是我度过时光最多的地方.
 
-![](/assets/images/20211231FinalSummary/2021F5.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F5.avif)
 
 我搞的跟炼金术师一样,添油加醋,油温,烹饪.
 
-![](/assets/images/20211231FinalSummary/2021F4.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F4.avif)
 
 吃完晚饭我会去家门口哈西站广场遛弯,思考一下人生.
 
-![](/assets/images/20211231FinalSummary/2021F9.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F9.avif)
 
 至于烹饪的事情还是挺佩服大学李月辉老师,我即便如何尝试也未曾学会摆盘儿,每次都看到老师逢年过节下厨,最后朋友圈share一下,高端操作.以后有机会我当面请教请教.
 
 7月的时候去了一趟齐齐哈尔扎龙自然保护区,看一看我女朋友家亲戚的别墅.
 
-![](/assets/images/20211231FinalSummary/2021F6.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F6.avif)
 
 别墅是好呀,菜园子成了点缀别墅的点睛之笔.
 
 重点是看仙鹤哈
 
-![](/assets/images/20211231FinalSummary/2021F10.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F10.avif)
 
 我分享一下大概 路线和路途方便兄弟们去自驾
 
@@ -123,7 +123,7 @@ typora-root-url: ..
 
 为了感受一下大家经常讨论的公考我做了一次尝试、结果可想而知这东西需要经常的锻炼、不是一朝一夕就能行的.但是收获很多, 例如:申论中针对社会现象的描述以及给出相应合理可被公众所接受且务实可行的方案. 虽然我们有时候站在一个老百姓的角度考虑问题可以肆无忌惮,但是站在一个公务人员的角度考虑问题需要遵守`永远为人民服务`为第一原则,阐述和写出可行性措施和最优解.并且要求公务人员的文字书写能力,逻辑组织能力都是很大的挑战.几乎可以说`千里挑一`.我们生活中所看到的官方通知,或者其它类似的文本消息.这些都是需要经过专业的训练和语言组织能力训练斟酌N遍.review N遍后 第一时间发出的.所以我们看到的时候才挑不出任何问题.那大家有没有想过谁来撰写这些内容呢！是公务科员类的人员, 大家虽然觉得是动动嘴就搞定的事,其实不知道的是为了动动嘴付出了多少努力.就训练写一篇声明稿件 我反复练习10+次,也依然不能完美写好!(可能是我不擅长干文职类的工作). 说真的自从高中高考毕业到我考试答申论作文,我已经十几年没再写过1200字以上的作文了.至于章法、文字功底、写作手法早已经随着互联网的发展交给百度去完成了. 不过考后我发现我对自己的申论总体来说还是很满意的虽然3类文,但是得了57分已经超出了我对自己的预期了.
 
-![](/assets/images/20211231FinalSummary/2021F7.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F7.avif)
 
 
 ## 关于工作
@@ -132,7 +132,7 @@ typora-root-url: ..
 
 在快手工作的时候申请的专利终于在2021年公示了
 
-![](/assets/images/20211231FinalSummary/2021F8.avif)
+![2021F](/assets/images/20211231FinalSummary/2021F8.avif)
 
 #### 回北京继续打拼
 
@@ -172,7 +172,7 @@ typora-root-url: ..
 
 这一年其实总的来看在工作内容和方向上自己需要有所改变和提升,最重要的是行胜于言,不能每年都墨迹XX要提升结果第二年年终总结还是待提升,要务实去做,实际行动起来才行.要`求真务实,实事求是`.禁止摸鱼
 
-![](/assets/images/20211231FinalSummary/BanTouchFish.avif)
+![Ban Touch Fish](/assets/images/20211231FinalSummary/BanTouchFish.avif)
 
 
 
@@ -185,19 +185,19 @@ typora-root-url: ..
 * Swift核心技术与实践
 * 鸿蒙OS
 
-![](/assets/images/20211231FinalSummary/2021F11iOS.avif)
+![2021F11i OS](/assets/images/20211231FinalSummary/2021F11iOS.avif)
 
 这门课程几乎全是干货,每一个iOS都应该作为科普课程学习.
 
-![](/assets/images/20211231FinalSummary/2021F11Algorithm.avif)
+![2021F11Algorithm](/assets/images/20211231FinalSummary/2021F11Algorithm.avif)
 
 这个数据结构与算法我也强烈建议各位认真学习,数据结构从`表`到`树`再到`图`,最后算法由浅入深.想想算法导论你买了后翻看了几页.
 
-![](/assets/images/20211231FinalSummary/2021F11Swift.avif)
+![2021F11Swift](/assets/images/20211231FinalSummary/2021F11Swift.avif)
 
 swift这是我学习第3遍了,swift5.x之后变动的东西太多了,不得不重新学习一遍,目前学习进度60%以上了.
 
-![](/assets/images/20211231FinalSummary/2021F11HarmonyOS.avif)
+![2021F11Harmony OS](/assets/images/20211231FinalSummary/2021F11HarmonyOS.avif)
 
 这门课程作为国产操作系统的标配,自从华为被美国打压后,国人痛定思痛,从基础科学研发搞起.专攻卡脖子的技术,为了完成我2019年描述的年终总结,2022年这门课程我必须认真学完.
 
@@ -222,7 +222,7 @@ swift这是我学习第3遍了,swift5.x之后变动的东西太多了,不得不�
 
 PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账加上双11,买了人生中第一个像样的游戏机.
 
-![](/assets/images/20211231FinalSummary/2021F12PS5.avif)
+![2021F12PS](/assets/images/20211231FinalSummary/2021F12PS5.avif)
 
 国行版本,港版账号备份可玩港服游戏
 
@@ -285,59 +285,59 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 
 我带大家认识下这些机械部件,以下全部是我的车换过的配件.
 
-![](/assets/images/20211231FinalSummary/2021F13BrakeDisc.avif)
+![2021F13Brake Disc](/assets/images/20211231FinalSummary/2021F13BrakeDisc.avif)
 
 前驱刹车盘 x2
 
-![](/assets/images/20211231FinalSummary/2021F13BrakeBlock.avif)
+![2021F13Brake Block](/assets/images/20211231FinalSummary/2021F13BrakeBlock.avif)
 
 刹车片 x2
 
-![](/assets/images/20211231FinalSummary/2021F13TireUC6.avif)
+![2021F13Tire UC](/assets/images/20211231FinalSummary/2021F13TireUC6.avif)
 
 马牌轮胎 x4
 
 
-![](/assets/images/20211231FinalSummary/2021F13ThrottleValve.avif)
+![2021F13Throttle Valve](/assets/images/20211231FinalSummary/2021F13ThrottleValve.avif)
 
 发动机节气门 
 > 冬天的时候仪表盘报EPC灯闪烁点亮,怠速抖动不稳,经过检测发现节气门信号不可信,冬天节气门里面有冷空气形成的水珠,冷热交替容易造成进气管道有水珠出现,凉车的时候东北温度低容易结冰,造成节气门开合不畅,长年累月造成节气门节气门电机疲劳,其实这玩意我非常想把它拆下来自己维修一下,这个东西1700+rmb.很贵换一个不值得.后来考虑这东西关键可别在路上坏了换个新的吧!
 
-![](/assets/images/20211231FinalSummary/2021F13DynamoBelt.avif)
+![2021F13Dynamo Belt](/assets/images/20211231FinalSummary/2021F13DynamoBelt.avif)
 
 发电机皮带,我看着这个东西要坏,实际拆下来没啥事也让我换新的了,旧的依然放在车上防止路上再出问题的时候有个备件更换,东西没多少钱但却十分重要.
 
-![](/assets/images/20211231FinalSummary/2021F13Oil-waterSeparator.avif)
+![2021F13Oil-water Separator](/assets/images/20211231FinalSummary/2021F13Oil-waterSeparator.avif)
 
 上面这个部件叫油气分离器或者叫油水分离器,发动机会产生高温气体,因为发动机内部有机油,机油产生的蒸汽中有水分子,为了能让机油和水分离开,这个部件就显得十分重要,我更换的时候其实没有坏,只是之前的部件漏油,整的发动机全是油污,我以为发动机漏油了呢结果一看这玩意上边全是油.换了改进型的,减少烧机油的可能.
 
 
-![](/assets/images/20211231FinalSummary/2021F13ValveEGR.avif)
+![2021F13Valve EGR](/assets/images/20211231FinalSummary/2021F13ValveEGR.avif)
 
 这个东西叫碳罐电磁阀,在节气门附近,主要是负责把汽油油箱产生的挥发蒸汽送入到燃烧室燃烧,如果这个东西坏的话最明显的表现就是常通油耗高(当然汽油都挥发了掉了能不费油吗).这个部件也没坏,只是我去4S店也看不出来这个东西有问题,只是换新的后汽油节省了30%.所以换新的零部件是起作用的.
 
-![](/assets/images/20211231FinalSummary/2021F13TimingChain.avif)
+![2021F13Timing Chain](/assets/images/20211231FinalSummary/2021F13TimingChain.avif)
 
 正时链条,我的是EA888 二代,这里只是引用一下图, 这个链条8~10w公里必须换,我很积极的在84000公里的时候直接把它换了,当时正时链条被拉长了很多几乎到了更换它的预设阈值范围,防止提前坏就换了. 这个东西相当于发动机核心的部件了,连链板等相关部件一起换掉2400块.
 
-![](/assets/images/20211231FinalSummary/2021F13PressureInlet.avif)
+![2021F13Pressure Inlet](/assets/images/20211231FinalSummary/2021F13PressureInlet.avif)
 
 发动机最里面有个连接涡轮增压的管道,因为油气分离器漏油导致这个管里面全是油,顺手把它换掉,其实这玩意换不换没啥必要,只是我不太像看到我的发动机全是裸露在外面油乎乎的样子.
 
-![](/assets/images/20211231FinalSummary/2021F13LeadAcidBattery.avif)
+![2021F13Lead Acid Battery](/assets/images/20211231FinalSummary/2021F13LeadAcidBattery.avif)
 
 风帆铅酸蓄电池(好马配好鞍,好车配风帆.),自冬天在路上EPC灯亮起我把车停路边,最后发现节气门信号不可信后一起把汽车电瓶也换了,原来的电瓶应该好多年没换了都鼓包了,我直接换新的了.
 
-![](/assets/images/20211231FinalSummary/2021F13Lights.avif)
+![2021F13Lights](/assets/images/20211231FinalSummary/2021F13Lights.avif)
 
 这是2020年升级的整套氙气大灯.
 
-![](/assets/images/20211231FinalSummary/2021F13SparkPlug.avif)
+![2021F13Spark Plug](/assets/images/20211231FinalSummary/2021F13SparkPlug.avif)
 
 这是2.0T的火花塞,是我自己从某猫上买的,博世的,顺手买了一套棘轮扳手工具箱,自己找个停车场 自己换的. 我非常自豪的说这玩意其实自己动手就可以解决4个火花塞才200不到,原来的火花塞2w公里4s店就建议更换,我的车2w公里后 自己换的新的,旧的拆下来后里面有积碳,我用洁厕灵泡了1天把火花塞清理的干干净净,后续还能对付用.
 
 
-![](/assets/images/20211231FinalSummary/2021F13OilFilter.avif)
+![2021F13Oil Filter](/assets/images/20211231FinalSummary/2021F13OilFilter.avif)
 
 机油滤清器,这玩意网上买才30多(4s店卖100+),赶上某活动自己有车的兄弟们可以多买几个囤着,这个东西是个消耗品,大众车每5000公里保养的时候就换它.这个我买了3个在曼牌旗舰店买的.
 
@@ -351,13 +351,13 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 > 不懂车的小伙伴看好了别搞混,这俩东西不一样
 > 以上俗称3滤芯都可以自己更换,机油滤清器得有专门的工具哈.
 
-![](/assets/images/20211231FinalSummary/2021F13PowerFlex.avif)
+![2021F13Power Flex](/assets/images/20211231FinalSummary/2021F13PowerFlex.avif)
 
 这个东西叫聚氨酯强化衬套,我的车全车如果换下来得7000+.为了尝试这东西到底行不行2020年大年初一赶上同学的单位(一汽大众4s店)休班人少,我自己拿着这两个衬套去4s店自己换的.
 大众现在的车底盘都是通用的配件,几乎所有的零件大部分都可以通用,下面我们来看看这玩意底盘可对应的零件号,以及价格
 
-![](/assets/images/20211231FinalSummary/2021F13MQB1.avif)
-![](/assets/images/20211231FinalSummary/2021F13MQB2.avif)
+![2021F13MQB](/assets/images/20211231FinalSummary/2021F13MQB1.avif)
+![2021F13MQB](/assets/images/20211231FinalSummary/2021F13MQB2.avif)
 
 我换的是后下支臂`PFR85-510`衬套,因为原车的已经老化到不行了,车很松散,开起来感觉车不自然.这玩意如果换的话必须连那两个下支臂一起换. 这一点我不得不批评一下大众,这个底盘设计的扩展性和改装性很差.不过换完后车底盘立马开起来不一样了.底盘很紧很硬,回到了新车状态.
 
@@ -365,19 +365,19 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 
 更换这个衬套最难的是需要压出原来的衬套,最好有专业设备,否则不太好拆卸.我利用修理厂的压力机和一些套筒工具勉强把这玩意拆下来.
 
-![](/assets/images/20211231FinalSummary/2021F13Lining.avif)
+![2021F13Lining](/assets/images/20211231FinalSummary/2021F13Lining.avif)
 
 上边这图的后备箱底部是一个车厢可拆卸内衬板,为啥要换它呢？夏天的时候帮亲戚农村操办喜事拉了一车厢的菜.导致某些液体渗漏到了车后备箱,一股难闻的味道,这东西洗还没法洗,搞的我只能换个新的了.
 
-![](/assets/images/20211231FinalSummary/2021F13ClearstorySwitch.avif)
+![2021F13Clearstory Switch](/assets/images/20211231FinalSummary/2021F13ClearstorySwitch.avif)
 
 天窗开关,这个东西很少有坏的,我的车是行驶一段时间天窗自己打开一会儿并关闭,一开始我以为迈腾是不是有二氧化碳浓度检测,当检测到车内二氧化碳气体过高会自动触发天窗开关把车外空气交换一下避免驾驶者昏迷困倦,结果我把这个事情跟我同学一聊他说大众应该给你点专利费,这个是个通病,开关时间长了触点氧化接触不良.于是更换了一个. 一汽大众你看好了,我申请个专利你看看这专利费是不是交一交.
 
-![](/assets/images/20211231FinalSummary/2021F13ShiftGears.avif)
+![2021F13Shift Gears](/assets/images/20211231FinalSummary/2021F13ShiftGears.avif)
 
 传说中的DSG(单身狗,大傻瓜)档把手球,原来的已经磨包浆了,换个新的.
 
-![](/assets/images/20211231FinalSummary/2021F13MIB682E.avif)
+![2021F13MIB682E](/assets/images/20211231FinalSummary/2021F13MIB682E.avif)
 
 这个mib车机系统, 是我觉得是这个老车上最应该升级的部件,这玩意很贵,连翻标倒车并支持CarPlay功能一共5500+. 老车有个很差劲的地方是 车机系统卡顿,功能单一破旧,对新兴技术跟进慢,这个也不能怪老车毕竟它生产的时候还没有iPhone 5s. 但是扩展性这一块做的很差.如果未来汽车谁能既产硬件又产软件并且能提供一套完整的接入车机方案的话那么这将是一个非常好的创业方向.正常情况这个东西想接入汽车是不行的因为内部是有加密协议的,不通用,我买的这个是破解完的波兰进口.破解完就不需要密码了,直接即插即用.只是有些功能这车功能不支持没法用.我买它的主要目的是有一个好的听音乐的系统并支持carplay.
 
@@ -388,51 +388,51 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 
 最后选择了车机,因为有导航.
 
-![](/assets/images/20211231FinalSummary/2021F13VWlogo.avif)
+![2021F13V Wlogo](/assets/images/20211231FinalSummary/2021F13VWlogo.avif)
 
 光换车机是不行的,必须也连同翻标倒车的摄像头一起换掉,于是也顺手换掉了翻标倒车.这个东西就是封面上那个logo它是大众的独特设计之一,倒车的时候logo会张开伸出一个摄像头,平常我们按动它的时候是开启后备箱.不用担心它会被按坏,它非常结实.
 
-![](/assets/images/20211231FinalSummary/2021F13PressBar.avif)
+![2021F13Press Bar](/assets/images/20211231FinalSummary/2021F13PressBar.avif)
 
 这个是车窗银色镀铬条,专业名称应该叫车窗压条,为啥换呢,我的车原来主驾位置的橡胶老化了,已经无法挡住雨水了,这个是和玻璃窗紧贴在一起的部件,于是就换了.
 
-![](/assets/images/20211231FinalSummary/2021F13AluminumBase.avif)
+![2021F13Aluminum Base](/assets/images/20211231FinalSummary/2021F13AluminumBase.avif)
 
 下支臂铝座支架,前侧底部下支臂和车身接触的地方橡胶老化,然后还不能单独更换胶套,只能一套一起更换,所以直接换了.这就是我说大众的车扩展性不强的主要原因,那个铝座胶套完好就橡胶老化了导致底盘开车的时候方向盘摆动响应程度不够.其实这个最好单独更换聚氨酯强化衬套会好一些,考虑成本 这俩单独更换其实都没有一个聚氨酯强化衬套贵.
 
-![](/assets/images/20211231FinalSummary/2021F13EngineShield.avif)
+![2021F13Engine Shield](/assets/images/20211231FinalSummary/2021F13EngineShield.avif)
 
 发动机下护板,这个东西是保护发动机油底壳的树脂材料,防止磕碰硬物导致发动机受伤.树脂的没有异响,如果是钢制的容易变形后影响底盘稳定性.
 
-![](/assets/images/20211231FinalSummary/2021F13EngineMounting.avif)
+![2021F13Engine Mounting](/assets/images/20211231FinalSummary/2021F13EngineMounting.avif)
 
 发动机连接变速箱的机脚胶,这个东西出现了异响,于是我就更换了新的. 左上角的是连接变速箱和发动机的.
 
-![](/assets/images/20211231FinalSummary/2021F13MudGuard.avif)
+![2021F13Mud Guard](/assets/images/20211231FinalSummary/2021F13MudGuard.avif)
 
 车轮挡泥板,买车的时候已经破的不成样子了,直接换了.
 
-![](/assets/images/20211231FinalSummary/2021F13Studdle.avif)
+![2021F13Studdle](/assets/images/20211231FinalSummary/2021F13Studdle.avif)
 
 后备箱气动支撑杆,这个东西冬天容易失去弹性,有可能和里面使用的油液有关系,不过换了1年后问题依旧,后续也不打算换了就这样了.
 
-![](/assets/images/20211231FinalSummary/2021F13TransmissionOil.avif)
+![2021F13Transmission Oil](/assets/images/20211231FinalSummary/2021F13TransmissionOil.avif)
 
 我的车是要求8万公里更换变速箱油的否则将会失去质保,质保10年16w公里,目前还剩3年质保.
 
-![](/assets/images/20211231FinalSummary/2021F13BrakeOil.avif)
+![2021F13Brake Oil](/assets/images/20211231FinalSummary/2021F13BrakeOil.avif)
 
 刹车油,这个是我冬天发现自己的车刹车刹不住了我去店里检测一下刹车油水分子过多红灯预警.必须更换否则影响安全.
 
-![](/assets/images/20211231FinalSummary/2021F13Antifreeze.avif)
+![2021F13Antifreeze](/assets/images/20211231FinalSummary/2021F13Antifreeze.avif)
 
 防冻液,这个买车的时候没有更换,怕水箱太脏早早更换了,现在还剩半瓶放在车里面呢.
 
-![](/assets/images/20211231FinalSummary/2021F13ShockAbsorbe.avif)
+![2021F13Shock Absorbe](/assets/images/20211231FinalSummary/2021F13ShockAbsorbe.avif)
 
 这车今年夏天走了一些烂路,发现减震器4个全部漏油,全部更换,同时更换了减震弹簧.
 
-![](/assets/images/20211231FinalSummary/2021F13Spring.avif)
+![2021F13Spring](/assets/images/20211231FinalSummary/2021F13Spring.avif)
 
 减震弹簧已经被应力压低了1cm多,一起换掉了避免车不安全.
 
@@ -442,7 +442,7 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 
 ## 总结
 
-![](/assets/images/20211231FinalSummary/final.avif)
+![final](/assets/images/20211231FinalSummary/final.avif)
 
 年终总结很零碎,也没啥技术含量,这一年过得很麻木,学习内容较少,其实我还私下里学习了一遍java发现还是不能形成学习体系并在工作中使用它,争取后续学习完其它框架后做点东西.回家的经历改变了我的看法,也教育了我应该继续扎根在北京继续成为一名`新一代的农民工`,从0~1的努力工作才能好好的生活.
 

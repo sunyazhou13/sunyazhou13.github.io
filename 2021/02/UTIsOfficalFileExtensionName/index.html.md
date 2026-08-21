@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20210221UTIsOfficalFileExtensionName/UTIs.avif)
+![UT Is](/assets/images/20210221UTIsOfficalFileExtensionName/UTIs.avif)
 
 # 前言
 
@@ -423,7 +423,7 @@ CF_ASSUME_NONNULL_END
 
 希望这篇文章帮助哪些需要区分类型的兄弟们.
 
-[官方文档Uniform Type Identifiers Reference](file:///Users/sunyazhou/Downloads/System-Declared%20Uniform%20Type%20Identifiers.htm). 
+[官方文档Uniform Type Identifiers Reference](https://developer.apple.com/documentation/uniformtypeidentifiers/system-declared-uniform-type-identifiers). 
 [如何在macOS上设置打开文件类型 ](https://www.file-extensions.org/article/set-default-app-for-opening-files-with-no-extension-on-mac)
 
-[软件地址]()
+软件地址

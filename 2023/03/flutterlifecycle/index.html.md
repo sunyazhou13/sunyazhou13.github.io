@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20230312FlutterLifeCycle/flutter0.avif)
+![flutter](/assets/images/20230312FlutterLifeCycle/flutter0.avif)
 
 
 # 前言
@@ -108,7 +108,7 @@ class ContentWidgetState extends State<ContentWidget>
 
 ```
 
-![](/assets/images/20230312FlutterLifeCycle/flutter1.avif)
+![flutter](/assets/images/20230312FlutterLifeCycle/flutter1.avif)
 
 打印如下:
 
@@ -132,7 +132,7 @@ flutter: ContentWidgetState的 build被调用
 
 当每次点击就会每次都调用 build
 
-![](/assets/images/20230312FlutterLifeCycle/flutter2.avif)
+![flutter](/assets/images/20230312FlutterLifeCycle/flutter2.avif)
 
 ``` sh
 flutter: ContentWidgetState的 build被调用
@@ -147,7 +147,7 @@ flutter: ContentWidgetState的 build被调用
 
 下面是flutter的生命周期函数图
 
-![](/assets/images/20230312FlutterLifeCycle/flutter3.avif)
+![flutter](/assets/images/20230312FlutterLifeCycle/flutter3.avif)
 
 > 图片引用自[Flutter(七)之有状态的StatefulWidget](https://zhuanlan.zhihu.com/p/83782208),如果有版权问题请联系我.
 

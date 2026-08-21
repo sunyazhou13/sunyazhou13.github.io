@@ -9,7 +9,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220414BranchManage/git.avif)
+![git](/assets/images/20220414BranchManage/git.avif)
 
 # 前言
 
@@ -18,7 +18,7 @@ typora-root-url: ..
 
 ## 一种适合客户端开发的分支管理模型
 
-![](/assets/images/20220414BranchManage/BranchGuide.avif)
+![Branch Guide](/assets/images/20220414BranchManage/BranchGuide.avif)
 
 首先`DEV`代表开发分支  
 首先`RB`代表发版分支

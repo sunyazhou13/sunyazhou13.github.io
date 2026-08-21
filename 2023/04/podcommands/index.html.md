@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20201010PodSpec/cocoapods.avif)
+![cocoapods](/assets/images/20201010PodSpec/cocoapods.avif)
 
 # 前言
 

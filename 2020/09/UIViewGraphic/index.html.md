@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
+![i OS Interview Questions Album Cover](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 # 前言
 
@@ -52,11 +52,11 @@ typora-root-url: ..
 
 下面是[WWDC2018 High Performance Auto Layout](https://developer.apple.com/videos/play/wwdc2018/220/)中对比的iOS12和iOS11下分别使用自动布局的性能对比现场.
 
-![](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutiOS11iOS12Compare.avif)
+![High Performance Auto Layouti OS11i OS12Compare](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutiOS11iOS12Compare.avif)
 
 经过实验得出如下图标结论:
 
-![](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutResult.avif)
+![High Performance Auto Layout Result](/assets/images/20200920UIViewGraphic/HighPerformanceAutoLayoutResult.avif)
 
 iOS12之前，视图嵌套的数量对性能的影响是呈指数级增长的，而iOS12优化之后对性能的影响是线性增长，对性能消耗不大。
 
@@ -133,7 +133,7 @@ Core Animation 是显式动画.因为它既可以直接对其layer属性做动�
 
 ### 8.什么是离屏渲染
 
-![](/assets/images/20200920UIViewGraphic/CoreAnimationPipeline.avif)
+![Core Animation Pipeline](/assets/images/20200920UIViewGraphic/CoreAnimationPipeline.avif)
 
 [iOS离屏渲染的深入研究](https://zhuanlan.zhihu.com/p/72653360)
 

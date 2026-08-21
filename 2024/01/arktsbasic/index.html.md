@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)
+![harmony OS](/assets/images/20240116HarmonyPhoneSendFileTomacOS/harmonyOS.avif)
 
 # 前言
 
@@ -123,7 +123,7 @@ aboutToDisappear(): void {
 ```
 
 生命周期流程如下图所示，下图展示的是被**@Entry装饰的组件（首页）生命周期。  
-![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)  
+![Entry Life Cycle](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)  
 **由此可知, @Component组件的声明周期方法 中间包含了@Entry方法全部生命周期方法调用.**
 
 示例代码演示了一个LifeCycle中 添加一个Child子组件,点击按钮push到新页面LifeCycleDetail
@@ -280,7 +280,7 @@ LiftCycle onPageShow
 app Log: Child aboutToDisappear
 ```
 
-![](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)
+![Entry Life Cycle](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)
 
 [页面和自定义组件生命周期 官方文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-page-custom-components-lifecycle-0000001630265125-V2)
 
@@ -523,14 +523,14 @@ struct LearnDetail {
 
 ```
 
-![](/assets/images/20240119ArkTSBasic/extend_example.avif)
+![extend_example](/assets/images/20240119ArkTSBasic/extend_example.avif)
 
 [参考@Extend官方文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-extend-0000001580345074-V2)
 
 ### @Prop装饰器:父子单向同步
 
 初始化规则图示  
-![](/assets/images/20240119ArkTSBasic/rules.avif)
+![rules](/assets/images/20240119ArkTSBasic/rules.avif)
 
 下面是单向传递示例代码
 
@@ -600,7 +600,7 @@ struct LearnDetailProp1 {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/prop.avif)
+![prop](/assets/images/20240119ArkTSBasic/prop.avif)
 
 [@Prop参考文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-prop-0000001580185150-V2)
 
@@ -627,7 +627,7 @@ struct  LearnDetailLink1 {
 
 效果展示
 
-![](/assets/images/20240119ArkTSBasic/link.avif)
+![link](/assets/images/20240119ArkTSBasic/link.avif)
 
 基于上述@Prop代码完整展示
 
@@ -804,7 +804,7 @@ struct  ProvideConsumeDemo2 {
 
 效果如下:
 
-![](/assets/images/20240119ArkTSBasic/provideconsume.avif)
+![provideconsume](/assets/images/20240119ArkTSBasic/provideconsume.avif)
 
 [@Provide装饰器和@Consume装饰器官网文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-provide-and-consume-0000001580345078-V2)
 
@@ -819,7 +819,7 @@ didMessageChanged () {  //此方法被触发,代表其它地方修改了 @Watch 
 	console.log("监听到消息发生变化:" + this.num1)
 }
 ```
-![](/assets/images/20240119ArkTSBasic/watch.avif)
+![watch](/assets/images/20240119ArkTSBasic/watch.avif)
 
 完整示例代码
 
@@ -893,7 +893,7 @@ struct ForEachDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/ForEach.avif)
+![For Each](/assets/images/20240119ArkTSBasic/ForEach.avif)
 
 这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在Harmonry4.1中*) => {}__
 
@@ -902,10 +902,10 @@ struct ForEachDemo {
 ``` sh
 Use explicit types instead of "any", "unknown" (arkts-no-any-unknown) <ArkTSCheck>
 ```
-![](/assets/images/20240119ArkTSBasic/ForEachError.avif)  
+![For Each Error](/assets/images/20240119ArkTSBasic/ForEachError.avif)  
 
 
-[ForEach:循环渲染](官方文档)
+ForEach:循环渲染（官方文档）
 
 ## 组件通用特性-点击事件
 
@@ -934,7 +934,7 @@ struct UniversalEventDemo {
 
 `ClickEvent `类可以拿到如下各种变量
 
-![](/assets/images/20240119ArkTSBasic/ClickEvent.avif)  
+![Click Event](/assets/images/20240119ArkTSBasic/ClickEvent.avif)  
 
 ## 组件通用特性-触摸事件
 
@@ -971,7 +971,7 @@ struct UniversalEventDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/TouchEvent.avif)  
+![Touch Event](/assets/images/20240119ArkTSBasic/TouchEvent.avif)  
 
 ## 组件通用的尺寸排版学习
 
@@ -1022,7 +1022,7 @@ struct LayoutDemo {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy1.avif) 
+![Layout Study](/assets/images/20240119ArkTSBasic/LayoutStudy1.avif) 
 
 `position`和`markAnchor`,以及`offset`的使用如下.
 
@@ -1078,7 +1078,7 @@ struct LayoutDemo2 {
 }
 ```  
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy2.avif) 
+![Layout Study](/assets/images/20240119ArkTSBasic/LayoutStudy2.avif) 
 
 ``` ts
 //当前 offset
@@ -1097,7 +1097,7 @@ Column({ space: 8}) {
 }
 ```
 
-![](/assets/images/20240119ArkTSBasic/LayoutStudy3.avif) 
+![Layout Study](/assets/images/20240119ArkTSBasic/LayoutStudy3.avif) 
 
 ### 组件的对齐方式
 
@@ -1144,11 +1144,11 @@ struct FlexPage {
 
 下面是Column的对齐方向
 
-![](/assets/images/20240119ArkTSBasic/FlexColumn.avif) 
+![Flex Column](/assets/images/20240119ArkTSBasic/FlexColumn.avif) 
 
 下面是Row的对齐方向
 
-![](/assets/images/20240119ArkTSBasic/FlexRow.avif) 
+![Flex Row](/assets/images/20240119ArkTSBasic/FlexRow.avif) 
 
 
 # 总结

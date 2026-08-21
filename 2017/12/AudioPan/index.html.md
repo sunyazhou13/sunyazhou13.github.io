@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20171219AudioPan/AudioPan.avif)
+![Audio Pan](/assets/images/20171219AudioPan/AudioPan.avif)
 
 
 # 前言
@@ -22,12 +22,12 @@ typora-root-url: ..
 下面是 UI 演示.
 
 
-![](/assets/images/20171219AudioPan/AudioPanDemo.avif)
+![Audio Pan Demo](/assets/images/20171219AudioPan/AudioPanDemo.avif)
 
 
 这里其实修改的类似 `AVAudioPlayer`里面的`pan`值修改
 
-![](/assets/images/20171219AudioPan/PanAudioApi.avif)
+![Pan Audio Api](/assets/images/20171219AudioPan/PanAudioApi.avif)
 
 
 我在以前的文章也有一篇提到过这个[pan 值](https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)
@@ -47,7 +47,7 @@ typora-root-url: ..
 带着这个问题我的同事找到了一个公式 来计算 这个值
 
 
-![](/assets/images/20171219AudioPan/PanAlgorithm.avif)
+![Pan Algorithm](/assets/images/20171219AudioPan/PanAlgorithm.avif)
 
 
 * `pan`就是我们的滑块的`value`

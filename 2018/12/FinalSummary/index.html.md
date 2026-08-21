@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20181231FinalSummary/banner.avif)
+![banner](/assets/images/20181231FinalSummary/banner.avif)
 
 # 前言
 
@@ -17,7 +17,7 @@ typora-root-url: ..
 **仿佛回到一三年,北京站前望着天.**  
 **北漂掘金那刻起,人生已无再少年.**
 
-![](/assets/images/20181231FinalSummary/yingxiongbense.avif)
+![yingxiongbense](/assets/images/20181231FinalSummary/yingxiongbense.avif)
 
 _我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信正义,可是没人相信我..._
 
@@ -66,18 +66,18 @@ __这一年过的像网速一样快,看着年末又到了,我依然得墨守陈�
 
 刚到这家公司不久就赶上了Team Building(团队建设),去杭州 我从未去过杭州,第一站是杭州的海宁
 
-![](/assets/images/20181231FinalSummary/haining.avif)
+![haining](/assets/images/20181231FinalSummary/haining.avif)
 
 > 当年孙中山先生就是在这里下车去钱塘江观潮
 
 西塘,在家乡我习惯了23年的低矮平房,从未见过如下得建筑风格,这种徽系的白墙瓦房有一种中国地方的特色
 
-![](/assets/images/20181231FinalSummary/hangzhou2.avif)
+![hangzhou](/assets/images/20181231FinalSummary/hangzhou2.avif)
 > 真是栏杆拍遍吴钩看了，无人会登临意,休说鲈鱼堪脍尽西风季鹰归未...
 
-![](/assets/images/20181231FinalSummary/hangzhou1.avif)
+![hangzhou](/assets/images/20181231FinalSummary/hangzhou1.avif)
 
-![](/assets/images/20181231FinalSummary/hangzhou3.avif)
+![hangzhou](/assets/images/20181231FinalSummary/hangzhou3.avif)
 
 这里曾经是__伍子胥（公元前559年—公元前484年,大约是春秋末年）__ 兴修的水利工程,我对春秋末年吴王夫差越王勾践的故事记忆犹新,但对吴国的风土人情的认知仅限于上学时候读的__《史记》__内容描述,从未亲自来到这里.虽然我的认知十分肤浅,但看到了江南风情的别具一格还是令我肃然起敬,从北京到杭州的列车上,途径山东泰山,苏州的姑苏城,上海的长江流域.长江三角洲的确不同于我的家乡东北,这里物流车辆远高于在东北的任何高速,从这一点就可以客观的发现江浙一带经济比东北要发达的多.这一路我几乎一夜没睡,各地都在大兴土木搞基建,火车途径每一个城市附近周边都很明显的发现塔吊楼房,正在施工作业.
 
@@ -85,7 +85,7 @@ __这一年过的像网速一样快,看着年末又到了,我依然得墨守陈�
 
 __杭州之旅我路过了钱塘江__
 
-![](/assets/images/20181231FinalSummary/qiantangriver.avif)
+![qiantangriver](/assets/images/20181231FinalSummary/qiantangriver.avif)
 
 这一幕让我不禁的想起初一时候清晨背诵的一首白居易的《钱塘湖春行》
 
@@ -95,7 +95,7 @@ __杭州之旅我路过了钱塘江__
 
 今年晚些时候, 快手征求全公司员工意见,为一部分员工的家乡树立广告牌,我很幸运,成为了其中之一
 
-![](/assets/images/20181231FinalSummary/kwaihometown.avif)
+![kwaihometown](/assets/images/20181231FinalSummary/kwaihometown.avif)
 
 我也从未想过有一天我能登上海伦的京都广告牌,成为快手的形象代言人之一,这要是在百度估计即便升到T8也未曾有如此这般的待遇吧! 真的很感谢快手,__这是一家有人文主义精神和艺术气质的公司.__
 
@@ -108,19 +108,19 @@ __杭州之旅我路过了钱塘江__
 
 首席看台
 
-![](/assets/images/20181231FinalSummary/chinablue2.avif)
+![chinablue](/assets/images/20181231FinalSummary/chinablue2.avif)
 
-![](/assets/images/20181231FinalSummary/chinablue3.avif)
+![chinablue](/assets/images/20181231FinalSummary/chinablue3.avif)
 
 
 我记得第一次听伍佰的歌的时候是2000年左右,那时候我寄人篱下在我舅家东胜村,去双胜去上初中初一,有一次去一个叫镇东的地方全班同学都去听文艺演出,我坐在拖拉机的后车斗上,唱着伍佰的《白鸽》那时候还不知道MP3是什么东西,能听上这首录用磁带已经很满足了
 
-![](/assets/images/20181231FinalSummary/opentheshow.avif)
+![opentheshow](/assets/images/20181231FinalSummary/opentheshow.avif)
 
 
 在伍佰的演唱会上开场的第二首想起的就是这首《白鸽》,唱出我的初中回忆,那个时候很穷,后来才知道还有一首成名曲叫《挪威的森林》.
 
-![](/assets/images/20181231FinalSummary/chinablue1.avif)
+![chinablue](/assets/images/20181231FinalSummary/chinablue1.avif)
 
 当全场一起演唱挪威的森林的时候 那种场合的效果,绝对比KTV好多了.真的是前所未有,老实说 现场的声音算是原声了,这场演唱会真的值得.
 
@@ -132,38 +132,38 @@ __杭州之旅我路过了钱塘江__
 这一年严格意义上来说我的眼睛很疼,每天至少14小时对着显示器,所以我列举了一些今年连看带听的书籍.
 
 《晚清的最后十八年4》  
-![](/assets/images/20181231FinalSummary/wanqing.avif)
+![wanqing](/assets/images/20181231FinalSummary/wanqing.avif)
 
 《曾国藩》   
-![](/assets/images/20181231FinalSummary/zengguofan.avif)  
+![zengguofan](/assets/images/20181231FinalSummary/zengguofan.avif)  
 
 《晚清重臣李鸿章》    
-![](/assets/images/20181231FinalSummary/lepetit.avif)
+![lepetit](/assets/images/20181231FinalSummary/lepetit.avif)
 
 
 《毛泽东传》  
-![](/assets/images/20181231FinalSummary/maozedong.avif)
+![maozedong](/assets/images/20181231FinalSummary/maozedong.avif)
 
 《周总理的最后600天》  
-![](/assets/images/20181231FinalSummary/zhouzongli.avif)
+![zhouzongli](/assets/images/20181231FinalSummary/zhouzongli.avif)
  
 《普京传记》  
-![](/assets/images/20181231FinalSummary/pujing.avif)
+![pujing](/assets/images/20181231FinalSummary/pujing.avif)
 
 《习近平的七年知青岁月》  
-![](/assets/images/20181231FinalSummary/xijinping.avif)
+![xijinping](/assets/images/20181231FinalSummary/xijinping.avif)
 
 《乔布斯传》  
-![](/assets/images/20181231FinalSummary/jobs.avif)
+![jobs](/assets/images/20181231FinalSummary/jobs.avif)
 
 《货币战争1~5部》   
-![](/assets/images/20181231FinalSummary/currencyWars.avif)
+![currency Wars](/assets/images/20181231FinalSummary/currencyWars.avif)
 
 《拿破仑传》  
-![](/assets/images/20181231FinalSummary/Napol%C3%A9onBonaparte.avif)
+![Napoleon Bonaparte](/assets/images/20181231FinalSummary/NapoleonBonaparte.avif)
 
 《李嘉诚传》  
-![](/assets/images/20181231FinalSummary/superlee.avif)
+![superlee](/assets/images/20181231FinalSummary/superlee.avif)
 
 
 #### 晚清的最后十八年 第4部
@@ -174,7 +174,7 @@ __杭州之旅我路过了钱塘江__
 
 如果非要我写出推荐的理由,那我只能拿一张照片说明一下:
 
-![](/assets/images/20181231FinalSummary/Krupp.avif)
+![Krupp](/assets/images/20181231FinalSummary/Krupp.avif)
 
 这是我今年10月份去天津市津南区小镇站 小站练兵园(袁世凯曾经练兵的地方)拍摄的德国克虏伯公司1860左右生产的野炮.
 
@@ -186,27 +186,27 @@ __杭州之旅我路过了钱塘江__
 
 所以为了表达我对曾大人的尊重我送曾大人一副对联:
 
-![](/assets/images/20181231FinalSummary/zengguofan1.avif)
+![zengguofan](/assets/images/20181231FinalSummary/zengguofan1.avif)
 
 __求忠臣必于孝子之门__  
 __凡秀才当以天下为任__
 
 #### 晚清重臣李鸿章
 
-![](/assets/images/20181231FinalSummary/lepetit1.avif)
+![lepetit](/assets/images/20181231FinalSummary/lepetit1.avif)
 
 这位慈祥的老人,改变了中国近代史,被西方人誉为"东方的脾斯麦",中国第一位登上美国时代周刊封面人物,中国历史上第一位欧洲考察的人,第一位... 总计创造 了 47个 中国第一.
 
-![](/assets/images/20181231FinalSummary/lepetit2.avif)
+![lepetit](/assets/images/20181231FinalSummary/lepetit2.avif)
 > 访问香港的李鸿章与香港总督卜力会面，站与李鸿章右侧者为刘学询，1900年7月。
 
-![](/assets/images/20181231FinalSummary/ChineseMinisterLi%20HongzhangAndPrinceBismarck.avif)
+![Chinese Minister Li%20Hongzhang And Prince Bismarck](/assets/images/20181231FinalSummary/ChineseMinisterLi%20HongzhangAndPrinceBismarck.avif)
 
 \- 为了表示对李鸿章的尊重和敬意，俾斯麦的着装极为庄重，穿上了他极少穿的盛装——德皇所赐玉冕、红鹰大十字宝星，手拿大玉，腰挂宝剑。两人见面后，首先互相问候对方身体如何，交流了各自的身心健康问题。
 
 脾斯麦被誉为 德国的铁血宰相,简直跟李鸿章一模一样经历三朝德皇,欧洲动荡,苦战多年终于换来了德国的统一.
 
-![](/assets/images/20181231FinalSummary/Bismarck%2COttoF%C3%BCrst_von_und%20LiHungChang.avif)
+![Bismarck Otto Fuerst Von Und Li Hung Chang](/assets/images/20181231FinalSummary/BismarckOttoFuerstVonUndLiHungChang.avif)
 > 李鸿章与俾斯麦在首相府阳台
 
 我用了这么多篇幅来介绍这位晚清名臣,我为什么这么崇拜这个人?
@@ -235,7 +235,7 @@ __凡秀才当以天下为任__
 我们再来看看今天的我们,我们心目中按照王阳明的《知行合一》大家也都佩服有实力的人吧.  
 如果你觉得一个富二代 爹妈在一线二线城市给他买套房 帮他摆平了他需要的一切,这个人还没个正经工作,每天都过着养尊处优的生活你会佩服他吗？这不就是我们身边的一些人嘛? 我相信你一定不佩服他,你佩服他的是他有如此有正事的父母.
 
-![](/assets/images/20181231FinalSummary/5YearsPlan.avif)
+![5Years Plan](/assets/images/20181231FinalSummary/5YearsPlan.avif)
 
 我从2013年开始制定自己的第一个五年计划,现在2018年了,我没有给自己一个满意的答卷,看着我的五年计划 勉强完成70%的程度,我很惭愧. 我承认我说了大话,我向那些看到我制定五年计划的各位,以及我的高中老师,深表歉意. 我确实在富二代的面前抬不起头,我的父亲没有正事,一切需要我自己白手起家.
 
@@ -251,13 +251,13 @@ __凡秀才当以天下为任__
 
 为了纪念这位伟人,我认真的听完讲解周总理的最后岁月,我很荣幸能在中国国家博物馆里找到总理的几件物品,让我瞻仰一下这位共和国总理的爱戴人民的精神和气质.
 
-![](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister1.avif)
+![hat Of Zhou Prime Minister](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister1.avif)
 
-![](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister2.avif)
+![hat Of Zhou Prime Minister](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister2.avif)
 
 这是周总理参加日内瓦会议的礼帽 也就是下面这张我们在初高中历史书上经常看到的
 
-![](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister3.avif)
+![hat Of Zhou Prime Minister](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister3.avif)
 
 _图片引用自百度百科_
 
@@ -289,7 +289,7 @@ _图片引用自百度百科_
 
 乔布斯的一生是不是传奇我不知道,我觉得至少我通过苹果的这副键盘敲出了一栋100w+楼房.
 
-![](/assets/images/20181231FinalSummary/applekeyboard.avif)
+![applekeyboard](/assets/images/20181231FinalSummary/applekeyboard.avif)
 
 是的 我是一个Apple iOS Developer,这位伟人不为人知的一面的值得学习.
 
@@ -311,7 +311,7 @@ _图片引用自百度百科_
 
 这里要说一下这个怡和置地,它的前身是[怡和洋行](https://baike.baidu.com/item/%E6%80%A1%E5%92%8C%E6%B4%8B%E8%A1%8C/5039743?fr=aladdin)(英资企业)由两名苏格兰裔英国人威廉·渣甸（William Jardine，1784年～1843年）及詹姆士·马地臣（James Matheson，一译“孖地臣”，1796年～1878年）在中国广州创办,就是当年林则徐虎门销烟,捣毁东印度公司的鸦片,实际上背后是怡和洋行在掌控,因为林则徐侵犯了怡和洋行的利益在华利益,这位渣甸老板在英国女皇面前游说,挑起了1840年的鸦片战争.
 
-![](/assets/images/20181231FinalSummary/yihe.avif)
+![yihe](/assets/images/20181231FinalSummary/yihe.avif)
 
 怡和洋行旧址 _图片引自百度百科_
 
@@ -350,36 +350,36 @@ _图片引用自百度百科_
 
 __机械键盘__
 
-![](/assets/images/20181231FinalSummary/keyboard.avif)
+![keyboard](/assets/images/20181231FinalSummary/keyboard.avif)
 
 > 这机械键盘,确实很好,周末在家写代码非常流畅顺手.￥519
 
 __iPhone X 256G 美版__
 
-![](/assets/images/20181231FinalSummary/iPhoneX.avif)
+![i Phone X](/assets/images/20181231FinalSummary/iPhoneX.avif)
 > 同事去美国帮忙代购的,作为一个iOS developer,我也是忍受了4年iPhone6,确实卡的不行了,￥8000
 
 __Apple Watch 3__
 
-![](/assets/images/20181231FinalSummary/AppleWatch3.avif)
+![Apple Watch](/assets/images/20181231FinalSummary/AppleWatch3.avif)
 
 > 这个我认为基本没啥用,就能戴在手上看个点儿,其余的功能都用不了,￥3188
 
 __PC__
 
-![](/assets/images/20181231FinalSummary/PC.avif)
+![PC](/assets/images/20181231FinalSummary/PC.avif)
 > 为了学习机器学习买了个1050Ti,很久没DIY了,整套自己的买的装的.16G DDR4 2400内存,240G+120G两块三星固态硬盘,i5 8400 CPU, 技嘉Z370主板 总造价 ￥5547.  
 > 我已经把旧的那个200+贱卖了.
 
 __BOSE 降噪耳机__
 
-![](/assets/images/20181231FinalSummary/bose.avif)
+![bose](/assets/images/20181231FinalSummary/bose.avif)
 > 双11 打算买个程序员梦想中的耳机 ￥1888
 
 
 __小牛 N1s 动力版__
 
-![](/assets/images/20181231FinalSummary/n1s.avif)
+![n1s](/assets/images/20181231FinalSummary/n1s.avif)
 > 上班的代步工具.￥7399
 
 今年败家花了 ￥26541. 
@@ -460,7 +460,7 @@ __小牛 N1s 动力版__
 
 今年的十一假期我去了阔别11年的天津,去看看07年去过的身影,11年前还没有GPS定位的地图,我却依然能找到方向.
 
-![](/assets/images/20181231FinalSummary/sun.avif)
+![sun](/assets/images/20181231FinalSummary/sun.avif)
 
 这是我在天津找到家族百年以来唯一留下仅存的几张照片,我曾祖父,曾祖母,我的父亲和姑姑.现在看到这显得无比珍贵.
 
@@ -472,15 +472,15 @@ __小牛 N1s 动力版__
 
 第一处
 
-![](/assets/images/20181231FinalSummary/hometown1.avif)
+![hometown](/assets/images/20181231FinalSummary/hometown1.avif)
 
 第二处
 
-![](/assets/images/20181231FinalSummary/hometown2.avif)
+![hometown](/assets/images/20181231FinalSummary/hometown2.avif)
 
 第三处
 
-![](/assets/images/20181231FinalSummary/hometown.avif)
+![hometown](/assets/images/20181231FinalSummary/hometown.avif)
 
 
 这里最有可能的是第一处 因为靠近河流有河流地面过渡区(甸子),经过百年的地域变化,可能河流流量减少,地表高处水面,时间长了形成村落和耕地.

@@ -10,7 +10,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20220701ReverseList/algorithm.avif)
+![algorithm](/assets/images/20220701ReverseList/algorithm.avif)
 
 # 前言
 
@@ -23,7 +23,7 @@ typora-root-url: ..
 
 #### 示例1
 
-![](/assets/images/20220704ZigzagLeveOrder/1.avif)
+![image](/assets/images/20220704ZigzagLeveOrder/1.avif)
 
 ``` sh 
 输入：root = [3,9,20,null,null,15,7]

@@ -10,7 +10,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20220701ReverseList/algorithm.avif)
+![algorithm](/assets/images/20220701ReverseList/algorithm.avif)
 
 # 前言
 

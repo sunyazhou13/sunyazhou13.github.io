@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
+![swiftuilogo](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)
 
 # 前言
 
@@ -20,7 +20,7 @@ typora-root-url: ..
 
 ## 主要内容包含
 
-![](/assets/images/20230604LearnSwiftUIChapter1/finalproject.avif)
+![finalproject](/assets/images/20230604LearnSwiftUIChapter1/finalproject.avif)
 
 1-5 第一章补充：some View、排版规则、设计细节 - SwiftUI 新手入门
 
@@ -110,9 +110,9 @@ struct ContentView_Previews: PreviewProvider {
 
 这里有几个比较重要的内容
 
-![](/assets/images/20230604LearnSwiftUIChapter1/ViewSizeType1.avif)
+![View Size Type](/assets/images/20230604LearnSwiftUIChapter1/ViewSizeType1.avif)
 
-![](/assets/images/20230604LearnSwiftUIChapter1/ViewSizeType2.avif)
+![View Size Type](/assets/images/20230604LearnSwiftUIChapter1/ViewSizeType2.avif)
 
 * 1.动态字体大小 Dynamic type [Human Interface Guildlines](https://developer.apple.com/design/human-interface-guidelines/)
 * 2.屏幕缩放系数 [屏幕大小和 Scale factor](https://iosref.com/res

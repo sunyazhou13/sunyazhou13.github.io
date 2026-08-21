@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](http://p1.bqimg.com/584350/7df258f2ecddcf81.avif)
+![7df258f2ecddcf81](http://p1.bqimg.com/584350/7df258f2ecddcf81.avif)
 > 练习了一年的小楷, 感谢老乡**潘旭**的帮助，我的书法有很多提升.
 
 
@@ -16,7 +16,7 @@ typora-root-url: ..
 --
 
 当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了 
-![](http://p1.bqimg.com/584350/035a303723a4b623.avif)
+![035a303723a4b623](http://p1.bqimg.com/584350/035a303723a4b623.avif)
 这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
 
 

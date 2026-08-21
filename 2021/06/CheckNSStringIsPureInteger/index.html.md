@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20210623CheckNSStringIsPureInteger/pureinteger.avif)
+![pureinteger](/assets/images/20210623CheckNSStringIsPureInteger/pureinteger.avif)
 
 # 前言
 

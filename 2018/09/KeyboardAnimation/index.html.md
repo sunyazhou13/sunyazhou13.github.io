@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20180918KeyboardAnimation/keyboard1.avif)
+![keyboard](/assets/images/20180918KeyboardAnimation/keyboard1.avif)
 
 
 # 前言
@@ -19,7 +19,7 @@ typora-root-url: ..
 
 上图
 
-![](/assets/images/20180918KeyboardAnimation/keyboardAnimation.avif)
+![keyboard Animation](/assets/images/20180918KeyboardAnimation/keyboardAnimation.avif)
 
 
 

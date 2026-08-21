@@ -15,11 +15,11 @@ typora-root-url: ..
 
 上图看下
 
-![](/assets/images/20181108AwemeAlbumAnimation/final.avif)
+![final](/assets/images/20181108AwemeAlbumAnimation/final.avif)
 
 再看下抖音的
 
-![](/assets/images/20181108AwemeAlbumAnimation/AlbumAnimation.avif)
+![Album Animation](/assets/images/20181108AwemeAlbumAnimation/AlbumAnimation.avif)
 
 # 具体实现思路
 
@@ -31,7 +31,7 @@ typora-root-url: ..
 2. Background Layer 
 3. Album (UIImageView)
 
-![](/assets/images/20181108AwemeAlbumAnimation/album1.avif)
+![album](/assets/images/20181108AwemeAlbumAnimation/album1.avif)
 
 我们首先写个 `MusicAlbumView` 继承自UIView
 
@@ -139,7 +139,7 @@ self.album.layer.masksToBounds = YES;
 
 加完效果是这样的
 
-![](/assets/images/20181108AwemeAlbumAnimation/album2.avif)
+![album](/assets/images/20181108AwemeAlbumAnimation/album2.avif)
 
 
 #### 如何实现弧度动画
@@ -148,12 +148,12 @@ self.album.layer.masksToBounds = YES;
 
 现仔细观察一下动画的音符
 
-![](/assets/images/20181108AwemeAlbumAnimation/album3.avif)
+![album](/assets/images/20181108AwemeAlbumAnimation/album3.avif)
 
 
 这是一张音符动画 它的运动轨迹大概是这样的
 
-![](/assets/images/20181108AwemeAlbumAnimation/bezier1.avif)
+![bezier](/assets/images/20181108AwemeAlbumAnimation/bezier1.avif)
 
 我们其实用到的是贝塞尔曲线动画 (我画的不是很好 大家理解这个意思就好)
 
@@ -222,7 +222,7 @@ pathAnimation.path = customPath.CGPath; //让动画沿着轨迹运动
 
 大家可以不用理解这些细节 看下面图就好了 
 
-![](/assets/images/20181108AwemeAlbumAnimation/bezier2.avif)
+![bezier](/assets/images/20181108AwemeAlbumAnimation/bezier2.avif)
 
 > customPath: 贝塞尔曲线对象
 
@@ -256,7 +256,7 @@ layer.frame = CGRectMake(beginPoint.x, beginPoint.y, 10, 10);
 
 我们来看下 简单一个音符 沿着贝塞尔曲线运动
 
-![](/assets/images/20181108AwemeAlbumAnimation/album4.avif)
+![album](/assets/images/20181108AwemeAlbumAnimation/album4.avif)
 
 好下面的工作就是 加旋转 透明 缩放动画
 
@@ -403,7 +403,7 @@ animationGroup.beginTime = CACurrentMediaTime() + delayTime;
 完成之后 就是这样了
 
 
-![](/assets/images/20181108AwemeAlbumAnimation/final.avif)
+![final](/assets/images/20181108AwemeAlbumAnimation/final.avif)
 
 
 # 总结

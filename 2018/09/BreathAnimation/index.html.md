@@ -14,7 +14,7 @@ typora-root-url: ..
 
 上图
 
-![](/assets/images/20180929BreathAnimation/breathAnimation.avif)
+![breath Animation](/assets/images/20180929BreathAnimation/breathAnimation.avif)
 
 大概是这个样子 
 
@@ -152,7 +152,7 @@ scaleOpacityGroup.repeatCount = FLT_MAX;
 
 那么第二个动画刚刚执行到一半,就会感觉很奇怪
 
-![](/assets/images/20180929BreathAnimation/aniamation.avif)
+![aniamation](/assets/images/20180929BreathAnimation/aniamation.avif)
 
 
 如果__渐变动画__执行0.5秒的话 它是重复的 那么他就重新开始 相当于 呼吸折回的时候它又重新开开始渐变

@@ -74,7 +74,7 @@ __[pop](https://github.com/facebook/pop)__
 --
 
 
-__[WWDC 2013 Session笔记 - iOS7中的ViewController切换]()__ 喵神的这篇必看  
+__WWDC 2013 Session笔记 - iOS7中的ViewController切换__ 喵神的这篇必看  
 
 __[UIPresentationController Tutorial: Getting Started](https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started)__ 需要翻墙  
 *(话说我解释一下这个词"翻墙",翻墙名词叫科学上网,黑话叫自备梯子,因为大家一开始都用[云梯VPN](https://www.yuntipub.com/)访问国外网站,因为我国搞了个垃圾防火墙的大型局域网,虽然阻碍了世界文明和技术科技的发展但也防范了一些不健康内容，比如万一有一天你搞个车床，制造个微冲出来怎么办哈哈,所以要翻越那个防火墙就俗称翻墙)*  

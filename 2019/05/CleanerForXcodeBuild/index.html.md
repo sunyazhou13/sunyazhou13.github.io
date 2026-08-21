@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20190517CleanerForXcodeBuild/CleanerForXcode.avif)
+![Cleaner For Xcode](/assets/images/20190517CleanerForXcodeBuild/CleanerForXcode.avif)
 
 # 前言
 

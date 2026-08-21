@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
+![i OS Interview Questions Album Cover](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 # 前言
 

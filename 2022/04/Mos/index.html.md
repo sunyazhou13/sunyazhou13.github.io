@@ -9,7 +9,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220425Mos/mos.avif)
+![mos](/assets/images/20220425Mos/mos.avif)
 
 # 前言
 

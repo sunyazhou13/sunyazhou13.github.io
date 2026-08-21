@@ -9,7 +9,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220711iOSCrashType/kernel.avif)
+![kernel](/assets/images/20220711iOSCrashType/kernel.avif)
 
 # 前言
 

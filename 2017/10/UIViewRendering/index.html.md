@@ -53,7 +53,7 @@ typora-root-url: ..
 
 上面提到的从`CPU`到`GPU`的过程可用下图表示:
 
-![](/assets/images/20171016UIViewRendering/CPUToGPU.avif)
+![CPU To GPU](/assets/images/20171016UIViewRendering/CPUToGPU.avif)
 
 
 下面具体来讨论下这个过程
@@ -76,7 +76,7 @@ label.text = @"test";
 
 类似这个样子:
 
-![](/assets/images/20171016UIViewRendering/DrawRect.avif)
+![Draw Rect](/assets/images/20171016UIViewRendering/DrawRect.avif)
 
 
 
@@ -150,7 +150,7 @@ GPU bound：
 这个对应关系建立起来之后，剩下的任务就是`GPU`如何将`Texture`渲染到屏幕上了。
 `GPU`大致的工作模式如下：
 
-![](/assets/images/20171016UIViewRendering/GPUWorkflow.avif)
+![GPU Workflow](/assets/images/20171016UIViewRendering/GPUWorkflow.avif)
 
 整个过程也就是一件事：
 
@@ -229,7 +229,7 @@ label.layer.rasterizationScale = label.layer.contentsScale;
 简单的说，这是一种`cache`机制。  
 同样`GPU`的性能也可以通过`instrument`去衡量：
 
-![](/assets/images/20171016UIViewRendering/RenderingResult.avif)
+![Rendering Result](/assets/images/20171016UIViewRendering/RenderingResult.avif)
 
 红色代表`GPU`需要做额外的工作来渲染`View`，绿色代表`GPU`无需做额外的工作来处理`bitmap`。
 

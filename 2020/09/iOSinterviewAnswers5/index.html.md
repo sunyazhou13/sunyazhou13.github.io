@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
+![i OS Interview Questions Album Cover](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 # 前言
 
@@ -43,7 +43,7 @@ typora-root-url: ..
 
 回答这个问题前请认真阅读一下 [iOS触摸事件全家桶](https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ)
 
-![](/assets/images/20200902iOSinterviewAnswers/runloop_event_receive.avif)
+![runloop_event_receive](/assets/images/20200902iOSinterviewAnswers/runloop_event_receive.avif)
 
 通过上图可以看出整个流程就是 我们app启动默认会通过machPort监听端口的方式 来接受IOHIDEvent 来接收和处理触摸事件.
 

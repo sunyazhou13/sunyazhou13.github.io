@@ -7,7 +7,7 @@ tags: [Electron, Tauri, Qt6, Flutter, React Native, uni-app, Taro, Python, LangC
 
 ---
 
-![](/assets/images/20260703CrossPlatformDesktopFrameworkComparison/banner.avif)
+![banner](/assets/images/20260703CrossPlatformDesktopFrameworkComparison/banner.avif)
 
 # 前言
 

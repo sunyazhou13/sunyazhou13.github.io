@@ -11,7 +11,7 @@ typora-root-url: ..
 
 # 前言
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesAlbum.avif)
+![Charles Album](/assets/images/20170901CharlesCaptureHttps/CharlesAlbum.avif)
 
 如何使用`charles`在iOS设备上截获`https`的请求 
 
@@ -25,7 +25,7 @@ typora-root-url: ..
 
 ####  (1) 查看电脑IP
 
-![](/assets/images/20170901CharlesCaptureHttps/WiFiIpmac.avif)
+![Wi Fi Ipmac](/assets/images/20170901CharlesCaptureHttps/WiFiIpmac.avif)
 
 #### (2) 设置手机HTTP代理
 
@@ -33,7 +33,7 @@ typora-root-url: ..
 服务器为电脑IP地址：如192.168.1.108
 端口：8888
 
-![](/assets/images/20170901CharlesCaptureHttps/WiFiIpPortiPhone.avif)
+![Wi Fi Ip Porti Phone](/assets/images/20170901CharlesCaptureHttps/WiFiIpPortiPhone.avif)
 
 
 注意:*这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP*
@@ -41,7 +41,7 @@ typora-root-url: ..
 
 设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesAllow.avif)
+![Charles Allow](/assets/images/20170901CharlesCaptureHttps/CharlesAllow.avif)
 
 点击**Allow** 就可以了
 
@@ -49,13 +49,13 @@ typora-root-url: ..
 
 左上角菜单中 选择`SSL Proxying Settings`
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesStep1.avif)
+![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep1.avif)
 
 然后 勾选`Enable SSL Proxying` 
 
 紧接着点击 `Add`
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesStep2.avif)
+![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep2.avif)
 
 再然后在
 
@@ -63,49 +63,49 @@ typora-root-url: ..
 
 `Port`: 443 默认端口 填完 点击OK
  
-![](/assets/images/20170901CharlesCaptureHttps/CharlesStep3.avif)
+![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep3.avif)
 
 
 紧接着 点击`Help` -> `SSL Proxying` -> 安装根证书
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesStep4.avif)
+![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep4.avif)
 
 安装到钥匙串后 点击charles的root证书 选择 `使用信任`
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesCerRootMac.avif)
+![Charles Cer Root Mac](/assets/images/20170901CharlesCaptureHttps/CharlesCerRootMac.avif)
 
 下一步 是安装手机的root证书 
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesStep6.avif)
+![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep6.avif)
 
 
-这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: [chls.pro/ssl](chls.pro/ssl)
+这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: [chls.pro/ssl](https://chls.pro/ssl)
 
 此时手机一会儿就弹出这样的 提示 点击**允许**
 
 
-![](/assets/images/20170901CharlesCaptureHttps/iPhone1.avif)
+![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone1.avif)
 
 然后 安装证书
 
-![](/assets/images/20170901CharlesCaptureHttps/iPhone2.avif)
+![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone2.avif)
 
 安装完 最后一步**非常重要**
 
 __必须到 通用->关于本机->证书信任设置__去信任 证书 
 
-![](/assets/images/20170901CharlesCaptureHttps/iPhone3.avif)
+![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone3.avif)
 
 
 如果不信任 就会抓取的时候出现下图这样的问题
 
-![](/assets/images/20170901CharlesCaptureHttps/CharlesRootCerError.avif)
+![Charles Root Cer Error](/assets/images/20170901CharlesCaptureHttps/CharlesRootCerError.avif)
 
 > 注意:*iOS10.3以上版本 貌似才需要*
 
 最后放上一张截获成功的图 (支付宝的接口)
 
-![](/assets/images/20170901CharlesCaptureHttps/Result.avif)
+![Result](/assets/images/20170901CharlesCaptureHttps/Result.avif)
 
 
 

@@ -9,7 +9,7 @@ math: true
 ---
 
 
-![](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
+![Swift UI](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
 # 前言
 
@@ -118,6 +118,6 @@ $$
 \text{AlignedSize} = \text{size} - (\text{size} \ \% \ \text{align}) + \text{align}
 $$
 
-![](/assets/images/20250511MemoryAlignmentAlgorithm/AlignedSize.avif)
+![Aligned Size](/assets/images/20250511MemoryAlignmentAlgorithm/AlignedSize.avif)
 
 其中 `%` 可通过 `& (align - 1)` 优化（当 `align` 是 2 的幂时）。

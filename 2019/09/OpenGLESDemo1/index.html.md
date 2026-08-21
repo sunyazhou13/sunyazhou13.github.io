@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20190906OpenGLESDemo1/sunyazhou_logo_glsl.avif)
+![sunyazhou_logo_glsl](/assets/images/20190906OpenGLESDemo1/sunyazhou_logo_glsl.avif)
 
 
 # 前言

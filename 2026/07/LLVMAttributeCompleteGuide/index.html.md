@@ -24,7 +24,7 @@ typora-root-url: ..
 ## 目录
 
 1. [什么是 `__attribute__`](#1-什么是-__attribute__)
-2. [函数调用前后：constructor / destructor / cleanup](#2-函数调用前后constructordestructorcleanup)
+2. [函数调用前后：constructor / destructor / cleanup](#2-函数调用前后constructor--destructor--cleanup)
 3. [ObjC 专属属性](#3-objc-专属属性)
 4. [Swift 互操作](#4-swift-互操作)
 5. [内存管理与 ARC](#5-内存管理与-arc)

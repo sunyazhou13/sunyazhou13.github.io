@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
+![Radial Center](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
 
 # 前言
 
@@ -16,13 +16,13 @@ typora-root-url: ..
 
 先上成品看看效果
 
-![](/assets/images/20221207RadialGradientlayer/final.avif)
+![final](/assets/images/20221207RadialGradientlayer/final.avif)
 
 # 深入CAGradientLayer 
 
 最近开发功能,视觉设计同学对QQ音乐的桌面歌词预览图的流体渐变动画很感兴趣,想让开发这边实现这个效果.
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
+![qqmusicanimation](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
 
 仔细观察歌词背景( 若不是我左右眼都是5.0 我第一次看到QQ音乐的效果我以为没动画.幼稚被教育了),会有一个类似柔光的效果像个灯光一样照射并移动.视觉设计同学把这个效果称为`流体过渡动画`.
 
@@ -47,7 +47,7 @@ open var type: CAGradientLayerType  //swift中的成员变量
 #### kCAGradientLayerAxial
 
 这种Linear (Axial) Gradients 如图
-![](/assets/images/20221207RadialGradientlayer/linear.avif)
+![linear](/assets/images/20221207RadialGradientlayer/linear.avif)
 
 ``` objc
 // Objective C
@@ -83,8 +83,8 @@ gradientLayer.colors =
 
 可以参考下图  
 
-![](/assets/images/20221207RadialGradientlayer/corners.avif)  
-![](/assets/images/20221207RadialGradientlayer/LinearHorizontal.avif)
+![corners](/assets/images/20221207RadialGradientlayer/corners.avif)  
+![Linear Horizontal](/assets/images/20221207RadialGradientlayer/LinearHorizontal.avif)
 
 示例代码如下:
 
@@ -127,7 +127,7 @@ gradientLayer.endPoint = CGPoint(x: 1, y: 0)
 gradientLayer的成员变量`colors`是个数组,可以接收多个颜色值.通常我们使用2个颜色做渐变,如果复杂的话可以设置多个
 
 下面代码示例多种颜色渐变和响应的代码  
-![](/assets/images/20221207RadialGradientlayer/rainbow.avif)  
+![rainbow](/assets/images/20221207RadialGradientlayer/rainbow.avif)  
 
 ``` objc
 gradientLayer.colors =
@@ -141,7 +141,7 @@ gradientLayer.colors =
 ```
 
 下图是演示关键渐变的位置设置
-![](/assets/images/20221207RadialGradientlayer/locations.avif)  
+![locations](/assets/images/20221207RadialGradientlayer/locations.avif)  
 
 位置设置代码如下
 
@@ -174,7 +174,7 @@ gradientLayer.locations = [
 
 当我们使用`kCAGradientLayerRadial `类型的时候 我们需要关注一下径向渐变需要的开始点和结束点. 下图演示的是一个椭圆的渐变layer.当然可以设置圆形.
 
-![](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
+![Radial Center](/assets/images/20221207RadialGradientlayer/RadialCenter.avif)
 
 ``` objc
 // Objective C
@@ -213,7 +213,7 @@ gradientLayer.endPoint = CGPoint(x: 0, y: 0.75)
 
 > 锥形渐变仅支持`@available(iOS 12.0, *)`
 
-![](/assets/images/20221207RadialGradientlayer/conic.avif)
+![conic](/assets/images/20221207RadialGradientlayer/conic.avif)
 
 注意观察开始点和结束点位置
 
@@ -248,17 +248,17 @@ gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
 gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
 ```
 
-![](/assets/images/20221207RadialGradientlayer/finaldemo.avif)
+![finaldemo](/assets/images/20221207RadialGradientlayer/finaldemo.avif)
 
 #### 实现Q音效果的思路
 
 我们先观察一下QQ音乐的效果
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
+![qqmusicanimation](/assets/images/20221207RadialGradientlayer/qqmusicanimation1.avif)
 
 我们的思路
 
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation2.avif)
+![qqmusicanimation](/assets/images/20221207RadialGradientlayer/qqmusicanimation2.avif)
 
 * 创建一个径向渐变图层
 * 放在视图外部通过加`CABasicAnimation`实现`position.x`从右向左移动动画
@@ -266,7 +266,7 @@ gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
 * 移动结束为止一定要在屏幕外部
 
 下面看下 实现思路示意图  
-![](/assets/images/20221207RadialGradientlayer/qqmusicanimation3.avif)
+![qqmusicanimation](/assets/images/20221207RadialGradientlayer/qqmusicanimation3.avif)
 
 代码如下
 
@@ -356,7 +356,7 @@ self.backgroundView.layer.masksToBounds = true //超出屏幕截掉
 
 下面看下做完的效果
 
-![](/assets/images/20221207RadialGradientlayer/final.avif)
+![final](/assets/images/20221207RadialGradientlayer/final.avif)
 
 ## 总结
 

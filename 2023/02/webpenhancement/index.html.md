@@ -69,14 +69,14 @@ read_dir $1
 
 这个脚本放到`/assets/images`目录执行
 
-![](/assets/images/20230205WebpEnhancement/webp1.avif)
+![webp](/assets/images/20230205WebpEnhancement/webp1.avif)
 
 剩下的工作就是找到左右post文章的markdown统一更改图片后缀
 
-![](/assets/images/20230205WebpEnhancement/webp2.avif)
+![webp](/assets/images/20230205WebpEnhancement/webp2.avif)
 
 然后通过sourceTree进行最后的校对 review一遍改动防止改错,这个过程很快,虽然很多 但是图片的后缀修改十分简单容易识别.
-![](/assets/images/20230205WebpEnhancement/webp3.avif)
+![webp](/assets/images/20230205WebpEnhancement/webp3.avif)
 
 最后build博客 部署到远端即可
 

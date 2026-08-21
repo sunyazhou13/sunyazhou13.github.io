@@ -10,7 +10,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20220701ReverseList/algorithm.avif)
+![algorithm](/assets/images/20220701ReverseList/algorithm.avif)
 
 # 前言
 
@@ -28,7 +28,7 @@ typora-root-url: ..
 
 #### 示例1
 
-![](/assets/images/20220704CycleLinkTable/1.avif)
+![image](/assets/images/20220704CycleLinkTable/1.avif)
 
 ``` sh 
 输入：head = [3,2,0,-4], pos = 1
@@ -38,7 +38,7 @@ typora-root-url: ..
 
 #### 示例2
 
-![](/assets/images/20220704CycleLinkTable/2.avif)
+![image](/assets/images/20220704CycleLinkTable/2.avif)
 
 ``` sh 
 输入：head = [1,2], pos = 0
@@ -48,7 +48,7 @@ typora-root-url: ..
 
 #### 示例3
 
-![](/assets/images/20220704CycleLinkTable/3.avif)
+![image](/assets/images/20220704CycleLinkTable/3.avif)
 
 ``` sh 
 输入：head = [1], pos = -1

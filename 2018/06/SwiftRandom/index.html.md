@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20180608SwiftRandom/whatisnewinswift.avif)
+![whatisnewinswift](/assets/images/20180608SwiftRandom/whatisnewinswift.avif)
 
 # 前言
 

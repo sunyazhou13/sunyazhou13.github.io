@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20180813TapticEngineFeedback/TapticEngine.avif)
+![Taptic Engine](/assets/images/20180813TapticEngineFeedback/TapticEngine.avif)
 
 
 # 前言
@@ -40,7 +40,7 @@ iOS10 引入了一种新的、产生触觉反馈的方式， 帮助用户认识�
 
 > 下图开启 声音与触感
 > 手机 -- 设置 -- 声音与触感 -- 系统触感反馈(打开)
-> ![](/assets/images/20180813TapticEngineFeedback/setting.avif)
+> ![setting](/assets/images/20180813TapticEngineFeedback/setting.avif)
  
 
 ### 调用相关振动代码实现振动功能

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/2026070235ChokePointTechnologies/35TechnologiesHero.avif)
+![35Technologies Hero](/assets/images/2026070235ChokePointTechnologies/35TechnologiesHero.avif)
 
 
 # 前言

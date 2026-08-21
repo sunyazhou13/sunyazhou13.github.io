@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20190417AVRoutePickerView/cover_album.avif)
+![cover_album](/assets/images/20190417AVRoutePickerView/cover_album.avif)
 
 
 # 前言
@@ -16,11 +16,11 @@ typora-root-url: ..
 
 最近无意中看了一下AVKit发现内部增加了很多新的内容.其中有个`AVRoutePickerView`的UI控件,打算研究一下. 其实这个很常见就在系统的控制中心 下拉屏幕就能看见 当你连接耳机或者无线蓝牙设备的时候.
 
-![](/assets/images/20190417AVRoutePickerView/RouteChange2.avif)
+![Route Change](/assets/images/20190417AVRoutePickerView/RouteChange2.avif)
 
 这里网易云音乐中有实践的例子  
 
-![](/assets/images/20190417AVRoutePickerView/RouteChange1.avif)
+![Route Change](/assets/images/20190417AVRoutePickerView/RouteChange1.avif)
 
 这个控件主要用于AirPlay投屏 和音频的线路切换
 
@@ -69,7 +69,7 @@ typora-root-url: ..
 
 添加完之后运行如下
 
-![](/assets/images/20190417AVRoutePickerView/RouteChange3.avif)
+![Route Change](/assets/images/20190417AVRoutePickerView/RouteChange3.avif)
 
 `AVRoutePickerView `这个View提供的API 就两个颜色值剩下的啥都没有,啥都改不了,那怎么才能实现网易云音乐那样自定义图标呢？
 
@@ -83,7 +83,7 @@ UIImageView *imageView = [[UIImageView alloc] initWithFrame:routerPickerView.bou
 
 ```
 
-![](/assets/images/20190417AVRoutePickerView/RouteChange4.avif)
+![Route Change](/assets/images/20190417AVRoutePickerView/RouteChange4.avif)
 
 自己加个图标即可.
 

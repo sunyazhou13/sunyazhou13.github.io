@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 # 前言  
-![](/assets/images/20170530OpenGLglslLanguage/OpenglVboShaderGlslVaoGPU.avif)
+![Opengl Vbo Shader Glsl Vao GPU](/assets/images/20170530OpenGLglslLanguage/OpenglVboShaderGlslVaoGPU.avif)
 
 最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考.
 
@@ -311,7 +311,7 @@ vec4 toonify(in float intensify)
 
 `discard`关键字可以避免片段更新帧缓冲区，当流控制遇到这个关键字时，正在处理的片段就会被标记为丢.
 
-如果不理解什么叫标记为丢 可以参考一下[UIView的绘制过程](理解UIView的绘制)
+如果不理解什么叫标记为丢 可以参考一下[UIView的绘制过程](/2017/10/UIViewRendering/)
 
 ## 函数
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20170209HowToUseGitManageCode/guide.avif)
+![guide](/assets/images/20170209HowToUseGitManageCode/guide.avif)
 
 
 # 全局配置git

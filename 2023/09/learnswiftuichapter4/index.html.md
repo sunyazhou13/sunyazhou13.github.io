@@ -31,7 +31,7 @@ typora-root-url: ..
 
 下面是该SwiftUI框架对应的UI示意图
 
-![](/assets/images/20230805LearnSwiftUIChapter4/SwiftUIMap.avif)
+![Swift UI Map](/assets/images/20230805LearnSwiftUIChapter4/SwiftUIMap.avif)
 
 ``` swift
 var body: some View {
@@ -98,7 +98,7 @@ var body: some View {
 @State private var confirmationDialog: Dialog = .inactive
 ```
 
-![](/assets/images/20230805LearnSwiftUIChapter4/darkmode.avif)
+![darkmode](/assets/images/20230805LearnSwiftUIChapter4/darkmode.avif)
 
 这里的Toggle也就是我们之前在UIKit中学习的switch开关触发的值直接关联到`@AppStorage("shouldUseDarkMode")`中,并且也会更新成员变量,这些操作都是SwiftUI帮我们做的.
 
@@ -118,7 +118,7 @@ var body: some View {
 ```  
 这样改动虽然马上生效但是并不会作用于全局的ViewController之类的视图上,这个改动只会改动从响应者链条中最顶层的VC,假设有个某某DetailVC present出来 它将不受此环境控制
 
-![](/assets/images/20230805LearnSwiftUIChapter4/darkmode2.avif)
+![darkmode](/assets/images/20230805LearnSwiftUIChapter4/darkmode2.avif)
 
 为了解决这个问题需要在顶层使用如下代码包裹起来,并使用`preferredColorScheme()`函数更改才会全局生效
 
@@ -131,7 +131,7 @@ NavigationStack {
 }
 ```
 
-![](/assets/images/20230805LearnSwiftUIChapter4/darkmode3.avif)
+![darkmode](/assets/images/20230805LearnSwiftUIChapter4/darkmode3.avif)
 
 如上就是这一部分学习到的技巧
 
@@ -191,7 +191,7 @@ Xcode14以后会自动帮我们生成一个struct的编码和解码方式
 
 如下图:
 
-![](/assets/images/20230805LearnSwiftUIChapter4/RawRepresentable.avif)
+![Raw Representable](/assets/images/20230805LearnSwiftUIChapter4/RawRepresentable.avif)
 
 点击AddExplicitCodableImplementation选项会自动帮我们为Person生成如下.
 

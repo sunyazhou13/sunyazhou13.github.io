@@ -10,7 +10,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20201010PodSpec/cocoapods.avif)
+![cocoapods](/assets/images/20201010PodSpec/cocoapods.avif)
 
 # 前言
 
@@ -655,7 +655,7 @@ Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方�
 
 如：`md5("CJFoundation") => 044d913fdd5a52b303222c357521f744`；`CJFoundation` 则在 /Specs/0/4/4 目录中
 
-![](/assets/images/20230426CocoaPodsUserGuide/1.avif)
+![image](/assets/images/20230426CocoaPodsUserGuide/1.avif)
 
 #### Create
 
@@ -802,7 +802,7 @@ end
 
 这些组件相对独立，被分成一个一个 Gem 包，在 [Core Components](https://guides.cocoapods.org/contributing/components.html) 中，可以找到对这些组件的简要描述。同时也可以到 CocoaPods 的 Github 中去看详细文档。
 
-![](/assets/images/20230426CocoaPodsUserGuide/2.avif)
+![image](/assets/images/20230426CocoaPodsUserGuide/2.avif)
 
 * `CocoaPods`：命令行支持与安装程序，也会处理 CocoaPods 的所有用户交互。
 * `cocoapods-core`：对模版文件的解析，如 Podfile、.podspec 等文件。
@@ -819,7 +819,7 @@ end
 
 经过消息转发与 CLAide 命令解析，最终调用了 CocoaPods/lib/cocoapods/installer.rb 的 install! 函数，主要流程图如下：
 
-![](/assets/images/20230426CocoaPodsUserGuide/3.avif)
+![image](/assets/images/20230426CocoaPodsUserGuide/3.avif)
 
 ``` ruby
 def install!

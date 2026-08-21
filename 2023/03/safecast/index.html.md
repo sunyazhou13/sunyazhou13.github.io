@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20230306SafeCast/cast.avif)
+![cast](/assets/images/20230306SafeCast/cast.avif)
 
 # 前言
 

@@ -57,7 +57,7 @@ typora-root-url: ..
 
 <details>
   <summary>书法</summary>
-  <p><img src="/assets/images/aboutme/about_read_books.avif" alt=""> </p>
+  <p><img src="/assets/images/aboutme/tsinghua.avif" alt="书法"> </p>
   <p> </p>
 </details>
 
@@ -65,7 +65,7 @@ typora-root-url: ..
 ``` html
 <details>
   <summary>书法</summary>
-  <p><img src="/assets/images/aboutme/about_read_books.avif" alt=""> </p>
+  <p><img src="/assets/images/aboutme/tsinghua.avif" alt="书法"> </p>
   <p> </p>
 </details>
 ```

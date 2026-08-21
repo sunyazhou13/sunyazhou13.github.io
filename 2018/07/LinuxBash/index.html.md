@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20180718LinuxBash/20130520LinuxLogoOnCentos5.avif)
+![20130520Linux Logo On Centos](/assets/images/20180718LinuxBash/20130520LinuxLogoOnCentos5.avif)
 
 
 # bash及其特性

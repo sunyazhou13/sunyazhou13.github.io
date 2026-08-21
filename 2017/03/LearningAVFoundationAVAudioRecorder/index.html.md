@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20170328LearningAVFoundationAVAudioRecorder/cover.avif)
+![cover](/assets/images/20170328LearningAVFoundationAVAudioRecorder/cover.avif)
 
 前言
 --
@@ -180,11 +180,11 @@ __音频队列服务分为3个部分:__
 
 **1. 下面是录音的音频队列服务的工作原理:**
 
-![](/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServiceRecord.avif)
+![Queue Service Record](/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServiceRecord.avif)
 
 **2. 下面是播放音频的音频队列服务的工作原理;**
 
-![](/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServicePlay.avif)
+![Queue Service Play](/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServicePlay.avif)
 
 当然处理这些不需要我们自己去写C语言函数实现 有个开源库[FreeStreamer](https://github.com/sunyazhou13/FreeStreamer)
 
@@ -1159,7 +1159,7 @@ CGFloat clamp(CGFloat intensity) {
 --
 `AVAudioRecorder` 的学习还算完整的搞完了,随时记录一下学习内容和技术知识。
 
-![](/assets/images/20170328LearningAVFoundationAVAudioRecorder/FinalDemo.avif)
+![Final Demo](/assets/images/20170328LearningAVFoundationAVAudioRecorder/FinalDemo.avif)
 
 __最终[Demo](https://github.com/sunyazhou13/AVAudioRecorderDemo)__
 

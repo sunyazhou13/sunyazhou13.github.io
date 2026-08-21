@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20171215CellAddKVO/UICollectionViewCell.avif)
+![UI Collection View Cell](/assets/images/20171215CellAddKVO/UICollectionViewCell.avif)
 
 
 # 前言
@@ -25,7 +25,7 @@ typora-root-url: ..
 
 听完这个需求是不是都晕了,我们来看张我实现完成的图.
 
-![](/assets/images/20171215CellAddKVO/RecordDemo.avif)
+![Record Demo](/assets/images/20171215CellAddKVO/RecordDemo.avif)
 
 1. 录制完的视频取出封面
 2. 正在预览的随时准备录制

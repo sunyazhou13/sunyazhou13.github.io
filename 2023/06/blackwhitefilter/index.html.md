@@ -53,7 +53,7 @@ typora-root-url: ..
 
 通过上述操作我们就轻松的实现了给一个UIImage 加黑白滤镜让它变成灰白色的效果,
 
-![](/assets/images/20230614BlackWhiteFilter/BlackWhiteFilter.avif)
+![Black White Filter](/assets/images/20230614BlackWhiteFilter/BlackWhiteFilter.avif)
 
 
 

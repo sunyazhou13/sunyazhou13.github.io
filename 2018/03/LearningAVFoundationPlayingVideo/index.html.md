@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/5kAirplay.avif)
+![5k Airplay](/assets/images/20180304LearningAVFoundationPlayingVideo/5kAirplay.avif)
 
 # 前言
 
@@ -54,15 +54,15 @@ typora-root-url: ..
 如下图:
 
 __AVLayerVideoGravityResizeAspect__保持缩放比例
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspect.avif)
+![AV Layer Video Gravity Resize Aspect](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspect.avif)
 
 __AVLayerVideoGravityResizeAspectFill__填充
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspectFill.avif)
+![AV Layer Video Gravity Resize Aspect Fill](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResizeAspectFill.avif)
 
 
 __AVLayerVideoGravityResize__拉伸
 
-![](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResize.avif)
+![AV Layer Video Gravity Resize](/assets/images/20180304LearningAVFoundationPlayingVideo/AVLayerVideoGravityResize.avif)
 
 
 

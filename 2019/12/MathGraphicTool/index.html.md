@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20191204MathGraphicTool/MathGraphic.avif)
+![Math Graphic](/assets/images/20191204MathGraphicTool/MathGraphic.avif)
 
 # 前言
 
@@ -27,5 +27,5 @@ typora-root-url: ..
 
 这里数学上用的东西都是可以直接拿来使用的,比如画个坐标系 表述一下 动画运动轨迹等
 
-![](/assets/images/20191204MathGraphicTool/MathGraphicOverView.avif)
+![Math Graphic Over View](/assets/images/20191204MathGraphicTool/MathGraphicOverView.avif)
 

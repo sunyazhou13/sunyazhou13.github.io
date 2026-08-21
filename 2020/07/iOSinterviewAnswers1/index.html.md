@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
+![i OS Interview Questions Album Cover](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 # 前言
 
@@ -111,7 +111,7 @@ protocols（实现的协议列表）;
 当然也包括一个isa指针，这说明Class也是一个对象类型，所以我们称之为类对象，
 这里的isa指向的是元类对象（metaclass），元类中保存了创建类对象（Class）的类方法的全部信息。
 
-![Objective-C的对象原型继承链](/assets/images/20200721iOSinterviewAnswers/class_inherit.avif)  [Objective-C的对象原型继承链]()
+![Objective-C的对象原型继承链](/assets/images/20200721iOSinterviewAnswers/class_inherit.avif)  Objective-C的对象原型继承链
 
 
 从图中可知，最终的基类`NSObject`的元类对象`isa`指向的是自己本身，从而形成一个闭环。  
@@ -213,7 +213,7 @@ Smalltalk中的MetaClass的设计是Smalltalk-80加入的。而之前的Smalltal
 
 那么Smalltalk的继承关系，其实和Objective-C的很像了（后面有class的是前者的MetaClass）。
 
-![](/assets/images/20200721iOSinterviewAnswers/class_inherit2_smaltalk.avif)
+![class_inherit2_smaltalk](/assets/images/20200721iOSinterviewAnswers/class_inherit2_smaltalk.avif)
 
 ###### 这时候产生了一个重要的问题，假如去掉MetaClass，把类方法放到也类里面是否可行？
 
@@ -465,7 +465,7 @@ struct class_data_bits_t {
 ```
 这个结构体只有一个`64bit`的成员变量`bits`，先来看看这`64bit`分别存放的什么信息：
 
-![](/assets/images/20200721iOSinterviewAnswers/objc_class_bits.avif)
+![objc_class_bits](/assets/images/20200721iOSinterviewAnswers/objc_class_bits.avif)
 
 * `is_swift` : 第一个bit，判断类是否是Swift类
 * `has_default_rr` ：第二个bit，判断当前类或者父类含有默认的`retain/release/autorelease/retainCount/_tryRetain/_isDeallocating/retainWeakReference/allowsWeakReference` 方法
@@ -518,11 +518,11 @@ struct class_ro_t {
 用两张图来说明这个过程：
 
 类的`realizeClass`运行之前：  
-![](/assets/images/20200721iOSinterviewAnswers/before_bits.avif)
+![before_bits](/assets/images/20200721iOSinterviewAnswers/before_bits.avif)
 
 类的`realizeClass`运行之后：
 
-![](/assets/images/20200721iOSinterviewAnswers/after_bits.avif)
+![after_bits](/assets/images/20200721iOSinterviewAnswers/after_bits.avif)
 
 细看两个结构体的成员变量会发现很多相同的地方，他们都存放着当前类的属性、实例变量、方法、协议等等。区别在于：`class_ro_t`存放的是编译期间就确定的；而`class_rw_t`是在`runtime`时才确定，它会先将`class_ro_t`的内容拷贝过去，然后再将当前类的分类的这些属性、方法等拷贝到其中。所以可以说`class_rw_t`是`class_ro_t`的超集，当然实际访问类的方法、属性等也都是访问的`class_rw_t`中的内容
 
@@ -776,7 +776,7 @@ objc_msgSendSuper   //如果要给超类发送消息
 
 结合上边的消息传递机制,在Objective-C中如果给一个对象发送一条它无法处理的消息，就会进入下图描述的消息转发(Message Forwarding)流程
 
-![](/assets/images/20200721iOSinterviewAnswers/methodforward.avif)
+![methodforward](/assets/images/20200721iOSinterviewAnswers/methodforward.avif)
 
 在objc中消息转发需要经历3个阶段  `resolveInstanceMethod` -> `forwardingTargetForSelectoer` -> `forwardInvocation` ->`消息未能处理`。  
 
@@ -889,7 +889,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 
 ##### 消息转发机制和其他语言的消息机制优劣对比
 
-这个目前没有深入其它编程语言的运行时层面,比如C的底层或者C++的底层或者Java的底层消息传递这里提供 [一个android的类似消息转发的文章](探索 Android App Bundle)
+这个目前没有深入其它编程语言的运行时层面,比如C的底层或者C++的底层或者Java的底层消息传递这里提供 一个android的类似消息转发的文章（探索 Android App Bundle）
 
 
 #### 在方法调用的时候，方法查询-> 动态解析-> 消息转发 之前做了什么

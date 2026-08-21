@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220413YZ3DMenu/3dmenu.avif)
+![3dmenu](/assets/images/20220413YZ3DMenu/3dmenu.avif)
 
 # 前言
 
@@ -31,7 +31,7 @@ typora-root-url: ..
 
 下面是框架的代码结构设计
 
-![](/assets/images/20220413YZ3DMenu/3DMenuDesign.avif)
+![3D Menu Design](/assets/images/20220413YZ3DMenu/3DMenuDesign.avif)
 
 代码比较多 我这里没有给大家详细列,我把代码 放在了 [github](https://github.com/sunyazhou13/YZ3DMenu)上感兴趣的可以点击查看一下.
 

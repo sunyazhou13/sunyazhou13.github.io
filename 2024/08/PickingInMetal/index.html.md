@@ -13,7 +13,7 @@ typora-root-url: ..
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 
-![](/assets/images/20240813PickingAndHitTestinginMetal/picking.avif)
+![picking](/assets/images/20240813PickingAndHitTestinginMetal/picking.avif)
 
 
 # 最近学习Metal
@@ -22,7 +22,7 @@ typora-root-url: ..
 
 在Metal.by.Tutorials.4th.2023.12.pdf这本书中我找到了答案-`Object Picking`
 
-![](/assets/images/20240813PickingAndHitTestinginMetal/Metal.by.Tutorials.4th.2023.12.avif)
+![Metal.by.Tutorials.4th.2023.](/assets/images/20240813PickingAndHitTestinginMetal/Metal.by.Tutorials.4th.2023.12.avif)
 
 
 ``` sh

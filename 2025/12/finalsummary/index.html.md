@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20251231FinalSummary/banner.avif)
+![banner](/assets/images/20251231FinalSummary/banner.avif)
 
 
 # 前言
@@ -84,13 +84,13 @@ typora-root-url: ..
 今年学习小有所成,使用AI辅助的形式完成了一本英文技术书的全文阅读,我翻译一遍然后找AI翻译一遍,而且地铁上的80%的时间都在学习, 这种习惯已经成为了我生活中的一部分, 英语能力也有了一层质的提升.并且在学习完这本英文书后又学习了两篇技术论文.
 
 * 《设计模式之美》
-	* ![](/assets/images/20251231FinalSummary/DesignPattern.avif)
+	* ![Design Pattern](/assets/images/20251231FinalSummary/DesignPattern.avif)
 * 《快手 · 移动端音视频开发实战》
-	* ![](/assets/images/20251231FinalSummary/AVDev.avif)
+	* ![AV Dev](/assets/images/20251231FinalSummary/AVDev.avif)
 * 《线性代数》2025年学习 9%
-	* ![](/assets/images/20251231FinalSummary/LinearAlgebra.avif)
+	* ![Linear Algebra](/assets/images/20251231FinalSummary/LinearAlgebra.avif)
 * 《Metal.by.Tutorials.4th.2023.12》
-	* ![](/assets/images/20251231FinalSummary/MetalByTutorials202312.avif)
+	* ![Metal By Tutorials](/assets/images/20251231FinalSummary/MetalByTutorials202312.avif)
 * 论文两篇
 	* [MipMap逐级渐远渲染](https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf)
 	* [On the Parameterization of Catmull-Rom Curves 弦长参数化使贝塞尔曲线的差值更平滑](https://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf)
@@ -199,12 +199,12 @@ B站上找的学习课程,因为要学习写着色器.需要控制骨骼动画�
 
 就在年末这几天 乔氏发布了 乔氏紫罗兰球台-乔氏Q5. 18800¥. 距离我开球房的梦想又近了一步.
 
-![](/assets/images/20251231FinalSummary/joyq5.avif)
+![joyq](/assets/images/20251231FinalSummary/joyq5.avif)
 
 以前乔氏银腿都是 28800起步,现在如果买了这个球台成本瞬间减少 35%.这一年看了很多台球比赛,身边缺少一起玩球的伙伴, 我还依然坚持着爱好,爱好嘛必然也要转成消费.
 
 2025年买了一直奥斯本兹-征途3
-![](/assets/images/20251231FinalSummary/archbenz.avif)
+![archbenz](/assets/images/20251231FinalSummary/archbenz.avif)
 这球杆绝对是2025年爆款.至于为啥我的理解可能它的握把更像孙悟空的金箍棒,毕竟今年《黑神话悟空》国产3A游戏大作破发,导致大部分人的钱袋子破防了.
 
 对于爱好这点投入还是值得的,毕竟我没有什么不良嗜好,除了点外卖这也许就是宅男唯一的消费.
@@ -226,22 +226,22 @@ B站上找的学习课程,因为要学习写着色器.需要控制骨骼动画�
 到了这个环节必须上硬菜
 
 * 标致姜戈 4gen 带仪表导航 踏板150摩托车
-	![](/assets/images/20251231FinalSummary/django1.avif)  
-	![](/assets/images/20251231FinalSummary/django2.avif)  
+	![django](/assets/images/20251231FinalSummary/django1.avif)  
+	![django](/assets/images/20251231FinalSummary/django2.avif)  
 > 摩托车上班必备,第4代姜戈150采用无钥匙进入,液晶仪表,摩托车投屏也是不错的,外观和实用性是我强烈推荐的  
 * Mac  mini  M4
-	![](/assets/images/20251231FinalSummary/macminim4.avif)
+	![macminim](/assets/images/20251231FinalSummary/macminim4.avif)
 > 生产力工具,小巧实用的家庭苹果电脑 价格 3000¥有国补优惠.
 * DGX spark 
-	![](/assets/images/20251231FinalSummary/dgxspark0.avif)
-	![](/assets/images/20251231FinalSummary/dgxspark1.avif)
-	![](/assets/images/20251231FinalSummary/dgxspark2.avif)
+	![dgxspark](/assets/images/20251231FinalSummary/dgxspark0.avif)
+	![dgxspark](/assets/images/20251231FinalSummary/dgxspark1.avif)
+	![dgxspark](/assets/images/20251231FinalSummary/dgxspark2.avif)
 > 这个是AI超级计算机,2025年AI最火爆, 未来AI电脑 一定会走向千家万户进入寻常百姓家,就是它的价格现在得到3w. 一个就能满血版deepseek直接运行.
 * Jetson AGX Thor
-	![](/assets/images/20251231FinalSummary/JetsonThor.avif)
+	![Jetson Thor](/assets/images/20251231FinalSummary/JetsonThor.avif)
 > 这是和上面的设备基本差不多的机器人的心脏, AI超级计算机 都是英伟达出品.如果你想开发具身智能那这玩意必备.
 * 华为凌霄子母路由器
-	![](/assets/images/20251231FinalSummary/router.avif)
+	![router](/assets/images/20251231FinalSummary/router.avif)
 > 新房网络全屋布设了网线,用上这个路由器几乎全屋覆盖WiFi,必须拉满支持最新WiFi7协议.
 
 # 总结

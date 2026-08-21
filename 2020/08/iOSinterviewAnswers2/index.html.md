@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 
-![](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
+![i OS Interview Questions Album Cover](/assets/images/20200721iOSinterviewAnswers/iOSInterviewQuestionsAlbumCover.avif)
 
 
 # 前言
@@ -189,7 +189,7 @@ SideTable就是一个结构体，内部主要有引用计数表和弱引用表�
 
 我们来看图
 
-![](/assets/images/20200808iOSinterviewAnswers/SideTableStructure.avif)
+![Side Table Structure](/assets/images/20200808iOSinterviewAnswers/SideTableStructure.avif)
 
 > 操作系统维护64个SideTable，通过对象的地址位置hash之后模64(就是%64求余数)找到指定的SideTable
 每个SideTable维护了一个RefcountMap的引用计数表，key就是对象地址，value就是此对象的引用计数
@@ -576,7 +576,7 @@ int main(int argc, const char * argv[]) {
 
 这个调用函数`objc_setAssociatedObject(OBJC_ASSOCIATION_RETAIN_NONATOMIC, @"Hello")`在内存中是这样的存储结构
 
-![](/assets/images/20200808iOSinterviewAnswers/AssociationOrder.avif)
+![Association Order](/assets/images/20200808iOSinterviewAnswers/AssociationOrder.avif)
 
 
 ##### `objc_setAssociatedObject()`
@@ -680,7 +680,7 @@ objc_object::setHasAssociatedObjects()
 
 它会将`isa`结构体中的标记位`has_assoc`标记为`true`，也就是表示当前对象有关联对象，如下图`isa`中的各个标记位都是干什么的.
 
-![](/assets/images/20200808iOSinterviewAnswers/isa.avif)
+![isa](/assets/images/20200808iOSinterviewAnswers/isa.avif)
 
 ##### `objc_getAssociatedObject()`
 
@@ -910,7 +910,7 @@ void *context = objc_autoreleasePoolPush();
 
 `AutoreleasePoolPage`是个C++的类
 
-![](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolpage.avif)
+![autoreleasepoolpage](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolpage.avif)
 
 * **AutoreleasePool**并没有单独的结构,而是由若干个`AutoreleasePoolPage`以`双向链表`的形式组合成的,根据上图可以看出,这个双向链表有`前驱parent `和`后继child `.
 *  **AutoreleasePool**是按`线程`一一对应的(thread 成员变量)
@@ -957,7 +957,7 @@ class AutoreleasePoolPage {
 
 下面看下工作机制图
 
-![](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolworkflow.avif)
+![autoreleasepoolworkflow](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolworkflow.avif)
 
 > 这张图来自快手同事 周学运,如果大佬看到这张图的话希望能允许授权给我使用哈.
 
@@ -965,7 +965,7 @@ class AutoreleasePoolPage {
 
 如果嵌套AutoreleasePool 就是通过`哨兵对象`来标识,每次更新链表的next和`前驱``后继`来完成表的创建销毁.
 
-![](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolpage1.avif)
+![autoreleasepoolpage](/assets/images/20200808iOSinterviewAnswers/autoreleasepoolpage1.avif)
 
 当我们对一个对象发送一条`autorelease`消息的时候实际上就是将这个对象加入到当前`AutoreleasePoolPage`的栈顶`next`指针指向的位置
 

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20170222macOSsimulateKeyboradNSEvent/Cover.avif)
+![Cover](/assets/images/20170222macOSsimulateKeyboradNSEvent/Cover.avif)
 
 
 

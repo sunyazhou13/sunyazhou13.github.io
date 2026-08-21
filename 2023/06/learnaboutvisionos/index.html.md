@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20230609LearnAboutVisionOS/visionos.avif)
+![visionos](/assets/images/20230609LearnAboutVisionOS/visionos.avif)
 
 # 前言
 
@@ -32,7 +32,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 *  volumes 这个是对window的扩充和增强容器,用于容纳2D和3D内容
 *  spaces 相当于摄影机,也就是我们人眼的位置,用于显示款贯穿和全屏以及3D大屏曲面模式的一种类型.
 
-![](/assets/images/20230609LearnAboutVisionOS/visionos0.avif)
+![visionos](/assets/images/20230609LearnAboutVisionOS/visionos0.avif)
 
 官方的解释如下:
 
@@ -48,7 +48,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 这里有了解这个的4个视频
 
-![](/assets/images/20230609LearnAboutVisionOS/MeetSpatialComputing1.avif)
+![Meet Spatial Computing](/assets/images/20230609LearnAboutVisionOS/MeetSpatialComputing1.avif)
 
 * [Get started with building apps for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10260/)
 * [Principles of spatial design](https://developer.apple.com/videos/play/wwdc2023/10072/)
@@ -57,7 +57,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 一旦您熟悉了visionOS的基础知识，就可以进一步了解支持该平台的框架。参观一下visionOS的SwiftUI，了解如何为窗口和卷添加深度，以及如何使用Full Space让人们以前所未有的方式体验您的应用程序。我们还将向您介绍用于空间计算的UIKit，并分享如何与SwiftUI一起使用它。
 
-![](/assets/images/20230609LearnAboutVisionOS/MeetSpatialComputing2.avif)
+![Meet Spatial Computing](/assets/images/20230609LearnAboutVisionOS/MeetSpatialComputing2.avif)
 
 [Meet SwiftUI for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10109/)
 [Meet UIKit for spatial computing](https://developer.apple.com/videos/play/wwdc2023/111215/)
@@ -68,7 +68,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 要更深入地了解SwiftUI和RealityKit，请探索专注于SwiftUI场景类型的专门系列会议，以帮助您跨窗口、卷和空间构建出色的体验。了解Model 3D API，了解如何在应用程序中添加深度和维度，并了解如何使用RealityView渲染3D内容。我们将帮助您准备好进入ImmersiveSpace—一种新的SwiftUI场景类型，可以让您为visionOS创造出色的沉浸式体验。学习管理场景类型的最佳实践，增加沉浸感，并建立一个“走出这个世界”的体验。
 
-![](/assets/images/20230609LearnAboutVisionOS/ExploreSwiftUIandRealityKit1.avif)
+![Explore Swift U Iand Reality Kit](/assets/images/20230609LearnAboutVisionOS/ExploreSwiftUIandRealityKit1.avif)
 
 * [Elevate your windowed app for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10110/)
 * [Take SwiftUI to the next dimension](https://developer.apple.com/videos/play/wwdc2023/10113/)
@@ -76,7 +76,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 在我们的第二个系列中，了解如何使用RealityKit为您的应用程序带来引人入胜的沉浸式内容。开始使用RealityKit实体，组件和系统，并了解如何将3D模型和效果添加到项目中。我们将向您展示如何将您的内容嵌入到实体层次结构中，使用锚将虚拟内容和现实世界混合在一起，将粒子效果带入您的应用程序，添加视频内容，并通过门户创建更身临其境的体验。
 
-![](/assets/images/20230609LearnAboutVisionOS/ExploreSwiftUIandRealityKit2.avif)
+![Explore Swift U Iand Reality Kit](/assets/images/20230609LearnAboutVisionOS/ExploreSwiftUIandRealityKit2.avif)
 
 * [Enhance your spatial computing app with RealityKit](https://developer.apple.com/videos/play/wwdc2023/10081/)
 * [Build spatial experiences with RealityKit](https://developer.apple.com/videos/play/wwdc2023/10080/)
@@ -87,7 +87,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 我们将分享这个框架是如何完全重新构想的，让你在保护隐私的同时建立互动体验。了解如何制作与某人房间交互的3D内容-无论您是想将虚拟球从地板上弹起还是将虚拟油漆扔到墙上。探索ARKit API的最新更新，并跟随我们演示如何在应用程序中利用手跟踪和场景几何。
  
- ![](/assets/images/20230609LearnAboutVisionOS/RediscoverARKit.avif)
+ ![Rediscover AR Kit](/assets/images/20230609LearnAboutVisionOS/RediscoverARKit.avif)
  
  * [Meet ARKit for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10082/)
  * [Evolve your ARKit app for spatial experiences](https://developer.apple.com/videos/play/wwdc2023/10091/)
@@ -96,7 +96,7 @@ visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的
 
 了解如何为空间计算设计出色的应用程序、游戏和体验。发现全新的输入和组件。潜入深度和规模。增加沉浸的时刻。创建空间音频音景。寻找合作和联系的机会。并帮助人们在探索全新世界的同时保持对周围环境的脚踏实地。无论这是您第一次设计空间体验，还是您多年来一直在构建完全沉浸式的应用程序，了解如何使用visionOS创建神奇的英雄时刻，迷人的音景，以人为中心的UI等等。
 
-![](/assets/images/20230609LearnAboutVisionOS/DesignforvisionOS.avif)
+![Designforvision OS](/assets/images/20230609LearnAboutVisionOS/DesignforvisionOS.avif)
 
 * [Principles of spatial design](https://developer.apple.com/videos/play/wwdc2023/10072/)
 * [Design for spatial user interfaces](https://developer.apple.com/videos/play/wwdc2023/10076/)
@@ -112,7 +112,7 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 用Xcode开始为visionOS开发。我们将向您展示如何将visionOS目的地添加到您现有的项目或构建一个全新的应用程序，在Xcode预览中的原型，并从Reality Composer Pro导入内容。我们还将分享如何使用visionOS模拟器来评估您对各种模拟场景和照明条件的体验。了解如何创建测试和可视化，以探索空间内容的碰撞、遮挡和场景理解，并优化该内容的性能和效率。
 
-![](/assets/images/20230609LearnAboutVisionOS/ExploredevelopertoolsforvisionOS.avif)
+![Exploredevelopertoolsforvision OS](/assets/images/20230609LearnAboutVisionOS/ExploredevelopertoolsforvisionOS.avif)
 
 * [What's new in Xcode 15](https://developer.apple.com/videos/play/wwdc2023/10165/)
 * [Develop your first immersive app](https://developer.apple.com/videos/play/wwdc2023/10203/)
@@ -126,7 +126,7 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 发现预览和准备3D内容的新方法为您的visionOS应用程序。本月晚些时候，现实作曲家专业利用美元的力量来帮助您撰写，编辑和预览资产，如3D模型，材料和声音。我们将向您展示如何利用此工具为您的应用程序创建身临其境的内容，向对象添加材料，并将您的现实作曲家Pro内容带入Xcode中。我们还将带您了解Apple平台上通用场景描述(USD)的最新更新。
 
-![](/assets/images/20230609LearnAboutVisionOS/MeetRealityComposerPro.avif)
+![Meet Reality Composer Pro](/assets/images/20230609LearnAboutVisionOS/MeetRealityComposerPro.avif)
 
 * [Meet Reality Composer Pro](https://developer.apple.com/videos/play/wwdc2023/10083/)
 * [Explore materials in Reality Composer Pro](https://developer.apple.com/videos/play/wwdc2023/10202/)
@@ -135,11 +135,11 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 ## 学习Unity
 
-![](/assets/images/20230609LearnAboutVisionOS/GetstartedwithUnity.avif)
+![Getstartedwith Unity](/assets/images/20230609LearnAboutVisionOS/GetstartedwithUnity.avif)
 
 ## TestFlight and App Store Connect
 
-![](/assets/images/20230609LearnAboutVisionOS/LearnaboutTestFlightandAppStoreConnect.avif)
+![Learnabout Test Flightand App Store Connect](/assets/images/20230609LearnAboutVisionOS/LearnaboutTestFlightandAppStoreConnect.avif)
 
 [Explore App Store Connect for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10012/)
 
@@ -147,7 +147,7 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 了解如何使用visionOS在游戏和媒体体验中创造真正身临其境的时刻。游戏和媒体可以利用全方位的沉浸感来讲述令人难以置信的故事，并以一种新的方式与人们建立联系。我们将向您展示可用的途径，让您开始与visionOS的游戏和叙事开发。学习使用RealityKit有效渲染3D内容的方法，探索视觉和运动的设计考虑因素，并了解如何创建完全身临其境的体验，将人们带入一个新的世界
 
-![](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences1.avif)  
+![Buildgamesandmediaexperiences](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences1.avif)  
 
 * [Build great games for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10096/)
 * [Explore rendering for spatial computing](https://developer.apple.com/videos/play/wwdc2023/10095/)
@@ -159,13 +159,13 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 声音也可以极大地增强你的visionOS应用程序和游戏的体验-无论你添加一个效果的按钮按下或创建一个完全身临其境的音景。了解Apple设计师如何选择声音和构建声景，在窗口、体量和空间中创造富有质感的沉浸式体验。我们将分享如何在您的应用程序中丰富声音的基本交互，当您在空间上放置音频线索时，变化重复的声音，并在您的应用程序中构建声音愉悦的时刻。
 
-![](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences2.avif)  
+![Buildgamesandmediaexperiences](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences2.avif)  
 
 * [Explore immersive sound design](https://developer.apple.com/videos/play/wwdc2023/10271/)
 
 如果您的应用程序或游戏具有媒体内容，我们有一系列的会议，旨在帮助您更新您的视频管道，并为visionOS建立一个伟大的播放体验。了解如何扩展交付管道以支持3D内容，并获得应用程序中空间媒体流的提示和技术。我们还将向您展示如何使用为visionOS提供视频播放的框架和api创建引人入胜和身临其境的播放体验。
 
-![](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences3.avif)  
+![Buildgamesandmediaexperiences](/assets/images/20230609LearnAboutVisionOS/Buildgamesandmediaexperiences3.avif)  
 
 * [Deliver video content for spatial experiences](https://developer.apple.com/videos/play/wwdc2023/10071/)
 * [Create a great spatial playback experience](https://developer.apple.com/videos/play/wwdc2023/10070/)
@@ -176,21 +176,21 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 
 通过了解您可以在应用程序中创建的共享活动类型，开始在Apple Vision Pro上设计和构建SharePlay。了解如何在体验中的参与者之间建立共享上下文，并了解如何通过支持空间人物角色在应用程序中支持更有意义的交互。
  
-![](/assets/images/20230609LearnAboutVisionOS/Buildforcollaborationsharingandproductivity.avif)
+![Buildforcollaborationsharingandproductivity](/assets/images/20230609LearnAboutVisionOS/Buildforcollaborationsharingandproductivity.avif)
 
 * [Design spatial SharePlay experiences](https://developer.apple.com/videos/play/wwdc2023/10075/)
 * [Build spatial SharePlay experiences](https://developer.apple.com/videos/play/wwdc2023/10087/) 
 
 ## web相关和创建3D模型相关
 
-![](/assets/images/20230609LearnAboutVisionOS/Buildwebexperiences1.avif)
-![](/assets/images/20230609LearnAboutVisionOS/Buildwebexperiences2.avif)
+![Buildwebexperiences](/assets/images/20230609LearnAboutVisionOS/Buildwebexperiences1.avif)
+![Buildwebexperiences](/assets/images/20230609LearnAboutVisionOS/Buildwebexperiences2.avif)
 
 ## 如果让我们的运行在iPhone和iPad的app运行在visionOS上
 
 了解如何在visionOS中运行现有的ipad和iOS应用程序。探索iPad和iOS应用程序如何在这个平台上运行，了解框架依赖关系，并了解专为iPad设计的应用程序交互。当您准备好将现有应用程序提升到一个新的水平时，我们将向您展示如何优化共享空间的iPad和iPhone应用程序体验，并帮助您改善视觉效果。
 
-![](/assets/images/20230609LearnAboutVisionOS/RunyouriPadandiPhoneappsinvisionOS.avif)
+![Runyouri Padandi Phoneappsinvision OS](/assets/images/20230609LearnAboutVisionOS/RunyouriPadandiPhoneappsinvisionOS.avif)
 
 * [Run your iPad and iPhone apps in the Shared Space](https://developer.apple.com/videos/play/wwdc2023/10090/)
 * [Enhance your iPad and iPhone apps for the Shared Space](https://developer.apple.com/videos/play/wwdc2023/10094/)

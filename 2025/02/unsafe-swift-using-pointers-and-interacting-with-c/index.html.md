@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20250222UnsafeSwift/banner.avif)
+![banner](/assets/images/20250222UnsafeSwift/banner.avif)
 
 # 前言
 
@@ -43,7 +43,7 @@ typora-root-url: ..
 ###  探索Unsafe Swift内存布局
 首先打开 UnsafeSwift Playground。由于本教程中的所有代码都是跨平台的，你可以选择任意平台
 
-![](/assets/images/20250222UnsafeSwift/memory1.avif)
+![memory](/assets/images/20250222UnsafeSwift/memory1.avif)
 
 不安全的 Swift 直接与内存系统交互。你可以将内存想象成一系列盒子——实际上有数十亿个盒子——每个盒子里都包含一个数字。
 
@@ -61,7 +61,7 @@ typora-root-url: ..
 
 首先打开 **UnsafeSwift** Playground。由于本教程中的所有代码都是跨平台的，你可以选择任意平台。
 
-![](/assets/images/20250222UnsafeSwift/memory2.avif)
+![memory](/assets/images/20250222UnsafeSwift/memory2.avif)
 
 不安全的 Swift 直接与内存系统交互。你可以将内存想象成一系列盒子——实际上有数十亿个盒子——每个盒子里都包含一个数字。
 
@@ -171,7 +171,7 @@ Swift 并不像 C 语言中的 `char *` 那样，只提供一种非结构化的 
 
 不安全的 Swift 指针使用一种可预测的命名方案来描述指针的特性：可变的（mutable）或不可变的（immutable）、原始的（raw）或类型化的（typed）、缓冲区风格（buffer style）或非缓冲区风格。总共有八种指针组合。你将在接下来的部分中了解更多关于它们的内容。
 
-![](/assets/images/20250222UnsafeSwift/pointers1.avif)
+![pointers](/assets/images/20250222UnsafeSwift/pointers1.avif)
 
 ### Using Raw Pointers 使用原始指针  
 
@@ -689,7 +689,7 @@ macOS 提供了 `arc4random`，它可以生成密码学安全的随机数。不�
 
 在本节中，你将利用新学到的知识来读取这个文件，并生成类型安全的随机数。
 
-![](/assets/images/20250222UnsafeSwift/hexdump.avif)
+![hexdump](/assets/images/20250222UnsafeSwift/hexdump.avif)
 
 首先，创建一个新的 Playground，命名为 RandomNumbers，或者打开项目中的初始 Playground。
 

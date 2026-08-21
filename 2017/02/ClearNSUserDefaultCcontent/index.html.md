@@ -30,7 +30,7 @@ macOS应用非沙盒权限(如下图) `~/Library/Preferences/<my app>.plist  <my
 
 macOS应用沙盒权限(如下图)  `~/Library/Containers/<my app>/Data/Library/Preferences/<my app>.plist` eg:qq  
 
-![](/assets/images/20170220ClearNSUserDefaultCcontent/SandBoxPermission.avif)
+![Sand Box Permission](/assets/images/20170220ClearNSUserDefaultCcontent/SandBoxPermission.avif)
 
 
 总结

@@ -15,7 +15,7 @@ typora-root-url: ..
 
 上图看成品
 
-![](/assets/images/20181114PlayLoadingAnimation/playloading.avif)
+![playloading](/assets/images/20181114PlayLoadingAnimation/playloading.avif)
 
 
 

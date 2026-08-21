@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20170930DeviceCheck/DeviceCheck.avif)
+![Device Check](/assets/images/20170930DeviceCheck/DeviceCheck.avif)
 
 # 前言
 
@@ -76,11 +76,11 @@ check 是否支持 如果支持 的话会在回调以后返回 `token`(NSData)
 
 token 是个 2188字节(2k 多点)的二进制流,很小
 
-![](/assets/images/20170930DeviceCheck/DCDeviceCode.avif)
+![DC Device Code](/assets/images/20170930DeviceCheck/DCDeviceCode.avif)
 
 我尝试各种字符串编码最终也不知道里面是啥 没能成功打印出来
 
-![](/assets/images/20170930DeviceCheck/DCDeviceBinary.avif)
+![DC Device Binary](/assets/images/20170930DeviceCheck/DCDeviceBinary.avif)
 
 谁要是打印出来烦请 share 一下
 

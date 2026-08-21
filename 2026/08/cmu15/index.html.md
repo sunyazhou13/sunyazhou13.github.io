@@ -8,11 +8,11 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/20260820CMU15/CMU15_1.avif)
+![CMU15_](/assets/images/20260820CMU15/CMU15_1.avif)
 
 > 本文整理自 CMU 15-462/662《Computer Graphics》(Keenan Crane 主讲) 完整课程，按讲义粒度收录**每一讲的算法与公式**。记号约定：向量用粗体，矩阵用大写字母，$\theta$ 指角度、$\omega$ 指立体角方向。建议对照讲义使用：算法看流程，公式记推导，最后动手实现。
 
-![](/assets/images/20260820CMU15/CMU15_2.avif)
+![CMU15_](/assets/images/20260820CMU15/CMU15_2.avif)
 
 ## 课程全景
 
@@ -732,4 +732,4 @@ $$\frac{\partial v}{\partial t} = -\frac{1}{\rho}\nabla p - (v\cdot\nabla)v + \n
 $$L_o = L_e + \int_\Omega f_r\, L_i \cos\theta\, d\omega_i$$
 
 
-[B站课程链接](bilibili.com/video/BV1Kn3q6yEic/?spm_id_from=333.1391.0.0&p=26)
+[B站课程链接](https://www.bilibili.com/video/BV1Kn3q6yEic/?spm_id_from=333.1391.0.0&p=26)

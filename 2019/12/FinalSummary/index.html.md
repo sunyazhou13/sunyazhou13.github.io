@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20191231FinalSummary/AlanTuring.avif)
+![Alan Turing](/assets/images/20191231FinalSummary/AlanTuring.avif)
 
 2019年 [阿兰图灵](https://baike.baidu.com/item/%E8%89%BE%E4%BC%A6%C2%B7%E9%BA%A6%E5%B8%AD%E6%A3%AE%C2%B7%E5%9B%BE%E7%81%B5/3940576?fromtitle=%E9%98%BF%E5%85%B0%C2%B7%E5%9B%BE%E7%81%B5&fromid=10961384)(计算机的先驱缔造者)将出现在未来的50英镑纸币的封面,这将是计算机发展史上的里程碑,是他破解了德国的著名密码系统Enigma，帮助盟军取得了二战的胜利.没有他就没有今天的计算机.
 
@@ -47,8 +47,8 @@ typora-root-url: ..
 
 今年有一件愉快的事情是我分享的一下AVAudioSesion相关文章,给个奖励,激励我不断学习专研技术.
 
-![](/assets/images/20191231FinalSummary/share1.avif)
-![](/assets/images/20191231FinalSummary/share2.avif)
+![share](/assets/images/20191231FinalSummary/share1.avif)
+![share](/assets/images/20191231FinalSummary/share2.avif)
 
 > 感谢我手官方,如此关怀备至.
 
@@ -62,7 +62,7 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 就在我写这篇文章的时候,我参与开发的`快手极速版`已经登上了App Store top1.
 
-![](/assets/images/20191231FinalSummary/nebula.avif)
+![nebula](/assets/images/20191231FinalSummary/nebula.avif)
 
 我2019年的年终OKR就是要把快手极速版送上App Store top1的宝座,今天实现了.
 
@@ -74,11 +74,11 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 
 下图是装完最后上理石包口的场景.   
-![](/assets/images/20191231FinalSummary/decoration1.avif)  
-![](/assets/images/20191231FinalSummary/decoration2.avif)
+![decoration](/assets/images/20191231FinalSummary/decoration1.avif)  
+![decoration](/assets/images/20191231FinalSummary/decoration2.avif)
 
 下面是装修完最后的一张图  
-![](/assets/images/20191231FinalSummary/decoration3.avif)
+![decoration](/assets/images/20191231FinalSummary/decoration3.avif)
 
 具体的装修套路我大概了解一二供后续装修的各位参考:
 
@@ -115,102 +115,102 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 北京首都国际机场直飞日本东京羽田机场
 
-![](/assets/images/20191231FinalSummary/japen_travel1.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel1.avif)
 
 > 出乎我意料的是这飞机是沿着朝鲜和韩国的38线飞过去的.
 
 到达东京坐大巴,日本的车牌让我震惊了
 
-![](/assets/images/20191231FinalSummary/japen_travel2.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel2.avif)
 
 简单几个数字就能代表一个车牌.
 
 上车后 我发现一下非常实用的设计 大巴的杯架
 
-![](/assets/images/20191231FinalSummary/japen_travel4.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel4.avif)
 
 不说咱崇洋媚外,就说这玩意为啥国内公交车没有吧!这玩意又没技术含量,这么人性化设计简直太难得了.
 
 
 东京湾的港口以及工厂基本说明了,日本之所以发达的原因
 
-![](/assets/images/20191231FinalSummary/japen_travel5.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel5.avif)
 
 日本属于英联邦国家,道路左侧通行,一辆辆卡车擦的锃亮.
 
 
-![](/assets/images/20191231FinalSummary/japen_travel6.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel6.avif)
 
 右舵的司机位置, 我只听过 日本司机戴白手套,这回见到了. 我还见到了 这司机把相同颜色的行李箱分组摆放,这点真是不一样,方便色盲的游客快速找到自己的行李箱.
 
 
 去的第一个景点是`平和公园`,没有拍照可惜了,空气湿度很好. 从随处可见的蝴蝶就能看出来,环境不错.
 
-![](/assets/images/20191231FinalSummary/japen_travel7.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel7.avif)
 
 到达`山梨县`温泉酒店 
 
-![](/assets/images/20191231FinalSummary/japen_travel9.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel9.avif)
 
 这个小县里的药妆店
 
-![](/assets/images/20191231FinalSummary/japen_travel10.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel10.avif)
 
 让我感到资本主义落后社会主义兴盛的唯一客观特征是`电线杆子`在日本随处可见.
 
 日本山梨县交警队
 
-![](/assets/images/20191231FinalSummary/japen_travel8.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel8.avif)
 
 
 日本的送餐摩托车
 
-![](/assets/images/20191231FinalSummary/japen_travel11.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel11.avif)
 
 看这整齐的车队,比起国内的送餐车除了不环保以外,其实还是很板正的. 啥时候国内能这样整齐的配备送餐工具车那我的祖国基本已经进入了发达国家的行列.这种车在日本被成为`大脚摩托`.前面还是分体式独立悬挂设计.备箱至少能送超过20人的餐食吧,一箱油200公里.  简直就是发达国家的标配.
 
 日式温泉酒店
 
-![](/assets/images/20191231FinalSummary/japen_travel12.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel12.avif)
 
 被子叠起来就桌子一放就能吃饭 ，省空间 省地方,是挺方便.
 
 第二天去富士山,富士山掠影
 
-![](/assets/images/20191231FinalSummary/japen_travel13.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel13.avif)
 
 回来的路上,看到每家房前屋后都有几罐燃气.
 
-![](/assets/images/20191231FinalSummary/japen_travel14.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel14.avif)
 
 日本的居民用车`K-CAR` 它不能超过660cc排量.小到非常实用.
 
-![](/assets/images/20191231FinalSummary/japen_travel15.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel15.avif)
 
 忍野八海 清澈的池塘,让我不禁想起 毛爷爷的那句**鹰击长空鱼翔浅底**
 
-![](/assets/images/20191231FinalSummary/japen_travel20.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel20.avif)
 
 下午我们抵达东京  去 天皇皇居外面参观
 
-![](/assets/images/20191231FinalSummary/japen_travel16.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel16.avif)
 
 > 他叫[楠木正成](https://baike.baidu.com/item/%E6%A5%A0%E6%9C%A8%E6%AD%A3%E6%88%90),相当于日本的诸葛亮. 日本也有类似我们的三国时期被称为[战国时代](https://baike.baidu.com/item/%E6%A5%A0%E6%9C%A8%E6%AD%A3%E6%88%90)1467—1585年或1615年,也就是 丰臣秀吉、织田信长、德川家康 ,最后以德川幕府取得最终的胜利建立今天的日本天皇时代.
 
 
 行程的第三天我们自由行 来到的  日本东京繁华的接头`新宿`
 
-![](/assets/images/20191231FinalSummary/japen_travel19.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel19.avif)
 
 日本的街头  人行横道原来是 横向 竖向 对角都可以.
 
 第三天我们自由行 晚上去了`六本目之丘`,俯瞰东京塔和繁华的东京夜景
 
-![](/assets/images/20191231FinalSummary/japen_travel18.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel18.avif)
 
 最后一天 去东京港 看一看 曾经日本在美国军舰密苏里号上签字宣布无条件投降的东京湾.
 
-![](/assets/images/20191231FinalSummary/japen_travel17.avif)
+![japen_travel](/assets/images/20191231FinalSummary/japen_travel17.avif)
 
 由于篇幅较长 这里简短的介绍到这里.
 
@@ -254,11 +254,11 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 买了谭浩强最新出的C程序设计
 
-![](/assets/images/20191231FinalSummary/cprogram.avif)
+![cprogram](/assets/images/20191231FinalSummary/cprogram.avif)
 
 买了鸟哥最新出的linux
 
-![](/assets/images/20191231FinalSummary/LinuxNew.avif)
+![Linux New](/assets/images/20191231FinalSummary/LinuxNew.avif)
 
 这两本书基本陪我走过了一半的职业生涯,家里装修完了,这些书都要放到书架上珍藏起来.
 据说最新版本的linux使用的已经不是centos6了,是centos7操作系统了.有时间把树莓派装上,感觉很棒.
@@ -267,8 +267,8 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 2019年北京出了限制性政策,说不符合标准的电动车2年后禁止上路,于是我把我的小牛N1s卖了,换了一辆摩托车代步,为了摩托又现去海淀驾校增驾的摩托车.
 
-![](/assets/images/20191231FinalSummary/motocycle1.avif)
-![](/assets/images/20191231FinalSummary/motocycle2.avif)
+![motocycle](/assets/images/20191231FinalSummary/motocycle1.avif)
+![motocycle](/assets/images/20191231FinalSummary/motocycle2.avif)
 
 买个踏板就够用了, 这摩托叫 django 150(姜戈) ,是济南轻骑制造.目前安全骑行3000公里,没有任何问题,价格2w+.买车的时候正好赶上国家执行150cc以下排量的摩托车免税.这辆车希望能骑回哈尔滨.用以纪念北京工作的这几年.
 
@@ -277,10 +277,10 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 为了增驾摩托车,又从科目一考到科目四,从报考到练车再到拿本用时11天.非常到位,不过夏天练摩托车是真热
 
 摩托车(2轮)科目二 练习  
-![](/assets/images/20191231FinalSummary/drivin_license_exam1.avif)
+![drivin_license_exam](/assets/images/20191231FinalSummary/drivin_license_exam1.avif)
 
 摩托车(3轮)科目二 练习  
-![](/assets/images/20191231FinalSummary/drivin_license_exam2.avif)
+![drivin_license_exam](/assets/images/20191231FinalSummary/drivin_license_exam2.avif)
 
 ##### 摩托车考试流程
 
@@ -314,20 +314,20 @@ __快手是我在北京的最后一家公司,没有哪家能像它一样接地�
 
 对于一个拿驾照2年多的我还从未尝试正经开过车,没有车练习怕以后用到的时候手足无措,今年没想到经过同学介绍碰到了一个合适的二手车,车况不错.于是坐飞机回去就买了.
 
-![](/assets/images/20191231FinalSummary/magotan1.avif)
-![](/assets/images/20191231FinalSummary/magotan2.avif)
-![](/assets/images/20191231FinalSummary/magotan3.avif)
-![](/assets/images/20191231FinalSummary/magotan4.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan1.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan2.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan3.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan4.avif)
 
 他叫`迈腾`B7L,2013年12月左右出厂的第7代迈腾(目前最新出的是迈腾B8.5后边带字母)我接手前 这车实表跑了8w左右.全车4s店保养,没出过大毛病.迈腾2013豪华版2.0TSI,我以10.5w买下. 办理牌照和保险以及保养全部搞完11w左右.
 
 买到手第一件事加装倒车翻标摄像头,也就是大众车标翻盖伸出来一个摄像头用于倒车影像.
 
-![](/assets/images/20191231FinalSummary/magotan5.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan5.avif)
 
 开到北京周末闲暇的时候洗洗车打打蜡跟新的一样.
 
-![](/assets/images/20191231FinalSummary/magotan6.avif)
+![magotan](/assets/images/20191231FinalSummary/magotan6.avif)
 
 说说买车的过程吧, 原车主一开始以为我不会买他的车也就没当回事,后来发现我连车都不看直接交易这个过程就有点认真了回去直接把全部证件都拿来了,下午4点办理完各种保险 第二天把车一顿保养,上100w的商保,开车回北京,期间感谢同学姚志强,一路办牌照压牌等等手续都板正的帮我整利索了,我这初中同学是在哈尔滨平房一个叫诚杰一汽大众4s店工作,所以在有人办事真快真方便.他在4s店我买车没理由不选择大众.原来的车主小伙送了我一套雪地胎很棒.
 

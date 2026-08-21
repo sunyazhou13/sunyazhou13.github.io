@@ -18,21 +18,21 @@ typora-root-url: ..
 隐藏左侧面板
 --
 
-![](/assets/images/20170406XcodeShortcuts/Command0.avif)
+![Command](/assets/images/20170406XcodeShortcuts/Command0.avif)
 
 > **command+0**=显示/隐藏左侧面板
 
 隐藏右侧面板
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommondOption0.avif)
+![Commond Option](/assets/images/20170406XcodeShortcuts/CommondOption0.avif)
 
 > **command+option+0**=显示/隐藏右侧面板
 
 隐藏debug区域
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommandShiftY.avif)
+![Command Shift Y](/assets/images/20170406XcodeShortcuts/CommandShiftY.avif)
 
 > **command+shift+y**=显示/隐藏底部控制等调试区域
 
@@ -40,7 +40,7 @@ typora-root-url: ..
 跳转到代码多少行 
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommandLine.avif)
+![Command Line](/assets/images/20170406XcodeShortcuts/CommandLine.avif)
 
 > **command + l (L)**=跳转到代码多少行 注意看清是l 不是i 
 
@@ -48,7 +48,7 @@ typora-root-url: ..
 隐藏/显示函数体 
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommondOptionLeft.avif)
+![Commond Option Left](/assets/images/20170406XcodeShortcuts/CommondOptionLeft.avif)
 
 > **command+option+⬅︎**=隐藏函数 `⬅︎`代表左箭头   iOS, macOS, Objective-C
 > **command+option+➡︎**=显示函数  `➡︎`代表右箭头 
@@ -58,7 +58,7 @@ typora-root-url: ..
 上下移动代码行
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommondOptionMove.avif)
+![Commond Option Move](/assets/images/20170406XcodeShortcuts/CommondOptionMove.avif)
 
 > **command + option + {**=向上移动代码行
 > **command + option + }**=向下移动代码行
@@ -66,7 +66,7 @@ typora-root-url: ..
 前后移动代码行
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommondMove.avif)
+![Commond Move](/assets/images/20170406XcodeShortcuts/CommondMove.avif)
 
 > **command + {**=向前移动代码行
 > **command + }**=向后移动代码行
@@ -76,7 +76,7 @@ typora-root-url: ..
 全工程查找文件
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommandShiftO.avif)
+![Command Shift O](/assets/images/20170406XcodeShortcuts/CommandShiftO.avif)
 
 > **command + shift + o**=向前移动代码行 o大写字母
 
@@ -84,7 +84,7 @@ typora-root-url: ..
 添加代码行注释
 --
 
-![](/assets/images/20170406XcodeShortcuts/CommondOptionQ.avif)
+![Commond Option Q](/assets/images/20170406XcodeShortcuts/CommondOptionQ.avif)
 
 > **command + option + ?**=自动添加函数描述声明
 

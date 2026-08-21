@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20201010PodSpec/cocoapods.avif)
+![cocoapods](/assets/images/20201010PodSpec/cocoapods.avif)
 
 # 前言
 
@@ -40,7 +40,7 @@ UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 
 上述显然不能满足我们的需求.
 
-![](/assets/images/20230322PodXCAssets/1.avif)
+![image](/assets/images/20230322PodXCAssets/1.avif)
 
 ## 图片都是带2x3x的图,怎么从默认的pod里面取到相关的图片呢?.
 
@@ -54,7 +54,7 @@ UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 
 ##### 如下图
 
-![](/assets/images/20230322PodXCAssets/2.avif)
+![image](/assets/images/20230322PodXCAssets/2.avif)
 
 
 ##### podspec中声明
@@ -67,7 +67,7 @@ spec.resource_bundles = {'YZToolsAssets' => ['Resources/*.xcassets']}
 
 下图中是相关的文档
 
-![](/assets/images/20230322PodXCAssets/6.avif)
+![image](/assets/images/20230322PodXCAssets/6.avif)
 
 这种[podspec文档](https://guides.cocoapods.org/syntax/podspec.html#resource_bundles)中说明演示的不清晰,大家需要深入学习和挖掘,
 
@@ -124,7 +124,7 @@ UIImage *image = [UIImage yzToolsImageNamed:@"power"];
 ```  
 结果如下图:
 
-![](/assets/images/20230322PodXCAssets/3.avif)
+![image](/assets/images/20230322PodXCAssets/3.avif)
 
 这里需要注意下这里面拿到的是`mainBundle`.
 
@@ -132,12 +132,12 @@ UIImage *image = [UIImage yzToolsImageNamed:@"power"];
 
 在.app/目录下
 
-![](/assets/images/20230322PodXCAssets/4.avif)
+![image](/assets/images/20230322PodXCAssets/4.avif)
 
 ``` sh
 /var/containers/Bundle/Application/F3C2809A-A5E4-4808-A2AA-5962D4BE6AA1/bodianplayer.app/YZToolsAssets.bundle
 ```
-![](/assets/images/20230322PodXCAssets/5.avif)
+![image](/assets/images/20230322PodXCAssets/5.avif)
 
 可以看到这里的图片素材已经被加密变成一个叫做Assets.car的文件,这说明我们的资源已经被加密打包,轻易不会被别的app找到.
 

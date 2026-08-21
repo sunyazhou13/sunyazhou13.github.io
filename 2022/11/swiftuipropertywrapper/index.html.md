@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20221125SwiftUIPropertyWrapper/swiftUIPropertyWrappers.avif)
+![swift UI Property Wrappers](/assets/images/20221125SwiftUIPropertyWrapper/swiftUIPropertyWrappers.avif)
 
 # 前言
 

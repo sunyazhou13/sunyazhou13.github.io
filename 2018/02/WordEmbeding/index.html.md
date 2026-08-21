@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20180204WordEmbeding/wordembeding.avif)
+![wordembeding](/assets/images/20180204WordEmbeding/wordembeding.avif)
 
 # 前言
 

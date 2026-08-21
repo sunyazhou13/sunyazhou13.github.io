@@ -9,7 +9,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220916FBMemoryCheckTool/FBMemoryProfiler.avif)
+![FB Memory Profiler](/assets/images/20220916FBMemoryCheckTool/FBMemoryProfiler.avif)
 
 # 前言
 
@@ -86,16 +86,16 @@ NSLog(@"%@", retainCycles);
 
 这里查找对象的方式用的是深度优先遍历搜索
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle.avif)
+![retain Cycle](/assets/images/20220916FBMemoryCheckTool/retainCycle.avif)
 
 
 ## 如何使用
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle1.avif)
+![retain Cycle](/assets/images/20220916FBMemoryCheckTool/retainCycle1.avif)
 
 示例场景分析
 
-![](/assets/images/20220916FBMemoryCheckTool/retainCycle2.avif)
+![retain Cycle](/assets/images/20220916FBMemoryCheckTool/retainCycle2.avif)
 
 示例代码
 

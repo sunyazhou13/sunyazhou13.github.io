@@ -14,7 +14,7 @@ typora-root-url: ..
 一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识,
 
 
-![](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo1.avif)
+![Aweme Demo](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo1.avif)
 
 
 # 技术实现原理
@@ -38,7 +38,7 @@ _tableView.contentInset = UIEdgeInsetsMake(SCREEN_HEIGHT, 0, SCREEN_HEIGHT * 3, 
 
 我画个图演示一下.
 
-![](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo2.avif)
+![Aweme Demo](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo2.avif)
 
 
 
@@ -140,7 +140,7 @@ __是的我们要自己监听自己的成员变量去搞些事情__.
 
 为什么置0呢?看下 下面这张图
 
-![](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo3Error.avif)
+![Aweme Demo3Error](/assets/images/20181106AwemeTopBottomScrollDemo/AwemeDemo3Error.avif)
 
 虽然我们能实现 自动滑动TableView到顶部 但是 我们拦截不到顶部状态栏点击的事件,在这个事件调用的地方 把当前页码置`0`.
 

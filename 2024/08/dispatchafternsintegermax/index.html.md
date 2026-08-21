@@ -16,7 +16,7 @@ math: true
 
 ## 开发中遇到的问题
 
-![](/assets/images/20240819dispatchafterNSIntegermax/popup.avif)
+![popup](/assets/images/20240819dispatchafterNSIntegermax/popup.avif)
 
 最近开发 测试同学提了一个bug, 首页底部tab的气泡一闪而过瞬间消失,认真追踪代码后发现,配置后台下发`-1`,客户端同学把这个`-1`替换成了NSIntegerMax
 
@@ -39,7 +39,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySeconds * NSEC_PE
 
 ### 为什么会立即执行?
 
-![](/assets/images/20240819dispatchafterNSIntegermax/NSIntegerMax1.avif)
+![NS Integer Max](/assets/images/20240819dispatchafterNSIntegermax/NSIntegerMax1.avif)
 
  `NSIntegerMax * NSEC_PER_SEC`= -10亿
 

@@ -13,18 +13,18 @@ typora-root-url: ..
 今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行
 
 看一张图  
-![](/assets/images/20170616XcodeDebugViaWireless/debug.avif)
+![debug](/assets/images/20170616XcodeDebugViaWireless/debug.avif)
 
 
 ### 配置
 
 第一步 选择设备选项
 
-![](/assets/images/20170616XcodeDebugViaWireless/setting1.avif)
+![setting](/assets/images/20170616XcodeDebugViaWireless/setting1.avif)
 
 第二步 点勾选 via network
 
-![](/assets/images/20170616XcodeDebugViaWireless/setting2.avif)
+![setting](/assets/images/20170616XcodeDebugViaWireless/setting2.avif)
 
 剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了
 

@@ -11,7 +11,7 @@ typora-root-url: ..
 
 # 前言
 
-![](/assets/images/20180902Beacon/beacon.avif)
+![beacon](/assets/images/20180902Beacon/beacon.avif)
 
 
 荷兰🇳🇱被称为"海上马车夫"，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20240115HarmonyOSLaunchPage/HarmonyLogo.avif)
+![Harmony Logo](/assets/images/20240115HarmonyOSLaunchPage/HarmonyLogo.avif)
 
 # 前言
 
@@ -22,7 +22,7 @@ typora-root-url: ..
 
 ### 先看下实现效果
 
-![](/assets/images/20240115HarmonyOSLaunchPage/launch.avif)
+![launch](/assets/images/20240115HarmonyOSLaunchPage/launch.avif)
 
 ### 这里使用的HarmonyOS4.1环境
 

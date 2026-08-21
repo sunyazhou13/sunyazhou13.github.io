@@ -8,7 +8,7 @@ typora-root-url: ..
 math: true
 ---
 
-![](/assets/images/20240222MotionShake/CMMotion.avif)
+![CM Motion](/assets/images/20240222MotionShake/CMMotion.avif)
 
 # 前言
 

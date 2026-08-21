@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20220406CVPixelBufferRef/Cover.avif)
+![Cover](/assets/images/20220406CVPixelBufferRef/Cover.avif)
 
 在iOS里，我们经常能看到`CVPixelBufferRef`这个类型，在`Camera`采集返回的数据里得到一个`CMSampleBufferRef`,而每个`CMSampleBufferRef`里则包含一个`CVPixelBufferRef`,在视频硬解码的返回数据里也是一个`CVPixelBufferRef`。
 

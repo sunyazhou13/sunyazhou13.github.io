@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![](/assets/images/20240822MultiBlockEmbedded/Objective-C.avif)
+![Objective-C](/assets/images/20240822MultiBlockEmbedded/Objective-C.avif)
 
 # 前言
 
