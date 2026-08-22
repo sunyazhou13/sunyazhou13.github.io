@@ -134,6 +134,21 @@ html[mode='dark'] #avt-app {
   accent-color: var(--avt-accent);
 }
 
+#avt-app .avt-options label.avt-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  padding-bottom: 0.35rem;
+  cursor: pointer;
+}
+
+#avt-app .avt-options label.avt-check input[type='checkbox'] {
+  accent-color: var(--avt-accent);
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+}
+
 #avt-app .avt-actions {
   display: flex;
   gap: 0.5rem;

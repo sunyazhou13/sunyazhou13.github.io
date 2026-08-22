@@ -24,6 +24,7 @@
     engine: document.getElementById('avt-engine'),
     speed: document.getElementById('avt-speed'),
     maxw: document.getElementById('avt-maxw'),
+    keepanim: document.getElementById('avt-keepanim'),
     convert: document.getElementById('avt-convert'),
     zip: document.getElementById('avt-zip'),
     clear: document.getElementById('avt-clear'),
@@ -36,6 +37,12 @@
     'image/bmp': 1, 'image/svg+xml': 1, 'image/avif': 1
   };
   var MAX_FILES = 300;
+  var MAX_ANIM_BYTES = 400 * 1048576; // 动图逐帧 RGBA 总量上限（内存保护）
+  var MAX_ANIM_FRAMES = 500;          // 单个动图最大帧数
+
+  function keepAnim() {
+    return !els.keepanim || els.keepanim.checked;
+  }
 
   var state = {
     items: [],
@@ -228,6 +235,70 @@
       });
   }
 
+  /* ---------- 动图逐帧解码（GIF 自研解码器 / WebP 走 ImageDecoder） ---------- */
+
+  function decodeGifFrames(file) {
+    return file.arrayBuffer().then(function (buf) {
+      return import('./anim.js').then(function (anim) {
+        var frames = [];
+        var info = anim.decodeGif(new Uint8Array(buf), function (f) {
+          frames.push(f);
+        });
+        return {
+          frames: frames,
+          frameCount: info.frameCount,
+          width: info.width,
+          height: info.height
+        };
+      });
+    });
+  }
+
+  function decodeWebpFrames(file) {
+    if (typeof ImageDecoder === 'undefined') {
+      return Promise.reject(new Error('NO_IMAGE_DECODER'));
+    }
+    return file.arrayBuffer().then(function (buf) {
+      var dec = new ImageDecoder({ data: buf, type: 'image/webp' });
+      return dec.tracks.ready.then(function () {
+        var track = dec.tracks.selectedTrack;
+        if (!track) throw new Error('无法解析 WebP 轨道');
+        var n = Math.min(track.frameCount, MAX_ANIM_FRAMES);
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d', { willReadFrequently: true });
+        var frames = [];
+        var w = 0, h = 0;
+        function one(i) {
+          return dec.decode({ frameIndex: i }).then(function (res) {
+            var vf = res.image;
+            if (i === 0) {
+              w = vf.displayWidth; h = vf.displayHeight;
+              canvas.width = w; canvas.height = h;
+            }
+            ctx.drawImage(vf, 0, 0);
+            var durMs = Math.round(vf.duration / 1000); // µs → ms
+            vf.close();
+            frames.push({
+              rgba: new Uint8Array(ctx.getImageData(0, 0, w, h).data),
+              delayMs: durMs > 0 ? durMs : 100,
+              index: i
+            });
+          });
+        }
+        var chain = Promise.resolve();
+        for (var k = 0; k < n; k++) {
+          (function (idx) {
+            chain = chain.then(function () { return one(idx); });
+          })(k);
+        }
+        return chain.then(function () {
+          dec.close();
+          return { frames: frames, frameCount: track.frameCount, width: w, height: h };
+        });
+      });
+    });
+  }
+
   /* ---------- 编码 ---------- */
 
   function encodeNative(canvas, quality) {
@@ -240,9 +311,14 @@
   }
 
   var WASM_DEFAULTS = {
+    // subsample 是 Squoosh 系 embind 自有枚举（勿信 jSquash 文档的 "0|1"），
+    // 实测（av1C seq_profile 裁决）：0=NONE 坏流（全灰）、1=YUV420、2=YUV422、
+    // 3=YUV444、4=YUV400（灰度）。jSquash 官方 lossless 包装即取 subsample=3。
+    // 线条类图 420（ss=1）色度减半是糊的根源：q80 仅 ~24dB；444（ss=3）同参数
+    // 达 52dB 且体积反而更小（照片类 +3% 体积持平质量）。Pillow+Chrome 双解码验证。
     quality: 60, qualityAlpha: -1, denoiseLevel: 0,
     tileColsLog2: 0, tileRowsLog2: 0, speed: 8,
-    subsample: 1, chromaDeltaQ: false, sharpness: 0,
+    subsample: 3, chromaDeltaQ: false, sharpness: 0,
     tune: 0, enableSharpYUV: true, bitDepth: 8
   };
 
@@ -256,15 +332,132 @@
     });
   }
 
+  /* ---------- 动图转换（逐帧 AVIF 编码 → 抽取 AV1 裸流 → HEIF 序列封装） ---------- */
+
+  function convertAnimated(item, engine) {
+    // 动图质量下限 80：q60 的帧 PSNR 仅 ~35dB，逐帧瑕疵在动画里会帧间闪烁放大；
+    // 滑杆高于 80 时尊重用户设置。实测 q60→q80 约 +4dB（照片类）。
+    var quality = Math.max(parseInt(els.quality.value, 10), 80);
+    var speed = parseInt(els.speed.value, 10);
+    var maxW = parseInt(els.maxw.value, 10) || Infinity;
+    var isGif = item.file.type === 'image/gif' || /\.gif$/i.test(item.name);
+    item.engine = engine;
+    item.animQuality = quality; // 卡片展示实际生效的质量（可能与滑杆不同）
+
+    var decodeP = isGif ? decodeGifFrames(item.file) : decodeWebpFrames(item.file);
+
+    return decodeP.then(function (decoded) {
+      var frames = decoded.frames;
+      if (!frames.length || decoded.frameCount > MAX_ANIM_FRAMES) {
+        throw new Error('动图帧数超过 ' + MAX_ANIM_FRAMES + ' 帧上限，请关闭「保留动画」改取首帧');
+      }
+      if (frames.length < 2) {
+        throw new Error('动图解码后不足 2 帧，请关闭「保留动画」改取首帧');
+      }
+      var totalRGBA = decoded.width * decoded.height * 4 * frames.length;
+      if (totalRGBA > MAX_ANIM_BYTES) {
+        throw new Error('动图原始帧数据约 ' + Math.round(totalRGBA / 1048576) + ' MB，超出处理上限，请限制最大宽度或关闭「保留动画」');
+      }
+
+      var scale = Math.min(1, maxW / decoded.width);
+      var w = Math.max(1, Math.round(decoded.width * scale));
+      var h = Math.max(1, Math.round(decoded.height * scale));
+      item.width = w; item.height = h;
+      item.frameCount = frames.length;
+
+      return import('./anim.js').then(function (anim) {
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext('2d', { willReadFrequently: true });
+        var tc = null, tcCtx = null; // 缩放用的临时画布
+        if (scale < 1) {
+          tc = document.createElement('canvas');
+          tc.width = decoded.width; tc.height = decoded.height;
+          tcCtx = tc.getContext('2d');
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+        }
+
+        var header = null; // 取第一帧解析出的 av1C / pixi / colr
+        var samples = [];
+        var i = 0;
+
+        function step() {
+          if (i >= frames.length) return Promise.resolve();
+          var f = frames[i++];
+          item.progressText = '转码帧 ' + i + '/' + frames.length + '…';
+          updateCard(item);
+
+          var encodeP;
+          if (scale === 1) {
+            ctx.putImageData(new ImageData(new Uint8ClampedArray(f.rgba), w, h), 0, 0);
+          } else {
+            tcCtx.putImageData(new ImageData(new Uint8ClampedArray(f.rgba), decoded.width, decoded.height), 0, 0);
+            ctx.clearRect(0, 0, w, h);
+            ctx.drawImage(tc, 0, 0, w, h);
+          }
+          if (engine === 'native') {
+            encodeP = encodeNative(canvas, quality).then(function (b) { return b.arrayBuffer(); });
+          } else {
+            encodeP = encodeWasm(ctx.getImageData(0, 0, w, h), quality, speed)
+              .then(function (b) { return b.arrayBuffer(); });
+          }
+          return encodeP.then(function (ab) {
+            var parsed = anim.parseAvifStill(new Uint8Array(ab));
+            if (!header) header = parsed;
+            samples.push({ data: parsed.av1, durationMs: f.delayMs });
+            return step();
+          });
+        }
+
+        return step().then(function () {
+          var out = anim.muxAnimatedAvif({
+            width: w, height: h,
+            av1C: header.av1C,
+            pixi: header.pixi,
+            colr: header.colr,
+            frames: samples
+          });
+          return new Blob([out], { type: 'image/avif' });
+        });
+      });
+    });
+  }
+
   /* ---------- 文件列表 ---------- */
 
   function convertItem(item, engine) {
     item.status = 'running';
+    item.progressText = '';
+    item.animFallback = false;
+    item.frameCount = 0;
     item.engine = engine;
     updateCard(item);
     var quality = parseInt(els.quality.value, 10);
     var speed = parseInt(els.speed.value, 10);
     var maxW = parseInt(els.maxw.value, 10) || Infinity;
+
+    // 动图 + 「保留动画」开启：走逐帧转码路径
+    if (item.animated && keepAnim()) {
+      var isGif = item.file.type === 'image/gif' || /\.gif$/i.test(item.name);
+      if (isGif || typeof ImageDecoder !== 'undefined') {
+        item.animMode = true;
+        return convertAnimated(item, engine).then(function (blob) {
+          item.blob = blob;
+          item.outSize = blob.size;
+          item.status = 'done';
+          item.progressText = '';
+          updateCard(item);
+        }).catch(function (err) {
+          item.status = 'error';
+          item.progressText = '';
+          item.error = (err && err.message) ? err.message : '动图转换失败';
+          updateCard(item);
+        });
+      }
+      // 动图 WebP 且浏览器无 ImageDecoder（Safari / Firefox）：降级取首帧
+      item.animFallback = true;
+    }
 
     return decodeImage(item.file).then(function (bmp) {
       var scale = Math.min(1, maxW / bmp.width);
@@ -351,8 +544,10 @@
 
   function statusText(it) {
     switch (it.status) {
-      case 'queued': return it.animated ? '动图 · 将取首帧' : '待转换';
-      case 'running': return '转换中…';
+      case 'queued':
+        if (!it.animated) return '待转换';
+        return (keepAnim() && !it.animFallback) ? '动图 · 保留动画' : '动图 · 仅取首帧';
+      case 'running': return it.progressText || '转换中…';
       case 'done': return '完成';
       case 'skipped': return '已是 AVIF · 跳过';
       case 'error': return '失败：' + it.error;
@@ -419,13 +614,16 @@
       var saved = item.origSize > 0 ? Math.round((1 - item.outSize / item.origSize) * 100) : 0;
       parts.push('→ ' + fmtBytes(item.outSize) + '（' + (saved >= 0 ? '-' : '+') + Math.abs(saved) + '%）');
       parts.push(item.width + '×' + item.height);
+      if (item.frameCount && item.frameCount > 1) {
+        parts.push(item.frameCount + ' 帧动画' + (item.animQuality ? ' · q' + item.animQuality : ''));
+      }
       parts.push(item.engine === 'native' ? '原生' : 'WASM');
       item._metaEl.classList.add('avt-meta-done');
       item._dlEl.hidden = false;
     } else if (item.status === 'skipped') {
       // no extra info
-    } else if (item.animated) {
-      parts.push('动图 · 仅取首帧');
+    } else if (item.animated && item.status === 'queued') {
+      parts.push(item.animFallback || !keepAnim() ? '动图 · 仅取首帧' : '动图 · 逐帧转码保留动画');
     }
     item._metaEl.textContent = parts.join(' · ');
     if (item.outName && item.status === 'done') {
@@ -630,6 +828,13 @@
   });
 
   els.engine.addEventListener('change', renderBadge);
+  if (els.keepanim) {
+    els.keepanim.addEventListener('change', function () {
+      state.items.forEach(function (it) {
+        if (it.status === 'queued') updateCard(it);
+      });
+    });
+  }
   els.convert.addEventListener('click', convertAll);
   els.zip.addEventListener('click', downloadZip);
   els.clear.addEventListener('click', clearAll);
