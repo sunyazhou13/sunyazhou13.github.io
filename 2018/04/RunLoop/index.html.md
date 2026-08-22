@@ -10,7 +10,6 @@ typora-root-url: ..
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop6.avif)
 
-
 # 前言
 
 `RunLoop` 是 `iOS` 和 `OSX` 开发中非常基础的一个概念，这篇文章将从`CFRunLoop`的源码入手，介绍 `RunLoop` 的概念以及底层实现原理。之后会介绍一下在 `iOS` 中，苹果是如何利用`RunLoop`实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
@@ -53,7 +52,6 @@ function loop() {
 
 这种模型通常被称作 [Event Loop](https://en.wikipedia.org/wiki/Event_loop)。 `Event Loop` 在很多系统和框架里都有实现，比如 `Node.js`的事件处理，比如 `Windows` 程序的消息循环，再比如 `OSX/iOS` 里的 `RunLoop`。实现这种模型的关键点在于：如何`管理事件/消息`，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。
 
-
 所以，`RunLoop` 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 `Event Loop` 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “`接受消息`->`等待->`处理`” 的循环中，直到这个循环结束（比如传入 `quit` 的消息），函数返回。
 
 `OSX/iOS` 系统中，提供了两个这样的对象：`NSRunLoop` 和 `CFRunLoopRef`。  
@@ -62,10 +60,9 @@ function loop() {
 
 `NSRunLoop` 是基于 `CFRunLoopRef` 的封装，提供了面向对象的 `API`，但是这些 `API` 不是线程安全的。  
 
-CFRunLoopRef 的代码是[开源](http://opensource.apple.com/source/CF/CF-855.17/CFRunLoop.c)的，你可以在这里 [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) 下载到整个 `CoreFoundation` 的源码来查看。
+CFRunLoopRef 的代码是开源的，你可以在这里 [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) 下载到整个 `CoreFoundation` 的源码来查看。
 
 (Update: Swift 开源后，苹果又维护了一个跨平台的 CoreFoundation 版本：[https://github.com/apple/swift-corelibs-foundation/](https://github.com/apple/swift-corelibs-foundation/)，这个版本的源码可能和现有`iOS`系统中的实现略不一样，但更容易编译，而且已经适配了`Linux/Windows`。)
-
 
 ### RunLoop 与线程的关系
 
@@ -114,13 +111,9 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 }
 ```
 
-
 从上面的代码可以看出，线程和`RunLoop`之间是一一对应的，其关系是保存在一个全局的 `Dictionary` 里。线程刚创建时并没有 `RunLoop`，如果你不主动获取，那它一直都不会有。`RunLoop` 的创建是发生在第一次获取时，`RunLoop` 的销毁是发生在线程结束时。你只能在一个线程的内部获取其 `RunLoop`（主线程除外）.
 
-
-
 ### RunLoop 对外的接口
-
 
 在 `CoreFoundation` 里面关于 `RunLoop` 有5个类:
 
@@ -130,11 +123,9 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 * `CFRunLoopTimerRef`
 * `CFRunLoopObserverRef`
 
-
 其中 `CFRunLoopModeRef` 类并没有对外暴露，只是通过 `CFRunLoopRef` 的接口进行了封装。他们的关系如下:
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop0.avif)
-
 
 一个 `RunLoop` 包含若干个 `Mode`，每个 `Mode `又包含若干个 `Source`/`Timer`/`Observer`。每次调用 `RunLoop` 的主函数时，只能指定其中一个 `Mode`，这个`Mode`被称作 `CurrentMode`。如果需要切换 `Mode`，只能退出 `Loop`，再重新指定一个 `Mode` 进入。这样做主要是为了分隔开不同组的 `Source`/`Timer`/`Observer`，让其互不影响。
 
@@ -143,9 +134,7 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 * `Source0` 只包含了一个回调（函数指针），它并不能主动触发事件。使用时，你需要先调用 `CFRunLoopSourceSignal(source)`，将这个 `Source` 标记为待处理，然后手动调用 `CFRunLoopWakeUp(runloop)` 来唤醒 `RunLoop`，让其处理这个事件。  
 * `Source1` 包含了一个 `mach_port` 和一个回调（函数指针），被用于通过内核和其他线程相互发送消息。这种 `Source` 能主动唤醒 `RunLoop` 的线程，其原理在下面会讲到。
 
-
 **CFRunLoopTimerRef** 是基于时间的触发器，它和 `NSTimer` 是`toll-free bridged `的，可以混用。其包含一个时间长度和一个回调（函数指针）。当其加入到 `RunLoop` 时，`RunLoop`会注册对应的时间点，当时间点到时，`RunLoop`会被唤醒以执行那个回调。
-
 
 **CFRunLoopObserverRef** 是观察者，每个 `Observer` 都包含了一个回调（函数指针），当 `RunLoop` 的状态发生变化时，观察者就能通过回调接受到这个变化。可以观测的时间点有以下几个：
 
@@ -185,7 +174,6 @@ struct __CFRunLoop {
 };
 ```
 
-
 这里有个概念叫 “`CommonModes`”：一个 `Mode` 可以将自己标记为”`Common`”属性（通过将其 `ModeName` 添加到 `RunLoop` 的 “`commonModes`” 中）。每当 `RunLoop` 的内容发生变化时，`RunLoop` 都会自动将 `_commonModeItems` 里的 `Source`/`Observer`/`Timer`同步到具有 “`Common`” 标记的所有`Mode`里。
 
 应用场景举例：主线程的 `RunLoop` 里有两个预置的 `Mode`：`kCFRunLoopDefaultMode` 和 `UITrackingRunLoopMode`。这两个 `Mode` 都已经被标记为”`Common`”属性。`DefaultMode` 是 `App` 平时所处的状态，`TrackingRunLoopMode` 是追踪 `ScrollView`滑动时的状态。当你创建一个`Timer`并加到 `DefaultMode` 时，`Timer` 会得到重复回调，但此时滑动一个`TableView`时，`RunLoop` 会将 `mode` 切换为 `TrackingRunLoopMode`，这时 `Timer` 就不会被回调，并且也不会影响到滑动操作。
@@ -223,7 +211,6 @@ CFRunLoopRemoveTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode)
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop1.avif)
 
 其内部代码整理如下 (太长了不想看可以直接跳过去，后面会有说明)
-
 
 ``` c
 /// 用DefaultMode启动
@@ -339,13 +326,11 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
 
 ```
 
-
 ### RunLoop 的底层实现
 
 从上面代码可以看到，`RunLoop` 的核心是基于 `mach port` 的，其进入休眠时调用的函数是 `mach_msg()`。为了解释这个逻辑，下面稍微介绍一下 `OSX/iOS` 的系统架构。
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop3.avif)
-
 
 苹果官方将整个系统大致划分为上述4个层次：
 应用层包括用户能接触到的图形应用，例如 `Spotlight`、`Aqua`、`SpringBoard` 等。
@@ -357,12 +342,10 @@ __我们在深入看一下 Darwin 这个核心的架构：__
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop4.avif)
 
-
 其中，在硬件层上面的三个组成部分：`Mach`、`BSD`、`IOKit` (还包括一些上面没标注的内容)，共同组成了 `XNU` 内核。
 `XNU` 内核的内环被称作 `Mach`，其作为一个微内核，仅提供了诸如处理器调度、`IPC` (进程间通信)等非常少量的基础服务。  
 `BSD` 层可以看作围绕 `Mach` 层的一个外环，其提供了诸如进程管理、文件系统和网络等功能。  
 `IOKit` 层是为设备驱动提供了一个面向对象(`C++`)的一个框架。
-
 
 `Mach` 本身提供的 `API` 非常有限，而且苹果也不鼓励使用 `Mach` 的 `API`，但是这些`API`非常基础，如果没有这些`API`的话，其他任何工作都无法实施。在 `Mach` 中，所有的东西都是通过自己的对象实现的，进程、线程和虚拟内存都被称为”对象”。和其他架构不同， `Mach` 的对象间不能直接调用，只能通过消息传递的方式实现对象间的通信。”`消息`”是 `Mach` 中最基础的概念，消息在两个端口 (`port`) 之间传递，这就是 `Mach` 的 `IPC` (进程间通信) 的核心。
 
@@ -397,19 +380,17 @@ mach_msg_return_t mach_msg(
 			mach_port_name_t notify);
 ```
 
-
 为了实现消息的发送和接收，`mach_msg()` 函数实际上是调用了一个 `Mach` 陷阱 `(trap)`，即函数`mach_msg_trap()`，陷阱这个概念在 `Mach` 中等同于系统调用。当你在用户态调用`mach_msg_trap()` 时会触发陷阱机制，切换到内核态；内核态中内核实现的 `mach_msg()` 函数会完成实际的工作，如下图：
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop5.avif)
 
 这些概念可以参考维基百科: [System_call](http://en.wikipedia.org/wiki/System_call)、[Trap_(computing)](http://en.wikipedia.org/wiki/Trap_(computing))。
 
-
 `RunLoop` 的核心就是一个 `mach_msg()` (见上面代码的第7步)，`RunLoop` 调用这个函数去接收消息，如果没有别人发送 `port` 消息过来，内核会将线程置于等待状态。例如你在模拟器里跑起一个 `iOS` 的 `App`，然后在 `App` 静止时点击暂停，你会看到主线程调用栈是停留在 `mach_msg_trap()` 这个地方。
 
 关于具体的如何利用 `mach port` 发送信息，可以看看 [NSHipster 这一篇文章](http://nshipster.com/inter-process-communication/)，或者[这里](http://segmentfault.com/a/1190000002400329)的中文翻译.
 
-关于`Mach`的历史可以看看这篇很有趣的文章：[Mac OS X 背后的故事（三）Mach 之父 Avie Tevanian](http://www.programmer.com.cn/8121/)。
+关于`Mach`的历史可以看看这篇很有趣的文章：Mac OS X 背后的故事（三）Mach 之父 Avie Tevanian。
 
 ### 苹果用 RunLoop 实现的功能
 
@@ -517,7 +498,6 @@ CFRunLoop {
 }
 ```
 
-
 可以看到，系统默认注册了5个`Mode:
 
 1. `kCFRunLoopDefaultMode`: `App`的默认 `Mode`，通常主线程是在这个 `Mode` 下运行的。
@@ -527,7 +507,6 @@ CFRunLoop {
 5. `kCFRunLoopCommonModes`: 这是一个占位的 `Mode`，没有实际作用。
 
 你可以在[这里](http://iphonedevwiki.net/index.php/CFRunLoop)看到更多的苹果内部的 `Mode`，但那些 `Mode` 在开发中就很难遇到了。
-
 
 当 `RunLoop` 进行回调时，一般都是通过一个很长的函数调用出去 (`call out`), 当你在你的代码中下断点调试时，通常能在调用栈上看到这些函数。下面是这几个函数的整理版本，如果你在调用栈中看到这些长函数名，在这里查找一下就能定位到具体的调用地点了：
 
@@ -586,16 +565,13 @@ App启动后，苹果在主线程 `RunLoop` 里注册了两个 `Observer`，其�
 
 第二个 `Observer` 监视了两个事件： `BeforeWaiting`(准备进入休眠) 时调用`_objc_autoreleasePoolPop()` 和 `_objc_autoreleasePoolPush()` 释放旧的池并创建新池；`Exit`(即将退出`Loop`) 时调用 `_objc_autoreleasePoolPop()` 来释放自动释放池。这个 `Observer` 的 `order` 是 `2147483647`，优先级最低，保证其释放池子发生在其他所有回调之后。
 
-
 在主线程执行的代码，通常是写在诸如事件回调、`Timer`回调内的。这些回调会被 `RunLoop` 创建好的 `AutoreleasePool` 环绕着，所以不会出现内存泄漏，开发者也不必显示创建` Pool` 了。
-
 
 #### 事件响应
 
 苹果注册了一个 `Source1` (基于 `mach port` 的) 用来接收系统事件，其回调函数为 `__IOHIDEventSystemClientQueueCallback()`。
 
 当一个硬件事件(触摸/锁屏/摇晃等)发生后，首先由 IOKit.framework 生成一个 `IOHIDEvent` 事件并由 `SpringBoard` 接收。这个过程的详细情况可以参考[这里](http://iphonedevwiki.net/index.php/IOHIDFamily)。`SpringBoard` 只接收按键(锁屏/静音等)，触摸，加速，接近传感器等几种 `Event`，随后用 `mach port` 转发给需要的`App`进程。随后苹果注册的那个 `Source1` 就会触发回调，并调用 `_UIApplicationHandleEventQueue()` 进行应用内部的分发。
-
 
 `_UIApplicationHandleEventQueue()` 会把 `IOHIDEvent` 处理并包装成 `UIEvent` 进行处理或分发，其中包括识别 `UIGesture`/`处理屏幕旋转`/发送给 `UIWindow` 等。通常事件比如 `UIButton` 点击、`touchesBegin`/`Move`/`End`/`Cancel` 事件都是在这个回调中完成的。
 
@@ -637,9 +613,7 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
 
 如果某个时间点被错过了，例如执行了一个很长的任务，则那个时间点的回调也会跳过去，不会延后执行。就比如等公交，如果 `10:10` 时我忙着玩手机错过了那个点的公交，那我只能等 `10:20` 这一趟了。
 
-
 `CADisplayLink` 是一个和屏幕刷新率一致的定时器（但实际实现原理更复杂，和 `NSTimer` 并不一样，其内部实际是操作了一个 `Source`）。如果在两次屏幕刷新之间执行了一个长任务，那其中就会有一帧被跳过去（和 `NSTimer` 相似），造成界面卡顿的感觉。在快速滑动`TableView`时，即使一帧的卡顿也会让用户有所察觉。`Facebook` 开源的`AsyncDisplayLink` 就是为了解决界面卡顿的问题，其内部也用到了 `RunLoop`，这个稍后我会再单独写一页博客来分析。
-
 
 #### PerformSelecter
 
@@ -652,7 +626,6 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
 实际上 `RunLoop` 底层也会用到 GCD 的东西， 例如 `dispatch_async()`。
 
 > NSTimer 是用了 XNU 内核的 `mk_timer`来驱动的，而非 GCD 驱动的.
-
 
 当调用 `dispatch_async(dispatch_get_main_queue(), block)` 时，`libDispatch` 会向主线程的 `RunLoop` 发送消息，RunLoop会被唤醒，并从消息中取得这个 `block`，并在回调 `__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__()` 里执行这个 `block`。但这个逻辑仅限于 `dispatch` 到主线程，`dispatch` 到其他线程仍然是由 `libDispatch` 处理的。
 
@@ -672,11 +645,9 @@ NSURLSession    ->AFNetworking2, Alamofire
 * `NSURLConnection` 是基于 `CFNetwork` 的更高层的封装，提供面向对象的接口，`AFNetworking`工作于这一层。
 * `NSURLSession` 是 `iOS7` 中新增的接口，表面上是和 `NSURLConnection`并列的，但底层仍然用到了 `NSURLConnection` 的部分功能 (比如 `com.apple.NSURLConnectionLoader` 线程)，`AFNetworking2` 和 `Alamofire` 工作于这一层。
 
-
 ##### 下面主要介绍下 NSURLConnection 的工作过程。
 
 通常使用 `NSURLConnection`时，你会传入一个 `Delegate`，当调用了 `[connection start]` 后，这个 `Delegate` 就会不停收到事件回调。实际上，`start` 这个函数的内部会会获取 `CurrentRunLoop`，然后在其中的 `DefaultMode` 添加了4个 `Source0 `(即需要手动触发的`Source`)。`CFMultiplexerSource` 是负责各种 `Delegate` 回调的，`CFHTTPCookieStorage` 是处理各种 `Cookie` 的。
-
 
 当开始网络传输时，我们可以看到 `NSURLConnection` 创建了两个新线程：`com.apple.NSURLConnectionLoader` 和 `com.apple.CFSocket.private`。其中 `CFSocket` 线程是处理底层 `socket` 连接的。`NSURLConnectionLoader` 这个线程内部会使用 `RunLoop` 来接收底层 `socket` 的事件，并通过之前添加的 `Source0` 通知到上层的 `Delegate`。
 
@@ -684,13 +655,11 @@ NSURLSession    ->AFNetworking2, Alamofire
 
 `NSURLConnectionLoader` 中的 `RunLoop` 通过一些基于 `mach port` 的`Source` 接收来自底层 `CFSocket` 的通知。当收到通知后，其会在合适的时机向 `CFMultiplexerSource` 等 `Source0` 发送通知，同时唤醒 `Delegate` 线程的 `RunLoop` 来让其处理这些通知。`CFMultiplexerSource` 会在 `Delegate` 线程的 `RunLoop` 对 `Delegate` 执行实际的回调。
 
-
 ### RunLoop 的实际应用举例
 
 #### AFNetworking
 
-[AFURLConnectionOperation](https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking%2FAFURLConnectionOperation.m) 这个类是基于 `NSURLConnection` 构建的，其希望能在后台线程接收 `Delegate` 回调。为此 `AFNetworking `单独创建了一个线程，并在这个线程中启动了一个 `RunLoop`
-
+AFURLConnectionOperation 这个类是基于 `NSURLConnection` 构建的，其希望能在后台线程接收 `Delegate` 回调。为此 `AFNetworking `单独创建了一个线程，并在这个线程中启动了一个 `RunLoop`
 
 ``` objc
 + (void)networkRequestThreadEntryPoint:(id)__unused object {
@@ -745,7 +714,7 @@ NSURLSession    ->AFNetworking2, Alamofire
 为此，`ASDK` 创建了一个名为 `ASDisplayNode` 的对象，并在内部封装了 `UIView`/`CALayer`，它具有和 `UIView`/`CALayer` 相似的属性，例如 `frame`、`backgroundColor`等。所有这些属性都可以在后台线程更改，开发者可以只通过 `Node` 来操作其内部的 `UIView`/`CALayer`，这样就可以将排版和绘制放入了后台线程。但是无论怎么操作，这些属性总需要在某个时刻同步到主线程的 `UIView`/`CALayer` 去。
 
 `ASDK` 仿照 `QuartzCore`/`UIKit` 框架的模式，实现了一套类似的界面更新的机制：即在主线程的 `RunLoop` 中添加一个 `Observer`，监听了 `kCFRunLoopBeforeWaiting` 和 `kCFRunLoopExit` 事件，在收到回调时，遍历所有之前放入队列的待处理的任务，然后一一执行。
-具体的代码可以看这里：[_ASAsyncTransactionGroup](https://github.com/facebook/AsyncDisplayKit/blob/master/AsyncDisplayKit%2FDetails%2FTransactions%2F_ASAsyncTransactionGroup.m)。
+具体的代码可以看这里：_ASAsyncTransactionGroup。
 
 ### 最后
 

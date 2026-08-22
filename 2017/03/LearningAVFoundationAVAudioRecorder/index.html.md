@@ -98,7 +98,7 @@ typora-root-url: ..
 }
 ```
 
-这里的建议调用`[self.recorder prepareToRecord]`方法对录音实例进行预设就像[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)创建`AVAudioPlayer`类似.都是为了执行底层`Audio Queue`初始化的必要过程.这个`prepareToRecord`方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时
+这里的建议调用`[self.recorder prepareToRecord]`方法对录音实例进行预设就像[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)创建`AVAudioPlayer`类似.都是为了执行底层`Audio Queue`初始化的必要过程.这个`prepareToRecord`方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时
 
 音频格式
 --
@@ -147,21 +147,21 @@ CF_ENUM(AudioFormatID)
 };
 
 ```
-这里的`kAudioFormatLinearPCM`会将为压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC`kAudioFormatMPEG4AAC`或者AppleIMA4`kAudioFormatAppleLossless`等格式会显著缩小文件，还能保证音频质量.
+这里的`kAudioFormatLinearPCM`会将未压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC`kAudioFormatMPEG4AAC`或者AppleIMA4`kAudioFormatAppleLossless`等格式会显著缩小文件，还能保证音频质量.
 > *注意:*
 > *指定的音频格式一定要和文件写入的URL文件类型保持一致。如果录制xxx.wav文件格式 是 Waveform Audio File Format(WAVE)的格式要求,即 低字节序、 LinePCM。 如果`AVFormatIDKey`指定的值不是`kAudioFormatLinearPCM`则会发生错误。NSError 会返回如下错误*
-> *The operation couldn't be completed. (OSState error 1718449215.)*
+> *The operation couldn't be completed. (OSStatus error 1718449215.)*
 
 采样率
 --
 
-上边的代码里`AVSampleRateKey`用于定义录音器的采样率. **采样率定义了对输入的模拟音频信号每一秒内的采样数**. 如果使用**低采样率** 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用**44.1kHz的采样率(CD质量的采样率)**会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用**标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz** ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)说了 **人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz**,录音最好采用 x 2 倍的频率）
+上边的代码里`AVSampleRateKey`用于定义录音器的采样率. **采样率定义了对输入的模拟音频信号每一秒内的采样数**. 如果使用**低采样率** 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用**44.1kHz的采样率(CD质量的采样率)**会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用**标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz** ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)说了 **人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz**,录音最好采用 x 2 倍的频率）
 
 
 通道数
 --
 
-`AVNumberOfChannelsKey`用于定义记录音频内容的通道数。**指定默认值1 意味着使用单声道录制**、**设置2意味着使用立体声录制**。除非使用外部硬件进行录制，否则同窗应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。
+`AVNumberOfChannelsKey`用于定义记录音频内容的通道数。**指定默认值1 意味着使用单声道录制**、**设置2意味着使用立体声录制**。除非使用外部硬件进行录制，否则通常应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。
 
 
 > 以上是全面`AVAudioRecorder`的部分概念,`AVAudioRecorder`支持**无限时长录制**,还可以设置从**未来某一时间点开始录制**或**指定时长录制**
@@ -250,9 +250,9 @@ FreeStreamer使用
 ```
 
 
-这`AVAudioSessionCategoryPlayAndRecord`是[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)说的那几种Category,我们需要__录音+播放__功能
+这`AVAudioSessionCategoryPlayAndRecord`是[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)说的那几种Category,我们需要__录音+播放__功能
 
-下一步 配置 plist文件访问权限信息 可以参考[Access privacy-sensitive data](http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/)这篇文章把访问权限需要的 信息填充上.
+下一步 配置 plist文件访问权限信息 可以参考[Access privacy-sensitive data](https://www.sunyazhou.com/2017/03/AccessPrivacySensitive/)这篇文章把访问权限需要的 信息填充上.
 
 ![plist1](/assets/images/20170328LearningAVFoundationAVAudioRecorder/FillInfo.avif)
 
@@ -492,7 +492,7 @@ typedef void (^BDRecordingSaveCompletionHanlder)(BOOL, id);
 ```
 上边大致是封装`BDRecorder`的过程
 
-下面是对`ViewController`UI的设置, 设置好时间格式 我们需要在`ViewController`里 自己搞个定时器去更新录制的时间在UI上的显示, 因为`self.recorder.currentTime`是只读熟悉 没提供set方法 所以我们也无法用KVO监听recorder的属性变化. 
+下面是对`ViewController`UI的设置, 设置好时间格式 我们需要在`ViewController`里 自己搞个定时器去更新录制的时间在UI上的显示, 因为`self.recorder.currentTime`是只读属性 没提供set方法 所以我们也无法用KVO监听recorder的属性变化. 
 
 代码如下:
 
@@ -788,7 +788,7 @@ typedef void (^BDRecordingSaveCompletionHanlder)(BOOL, id);
 ```
 
 一个timer用于 刷新录制时间 
-`levelTimer`用于刷新录制的视波图也叫`Audio Metering`对音频进行计量
+`levelTimer`用于刷新录制的声波图也叫`Audio Metering`对音频进行计量
 
 在`BDRecorder`中增加了
 
@@ -827,7 +827,7 @@ self.recorder.meteringEnabled = YES;
 
 每当读取值之前需要调用`[self.recorder updateMeters]`方法才能获取到最新值，否则可能获取的不够精确
 
-然后 使用`MeterTable`类 声明的函数`valueForPower:` 把上边两个阀值 转成线性运算
+然后 使用`MeterTable`类 声明的函数`valueForPower:` 把上边两个阈值 转成线性运算
 
 **就是分贝值从对数形式的`-160 ~ 0`范围转换为线性0到1的形式.**
 
@@ -1001,7 +1001,7 @@ float dbToAmp(float dB) {
 
 
 
-`BDRecorder`没有 处理意外中断等情况 比如外接麦克风 和音频意外来电等，如果需要处理 就可以在`BDRecorder`中声明几个代理监听音频回话的那几个通知就可以了 这里出于学习为目的就简单写到这里吧，如果大家需求强烈我可以回头补上并开源。
+`BDRecorder`没有 处理意外中断等情况 比如外接麦克风 和音频意外来电等，如果需要处理 就可以在`BDRecorder`中声明几个代理监听音频会话的那几个通知就可以了 这里出于学习为目的就简单写到这里吧，如果大家需求强烈我可以回头补上并开源。
 
 
 
@@ -1151,7 +1151,7 @@ CGFloat clamp(CGFloat intensity) {
 
 @end
 ```
-这里给出了level和peak的阀值 有很多第三方开源的view大家可以自行研究一下 很简单 就是把相关阀值量化的过程。
+这里给出了level和peak的阈值 有很多第三方开源的view大家可以自行研究一下 很简单 就是把相关阈值量化的过程。
 
 
 

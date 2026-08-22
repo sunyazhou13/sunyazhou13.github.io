@@ -8,18 +8,15 @@ typora-root-url: ..
 
 ---
 
-
 # 前言
 
 ![Charles Album](/assets/images/20170901CharlesCaptureHttps/CharlesAlbum.avif)
 
 如何使用`charles`在iOS设备上截获`https`的请求 
 
-
 ## 1.安装Charles
 
 [官网下载](https://www.charlesproxy.com/download/)就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 
-
 
 ## 2.HTTP抓包配置
 
@@ -35,9 +32,7 @@ typora-root-url: ..
 
 ![Wi Fi Ip Porti Phone](/assets/images/20170901CharlesCaptureHttps/WiFiIpPortiPhone.avif)
 
-
 注意:*这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP*
-
 
 设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:
 
@@ -65,7 +60,6 @@ typora-root-url: ..
  
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep3.avif)
 
-
 紧接着 点击`Help` -> `SSL Proxying` -> 安装根证书
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep4.avif)
@@ -78,11 +72,9 @@ typora-root-url: ..
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep6.avif)
 
-
-这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: [chls.pro/ssl](https://chls.pro/ssl)
+这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: chls.pro/ssl
 
 此时手机一会儿就弹出这样的 提示 点击**允许**
-
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone1.avif)
 
@@ -96,7 +88,6 @@ __必须到 通用->关于本机->证书信任设置__去信任 证书
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone3.avif)
 
-
 如果不信任 就会抓取的时候出现下图这样的问题
 
 ![Charles Root Cer Error](/assets/images/20170901CharlesCaptureHttps/CharlesRootCerError.avif)
@@ -106,9 +97,5 @@ __必须到 通用->关于本机->证书信任设置__去信任 证书
 最后放上一张截获成功的图 (支付宝的接口)
 
 ![Result](/assets/images/20170901CharlesCaptureHttps/Result.avif)
-
-
-
-
 
 全文完

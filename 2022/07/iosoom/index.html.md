@@ -6,7 +6,6 @@ categories: [iOS, Swift]
 tags: [iOS, Swift, Objective-C, skills]
 typora-root-url: ..
 
-
 ---
 
 ![kernel](/assets/images/20220711iOSCrashType/kernel.avif)
@@ -16,7 +15,6 @@ typora-root-url: ..
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 ## OOM
-
 
 在iOS开发中，可能会经常看到app用着用着就崩溃了，而在后台查看崩溃栈的时候，找不到崩溃日志。其实这大多数的可能是系统产生了低内存崩溃，也就是`OOM`(还有一种可能是主线程卡死，导致`watchdog`杀掉了应用)，而低内存崩溃的日志，往往都是以`JetsamEvent`开头的，日志中有内存页大小(`pageSize`)，CPU时间(`cpuTime`)等字段。
 
@@ -326,6 +324,4 @@ facebook和微信的Matrix都是采用的排除法。在Matrix初始化的时候
 
 平时我们谈论的大部分都是FOOM,因为如果我们的程序在后台，优先级很低，即便我们不占用大量的内存，也可能会由于前台应用程序占用了大量的内存，而把我们在后台的程序杀掉。这是系统的机制，我们没有太多的办法.针对于FOOM，我们需要着重关注`dirty pages`和`IOKit mappings`，当然注意系统做的缓存，例如图片、字体等。针对于OOM问题监控与解决，可以参考[Matrix](https://github.com/Tencent/matrix)和[OOMDetector](https://github.com/Tencent/OOMDetector)两个开源库
 
-
-
-[实践方案 快影iOS端如何实现OOM率下降80%+](https://www.gushiciku.cn/pl/aHa7)
+实践方案 快影iOS端如何实现OOM率下降80%+

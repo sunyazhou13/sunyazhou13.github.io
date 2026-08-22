@@ -8,11 +8,9 @@ typora-root-url: ..
 
 ---
 
-
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
-
 
 # 揭秘 AI 编码代理：用 Swift 构建你自己的代理
 
@@ -637,10 +635,10 @@ Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，
 **想深入了解？** 查看：
 
 * [完整的 Nimbo 源代码](https://github.com/gscalzo/Nimbo)
-* [Anthropic 的工具使用指南](https://docs.anthropic.com/en/docs/build-with-claude/tool-use)
+* Anthropic 的工具使用指南
 * [OpenAI 的函数调用文档](https://platform.openai.com/docs/guides/function-calling)
 
-**有问题？有想法？** 在 [Twitter](https://twitter.com/giordanoscalzo) 或 [LinkedIn](https://linkedin.com/in/giordanoscalzo) 上联系我。我很想看看你构建了什么！
+**有问题？有想法？** 在 Twitter 或 LinkedIn 上联系我。我很想看看你构建了什么！
 
 ---
 

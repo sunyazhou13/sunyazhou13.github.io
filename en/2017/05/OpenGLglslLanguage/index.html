@@ -6,7 +6,7 @@
 <span class="mo">042</span>  <span class="c1">// Octal  </span>
 <span class="mh">0x2A</span> <span class="c1">// Hexadecimal</span>
 
-</pre></table></code></div></div><p><strong>**Note: GLSL does not support pointers. GLSL treats vectors and matrices as basic data types**</strong><br /> <a href="http://baike.baidu.com/link?url=XKZL51jLByIFnqrj3vaZ-4cnL-AedjBKiVBcD7pEGQG26Jmb9RYl7QOrX4Mwck-mT0nNlzD8UtzXi4ueVYNGkdO1b2uARr59UAih7ulWRvO">Vector (vector)</a>: a line segment with a starting position and direction, also called a <strong>vector</strong> (don’t be intimidated by these terms — I remember learning about vectors in high school math).</p><h2 id="vectors">Vectors</h2><p>Vectors can perform addition, subtraction, multiplication, and division with scalars and even matrices (must follow certain rules, otherwise it will cause errors)</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></table></code></div></div><p><strong>**Note: GLSL does not support pointers. GLSL treats vectors and matrices as basic data types**</strong><br /> Vector (vector): a line segment with a starting position and direction, also called a <strong>vector</strong> (don’t be intimidated by these terms — I remember learning about vectors in high school math).</p><h2 id="vectors">Vectors</h2><p>Vectors can perform addition, subtraction, multiplication, and division with scalars and even matrices (must follow certain rules, otherwise it will cause errors)</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 </pre><td class="rouge-code"><pre>vec2,  vec3,  vec4  // Vectors containing 2/3/4 floats (float type)
@@ -135,7 +135,6 @@ vec3 v = vec3(0.6,0.6,0.6);
 15
 16
 17
-18
 </pre><td class="rouge-code"><pre>attribute variables can only be used in the vertex shader
 They cannot be declared as attribute variables in the fragment shader,
 nor can they be used in the fragment shader)
@@ -152,7 +151,6 @@ void main(void)
   gl_Position = u_matViewProjection * a_position;
   v_texCoord = a_texCoord0;
 }
-
 
 </pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">uniform</code>: Generally used by the application to set initialization values related to the vertex shader and fragment shader. Initialization at declaration is not allowed. The <code class="language-plaintext highlighter-rouge">uniform</code> qualifier marks a type of global variable that cannot be changed for a given primitive (<code class="language-plaintext highlighter-rouge">primitive</code>). It can receive parameters passed from the <code class="language-plaintext highlighter-rouge">OpenGL</code> application.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -203,7 +201,6 @@ uniform vec3 lightPosition;     // Light source position
 29
 30
 31
-32
 </pre><td class="rouge-code"><pre>varying variables are used for data transfer between vertex and fragment shaders.
 Generally, the vertex shader modifies the varying variable's value,
 then the fragment shader uses that varying variable's value.
@@ -234,7 +231,6 @@ void main()
   lightColor = texture2D(s_lightMap, v_texCoord);
   gl_FragColor = baseColor * (lightColor + 0.25);
 }
-
 
 </pre></table></code></div></div><p><em><strong>Note: These qualifiers are very important</strong></em></p><h2 id="restrictions">Restrictions</h2><ul><li>Variables cannot be declared inside if-else statements<li>Conditions used for branching must be of bool type (if, while, for…)<li>The two arguments after the (?:) operator must be of the same type<li>switch statements are not supported</ul><div class="language-glsl highlighter-rouge"><div class="code-header"> <span data-label-text="Glsl"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2

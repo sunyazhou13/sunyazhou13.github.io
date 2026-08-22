@@ -1252,7 +1252,6 @@ Published At: 2026-07-03 02:45:00 +0000
 
 这篇文章是我调研过程的完整记录，**从 iOS 开发者的认知模型出发**，把市面主流方案横向拉通，量化对比。
 
-
 2026 年，AI Agent 从概念验证全面进入生产落地阶段。LangChain 生态日趋成熟，MCP（Model Context Protocol）成为工具集成的事实标准，`llama.cpp` 让本地推理不再依赖云端 API。
 
 与此同时，"跨平台"的定义已经被彻底重写。一个 AI Agent 产品可能需要在以下 **6 个端**上运行：
@@ -2157,7 +2156,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 
 | 类型 | 链接 |
 |------|------|
-| 官网 | <https://taro.jd.com/> |
+| 官网 | <> |
 | 安装 | `npm install -g @tarojs/cli` |
 | 中文文档 | <https://taro-docs.jd.com/> |
 | GitHub | <https://github.com/NervJS/taro> |
@@ -2174,7 +2173,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | 中文文档 | <https://reactnative.cn/> |
 | 安装 | `npx create-expo-app` |
 | Windows/macOS | <https://microsoft.github.io/react-native-windows/> |
-| 鸿蒙 (RN-OH) | <https://gitee.com/openharmony-sig/RNOHDCS> |
+| 鸿蒙 (RN-OH) | <> |
 | GitHub | <https://github.com/facebook/react-native> |
 
 > Expo 快速启动。鸿蒙适配由华为开发者联盟主导。
@@ -2295,7 +2294,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | 中文文档 | <https://doc.qt.ac.cn/> |
 | PySide6 文档 | <https://doc.qt.io/qtforpython-6/> |
 
-> 国内推荐清华镜像：`https://mirrors.tuna.tsinghua.edu.cn/qt/`
+> 国内推荐清华镜像：`
 
 ---
 
@@ -2375,8 +2374,8 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | HarmonyOS 开发者 | <https://developer.huawei.com/consumer/cn/harmonyos/> | 鸿蒙官方门户 |
 | DevEco Studio | <https://developer.huawei.com/consumer/cn/deveco-studio/> | 鸿蒙官方 IDE |
 | ArkUI 文档 | <https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui-overview> | 鸿蒙原生 UI |
-| 微信小程序文档 | <https://developers.weixin.qq.com/miniprogram/dev/> | 小程序官方开发 |
-| 微信小程序 AI 能力 | <https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/ai.html> | 小程序内置 AI |
+| 微信小程序文档 | <> | 小程序官方开发 |
+| 微信小程序 AI 能力 | <> | 小程序内置 AI |
 | uni-app 插件市场 | <https://ext.dcloud.net.cn/> | uni-app/Taro 插件 |
 
 ---
@@ -5087,7 +5086,7 @@ libtag的库我是以本地pod的形式集成的,功能完好,需要使用自取
 
 # 总结
 
-2026年还是要坚持写博客.这篇文件介绍一下 音频元数据的工具类.善于积累细节,工作中一定用得到.
+2026年还是要坚持写博客.这篇文章介绍一下 音频元数据的工具类.善于积累细节,工作中一定用得到.
 
 
 URL: https://sunyazhou.com/2025/12/finalsummary/index.html.md
@@ -5350,7 +5349,6 @@ Published At: 2025-11-17 05:09:00 +0000
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
-
 
 # 揭秘 AI 编码代理：用 Swift 构建你自己的代理
 
@@ -5975,10 +5973,10 @@ Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，
 **想深入了解？** 查看：
 
 * [完整的 Nimbo 源代码](https://github.com/gscalzo/Nimbo)
-* [Anthropic 的工具使用指南](https://docs.anthropic.com/en/docs/build-with-claude/tool-use)
+* Anthropic 的工具使用指南
 * [OpenAI 的函数调用文档](https://platform.openai.com/docs/guides/function-calling)
 
-**有问题？有想法？** 在 [Twitter](https://twitter.com/giordanoscalzo) 或 [LinkedIn](https://linkedin.com/in/giordanoscalzo) 上联系我。我很想看看你构建了什么！
+**有问题？有想法？** 在 Twitter 或 LinkedIn 上联系我。我很想看看你构建了什么！
 
 ---
 
@@ -6009,7 +6007,7 @@ Published At: 2025-10-20 22:48:00 +0000
 
 ## UIBezierPath 和贝塞尔曲线
 
-在 iOS 中，我们使用 <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIBezierPath_class/Reference/Reference.html" title="UIBezierPath">UIBezierPath</a> 绘制直线段和曲线段。通过 <code>addLineToPoint:</code> 添加线性段非常简单，但如何绘制曲线形状呢？
+在 iOS 中，我们使用 <a href="" title="UIBezierPath">UIBezierPath</a> 绘制直线段和曲线段。通过 <code>addLineToPoint:</code> 添加线性段非常简单，但如何绘制曲线形状呢？
 
 可以通过在路径中添加<i>三次贝塞尔曲线</i>来绘制曲线段。三次贝塞尔曲线由四个控制点定义——这四个点的位置定义了曲线的形状。在下图中，每个点都是欧几里得空间中的 2D (x,y) 点。
 
@@ -6041,7 +6039,7 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 
 曲线 <b>A</b> 和 <b>B</b> 都是通过 Hermite 插值创建的。曲线 <b>A</b> 看起来很好——点大致均匀分布。然而，曲线 <b>B</b> 由于点的不规则分布而出现扭结和自相交。
 
-另一种用曲线拟合点的选择是使用 <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom 样条曲线</a>。与 Hermite 曲线一样，Catmull-Rom 曲线会穿过插值点并生成平滑结果，但它们还提供额外的控制——一个标量 alpha 值（在 0.0 和 1.0 之间），用于控制切线幅度。有关详细信息，请参阅这篇出色的论文，标题为 <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCsQFjAA&amp;url=http%3A%2F%2Fwww.cemyuksel.com%2Fresearch%2Fcatmullrom_param%2Fcatmullrom.pdf&amp;ei=FSdcU47DE-mfyQGgzYDYDQ&amp;usg=AFQjCNHa0SzJ9H6nSDAdCt9GD9jAkFnvMg&amp;sig2=hbl_LJtItSnusxWD-nhzKQ&amp;bvm=bv.65397613,d.aWc">关于 Catmull-Rom 曲线的参数化</a>，其中讨论了 alpha 的影响。
+另一种用曲线拟合点的选择是使用 <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom 样条曲线</a>。与 Hermite 曲线一样，Catmull-Rom 曲线会穿过插值点并生成平滑结果，但它们还提供额外的控制——一个标量 alpha 值（在 0.0 和 1.0 之间），用于控制切线幅度。有关详细信息，请参阅这篇出色的论文，标题为 <a href="">关于 Catmull-Rom 曲线的参数化</a>，其中讨论了 alpha 的影响。
 
 常用的 alpha 值为 0.0、0.5 和 1.0，分别对应曲线的<i>均匀</i>、<i>向心</i>和<i>弦长</i>参数化。
 ![均匀、弦长和向心参数化](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/UniformChordalCentripetal.avif)
@@ -6089,7 +6087,7 @@ Published At: 2025-05-11 07:30:00 +0000
 
 ## 背景介绍
 
-在学习《Metal》 GPU着色器编程中 有一章讲解GPU资源堆(Resource Heap)的参数缓冲(Arguements Buffer)中需要从CPU送资源到GPU时遇到一段代码计算资源的内存占用的算法,很有意思,在此记录下来.
+在学习《Metal》 GPU着色器编程中 有一章讲解GPU资源堆(Resource Heap)的参数缓冲(Arguments Buffer)中需要从CPU送资源到GPU时遇到一段代码计算资源的内存占用的算法,很有意思,在此记录下来.
 
 ``` swift
 let sizeAndAligns = descriptors.map { descriptor in
@@ -6202,11 +6200,9 @@ Published At: 2025-02-23 12:17:00 +0000
 
 ![Swift UI](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
-
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
-
 
 ## 背景介绍
 
@@ -6215,7 +6211,6 @@ Published At: 2025-02-23 12:17:00 +0000
 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到swift中的结构体实例的内存布局,我把这些整理了一下.
 
 ## 大小、步长和对齐(Size, Stride, Alignment)
-
 
 Swift 结构体实例内存布局的基础知识
 > 2018 年 3 月 12 日 ∙ Swift 内部原理 ∙ 作者：Greg Heo
@@ -6273,7 +6268,6 @@ struct Puppy {
 
 结构体的大小应该与其属性的大小相匹配：
 
-
 ``` swift
 MemoryLayout<Int>.size + MemoryLayout<Bool>.size
 // returns 9, from 8 + 1
@@ -6311,7 +6305,6 @@ MemoryLayout<Puppy>.stride
 也就是说，如果你有一个指向第一个元素的字节指针，并希望移动到第二个元素，步长就是你需要将指针前进的字节距离。
 
 为什么大小和步长会不同？这就引出了内存布局的最后一个神奇数字。
-
 
 ## 对齐（Alignment）  
 
@@ -6444,7 +6437,6 @@ struct CertifiedPuppy2 {
 
 ![size-stride-alignment-summary](/assets/images/20250223SwiftStructMemoryLayout/size-stride-alignment-summary.avif)
 
-
 对于我们大多数人来说，大多数时候，我们处理的都是高级集合，比如数组和集合，不需要考虑底层的内存布局。
 
 在其他情况下，你可能需要在平台上使用低级API，或者与C代码进行互操作。如果你有一个Swift结构体数组，并且需要让C代码读取它（或者反过来），那么你就需要担心分配具有正确对齐方式的缓冲区，确保结构体内部的填充字节对齐，以及确保你有正确的步长值，以便正确解释数据。
@@ -6456,8 +6448,7 @@ struct CertifiedPuppy2 {
 - [Wikipedia 上的 “Data structure alignment”](https://en.wikipedia.org/wiki/Data_structure_alignment)  
 - [Swift 文档中的 “Type Layout” 文章](https://github.com/apple/swift/blob/master/docs/ABI/TypeLayout.rst)，解释了如何计算结构体的大小（size）、步长（stride）和对齐方式（alignment）。  
 - [LLVM 中的 `getAlignOf` 源码](https://github.com/apple/swift-llvm/blob/stable/lib/IR/Constants.cpp#L1800-L1811)
-- [Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数](https://developer.apple.com/documentation/swift/unsafemutablerawpointer/allocate(bytecount:alignment:))
-
+- [Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数](:))
 
 # 总结
 
@@ -7189,7 +7180,7 @@ enum RandomSource {
 
 `get` 函数是实际执行工作的地方。
 
-首先，创建一个未分配的存储空间，其大小比你需要的多一个，因为 `fgets` 总是以 `\0`（空字符）结尾。
+首先，创建一个未初始化的存储空间，其大小比你需要的多一个，因为 `fgets` 总是以 `\0`（空字符）结尾。
 
 接下来，在 GCD 队列中操作，从文件中获取数据。
 
@@ -7230,7 +7221,7 @@ UInt64.randomized
 
 至此，一切都完成了！你现在以一种安全的方式生成随机数，而这一切的背后正是利用了 Swift 的不安全特性。
 
-### 下一步要做这么？
+### 下一步要做什么？
 
 恭喜你完成了本教程！你可以通过本教程顶部或底部的“[下载材料](https://github.com/sunyazhou13/Using-Pointers-and-Interacting-With-C)”链接下载完整的项目文件。
 
@@ -7249,7 +7240,7 @@ UInt64.randomized
 
 # 总结
 
-以上是去年欠下的技术债.今天要还上,这里介绍的额unsafe swift中操作内存的方函数方法 值得大家深入学习,虽然翻译的过于机器化,等抽空我重新整理一下.
+以上是去年欠下的技术债.今天要还上,这里介绍的unsafe swift中操作内存的函数方法 值得大家深入学习,虽然翻译得过于机器化,等抽空我重新整理一下.
 
 [原文链接Unsafe Swift: Using Pointers and Interacting With C](https://www.kodeco.com/7181017-)
 
@@ -7327,7 +7318,6 @@ Published At: 2024-12-31 23:53:00 +0000
 ### 曾经熟悉的朋友或同学目前都在做什么？
 
 每当我踏上地铁,拿出手机打开iBook看《Metal by Tutorials 4th 2023》时,看着大家都前所未闻的图形图像技术专业书籍,对着冰冷的技术点和着色器代码.我时常在想 身边真有像我这样的人每天研究奇奇怪怪的晦涩难懂的函数的人吗?他们这个时候都在干啥? 那时候感觉自己 无比孤独, 也许就像《北派盗墓笔记》中 秦西达说项云峰:"强者注定孤独..."
-
 
 ## 工作
 
@@ -7446,13 +7436,11 @@ Published At: 2024-12-31 23:53:00 +0000
 
 曾经我们顶着痞子运动的帽子，在街边在巷尾任汗水挥洒，对于出身高贵的斯诺克 9球，我们只能仰视，枉自嗟呀，我们犹如石缝中的小草，顶着难以出头的重压，我们卑微弱小被冷眼歧视，甚至险些被无情扼杀，丁俊晖有了自己的别墅，潘晓婷的跑车也很豪华。可我们什么都没有，只有工作之余苦苦的练球浪迹天涯，我们用自己来证明这项运动的存在，尝尽人间的酸甜苦辣，因为热爱使我们割舍不下，因为梦想使我们内心无比强大，我们咬牙坚持，孤独练球，令多少人泪目激情迸发，一位大叔听到了我们痛苦的呐喊，乔氏扛起大旗与我们并肩拼杀，乔氏让我们充满了无尽的希望，我们让乔氏奋力拼搏，永不放弃，绝不倒下，一群不像命运低头的叛逆者活出了一口气，重压下挥出的每一杆都是对命运无声的击打。而这位老人却把这项运动推向了世界奥运的壮举成为了佳话，从此我才知道原来台球运动可以这样伟大。乔氏中式8球大师赛已经18岁了，它终将在世界体育赛事中勇闯天涯，为我们这些卑微的台球爱好者抹去那痞子运动的帽子的同时把这项运动的光辉留在世界台坛的聚光灯下。
 
-
 ### 台球的未来
 
-这项运动让我感受到了前所未有的公平竞技,全凭实力说话,其中包含很多技术技巧和知识, 普通人看来估计也就是几根木头棍子加一张绿色台泥的案板而已, 其实这里面有很多机会等待挖掘,比如生产质量最好的胶边来自[中国振宏胶边](http://www.j-hrubber.com/)(就是球岸的橡胶条),生产的好台尼的厂家中国的[利百文](https://www.liberwintex.com/)和[英国世创6811](https://strachan.co/zh-hans/), 球杆各种品牌都被职业选手充值了,不过也有很多好的, 比如 皮尔力、李斯球馆、兰蔻各种品牌就和汽车一样应有尽有, 这里面还有一些生产皮头和巧粉的企业,比如小麦皮头，HR巧粉等.其实不深入这行业根本不了解这行业的供应链,甚至青石板的供应商、比利时进口的雅乐美TV球. 最近这几年很流行的 互义灯具(专门生产台球球台上方的无影灯企业) 还有像盛利者沙发,专门生产 台球专用沙发. 
+这项运动让我感受到了前所未有的公平竞技,全凭实力说话,其中包含很多技术技巧和知识, 普通人看来估计也就是几根木头棍子加一张绿色台泥的案板而已, 其实这里面有很多机会等待挖掘,比如生产质量最好的胶边来自中国振宏胶边(就是球岸的橡胶条),生产的好台尼的厂家中国的[利百文](https://www.liberwintex.com/)和[英国世创6811](https://strachan.co/zh-hans/), 球杆各种品牌都被职业选手充值了,不过也有很多好的, 比如 皮尔力、李斯球馆、兰蔻各种品牌就和汽车一样应有尽有, 这里面还有一些生产皮头和巧粉的企业,比如小麦皮头，HR巧粉等.其实不深入这行业根本不了解这行业的供应链,甚至青石板的供应商、比利时进口的雅乐美TV球. 最近这几年很流行的 互义灯具(专门生产台球球台上方的无影灯企业) 还有像盛利者沙发,专门生产 台球专用沙发. 
 
 这是一门内行人的生意,我们总说自己在目前的就业压力下很难找到自己的第二曲线,我想说无论啥曲线都需要花时间和精力去了解和深入研究学习,哪个曲线都是留给有准备的人.
-
 
 ## 买房
 
@@ -7476,7 +7464,6 @@ Published At: 2024-12-31 23:53:00 +0000
 ![gjj](/assets/images/20241231FinalSummary/gjj.avif)  
 
 经过此次买房让我觉得好险好险,没钱的穷人在北京买房真的是一项巨大的挑战. 真的不知道失业和明天哪个先来!没有父母为自己生活兜底,这个国家又一次性拿走年轻人的全部收入甚至掏空父母的钱包,就这样还能有什么消费,经济岂能向好，经济只能停滞不前.
-
 
 # 总结
 
@@ -10517,7 +10504,7 @@ Published At: 2024-01-19 02:19:00 +0000
 
 | 快捷键 | 用途 | 备注 |
 | ------| ------ | ------ |
-| ⌘(Command) + `B` |  进入到类或者对象的定义文件中中 | 类似Xcode中的  ⌘(Command) + `→`|
+| ⌘(Command) + `B` |  进入到类或者对象的定义文件中 | 类似Xcode中的  ⌘(Command) + `→`|
 | ⌘(Command) +  ⇧(Shift) + ⌫(Back) |  与上面相反,返回上一级 | 类似Xcode中的  ⌘(Command) + `←`|
 | | | |
 | | | |
@@ -10620,7 +10607,7 @@ aboutToDisappear(): void {
 
 生命周期流程如下图所示，下图展示的是被**@Entry装饰的组件（首页）生命周期。  
 ![Entry Life Cycle](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)  
-**由此可知, @Component组件的声明周期方法 中间包含了@Entry方法全部生命周期方法调用.**
+**由此可知, @Component组件的生命周期方法 中间包含了@Entry方法全部生命周期方法调用.**
 
 示例代码演示了一个LifeCycle中 添加一个Child子组件,点击按钮push到新页面LifeCycleDetail
 
@@ -10747,7 +10734,7 @@ struct LifeCycleDetail {
   }
 }
 ```
-当我们启动预览的时候声明周期函数如下:
+当我们启动预览的时候生命周期函数如下:
 
 ``` sh
 app Log: LiftCycle aboutToAppear
@@ -10950,7 +10937,7 @@ struct LearnDetail {
 }
 ```
 
-以上是是如何使用 @Styles装饰器的代码, [参考官方@Styles文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
+以上是如何使用 @Styles装饰器的代码, [参考官方@Styles文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
 
 ### @Extend装饰器: 定义扩展组件样式
 
@@ -11102,7 +11089,7 @@ struct LearnDetailProp1 {
 
 ### @Link装饰器:父子双向同步
 
-示例代码如果
+示例代码如下
 
 ``` ts
 // @Link装饰状态数据，方便父与子组件之问进行数据传递与同步 父State <--------->prop 双向传递
@@ -11233,7 +11220,7 @@ struct  LearnDetailLink1 {
 @Consume('a') c: number;
 ```
 
-显然这修饰器是统一标识 类型一直 根据文档说明如下
+显然这修饰器是统一标识 类型一致 根据文档说明如下
 
 | @Provide变量装饰器 | 	说明  |
 | ------| ------ |
@@ -11391,7 +11378,7 @@ struct ForEachDemo {
 
 ![For Each](/assets/images/20240119ArkTSBasic/ForEach.avif)
 
-这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在Harmonry4.1中*) => {}__
+这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在HarmonyOS4.1中*) => {}__
 
 如果不标注类型就容易报错
 
@@ -11917,7 +11904,6 @@ Published At: 2023-12-31 08:02:00 +0000
 ![banner](/assets/images/20231231FinalSummary/banner.avif)  
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="去打台球的路上">繁华的北京二环东四十条天桥夜景</button>
 
-
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
@@ -12063,7 +12049,6 @@ Published At: 2023-12-31 08:02:00 +0000
 
 2023年我肤浅的认为工作的基本内容是用自己低廉的技术换取生活的基本保障.没有啥好说的,就是各种茫然的不知所措.没有职业规划,没有远大的理想,只有埋头苦干的坚韧不拔.
 
-
 ### 不善于学习
 
 2023年学习的课程有:
@@ -12093,7 +12078,7 @@ Published At: 2023-12-31 08:02:00 +0000
 鸿蒙这里只是一些基础
 
 官方资料:
-ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
+ArkUI实战 文档 
 开发者指南： [https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3)
 
 官方内部提供未发布的[SDK IDE以及模拟器 ](https://developer.harmonyos.com/deveco-developer-suite/enabling/kit?currentPage=1&pageSize=100)
@@ -12143,7 +12128,7 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 
 ### 败家的好物
 
-这一年非常深度使用PDD买东西,而且都很实用,除了其它平台更具性价比外首选pdd,现在买东西养成了一个习惯我把它称为`遛货`,就是我如果很想买一件商品,我就按耐忍住半个月观察一下这个商品价格,如果他跌了就下手,涨了就不买,啥时候跌啥时候买,经过几次`遛货`我发现pdd买贵了投诉官方客服指定能给退,直接投诉到底就完事了.
+这一年非常深度使用PDD买东西,而且都很实用,除了其它平台更具性价比外首选pdd,现在买东西养成了一个习惯我把它称为`遛货`,就是我如果很想买一件商品,我就按捺忍住半个月观察一下这个商品价格,如果他跌了就下手,涨了就不买,啥时候跌啥时候买,经过几次`遛货`我发现pdd买贵了投诉官方客服指定能给退,直接投诉到底就完事了.
 
 今年败家的东西比较少,随着消费降级,自己买生活用品都很少了,下面的是纯业余爱好.
 
@@ -12158,7 +12143,6 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 * 显示器总成线控版
 * 刨丝器
 
-
 #### 威联通NAS  464C-8G
 
 ![nas](/assets/images/20231231FinalSummary/nas1.avif)  
@@ -12171,7 +12155,6 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 ![cue](/assets/images/20231231FinalSummary/cue.avif) 
 
 这个台球杆可以说1倍的价钱双倍的快乐,我选的是几百块钱的手工杆,不是很出名,是一个广东台山的很古老的手工杆品牌.白沙.用着质感和使用体验非常好.我很喜欢这只球杆.它陪伴我打球的过程中有很多运气加持.
-
 
 #### HomePod
 
@@ -12484,11 +12467,9 @@ Published At: 2023-09-09 07:55:00 +0000
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-
 ## SwiftUI课程
 
 最近坚持学习swiftUI,周末有空把第四章都看完了,我这里说的看是动手实践+教程学习.记录一些容易遗忘的内容
-
 
 ### 主要内容包括
 
@@ -12547,8 +12528,6 @@ var desciption : String {
 
 影片中介紹了能把日期、單位、數字和文字等等資料，根據使用者 Locale 進行格式化的工具
 
-
-
 # 总结
 
 其实第五章讲的比较多的是属性封装器的高度封装,我看篇幅实在太大,与其我在这记录一下不如大家亲自看一下[教程视频](https://www.bilibili.com/video/BV1bA411y71h/?spm_id_from=333.788&vd_source=9309f71afe97e633abeadc8407870e76),讲的比较透彻。
@@ -12558,7 +12537,7 @@ var desciption : String {
 一直跟进这门课程希望有所收获,下面是整理的一对课程资料 请查阅
 
 # SwiftUI 入門課程
-放置 [SwiftUI 入門課程](https://www.youtube.com/playlist?list=PLXM8k1EWy5khONZ9M9ytK8mMrcEOXvGsE) 的相關檔案，以及每一章節的相關連結、延伸閱讀。
+放置 SwiftUI 入門課程 的相關檔案，以及每一章節的相關連結、延伸閱讀。
 
 ### Chapter 1：基本介紹
 介紹 Xcode 介面和 SwiftUI 的基本架構。
@@ -12600,7 +12579,7 @@ var desciption : String {
 * [會新增 Presentation 的調整器](https://developer.apple.com/documentation/swiftui/view-presentation)
 * 影片中提到可以嘗試**建立自己的 AppStorage 屬性包裝**，如果有興趣可以參考 [SwiftLee 的這篇文章](https://www.avanderlee.com/swift/appstorage-explained/
 )，不過這個是個相對進階的內容，你會需要有基本 Combine 概念、了解 ObservableObject 和 DynamicProperty 。
-* 使用 FileManager 時，你可能會需要知道[如何取得檔案 URL](https://chaocode.co/blog/getting-url)。
+* 使用 FileManager 時，你可能會需要知道如何取得檔案 URL。
 
 ---
 
@@ -12611,7 +12590,7 @@ var desciption : String {
 * [WWDC20: 在地化的格式化工具](https://developer.apple.com/videos/play/wwdc2020/10160/)，影片中介紹了能把日期、單位、數字和文字等等資料，根據使用者 Locale 進行格式化的工具。
 * [WWDC19: 測試、Test Plan、CICD 介紹](https://developer.apple.com/wwdc19/403)
 * 了解 [Locale](https://developer.apple.com/documentation/foundation/locale)，Locale 並不單指語言，而是結合語言加上地區，提供更精確的慣用法。例如同樣是英文，在不同國家寫日期的順序依然會有所不同。
-    - 在你的 app 沒有做其他語言之前，**Locale 會被設定成你的專案的 base language**，詳細的介紹可以看[這篇文章](https://medium.com/swlh/know-your-language-locale-in-swift-beae4fcc5174)，裡面也提供了`取得使用者偏好 / 正在使用的語言的方法`，在你還沒做多語言之前，你可以嘗試取得這些值來強制修改 Locale。
+    - 在你的 app 沒有做其他語言之前，**Locale 會被設定成你的專案的 base language**，詳細的介紹可以看這篇文章，裡面也提供了`取得使用者偏好 / 正在使用的語言的方法`，在你還沒做多語言之前，你可以嘗試取得這些值來強制修改 Locale。
   
 * [在 iOS16 加上工具列的背景色](https://sarunw.com/posts/swiftui-tabview-color/)：文章是針對 TabBar 介紹，不過這個調整器 `toolbarBackground` 也能用來修改 Navigation Bar。
 * 你可能會發現 TabBar 在 iOS14 以前長得不一樣 🥲，如果你想要全部統一的話可以參考[這篇文章中的程式碼](https://blog.personal-factory.com/2021/12/29/ios15-transparent-navigationbar-and-tabbar-by-default/)做修改。
@@ -12635,7 +12614,7 @@ var desciption : String {
 * 6-5 影片中使用的[快速產生 JSON 解析程式碼的網站](https://app.quicktype.io/)。要記得用自動產生的程式碼的時候，不管多簡單的資料都要自己再檢查一遍哦
 * 6-8 [StateObject 的文件](https://developer.apple.com/documentation/swiftui/stateobject)：這個文件簡單介紹了搭配 `ObservableObject` 的三個屬性包裝器，以及它們的更新時機。建議大概閱讀啟動和更新的部分，當未來遇到 StateObject 重複被啟動或是沒有如預期的更新的時候再次回來閱讀。
 * 6-8 如果對 **StateObject 和 ObservedObject** 的差別有疑惑，可以參考 onevcat 的[這篇文章](https://onevcat.com/2020/06/stateobject/)。
-* 6-11 [onAppear 和 task 調整器的差別](https://byby.dev/swiftui-task-vs-onappear)，這篇文章提到的差別我覺得都蠻重要的，除了影片中提過的，還有額外講到 task 搭配 id 的用法。
+* 6-11 onAppear 和 task 調整器的差別，這篇文章提到的差別我覺得都蠻重要的，除了影片中提過的，還有額外講到 task 搭配 id 的用法。
 * 6-11 如果對於使用`Task`和`Task.detached`的時機不太確定，可以參考[這篇文章](https://www.donnywals.com/understanding-unstructured-and-detached-tasks-in-swift/)裡面的 **When to use unstructured tasks** 和 **When to use detached tasks**。
   ###### 另外，目前主流的做法是避免使用 detached，這並不是因為它不好，而是沒有什麼非得要用的原因（i.e. 沒必要讓自己的程式碼變複雜）。不過，我個人覺得 detached 的 explicit 對於初期掌握自己的程式碼在做什麼很有幫助，還有因為它沒有繼承而產生的一些報錯和警告也對初期學習很有幫助。
 * 6-11 如果想瞭解更多關於`onAppear`出現的時機，可以看這篇關於 [View 的生命週期](https://www.vadimbulavin.com/swiftui-view-lifecycle/) 的文章。
@@ -14005,7 +13984,7 @@ Published At: 2023-06-07 02:01:00 +0000
 
 作为一个很多年都不怎么学习使用脚本的我面对这个一个突如其来的需求比较麻木,喵神曾经说过:"对于一些不擅长的技术很多人刚接触的时候会有一种恐惧感,这种恐惧源于未知!"。那么怎么解决自己不了解的技术难题的呢?--`ChatGPT`
 
-先打开[ChatGPT](https://chat.openai.com/), 输入如下:
+先打开ChatGPT, 输入如下:
 
 ``` txt
 写个shell脚本 指定 Mac  中Downloads目录下的所有HEIC格式一次批量转成png
@@ -14249,16 +14228,13 @@ Published At: 2023-04-26 03:22:00 +0000
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-
 在我的技术认知里, Cocoapods已经成为每一位iOS开发者必备的技能之一,然后这么多年过去了,在我认为它已经过时了的时候居然还有人对这个东西玩的不透彻,今天我就把我这么多年使用的经验高阶部分全部都拿出来跟不熟悉这个工具的同行分享一下.
 
 对于大多数软件开发团队来说，依赖管理工具必不可少，它能针对开源和私有依赖进行安装与管理，从而提升开发效率，降低维护成本。针对不同的语言与平台，其依赖管理工具也各有不同，例如`npm`管理`Javascript`、`Gradle `、`Maven` 管理`Jar` 包、`pip `管理 `Python `包，`Bundler`、`RubyGems`等等。本文聚焦于` iOS `方面，对 `CocoaPods `的使用和部分原理进行阐述。
 
-
 ## 简单易用的 CocoaPods
 
 对于 iOSer 来说，CocoaPods 并不陌生，几乎所有的 iOS 工程都会有它的身影。CocoaPods 采用 Ruby 构建，它是 Swift 和 Objective-C Cocoa 项目的依赖管理工具。在 MacOS 上，推荐使用默认的 Ruby 进行安装 (以下操作均在 CocoaPods 1.10.1、Ruby 2.7.2 进行)：
-
 
 ``` objc
 sudo gem install cocoapods
@@ -14304,7 +14280,7 @@ install! 'cocoapods',
 * `:clean`：根据 podspec 和项目支持平台的指定，清理所有不被 pod 使用的文件，默认为 true。
 * `:deduplicate_targets`：是否对 pod target 进行重复数据删除，默认为 true。
 * `:deterministic_uuids`：创建 pod project 是否产生确定性 UUID，默认为 true。
-* `:integrate_targets`：是否继承到用户项目中，为 false 会将 Pod 下载并安装到到 project_path/Pods 目录下，默认为 true。
+* `:integrate_targets`：是否集成到用户项目中，为 false 会将 Pod 下载并安装到 project_path/Pods 目录下，默认为 true。
 * `:lock_pos_sources`：是否锁定 pod 的源文件，当 Xcode 尝试修改时会提示解锁文件，默认为 true。
 * `:warn_for_multiple_pod_sources`：当多个 source 包含同名同版本 pod 时是否发出警告，默认为 true。
 * `:warn_for_unused_master_specs_repo`：如果没有明确指出 master specs repo 的 git 是否发出警告，默认为 true。
@@ -14324,7 +14300,7 @@ ensure_bundler! '~> 2.0.0'
 
 `pod`：指定项目的依赖项
 
-* 依赖版本控制：`=`、`>`、`>=`、`<`、`<=` 为字面意思；`~> 0.1.2` 表示 `0.1.2 <= currVersion < 0.2` 之间的符合要求的最新版本版本。
+* 依赖版本控制：`=`、`>`、`>=`、`<`、`<=` 为字面意思；`~> 0.1.2` 表示 `0.1.2 <= currVersion < 0.2` 之间的符合要求的最新版本。
 * Build configurations：默认依赖安装在所有的构建配置中，但也可仅在指定构建配置中启用。
 * Modular Headers：用于将 pod 转换为 module 以支持模块，这时在 Swift 中可以不用借助 `bridging-header` 桥接就可以直接导入，简化了 Swift 引用 Objective-C 的方式；也可以采用 `use_modular_headers!` 进行全局的变更。
 * Source：指定具有依赖项的源，同时会忽略全局源。
@@ -14475,7 +14451,7 @@ supports_swift_versions '>= 3.0', '< 4.0'
 
 #### Sources
 
-`sources`：Podfile 从指定的源列表中进行检索。sources 默认存储在 ~/.cocoapods/repos 中，是全局的而非按 target definition 存储。当有多个相同的 Pod 时，优先采用检索到的 Pod 的第一个源，因此当指定另一个来源时，则需显示指定 CocoaPods 的源。
+`sources`：Podfile 从指定的源列表中进行检索。sources 默认存储在 ~/.cocoapods/repos 中，是全局的而非按 target definition 存储。当有多个相同的 Pod 时，优先采用检索到的 Pod 的第一个源，因此当指定另一个来源时，则需显式指定 CocoaPods 的源。
 
 ``` ruby
 source 'https://github.com/artsy/Specs.git'
@@ -14551,7 +14527,6 @@ podspec = pod Specification，意为 pod 规范，它是一个 Ruby 文件。包
 | `static_framework` | 是否采用静态 framework 分发  | |
 | `deprecated` | 该库是否已被弃用  | |
 | `deprecated_in_favor_of` | 该库名称已被弃用，取而代之    | |
-
 
 ``` ruby
 Pod::Spec.new do |s|
@@ -14663,7 +14638,7 @@ spec.user_target_xcconfig = { 'MY_SUBSPEC' => 'YES' }
 spec.prefix_header_contents = '#import <UIKit/UIKit.h>', '#import <Foundation/Foundation.h>'
 ```
 
-`prefix_header_file`：预编译头文件，false 表示不生成默认的 CocoaPods 的与编译头文件。🙅 不推荐使用路径形式，因为其会污染用户或者其他库的预编译头。
+`prefix_header_file`：预编译头文件，false 表示不生成默认的 CocoaPods 的预编译头文件。🙅 不推荐使用路径形式，因为其会污染用户或者其他库的预编译头。
 
 ``` ruby
 spec.prefix_header_file = 'iphone/include/prefix.pch'
@@ -14700,7 +14675,7 @@ spec.script_phases = [
 
 #### File patterns
 
-文件模式指定了库的所有文件管理方式，如源代码、头文件、framework、libaries、以及各种资源。其文件模式通配符形式可参考[链接](https://guides.cocoapods.org/syntax/podspec.html#group_file_patterns)
+文件模式指定了库的所有文件管理方式，如源代码、头文件、framework、libraries、以及各种资源。其文件模式通配符形式可参考[链接](https://guides.cocoapods.org/syntax/podspec.html#group_file_patterns)
 
 `source_files`：指定源文件
 
@@ -14776,13 +14751,12 @@ spec.preserve_path = 'IMPORTANT.txt'
 spec.preserve_paths = 'Frameworks/*.framework'
 ```
 
-`module_map`：pod 继承为 framework 时使用的模块映射文件，默认为 true，CocoaPods 根据 公共头文件创建 module_map 文件。
+`module_map`：pod 集成为 framework 时使用的模块映射文件，默认为 true，CocoaPods 根据 公共头文件创建 module_map 文件。
 
 ``` ruby
 spec.module_map = 'source/module.modulemap'
 spec.module_map = false
 ```
-
 
 #### Subspecs
 
@@ -14880,11 +14854,9 @@ spec.ios.resources = 'Resources_ios/**/*.png'
 
 了解完 Podfile 和 podspec 的相关的规范之后，那么开发自己的 pod 应该是一件驾轻就熟的事。
 
-
 #### Spec Repo
 
-Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方。本地源存储于 ~/.cocoapods/repos中，它从 git 上拉取并完全保留目录结构。可以发现， Master Specs Repo 的现在目录结构有些特殊；以往版本的 Master Spec Repo 是完全在同一目录下的，但若大量文件在同一目录中会导致了 [Github 下载慢](https://github.com/CocoaPods/CocoaPods/issues/4989#issuecomment-193772935) 的问题。为解决这个问题，采用散列表形式处理。具体方式为对名称进行 MD5 计算得到散列值，取前三位作为目录前缀，以对文件分散化。初次之外，CocoaPods 后续还采用 CDN 以及 trunk 进一步加快下载速度，有兴趣可以参考 [CocoaPods Source 管理机制](http://chuquan.me/2022/01/07/source-analyze-principle/)。
-
+Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方。本地源存储于 ~/.cocoapods/repos中，它从 git 上拉取并完全保留目录结构。可以发现， Master Specs Repo 的现在目录结构有些特殊；以往版本的 Master Spec Repo 是完全在同一目录下的，但若大量文件在同一目录中会导致了 [Github 下载慢](https://github.com/CocoaPods/CocoaPods/issues/4989#issuecomment-193772935) 的问题。为解决这个问题，采用散列表形式处理。具体方式为对名称进行 MD5 计算得到散列值，取前三位作为目录前缀，以对文件分散化。除此之外，CocoaPods 后续还采用 CDN 以及 trunk 进一步加快下载速度，有兴趣可以参考 [CocoaPods Source 管理机制](http://chuquan.me/2022/01/07/source-analyze-principle/)。
 
 如：`md5("CJFoundation") => 044d913fdd5a52b303222c357521f744`；`CJFoundation` 则在 /Specs/0/4/4 目录中
 
@@ -14892,7 +14864,7 @@ Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方�
 
 #### Create
 
-只需利用  `pod lib create [PodName] ` 命令便可以快速创建一个自己的 pod 。填写好使用平台、使用语言、是否包含 Demo、测试框架等信息，CocoaPods 会从默认的 Git 地址中拉取一份 pod 模版，同时也可以通过 `--template-url=URL` 指定模版地址。在执行完后，整个文件结构如下：
+只需利用  `pod lib create [PodName] ` 命令便可以快速创建一个自己的 pod 。填写好使用平台、使用语言、是否包含 Demo、测试框架等信息，CocoaPods 会从默认的 Git 地址中拉取一份 pod 模板，同时也可以通过 `--template-url=URL` 指定模板地址。在执行完后，整个文件结构如下：
 
 ``` swift
 tree CustomPod -L 2
@@ -14917,7 +14889,7 @@ CustomPod
 
 #### Development
 
-将源文件和资源分别放入 Classes / Assets 文件夹中，或者按你喜欢的方式组织文件，并在 podspec 文件中编辑相应项。如果你有任何想使用的配置项，可参考前面的podsepc 语法规范 。
+将源文件和资源分别放入 Classes / Assets 文件夹中，或者按你喜欢的方式组织文件，并在 podspec 文件中编辑相应项。如果你有任何想使用的配置项，可参考前面的podspec 语法规范 。
 一般来说，开发 Pod 一般都是作为本地 Pod 被其他 Project 所依赖进行开发，无论是使用 example 文件夹的 project 或者其他的 Project。
 
 `pod 'Name', :path => '~/CustomPod/'`
@@ -14981,7 +14953,7 @@ pod 'AFNetworking', :git => 'https://github.com/XXX/CustomPod.git'
 
 #### Semantic Versioning
 
-语义化版本控制顾名思义是一种语义上的版本控制，它不要求强制遵循，只是希望开发者能够尽量遵守。如果库之间依赖关系过高，可能面临版本控制被锁死的风险（可能需要对每一个依赖库改版才能完成某次升级）；如果库之间依赖关系过于松散，又将无法避免版本的混乱（可能库兼容性不再能支持以往版本），语义化版本控制正是作为这个问题的解决方案之一。无论在 CocoaPods 中，还是 Swift Packager Manager 上，官方都希望库开发者的的版本号能遵循这一原则：
+语义化版本控制顾名思义是一种语义上的版本控制，它不要求强制遵循，只是希望开发者能够尽量遵守。如果库之间依赖关系过高，可能面临版本控制被锁死的风险（可能需要对每一个依赖库改版才能完成某次升级）；如果库之间依赖关系过于松散，又将无法避免版本的混乱（可能库兼容性不再能支持以往版本），语义化版本控制正是作为这个问题的解决方案之一。无论在 CocoaPods 中，还是 Swift Package Manager 上，官方都希望库开发者的版本号能遵循这一原则：
 
 例如，给定版本号 `MAJOR.MINOR.PATCH`：
 
@@ -14993,7 +14965,7 @@ pod 'AFNetworking', :git => 'https://github.com/XXX/CustomPod.git'
 
 ## CocoaPods 原理浅析
 
-#### CococaPods 核心组件
+#### CocoaPods 核心组件
 
 CocoaPods 被 Ruby 管理，其核心部分也被分为一个一个组件。下载源码，可以看到 Gemfile 文件如下，其依赖了若干个 `gem`，有意思的是 `cp_gem` 函数，通过 `SKIP_UNRELEASED_VERSIONS` 与 `path`来控制是否采用本地的 gem 路径，实现了 DEVELOPMENT 与 RELEASE 环境的切换。
 
@@ -15038,11 +15010,11 @@ end
 ![image](/assets/images/20230426CocoaPodsUserGuide/2.avif)
 
 * `CocoaPods`：命令行支持与安装程序，也会处理 CocoaPods 的所有用户交互。
-* `cocoapods-core`：对模版文件的解析，如 Podfile、.podspec 等文件。
+* `cocoapods-core`：对模板文件的解析，如 Podfile、.podspec 等文件。
 * `CLAide`：一个简单的命令解析器，它提供了一个快速创建功能齐全的命令行界面的 API。
-* `cocoapods-downloader`：用于下载源码，为各种类型的源代码控制器(HTTP/SVN/Git/Mercurial) 提供下载器。它提供 tags、commites、revisions、branches 以及 zips 文件的下载与解压缩操作。
-* `Monlinillo`：CocoaPods：对于依赖仲裁算法的封装，它是一个具有前项检察的回溯算法。不仅在 pods 中，Bundler 和 RubyGems 也是使用这一套仲裁算法。
-* `Xcodeproj`：通过 Ruby 来对 Xcode projects 进行创建于修改。如：脚本管理、libraries 构建、Xcode workspece 和配置文件的管理。
+* `cocoapods-downloader`：用于下载源码，为各种类型的源代码控制器(HTTP/SVN/Git/Mercurial) 提供下载器。它提供 tags、commits、revisions、branches 以及 zips 文件的下载与解压缩操作。
+* `Molinillo`：CocoaPods：对于依赖仲裁算法的封装，它是一个具有前向检查的回溯算法。不仅在 pods 中，Bundler 和 RubyGems 也是使用这一套仲裁算法。
+* `Xcodeproj`：通过 Ruby 来对 Xcode projects 进行创建与修改。如：脚本管理、libraries 构建、Xcode workspace 和配置文件的管理。
 * `cocoapods-plugins`：插件管理，其中有 pod plugins 命令帮助你获取的可用插件列表以及开发一个新插件等功能，具体可用 pod plugins --help 了解。
 
 #### pod install 做了什么
@@ -15097,7 +15069,6 @@ end
 
 在 prepare 阶段会完成 `pod install` 的环境准备，包括目录结构、版本一致性以及 `pre_install` 的 hook。
 
-
 #### 2. 解决依赖冲突（resolve dependencies）
 
 ``` ruby
@@ -15126,7 +15097,7 @@ def resolve_dependencies
 end
 ```
 
-通过 Podfile、Podfile.lock 以及 manifest.lock 等生成 Analyzer 对象，其内部会使用个 Molinillo 算法解析得到一张依赖关系表，进行一系列的分析与依赖冲突解决。
+通过 Podfile、Podfile.lock 以及 manifest.lock 等生成 Analyzer 对象，其内部会使用这个 Molinillo 算法解析得到一张依赖关系表，进行一系列的分析与依赖冲突解决。
 
 #### 3. 下载依赖文件（download dependencies）
 
@@ -15143,7 +15114,7 @@ def download_dependencies
 end
 ```   
 
-经过前面分析与解决依赖冲突后，这是会进行依赖下载。会根据依赖信息是否被新添加或者修改等信息进行下载，同时下载后也会在本地留有一份缓存，其目录在 ～/Library/Caches/CocoaPods 。
+经过前面分析与解决依赖冲突后，这时会进行依赖下载。会根据依赖信息是否被新添加或者修改等信息进行下载，同时下载后也会在本地留有一份缓存，其目录在 ～/Library/Caches/CocoaPods 。
 
 #### 4. 验证 targets（validate targets）
 
@@ -15224,7 +15195,6 @@ end
 
 将依赖更新写入 Podfile.lock 与 Manifest.lock
 
-
 #### 7. 结束回调（perform post install action）
 
 ``` ruby
@@ -15244,7 +15214,6 @@ end
 
 最后的收尾工作，进行 post install action 的 hook 执行以及一些 warning 打印。
 
-
 ## CocoaPods + Plugins
 
 早在 2013 年，CocoaPods 就添加了对插件的支持，以添加不符合依赖管理和生态系统增长为主要目标的功能。CocoaPods Plugins 可以：在 install 前后添加 hook、添加新命令到 pod、以及利用 Ruby 动态性做任何事。下面介绍一下常见的插件：
@@ -15256,7 +15225,6 @@ end
 
 > 许多插件可能许久未维护，读者使用需自行斟酌。
 
-
 ## 不太常见概念
 
 CocoaPods 的配置内容几乎包含了 Xcode Build 的方方面面，因此存在许多不太常见的概念，在此做一个链接聚合以供参考。
@@ -15265,7 +15233,7 @@ CocoaPods 的配置内容几乎包含了 Xcode Build 的方方面面，因此存
 
 * [Modules](https://clang.llvm.org/docs/Modules.html#introduction)
 * [Clang Module](http://chuquan.me/2021/02/11/clang-module/)
-* [LLVM 中的 Module](https://www.stephenw.cc/2017/08/23/llvm-modules/)
+* LLVM 中的 Module
 * Hmap / Xcode Header / CocoaPods Headers
 
 Header Map 是一组头文件信息映射表，用 .hmap 后缀表示，整体结构以 Key-Value 形式存储；Key为头文件名称、Value 为 头文件物理地址。
@@ -15276,7 +15244,6 @@ Xcode Phases - Header 在构建配置中分为 public、private 与 project ，�
 * [What are build phases?](https://help.apple.com/xcode/mac/current/#/dev50bab713d)
 * [Xcconfig](https://nshipster.com/xcconfig/): 一种配置文件，用以对构建设置进行声明与管理，比如区分不同的开发环境等。
 * [On demand resource](https://developer.apple.com/videos/play/wwdc2015/214/)：WWDC 2015 引入的概念，对资源文件的按需加载。
-
 
 # 总结
 
@@ -15936,12 +15903,12 @@ Published At: 2023-03-12 06:38:00 +0000
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 
-## Flutter的声明周期
+## Flutter的生命周期
 
 
 最近在负责波点音乐的相关开发,由于波点是用flutter写的,所以周末不得不做一些Flutter开发的功课来弥补自己在移动端技术栈的缺失.
 
-Flutter的声明周期主要是`StatefulWidget`和`State`之间配合
+Flutter的生命周期主要是`StatefulWidget`和`State`之间配合
 
 下面从祖传的hello world开始
 
@@ -16196,7 +16163,7 @@ Published At: 2023-02-13 11:39:00 +0000
 * 1.系统NSCalendar日历
 
 ``` objc
-NSDate *date = [NSDate date]; //这里取当前日期,正常应该做为参数传入NSDate
+NSDate *date = [NSDate date]; //这里取当前日期,正常应该作为参数传入NSDate
 BOOL inToday = [[NSCalendar currentCalendar] isDateInToday:date]
 ```
 
@@ -16389,7 +16356,7 @@ Published At: 2023-02-02 02:21:00 +0000
 hexo new "202300202XXXPaper"
 
 ```
-的形式 通过模版生成一个markdown文件.
+的形式 通过模板生成一个markdown文件.
 
 > 具体使用一看看[hexo 指令](https://hexo.io/zh-cn/docs/commands.html)
 
@@ -16450,7 +16417,7 @@ bundle exec jekyll post "jekyllpost"
 
 ### 疑问
 
-这里生成的markdown没有hexo中的模版那样能自定义,我没找到 如果你感兴趣可以一起研究一下.
+这里生成的markdown没有hexo中的模板那样能自定义,我没找到 如果你感兴趣可以一起研究一下.
 
 [Why isn't there a "jekyll post" command to create posts like in hexo?](https://stackoverflow.com/questions/43416113/why-isnt-there-a-jekyll-post-command-to-create-posts-like-in-hexo)
 
@@ -17933,7 +17900,6 @@ Published At: 2022-07-11 03:04:00 +0000
 
 ## OOM
 
-
 在iOS开发中，可能会经常看到app用着用着就崩溃了，而在后台查看崩溃栈的时候，找不到崩溃日志。其实这大多数的可能是系统产生了低内存崩溃，也就是`OOM`(还有一种可能是主线程卡死，导致`watchdog`杀掉了应用)，而低内存崩溃的日志，往往都是以`JetsamEvent`开头的，日志中有内存页大小(`pageSize`)，CPU时间(`cpuTime`)等字段。
 
 #### 什么是OOM？
@@ -18242,9 +18208,7 @@ facebook和微信的Matrix都是采用的排除法。在Matrix初始化的时候
 
 平时我们谈论的大部分都是FOOM,因为如果我们的程序在后台，优先级很低，即便我们不占用大量的内存，也可能会由于前台应用程序占用了大量的内存，而把我们在后台的程序杀掉。这是系统的机制，我们没有太多的办法.针对于FOOM，我们需要着重关注`dirty pages`和`IOKit mappings`，当然注意系统做的缓存，例如图片、字体等。针对于OOM问题监控与解决，可以参考[Matrix](https://github.com/Tencent/matrix)和[OOMDetector](https://github.com/Tencent/OOMDetector)两个开源库
 
-
-
-[实践方案 快影iOS端如何实现OOM率下降80%+](https://www.gushiciku.cn/pl/aHa7)
+实践方案 快影iOS端如何实现OOM率下降80%+
 
 
 URL: https://sunyazhou.com/2022/07/ioscrashtype/index.html.md
@@ -18275,7 +18239,6 @@ Published At: 2022-07-11 01:53:00 +0000
 ![image](/assets/images/20220711iOSCrashType/1.avif)
 
 僵尸在RAC出现以前作用很大。但自从有了ARC，如果你在对象的所有权方面比较注意，那么通常不会碰到内存相关的崩溃。
-
 
 ### 2.`SIGSEGV`
 
@@ -18315,7 +18278,7 @@ int result = 10/0;  //0不能作为除数 否则crash
 
 # 总结
 
-crash log类型不限于上述这些,结合实际跟踪将会找到影响的崩溃信息.这里只做参考使用. 如果想了解更加详细请参考gnu的[源码](http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24)
+crash log类型不限于上述这些,结合实际跟踪将会找到影响的崩溃信息.这里只做参考使用. 如果想了解更加详细请参考gnu的源码
 
 [参考](https://zhuanlan.zhihu.com/p/269371735)  
 [理解 iOS 异常类型](https://juejin.cn/post/6844903866128039944)  
@@ -18335,7 +18298,6 @@ Published At: 2022-07-05 00:12:00 +0000
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 # 实现代码
-
 
 ``` objc
 
@@ -18374,12 +18336,11 @@ Published At: 2022-07-05 00:12:00 +0000
 }
 ```
 
-
 # 总结
 
 本题类似二叉树寻找最近公共父节点,可以参考masonry的实现
 
-[Masonry 算法之 最近公共父视图](https://www.todayios.com/ios-masonry-lca-closest-common-superview/)
+Masonry 算法之 最近公共父视图
 
 
 URL: https://sunyazhou.com/2022/07/binarytreeorder/index.html.md
@@ -19792,7 +19753,6 @@ Published At: 2022-04-14 00:50:00 +0000
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-
 ## 一种适合客户端开发的分支管理模型
 
 ![Branch Guide](/assets/images/20220414BranchManage/BranchGuide.avif)
@@ -19836,11 +19796,9 @@ RB分支修改后和如何同步给DEV分支,如果常规开发的话在代码Re
 
 --
 本文撰写自  
-[sunyazhou](https://https://www.sunyazhou.com/)   
+sunyazhou   
 [中] sunyazhou.com   
 此材料受版权保护
-
-
 
 
 
@@ -20487,8 +20445,7 @@ Published At: 2021-12-23 01:30:00 +0000
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-首先致敬一下iOS领域开发者-戴铭,我也非常推荐大家买它的[课程](https://time.geekbang.org/column/intro/161),本篇文章主要是学习时记录的笔记,记录大佬讲述的内容.
-
+首先致敬一下iOS领域开发者-戴铭,我也非常推荐大家买它的课程,本篇文章主要是学习时记录的笔记,记录大佬讲述的内容.
 
 ## 学习资料
 
@@ -20518,7 +20475,6 @@ iOS 开发者需要掌握的整个基础知识，按照 App 的开发流程（�
 ### 原生与前端
 
 ![nativeandfemudule](/assets/images/20210722iOSLessonsStudyNotes1/nativeandfemudule.avif)
-
 
 ### 汇总
 
@@ -20987,7 +20943,7 @@ Published At: 2021-02-21 10:40:31 +0000
 
 ## 文件扩展名
 
-最近开发过程中遇到了一个很低级的问题,有点类似网盘app里面要区分各种文件类型,然后找出对应的文件归属icon并显示,做为一个极客精神的iOS开发者,我想找到一种文件扩展名集合并不需要自己命名枚举值,这时我想起2015年左右开发百度网盘时调研过的airdrop,其中苹果规定了分享文件到其它手机需要提供的`文件唯一标识(UTI)`,于是我找了一下文档记录一下如下的文件类型列表.
+最近开发过程中遇到了一个很低级的问题,有点类似网盘app里面要区分各种文件类型,然后找出对应的文件归属icon并显示,作为一个极客精神的iOS开发者,我想找到一种文件扩展名集合并不需要自己命名枚举值,这时我想起2015年左右开发百度网盘时调研过的airdrop,其中苹果规定了分享文件到其它手机需要提供的`文件唯一标识(UTI)`,于是我找了一下文档记录一下如下的文件类型列表.
 
 苹果的CoreServices.framework中有一个`UTCoreTypes.h`头文件记录了所有的文件类型.
 
@@ -21412,12 +21368,12 @@ Published At: 2021-01-21 20:00:29 +0000
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 
-最近看到搜狐发表了一篇文章,其中有一段是文本如何添加渐变颜色,使用`非mask`的方式.因为mask的方式非常耗费性能,因为mask会触发离屏渲染.今天的demo中我使用了原来的demo做为例子
+最近看到搜狐发表了一篇文章,其中有一段是文本如何添加渐变颜色,使用`非mask`的方式.因为mask的方式非常耗费性能,因为mask会触发离屏渲染.今天的demo中我使用了原来的demo作为例子
 
 
 ## 实现滚动字幕中增加 渐变颜色
 
-核心实现很简单,[带你实现完整的 iOS 视频弹幕系统](https://mp.weixin.qq.com/s/4pWrwmZBEbrca2uxIt3o6w)中并没有给出相关demo.只是把相关弹幕的实现思路大概说说.所以做为一个iOS开发要善于动手写代码实现和验证它的思路. 其实我内心是很讨厌 搜狐的这篇有头没尾的技术文章,无非就是写写思路,代码实现的demo一个也不放出来显然不厚道.
+核心实现很简单,[带你实现完整的 iOS 视频弹幕系统](https://mp.weixin.qq.com/s/4pWrwmZBEbrca2uxIt3o6w)中并没有给出相关demo.只是把相关弹幕的实现思路大概说说.所以作为一个iOS开发要善于动手写代码实现和验证它的思路. 其实我内心是很讨厌 搜狐的这篇有头没尾的技术文章,无非就是写写思路,代码实现的demo一个也不放出来显然不厚道.
 
 这里面我们实现的比较简单.就是算出文本的size然后用 CoreGraphicContext画出一张图片.
 
@@ -22175,7 +22131,7 @@ Published At: 2020-10-04 11:58:03 +0000
 
 # 使用Xcode配置文件来管理不同的环境设置
 
-![Xcode Build Configration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.avif)
+![Xcode Build Configuration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigurationFile1.avif)
 
 # 前言
 
@@ -22380,7 +22336,7 @@ Published At: 2020-09-20 11:40:47 +0000
 #### AutoLayout的原理
 
 > 来历
-一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（[论文地址:http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的[Cassowary网站上http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/)。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的https://github.com/pybee/cassowary。自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。
+一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（[论文地址:http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的[Cassowary网站上http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/)。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。
 
 论文下载链接比较慢,我下载了一份[Cassowary原文放到了我的博客 大家可以自由下载](/assets/images/20200920UIViewGraphic/Cassowary.pdf).
 
@@ -22419,10 +22375,9 @@ iOS12之前，视图嵌套的数量对性能的影响是呈指数级增长的，
 
 [iOS触摸事件全家桶](https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ)
 
-
 ### 4. drawrect & layoutsubviews调用时机
 
-`layoutSubviews:`(相当于layoutSubviews()函数)在以下情况下会被调用：
+`layoutSubviews:`(相当于layoutSubviews函数)在以下情况下会被调用：
  
 1. init初始化不会触发layoutSubviews。
 2. addSubview会触发layoutSubviews。
@@ -22432,14 +22387,14 @@ iOS12之前，视图嵌套的数量对性能的影响是呈指数级增长的，
 6. 改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件。
 7. 直接调用setLayoutSubviews。
 
-`drawrect:`(drawrect()函数)在以下情况下会被调用：
+`drawrect:`(drawrect函数)在以下情况下会被调用：
 
 1. `drawrect:`是在UIViewController的`loadView:`和`ViewDidLoad:`方法之后调用.
 2. 当我们调用`[UIFont的 sizeToFit]`后,会触发系统自动调用`drawRect:`
 3. 当设置UIView的contentMode或者Frame后会立即触发触发系统调用`drawRect:`
 4. 直接调用`setNeedsDisplay`设置标记 或`setNeedsDisplayInRect:`的时候会触发`drawRect:`
 
-> 知识点扩充: 当我们操作drawRect方法的时候实际是在操作内存中存放视图的backingStore区域,用于后续图形的渲染操作,如果不理解可以看下[UIView的渲染过程](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/).
+> 知识点扩充: 当我们操作drawRect方法的时候实际是在操作内存中存放视图的backingStore区域,用于后续图形的渲染操作,如果不理解可以看下[UIView的渲染过程](https://www.sunyazhou.com/2017/10/UIViewRendering/).
 
 ### 5.UI的刷新原理
 
@@ -22451,7 +22406,7 @@ iOS 的`MainRunloop` 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘�
 * view内容的绘制(如果重写了 drawRect)
 * 接收和处理系统的触摸事件
 
-我们看到的UI图形实际上是CPU和GPU不断配合工作的结果.经过[UIView的渲染过程](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/) 后我们的UI会不间断的接收系统图给我们的事件.
+我们看到的UI图形实际上是CPU和GPU不断配合工作的结果.经过[UIView的渲染过程](https://www.sunyazhou.com/2017/10/UIViewRendering/) 后我们的UI会不间断的接收系统图给我们的事件.
 
 由于主线程的runloop 一直在回调,我们的UI就得到了刷新的窗口,是渲染还是处理事件都是因为runloop不断工作的结果.前几篇我们学过 main线程的runloop默认是启动的.因为我们响应交互.
 
@@ -22499,7 +22454,6 @@ CGImageSource开头的哪些,根据合理利用时机和操作系统资源调整
 
 可以从阴影,圆角入手.帧率,电量,图片的锯齿等等.
 
-
 [iOS开发-视图渲染与性能优化](https://www.jianshu.com/p/748f9abafff8)
 
 ### 12.如果GPU的刷新率超过了iOS屏幕60Hz刷新率是什么现象，怎么解决
@@ -22507,7 +22461,6 @@ CGImageSource开头的哪些,根据合理利用时机和操作系统资源调整
 现象是 图形清晰,场景逼真,但是一般arm芯片的GPU 刷新超过60Hz一定会超级费电,手机发热导致降频.FPS降低,因为低能耗电量不足,无法支持GPU高刷新率
 
 解决办法只能用xcode自带工具检测,看渲染过程哪里可以优化.
-
 
 # 总结
 
@@ -23147,7 +23100,7 @@ Published At: 2020-09-02 11:23:24 +0000
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-[前几篇](https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/)我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO
+[前几篇](https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/)我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO
 
 
 本章的主要回答的问题如下:
@@ -23562,7 +23515,6 @@ Published At: 2020-08-31 16:52:25 +0000
 3. iOS 中内省的几个方法有哪些？内部实现原理是什么
 4. `class`、`objc_getClass`、`object_getclass` 方法有什么区别?
 
-
 ## `Method Swizzle`注意事项
 
 1. **需要注意的是交换方法实现后的副作用**, `method_exchangeImplementations()`.交换方法函数最终会以`objc_msgSend()`方式调用,副作用主要集中在第一个参数  如下示例
@@ -23570,7 +23522,7 @@ Published At: 2020-08-31 16:52:25 +0000
 	``` objc
 	objc_msgSend(payment, @selector(quantity))
 	```
-	方法交换后再去调用quantity方法将有可能会crash.解决这种副作用的方式是使用`method_setImplementation()`来替换原来的交换方式,这样才最为合理, 具体原理请参照 [Objc 黑科技 - Method Swizzle 的一些注意事项](https://www.ctolib.com/topics-103098.html)  
+	方法交换后再去调用quantity方法将有可能会crash.解决这种副作用的方式是使用`method_setImplementation()`来替换原来的交换方式,这样才最为合理, 具体原理请参照 Objc 黑科技 - Method Swizzle 的一些注意事项  
 
 2. **避免交换父类方法** 
 
@@ -23765,7 +23717,7 @@ respondsToSelector:
 				返回IMP结果
 ```
 
-这就是整个消息转发的过程 就不在这里赘述了.感兴趣回看一下[第二章](https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/) 消息转发部分
+这就是整个消息转发的过程 就不在这里赘述了.感兴趣回看一下[第二章](https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2/) 消息转发部分
 
 我上述列举了一些常用的内省方法,其它的都方法基本没什么特别之处都是拿到isa各种操作内部的获取相关属性的函数返回结.
 
@@ -23809,7 +23761,7 @@ respondsToSelector:
 
 # 总结
 
-以上就是"一套高效的iOS面试题之我整理的答案之runtime相关问题3"中的内存剩余部分,问题答案虽然简短 但是每道题都问的非常到位,下一期我们讲一下 通知部分 争取用最快时间内把所有问题都整理出来答案.
+以上就是"一套高效的iOS面试题之我整理的答案之runtime相关问题3"中的内存剩余部分,问题答案虽然简短 但是每道题都问得非常到位,下一期我们讲一下 通知部分 争取用最快时间内把所有问题都整理出来答案.
 
 [参考](https://www.codenong.com/cs106358283/)
 
@@ -23837,7 +23789,7 @@ Published At: 2020-08-08 14:54:07 +0000
 * weak的实现原理？SideTable的结构是什么样的
 * 关联对象的应用？系统如何实现关联对象的
 * 关联对象的如何进行内存管理的？关联对象如何实现weak属性
-* Autoreleasepool的原理？所使用的的数据结构是什么
+* Autoreleasepool的原理？所使用的数据结构是什么
 * ARC的实现原理？ARC下对retain, release做了哪些优化
 * ARC下哪些情况会造成内存泄漏
 
@@ -23846,7 +23798,7 @@ Published At: 2020-08-08 14:54:07 +0000
 
 先说结论:
 
-* `weak表`其实是一个hash(哈西)表.`Key`是所指对象的地址，`Value`是`weak`指针的地址数组.实现原理是通过新旧表的更新指针方式,对weak对象单独存储于`SideTable`中的`weak_table_t`(类型)  `weak_table`表中,通过函数`objc_initWeak()`->`storeWeak()`函数中的新旧`SideTable`(结构体)表来实现
+* `weak表`其实是一个hash(哈希)表.`Key`是所指对象的地址，`Value`是`weak`指针的地址数组.实现原理是通过新旧表的更新指针方式,对weak对象单独存储于`SideTable`中的`weak_table_t`(类型)  `weak_table`表中,通过函数`objc_initWeak()`->`storeWeak()`函数中的新旧`SideTable`(结构体)表来实现
 * `SideTable`是一个结构体，内部主要有引用计数表和弱引用表两个成员，内存存储的其实都是对象的地址和引用计数和weak变量的地址，而不是对象本身的数据,它的结构如下
 
 ``` objc
@@ -24057,7 +24009,7 @@ struct weak_entry_t {
 ```
 其中`DisguisedPtr`类型的`referent`变量是**对泛型对象的指针的封装**,通过这个`泛型类`来解决内存泄露的问题.  
 
-注释中有个很重要的`out_of_line`成员,它代表最低的有效位,当它为0的时候,`weak_referrer_t `成员将扩展为多行静态的`hask table`.
+注释中有个很重要的`out_of_line`成员,它代表最低的有效位,当它为0的时候,`weak_referrer_t `成员将扩展为多行静态的`hash table`.
 
 其中`weak_referrer_t ` 是一个二维`objc_object`的别名(typedef),通过一个二维指针地址偏移,用下标作hash的`key`,做成了一个弱引用的散列。
 
@@ -24524,8 +24476,8 @@ _object_get_associative_reference(id object, const void *key)
     return association.autoreleaseReturnedValue();
 }
 ```
-1. 通过`AssociationsManager`拿到`AssociationsHashMap`哈西表
-2. 通过哈西表寻找关联对象
+1. 通过`AssociationsManager`拿到`AssociationsHashMap`哈希表
+2. 通过哈希表寻找关联对象
 3. 剩下的就是更新对象是否初次创建等标记 然后返回对象 
 
 ##### `objc_removeAssociatedObjects()`
@@ -24604,7 +24556,7 @@ enum {
     OBJC_ASSOCIATION_GETTER_AUTORELEASE = (2 << 8)
 };
 ```
-通过 acquireValue()函数判断使用那种内存关键字.  
+通过 acquireValue()函数判断使用哪种内存关键字.  
 
 ``` objc
 inline void acquireValue() {
@@ -24623,7 +24575,7 @@ inline void acquireValue() {
 
 ### 关联对象如何实现weak属性？
 
-首先说一下 这个问题问的非常有技术含量,完全考验iOS开发者对底层了解的程度.
+首先说一下 这个问题问得非常有技术含量,完全考验iOS开发者对底层了解的程度.
 
 在为NSObject对象绑定 associated object 时可以指定如下依赖关系：
 
@@ -24694,7 +24646,7 @@ dealloc
 
 [关联对象参考](https://draveness.me/ao/)
 
-##  Autoreleasepool的原理？所使用的的数据结构是什么？
+##  Autoreleasepool的原理？所使用的数据结构是什么？
 
 
 在ARC下我们使用`@autoreleasepool{}` 关键字 把需要自动管理的代码块圈起来 ,这个过程就是在使用一个`AutoReleasePool`
@@ -24834,7 +24786,7 @@ union isa_t
 
 * TaggedPointer  指针优化
 * !newisa.nonpointer：未优化的 isa 的情况下retain或者release
-* newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出区别 我把相关代码站在下面并且把结论输出出来.
+* newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出区别 我把相关代码贴在下面并且把结论输出出来.
 
 | 内存操作 | objc_retain | objc_release |
 | :------:| :------: | :------: |
@@ -25001,13 +24953,13 @@ ALWAYS_INLINE bool objc_object::rootRelease(bool performDealloc, bool handleUnde
 * NSTimer的循环引用
 * addObserver的循环引用
 * delegate的强引用
-* 大次数循环内存爆涨
+* 大次数循环内存暴涨
 * 非OC对象的内存处理（需手动释放）
 
 
 # 总结
 
-以上就是我们讨论上述一套面试题的 runtime相关问题之 内存管理部分,下一篇讲把剩余的问题收一下尾 感谢各位支持 
+以上就是我们讨论上述一套面试题的 runtime相关问题之 内存管理部分,下一篇将把剩余的问题收一下尾 感谢各位支持 
 
 
 
@@ -25024,7 +24976,7 @@ Published At: 2020-07-06 09:52:47 +0000
 > 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 
-记得过年时候 [有一个微信公众号](https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w) 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时长关注.期间如果有解答不清楚或者不对之处还请各位指正.
+记得过年时候 [有一个微信公众号](https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w) 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时常关注.期间如果有解答不清楚或者不对之处还请各位指正.
 
 
 # 面试题的结构分类和细化
@@ -25392,7 +25344,7 @@ class_copyPropertyList(Class cls, unsigned int *outCount)
 auto rw = cls->data();
 rw->properties; //通过rw直接拿到properties
 ```
-通过rw直接拿到properties,然后便利拿出想要的 以`@property`关键字 声明变量名称.
+通过rw直接拿到properties,然后遍历拿出想要的 以`@property`关键字 声明变量名称.
 
 `properties `详细内容 还请异步运行时源码看下这里篇幅限制就不啰嗦了.
 
@@ -25699,7 +25651,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
     }
     auto rw = cls->data();
         
-    // 注意下面的代码，上面采用倒叙遍历方式，所以后编译的 category 会先add到数组的前部
+    // 注意下面的代码，上面采用倒序遍历方式，所以后编译的 category 会先add到数组的前部
     prepareMethodLists(cls, mlists, mcount, NO, fromBundle);
     rw->methods.attachLists(mlists, mcount);
     free(mlists);
@@ -25724,7 +25676,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 
 * 运行时添加分类属性/协议/方法
 * 分类添加的方法会“覆盖”原类方法，因为方法查找的话是从头至尾，一旦查找到了就停止了
-* 同名分类方法谁生效取决于编译顺序，image 读取的信息是倒叙的，所以编译越靠后的越先读入
+* 同名分类方法谁生效取决于编译顺序，image 读取的信息是倒序的，所以编译越靠后的越先读入
 * 名字相同的分类会引起编译报错；
 
 ##### `extension`
@@ -25733,7 +25685,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 * 只以声明的形式存在，多数情况下就存在于 .m 文件中；
 * 不能为系统类添加扩展
 
-可以给类添加成员变量，但是是私有的 可以給类添加方法，但是是私有的 添加的属性和方法是类的一部分，在编译期就决定的。在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。 伴随着类的产生而产生，也随着类的消失而消失
+可以给类添加成员变量，但是是私有的 可以给类添加方法，但是是私有的 添加的属性和方法是类的一部分，在编译期就决定的。在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。 伴随着类的产生而产生，也随着类的消失而消失
 
 > **必须有类的源码才可以给类添加extension**!!!
 
@@ -25751,29 +25703,29 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 
 #### 消息转发机制，消息转发机制和其他语言的消息机制优劣对比
 
- > 前言: 了解消息转发之前我们有必要了解一些Objectivce-C中的消息传递机制
+ > 前言: 了解消息转发之前我们有必要了解一些Objective-C中的消息传递机制
 
 ##### 消息传递机制
 
-在Objectivce-C中,我们通过`实例变量(对象)`或者`类方法名`调用一个方法,那么我们实际上是在发送一条消息
+在Objective-C中,我们通过`实例变量(对象)`或者`类方法名`调用一个方法,那么我们实际上是在发送一条消息
 
 ``` objc
 id returnValue = [someObject messageName:parameter];  //实例调用方式
 id returnValue = [ClassA messageName:parameter];  //类调用方式
 ```
-上述`someObject`和`ClassA`是接受者(receiver)，`messageName:`是选择器(`selector`),选择器和参数合起来称为消息(`message`)。编译器看到此消息后，将其转换为一条标准的c语言函数调用，所调用的函数乃是消息传递机制中的核心函数：`objc_msgSend()`。
+上述`someObject`和`ClassA`是接收者(receiver)，`messageName:`是选择器(`selector`),选择器和参数合起来称为消息(`message`)。编译器看到此消息后，将其转换为一条标准的c语言函数调用，所调用的函数乃是消息传递机制中的核心函数：`objc_msgSend()`。
 
 ``` c
 void objc_msgSend(id self, SEL cmd, ...)
 ```
-第一个参数代表接受者，第二个参数代表选择子，后续参数就是消息中的那些参数
+第一个参数代表接收者，第二个参数代表选择子，后续参数就是消息中的那些参数
 编译器会把刚才的那个例子中的消息转换为如下函数：
 
 ``` objc
 id returnValue = objc_msgSend(someObject, @selector(messageName:),parameter);
 id returnValue = objc_msgSend(ClassA, @selector(messageName:),parameter);
 ```
-`objc_msgSend()`函数会依据接受者与选择器的类型来调用适当的方法.为来完成此操作，该方法需要在接受者所属的类中搜寻其“方法列表”(也就是上文我们说的`class_ro_t`中的method_list)。找到则跳到现实代码，否则，就沿着继承体系继续向上查找，如果还没有则执行消息转发操作。对于其他的“边界情况”，则需要交由Objective-c运行环境的另一些函数来处理：
+`objc_msgSend()`函数会依据接收者与选择器的类型来调用适当的方法.为了完成此操作，该方法需要在接收者所属的类中搜寻其“方法列表”(也就是上文我们说的`class_ro_t`中的method_list)。找到则跳到实现代码，否则，就沿着继承体系继续向上查找，如果还没有则执行消息转发操作。对于其他的“边界情况”，则需要交由Objective-c运行环境的另一些函数来处理：
 
 ``` c
 objc_msgSend_stret  //待发送的消息返回结构体时
@@ -25789,7 +25741,7 @@ objc_msgSendSuper   //如果要给超类发送消息
 
 在objc中消息转发需要经历3个阶段  `resolveInstanceMethod` -> `forwardingTargetForSelectoer` -> `forwardInvocation` ->`消息未能处理`。  
 
-* 第一阶段:**动态方法解析(Dynamic Method Resolution)**也就是在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个**未知选择器**
+* 第一阶段:**动态方法解析(Dynamic Method Resolution)**也就是在所属的类中先征询接收者,看其是否能动态加方法，来处理当前这个**未知选择器**
 * 第二阶段:**替换消息接收者快速转发**
 * 第三阶段:**完全消息转发机制**
 
@@ -25847,7 +25799,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 
 这个阶段的意义是为一个类动态提供方法实现,严格来说，还没进入消息转发流程。
 
-`resolveInstanceMethod:` 控制这下面两个方法是否会被调用
+`resolveInstanceMethod:` 控制着下面两个方法是否会被调用
 
 * `respondsToSelector:`  
 * `instancesRespondToSelector:`  
@@ -25886,7 +25838,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 
 > `NSInvocation`可以简单理解为一个对象把我们用到 selector方法和对象都存储了一下,然后哪个是指向我们需要调用的指针对象.
 
-所以不同与第二阶段，在这个阶段你可以：
+所以不同于第二阶段，在这个阶段你可以：
 
 * 把消息存储，在你觉得合适的时机转发出去，或者不处理这个消息。
 * 修改消息的target，selector，参数等
@@ -25912,7 +25864,7 @@ Objective-C 实例对象执行方法步骤
 5. 若最终没有找到，则进行消息转发操作.
 
 * 方法查询之前 要知道  receiver和 selector.主要是要明确我们是哪个实例调用了哪个方法.  
-* 动态解析解析之前要 在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个未知选择器.
+* 动态解析之前要 在所属的类中先征询接收者,看其是否能动态加方法，来处理当前这个未知选择器.
 * 消息转发 之前 要询问是否把消息转发给另一个对象. 
 
 > 如果更深入的而理解 那应该是 objc_msgSend() 为啥是汇编实现的,上面的那些方法 调用之前 汇编的哪些指令被执行
@@ -25998,7 +25950,7 @@ runtime 使用了发送消息 `objc_msgSend` 的方式对 `+initialize` 方法�
 
 ##### 在继承关系中他们有什么区别
 
-super的方法会成功调用，但是这是多余的，因为runtime会自动对父类的+load方法进行调用，而+initialize则会随子类自动激发父类的方法（如Apple文档中所言）不需要显示调用。另一方面，如果父类中的方法用到的self（像示例中的方法），其指代的依然是类自身，而不是父类
+super的方法会成功调用，但是这是多余的，因为runtime会自动对父类的+load方法进行调用，而+initialize则会随子类自动激发父类的方法（如Apple文档中所言）不需要显式调用。另一方面，如果父类中的方法用到的self（像示例中的方法），其指代的依然是类自身，而不是父类
 
 ####  说说消息转发机制的优劣
 
@@ -26010,7 +25962,7 @@ super的方法会成功调用，但是这是多余的，因为runtime会自动�
 
 缺点:
 
-* Objective-C本身不支持多继承，这是因为消息机制名称查找发生在运行时而非编译时，很难解决多个基类可能导致的二义性问题，但是可以通过消息转发机制在内部创建多个功能的对象，把不能实现的功能给转发到其他对象上去，这样就做出来一种多继承的假象。转发和继承相似，可用于为OC编程添加一些多继承的效果，一个对象把消息转发出去，就好像他把另一个对象中放法接过来或者“继承”一样。消息转发弥补了objc不支持多继承的性质，也避免了因为多继承导致单个类变得臃肿复杂。
+* Objective-C本身不支持多继承，这是因为消息机制名称查找发生在运行时而非编译时，很难解决多个基类可能导致的二义性问题，但是可以通过消息转发机制在内部创建多个功能的对象，把不能实现的功能给转发到其他对象上去，这样就做出来一种多继承的假象。转发和继承相似，可用于为OC编程添加一些多继承的效果，一个对象把消息转发出去，就好像他把另一个对象中方法接过来或者“继承”一样。消息转发弥补了objc不支持多继承的性质，也避免了因为多继承导致单个类变得臃肿复杂。
 
 
 # 总结
@@ -26312,7 +26264,7 @@ NSURLProtocol 允许开发者去获取、添加、删除 request 对象的任意
 ``` objc
 // 获取协议接收者的缓存
 - (NSCachedURLResponse *)cachedResponse;
-// 接受者用来与 URL 加载系统通信的对象，每个 NSProtocol 的子类实例都拥有它
+// 接收者用来与 URL 加载系统通信的对象，每个 NSProtocol 的子类实例都拥有它
 - (id<NSURLProtocolClient>)client;
 // 接收方的请求
 - (NSURLRequest *)request;
@@ -28396,7 +28348,6 @@ PE工具箱制作
 
 下载地址:链接：[http://www.usbrun.com/](http://www.usbrun.com/)
 
-
 ![image](/assets/images/20190424WindowsResources/1.avif)
 
 下载精简版本好后 先把杀毒软件关掉 ！！  双击安装一下此软件到电脑上 ，安装好软件后打开  ，如果软件提示更新，可以忽略，不需要更新！！
@@ -28411,21 +28362,16 @@ PE工具箱制作
 
 点一键制作然后等制作完成就OK！！ 制作完成之后 点一下模拟启动看下U盘能不能启动，能的话就OK。关掉即可
 
-
 ## 下载系统步骤
-
 
 下面选1个需要的系统版本下载 (U盘容量够大两个系统都可以下载使用 此PE支持原版系统安装)
 
 WIN7 64位（B360B450锐龙二代CPU主板不支持）
-系统下载连接：[链接](http://www.jsgho.net/win7/jsy/35178.html)(技术员纯净版)
-
-
+系统下载连接：链接(技术员纯净版)
 
 ![image](/assets/images/20190424WindowsResources/3.avif)
 
 ![image](/assets/images/20190424WindowsResources/4.avif)
-
 
 ## WIN7~10 64位
 
@@ -28443,7 +28389,6 @@ ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dv
 
 ![image](/assets/images/20190424WindowsResources/6.avif)
 
-
 ## 设置U盘启动步骤
 
 制作好的U盘插上您需要装系统的电脑上，以下主板U盘快捷启动按键
@@ -28460,7 +28405,6 @@ ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dv
 出现U盘启动界面 如下图选择  启动WIN10 PE X 64 ，别的不用去选择。 
 
 ![image](/assets/images/20190424WindowsResources/8.avif)
-
 
 ## 分区安装系统步骤
 
@@ -28484,15 +28428,11 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 
 > 注：固态硬盘需要选择4K，机械硬盘不用现在 ，选择了会导致进不了系统
 
-
 ![image](/assets/images/20190424WindowsResources/11.avif)
-
 
 分区好后关闭分区接口窗口看下一步操作
 
-
 ##  安装系统镜像步骤
-
 
 打开桌面上的电脑店一键还原，如下图  
 
@@ -28511,9 +28451,7 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 免责条款
 > (本作品仅限网友交流安装系统经验，或可作临时安装测试PC硬件之用，请在安装后24小时内删除，若需要长期使用，请购买正版系统及软件。)
 
-
 ##  激活系统步骤
-
 
 激活工具箱下载连接： 
 
@@ -28527,17 +28465,14 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 
 教程连接：[http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438](http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438)
 
-
 建议上网其他驱动问题下载：[驱动精灵 标准版](http://www.drivergenius.com/)
-
 
 # 总结
 
 每次装机总忘记一些流程 这里记录下来
 
-
-[参考 PE安装系统教程](https://note.youdao.com/ynoteshare1/index.html?id=e0f8c30393c4f069555d286020f9d394&type=note)  
-[U盘刻录安装原版系统教程](http://05aebac1.wiz03.com/share/s/05HHH13zK4EY2bE37Q00RO3H1CvO101754vQ2bNyFE2nhALV?tdsourcetag=s_pcqq_aiomsg)  
+参考 PE安装系统教程  
+U盘刻录安装原版系统教程  
 [I tell you神奇的镜像下载网站 绝对纯洁](http://msdn.itellyou.cn/)
 
 
@@ -28952,7 +28887,6 @@ Published At: 2019-02-15 10:40:15 +0000
 
 新年第一篇 把自己用的比较好的工具都记录下来
 
-
 ## 截屏 Snipaste
 
 没当没有网络的时候 或者拿到新mac的时候由于没有什么软件截屏,不得不用QQ或者微信自带的截屏.这就逼着我不得不安装这两个app，有了Snipaste 跟截屏说再见吧
@@ -28965,13 +28899,11 @@ Snipaste是一个小巧强大的截图软件，可以直接对截图进行打码
 
 [下载地址](https://www.snipaste.com/)
 
-
 ## 快捷键查看器CheatSheet
 
 CheatSheet可以快速调出当前软件支持的快捷键，长按command即可，简单实用。
 
 ![Cheat Sheet](/assets/images/20190215Tools/CheatSheet.avif)
-
 
 > 使用之前必须在隐藏策略和安全性那个地方给这个加上访问权限才可以 具体有图片提示按照图片操作即可
 
@@ -28986,7 +28918,6 @@ CheatSheet可以快速调出当前软件支持的快捷键，长按command即可
 对于一个曾经在百度网盘搬过砖的程序员 文件上传下载这种最基础的业务必须玩的很溜,当年迅雷有意让我去面试被我拒绝,主要是公司距离住的地方太远,但是从文件下载限速的策略上我觉得是迅雷还是不足以驱动互联网前进的方向,这种第三方的folx完全彻底取代了迅雷.
 
 [下载地址](https://mac.eltima.com/cn/torrent-client.html)
-
 
 ## 视频播放器IINA
 
@@ -29004,10 +28935,9 @@ Mactracker提供了苹果全系列产品的所有信息，包括性能参数、�
 
 ![Mactracker](/assets/images/20190215Tools/Mactracker.avif)
 
-做为一个iOS开发者,如果不能实时了解水果公司得各种产品的积极动向我觉得是一种不积极的工作表现,这个软件可以实时的查看苹果目前的所有发不过的型号等等info.
+作为一个iOS开发者,如果不能实时了解水果公司的各种产品的积极动向我觉得是一种不积极的工作表现,这个软件可以实时地查看苹果目前的所有发布过的型号等等info.
 
 [下载地址iTunes](https://itunes.apple.com/cn/app/mactracker/id430255202?mt=12)
-
 
 ## 图片水印批量添加工具 PhotoBulk
 
@@ -29026,7 +28956,6 @@ Mac对压缩文件的格式支持不足，只支持zip，借助The Unarchiver可
 [下载地址](https://itunes.apple.com/cn/app/the-unarchiver/id425424353?mt=12)
 
 ## mac上管理android的文件管理 handshaker
-
 
 锤子科技出品的文件管理软件，用于在Mac电脑上管理Android手机内容，功能强大，可以互传文件、分类管理。
 
@@ -29060,7 +28989,6 @@ Background Music的功能非常简单，在MacBook中分别控制不同软件的
 
 ![iease Music](/assets/images/20190215Tools/ieaseMusic.avif)
 
-
 这个第三方的过于花哨 不实用,不如不装.
 
 [下载地址](https://github.com/trazyn/ieaseMusic)
@@ -29070,7 +28998,7 @@ Background Music的功能非常简单，在MacBook中分别控制不同软件的
 有很多软件没有及时整理 有时间会不定时更新 多谢支持
 
 [喵神的工具集合](https://onevcat.com/apps/)  
-[参考ithome](https://www.ithome.com/0/409/410.htm)
+参考ithome
 
 
 URL: https://sunyazhou.com/2018/12/FinalSummary/index.html.md
@@ -29319,7 +29247,7 @@ __凡秀才当以天下为任__
 
 这位共和国总理的声音你都需要听到,这也是我第一次听到周总理的原声录音,在最后的600多天的日子里,这位总理可谓鞠躬尽瘁日理万机,与江青团伙斗智斗勇,努力纠正文革的错误,把共和国的重任一步一步交给邓小平,没有小平爷爷的改革开放,那你今天也许就不会看到我写的博客文章来总结我的2018,周总理的勤俭值得我去学习,由于医疗条件不是很完备,当时的新中国还没有能力制造一些高级药品,周总理的药都是国外进口,可是这位总理节俭到当药片掉地上很珍惜的捡起来吃,他说,我多么希望我们共和国也能制造这种药去帮助那些像我一样受病痛折磨的人民.在最后的岁月里与病魔坚强抗争.
 
-为了纪念这位伟人,我认真的听完讲解周总理的最后岁月,我很荣幸能在中国国家博物馆里找到总理的几件物品,让我瞻仰一下这位共和国总理的爱戴人民的精神和气质.
+为了纪念这位伟人,我认真地听完讲解周总理的最后岁月,我很荣幸能在中国国家博物馆里找到总理的几件物品,让我瞻仰一下这位共和国总理的爱戴人民的精神和气质.
 
 ![hat Of Zhou Prime Minister](/assets/images/20181231FinalSummary/hatOfZhouPrimeMinister1.avif)
 
@@ -29640,7 +29568,7 @@ Published At: 2018-12-21 10:12:07 +0000
 
 ```
 
- `0` 处代码使我们需要把当前的类做为转场的代理  
+ `0` 处代码使我们需要把当前的类作为转场的代理  
  `1` 这里我们要拿出cell这个view  
  `2` 拿出当前Cell的frame坐标  
  `3` cell的坐标转成屏幕坐标  
@@ -30035,7 +29963,7 @@ if (!self.isInteracting && vel.x < 0) {
 }
 ```
 
-然后 开始的时候加个蒙版做为view.mask 这样是为了解决tableView 超出contentSize的范围要隐藏
+然后 开始的时候加个蒙版作为view.mask 这样是为了解决tableView 超出contentSize的范围要隐藏
 
 剩下的就是中间过程 
 
@@ -30768,7 +30696,7 @@ Published At: 2018-11-08 11:52:06 +0000
 ``` objc
 __weak __typeof(self) wself = self;
 //加载网络图
-[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/images/logo2.jpg"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/assets/images/20181108AwemeAlbumAnimation/album1.avif"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
     if(!error) {
         wself.musicAlbum.album.image = image;
     }
@@ -31592,12 +31520,10 @@ Published At: 2018-09-20 09:40:06 +0000
 
 今天的文章和大家分享一下解决这种问题的代码
 
-
 # 实现思路
 
 * 子类话UIButton 复写 它的`hitTest:`方法
 * 子类话UIButton 复写 point:inside:withEvent: 方法
-
 
 ## 第一种方式
 
@@ -31612,17 +31538,14 @@ override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
 ```
 
-
 * 1. 让theButton的 x 扩大 30, y 扩大 30 (正数为缩小 负数为放大. 然后宽高 分别是2 * 30和 2 * 30)
 * 2. 判断点击的位置是否在放大完的frame内.
 * 3. 如果是 就返回button
 * 4. 不是的话让事件继续传递
 
-
 > 注意:_这里没判断 theButton.alpha == 0 和 theButton.userInterface.. ==  YES 还有它是否可见之类的,请自行判断_
 
 ## 第二种方式
-
 
 复写UIView的point:方法
 
@@ -31633,7 +31556,6 @@ override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
 	return biggerFrame.contains(point)
 }
 ```
-
 
 OC的版本是这样
 
@@ -31646,20 +31568,15 @@ OC的版本是这样
 }
 ```
 
-
 但是 第二种方式 其实 是 hitTest:方法调用之前UIView的判断,它判断当前点击的point是否在这个UIView上.
 
 不过 还是推荐第一种方式
 
-
 ## 核心代码
-
 
 其实 最核心的代码是
 
-
 CGRectInset(<#CGRect rect#>, <#CGFloat dx#>, <#CGFloat dy#>)
-
 
 > CGRect CGRectOffset(CGRect rect, CGFloat dx, CGFloat dy)是以rect为中心，根据dx和dy来实现缩小。
 
@@ -31667,23 +31584,16 @@ CGRectInset(<#CGRect rect#>, <#CGFloat dx#>, <#CGFloat dy#>)
 
 但是大家可能很疑惑 那宽度和高度怎么 缩小放大
 
-
 首先: 我们明确 这个API的含义 只要传入正数 它就缩放 那么 宽高也会适当前传入的dx和dy来决定 缩放比
 
 因为是中心点缩放 所以宽高 __要 X 2__,因为有两侧嘛,左侧缩小30右侧也需要缩小30,上部和底部是一样的.
 
-
 大家可自行查阅google看下
 
-
-
-[参考Increasing the tap area of a UIButton](https://rolandleth.com/increasing-the-tap-area-of-a-uibutton)  
+参考Increasing the tap area of a UIButton  
 [参考 iOS触摸事件全家桶](https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ)
 
 全文完
-
-
-
 
 
 
@@ -32714,14 +32624,11 @@ Published At: 2018-06-08 09:18:03 +0000
 * Swift4.2
 * 使用Xcode中的Playground
 
-
 ## 生成随机数
 
 在上一篇中我们大部分时间都在围绕[arcrandom()](https://man.openbsd.org/arc4random.3)函数来介绍随机数.当然也有它的一些变种.eg：arc4random_uniform(),rand(),random().但无论如何这些函数多数都是系统级函数。
 
-
 在swift4.2中 所有的 数字类型(就是普通数据类型中代表数字的)都有一个静态方法`random(in:)`,这个方法将接收一个范围(Range)或者开闭范围,返回一个无序的随机数(a uniform distribution). 这些随机函数将会包含在swift的标准库中,如果跨平台的话标准库函数都是一致的,不像上面介绍的系统随机函数.
-
 
 ``` swift
 
@@ -32740,7 +32647,7 @@ let between0And5 = UInt8.random() % 6
 
 ```
 
-这种随机数 有可能不够均匀分布,这种非均匀分布的方式就叫[`模偏差`](https://www.quora.com/What-is-modulo-bias).
+这种随机数 有可能不够均匀分布,这种非均匀分布的方式就叫`模偏差`.
 
 那如何解决这种莫偏差的问题呢?
 
@@ -32756,7 +32663,6 @@ let between0And5 = UInt8.random(in: 0..<6) // → 5
 ``` swift 
 let between0And255 = UInt8.random(in: .min ... .max) // → 190
 ```
-
 
 ### Bool值随机
 
@@ -32868,14 +32774,12 @@ extension Int {
 
 这个`generator`参数需要总是传入[`inout`](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545),因为在产生新的随机性时，RNGs通常会改变它们的状态。
 
-
 下面看下我们怎么调用自定义随机, 我们需要创建一个可变的并且满足inout的要求的方法.
 
 ``` swift
 var mersenneTwister = MersenneTwisterRNG(...) // assume this exists
 Int.random(in: 10..<20, using: &mersenneTwister)
 ```
-
 
 ### 在自有类型中生成随机值
 
@@ -32885,7 +32789,6 @@ Int.random(in: 10..<20, using: &mersenneTwister)
 
 * 提供静态随机方法`random() -> Self` 这个方法使用默认的RNG,如果我们规范随机范围的时候这个函数能补充额外参数.以便于我们规范随机的range.  
 * 提供第二个方法`random<T: RandomNumberGenerator>(using generator: inout T) -> Self`这个是生成默认随机数的核心方法.
-
 
 举个扑克游戏中的枚举例子, 这里面我们可以充分利用[`Swift4.2`](https://github.com/apple/swift-evolution/blob/master/proposals/0194-derived-collection-of-enum-cases.md)中的[allCase](https://developer.apple.com/documentation/swift/caseiterable)属性.
 
@@ -32913,13 +32816,11 @@ let randomSuit = Suit.random() // → clubs
 randomSuit.rawValue // → "♠"
 ```
 
-
 ## 总结
 
 本篇补充了新版Swift4.2中对标准库中的随机函数支持,也介绍了洗牌函数默认随机均匀排列,希望小伙伴们看完有所收获,有问题还请多多指教
 
 全文完
-
 
 [参考](https://oleb.net/blog/2018/06/random-numbers-in-swift/)
 
@@ -33871,7 +33772,7 @@ CF_ENUM(UInt32) {
 | 子类型 | 用途说明 | 子枚举类型 |
 | :------ | :------ | :------ |
 |均衡效果器 | 为声音的某些[频带](https://baike.baidu.com/item/%E9%A2%91%E5%B8%A6)增强或衰减能量，效果器需要指定多个频带,然后为各频带设置增益最终改变声音在音域上的能量分布 | kAudioUnitSubType_NBandEQ|
-| 压缩效果器 | 当声音较小或较大通过设置阀值来提高或降低声音能量 eg:作用时间、释放时间、以及触发值从而最终控制声音在时域上的能量范围 | kAudioUnitSubType_DynamicsProcessor |
+| 压缩效果器 | 当声音较小或较大通过设置阈值来提高或降低声音能量 eg:作用时间、释放时间、以及触发值从而最终控制声音在时域上的能量范围 | kAudioUnitSubType_DynamicsProcessor |
 | 混响效果器 | 通过声音反射的延迟控制声音效果 | kAudioUnitSubType_Reverb2 |
 
 > Effect Unit 下最常用的效果器就上边这三种, 像高通(High Pass)、低通(Low Pass)、带通(Band Pass)、延迟(Delay)、压限(Limiter) 等这些不是很常用,如果大家对这个很熟悉可以试试使用一下.
@@ -34133,7 +34034,6 @@ Published At: 2018-04-02 14:16:34 +0000
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop6.avif)
 
-
 # 前言
 
 `RunLoop` 是 `iOS` 和 `OSX` 开发中非常基础的一个概念，这篇文章将从`CFRunLoop`的源码入手，介绍 `RunLoop` 的概念以及底层实现原理。之后会介绍一下在 `iOS` 中，苹果是如何利用`RunLoop`实现自动释放池、延迟回调、触摸事件、屏幕刷新等功能的。
@@ -34176,7 +34076,6 @@ function loop() {
 
 这种模型通常被称作 [Event Loop](https://en.wikipedia.org/wiki/Event_loop)。 `Event Loop` 在很多系统和框架里都有实现，比如 `Node.js`的事件处理，比如 `Windows` 程序的消息循环，再比如 `OSX/iOS` 里的 `RunLoop`。实现这种模型的关键点在于：如何`管理事件/消息`，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。
 
-
 所以，`RunLoop` 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 `Event Loop` 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “`接受消息`->`等待->`处理`” 的循环中，直到这个循环结束（比如传入 `quit` 的消息），函数返回。
 
 `OSX/iOS` 系统中，提供了两个这样的对象：`NSRunLoop` 和 `CFRunLoopRef`。  
@@ -34185,10 +34084,9 @@ function loop() {
 
 `NSRunLoop` 是基于 `CFRunLoopRef` 的封装，提供了面向对象的 `API`，但是这些 `API` 不是线程安全的。  
 
-CFRunLoopRef 的代码是[开源](http://opensource.apple.com/source/CF/CF-855.17/CFRunLoop.c)的，你可以在这里 [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) 下载到整个 `CoreFoundation` 的源码来查看。
+CFRunLoopRef 的代码是开源的，你可以在这里 [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) 下载到整个 `CoreFoundation` 的源码来查看。
 
 (Update: Swift 开源后，苹果又维护了一个跨平台的 CoreFoundation 版本：[https://github.com/apple/swift-corelibs-foundation/](https://github.com/apple/swift-corelibs-foundation/)，这个版本的源码可能和现有`iOS`系统中的实现略不一样，但更容易编译，而且已经适配了`Linux/Windows`。)
-
 
 ### RunLoop 与线程的关系
 
@@ -34237,13 +34135,9 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 }
 ```
 
-
 从上面的代码可以看出，线程和`RunLoop`之间是一一对应的，其关系是保存在一个全局的 `Dictionary` 里。线程刚创建时并没有 `RunLoop`，如果你不主动获取，那它一直都不会有。`RunLoop` 的创建是发生在第一次获取时，`RunLoop` 的销毁是发生在线程结束时。你只能在一个线程的内部获取其 `RunLoop`（主线程除外）.
 
-
-
 ### RunLoop 对外的接口
-
 
 在 `CoreFoundation` 里面关于 `RunLoop` 有5个类:
 
@@ -34253,11 +34147,9 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 * `CFRunLoopTimerRef`
 * `CFRunLoopObserverRef`
 
-
 其中 `CFRunLoopModeRef` 类并没有对外暴露，只是通过 `CFRunLoopRef` 的接口进行了封装。他们的关系如下:
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop0.avif)
-
 
 一个 `RunLoop` 包含若干个 `Mode`，每个 `Mode `又包含若干个 `Source`/`Timer`/`Observer`。每次调用 `RunLoop` 的主函数时，只能指定其中一个 `Mode`，这个`Mode`被称作 `CurrentMode`。如果需要切换 `Mode`，只能退出 `Loop`，再重新指定一个 `Mode` 进入。这样做主要是为了分隔开不同组的 `Source`/`Timer`/`Observer`，让其互不影响。
 
@@ -34266,9 +34158,7 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 * `Source0` 只包含了一个回调（函数指针），它并不能主动触发事件。使用时，你需要先调用 `CFRunLoopSourceSignal(source)`，将这个 `Source` 标记为待处理，然后手动调用 `CFRunLoopWakeUp(runloop)` 来唤醒 `RunLoop`，让其处理这个事件。  
 * `Source1` 包含了一个 `mach_port` 和一个回调（函数指针），被用于通过内核和其他线程相互发送消息。这种 `Source` 能主动唤醒 `RunLoop` 的线程，其原理在下面会讲到。
 
-
 **CFRunLoopTimerRef** 是基于时间的触发器，它和 `NSTimer` 是`toll-free bridged `的，可以混用。其包含一个时间长度和一个回调（函数指针）。当其加入到 `RunLoop` 时，`RunLoop`会注册对应的时间点，当时间点到时，`RunLoop`会被唤醒以执行那个回调。
-
 
 **CFRunLoopObserverRef** 是观察者，每个 `Observer` 都包含了一个回调（函数指针），当 `RunLoop` 的状态发生变化时，观察者就能通过回调接受到这个变化。可以观测的时间点有以下几个：
 
@@ -34308,7 +34198,6 @@ struct __CFRunLoop {
 };
 ```
 
-
 这里有个概念叫 “`CommonModes`”：一个 `Mode` 可以将自己标记为”`Common`”属性（通过将其 `ModeName` 添加到 `RunLoop` 的 “`commonModes`” 中）。每当 `RunLoop` 的内容发生变化时，`RunLoop` 都会自动将 `_commonModeItems` 里的 `Source`/`Observer`/`Timer`同步到具有 “`Common`” 标记的所有`Mode`里。
 
 应用场景举例：主线程的 `RunLoop` 里有两个预置的 `Mode`：`kCFRunLoopDefaultMode` 和 `UITrackingRunLoopMode`。这两个 `Mode` 都已经被标记为”`Common`”属性。`DefaultMode` 是 `App` 平时所处的状态，`TrackingRunLoopMode` 是追踪 `ScrollView`滑动时的状态。当你创建一个`Timer`并加到 `DefaultMode` 时，`Timer` 会得到重复回调，但此时滑动一个`TableView`时，`RunLoop` 会将 `mode` 切换为 `TrackingRunLoopMode`，这时 `Timer` 就不会被回调，并且也不会影响到滑动操作。
@@ -34346,7 +34235,6 @@ CFRunLoopRemoveTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode)
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop1.avif)
 
 其内部代码整理如下 (太长了不想看可以直接跳过去，后面会有说明)
-
 
 ``` c
 /// 用DefaultMode启动
@@ -34462,13 +34350,11 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
 
 ```
 
-
 ### RunLoop 的底层实现
 
 从上面代码可以看到，`RunLoop` 的核心是基于 `mach port` 的，其进入休眠时调用的函数是 `mach_msg()`。为了解释这个逻辑，下面稍微介绍一下 `OSX/iOS` 的系统架构。
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop3.avif)
-
 
 苹果官方将整个系统大致划分为上述4个层次：
 应用层包括用户能接触到的图形应用，例如 `Spotlight`、`Aqua`、`SpringBoard` 等。
@@ -34480,12 +34366,10 @@ __我们在深入看一下 Darwin 这个核心的架构：__
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop4.avif)
 
-
 其中，在硬件层上面的三个组成部分：`Mach`、`BSD`、`IOKit` (还包括一些上面没标注的内容)，共同组成了 `XNU` 内核。
 `XNU` 内核的内环被称作 `Mach`，其作为一个微内核，仅提供了诸如处理器调度、`IPC` (进程间通信)等非常少量的基础服务。  
 `BSD` 层可以看作围绕 `Mach` 层的一个外环，其提供了诸如进程管理、文件系统和网络等功能。  
 `IOKit` 层是为设备驱动提供了一个面向对象(`C++`)的一个框架。
-
 
 `Mach` 本身提供的 `API` 非常有限，而且苹果也不鼓励使用 `Mach` 的 `API`，但是这些`API`非常基础，如果没有这些`API`的话，其他任何工作都无法实施。在 `Mach` 中，所有的东西都是通过自己的对象实现的，进程、线程和虚拟内存都被称为”对象”。和其他架构不同， `Mach` 的对象间不能直接调用，只能通过消息传递的方式实现对象间的通信。”`消息`”是 `Mach` 中最基础的概念，消息在两个端口 (`port`) 之间传递，这就是 `Mach` 的 `IPC` (进程间通信) 的核心。
 
@@ -34520,19 +34404,17 @@ mach_msg_return_t mach_msg(
 			mach_port_name_t notify);
 ```
 
-
 为了实现消息的发送和接收，`mach_msg()` 函数实际上是调用了一个 `Mach` 陷阱 `(trap)`，即函数`mach_msg_trap()`，陷阱这个概念在 `Mach` 中等同于系统调用。当你在用户态调用`mach_msg_trap()` 时会触发陷阱机制，切换到内核态；内核态中内核实现的 `mach_msg()` 函数会完成实际的工作，如下图：
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop5.avif)
 
 这些概念可以参考维基百科: [System_call](http://en.wikipedia.org/wiki/System_call)、[Trap_(computing)](http://en.wikipedia.org/wiki/Trap_(computing))。
 
-
 `RunLoop` 的核心就是一个 `mach_msg()` (见上面代码的第7步)，`RunLoop` 调用这个函数去接收消息，如果没有别人发送 `port` 消息过来，内核会将线程置于等待状态。例如你在模拟器里跑起一个 `iOS` 的 `App`，然后在 `App` 静止时点击暂停，你会看到主线程调用栈是停留在 `mach_msg_trap()` 这个地方。
 
 关于具体的如何利用 `mach port` 发送信息，可以看看 [NSHipster 这一篇文章](http://nshipster.com/inter-process-communication/)，或者[这里](http://segmentfault.com/a/1190000002400329)的中文翻译.
 
-关于`Mach`的历史可以看看这篇很有趣的文章：[Mac OS X 背后的故事（三）Mach 之父 Avie Tevanian](http://www.programmer.com.cn/8121/)。
+关于`Mach`的历史可以看看这篇很有趣的文章：Mac OS X 背后的故事（三）Mach 之父 Avie Tevanian。
 
 ### 苹果用 RunLoop 实现的功能
 
@@ -34640,7 +34522,6 @@ CFRunLoop {
 }
 ```
 
-
 可以看到，系统默认注册了5个`Mode:
 
 1. `kCFRunLoopDefaultMode`: `App`的默认 `Mode`，通常主线程是在这个 `Mode` 下运行的。
@@ -34650,7 +34531,6 @@ CFRunLoop {
 5. `kCFRunLoopCommonModes`: 这是一个占位的 `Mode`，没有实际作用。
 
 你可以在[这里](http://iphonedevwiki.net/index.php/CFRunLoop)看到更多的苹果内部的 `Mode`，但那些 `Mode` 在开发中就很难遇到了。
-
 
 当 `RunLoop` 进行回调时，一般都是通过一个很长的函数调用出去 (`call out`), 当你在你的代码中下断点调试时，通常能在调用栈上看到这些函数。下面是这几个函数的整理版本，如果你在调用栈中看到这些长函数名，在这里查找一下就能定位到具体的调用地点了：
 
@@ -34709,16 +34589,13 @@ App启动后，苹果在主线程 `RunLoop` 里注册了两个 `Observer`，其�
 
 第二个 `Observer` 监视了两个事件： `BeforeWaiting`(准备进入休眠) 时调用`_objc_autoreleasePoolPop()` 和 `_objc_autoreleasePoolPush()` 释放旧的池并创建新池；`Exit`(即将退出`Loop`) 时调用 `_objc_autoreleasePoolPop()` 来释放自动释放池。这个 `Observer` 的 `order` 是 `2147483647`，优先级最低，保证其释放池子发生在其他所有回调之后。
 
-
 在主线程执行的代码，通常是写在诸如事件回调、`Timer`回调内的。这些回调会被 `RunLoop` 创建好的 `AutoreleasePool` 环绕着，所以不会出现内存泄漏，开发者也不必显示创建` Pool` 了。
-
 
 #### 事件响应
 
 苹果注册了一个 `Source1` (基于 `mach port` 的) 用来接收系统事件，其回调函数为 `__IOHIDEventSystemClientQueueCallback()`。
 
 当一个硬件事件(触摸/锁屏/摇晃等)发生后，首先由 IOKit.framework 生成一个 `IOHIDEvent` 事件并由 `SpringBoard` 接收。这个过程的详细情况可以参考[这里](http://iphonedevwiki.net/index.php/IOHIDFamily)。`SpringBoard` 只接收按键(锁屏/静音等)，触摸，加速，接近传感器等几种 `Event`，随后用 `mach port` 转发给需要的`App`进程。随后苹果注册的那个 `Source1` 就会触发回调，并调用 `_UIApplicationHandleEventQueue()` 进行应用内部的分发。
-
 
 `_UIApplicationHandleEventQueue()` 会把 `IOHIDEvent` 处理并包装成 `UIEvent` 进行处理或分发，其中包括识别 `UIGesture`/`处理屏幕旋转`/发送给 `UIWindow` 等。通常事件比如 `UIButton` 点击、`touchesBegin`/`Move`/`End`/`Cancel` 事件都是在这个回调中完成的。
 
@@ -34760,9 +34637,7 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
 
 如果某个时间点被错过了，例如执行了一个很长的任务，则那个时间点的回调也会跳过去，不会延后执行。就比如等公交，如果 `10:10` 时我忙着玩手机错过了那个点的公交，那我只能等 `10:20` 这一趟了。
 
-
 `CADisplayLink` 是一个和屏幕刷新率一致的定时器（但实际实现原理更复杂，和 `NSTimer` 并不一样，其内部实际是操作了一个 `Source`）。如果在两次屏幕刷新之间执行了一个长任务，那其中就会有一帧被跳过去（和 `NSTimer` 相似），造成界面卡顿的感觉。在快速滑动`TableView`时，即使一帧的卡顿也会让用户有所察觉。`Facebook` 开源的`AsyncDisplayLink` 就是为了解决界面卡顿的问题，其内部也用到了 `RunLoop`，这个稍后我会再单独写一页博客来分析。
-
 
 #### PerformSelecter
 
@@ -34775,7 +34650,6 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
 实际上 `RunLoop` 底层也会用到 GCD 的东西， 例如 `dispatch_async()`。
 
 > NSTimer 是用了 XNU 内核的 `mk_timer`来驱动的，而非 GCD 驱动的.
-
 
 当调用 `dispatch_async(dispatch_get_main_queue(), block)` 时，`libDispatch` 会向主线程的 `RunLoop` 发送消息，RunLoop会被唤醒，并从消息中取得这个 `block`，并在回调 `__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__()` 里执行这个 `block`。但这个逻辑仅限于 `dispatch` 到主线程，`dispatch` 到其他线程仍然是由 `libDispatch` 处理的。
 
@@ -34795,11 +34669,9 @@ NSURLSession    ->AFNetworking2, Alamofire
 * `NSURLConnection` 是基于 `CFNetwork` 的更高层的封装，提供面向对象的接口，`AFNetworking`工作于这一层。
 * `NSURLSession` 是 `iOS7` 中新增的接口，表面上是和 `NSURLConnection`并列的，但底层仍然用到了 `NSURLConnection` 的部分功能 (比如 `com.apple.NSURLConnectionLoader` 线程)，`AFNetworking2` 和 `Alamofire` 工作于这一层。
 
-
 ##### 下面主要介绍下 NSURLConnection 的工作过程。
 
 通常使用 `NSURLConnection`时，你会传入一个 `Delegate`，当调用了 `[connection start]` 后，这个 `Delegate` 就会不停收到事件回调。实际上，`start` 这个函数的内部会会获取 `CurrentRunLoop`，然后在其中的 `DefaultMode` 添加了4个 `Source0 `(即需要手动触发的`Source`)。`CFMultiplexerSource` 是负责各种 `Delegate` 回调的，`CFHTTPCookieStorage` 是处理各种 `Cookie` 的。
-
 
 当开始网络传输时，我们可以看到 `NSURLConnection` 创建了两个新线程：`com.apple.NSURLConnectionLoader` 和 `com.apple.CFSocket.private`。其中 `CFSocket` 线程是处理底层 `socket` 连接的。`NSURLConnectionLoader` 这个线程内部会使用 `RunLoop` 来接收底层 `socket` 的事件，并通过之前添加的 `Source0` 通知到上层的 `Delegate`。
 
@@ -34807,13 +34679,11 @@ NSURLSession    ->AFNetworking2, Alamofire
 
 `NSURLConnectionLoader` 中的 `RunLoop` 通过一些基于 `mach port` 的`Source` 接收来自底层 `CFSocket` 的通知。当收到通知后，其会在合适的时机向 `CFMultiplexerSource` 等 `Source0` 发送通知，同时唤醒 `Delegate` 线程的 `RunLoop` 来让其处理这些通知。`CFMultiplexerSource` 会在 `Delegate` 线程的 `RunLoop` 对 `Delegate` 执行实际的回调。
 
-
 ### RunLoop 的实际应用举例
 
 #### AFNetworking
 
-[AFURLConnectionOperation](https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking%2FAFURLConnectionOperation.m) 这个类是基于 `NSURLConnection` 构建的，其希望能在后台线程接收 `Delegate` 回调。为此 `AFNetworking `单独创建了一个线程，并在这个线程中启动了一个 `RunLoop`
-
+AFURLConnectionOperation 这个类是基于 `NSURLConnection` 构建的，其希望能在后台线程接收 `Delegate` 回调。为此 `AFNetworking `单独创建了一个线程，并在这个线程中启动了一个 `RunLoop`
 
 ``` objc
 + (void)networkRequestThreadEntryPoint:(id)__unused object {
@@ -34868,7 +34738,7 @@ NSURLSession    ->AFNetworking2, Alamofire
 为此，`ASDK` 创建了一个名为 `ASDisplayNode` 的对象，并在内部封装了 `UIView`/`CALayer`，它具有和 `UIView`/`CALayer` 相似的属性，例如 `frame`、`backgroundColor`等。所有这些属性都可以在后台线程更改，开发者可以只通过 `Node` 来操作其内部的 `UIView`/`CALayer`，这样就可以将排版和绘制放入了后台线程。但是无论怎么操作，这些属性总需要在某个时刻同步到主线程的 `UIView`/`CALayer` 去。
 
 `ASDK` 仿照 `QuartzCore`/`UIKit` 框架的模式，实现了一套类似的界面更新的机制：即在主线程的 `RunLoop` 中添加一个 `Observer`，监听了 `kCFRunLoopBeforeWaiting` 和 `kCFRunLoopExit` 事件，在收到回调时，遍历所有之前放入队列的待处理的任务，然后一一执行。
-具体的代码可以看这里：[_ASAsyncTransactionGroup](https://github.com/facebook/AsyncDisplayKit/blob/master/AsyncDisplayKit%2FDetails%2FTransactions%2F_ASAsyncTransactionGroup.m)。
+具体的代码可以看这里：_ASAsyncTransactionGroup。
 
 ### 最后
 
@@ -34988,21 +34858,17 @@ Published At: 2018-03-08 11:14:12 +0000
 
 iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
 
-
 ## 本周主要内容如下
 
 * 什么是符号表？
 * 为什么要配置符号表？
 * dSYM文件？
 
-
-
 ### 什么是符号表？
 
 符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
 
 `<起始地址>` `<结束地址>` `<函数>` [`<文件名>`:`<行号>`]  
-
 
 ### 为什么要配置符号表？
 
@@ -35012,10 +34878,7 @@ iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符�
 
 ![stack Symbol](/assets/images/20180308WhatIsThedSYM/stackSymbol.avif)
 
-
 上图是我们通过符号表来解析出来崩溃堆栈的调用
-
-
 
 ### 什么是dSYM文件？
 
@@ -35027,8 +34890,6 @@ iOS平台中，`dSYM`文件是指具有调试信息的目标文件，文件名�
 
 > 为了方便找回Crash对应的dSYM文件和还原堆栈，建议每次构建或者发布APP版本的时候，备份好dSYM文件
 
-
-
 #### 如何定位dSYM文件？
 
 一般情况下，项目编译完`dSYM`文件跟`app`文件在同一个目录下，下面以`XCode`作为IDE详细说明定位`dSYM`文件
@@ -35037,11 +34898,9 @@ iOS平台中，`dSYM`文件是指具有调试信息的目标文件，文件名�
 
 ![d SYM](/assets/images/20180308WhatIsThedSYM/dSYM2.avif)
 
-
 > 这里用 release 模式做的测试 
 
 我们看到 和工程 `target`一样的名称的 `.dSYM`.
-
 
 #### XCode编译后没有生成dSYM文件?
 
@@ -35150,8 +35009,7 @@ Heaviest stack for the target process:
 参考如下:
 
 [Bugly iOS 符号表配置](https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1)  
-[App 启动时间：过去，现在和未来](https://techblog.toutiao.com/2017/07/05/session413/)
-
+App 启动时间：过去，现在和未来
 
 全文完
   
@@ -35926,8 +35784,6 @@ Published At: 2018-02-04 12:24:30 +0000
 
 学习过程中记录一下python代码
 
-
-
 ``` python
 #!/usr/bin/env python
 # coding:utf8
@@ -35935,7 +35791,6 @@ Published At: 2018-02-04 12:24:30 +0000
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-
 
 # 加载包
 from gensim.models import Word2Vec
@@ -35969,7 +35824,7 @@ model.similarity(u'男人',  u'女人')
    
 参考分词如下:  
 
-[哈工大分词](https://www.ltp-cloud.com/demo/)  
+哈工大分词  
 [jieba分词](https://github.com/fxsjy/jieba)  
 [stanford分词](https://nlp.stanford.edu/software/segmenter.shtml)
 
@@ -36348,9 +36203,7 @@ Published At: 2018-01-12 10:32:18 +0000
 ![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.avif)
 # 前言
 
-
 2018新年第一篇, 梳理`AVAudioSession`的`Category`,解决音频开发中的各种播放被打断或者首次启动时无声音的问题
-
 
 ## 开篇
 
@@ -36364,7 +36217,6 @@ Published At: 2018-01-12 10:32:18 +0000
 * 插拔耳机后如何表现？
 * 来电话/闹钟响了后如何表现？
 * 其他音频App启动后如何表现？
-
 
 ### Session默认行为
 
@@ -36447,8 +36299,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryAudioProcessing NS_DEPRECATED_I
 AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0);
 ```
 
-
-
 `AVAudioSession`将使用音频的场景分成七大类，通过设置`Session`为不同的类别，可以控制：
 
 * 当App激活Session的时候，是否会打断其他不支持混音的App声音
@@ -36467,7 +36317,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 | AVAudioSessionCategoryRecord | 否 | 是 | 只用于录音 |
 | AVAudioSessionCategorySoloAmbient | 是 | 是 | 只用于播放 |
 
-
 可以看到，其实默认的就是`AVAudioSessionCategorySoloAmbient`类别.  
 从表中我们可以总结如下：  
 
@@ -36484,7 +36333,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 * _`AVAudioSessionCategoryRecord`:有了播放器，肯定要录音机，比如微信语音的录制，就要用到这个类别，既然要安静的录音，肯定不希望有QQ音乐了，所以其他播放声音会中断。想想微信语音的场景，就知道什么时候用他了._
 
 * _`AVAudioSessionCategorySoloAmbient`:也是只用于播放,但是和`AVAudioSessionCategoryAmbient`不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了._
-
 
 了解了这七大类别，我们就可以根据自己的需要进行对应类别的设置了：
 
@@ -36517,13 +36365,9 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 
 此时在播放音乐的时候，再去按下静音键，会发现，音乐还在继续播放，不会被静音。
 
-
 ### 类别的选项(Category Options)
 
-
-
 上面介绍的这个七大类别，可以认为是设定了七种主场景，而这七类肯定是不能满足开发者所有的需求的。`CoreAudio`提供的方法是，__首先定下七种的一种基调,然后在进行微调.`CoreAudio`为每种`Category`都提供了些许选项来进行微调.__
-
 
 在设置完类别后，可以通过:
 
@@ -36547,7 +36391,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 } NS_AVAILABLE_IOS(6_0);
 ```
 
-
 | 选项 | 适用类别 | 作用 | 
 | :------ | :------ | :------: |
 | AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryPlayAndRecord, AVAudioSessionCategoryPlayback, and AVAudioSessionCategoryMultiRoute | 是否可以和其他后台App进行混音 |
@@ -36562,7 +36405,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 | AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers  | -- | -- | iOS 9|
 | AVAudioSessionCategoryOptionAllowBluetoothA2DP  | -- | -- | iOS 10|
 | AVAudioSessionCategoryOptionAllowAirPlay  | -- | 支持蓝牙A2DP耳机和AirPlay | iOS 10|
-
 
 下面介绍一下每个子场景选项的作用:
 
@@ -36621,7 +36463,6 @@ AVF_EXPORT NSString *const AVAudioSessionModeVideoChat NS_AVAILABLE_IOS(7_0);
 AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 ```
 
-
 我们基本覆盖了常用的__主场景__，在每个主场景中可以通过`Option`进行__微调__。为此`CoreAudio`提供了七大比较常见微调后的子场景。叫做`各个类别的模式`.
 
 | 模式Mode | 适用的类别 | 场景 | 
@@ -36645,9 +36486,7 @@ AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 
 这个属性,查看其支持哪些属性，做合法性校验。
 
-
 下面说一下具体应用场景:
-
 
 * __`AVAudioSessionModeDefault`： 每种类别默认的就是这个模式，所有要想还原的话，就设置成这个模式。__
 
@@ -36658,7 +36497,6 @@ AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 * __`AVAudioSessionModeGameChat` ： 适用于游戏App的采集和播放，比如“GKVoiceChat”对象，一般不需要手动设置.__
 
 > 另外几种和音频APP关系不大，一般我们只需要关注VoIP或者视频通话即可。
-
 
 通过调用：
 
@@ -36704,11 +36542,9 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 
 * `AVAudioSessionSilenceSecondaryAudioHintTypeEnd`: 表示其他`App`开始释放`Session`.
 
-
 ### 外设改变
 
 除了其他`App`和系统服务，会对我们的`App`产生影响以外，用户的手也会对我们产生影响。默认情况下，`AudioSession`会在`App`启动时选择一个最优的输出方案，比如插入耳机的时候，就用耳机。但是这个过程中，用户可能拔出耳机，我们App要如何感知这样的情况呢？
-
 
 同样`AVAudioSession`也是通过`Notifications`来进行此类状况的通知。
 
@@ -36722,7 +36558,6 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 * `AVAudioSessionRouteChangeReasonKey` : 表示改变的原因
 * `AVAudioSessionSilenceSecondaryAudioHintTypeKey`： 和上面的中断意义意义一样。
 
-
 | 枚举值 | 意义 |
 | :------ | :------: | 
 | AVAudioSessionRouteChangeReasonUnknown  | 未知原因 |
@@ -36734,14 +36569,12 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 | AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory  | 当前Category下没有合适的设备 |
 | AVAudioSessionRouteChangeReasonRouteConfigurationChange  | Rotuer的配置改变了 |
 
-
 # 总结
 
 `AVAudioSession`构建了一个音频使用生命周期的上下文。当前状态是否可以录音、对其他App有怎样的影响、是否响应系统的静音键、如何感知来电话了等都可以通过它来实现。尤为重要的是`AVAudioSession`不仅可以和`AVFoundation`中的`AVAudioPlyaer`/`AVAudioRecorder`配合，其他录音/播放工具比如`AudioUnit`、`AudioQueueService`也都需要他进行录音、静音等上下文配合。
 
-
 [参考](https://www.jianshu.com/p/3e0a399380df)  
-[参考2](http://cinvoke.me/?p=37)
+参考2
 
 全文完
 
@@ -37325,8 +37158,8 @@ https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66
 
 
 更多技巧可参考以前写的一篇文章  
-[markdown折叠](https://www.sunyazhou.com/2017/10/25/20171025markdownSkill/)    
-[markdown 表格](https://www.sunyazhou.com/2017/09/29/20170929MarkdownTable/)
+[markdown折叠](https://www.sunyazhou.com/2017/10/MarkdownSkill/)    
+[markdown 表格](https://www.sunyazhou.com/2017/09/MarkdownTable/)
 
 全文完
 
@@ -37339,7 +37172,6 @@ Published At: 2017-12-19 11:40:13 +0000
 
 ![Audio Pan](/assets/images/20171219AudioPan/AudioPan.avif)
 
-
 # 前言
 
 最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案.
@@ -37349,42 +37181,33 @@ Published At: 2017-12-19 11:40:13 +0000
 最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕效果.
 下面是 UI 演示.
 
-
 ![Audio Pan Demo](/assets/images/20171219AudioPan/AudioPanDemo.avif)
-
 
 这里其实修改的类似 `AVAudioPlayer`里面的`pan`值修改
 
 ![Pan Audio Api](/assets/images/20171219AudioPan/PanAudioApi.avif)
 
-
-我在以前的文章也有一篇提到过这个[pan 值](https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)
-
+我在以前的文章也有一篇提到过这个[pan 值](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)
 
 可能大家不理解为啥 这个 API 起名叫`pan`
 
 在声学领域这个东西有专门的名字叫 `声像`.
 
-[这篇文章](http://underwaysoft.com/writing/books/dsp-develop.html#%E7%BA%BF%E6%80%A7%E5%A3%B0%E5%83%8F%EF%BC%88<span class=cnBracket>Pan</span>%EF%BC%89)介绍了一些我们对声学知识的简单介绍,虽然不知道作者是谁,但是作者应该是非常专业的声学开发者.
+[这篇文章](<span class=cnBracket>Pan</span>%EF%BC%89)介绍了一些我们对声学知识的简单介绍,虽然不知道作者是谁,但是作者应该是非常专业的声学开发者.
 
 其实按照我们平常的理解应该是这样去实现这个 pan 值的修改
-
 
 左声道音量给右声道声音的补偿 或者右侧声道给左侧声道的补偿,通过滑块的 value 来决定两边谁加多少减多少,但是大家的思路是对的,但是做法是不正确的,因为 两边的音量放在中间必须是1.0,也就是说 range 在 `-1 ~ 1`之间. 如果按照这个滑动方式回导致滑动过大. 
 
 带着这个问题我的同事找到了一个公式 来计算 这个值
 
-
 ![Pan Algorithm](/assets/images/20171219AudioPan/PanAlgorithm.avif)
-
 
 * `pan`就是我们的滑块的`value`
 * `Vl` 代表左侧音量
 * `Vr` 代表右侧音量
 
-
 根据这个公式我们有如下 代码
-
 
 ``` objc
 
@@ -37402,8 +37225,6 @@ typedef NS_ENUM(NSUInteger, KSYMCChannelType) {
                     volume:(CGFloat)volume;
 
 @end
-
-
 
 @implementation KSYMultiCanvasHelper
 
@@ -37426,7 +37247,6 @@ typedef NS_ENUM(NSUInteger, KSYMCChannelType) {
 这里的计算还是比较准确的.
 
 经过测试 左侧 音量 为 0 时 右侧音量应该是 1.41左右
-
 
 ## 总结
 
@@ -38527,11 +38347,9 @@ Published At: 2017-09-01 23:17:09 +0000
 
 如何使用`charles`在iOS设备上截获`https`的请求 
 
-
 ## 1.安装Charles
 
 [官网下载](https://www.charlesproxy.com/download/)就行了 至于破解之类的 自行google吧  我这里使用的是Charles 4.1.3版本 目前应该是最新的 
-
 
 ## 2.HTTP抓包配置
 
@@ -38547,9 +38365,7 @@ Published At: 2017-09-01 23:17:09 +0000
 
 ![Wi Fi Ip Porti Phone](/assets/images/20170901CharlesCaptureHttps/WiFiIpPortiPhone.avif)
 
-
 注意:*这里用我自己电脑的IP举例 红色区域 记得替换成你自己的电脑的IP*
-
 
 设置代理后，需在在电脑上打开Charles,这个时候 如果手机有请求就会弹出如下图:
 
@@ -38577,7 +38393,6 @@ Published At: 2017-09-01 23:17:09 +0000
  
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep3.avif)
 
-
 紧接着 点击`Help` -> `SSL Proxying` -> 安装根证书
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep4.avif)
@@ -38590,11 +38405,9 @@ Published At: 2017-09-01 23:17:09 +0000
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep6.avif)
 
-
-这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: [chls.pro/ssl](https://chls.pro/ssl)
+这时 需要在 设置 代理ip的手机上 (iPhone上)用 Safari 直接打开网址: chls.pro/ssl
 
 此时手机一会儿就弹出这样的 提示 点击**允许**
-
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone1.avif)
 
@@ -38608,7 +38421,6 @@ __必须到 通用->关于本机->证书信任设置__去信任 证书
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone3.avif)
 
-
 如果不信任 就会抓取的时候出现下图这样的问题
 
 ![Charles Root Cer Error](/assets/images/20170901CharlesCaptureHttps/CharlesRootCerError.avif)
@@ -38618,10 +38430,6 @@ __必须到 通用->关于本机->证书信任设置__去信任 证书
 最后放上一张截获成功的图 (支付宝的接口)
 
 ![Result](/assets/images/20170901CharlesCaptureHttps/Result.avif)
-
-
-
-
 
 全文完
 
@@ -38635,7 +38443,7 @@ Published At: 2017-08-30 14:50:43 +0000
 
 ![AR Kit Preview](/assets/images/20170830ARKit/ARKitPreview.avif)
 
-本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过渡讲解.
 期间有任何问题请大家集思广益,多多指教. 
 
 # 主要内容
@@ -38878,7 +38686,7 @@ _`Session` 和`Context`不同点_
 
 它的内部实现了一系列庞大的算法和调用iPhone 上必要的传感器来检测手机的 __移动、旋转、平移__(六轴位置方向变化) 
 
-当`ARWorldTrackingConfiguration`计算出相机在3D 世界中的位置时,会把这个**位置数据** 交个`ARSession`去管理, 而相机的**位置数据**对应的类就是`ARFrame` 
+当`ARWorldTrackingConfiguration`计算出相机在3D 世界中的位置时,会把这个**位置数据** 交给`ARSession`去管理, 而相机的**位置数据**对应的类就是`ARFrame` 
 
 > `ARSession`类一个属性叫`currentFrame` 就是 ARFrame 的实例变量
 
@@ -38945,7 +38753,7 @@ __ARCamera在3D世界的位置__
 
 __我们只说一下`ARSCNView`,`scene`,`node`啥关系__
 
-`ARSCNView` 是个集成自 UIView 的视图
+`ARSCNView` 是个继承自 UIView 的视图
 
 `ARSCNView` 有个属性(成员变量)叫`scene` 这就相当于 VC
 
@@ -39290,14 +39098,14 @@ ARHitTestResultType：捕捉类型  点还是面
 @end
 ```
 
-#### ARSesson 重点介绍
+#### ARSession 重点介绍
 
 ![Session Bridge](/assets/images/20170830ARKit/SessionBridge.avif)
 
-`ARSesson` 是一个连接底层与 AR 视图之间的桥梁, `ARSCNView`里的所有方法都是又`ARSession`提供的
+`ARSession` 是一个连接底层与 AR 视图之间的桥梁, `ARSCNView`里的所有方法都是由`ARSession`提供的
 
 
-__`ARSesson`获取相机位置数据主要由两种方式__
+__`ARSession`获取相机位置数据主要有哪些方式__
 
 * push 通过实现 Session 的代理`session:didUpdateFrame:`告知用户
 * pull 用户想要可主动去取 `ARSession`的`currentFrame`属性
@@ -39487,7 +39295,7 @@ typedef NS_ENUM(NSInteger, ARTrackingStateReason) {
 
 > 这里面涉及到的 一个叫做`eulerAngles`[欧拉角](https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92) 
 > ![Euler Angles](/assets/images/20170830ARKit/EulerAngles.avif)
-> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) 
+> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) 
 
 
 #### ARKit捕捉平地
@@ -39615,7 +39423,6 @@ MediaItem *item = [[MediaItem alloc] initWithURL:self.url];
     NSLog(@"%@",[item modelDescription]);
 }];
 
-
 ```
 
 代码实现部分  
@@ -39654,9 +39461,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 > 注意:_**mp3文件是不可编辑的文件故而不能进行编辑 比如改变歌手名称之类 如果要编辑可使用其它专业软件尝试**_  
 
-
-
-
 我尝试了 mac 版本的 demo 编辑 文件 是 OK 的 但是在 iOS 上 我更改其它格式也没能保存成功 如果你看到有解决办法 可以留言给我或者发邮件给我 非常感谢.
 
 ### MetaData
@@ -39684,7 +39488,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 - (void)addMetadataItem:(AVMetadataItem *)item withKey:(id)key;
 - (NSArray *)metadataItems;
 @end
-
 
 ```
 看到上边的代码估计你也猜到了 这就是我们需要的 比如 mp3文件解析出来的真正 model  
@@ -39716,8 +39519,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 @end
 ```
 
-
-
 ### MetadataConverterFactory
 
 这个类用于统一输出遵守`MetadataConverter`协议的model并且找到适当的转换器去转换响应的格式
@@ -39748,11 +39549,9 @@ typedef void(^CompletionHandler)(BOOL complete);
 @end
 ```
 
-
 ### DefaultMetadataConverter
 
 简单实现`MetadataConverter`协议
-
 
 ``` objc
 @interface DefaultMetadataConverter : NSObject <MetadataConverter>
@@ -39772,9 +39571,7 @@ typedef void(^CompletionHandler)(BOOL complete);
     return metadataItem;
 }
 
-
 ```
-
 
 ### ArtworkMetadataConverter
 实现`MetadataConverter`协议 取出专辑封面
@@ -39940,8 +39737,7 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 ![gener](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif)
 
-
-虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
+虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. Apple's Genre IDs Appendix
 
 示例代码已经包含了这些类型 虽不在赘述 请参考 demo
 
@@ -39984,7 +39780,6 @@ typedef void(^CompletionHandler)(BOOL complete);
     }];
 }
 
-
 - (NSURL *)tempURL {
     // 获取Caches目录路径
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -40014,7 +39809,6 @@ Published At: 2017-07-13 10:55:15 +0000
 
 ![whatisnewsinios](/assets/images/20170713ios11NewSkills/whatisnewsinios11.avif)
 
-
 ## 可用性检查API
 
 在swift代码中经常可以看到 某个API 适用于 iOS10.0 
@@ -40032,7 +39826,6 @@ Published At: 2017-07-13 10:55:15 +0000
 在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查
 
 ##### 通过`API_AVAILABLE`宏来标注方法的可用性
-
 
 ``` objc
 @interface ViewController : UIViewController
@@ -40085,10 +39878,9 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 ![availability](/assets/images/20170713ios11NewSkills/availability.avif)
 
-
 ## 静态分析
 
-前面的文章我又讲过[静态分析](http://www.sunyazhou.com/2017/06/20/enable-static-analyer/)
+前面的文章我又讲过[静态分析](https://www.sunyazhou.com/2017/06/EnableStaticAnalyer/)
 
 这里说一下变化
 
@@ -40102,7 +39894,6 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 在Xcode9 中可以直接把这种倍忽视 的问题改成 当错误处理
 
 ![static](/assets/images/20170713ios11NewSkills/static.avif)
-
 
 ## 开启 LTO 并设置为 Incremental 模式 
 
@@ -40122,9 +39913,7 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 据说对包大小和运行时速度有 10% 左右的优化
 
-
 ## GCD 统一队列标识
-
 
 统一队列标识是指我们在工程中散落在各处的创建队列，如果队列标识是一样的，他们在内核中会被 bind 在一起，其效率可以提高 30%。Apple 没有告诉我们其内核是怎么做到的，它提供了这样的建议，如果一类操作重要性程度或其他属性接近，亦或开发者希望散落在工程各处的代码可以放在同一个队列里去控制，那么我们在创建队列的时候就可以指定一个共同的标识符。 然后系统在内核中会把这些标识相同的队列 bind 到一起来管理
 
@@ -40139,10 +39928,8 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 > 老实说 工程里面 避免不了文件上传下载 或者耗时任务处理  如果 整体搞成一个queue显然 不太符合业务需求 如果尽量保持 一个标识的Queue的话 也只能根据 业务分类来做到  可以有机会尝试一下
 
-
 全文完
 
-[参考](https://techblog.toutiao.com/2017/07/05/session0-2/)
 
 
 
@@ -40213,18 +40000,15 @@ Published At: 2017-06-26 10:42:47 +0000
 
 RSA非对称加密 原理 各种。。。 请自行百度 
 
-
 ## 弯路
 
 最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码.
  浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客
 把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾) 
 
-
 # 代码实现
 
 ## 第一步 生成公私钥对
-
 
 ### 命令生成原始 RSA私钥文件 rsa_private_key.pem
 
@@ -40245,8 +40029,6 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 ```
 
 > 从上面看出通过私钥能生成对应的公钥，因此我们将私钥`private_key.pem`用在*服务器端*，*公钥*发放给`android`跟`ios`等前端
-> 
-
 
 ## 第二步 php代码实现
 
@@ -40415,7 +40197,6 @@ public class Rsa {
 __*注意:*__在初始化`Cipher`对象时，一定要指明使用`"RSA/ECB/PKCS1Padding"`格式如`Cipher.getInstance("RSA/ECB/PKCS1Padding");`
 打开`rsa_public_key.pem`文件，将上面代码的`RSA_PUBLICE`替换成其中内容即可.
 
-
 ## 第四步 iOS端代码实现
 
 iOS上没有直接处理RSA加密的API，网上说的大多数也是处理X.509的证书的方法来实现，不过X.509证书是带签名的，在php端`openssl_pkey_get_private`方法获取密钥时，第二个参数需要传签名，而android端实现X.509证书加密解密较为不易，在这里我们利用ios兼容c程序的特点，利用openssl的api实现rsa的加密解密，代码如下：
@@ -40436,7 +40217,6 @@ CRSA.h代码
 #import <openssl/rsa.h>
 #import <openssl/pem.h>
 #import <openssl/err.h>
-
 
 typedef enum {
     KeyTypePublic,
@@ -40463,7 +40243,6 @@ typedef enum {
 - (NSString *)decryptByRsa:(NSString*)content withKeyType:(KeyType)keyType;
 
 @end
-
 
 ```
 
@@ -40552,7 +40331,6 @@ CRSA.m
     
     return NO;
 }
-
 
 - (BOOL)importRSAKeyFromeStringWithType:(KeyType)type andKey:(NSString *)key{
     if (key.length == 0) { return NO; }
@@ -40677,7 +40455,6 @@ CRSA.m
     return len;
 }
 
-
 //---------------加密工具方法
 - (NSString *)base64EncodedStringForData:(NSData *)data
 {
@@ -40744,12 +40521,10 @@ CRSA.m
     return (outputLength >= 4)? result: nil;
 }
 
-
 - (NSData *)base64DecodedDataForString:(NSString *)string
 {
     return [self dataWithBase64EncodedString:string];
 }
-
 
 - (NSData *)dataWithBase64EncodedString:(NSString *)string
 {
@@ -40862,9 +40637,7 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
     //剩下的大家自己探索一下 没什么难度  
 ```
 
-
 其中openssl api包，我们可以在第一步RSA密钥生成工具openssl的include文件夹中得到
-
 
 下面我说一下如何集成openssl到 iOS工程 
 
@@ -40877,7 +40650,6 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
 
 然后 去 project targets -> `Build Settings`
 
-
 * 找到 **Header Search Paths**, 添加 `"${SRCROOT}/Libraries/openssl/include"` 为你的工程
 * 找到 **Library Search Paths**, 添加 `"${SRCROOT}/Libraries/openssl/lib"` 
 
@@ -40885,9 +40657,7 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
 
 --
 
-
 ## 最后说一下我遇到RSA加密的坑
-
 
 在iOS端加密 生成摘要到android的时候 android解析不出来(有时候解析出结果前面 一堆乱码) 这是base64有问题  建议 android使用原生的恩
 
@@ -40909,8 +40679,6 @@ base64的代码我已经把代码实现写到`CRSA.m`了 如果像剥离很简�
 最后我说一句 很简单的一个RSA跨平台方案 那些抄袭CSDN的文章小伙伴 少坑点人 连搜索引擎都不会放过你
 
 全文完 
-
-[参考](https://www.lvtao.net/dev/android_ios_php_openssl.html)
 
 
 
@@ -41046,7 +40814,6 @@ Published At: 2017-06-16 10:11:19 +0000
 
 ![Album Detail](/assets/images/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.avif)
 
-
 # 前言
 本篇讲述的`AVAsset`元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年.... 等这些数据的来源). 当然这种意义上的字段信息 属于`AVAsset`的一个属性。`AV Foundation`通过`AVAsset`封装来处理各种音频的元数据, __比如从mp3文件中解析出来封面图(artwork)__等。 本章的具体内容如下:
 
@@ -41081,8 +40848,6 @@ Published At: 2017-06-16 10:11:19 +0000
   
 #### __保存元数据__
 ---
-
-
 
 ### __理解`AVAsset`资源含义__  
 `AVAsset`是一个不可变的抽象类,定义媒体资源混合呈现方式.里面包含音视频的**曲目**、**格式**、**时长**, 以及**元数据NSData**(二进制的bytes).
@@ -41124,7 +40889,6 @@ _**`AVAsset.tracks`**_ 如下
 > ....
 
 `AVAsset`是个抽象类, 它不能直接被实例化. 当使用`assetWithURL:`方法创建实例时,实际上是创建了`AVAsset`的子类`AVURLAsset` 有时候会直接使用这个类, 因为它允许通过传递选项字典来精细调整资源的创建方式, 举个例子,比如创建 用在音频或视频编辑场景中的资源, 可能希望传递一个选项(option)的字典来告诉程序提供更精确的时长和计时等信息 例如:
-
 
 ``` objc
 
@@ -41169,7 +40933,6 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 
 我们获取媒体的一个常见位置就是用户的iPod库. `MediaPlayer` framework 框架提供了API, 用于在iPod库中查询和获取条目. 当找到想获取的item时, 可以得到一个存储的URL并使用这个得到的URL初始化一个资源, 如下例所示:  
 
-
 ``` objc
     //艺术家
     MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:@"刘德华" forProperty:MPMediaItemPropertyArtist];
@@ -41192,15 +40955,12 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     }
 ```
 
-
 `MediaPlayer`framework提供了一个为`MPMediaPropertyPredicate`的类,用户帮助用户在iPod库中查找到具体内容所用的查询语句
 上边举例一个例子: 在`刘德华`的`真永远`(真永远专辑)  唱片中查找`爱你一万年`这首歌, 执行完查询 会返回这个媒体 条目的资源URL属性(`MPMediaItemPropertyAssetURL`). 并使用这个属性创建`AVAsset`
 
 ##### macOS iTunes库
 
 在 macOS(以前叫 OS X)上, iTunes是用户的媒体资源中心. 要识别这个库中的资源, 我们通常要对iTunes音乐目录中的iTunes Music Library.xml 文件进行解析, 从而得到相关数据. 不过在 Mac OS X 10.8山狮之后 有了比较简单的方法--`iTunesLibrary`framework.
-
-
 
 ``` objc 
 ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
@@ -41219,7 +40979,6 @@ ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
     }
     
 ```
-
 
 `iTunesLibrary`框架并没有像MediaPlayer框架那样给出具体的查询API. 不过开发者可使用标准的Cocoa NSPredicate(谓词)类来构建一个复杂的查询,当筛出需要的media item集合后，可使用`ITLibMediaItem`的`location`属性得到一个URL并创建`AVAsset`.
 
@@ -41283,7 +41042,6 @@ typedef enum AVKeyValueStatus : NSInteger {
 > (1) 每次调用 `loadValuesAsynchronouslyForKeys:completionHandler:`方法时只会调用一次`completionHandler`block, 调用这个callback的次数不是根据传递给这个方法的key个数决定的.
 > (2) 需要为每个请求的属性调用`statusOfValueForKey:error:`,不能假设所有属性都返回相同的状态值.
 
-
 ### __媒体元数据__
 	
 当创建一个媒体应用程序时,了解该媒体的组织格式非常重要, 简单的展示一堆文件名也许在文件不多的时候还能接受, 如果大规模批量的文件需要展示就比较蛋疼了, 我们真正需要的是 _找到一种方法对媒体进行描述,当用户可以方便的找到、识别和组织这些媒体._ 我们所使用的`AV Foundation`中的主要媒体格式(*.mp4、*.mp3、*.mov、*.mkv.....)都可以嵌入描述其内容的元数据.因为各种媒体格式的描述不尽相同,要搞一套通用的策略去解析各种媒体的格式文件,这要求我们对底层技术有一些了解.不过`AV Foundation`让这些变得简单,因为它使开发者不需要考虑大多数特定格式的细节; 在处理媒体元数据方面, AV Foundation`提供了一套统一的方法.
@@ -41303,8 +41061,8 @@ typedef enum AVKeyValueStatus : NSInteger {
 	
 	![Atom Inspector](/assets/images/20170616LearningAVFoundationAVAssetBasic/AtomInspector.avif)
 	
-	下载地址:[Atom Inspector 猛击这里](http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg)  貌似需要登录开发者帐号
-	下载中心:[苹果官方软件下载中心](https://developer.apple.com/download/more/)  貌似需要登录开发者帐号 
+	下载地址:[Atom Inspector 猛击这里](http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg)  貌似需要登录开发者账号
+	下载中心:[苹果官方软件下载中心](https://developer.apple.com/download/more/)  貌似需要登录开发者账号 
 	
 	下图就是atom格式
 	![Quick Time Atom Structure New](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureNew.avif)
@@ -41334,7 +41092,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	![mp4Atom](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4Atom.avif)
 	*MPEG-4 atom结构 实测结果*
 	
-	`MPEG-4`文件的元数据保存在`/moov/udat/meta/ilst`中. 对于`atom`中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考[mp4v2库](https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki)文档了解更多mp4内容.
+	`MPEG-4`文件的元数据保存在`/moov/udat/meta/ilst`中. 对于`atom`中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考mp4v2库文档了解更多mp4内容.
 	
 	`mp4`是对MPEG-4媒体的标准扩展.eg: `.m4v`、`.m4a`、`.m4p`、`.m4b`.这些变体使用的都是`MPEG-4`容器格式,也有些包含了附加的扩展功能.  
 	大家只需要记住几点:
@@ -41364,9 +41122,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	
 > `AV Foundation`支持所有`ID3v2`标签格式的读取操作,但是`ID3v2`是要加星号的.`ID3v2.2`的布局和`ID3v2.3`及之后版本的布局不同. 需要注意:有些标签由3个字符组成,而不是4个字符, 比如一首歌曲的标注信息, 当标签为`ID3v2.2`时,是被保存到COM帧中,但当同一首歌使用`ID3v2.3`标签或更新版本的标签时,歌曲的标注信息会被保存在COMM帧中,框架定义的字符常量只适用于`ID3v2.3`及以后版本,后续demo中我们通过代码演示如何向前兼容`ID3v2.2`.
 
-
 ### __使用元数据__
-
 
 `AVAsset`和`AVAssetTrack`可以实现查询元数据功能  
 
@@ -41397,9 +41153,7 @@ typedef enum AVKeyValueStatus : NSInteger {
         //处理metadata (AVMetadataItems)
     }];
 
-
 ```
-
 
 ### __查找元数据__
 
@@ -41432,7 +41186,6 @@ typedef enum AVKeyValueStatus : NSInteger {
 ``` objc
 + (NSArray<AVMetadataItem *> *)metadataItemsFromArray:(NSArray<AVMetadataItem *> *)metadataItems withKey:(id)key keySpace:(AVMetadataKeySpace)keySpace;
 ```
-
 
 ### 使用AVMetadataItem
 
@@ -41494,7 +41247,6 @@ AVMetadataItem 可以理解成它是一个 专用于元数据的 字典(key: val
 
 基础篇部分讲解到这里 下一篇 会写个demo演示一下元数据的各种不同格式如何统一解析
 
-
 全文完
 
 
@@ -41531,7 +41283,6 @@ GLSL编写的着色器函数是对每个数据同时执行的。
 * 动画效果 -- 关键帧插值，粒子系统
 * 用户可编程的反走样方法
 
-
 ## GLSL注意
 
 * **GLSL支持函数重载**(就是父类定义方法,子类复写该方法叫重载)
@@ -41556,7 +41307,7 @@ GLSL有三种基本数据类型:
 ```
 
 __**注意:GLSL不支持指针,GLSL把向量和矩阵作为基本数据类型**__  
-[向量(vector)](http://baike.baidu.com/link?url=XKZL51jLByIFnqrj3vaZ-4cnL-AedjBKiVBcD7pEGQG26Jmb9RYl7QOrX4Mwck-mT0nNlzD8UtzXi4ueVYNGkdO1b2uARr59UAih7ulWRvO):有起始位置有方向的线段,也称作 **矢量**(不要被这些名词吓到,我记得这个向量是我高二的时候数学学的东西).
+向量(vector):有起始位置有方向的线段,也称作 **矢量**(不要被这些名词吓到,我记得这个向量是我高二的时候数学学的东西).
 
 ## 矢量
 
@@ -41731,9 +41482,7 @@ void main(void)
   v_texCoord = a_texCoord0;
 }
 
-
 ```
-
 
 `uniform`:一般是应用程序用于设定顶点着色器和片断着色器相关初始化值.不允许声明时初始化.`uniform`限定符标记的是一种全局变量,该变量对于一个图元（`primitive`）来说是不可更改的 它可以从`OpenGL`应用程序中接收传递来的参数  
 
@@ -41781,7 +41530,6 @@ void main()
   lightColor = texture2D(s_lightMap, v_texCoord);
   gl_FragColor = baseColor * (lightColor + 0.25);
 }
-
 
 ```
 
@@ -41840,13 +41588,10 @@ v4.xxyy;    // 重复分量
 
 最后推荐一个GLSL编辑调试工具[OpenGL Shader Builder(Graphics Tools.dmg)](http://adcdownload.apple.com/Developer_Tools/Graphics_Tools_for_Xcode_7.2/Graphics_Tools_for_Xcode_7.2.dmg)
 
-
 # 总结:
 
 由于本人记性不好使 找东西有时候总找不到 把一些 名词知识点收录出来并加以解释 方便后来的学习者学习.
 
-
-参考:  
 [GLSL基础](http://www.cnblogs.com/luweimy/p/4208570.html?utm_source=tuicool&utm_medium=referral)
 
 [iOS开发-OpenGL ES入门教程2](http://www.jianshu.com/p/ee597b2bd399)  
@@ -42007,19 +41752,14 @@ Published At: 2017-04-29 09:15:21 +0000
 # 前言
 > 无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. __学习好一定要坚持下去,学习不好并不代表以后没有机会__, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
 
-
 # 计算机专业学习路线
-
 
 [计算机专业学习路线](https://hackway.org/docs/cs/intro)  
 ![learn CS Line](/assets/images/20170429CmputerScienceAndTechnologyClassic/learnCSLine.avif)
 
-
 据说站长是北大学生，参考美国名校的计算机培养方案，整理的计算机专业学习路线。
 
 上边的才是最近更新学习计算机课程的正解,2023/06/30更新↑↑↑.
-
-
 
 ## 主要分3个方面
 
@@ -42027,11 +41767,10 @@ Published At: 2017-04-29 09:15:21 +0000
 * 技法
 * 装备
 
-
 ### 书籍
 首先来说 书籍 大学计算机必须的基本经典书籍
 
-* [C语言程序设计 谭浩强](http://baike.baidu.com/link?url=rVNBy5FqKGq6YBb22T6Sj0IrRCeFj_SKf9QLjV7avP1cXIelBdhMza-y9Xu4fBHk0ynNI-RiFxbGySk68agqb1zrrQ2xPBZO9-WiqQe3AJy8IHEtHGBWGnxcwJlf77xiVaN3VdvdSn9_OaHodVRmuSl8MbPLBh5e0JzEhE0ikuNIGivWRklNzsL2WTD6WOJT) __必学__  
+* C语言程序设计 谭浩强 __必学__  
 ![C Language](/assets/images/20170429CmputerScienceAndTechnologyClassic/CLanguage.avif)
 
 * [清华大学计算机系列教材：数据结构（C语言版）](https://item.jd.com/11076338.html) __必学__  
@@ -42059,10 +41798,10 @@ Published At: 2017-04-29 09:15:21 +0000
 
 * [免费的编程中文书籍索引](https://github.com/sunyazhou13/free-programming-books-zh_CN) 这就是不需要大家买书的原因,所有计算机相关的技术书籍和视频教程博客等全部资料都在这,是的你确实没看错就是一个链接搞定.
 * 学习一下如何搭建自己博客这样就可以把所学的知识点记录下来还能提高影响力
-详情可以参考我的文章[如何搭建HEXO博客](http://localhost:4000/2017/02/10/build-hexo-blog-Tutorial/)
+详情可以参考我的文章[如何搭建HEXO博客](https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial/)
 * 每天尽量早起一个小时看书,预习今天要讲的内容.
 * 看大神的博客
-* 订阅各种博客发布文章(推荐一个软件叫[Reeder](http://www.0daydown.com/12/436535.html))   
+* 订阅各种博客发布文章(推荐一个软件叫Reeder)   
 ![Reeder](/assets/images/20170429CmputerScienceAndTechnologyClassic/Reeder.avif)
 
 (估计初学者还不知道谁是在某个领域的大神,这个可以慢慢摸索)  
@@ -42167,7 +41906,6 @@ Published At: 2017-04-29 09:15:21 +0000
 
 是的 5k足够了 其实这才是最经济的方案 如果 手机不用买 鼠标键盘也不用买的花 也就 4k多一点 无论是毕业生还是大学生 切记要让钱花在刀刃上 东西要物尽其用 尤其是大学期间 根本不需要多好 能用就行了 参加工作 自己自足之后 想买什么就不是问题了 
 
-
 **让自己的大学生活过得有章法一点.**
 
 全文完
@@ -42184,7 +41922,6 @@ Published At: 2017-04-20 16:35:42 +0000
 ## 前言
 
 当我无数次看到大家写代码的时候总是以一个`时间戳+arc4random()`创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题.
-
 
 ``` objc
 /* Create a recording file */
@@ -42214,8 +41951,6 @@ Published At: 2017-04-20 16:35:42 +0000
 完成之后
 ![done](/assets/images/20170420UniqueFilenameInSystem/done.avif)
 
-
-
 *__切记文件后缀需要 加上 `XXXXXX`__* 几个`X`就代表几位`数字+字母`混合 
 *注意*:最好是6个X或者6个以上 [参考Linux](http://man7.org/linux/man-pages/man3/mkstemp.3.html)
 
@@ -42223,8 +41958,7 @@ Published At: 2017-04-20 16:35:42 +0000
 
 [strdup()用于c语言中常用的一种字符串拷贝](http://baike.baidu.com/item/strdup/5522525)
 
-[mkstemp()函数在系统中以唯一的文件名创建一个文件并打开](http://baike.baidu.com/link?url=wFhfkOVXafm15-4vGfxEQiQynIG7BG2yYAurwzS4uHKmby2C2lfhiO2T6WAqbdc3nOP9mEOVTMaBqxOc2eZps7_JIAsIWI0p11pEIl7Vku_)
-
+mkstemp()函数在系统中以唯一的文件名创建一个文件并打开
 
 OK 希望大家有收获
 
@@ -42547,7 +42281,7 @@ Published At: 2017-03-28 09:40:18 +0000
 }
 ```
 
-这里的建议调用`[self.recorder prepareToRecord]`方法对录音实例进行预设就像[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)创建`AVAudioPlayer`类似.都是为了执行底层`Audio Queue`初始化的必要过程.这个`prepareToRecord`方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时
+这里的建议调用`[self.recorder prepareToRecord]`方法对录音实例进行预设就像[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)创建`AVAudioPlayer`类似.都是为了执行底层`Audio Queue`初始化的必要过程.这个`prepareToRecord`方法还在给定的URL参数指定的位置创建一个文件，这样就减少了录制启动时的延时
 
 音频格式
 --
@@ -42596,21 +42330,21 @@ CF_ENUM(AudioFormatID)
 };
 
 ```
-这里的`kAudioFormatLinearPCM`会将为压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC`kAudioFormatMPEG4AAC`或者AppleIMA4`kAudioFormatAppleLossless`等格式会显著缩小文件，还能保证音频质量.
+这里的`kAudioFormatLinearPCM`会将未压缩的音频流写入到文件中,这就是原始数据,保真度最高,当然文件也最大, 选择ACC`kAudioFormatMPEG4AAC`或者AppleIMA4`kAudioFormatAppleLossless`等格式会显著缩小文件，还能保证音频质量.
 > *注意:*
 > *指定的音频格式一定要和文件写入的URL文件类型保持一致。如果录制xxx.wav文件格式 是 Waveform Audio File Format(WAVE)的格式要求,即 低字节序、 LinePCM。 如果`AVFormatIDKey`指定的值不是`kAudioFormatLinearPCM`则会发生错误。NSError 会返回如下错误*
-> *The operation couldn't be completed. (OSState error 1718449215.)*
+> *The operation couldn't be completed. (OSStatus error 1718449215.)*
 
 采样率
 --
 
-上边的代码里`AVSampleRateKey`用于定义录音器的采样率. **采样率定义了对输入的模拟音频信号每一秒内的采样数**. 如果使用**低采样率** 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用**44.1kHz的采样率(CD质量的采样率)**会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用**标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz** ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)说了 **人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz**,录音最好采用 x 2 倍的频率）
+上边的代码里`AVSampleRateKey`用于定义录音器的采样率. **采样率定义了对输入的模拟音频信号每一秒内的采样数**. 如果使用**低采样率** 比如8kHz,会导致粗粒度、AM广播类型的录制效果, 不过文件会比较小; 使用**44.1kHz的采样率(CD质量的采样率)**会得到非常高质量的内容, 不过文件比较大. 至于使用什么样的采样率没有明确的定义. 不过开发者应该尽量使用**标准的采样率，比如: 8000Hz、16 000Hz(16kHz)、22050Hz(22.05kHz)或 44100Hz(44.1kHz)、当然还有48000Hz和96000Hz** ,(kHz代表千赫),超过48000或96000的采样对人耳已经没有意义.最终是我们的耳朵在进行判断.（[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)说了 **人耳所能听到的声音，最低的频率是从20Hz起一直到最高频率20kHz**,录音最好采用 x 2 倍的频率）
 
 
 通道数
 --
 
-`AVNumberOfChannelsKey`用于定义记录音频内容的通道数。**指定默认值1 意味着使用单声道录制**、**设置2意味着使用立体声录制**。除非使用外部硬件进行录制，否则同窗应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。
+`AVNumberOfChannelsKey`用于定义记录音频内容的通道数。**指定默认值1 意味着使用单声道录制**、**设置2意味着使用立体声录制**。除非使用外部硬件进行录制，否则通常应该创建单声道录音。 这里的通道数是指 录制设备的输入数量 可以理解为 麦克风 内置 或者外接麦克风录制比如 插入Apple耳机 里面的麦克风。
 
 
 > 以上是全面`AVAudioRecorder`的部分概念,`AVAudioRecorder`支持**无限时长录制**,还可以设置从**未来某一时间点开始录制**或**指定时长录制**
@@ -42699,9 +42433,9 @@ FreeStreamer使用
 ```
 
 
-这`AVAudioSessionCategoryPlayAndRecord`是[上一章](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)说的那几种Category,我们需要__录音+播放__功能
+这`AVAudioSessionCategoryPlayAndRecord`是[上一章](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)说的那几种Category,我们需要__录音+播放__功能
 
-下一步 配置 plist文件访问权限信息 可以参考[Access privacy-sensitive data](http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/)这篇文章把访问权限需要的 信息填充上.
+下一步 配置 plist文件访问权限信息 可以参考[Access privacy-sensitive data](https://www.sunyazhou.com/2017/03/AccessPrivacySensitive/)这篇文章把访问权限需要的 信息填充上.
 
 ![plist1](/assets/images/20170328LearningAVFoundationAVAudioRecorder/FillInfo.avif)
 
@@ -42941,7 +42675,7 @@ typedef void (^BDRecordingSaveCompletionHanlder)(BOOL, id);
 ```
 上边大致是封装`BDRecorder`的过程
 
-下面是对`ViewController`UI的设置, 设置好时间格式 我们需要在`ViewController`里 自己搞个定时器去更新录制的时间在UI上的显示, 因为`self.recorder.currentTime`是只读熟悉 没提供set方法 所以我们也无法用KVO监听recorder的属性变化. 
+下面是对`ViewController`UI的设置, 设置好时间格式 我们需要在`ViewController`里 自己搞个定时器去更新录制的时间在UI上的显示, 因为`self.recorder.currentTime`是只读属性 没提供set方法 所以我们也无法用KVO监听recorder的属性变化. 
 
 代码如下:
 
@@ -43237,7 +42971,7 @@ typedef void (^BDRecordingSaveCompletionHanlder)(BOOL, id);
 ```
 
 一个timer用于 刷新录制时间 
-`levelTimer`用于刷新录制的视波图也叫`Audio Metering`对音频进行计量
+`levelTimer`用于刷新录制的声波图也叫`Audio Metering`对音频进行计量
 
 在`BDRecorder`中增加了
 
@@ -43276,7 +43010,7 @@ self.recorder.meteringEnabled = YES;
 
 每当读取值之前需要调用`[self.recorder updateMeters]`方法才能获取到最新值，否则可能获取的不够精确
 
-然后 使用`MeterTable`类 声明的函数`valueForPower:` 把上边两个阀值 转成线性运算
+然后 使用`MeterTable`类 声明的函数`valueForPower:` 把上边两个阈值 转成线性运算
 
 **就是分贝值从对数形式的`-160 ~ 0`范围转换为线性0到1的形式.**
 
@@ -43450,7 +43184,7 @@ float dbToAmp(float dB) {
 
 
 
-`BDRecorder`没有 处理意外中断等情况 比如外接麦克风 和音频意外来电等，如果需要处理 就可以在`BDRecorder`中声明几个代理监听音频回话的那几个通知就可以了 这里出于学习为目的就简单写到这里吧，如果大家需求强烈我可以回头补上并开源。
+`BDRecorder`没有 处理意外中断等情况 比如外接麦克风 和音频意外来电等，如果需要处理 就可以在`BDRecorder`中声明几个代理监听音频会话的那几个通知就可以了 这里出于学习为目的就简单写到这里吧，如果大家需求强烈我可以回头补上并开源。
 
 
 
@@ -43600,7 +43334,7 @@ CGFloat clamp(CGFloat intensity) {
 
 @end
 ```
-这里给出了level和peak的阀值 有很多第三方开源的view大家可以自行研究一下 很简单 就是把相关阀值量化的过程。
+这里给出了level和peak的阈值 有很多第三方开源的view大家可以自行研究一下 很简单 就是把相关阈值量化的过程。
 
 
 
@@ -43652,7 +43386,6 @@ Published At: 2017-03-17 10:26:06 +0000
 最近在学习`AV Foundation` 试图把学习内容记录下来 并参考一些博客文章
 本期的内容是`AVAudioPlayer`
 
-
 音频知识基础  
 --
 
@@ -43672,7 +43405,7 @@ Published At: 2017-03-17 10:26:06 +0000
 7. 重复1-6步直到播放完成
 
 在iOS系统中apple对上述的流程进行了封装并提供了不同层次的接口 
-![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.avif)  
+![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.png)  
 > 这是CoreAudio的接口层次  
 
 下面对其中的中高层接口进行功能说明：
@@ -43695,10 +43428,7 @@ Published At: 2017-03-17 10:26:06 +0000
 * 如果你的app需要对音频进行流播放并且同时存储，那么AudioFileStreamer加AudioQueue能够帮到你，你可以先把音频数据下载到本地，一边下载一边用NSFileHandler等接口读取本地音频文件并交给AudioFileStreamer或者AudioFile解析分离音频帧，分离出来的音频帧可以送给AudioQueue进行解码和播放。如果是本地文件直接读取文件解析即可。（这两个都是比较直接的做法，这类需求也可以用AVFoundation+本地server的方式实现，AVAudioPlayer会把请求发送给本地server，由本地server转发出去，获取数据后在本地server中存储并转送给AVAudioPlayer。另一个比较trick的做法是先把音频下载到文件中，在下载到一定量的数据后把文件路径给AVAudioPlayer播放，当然这种做法在音频seek后就回有问题了。）
 * 如果你正在开发一个专业的音乐播放软件，需要对音频施加音效（均衡器、混响器），那么除了数据的读取和解析以外还需要用到AudioConverter来把音频数据转换成PCM数据，再由AudioUnit+AUGraph来进行音效处理和播放（但目前多数带音效的app都是自己开发音效模块来坐PCM数据的处理，这部分功能自行开发在自定义性和扩展性上会比较强一些。PCM数据通过音效器处理完成后就可以使用AudioUnit播放了，当然AudioQueue也支持直接使对PCM数据进行播放。）。下图描述的就是使用AudioFile + AudioConverter + AudioUnit进行音频播放的流程
 
-![audio Unit Play](http://msching.github.io/images/iOS-audio/audioUnitPlay.avif)
-
 以上内容均转自[码农人生](http://msching.github.io/blog/2014/07/07/audio-in-ios/) 希望大神不要介意 如果有问题 我可立即清除
-
 
    
 
@@ -43712,7 +43442,7 @@ Published At: 2017-03-17 10:26:06 +0000
 * 控制协调app输入输出设备（比如 麦克风，耳机、手机外放比如蓝牙连接一个外置音响 或airplay）
 * 协调你的app的音频播放和系统以及其他app行为（例如有电话时需要打断，电话结束时需要恢复，按下静音按钮时是否歌曲也要静音等）
 
-![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.avif)
+![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png)
 
 *注：AVAudioSession iOS6以后使用 以前叫AudioSession*
 
@@ -43722,7 +43452,6 @@ Published At: 2017-03-17 10:26:06 +0000
 在我的博客里面我尽量使用code胜过千言万语
 使用`AVAudioPlayer`之前需要在`AppDelegate`里面导入`#import <AVFoundation/AVFoundation.h>`  
 并且启动音频会话
-
 
 ``` objc  
 
@@ -43754,7 +43483,6 @@ Published At: 2017-03-17 10:26:06 +0000
 ![Backgounrd Play](/assets/images/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.avif)  
 或者在plist里面修改
 ![Plist Modify](/assets/images/20170317LearningAVFoundationAVAudioPlayer/PlistModify.avif)  
-
 
 下面就是创建音频播放器代码
 
@@ -43833,7 +43561,6 @@ Published At: 2017-03-17 10:26:06 +0000
 这里说一下`[audioPlayer prepareToPlay]`
 __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue`的缓冲区.__ 当然也可以不调用这个方法直接调用 `[audioPlayer play]`，但当  __调用`play`方法时也会隐性激活__,调用`prepareToPlay`是为了减少 创建播放器时预设加载和听到声音输出之间的延时 
 
-
 ``` objc
 
 @implementation ViewController
@@ -43858,12 +43585,10 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
     
 }
 
-
 ```
 
 > 在`initWithNibName`或`awakeFromNib`时候调用一下创建播放器的代码  
 这个`[self setupNotifications];`后面说  
-
 
 先添加一些常见的方法封装 比如 __播放、暂停、停止__
 ``` objc 
@@ -43950,7 +43675,7 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
 }
 ```
 
-> 参考[IOS后台运行 之 后台播放音乐](http://www.iliunian.com/2831.html) 
+> 参考IOS后台运行 之 后台播放音乐 
 
 下面我们来介绍一下
 `[self setupNotifications];`注册监听 音频意外中断和耳机拔出时要暂停音乐播放
@@ -43976,11 +43701,9 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
                object:[AVAudioSession sharedInstance]];
 }
 
-
 ```
 
 *注：记得在delloc里面`[[NSNotificationCenter defaultCenter] removeObserver:self]`*
-
 
 意外中断音频发生的场景 例如 听歌过程中来电话或者 按住home键使用siri 
 
@@ -44020,8 +43743,6 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
         }
     }
 }
-
-
 
 ```
 
@@ -44096,7 +43817,6 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRouteChangeReason)
 如果`[portType isEqualToString:AVAudioSessionPortHeadphones]`
 
 如果是耳机`AVAudioSessionPortHeadphones`则暂停播放
-
 
 以上就是中断和线路切换的一些代码逻辑
 
@@ -44817,11 +44537,11 @@ Published At: 2017-02-10 10:24:25 +0000
 
 # 搭建hexo博客教程
 
-> [Jekyll迁移到Hexo搭建个人博客](http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html)  
+> Jekyll迁移到Hexo搭建个人博客  
 
-> [HEXO + Github 搭建自己的博客系统](http://www.czhzero.com/2016/06/25/hexoblog/)
+> HEXO + Github 搭建自己的博客系统
 
-> [利用Hexo和Github Pages搭建个人博客](http://skx926.com/2016/01/26/build-hexo/)
+> 利用Hexo和Github Pages搭建个人博客
 
 ### 1 初级功能
 
@@ -44842,7 +44562,7 @@ github pages  配置 大家自行google吧 真的很简单
 
 ### 3 SSL(自定义域名支持HTTPS)
 
-[支持https](https://gbin.me/2017/08/03/Hexo-deployed-in-github-and-coding/)
+支持https
 
 
 URL: https://sunyazhou.com/2017/02/DFSAlgorithm/index.html.md
@@ -45358,124 +45078,6 @@ Published At: 2017-02-09 13:37:28 +0000
 
 
 
-URL: https://sunyazhou.com/2017/01/SpringFestival/index.html.md
-Published At: 2017-01-28 13:42:34 +0000
-
-# 2017回家过年
-
-![7df258f2ecddcf81](http://p1.bqimg.com/584350/7df258f2ecddcf81.avif)
-> 练习了一年的小楷, 感谢老乡**潘旭**的帮助，我的书法有很多提升.
-
-
-出发
---
-
-当我拿着行李箱等待过年回家地铁那一刻 又是一年过去了 
-![035a303723a4b623](http://p1.bqimg.com/584350/035a303723a4b623.avif)
-这么多年总觉得自己和农民工一样，无非就是穿着体面一些,但内心还是农民工的内心.
-
-
-
-高铁
---
-
-睁开眼睛看到这篇黑土地盖着一层雪, 我应该快到家了。
-![Markdown](http://p1.bpimg.com/584350/5addde1fe4d65611.avif)
-我就是从这片黑土地走出去的年轻人, 我23年没有离开过这片黑土地，如今在京码砖好几年。买房没资格,买车没牌照,只能每天骑车我心爱的小牛M1上班。(其实我内心是崩溃的),只有雾霾陪着哥,有事没事来北京看看我和北京的土著。
-
-24岁入职百度如今已经快3年了, 想想已经很久没换工作了.工资少的可怜,想起那个每天都一门心思研究人工智能的厂长，我真想拒绝再给他打工了.
-
-
-中转站
---
-
-擦 车到站了 (我打算以后在这买个楼)
-![Markdown](http://i1.piimg.com/584350/698eb97cae2b2dea.avif)  
-刚下火车 已经被这种熟悉的冷瞬间打透.这种冷是多么的熟悉, 我早穿上了
-[林甸鞋](https://item.taobao.com/item.htm?spm=a230r.1.14.9.pmOPas&id=36777946060&ns=1&abbucket=15#detail),只有熟悉东北的小伙伴才知道啥叫林甸鞋
-> 大庆市林甸县制造 的林甸鞋 俗称**老头鞋** 我就不上照片了,我觉得这是东北人值得骄傲的文化遗产,都可以申请世界文化遗产了,在冰城没有这鞋我估计你很难度过漫长严寒的冬天。一双鞋售价仅仅 33 元 送一双羊毛鞋垫, 说句实话这绝对是东北人的业界良心，这鞋一年都不断帮断底，一个冬天穿这鞋很暖和,不信你可以问问你身边的东北人。
-> 当然不熟悉套路的估计不知道买啥牌子好, 我印象中只有 林嘉牌 双丽牌比较好 但是工厂估计早破产了,33元每双上哪挣钱去啊。想买的小伙伴或者想去东北旅游的小伙伴 建议随便买一双的就行了 都一样 反正不贵。
-![Markdown](http://p1.bqimg.com/584350/fb737f626882c66b.avif)
-
-小吃
---
-
-
-古云人:"上车饺子下车面" 这句话说的很有哲理我特意在百度搜了一下
-不过我还是想去吃哈尔滨的喜家德水饺
-![Markdown](http://p1.bqimg.com/584350/042feb2337732f5e.avif) 
-> trust me如果到哈尔滨必须要尝尝**喜家德水饺**和**东方饺子王**  
-> 不去尝尝永远不知道啥叫地道的饺子, 做饺子能做到淋漓尽致也没谁了,饺子皮、大小、厚度、弧度、都有专门的计量工具, 如果把**做饺子**当做一个app的话,我觉得喜家德应该是 app 中的支付宝, 但是比较蛋疼的是这些传统的民族企业都不发展互联网, 不支持任何网络支付、支付宝、微信、百度钱包都用不了、我真觉的喜家德CEO应该聘请哥给他当互联网总裁、用互联网发展一下传统企业、这种封闭的经营模式我持批评的态度.这是新时代的中国、想发展必须要与时俱进、跟上时代的发展不能闭关锁国、我怀疑喜家德的 老大不太相信互联网给他带来的任何改变、这一点我必须批评一下他、要拿出李鸿章大人以一人抵一国的能力. 不断学习,与时俱进
-
-
-
-冰雪大世界
---
-
-说来惭愧在哈尔滨好几年都没去过**冰雪大世界**(上学时比较穷)门票在糯米上至少需要360左右/人,这绝对有点贵.
-
-参加工作以后挣钱了必须想圆了学生时代的梦想,于是 让我大姐请我去了哈哈
-
-![Markdown](http://p1.bqimg.com/584350/d449b5d2f5debbed.avif)
-
-![Markdown](http://i1.piimg.com/584350/f894381b5bd3aaee.avif)
-![Markdown](http://i1.piimg.com/584350/d1115c4e6d7981ab.avif)
-
-
-> 这个世界玩的都是人的想象力,我从来没想过冰和雪能玩出什么花样,去了才知道只要有想象力和创造力 一件普通东西能这么有意思。记得一点要有车去大世界最好, 我建议租个车或者亲戚有车,不然必须坐黑车回来,这个很蛋疼,什么滴滴打车 用司机的话 **"啥滴都不好使"** 这个确实很无奈,大家玩完回不去很是蛋疼.政府得加大力度管制这些出租车司机.
-
-
-美丽冰城
---
-![Markdown](http://i1.piimg.com/584350/a9abec8d1c2c56e0.avif)  
-![Markdown](http://i1.piimg.com/584350/7bf35db34b720d2a.avif)  
-![Markdown](http://i1.piimg.com/584350/dc97959821ac8fa2.avif)  
-![Markdown](http://i1.piimg.com/584350/a260c895027dd64c.avif)
-> 在哈尔滨俄罗斯的建筑随处可见, 哈站前边(前两张照片)始于1907年有个什么斯基开个茶馆, 建的楼群依然还矗立在果戈里大街附近, 没去的小伙伴可以去看看, 最后一张断壁残垣在抢救性修复中。
-
-
-红肠
---
-哈尔滨有个比较出名的东西貌似叫红肠,但是 不是本地人很难知道哪里买的才算地道 我今天可以告诉大家啥叫地道的哈尔滨红肠
-![Markdown](http://i1.piimg.com/584350/1736e20ba1e625f5.avif)  
-
-![Markdown](http://p1.bpimg.com/584350/40a9d97bdeee2b05.avif)
-
-> 大家一定听过秋林红肠,都以为红肠应该是秋林牌子,其实好像叫秋林里道斯系列的食品
-> 如果想买正宗的红肠我推荐2个品牌个两个地点
-  
-  * **商委红肠**  
-  
-  这个商委在 道外红旗大街514号（黑龙江工程学院对面）前店后厂,之所以这么出名是因为商委红肠全程纯手工制作,深得龙江人喜爱.很多人喜欢吃它那个专有的味道.也有很多人不喜欢它的味道嫌它大蒜放的多哈哈.反正我吃都一样没啥特别的.如果我回哈尔滨发展我一定学学红肠怎么制作的自己做的才放心哈哈. 这个红肠火爆的程度得早晨5点去排队 每天几百斤,卖没了就售罄了,尤其过节期间
-  * **秋林里道斯红肠**  
-   
-    这个就在上边那绿色图片的地方地下一层,看哪里排队人多就在那里买就是秋林红肠最正宗的卖点,一定不要相信任何人说秋林红肠换地方了,好几十年了都没换地方怎么可能说换就换.都是商业竞争搞得鬼把戏,岂能欺骗我这个程序猿. (东大直街319号(近秋林国际购物中心)
-15245082279,(0451)58938888)  
-就下图这地方
-![Markdown](http://p1.bqimg.com/584350/b4c23a2cdd0e057b.avif)
-
-以后不要问谁哪里买红肠最好了,上边的就是最正宗的买红肠的地方了.
-
-回家
---
-![Markdown](http://p1.bpimg.com/584350/8f60e12618c08949.avif)
-看着家乡的夕阳,我真的快到家了-海伦市
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 URL: https://sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate/index.html.md
 Published At: 2017-01-18 13:44:57 +0000
 
@@ -45498,7 +45100,6 @@ iOS技术分类如下
 * Cocoapods
 * 文件相关
 
-
 音频
 --
 
@@ -45514,27 +45115,24 @@ __[iOS音频播放 (九)：边播边缓存](http://msching.github.io/blog/2016/0
 
 > 以上内容来自[码农人生](http://msching.github.io/) 这个哥们我有过交流，感觉底层音频技术比较透彻，适合初学者以及中级开发者研究学习和使用。
 
-
 图形处理
 --
 
 __[基础知识](https://objccn.io/issue-21-1/)__一些列教程可以连续看完  
 __[GPUImage](https://github.com/BradLarson/GPUImage)__库   
 __[iOS GPUImage源码解读（一）](http://mp.weixin.qq.com/s/pg2vPYftkfghoQswxJFIvw)__
-__[开源一个上架 App Store 的相机 App](http://hawk0620.github.io/blog/2017/02/17/zpcamera-opensource-share/)__
-
+__开源一个上架 App Store 的相机 App__
 
 图形图像
 --
-__[基于 OpenCV 的人脸识别](https://www.objccn.io/issue-21-9/)__  
+__基于 OpenCV 的人脸识别__  
 __[图片编辑](https://github.com/3tinkers/TKImageView)__
-
 
 动画
 --
 
-__[QQ中未读气泡拖拽消失的实现分析](http://kittenyang.com/drawablebubble/)__  
-__[iOS 自定义下拉线条动画](http://kittenyang.com/curvelineanimation/)__  
+__QQ中未读气泡拖拽消失的实现分析__  
+__iOS 自定义下拉线条动画__  
 __[一个库涵盖了所有iOS动画效果](https://github.com/sunyazhou13/Animations)__
 __[pop](https://github.com/facebook/pop)__
 
@@ -45542,42 +45140,35 @@ __[pop](https://github.com/facebook/pop)__
 > 以上是普通动画内容2篇来自Kitten  
 > 持续更新中
 
-
 转场动画
 --
-
 
 __WWDC 2013 Session笔记 - iOS7中的ViewController切换__ 喵神的这篇必看  
 
 __[UIPresentationController Tutorial: Getting Started](https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started)__ 需要翻墙  
-*(话说我解释一下这个词"翻墙",翻墙名词叫科学上网,黑话叫自备梯子,因为大家一开始都用[云梯VPN](https://www.yuntipub.com/)访问国外网站,因为我国搞了个垃圾防火墙的大型局域网,虽然阻碍了世界文明和技术科技的发展但也防范了一些不健康内容，比如万一有一天你搞个车床，制造个微冲出来怎么办哈哈,所以要翻越那个防火墙就俗称翻墙)*  
+*(话说我解释一下这个词"翻墙",翻墙名词叫科学上网,黑话叫自备梯子,因为大家一开始都用云梯VPN访问国外网站,因为我国搞了个垃圾防火墙的大型局域网,虽然阻碍了世界文明和技术科技的发展但也防范了一些不健康内容，比如万一有一天你搞个车床，制造个微冲出来怎么办哈哈,所以要翻越那个防火墙就俗称翻墙)*  
 
 __[自定义控制器转场动画及下拉菜单的小Demo | AppCoda翻译系列](http://wxgbridgeq.github.io/blog/2015/08/10/custom-transition-animation/)__
 
 >还有可以github搜索__[Transition](https://github.com/search?l=Objective-C&o=desc&q=Transition&s=stars&type=Repositories&utf8=%E2%9C%93)__  
 >很多这种转场动画不一一介绍
 
-
 ASDK(AsyncDisplayKit)
 --
 
 __[官方文档](http://asyncdisplaykit.org/)__ (需要翻墙)  
-__[中文翻译](http://reactnative.cn/docs/0.46/getting-started.html)__  
+__中文翻译__  
 __[AsyncDisplayKit 2.0 Tutorial: Getting Started](https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started)__  
 __[AsyncDisplayKit 2.0 Tutorial: Automatic Layout](https://www.raywenderlich.com/124696/asyncdisplaykit-2-0-tutorial-automatic-layout)__  
-__[AsyncDisplayKit官方文档翻译](http://awhisper.github.io/2016/05/04/AsyncDisplayKit%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/)__  
-__[AsyncDisplayKit源码分析(一)轮廓梳理](http://awhisper.github.io/2016/05/06/AsyncDisplayKit%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/)__  
-__[AsyncDisplayKit源码分析(二) 异步渲染](http://awhisper.github.io/2016/12/16/AysncDisplayKit%E5%88%86%E6%9E%90-%E4%BA%8C/)__  
+__AsyncDisplayKit官方文档翻译__  
+__AsyncDisplayKit源码分析(一)轮廓梳理__  
+__AsyncDisplayKit源码分析(二) 异步渲染__  
 __[使用ASDK性能调优-提升iOS界面的渲染性能](http://draveness.me/asdk-rendering/)__
 
-
 > 以上几篇分别来自 __[raywenderlich](https://www.raywenderlich.com/)__  
-> 源码分析来自于 __[折腾范儿の味精
-> ](http://awhisper.github.io/)__ 一个百度阅读团队同事的博客  
+> 源码分析来自于 __折腾范儿の味精
+>__ 一个百度阅读团队同事的博客  
 > 在这里我说一下我对ASDK的看法，我视图读过源码和官方文档，我发现这个不是你想用想用就能马上用的东西，简直可以让一个初学者学习一遍 **UIKit** 一样集成起来倒是很简单，但是就那是那个布局就足够一个开发人员研究一阵子，用不了masonry,但是功能单一的页面需要调优可以考虑一下。
-
-
-
 
 swift相关
 --
@@ -45587,11 +45178,9 @@ __[Swift 3必看：从使用场景了解GCD新API](http://www.jianshu.com/p/fc78
 
 > 持续更新中更新...
 
-
 数学图形
 --
 __[图形数学](https://jackschaedler.github.io/)__ eg:傅里叶变换
-
 
 架构
 --
@@ -45600,10 +45189,8 @@ __[Casa博客](http://casatwy.com/)__
 > 我必须评价一下这个Casa哥们,iOS架构师我唯一佩服的人,用我的话就是，这才是真正程序员心中的架构师，而不是哪些所谓的听起来很NB的架构师,我在百度个人云(你们看到的是百度网盘)工作时有个T8架构师就坐在我对面，那个架构师每天闲的我真想撅他，改iOS程序 xib的引用没去掉都不知道 最好导致线上崩溃，我其实非常想送他一句话，不管技术多NB 每天都要保持写代码，记得孔子的话：『吾尝终日而思矣，不如须臾之所学也』。  
 > 这个Casa的哥们让我看到了什么叫 架构工程师 和业务工程师，这是一个能真正去写架构代码然后扔给业务工程师说：按照这个搞法
 
-
 Masonry
 --
-__[](http://tutuge.me/2015/05/23/autolayout-example-with-masonry/)__  
 __[有趣的Autolayout示例-Masonry实现](http://tutuge.me/2015/05/23/autolayout-example-with-masonry/)__  
 __[有趣的Autolayout示例2-Masonry实现](http://tutuge.me/2015/08/08/autolayout-example-with-masonry2/)__ 
 __[有趣的Autolayout示例3-Masonry实现](http://tutuge.me/2015/12/14/autolayout-example-with-masonry3/)__ 
@@ -45611,16 +45198,14 @@ __[有趣的Autolayout示例4-Masonry实现](http://tutuge.me/2016/08/06/autolay
 __[有趣的Autolayout示例5-Masonry实现](http://tutuge.me/2017/03/12/autolayout-example-with-masonry5/)__  
 
 __[iOS自动布局框架-Masonry详解](http://www.jianshu.com/p/ea74b230c70d)__  
-__[Masonry — 使用纯代码进行iOS应用的autolayout自适应布局](http://www.ios122.com/2015/09/masonry/)__ 中文翻译
+__Masonry — 使用纯代码进行iOS应用的autolayout自适应布局__ 中文翻译
 
 > 话说 我个人认为学习masonry只需要看看 中文翻译之后 再去看看土土哥的教程就会了。土土哥的masonry教程简直就是中文文档。写的非常好
-
 
 Cocoapods
 --
 
 __[用CocoaPods做iOS程序的依赖管理](http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/)__ 巧神的文章必看
-
 
 文件相关
 --
@@ -45628,62 +45213,59 @@ __[用CocoaPods做iOS程序的依赖管理](http://blog.devtang.com/2014/05/25/u
 __[文件列表](https://github.com/sunyazhou13/FileExplorer)__  
 __[HYFileManager](https://github.com/sunyazhou13/HYFileManager)__  
 
-
-
-
 博客列表
 --
 
 | 博客地址                                     | RSS地址                                    |
 | ---------------------------------------- | :--------------------------------------- |
 | [OneV's Den](http://onevcat.com)         | <http://onevcat.com/atom.xml>            |
-| [破船之家](http://beyondvincent.com)         | <http://beyondvincent.com/atom.xml>      |
-| [NSHipster](http://nshipster.cn)         | <http://nshipster.cn/feed.xml>           |
-| [Limboy 无网不剩](http://blog.leezhong.com/) | <http://feeds.feedburner.com/lzyy>       |
+| 破船之家         | <>      |
+| NSHipster         | <>           |
+| Limboy 无网不剩 | <>       |
 | [唐巧的技术博客](http://blog.devtang.com)       | <http://blog.devtang.com/atom.xml>       |
 | [Lex iOS notes](http://ios.lextang.com)  | <http://ios.lextang.com/rss>             |
 | [念茜的博客](http://nianxi.net)               | <http://nianxi.net/feed.xml>             |
-| [Xcode Dev](http://blog.xcodev.com)      | <http://blog.xcodev.com/atom.xml>        |
-| [Ted's Homepage](http://wufawei.com/)    | <http://wufawei.com/feed>                |
-| [txx's blog](http://blog.t-xx.me)        | <http://blog.t-xx.me/atom.xml>           |
-| [KEVIN BLOG](http://imkevin.me)          | <http://imkevin.me/rss>                  |
+| Xcode Dev      | <>        |
+| Ted's Homepage    | <>                |
+| txx's blog        | <>           |
+| KEVIN BLOG          | <>                  |
 | [阿毛的蛋疼地](http://www.xiangwangfeng.com)   | <http://www.xiangwangfeng.com/atom.xml>  |
 | [亚庆的 Blog](http://billwang1990.github.io) | <http://billwang1990.github.io/atom.xml> |
-| [Nonomori](http://nonomori.farbox.com)   | <http://nonomori.farbox.com/feed>        |
-| [言无不尽](http://tang3w.com)                | <http://tang3w.com/atom.xml>             |
+| Nonomori   | <>        |
+| 言无不尽                | <>             |
 | [Wonderffee's Blog](http://wonderffee.github.io) | <http://wonderffee.github.io/atom.xml>   |
 | [I'm TualatriX](http://imtx.me)          | <http://imtx.me/feed/latest/>            |
-| [vclwei](http://vclwei.com)              | <http://vclwei.com/posts.rss>            |
-| [Cocoabit](http://blog.cocoabit.com)     | <http://blog.cocoabit.com/atom.xml>      |
-| [nixzhu on scriptogr.am](http://nixzhu.me) | <http://nixzhu.me/feed>                  |
+| [vclwei](http://vclwei.com)              | <>            |
+| Cocoabit     | <>      |
+| nixzhu on scriptogr.am | <>                  |
 | [不会开机的男孩](http://studentdeng.github.io)  | <http://studentdeng.github.io/atom.xml>  |
-| [Nico](http://www.taofengping.com)       | <http://www.taofengping.com/rss.xml>     |
-| [阿峰的技术窝窝](http://hufeng825.github.io)    | <http://hufeng825.github.io/atom.xml>    |
-| [answer_huang](http://answerhuang.duapp.com) | <http://answerhuang.duapp.com/index.php/feed/> |
-| [webfrogs](http://webfrogs.me)           | <http://webfrogs.me/feed/>               |
-| [代码手工艺人](http://joeyio.com)              | <http://joeyio.com/atom.xml>             |
+| Nico       | <>     |
+| [阿峰的技术窝窝](http://hufeng825.github.io)    | <>    |
+| answer_huang | <> |
+| webfrogs           | <>               |
+| 代码手工艺人              | <>             |
 | [Lancy's Blog](http://gracelancy.com)    | <http://gracelancy.com/atom.xml>         |
-| [I'm Allen](http://www.imallen.com)      | <http://www.imallen.com/atom.xml>        |
-| [Travis' Blog](http://imi.im/)           | <http://imi.im/feed>                     |
-| [王中周的技术博客](http://wangzz.github.io/)     | <http://wangzz.github.io/atom.xml>       |
-| [会写代码的猪](http://jiajun.org/)             | <http://gaosboy.com/feed/atom/>          |
+| I'm Allen      | <>        |
+| Travis' Blog           | <>                     |
+| [王中周的技术博客](http://wangzz.github.io/)     | <>       |
+| [会写代码的猪](http://jiajun.org/)             | <>          |
 | [克伟的博客](http://wangkewei.cnblogs.com/)   | <http://feed.cnblogs.com/blog/u/23857/rss> |
 | [摇滚诗人](http://cnblogs.com/biosli)        | <http://feed.cnblogs.com/blog/u/35410/rss> |
 | [Luke's Homepage](http://geeklu.com/)    | <http://geeklu.com/feed/>                |
 | [萧宸宇](http://iiiyu.com/)                 | <http://iiiyu.com/atom.xml>              |
 | [Yuan博客](http://www.heyuan110.com/)      | <http://www.heyuan110.com/?feed=rss2>    |
-| [Shining IO](http://shiningio.com/)      | <http://shiningio.com/atom.xml>          |
+| Shining IO      | <>          |
 | [YIFEIYANG--易飞扬的博客](http://www.yifeiyang.net/) | <http://www.yifeiyang.net/feed>          |
-| [KooFrank's Blog](http://koofrank.com/)  | <http://koofrank.com/rss>                |
-| [hello it works](http://helloitworks.com) | <http://helloitworks.com/feed>           |
+| KooFrank's Blog  | <>                |
+| hello it works | <>           |
 | [码农人生](http://msching.github.io/)        | <http://msching.github.io/atom.xml>      |
 | [玉令天下的Blog](http://yulingtianxia.com)    | <http://yulingtianxia.com/atom.xml>      |
 | [不掏蜂窝的熊](http://www.hotobear.com/)       | <http://www.hotobear.com/?feed=rss2>     |
-| [猫·仁波切](https://andelf.github.io/)       | <https://andelf.github.io/atom.xml>      |
-| [煲仔饭](http://ivoryxiong.org/)            | <http://ivoryxiong.org/feed.xml>         |
-| [里脊串的开发随笔](http://adad184.com)           | <http://adad184.com/atom.xml>            |
-| [Chun Tips](http://chun.tips/)           | <http://chun.tips/atom.xml>              |
-| [Why's blog - 汪海的实验室](http://blog.callmewhy.com/) | <http://blog.callmewhy.com/atom.xml>     |
+| [猫·仁波切](https://andelf.github.io/)       | <>      |
+| 煲仔饭            | <>         |
+| [里脊串的开发随笔](http://adad184.com)           | <>            |
+| Chun Tips           | <>              |
+| Why's blog - 汪海的实验室 | <>     |
 
 
 

@@ -13,7 +13,7 @@ typora-root-url: ..
 
 ![AR Kit Preview](/assets/images/20170830ARKit/ARKitPreview.avif)
 
-本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过度讲解.
+本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过渡讲解.
 期间有任何问题请大家集思广益,多多指教. 
 
 # 主要内容
@@ -256,7 +256,7 @@ _`Session` 和`Context`不同点_
 
 它的内部实现了一系列庞大的算法和调用iPhone 上必要的传感器来检测手机的 __移动、旋转、平移__(六轴位置方向变化) 
 
-当`ARWorldTrackingConfiguration`计算出相机在3D 世界中的位置时,会把这个**位置数据** 交个`ARSession`去管理, 而相机的**位置数据**对应的类就是`ARFrame` 
+当`ARWorldTrackingConfiguration`计算出相机在3D 世界中的位置时,会把这个**位置数据** 交给`ARSession`去管理, 而相机的**位置数据**对应的类就是`ARFrame` 
 
 > `ARSession`类一个属性叫`currentFrame` 就是 ARFrame 的实例变量
 
@@ -323,7 +323,7 @@ __ARCamera在3D世界的位置__
 
 __我们只说一下`ARSCNView`,`scene`,`node`啥关系__
 
-`ARSCNView` 是个集成自 UIView 的视图
+`ARSCNView` 是个继承自 UIView 的视图
 
 `ARSCNView` 有个属性(成员变量)叫`scene` 这就相当于 VC
 
@@ -668,14 +668,14 @@ ARHitTestResultType：捕捉类型  点还是面
 @end
 ```
 
-#### ARSesson 重点介绍
+#### ARSession 重点介绍
 
 ![Session Bridge](/assets/images/20170830ARKit/SessionBridge.avif)
 
-`ARSesson` 是一个连接底层与 AR 视图之间的桥梁, `ARSCNView`里的所有方法都是又`ARSession`提供的
+`ARSession` 是一个连接底层与 AR 视图之间的桥梁, `ARSCNView`里的所有方法都是由`ARSession`提供的
 
 
-__`ARSesson`获取相机位置数据主要由两种方式__
+__`ARSession`获取相机位置数据主要有哪些方式__
 
 * push 通过实现 Session 的代理`session:didUpdateFrame:`告知用户
 * pull 用户想要可主动去取 `ARSession`的`currentFrame`属性
@@ -865,7 +865,7 @@ typedef NS_ENUM(NSInteger, ARTrackingStateReason) {
 
 > 这里面涉及到的 一个叫做`eulerAngles`[欧拉角](https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92) 
 > ![Euler Angles](/assets/images/20170830ARKit/EulerAngles.avif)
-> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) 
+> 这个欧拉角是解决3D物体的 旋转矩阵 等取向问题, 就有一个平面 是静止不动的 一个平面是动的 根据圆心距离两个平面相交的 角度或者 sin cos 来解决一些夹角标记、旋转矩阵等问题 具体可以参考维基百科的解释 (我研究了一阵 还是云里雾里 见笑见笑) 
 
 
 #### ARKit捕捉平地

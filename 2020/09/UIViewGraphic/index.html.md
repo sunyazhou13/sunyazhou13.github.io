@@ -38,7 +38,7 @@ typora-root-url: ..
 #### AutoLayout的原理
 
 > 来历
-一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（[论文地址:http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的[Cassowary网站上http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/)。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的https://github.com/pybee/cassowary。自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。
+一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（[论文地址:http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的[Cassowary网站上http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/)。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。
 
 论文下载链接比较慢,我下载了一份[Cassowary原文放到了我的博客 大家可以自由下载](/assets/images/20200920UIViewGraphic/Cassowary.pdf).
 
@@ -77,10 +77,9 @@ iOS12之前，视图嵌套的数量对性能的影响是呈指数级增长的，
 
 [iOS触摸事件全家桶](https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ)
 
-
 ### 4. drawrect & layoutsubviews调用时机
 
-`layoutSubviews:`(相当于layoutSubviews()函数)在以下情况下会被调用：
+`layoutSubviews:`(相当于layoutSubviews函数)在以下情况下会被调用：
  
 1. init初始化不会触发layoutSubviews。
 2. addSubview会触发layoutSubviews。
@@ -90,14 +89,14 @@ iOS12之前，视图嵌套的数量对性能的影响是呈指数级增长的，
 6. 改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件。
 7. 直接调用setLayoutSubviews。
 
-`drawrect:`(drawrect()函数)在以下情况下会被调用：
+`drawrect:`(drawrect函数)在以下情况下会被调用：
 
 1. `drawrect:`是在UIViewController的`loadView:`和`ViewDidLoad:`方法之后调用.
 2. 当我们调用`[UIFont的 sizeToFit]`后,会触发系统自动调用`drawRect:`
 3. 当设置UIView的contentMode或者Frame后会立即触发触发系统调用`drawRect:`
 4. 直接调用`setNeedsDisplay`设置标记 或`setNeedsDisplayInRect:`的时候会触发`drawRect:`
 
-> 知识点扩充: 当我们操作drawRect方法的时候实际是在操作内存中存放视图的backingStore区域,用于后续图形的渲染操作,如果不理解可以看下[UIView的渲染过程](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/).
+> 知识点扩充: 当我们操作drawRect方法的时候实际是在操作内存中存放视图的backingStore区域,用于后续图形的渲染操作,如果不理解可以看下[UIView的渲染过程](https://www.sunyazhou.com/2017/10/UIViewRendering/).
 
 ### 5.UI的刷新原理
 
@@ -109,7 +108,7 @@ iOS 的`MainRunloop` 是一个60fps 的回调,也就是说16.7ms(毫秒)会绘�
 * view内容的绘制(如果重写了 drawRect)
 * 接收和处理系统的触摸事件
 
-我们看到的UI图形实际上是CPU和GPU不断配合工作的结果.经过[UIView的渲染过程](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/) 后我们的UI会不间断的接收系统图给我们的事件.
+我们看到的UI图形实际上是CPU和GPU不断配合工作的结果.经过[UIView的渲染过程](https://www.sunyazhou.com/2017/10/UIViewRendering/) 后我们的UI会不间断的接收系统图给我们的事件.
 
 由于主线程的runloop 一直在回调,我们的UI就得到了刷新的窗口,是渲染还是处理事件都是因为runloop不断工作的结果.前几篇我们学过 main线程的runloop默认是启动的.因为我们响应交互.
 
@@ -157,7 +156,6 @@ CGImageSource开头的哪些,根据合理利用时机和操作系统资源调整
 
 可以从阴影,圆角入手.帧率,电量,图片的锯齿等等.
 
-
 [iOS开发-视图渲染与性能优化](https://www.jianshu.com/p/748f9abafff8)
 
 ### 12.如果GPU的刷新率超过了iOS屏幕60Hz刷新率是什么现象，怎么解决
@@ -165,7 +163,6 @@ CGImageSource开头的哪些,根据合理利用时机和操作系统资源调整
 现象是 图形清晰,场景逼真,但是一般arm芯片的GPU 刷新超过60Hz一定会超级费电,手机发热导致降频.FPS降低,因为低能耗电量不足,无法支持GPU高刷新率
 
 解决办法只能用xcode自带工具检测,看渲染过程哪里可以优化.
-
 
 # 总结
 

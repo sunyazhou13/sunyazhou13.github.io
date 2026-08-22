@@ -15,7 +15,7 @@ typora-root-url: ..
 > 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 
-记得过年时候 [有一个微信公众号](https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w) 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时长关注.期间如果有解答不清楚或者不对之处还请各位指正.
+记得过年时候 [有一个微信公众号](https://mp.weixin.qq.com/s/bDnsaD__ZpdHIk3_So382w) 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时常关注.期间如果有解答不清楚或者不对之处还请各位指正.
 
 
 # 面试题的结构分类和细化
@@ -383,7 +383,7 @@ class_copyPropertyList(Class cls, unsigned int *outCount)
 auto rw = cls->data();
 rw->properties; //通过rw直接拿到properties
 ```
-通过rw直接拿到properties,然后便利拿出想要的 以`@property`关键字 声明变量名称.
+通过rw直接拿到properties,然后遍历拿出想要的 以`@property`关键字 声明变量名称.
 
 `properties `详细内容 还请异步运行时源码看下这里篇幅限制就不啰嗦了.
 
@@ -690,7 +690,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
     }
     auto rw = cls->data();
         
-    // 注意下面的代码，上面采用倒叙遍历方式，所以后编译的 category 会先add到数组的前部
+    // 注意下面的代码，上面采用倒序遍历方式，所以后编译的 category 会先add到数组的前部
     prepareMethodLists(cls, mlists, mcount, NO, fromBundle);
     rw->methods.attachLists(mlists, mcount);
     free(mlists);
@@ -715,7 +715,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 
 * 运行时添加分类属性/协议/方法
 * 分类添加的方法会“覆盖”原类方法，因为方法查找的话是从头至尾，一旦查找到了就停止了
-* 同名分类方法谁生效取决于编译顺序，image 读取的信息是倒叙的，所以编译越靠后的越先读入
+* 同名分类方法谁生效取决于编译顺序，image 读取的信息是倒序的，所以编译越靠后的越先读入
 * 名字相同的分类会引起编译报错；
 
 ##### `extension`
@@ -724,7 +724,7 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 * 只以声明的形式存在，多数情况下就存在于 .m 文件中；
 * 不能为系统类添加扩展
 
-可以给类添加成员变量，但是是私有的 可以給类添加方法，但是是私有的 添加的属性和方法是类的一部分，在编译期就决定的。在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。 伴随着类的产生而产生，也随着类的消失而消失
+可以给类添加成员变量，但是是私有的 可以给类添加方法，但是是私有的 添加的属性和方法是类的一部分，在编译期就决定的。在编译器和头文件的@interface和实现文件里的@implement一起形成了一个完整的类。 伴随着类的产生而产生，也随着类的消失而消失
 
 > **必须有类的源码才可以给类添加extension**!!!
 
@@ -742,29 +742,29 @@ attachCategories(Class cls, category_list *cats, bool flush_caches)
 
 #### 消息转发机制，消息转发机制和其他语言的消息机制优劣对比
 
- > 前言: 了解消息转发之前我们有必要了解一些Objectivce-C中的消息传递机制
+ > 前言: 了解消息转发之前我们有必要了解一些Objective-C中的消息传递机制
 
 ##### 消息传递机制
 
-在Objectivce-C中,我们通过`实例变量(对象)`或者`类方法名`调用一个方法,那么我们实际上是在发送一条消息
+在Objective-C中,我们通过`实例变量(对象)`或者`类方法名`调用一个方法,那么我们实际上是在发送一条消息
 
 ``` objc
 id returnValue = [someObject messageName:parameter];  //实例调用方式
 id returnValue = [ClassA messageName:parameter];  //类调用方式
 ```
-上述`someObject`和`ClassA`是接受者(receiver)，`messageName:`是选择器(`selector`),选择器和参数合起来称为消息(`message`)。编译器看到此消息后，将其转换为一条标准的c语言函数调用，所调用的函数乃是消息传递机制中的核心函数：`objc_msgSend()`。
+上述`someObject`和`ClassA`是接收者(receiver)，`messageName:`是选择器(`selector`),选择器和参数合起来称为消息(`message`)。编译器看到此消息后，将其转换为一条标准的c语言函数调用，所调用的函数乃是消息传递机制中的核心函数：`objc_msgSend()`。
 
 ``` c
 void objc_msgSend(id self, SEL cmd, ...)
 ```
-第一个参数代表接受者，第二个参数代表选择子，后续参数就是消息中的那些参数
+第一个参数代表接收者，第二个参数代表选择子，后续参数就是消息中的那些参数
 编译器会把刚才的那个例子中的消息转换为如下函数：
 
 ``` objc
 id returnValue = objc_msgSend(someObject, @selector(messageName:),parameter);
 id returnValue = objc_msgSend(ClassA, @selector(messageName:),parameter);
 ```
-`objc_msgSend()`函数会依据接受者与选择器的类型来调用适当的方法.为来完成此操作，该方法需要在接受者所属的类中搜寻其“方法列表”(也就是上文我们说的`class_ro_t`中的method_list)。找到则跳到现实代码，否则，就沿着继承体系继续向上查找，如果还没有则执行消息转发操作。对于其他的“边界情况”，则需要交由Objective-c运行环境的另一些函数来处理：
+`objc_msgSend()`函数会依据接收者与选择器的类型来调用适当的方法.为了完成此操作，该方法需要在接收者所属的类中搜寻其“方法列表”(也就是上文我们说的`class_ro_t`中的method_list)。找到则跳到实现代码，否则，就沿着继承体系继续向上查找，如果还没有则执行消息转发操作。对于其他的“边界情况”，则需要交由Objective-c运行环境的另一些函数来处理：
 
 ``` c
 objc_msgSend_stret  //待发送的消息返回结构体时
@@ -780,7 +780,7 @@ objc_msgSendSuper   //如果要给超类发送消息
 
 在objc中消息转发需要经历3个阶段  `resolveInstanceMethod` -> `forwardingTargetForSelectoer` -> `forwardInvocation` ->`消息未能处理`。  
 
-* 第一阶段:**动态方法解析(Dynamic Method Resolution)**也就是在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个**未知选择器**
+* 第一阶段:**动态方法解析(Dynamic Method Resolution)**也就是在所属的类中先征询接收者,看其是否能动态加方法，来处理当前这个**未知选择器**
 * 第二阶段:**替换消息接收者快速转发**
 * 第三阶段:**完全消息转发机制**
 
@@ -838,7 +838,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 
 这个阶段的意义是为一个类动态提供方法实现,严格来说，还没进入消息转发流程。
 
-`resolveInstanceMethod:` 控制这下面两个方法是否会被调用
+`resolveInstanceMethod:` 控制着下面两个方法是否会被调用
 
 * `respondsToSelector:`  
 * `instancesRespondToSelector:`  
@@ -877,7 +877,7 @@ class_addMethod(Class cls, SEL name, IMP imp, const char *types)
 
 > `NSInvocation`可以简单理解为一个对象把我们用到 selector方法和对象都存储了一下,然后哪个是指向我们需要调用的指针对象.
 
-所以不同与第二阶段，在这个阶段你可以：
+所以不同于第二阶段，在这个阶段你可以：
 
 * 把消息存储，在你觉得合适的时机转发出去，或者不处理这个消息。
 * 修改消息的target，selector，参数等
@@ -903,7 +903,7 @@ Objective-C 实例对象执行方法步骤
 5. 若最终没有找到，则进行消息转发操作.
 
 * 方法查询之前 要知道  receiver和 selector.主要是要明确我们是哪个实例调用了哪个方法.  
-* 动态解析解析之前要 在所属的类中先征询接受者,看其是否能动态加方法，来处理当前这个未知选择器.
+* 动态解析之前要 在所属的类中先征询接收者,看其是否能动态加方法，来处理当前这个未知选择器.
 * 消息转发 之前 要询问是否把消息转发给另一个对象. 
 
 > 如果更深入的而理解 那应该是 objc_msgSend() 为啥是汇编实现的,上面的那些方法 调用之前 汇编的哪些指令被执行
@@ -989,7 +989,7 @@ runtime 使用了发送消息 `objc_msgSend` 的方式对 `+initialize` 方法�
 
 ##### 在继承关系中他们有什么区别
 
-super的方法会成功调用，但是这是多余的，因为runtime会自动对父类的+load方法进行调用，而+initialize则会随子类自动激发父类的方法（如Apple文档中所言）不需要显示调用。另一方面，如果父类中的方法用到的self（像示例中的方法），其指代的依然是类自身，而不是父类
+super的方法会成功调用，但是这是多余的，因为runtime会自动对父类的+load方法进行调用，而+initialize则会随子类自动激发父类的方法（如Apple文档中所言）不需要显式调用。另一方面，如果父类中的方法用到的self（像示例中的方法），其指代的依然是类自身，而不是父类
 
 ####  说说消息转发机制的优劣
 
@@ -1001,7 +1001,7 @@ super的方法会成功调用，但是这是多余的，因为runtime会自动�
 
 缺点:
 
-* Objective-C本身不支持多继承，这是因为消息机制名称查找发生在运行时而非编译时，很难解决多个基类可能导致的二义性问题，但是可以通过消息转发机制在内部创建多个功能的对象，把不能实现的功能给转发到其他对象上去，这样就做出来一种多继承的假象。转发和继承相似，可用于为OC编程添加一些多继承的效果，一个对象把消息转发出去，就好像他把另一个对象中放法接过来或者“继承”一样。消息转发弥补了objc不支持多继承的性质，也避免了因为多继承导致单个类变得臃肿复杂。
+* Objective-C本身不支持多继承，这是因为消息机制名称查找发生在运行时而非编译时，很难解决多个基类可能导致的二义性问题，但是可以通过消息转发机制在内部创建多个功能的对象，把不能实现的功能给转发到其他对象上去，这样就做出来一种多继承的假象。转发和继承相似，可用于为OC编程添加一些多继承的效果，一个对象把消息转发出去，就好像他把另一个对象中方法接过来或者“继承”一样。消息转发弥补了objc不支持多继承的性质，也避免了因为多继承导致单个类变得臃肿复杂。
 
 
 # 总结

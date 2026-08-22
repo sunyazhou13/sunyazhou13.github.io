@@ -8,25 +8,19 @@ typora-root-url: ..
 
 ---
 
-
 ![album](/assets/images/20170429CmputerScienceAndTechnologyClassic/album.avif)
 
 # 前言
 > 无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. __学习好一定要坚持下去,学习不好并不代表以后没有机会__, 如果你大学想学的是计算机相关专业,我可以把我之所学和必备的一些学习装备合盘托出毫无保留的告诉你, 并切能节省大部分学习开支.
 
-
 # 计算机专业学习路线
-
 
 [计算机专业学习路线](https://hackway.org/docs/cs/intro)  
 ![learn CS Line](/assets/images/20170429CmputerScienceAndTechnologyClassic/learnCSLine.avif)
 
-
 据说站长是北大学生，参考美国名校的计算机培养方案，整理的计算机专业学习路线。
 
 上边的才是最近更新学习计算机课程的正解,2023/06/30更新↑↑↑.
-
-
 
 ## 主要分3个方面
 
@@ -34,11 +28,10 @@ typora-root-url: ..
 * 技法
 * 装备
 
-
 ### 书籍
 首先来说 书籍 大学计算机必须的基本经典书籍
 
-* [C语言程序设计 谭浩强](http://baike.baidu.com/link?url=rVNBy5FqKGq6YBb22T6Sj0IrRCeFj_SKf9QLjV7avP1cXIelBdhMza-y9Xu4fBHk0ynNI-RiFxbGySk68agqb1zrrQ2xPBZO9-WiqQe3AJy8IHEtHGBWGnxcwJlf77xiVaN3VdvdSn9_OaHodVRmuSl8MbPLBh5e0JzEhE0ikuNIGivWRklNzsL2WTD6WOJT) __必学__  
+* C语言程序设计 谭浩强 __必学__  
 ![C Language](/assets/images/20170429CmputerScienceAndTechnologyClassic/CLanguage.avif)
 
 * [清华大学计算机系列教材：数据结构（C语言版）](https://item.jd.com/11076338.html) __必学__  
@@ -66,10 +59,10 @@ typora-root-url: ..
 
 * [免费的编程中文书籍索引](https://github.com/sunyazhou13/free-programming-books-zh_CN) 这就是不需要大家买书的原因,所有计算机相关的技术书籍和视频教程博客等全部资料都在这,是的你确实没看错就是一个链接搞定.
 * 学习一下如何搭建自己博客这样就可以把所学的知识点记录下来还能提高影响力
-详情可以参考我的文章[如何搭建HEXO博客](http://localhost:4000/2017/02/10/build-hexo-blog-Tutorial/)
+详情可以参考我的文章[如何搭建HEXO博客](https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial/)
 * 每天尽量早起一个小时看书,预习今天要讲的内容.
 * 看大神的博客
-* 订阅各种博客发布文章(推荐一个软件叫[Reeder](http://www.0daydown.com/12/436535.html))   
+* 订阅各种博客发布文章(推荐一个软件叫Reeder)   
 ![Reeder](/assets/images/20170429CmputerScienceAndTechnologyClassic/Reeder.avif)
 
 (估计初学者还不知道谁是在某个领域的大神,这个可以慢慢摸索)  
@@ -173,7 +166,6 @@ typora-root-url: ..
 `￥3300` + `￥275` + `￥699` +  `￥558` + `￥1000` = `￥4832`
 
 是的 5k足够了 其实这才是最经济的方案 如果 手机不用买 鼠标键盘也不用买的花 也就 4k多一点 无论是毕业生还是大学生 切记要让钱花在刀刃上 东西要物尽其用 尤其是大学期间 根本不需要多好 能用就行了 参加工作 自己自足之后 想买什么就不是问题了 
-
 
 **让自己的大学生活过得有章法一点.**
 

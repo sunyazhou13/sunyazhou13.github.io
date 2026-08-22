@@ -21,7 +21,6 @@ tags: [Electron, Tauri, Qt6, Flutter, React Native, uni-app, Taro, Python, LangC
 
 这篇文章是我调研过程的完整记录，**从 iOS 开发者的认知模型出发**，把市面主流方案横向拉通，量化对比。
 
-
 2026 年，AI Agent 从概念验证全面进入生产落地阶段。LangChain 生态日趋成熟，MCP（Model Context Protocol）成为工具集成的事实标准，`llama.cpp` 让本地推理不再依赖云端 API。
 
 与此同时，"跨平台"的定义已经被彻底重写。一个 AI Agent 产品可能需要在以下 **6 个端**上运行：
@@ -926,7 +925,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 
 | 类型 | 链接 |
 |------|------|
-| 官网 | <https://taro.jd.com/> |
+| 官网 | <> |
 | 安装 | `npm install -g @tarojs/cli` |
 | 中文文档 | <https://taro-docs.jd.com/> |
 | GitHub | <https://github.com/NervJS/taro> |
@@ -943,7 +942,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | 中文文档 | <https://reactnative.cn/> |
 | 安装 | `npx create-expo-app` |
 | Windows/macOS | <https://microsoft.github.io/react-native-windows/> |
-| 鸿蒙 (RN-OH) | <https://gitee.com/openharmony-sig/RNOHDCS> |
+| 鸿蒙 (RN-OH) | <> |
 | GitHub | <https://github.com/facebook/react-native> |
 
 > Expo 快速启动。鸿蒙适配由华为开发者联盟主导。
@@ -1064,7 +1063,7 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | 中文文档 | <https://doc.qt.ac.cn/> |
 | PySide6 文档 | <https://doc.qt.io/qtforpython-6/> |
 
-> 国内推荐清华镜像：`https://mirrors.tuna.tsinghua.edu.cn/qt/`
+> 国内推荐清华镜像：`
 
 ---
 
@@ -1144,8 +1143,8 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 | HarmonyOS 开发者 | <https://developer.huawei.com/consumer/cn/harmonyos/> | 鸿蒙官方门户 |
 | DevEco Studio | <https://developer.huawei.com/consumer/cn/deveco-studio/> | 鸿蒙官方 IDE |
 | ArkUI 文档 | <https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui-overview> | 鸿蒙原生 UI |
-| 微信小程序文档 | <https://developers.weixin.qq.com/miniprogram/dev/> | 小程序官方开发 |
-| 微信小程序 AI 能力 | <https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/ai.html> | 小程序内置 AI |
+| 微信小程序文档 | <> | 小程序官方开发 |
+| 微信小程序 AI 能力 | <> | 小程序内置 AI |
 | uni-app 插件市场 | <https://ext.dcloud.net.cn/> | uni-app/Taro 插件 |
 
 ---

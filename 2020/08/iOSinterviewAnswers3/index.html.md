@@ -23,7 +23,6 @@ typora-root-url: ..
 3. iOS 中内省的几个方法有哪些？内部实现原理是什么
 4. `class`、`objc_getClass`、`object_getclass` 方法有什么区别?
 
-
 ## `Method Swizzle`注意事项
 
 1. **需要注意的是交换方法实现后的副作用**, `method_exchangeImplementations()`.交换方法函数最终会以`objc_msgSend()`方式调用,副作用主要集中在第一个参数  如下示例
@@ -31,7 +30,7 @@ typora-root-url: ..
 	``` objc
 	objc_msgSend(payment, @selector(quantity))
 	```
-	方法交换后再去调用quantity方法将有可能会crash.解决这种副作用的方式是使用`method_setImplementation()`来替换原来的交换方式,这样才最为合理, 具体原理请参照 [Objc 黑科技 - Method Swizzle 的一些注意事项](https://www.ctolib.com/topics-103098.html)  
+	方法交换后再去调用quantity方法将有可能会crash.解决这种副作用的方式是使用`method_setImplementation()`来替换原来的交换方式,这样才最为合理, 具体原理请参照 Objc 黑科技 - Method Swizzle 的一些注意事项  
 
 2. **避免交换父类方法** 
 
@@ -226,7 +225,7 @@ respondsToSelector:
 				返回IMP结果
 ```
 
-这就是整个消息转发的过程 就不在这里赘述了.感兴趣回看一下[第二章](https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/) 消息转发部分
+这就是整个消息转发的过程 就不在这里赘述了.感兴趣回看一下[第二章](https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2/) 消息转发部分
 
 我上述列举了一些常用的内省方法,其它的都方法基本没什么特别之处都是拿到isa各种操作内部的获取相关属性的函数返回结.
 
@@ -270,6 +269,6 @@ respondsToSelector:
 
 # 总结
 
-以上就是"一套高效的iOS面试题之我整理的答案之runtime相关问题3"中的内存剩余部分,问题答案虽然简短 但是每道题都问的非常到位,下一期我们讲一下 通知部分 争取用最快时间内把所有问题都整理出来答案.
+以上就是"一套高效的iOS面试题之我整理的答案之runtime相关问题3"中的内存剩余部分,问题答案虽然简短 但是每道题都问得非常到位,下一期我们讲一下 通知部分 争取用最快时间内把所有问题都整理出来答案.
 
 [参考](https://www.codenong.com/cs106358283/)

@@ -378,7 +378,7 @@ CF_ENUM(UInt32) {
 | 子类型 | 用途说明 | 子枚举类型 |
 | :------ | :------ | :------ |
 |均衡效果器 | 为声音的某些[频带](https://baike.baidu.com/item/%E9%A2%91%E5%B8%A6)增强或衰减能量，效果器需要指定多个频带,然后为各频带设置增益最终改变声音在音域上的能量分布 | kAudioUnitSubType_NBandEQ|
-| 压缩效果器 | 当声音较小或较大通过设置阀值来提高或降低声音能量 eg:作用时间、释放时间、以及触发值从而最终控制声音在时域上的能量范围 | kAudioUnitSubType_DynamicsProcessor |
+| 压缩效果器 | 当声音较小或较大通过设置阈值来提高或降低声音能量 eg:作用时间、释放时间、以及触发值从而最终控制声音在时域上的能量范围 | kAudioUnitSubType_DynamicsProcessor |
 | 混响效果器 | 通过声音反射的延迟控制声音效果 | kAudioUnitSubType_Reverb2 |
 
 > Effect Unit 下最常用的效果器就上边这三种, 像高通(High Pass)、低通(Low Pass)、带通(Band Pass)、延迟(Delay)、压限(Limiter) 等这些不是很常用,如果大家对这个很熟悉可以试试使用一下.

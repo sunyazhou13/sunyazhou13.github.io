@@ -6,11 +6,9 @@ categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
 
-
 ---
 
 ![whatisnewsinios](/assets/images/20170713ios11NewSkills/whatisnewsinios11.avif)
-
 
 ## 可用性检查API
 
@@ -29,7 +27,6 @@ typora-root-url: ..
 在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查
 
 ##### 通过`API_AVAILABLE`宏来标注方法的可用性
-
 
 ``` objc
 @interface ViewController : UIViewController
@@ -82,10 +79,9 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 ![availability](/assets/images/20170713ios11NewSkills/availability.avif)
 
-
 ## 静态分析
 
-前面的文章我又讲过[静态分析](http://www.sunyazhou.com/2017/06/20/enable-static-analyer/)
+前面的文章我又讲过[静态分析](https://www.sunyazhou.com/2017/06/EnableStaticAnalyer/)
 
 这里说一下变化
 
@@ -99,7 +95,6 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 在Xcode9 中可以直接把这种倍忽视 的问题改成 当错误处理
 
 ![static](/assets/images/20170713ios11NewSkills/static.avif)
-
 
 ## 开启 LTO 并设置为 Incremental 模式 
 
@@ -119,9 +114,7 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 据说对包大小和运行时速度有 10% 左右的优化
 
-
 ## GCD 统一队列标识
-
 
 统一队列标识是指我们在工程中散落在各处的创建队列，如果队列标识是一样的，他们在内核中会被 bind 在一起，其效率可以提高 30%。Apple 没有告诉我们其内核是怎么做到的，它提供了这样的建议，如果一类操作重要性程度或其他属性接近，亦或开发者希望散落在工程各处的代码可以放在同一个队列里去控制，那么我们在创建队列的时候就可以指定一个共同的标识符。 然后系统在内核中会把这些标识相同的队列 bind 到一起来管理
 
@@ -136,7 +129,5 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 > 老实说 工程里面 避免不了文件上传下载 或者耗时任务处理  如果 整体搞成一个queue显然 不太符合业务需求 如果尽量保持 一个标识的Queue的话 也只能根据 业务分类来做到  可以有机会尝试一下
 
-
 全文完
 
-[参考](https://techblog.toutiao.com/2017/07/05/session0-2/)

@@ -6,9 +6,7 @@ categories: [iOS]
 tags: [iOS, macOS, Objective-C, Cocoapods, skills]
 typora-root-url: ..
 
-
 ---
-
 
 ![cocoapods](/assets/images/20201010PodSpec/cocoapods.avif)
 
@@ -16,16 +14,13 @@ typora-root-url: ..
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-
 在我的技术认知里, Cocoapods已经成为每一位iOS开发者必备的技能之一,然后这么多年过去了,在我认为它已经过时了的时候居然还有人对这个东西玩的不透彻,今天我就把我这么多年使用的经验高阶部分全部都拿出来跟不熟悉这个工具的同行分享一下.
 
 对于大多数软件开发团队来说，依赖管理工具必不可少，它能针对开源和私有依赖进行安装与管理，从而提升开发效率，降低维护成本。针对不同的语言与平台，其依赖管理工具也各有不同，例如`npm`管理`Javascript`、`Gradle `、`Maven` 管理`Jar` 包、`pip `管理 `Python `包，`Bundler`、`RubyGems`等等。本文聚焦于` iOS `方面，对 `CocoaPods `的使用和部分原理进行阐述。
 
-
 ## 简单易用的 CocoaPods
 
 对于 iOSer 来说，CocoaPods 并不陌生，几乎所有的 iOS 工程都会有它的身影。CocoaPods 采用 Ruby 构建，它是 Swift 和 Objective-C Cocoa 项目的依赖管理工具。在 MacOS 上，推荐使用默认的 Ruby 进行安装 (以下操作均在 CocoaPods 1.10.1、Ruby 2.7.2 进行)：
-
 
 ``` objc
 sudo gem install cocoapods
@@ -71,7 +66,7 @@ install! 'cocoapods',
 * `:clean`：根据 podspec 和项目支持平台的指定，清理所有不被 pod 使用的文件，默认为 true。
 * `:deduplicate_targets`：是否对 pod target 进行重复数据删除，默认为 true。
 * `:deterministic_uuids`：创建 pod project 是否产生确定性 UUID，默认为 true。
-* `:integrate_targets`：是否继承到用户项目中，为 false 会将 Pod 下载并安装到到 project_path/Pods 目录下，默认为 true。
+* `:integrate_targets`：是否集成到用户项目中，为 false 会将 Pod 下载并安装到 project_path/Pods 目录下，默认为 true。
 * `:lock_pos_sources`：是否锁定 pod 的源文件，当 Xcode 尝试修改时会提示解锁文件，默认为 true。
 * `:warn_for_multiple_pod_sources`：当多个 source 包含同名同版本 pod 时是否发出警告，默认为 true。
 * `:warn_for_unused_master_specs_repo`：如果没有明确指出 master specs repo 的 git 是否发出警告，默认为 true。
@@ -91,7 +86,7 @@ ensure_bundler! '~> 2.0.0'
 
 `pod`：指定项目的依赖项
 
-* 依赖版本控制：`=`、`>`、`>=`、`<`、`<=` 为字面意思；`~> 0.1.2` 表示 `0.1.2 <= currVersion < 0.2` 之间的符合要求的最新版本版本。
+* 依赖版本控制：`=`、`>`、`>=`、`<`、`<=` 为字面意思；`~> 0.1.2` 表示 `0.1.2 <= currVersion < 0.2` 之间的符合要求的最新版本。
 * Build configurations：默认依赖安装在所有的构建配置中，但也可仅在指定构建配置中启用。
 * Modular Headers：用于将 pod 转换为 module 以支持模块，这时在 Swift 中可以不用借助 `bridging-header` 桥接就可以直接导入，简化了 Swift 引用 Objective-C 的方式；也可以采用 `use_modular_headers!` 进行全局的变更。
 * Source：指定具有依赖项的源，同时会忽略全局源。
@@ -242,7 +237,7 @@ supports_swift_versions '>= 3.0', '< 4.0'
 
 #### Sources
 
-`sources`：Podfile 从指定的源列表中进行检索。sources 默认存储在 ~/.cocoapods/repos 中，是全局的而非按 target definition 存储。当有多个相同的 Pod 时，优先采用检索到的 Pod 的第一个源，因此当指定另一个来源时，则需显示指定 CocoaPods 的源。
+`sources`：Podfile 从指定的源列表中进行检索。sources 默认存储在 ~/.cocoapods/repos 中，是全局的而非按 target definition 存储。当有多个相同的 Pod 时，优先采用检索到的 Pod 的第一个源，因此当指定另一个来源时，则需显式指定 CocoaPods 的源。
 
 ``` ruby
 source 'https://github.com/artsy/Specs.git'
@@ -318,7 +313,6 @@ podspec = pod Specification，意为 pod 规范，它是一个 Ruby 文件。包
 | `static_framework` | 是否采用静态 framework 分发  | |
 | `deprecated` | 该库是否已被弃用  | |
 | `deprecated_in_favor_of` | 该库名称已被弃用，取而代之    | |
-
 
 ``` ruby
 Pod::Spec.new do |s|
@@ -430,7 +424,7 @@ spec.user_target_xcconfig = { 'MY_SUBSPEC' => 'YES' }
 spec.prefix_header_contents = '#import <UIKit/UIKit.h>', '#import <Foundation/Foundation.h>'
 ```
 
-`prefix_header_file`：预编译头文件，false 表示不生成默认的 CocoaPods 的与编译头文件。🙅 不推荐使用路径形式，因为其会污染用户或者其他库的预编译头。
+`prefix_header_file`：预编译头文件，false 表示不生成默认的 CocoaPods 的预编译头文件。🙅 不推荐使用路径形式，因为其会污染用户或者其他库的预编译头。
 
 ``` ruby
 spec.prefix_header_file = 'iphone/include/prefix.pch'
@@ -467,7 +461,7 @@ spec.script_phases = [
 
 #### File patterns
 
-文件模式指定了库的所有文件管理方式，如源代码、头文件、framework、libaries、以及各种资源。其文件模式通配符形式可参考[链接](https://guides.cocoapods.org/syntax/podspec.html#group_file_patterns)
+文件模式指定了库的所有文件管理方式，如源代码、头文件、framework、libraries、以及各种资源。其文件模式通配符形式可参考[链接](https://guides.cocoapods.org/syntax/podspec.html#group_file_patterns)
 
 `source_files`：指定源文件
 
@@ -543,13 +537,12 @@ spec.preserve_path = 'IMPORTANT.txt'
 spec.preserve_paths = 'Frameworks/*.framework'
 ```
 
-`module_map`：pod 继承为 framework 时使用的模块映射文件，默认为 true，CocoaPods 根据 公共头文件创建 module_map 文件。
+`module_map`：pod 集成为 framework 时使用的模块映射文件，默认为 true，CocoaPods 根据 公共头文件创建 module_map 文件。
 
 ``` ruby
 spec.module_map = 'source/module.modulemap'
 spec.module_map = false
 ```
-
 
 #### Subspecs
 
@@ -647,11 +640,9 @@ spec.ios.resources = 'Resources_ios/**/*.png'
 
 了解完 Podfile 和 podspec 的相关的规范之后，那么开发自己的 pod 应该是一件驾轻就熟的事。
 
-
 #### Spec Repo
 
-Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方。本地源存储于 ~/.cocoapods/repos中，它从 git 上拉取并完全保留目录结构。可以发现， Master Specs Repo 的现在目录结构有些特殊；以往版本的 Master Spec Repo 是完全在同一目录下的，但若大量文件在同一目录中会导致了 [Github 下载慢](https://github.com/CocoaPods/CocoaPods/issues/4989#issuecomment-193772935) 的问题。为解决这个问题，采用散列表形式处理。具体方式为对名称进行 MD5 计算得到散列值，取前三位作为目录前缀，以对文件分散化。初次之外，CocoaPods 后续还采用 CDN 以及 trunk 进一步加快下载速度，有兴趣可以参考 [CocoaPods Source 管理机制](http://chuquan.me/2022/01/07/source-analyze-principle/)。
-
+Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方。本地源存储于 ~/.cocoapods/repos中，它从 git 上拉取并完全保留目录结构。可以发现， Master Specs Repo 的现在目录结构有些特殊；以往版本的 Master Spec Repo 是完全在同一目录下的，但若大量文件在同一目录中会导致了 [Github 下载慢](https://github.com/CocoaPods/CocoaPods/issues/4989#issuecomment-193772935) 的问题。为解决这个问题，采用散列表形式处理。具体方式为对名称进行 MD5 计算得到散列值，取前三位作为目录前缀，以对文件分散化。除此之外，CocoaPods 后续还采用 CDN 以及 trunk 进一步加快下载速度，有兴趣可以参考 [CocoaPods Source 管理机制](http://chuquan.me/2022/01/07/source-analyze-principle/)。
 
 如：`md5("CJFoundation") => 044d913fdd5a52b303222c357521f744`；`CJFoundation` 则在 /Specs/0/4/4 目录中
 
@@ -659,7 +650,7 @@ Spec Repo 是 podspec 的仓库，即是存储相关的 podspec 文件的地方�
 
 #### Create
 
-只需利用  `pod lib create [PodName] ` 命令便可以快速创建一个自己的 pod 。填写好使用平台、使用语言、是否包含 Demo、测试框架等信息，CocoaPods 会从默认的 Git 地址中拉取一份 pod 模版，同时也可以通过 `--template-url=URL` 指定模版地址。在执行完后，整个文件结构如下：
+只需利用  `pod lib create [PodName] ` 命令便可以快速创建一个自己的 pod 。填写好使用平台、使用语言、是否包含 Demo、测试框架等信息，CocoaPods 会从默认的 Git 地址中拉取一份 pod 模板，同时也可以通过 `--template-url=URL` 指定模板地址。在执行完后，整个文件结构如下：
 
 ``` swift
 tree CustomPod -L 2
@@ -684,7 +675,7 @@ CustomPod
 
 #### Development
 
-将源文件和资源分别放入 Classes / Assets 文件夹中，或者按你喜欢的方式组织文件，并在 podspec 文件中编辑相应项。如果你有任何想使用的配置项，可参考前面的podsepc 语法规范 。
+将源文件和资源分别放入 Classes / Assets 文件夹中，或者按你喜欢的方式组织文件，并在 podspec 文件中编辑相应项。如果你有任何想使用的配置项，可参考前面的podspec 语法规范 。
 一般来说，开发 Pod 一般都是作为本地 Pod 被其他 Project 所依赖进行开发，无论是使用 example 文件夹的 project 或者其他的 Project。
 
 `pod 'Name', :path => '~/CustomPod/'`
@@ -748,7 +739,7 @@ pod 'AFNetworking', :git => 'https://github.com/XXX/CustomPod.git'
 
 #### Semantic Versioning
 
-语义化版本控制顾名思义是一种语义上的版本控制，它不要求强制遵循，只是希望开发者能够尽量遵守。如果库之间依赖关系过高，可能面临版本控制被锁死的风险（可能需要对每一个依赖库改版才能完成某次升级）；如果库之间依赖关系过于松散，又将无法避免版本的混乱（可能库兼容性不再能支持以往版本），语义化版本控制正是作为这个问题的解决方案之一。无论在 CocoaPods 中，还是 Swift Packager Manager 上，官方都希望库开发者的的版本号能遵循这一原则：
+语义化版本控制顾名思义是一种语义上的版本控制，它不要求强制遵循，只是希望开发者能够尽量遵守。如果库之间依赖关系过高，可能面临版本控制被锁死的风险（可能需要对每一个依赖库改版才能完成某次升级）；如果库之间依赖关系过于松散，又将无法避免版本的混乱（可能库兼容性不再能支持以往版本），语义化版本控制正是作为这个问题的解决方案之一。无论在 CocoaPods 中，还是 Swift Package Manager 上，官方都希望库开发者的版本号能遵循这一原则：
 
 例如，给定版本号 `MAJOR.MINOR.PATCH`：
 
@@ -760,7 +751,7 @@ pod 'AFNetworking', :git => 'https://github.com/XXX/CustomPod.git'
 
 ## CocoaPods 原理浅析
 
-#### CococaPods 核心组件
+#### CocoaPods 核心组件
 
 CocoaPods 被 Ruby 管理，其核心部分也被分为一个一个组件。下载源码，可以看到 Gemfile 文件如下，其依赖了若干个 `gem`，有意思的是 `cp_gem` 函数，通过 `SKIP_UNRELEASED_VERSIONS` 与 `path`来控制是否采用本地的 gem 路径，实现了 DEVELOPMENT 与 RELEASE 环境的切换。
 
@@ -805,11 +796,11 @@ end
 ![image](/assets/images/20230426CocoaPodsUserGuide/2.avif)
 
 * `CocoaPods`：命令行支持与安装程序，也会处理 CocoaPods 的所有用户交互。
-* `cocoapods-core`：对模版文件的解析，如 Podfile、.podspec 等文件。
+* `cocoapods-core`：对模板文件的解析，如 Podfile、.podspec 等文件。
 * `CLAide`：一个简单的命令解析器，它提供了一个快速创建功能齐全的命令行界面的 API。
-* `cocoapods-downloader`：用于下载源码，为各种类型的源代码控制器(HTTP/SVN/Git/Mercurial) 提供下载器。它提供 tags、commites、revisions、branches 以及 zips 文件的下载与解压缩操作。
-* `Monlinillo`：CocoaPods：对于依赖仲裁算法的封装，它是一个具有前项检察的回溯算法。不仅在 pods 中，Bundler 和 RubyGems 也是使用这一套仲裁算法。
-* `Xcodeproj`：通过 Ruby 来对 Xcode projects 进行创建于修改。如：脚本管理、libraries 构建、Xcode workspece 和配置文件的管理。
+* `cocoapods-downloader`：用于下载源码，为各种类型的源代码控制器(HTTP/SVN/Git/Mercurial) 提供下载器。它提供 tags、commits、revisions、branches 以及 zips 文件的下载与解压缩操作。
+* `Molinillo`：CocoaPods：对于依赖仲裁算法的封装，它是一个具有前向检查的回溯算法。不仅在 pods 中，Bundler 和 RubyGems 也是使用这一套仲裁算法。
+* `Xcodeproj`：通过 Ruby 来对 Xcode projects 进行创建与修改。如：脚本管理、libraries 构建、Xcode workspace 和配置文件的管理。
 * `cocoapods-plugins`：插件管理，其中有 pod plugins 命令帮助你获取的可用插件列表以及开发一个新插件等功能，具体可用 pod plugins --help 了解。
 
 #### pod install 做了什么
@@ -864,7 +855,6 @@ end
 
 在 prepare 阶段会完成 `pod install` 的环境准备，包括目录结构、版本一致性以及 `pre_install` 的 hook。
 
-
 #### 2. 解决依赖冲突（resolve dependencies）
 
 ``` ruby
@@ -893,7 +883,7 @@ def resolve_dependencies
 end
 ```
 
-通过 Podfile、Podfile.lock 以及 manifest.lock 等生成 Analyzer 对象，其内部会使用个 Molinillo 算法解析得到一张依赖关系表，进行一系列的分析与依赖冲突解决。
+通过 Podfile、Podfile.lock 以及 manifest.lock 等生成 Analyzer 对象，其内部会使用这个 Molinillo 算法解析得到一张依赖关系表，进行一系列的分析与依赖冲突解决。
 
 #### 3. 下载依赖文件（download dependencies）
 
@@ -910,7 +900,7 @@ def download_dependencies
 end
 ```   
 
-经过前面分析与解决依赖冲突后，这是会进行依赖下载。会根据依赖信息是否被新添加或者修改等信息进行下载，同时下载后也会在本地留有一份缓存，其目录在 ～/Library/Caches/CocoaPods 。
+经过前面分析与解决依赖冲突后，这时会进行依赖下载。会根据依赖信息是否被新添加或者修改等信息进行下载，同时下载后也会在本地留有一份缓存，其目录在 ～/Library/Caches/CocoaPods 。
 
 #### 4. 验证 targets（validate targets）
 
@@ -991,7 +981,6 @@ end
 
 将依赖更新写入 Podfile.lock 与 Manifest.lock
 
-
 #### 7. 结束回调（perform post install action）
 
 ``` ruby
@@ -1011,7 +1000,6 @@ end
 
 最后的收尾工作，进行 post install action 的 hook 执行以及一些 warning 打印。
 
-
 ## CocoaPods + Plugins
 
 早在 2013 年，CocoaPods 就添加了对插件的支持，以添加不符合依赖管理和生态系统增长为主要目标的功能。CocoaPods Plugins 可以：在 install 前后添加 hook、添加新命令到 pod、以及利用 Ruby 动态性做任何事。下面介绍一下常见的插件：
@@ -1023,7 +1011,6 @@ end
 
 > 许多插件可能许久未维护，读者使用需自行斟酌。
 
-
 ## 不太常见概念
 
 CocoaPods 的配置内容几乎包含了 Xcode Build 的方方面面，因此存在许多不太常见的概念，在此做一个链接聚合以供参考。
@@ -1032,7 +1019,7 @@ CocoaPods 的配置内容几乎包含了 Xcode Build 的方方面面，因此存
 
 * [Modules](https://clang.llvm.org/docs/Modules.html#introduction)
 * [Clang Module](http://chuquan.me/2021/02/11/clang-module/)
-* [LLVM 中的 Module](https://www.stephenw.cc/2017/08/23/llvm-modules/)
+* LLVM 中的 Module
 * Hmap / Xcode Header / CocoaPods Headers
 
 Header Map 是一组头文件信息映射表，用 .hmap 后缀表示，整体结构以 Key-Value 形式存储；Key为头文件名称、Value 为 头文件物理地址。
@@ -1043,7 +1030,6 @@ Xcode Phases - Header 在构建配置中分为 public、private 与 project ，�
 * [What are build phases?](https://help.apple.com/xcode/mac/current/#/dev50bab713d)
 * [Xcconfig](https://nshipster.com/xcconfig/): 一种配置文件，用以对构建设置进行声明与管理，比如区分不同的开发环境等。
 * [On demand resource](https://developer.apple.com/videos/play/wwdc2015/214/)：WWDC 2015 引入的概念，对资源文件的按需加载。
-
 
 # 总结
 

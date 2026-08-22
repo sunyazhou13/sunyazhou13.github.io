@@ -59,7 +59,6 @@ MediaItem *item = [[MediaItem alloc] initWithURL:self.url];
     NSLog(@"%@",[item modelDescription]);
 }];
 
-
 ```
 
 代码实现部分  
@@ -98,9 +97,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 > 注意:_**mp3文件是不可编辑的文件故而不能进行编辑 比如改变歌手名称之类 如果要编辑可使用其它专业软件尝试**_  
 
-
-
-
 我尝试了 mac 版本的 demo 编辑 文件 是 OK 的 但是在 iOS 上 我更改其它格式也没能保存成功 如果你看到有解决办法 可以留言给我或者发邮件给我 非常感谢.
 
 ### MetaData
@@ -128,7 +124,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 - (void)addMetadataItem:(AVMetadataItem *)item withKey:(id)key;
 - (NSArray *)metadataItems;
 @end
-
 
 ```
 看到上边的代码估计你也猜到了 这就是我们需要的 比如 mp3文件解析出来的真正 model  
@@ -160,8 +155,6 @@ typedef void(^CompletionHandler)(BOOL complete);
 @end
 ```
 
-
-
 ### MetadataConverterFactory
 
 这个类用于统一输出遵守`MetadataConverter`协议的model并且找到适当的转换器去转换响应的格式
@@ -192,11 +185,9 @@ typedef void(^CompletionHandler)(BOOL complete);
 @end
 ```
 
-
 ### DefaultMetadataConverter
 
 简单实现`MetadataConverter`协议
-
 
 ``` objc
 @interface DefaultMetadataConverter : NSObject <MetadataConverter>
@@ -216,9 +207,7 @@ typedef void(^CompletionHandler)(BOOL complete);
     return metadataItem;
 }
 
-
 ```
-
 
 ### ArtworkMetadataConverter
 实现`MetadataConverter`协议 取出专辑封面
@@ -384,8 +373,7 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 ![gener](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif)
 
-
-虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
+虽然 iTunes 使用了 ID3集合中的预定义音乐风格, 不过 iTunes 对电视、电影和有声读物等定义了自己的风格集. Apple's Genre IDs Appendix
 
 示例代码已经包含了这些类型 虽不在赘述 请参考 demo
 
@@ -427,7 +415,6 @@ typedef void(^CompletionHandler)(BOOL complete);
         NSLog(@"sessionError:%@",session.error);
     }];
 }
-
 
 - (NSURL *)tempURL {
     // 获取Caches目录路径

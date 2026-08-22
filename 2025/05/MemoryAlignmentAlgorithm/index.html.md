@@ -17,7 +17,7 @@ math: true
 
 ## 背景介绍
 
-在学习《Metal》 GPU着色器编程中 有一章讲解GPU资源堆(Resource Heap)的参数缓冲(Arguements Buffer)中需要从CPU送资源到GPU时遇到一段代码计算资源的内存占用的算法,很有意思,在此记录下来.
+在学习《Metal》 GPU着色器编程中 有一章讲解GPU资源堆(Resource Heap)的参数缓冲(Arguments Buffer)中需要从CPU送资源到GPU时遇到一段代码计算资源的内存占用的算法,很有意思,在此记录下来.
 
 ``` swift
 let sizeAndAligns = descriptors.map { descriptor in

@@ -14,8 +14,6 @@ typora-root-url: ..
 
 学习过程中记录一下python代码
 
-
-
 ``` python
 #!/usr/bin/env python
 # coding:utf8
@@ -23,7 +21,6 @@ typora-root-url: ..
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-
 
 # 加载包
 from gensim.models import Word2Vec
@@ -57,6 +54,6 @@ model.similarity(u'男人',  u'女人')
    
 参考分词如下:  
 
-[哈工大分词](https://www.ltp-cloud.com/demo/)  
+哈工大分词  
 [jieba分词](https://github.com/fxsjy/jieba)  
 [stanford分词](https://nlp.stanford.edu/software/segmenter.shtml)

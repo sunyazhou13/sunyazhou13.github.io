@@ -18,18 +18,15 @@ typora-root-url: ..
 
 RSA非对称加密 原理 各种。。。 请自行百度 
 
-
 ## 弯路
 
 最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码.
  浪费了好几天开发时间 就没有一个靠谱能好使的 所以我必须发一篇博客
 把真正 好使的代码拿出来 share一下 (当时我真的 想骂娘了 我擦 百度搜出来的 一堆垃圾) 
 
-
 # 代码实现
 
 ## 第一步 生成公私钥对
-
 
 ### 命令生成原始 RSA私钥文件 rsa_private_key.pem
 
@@ -50,8 +47,6 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 ```
 
 > 从上面看出通过私钥能生成对应的公钥，因此我们将私钥`private_key.pem`用在*服务器端*，*公钥*发放给`android`跟`ios`等前端
-> 
-
 
 ## 第二步 php代码实现
 
@@ -220,7 +215,6 @@ public class Rsa {
 __*注意:*__在初始化`Cipher`对象时，一定要指明使用`"RSA/ECB/PKCS1Padding"`格式如`Cipher.getInstance("RSA/ECB/PKCS1Padding");`
 打开`rsa_public_key.pem`文件，将上面代码的`RSA_PUBLICE`替换成其中内容即可.
 
-
 ## 第四步 iOS端代码实现
 
 iOS上没有直接处理RSA加密的API，网上说的大多数也是处理X.509的证书的方法来实现，不过X.509证书是带签名的，在php端`openssl_pkey_get_private`方法获取密钥时，第二个参数需要传签名，而android端实现X.509证书加密解密较为不易，在这里我们利用ios兼容c程序的特点，利用openssl的api实现rsa的加密解密，代码如下：
@@ -241,7 +235,6 @@ CRSA.h代码
 #import <openssl/rsa.h>
 #import <openssl/pem.h>
 #import <openssl/err.h>
-
 
 typedef enum {
     KeyTypePublic,
@@ -268,7 +261,6 @@ typedef enum {
 - (NSString *)decryptByRsa:(NSString*)content withKeyType:(KeyType)keyType;
 
 @end
-
 
 ```
 
@@ -357,7 +349,6 @@ CRSA.m
     
     return NO;
 }
-
 
 - (BOOL)importRSAKeyFromeStringWithType:(KeyType)type andKey:(NSString *)key{
     if (key.length == 0) { return NO; }
@@ -482,7 +473,6 @@ CRSA.m
     return len;
 }
 
-
 //---------------加密工具方法
 - (NSString *)base64EncodedStringForData:(NSData *)data
 {
@@ -549,12 +539,10 @@ CRSA.m
     return (outputLength >= 4)? result: nil;
 }
 
-
 - (NSData *)base64DecodedDataForString:(NSString *)string
 {
     return [self dataWithBase64EncodedString:string];
 }
-
 
 - (NSData *)dataWithBase64EncodedString:(NSString *)string
 {
@@ -667,9 +655,7 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
     //剩下的大家自己探索一下 没什么难度  
 ```
 
-
 其中openssl api包，我们可以在第一步RSA密钥生成工具openssl的include文件夹中得到
-
 
 下面我说一下如何集成openssl到 iOS工程 
 
@@ -682,7 +668,6 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
 
 然后 去 project targets -> `Build Settings`
 
-
 * 找到 **Header Search Paths**, 添加 `"${SRCROOT}/Libraries/openssl/include"` 为你的工程
 * 找到 **Library Search Paths**, 添加 `"${SRCROOT}/Libraries/openssl/lib"` 
 
@@ -690,9 +675,7 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
 
 --
 
-
 ## 最后说一下我遇到RSA加密的坑
-
 
 在iOS端加密 生成摘要到android的时候 android解析不出来(有时候解析出结果前面 一堆乱码) 这是base64有问题  建议 android使用原生的恩
 
@@ -714,6 +697,4 @@ base64的代码我已经把代码实现写到`CRSA.m`了 如果像剥离很简�
 最后我说一句 很简单的一个RSA跨平台方案 那些抄袭CSDN的文章小伙伴 少坑点人 连搜索引擎都不会放过你
 
 全文完 
-
-[参考](https://www.lvtao.net/dev/android_ios_php_openssl.html)
 

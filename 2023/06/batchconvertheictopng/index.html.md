@@ -29,7 +29,7 @@ typora-root-url: ..
 
 作为一个很多年都不怎么学习使用脚本的我面对这个一个突如其来的需求比较麻木,喵神曾经说过:"对于一些不擅长的技术很多人刚接触的时候会有一种恐惧感,这种恐惧源于未知!"。那么怎么解决自己不了解的技术难题的呢?--`ChatGPT`
 
-先打开[ChatGPT](https://chat.openai.com/), 输入如下:
+先打开ChatGPT, 输入如下:
 
 ``` txt
 写个shell脚本 指定 Mac  中Downloads目录下的所有HEIC格式一次批量转成png

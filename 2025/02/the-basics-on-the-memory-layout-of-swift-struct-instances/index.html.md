@@ -10,11 +10,9 @@ typora-root-url: ..
 
 ![Swift UI](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
-
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
-
 
 ## 背景介绍
 
@@ -23,7 +21,6 @@ typora-root-url: ..
 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到swift中的结构体实例的内存布局,我把这些整理了一下.
 
 ## 大小、步长和对齐(Size, Stride, Alignment)
-
 
 Swift 结构体实例内存布局的基础知识
 > 2018 年 3 月 12 日 ∙ Swift 内部原理 ∙ 作者：Greg Heo
@@ -81,7 +78,6 @@ struct Puppy {
 
 结构体的大小应该与其属性的大小相匹配：
 
-
 ``` swift
 MemoryLayout<Int>.size + MemoryLayout<Bool>.size
 // returns 9, from 8 + 1
@@ -119,7 +115,6 @@ MemoryLayout<Puppy>.stride
 也就是说，如果你有一个指向第一个元素的字节指针，并希望移动到第二个元素，步长就是你需要将指针前进的字节距离。
 
 为什么大小和步长会不同？这就引出了内存布局的最后一个神奇数字。
-
 
 ## 对齐（Alignment）  
 
@@ -252,7 +247,6 @@ struct CertifiedPuppy2 {
 
 ![size-stride-alignment-summary](/assets/images/20250223SwiftStructMemoryLayout/size-stride-alignment-summary.avif)
 
-
 对于我们大多数人来说，大多数时候，我们处理的都是高级集合，比如数组和集合，不需要考虑底层的内存布局。
 
 在其他情况下，你可能需要在平台上使用低级API，或者与C代码进行互操作。如果你有一个Swift结构体数组，并且需要让C代码读取它（或者反过来），那么你就需要担心分配具有正确对齐方式的缓冲区，确保结构体内部的填充字节对齐，以及确保你有正确的步长值，以便正确解释数据。
@@ -264,8 +258,7 @@ struct CertifiedPuppy2 {
 - [Wikipedia 上的 “Data structure alignment”](https://en.wikipedia.org/wiki/Data_structure_alignment)  
 - [Swift 文档中的 “Type Layout” 文章](https://github.com/apple/swift/blob/master/docs/ABI/TypeLayout.rst)，解释了如何计算结构体的大小（size）、步长（stride）和对齐方式（alignment）。  
 - [LLVM 中的 `getAlignOf` 源码](https://github.com/apple/swift-llvm/blob/stable/lib/IR/Constants.cpp#L1800-L1811)
-- [Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数](https://developer.apple.com/documentation/swift/unsafemutablerawpointer/allocate(bytecount:alignment:))
-
+- [Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数](:))
 
 # 总结
 

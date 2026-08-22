@@ -14,21 +14,17 @@ typora-root-url: ..
 
 iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整理出来,以便后续方便记忆.
 
-
 ## 本周主要内容如下
 
 * 什么是符号表？
 * 为什么要配置符号表？
 * dSYM文件？
 
-
-
 ### 什么是符号表？
 
 符号表是内存地址与函数名、文件名、行号的映射表。符号表元素如下所示：
 
 `<起始地址>` `<结束地址>` `<函数>` [`<文件名>`:`<行号>`]  
-
 
 ### 为什么要配置符号表？
 
@@ -38,10 +34,7 @@ iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符�
 
 ![stack Symbol](/assets/images/20180308WhatIsThedSYM/stackSymbol.avif)
 
-
 上图是我们通过符号表来解析出来崩溃堆栈的调用
-
-
 
 ### 什么是dSYM文件？
 
@@ -53,8 +46,6 @@ iOS平台中，`dSYM`文件是指具有调试信息的目标文件，文件名�
 
 > 为了方便找回Crash对应的dSYM文件和还原堆栈，建议每次构建或者发布APP版本的时候，备份好dSYM文件
 
-
-
 #### 如何定位dSYM文件？
 
 一般情况下，项目编译完`dSYM`文件跟`app`文件在同一个目录下，下面以`XCode`作为IDE详细说明定位`dSYM`文件
@@ -63,11 +54,9 @@ iOS平台中，`dSYM`文件是指具有调试信息的目标文件，文件名�
 
 ![d SYM](/assets/images/20180308WhatIsThedSYM/dSYM2.avif)
 
-
 > 这里用 release 模式做的测试 
 
 我们看到 和工程 `target`一样的名称的 `.dSYM`.
-
 
 #### XCode编译后没有生成dSYM文件?
 
@@ -176,8 +165,7 @@ Heaviest stack for the target process:
 参考如下:
 
 [Bugly iOS 符号表配置](https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1)  
-[App 启动时间：过去，现在和未来](https://techblog.toutiao.com/2017/07/05/session413/)
-
+App 启动时间：过去，现在和未来
 
 全文完
   

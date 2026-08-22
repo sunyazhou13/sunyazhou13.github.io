@@ -11,9 +11,7 @@ typora-root-url: ..
 ![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.avif)
 # 前言
 
-
 2018新年第一篇, 梳理`AVAudioSession`的`Category`,解决音频开发中的各种播放被打断或者首次启动时无声音的问题
-
 
 ## 开篇
 
@@ -27,7 +25,6 @@ typora-root-url: ..
 * 插拔耳机后如何表现？
 * 来电话/闹钟响了后如何表现？
 * 其他音频App启动后如何表现？
-
 
 ### Session默认行为
 
@@ -110,8 +107,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryAudioProcessing NS_DEPRECATED_I
 AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0);
 ```
 
-
-
 `AVAudioSession`将使用音频的场景分成七大类，通过设置`Session`为不同的类别，可以控制：
 
 * 当App激活Session的时候，是否会打断其他不支持混音的App声音
@@ -130,7 +125,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 | AVAudioSessionCategoryRecord | 否 | 是 | 只用于录音 |
 | AVAudioSessionCategorySoloAmbient | 是 | 是 | 只用于播放 |
 
-
 可以看到，其实默认的就是`AVAudioSessionCategorySoloAmbient`类别.  
 从表中我们可以总结如下：  
 
@@ -147,7 +141,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 * _`AVAudioSessionCategoryRecord`:有了播放器，肯定要录音机，比如微信语音的录制，就要用到这个类别，既然要安静的录音，肯定不希望有QQ音乐了，所以其他播放声音会中断。想想微信语音的场景，就知道什么时候用他了._
 
 * _`AVAudioSessionCategorySoloAmbient`:也是只用于播放,但是和`AVAudioSessionCategoryAmbient`不同的是，用了它就别想听QQ音乐了，比如不希望QQ音乐干扰的App，类似节奏大师。同样当用户锁屏或者静音时也会随着静音，锁屏了就玩不了节奏大师了._
-
 
 了解了这七大类别，我们就可以根据自己的需要进行对应类别的设置了：
 
@@ -180,13 +173,9 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 
 此时在播放音乐的时候，再去按下静音键，会发现，音乐还在继续播放，不会被静音。
 
-
 ### 类别的选项(Category Options)
 
-
-
 上面介绍的这个七大类别，可以认为是设定了七种主场景，而这七类肯定是不能满足开发者所有的需求的。`CoreAudio`提供的方法是，__首先定下七种的一种基调,然后在进行微调.`CoreAudio`为每种`Category`都提供了些许选项来进行微调.__
-
 
 在设置完类别后，可以通过:
 
@@ -210,7 +199,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 } NS_AVAILABLE_IOS(6_0);
 ```
 
-
 | 选项 | 适用类别 | 作用 | 
 | :------ | :------ | :------: |
 | AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryPlayAndRecord, AVAudioSessionCategoryPlayback, and AVAudioSessionCategoryMultiRoute | 是否可以和其他后台App进行混音 |
@@ -225,7 +213,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 | AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers  | -- | -- | iOS 9|
 | AVAudioSessionCategoryOptionAllowBluetoothA2DP  | -- | -- | iOS 10|
 | AVAudioSessionCategoryOptionAllowAirPlay  | -- | 支持蓝牙A2DP耳机和AirPlay | iOS 10|
-
 
 下面介绍一下每个子场景选项的作用:
 
@@ -284,7 +271,6 @@ AVF_EXPORT NSString *const AVAudioSessionModeVideoChat NS_AVAILABLE_IOS(7_0);
 AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 ```
 
-
 我们基本覆盖了常用的__主场景__，在每个主场景中可以通过`Option`进行__微调__。为此`CoreAudio`提供了七大比较常见微调后的子场景。叫做`各个类别的模式`.
 
 | 模式Mode | 适用的类别 | 场景 | 
@@ -308,9 +294,7 @@ AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 
 这个属性,查看其支持哪些属性，做合法性校验。
 
-
 下面说一下具体应用场景:
-
 
 * __`AVAudioSessionModeDefault`： 每种类别默认的就是这个模式，所有要想还原的话，就设置成这个模式。__
 
@@ -321,7 +305,6 @@ AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 * __`AVAudioSessionModeGameChat` ： 适用于游戏App的采集和播放，比如“GKVoiceChat”对象，一般不需要手动设置.__
 
 > 另外几种和音频APP关系不大，一般我们只需要关注VoIP或者视频通话即可。
-
 
 通过调用：
 
@@ -367,11 +350,9 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 
 * `AVAudioSessionSilenceSecondaryAudioHintTypeEnd`: 表示其他`App`开始释放`Session`.
 
-
 ### 外设改变
 
 除了其他`App`和系统服务，会对我们的`App`产生影响以外，用户的手也会对我们产生影响。默认情况下，`AudioSession`会在`App`启动时选择一个最优的输出方案，比如插入耳机的时候，就用耳机。但是这个过程中，用户可能拔出耳机，我们App要如何感知这样的情况呢？
-
 
 同样`AVAudioSession`也是通过`Notifications`来进行此类状况的通知。
 
@@ -385,7 +366,6 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 * `AVAudioSessionRouteChangeReasonKey` : 表示改变的原因
 * `AVAudioSessionSilenceSecondaryAudioHintTypeKey`： 和上面的中断意义意义一样。
 
-
 | 枚举值 | 意义 |
 | :------ | :------: | 
 | AVAudioSessionRouteChangeReasonUnknown  | 未知原因 |
@@ -397,14 +377,12 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 | AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory  | 当前Category下没有合适的设备 |
 | AVAudioSessionRouteChangeReasonRouteConfigurationChange  | Rotuer的配置改变了 |
 
-
 # 总结
 
 `AVAudioSession`构建了一个音频使用生命周期的上下文。当前状态是否可以录音、对其他App有怎样的影响、是否响应系统的静音键、如何感知来电话了等都可以通过它来实现。尤为重要的是`AVAudioSession`不仅可以和`AVFoundation`中的`AVAudioPlyaer`/`AVAudioRecorder`配合，其他录音/播放工具比如`AudioUnit`、`AudioQueueService`也都需要他进行录音、静音等上下文配合。
 
-
 [参考](https://www.jianshu.com/p/3e0a399380df)  
-[参考2](http://cinvoke.me/?p=37)
+参考2
 
 全文完
 

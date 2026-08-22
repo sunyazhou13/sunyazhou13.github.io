@@ -137,7 +137,7 @@ NSURLProtocol 允许开发者去获取、添加、删除 request 对象的任意
 ``` objc
 // 获取协议接收者的缓存
 - (NSCachedURLResponse *)cachedResponse;
-// 接受者用来与 URL 加载系统通信的对象，每个 NSProtocol 的子类实例都拥有它
+// 接收者用来与 URL 加载系统通信的对象，每个 NSProtocol 的子类实例都拥有它
 - (id<NSURLProtocolClient>)client;
 // 接收方的请求
 - (NSURLRequest *)request;

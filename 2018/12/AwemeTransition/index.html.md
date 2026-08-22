@@ -56,7 +56,7 @@ typora-root-url: ..
 
 ```
 
- `0` 处代码使我们需要把当前的类做为转场的代理  
+ `0` 处代码使我们需要把当前的类作为转场的代理  
  `1` 这里我们要拿出cell这个view  
  `2` 拿出当前Cell的frame坐标  
  `3` cell的坐标转成屏幕坐标  
@@ -451,7 +451,7 @@ if (!self.isInteracting && vel.x < 0) {
 }
 ```
 
-然后 开始的时候加个蒙版做为view.mask 这样是为了解决tableView 超出contentSize的范围要隐藏
+然后 开始的时候加个蒙版作为view.mask 这样是为了解决tableView 超出contentSize的范围要隐藏
 
 剩下的就是中间过程 
 

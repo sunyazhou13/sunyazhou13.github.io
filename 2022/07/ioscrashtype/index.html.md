@@ -6,7 +6,6 @@ categories: [iOS, Swift]
 tags: [iOS, Swift, Objective-C, skills]
 typora-root-url: ..
 
-
 ---
 
 ![kernel](/assets/images/20220711iOSCrashType/kernel.avif)
@@ -32,7 +31,6 @@ typora-root-url: ..
 ![image](/assets/images/20220711iOSCrashType/1.avif)
 
 僵尸在RAC出现以前作用很大。但自从有了ARC，如果你在对象的所有权方面比较注意，那么通常不会碰到内存相关的崩溃。
-
 
 ### 2.`SIGSEGV`
 
@@ -72,7 +70,7 @@ int result = 10/0;  //0不能作为除数 否则crash
 
 # 总结
 
-crash log类型不限于上述这些,结合实际跟踪将会找到影响的崩溃信息.这里只做参考使用. 如果想了解更加详细请参考gnu的[源码](http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24)
+crash log类型不限于上述这些,结合实际跟踪将会找到影响的崩溃信息.这里只做参考使用. 如果想了解更加详细请参考gnu的源码
 
 [参考](https://zhuanlan.zhihu.com/p/269371735)  
 [理解 iOS 异常类型](https://juejin.cn/post/6844903866128039944)  

@@ -26,7 +26,7 @@ typora-root-url: ..
 * weak的实现原理？SideTable的结构是什么样的
 * 关联对象的应用？系统如何实现关联对象的
 * 关联对象的如何进行内存管理的？关联对象如何实现weak属性
-* Autoreleasepool的原理？所使用的的数据结构是什么
+* Autoreleasepool的原理？所使用的数据结构是什么
 * ARC的实现原理？ARC下对retain, release做了哪些优化
 * ARC下哪些情况会造成内存泄漏
 
@@ -35,7 +35,7 @@ typora-root-url: ..
 
 先说结论:
 
-* `weak表`其实是一个hash(哈西)表.`Key`是所指对象的地址，`Value`是`weak`指针的地址数组.实现原理是通过新旧表的更新指针方式,对weak对象单独存储于`SideTable`中的`weak_table_t`(类型)  `weak_table`表中,通过函数`objc_initWeak()`->`storeWeak()`函数中的新旧`SideTable`(结构体)表来实现
+* `weak表`其实是一个hash(哈希)表.`Key`是所指对象的地址，`Value`是`weak`指针的地址数组.实现原理是通过新旧表的更新指针方式,对weak对象单独存储于`SideTable`中的`weak_table_t`(类型)  `weak_table`表中,通过函数`objc_initWeak()`->`storeWeak()`函数中的新旧`SideTable`(结构体)表来实现
 * `SideTable`是一个结构体，内部主要有引用计数表和弱引用表两个成员，内存存储的其实都是对象的地址和引用计数和weak变量的地址，而不是对象本身的数据,它的结构如下
 
 ``` objc
@@ -246,7 +246,7 @@ struct weak_entry_t {
 ```
 其中`DisguisedPtr`类型的`referent`变量是**对泛型对象的指针的封装**,通过这个`泛型类`来解决内存泄露的问题.  
 
-注释中有个很重要的`out_of_line`成员,它代表最低的有效位,当它为0的时候,`weak_referrer_t `成员将扩展为多行静态的`hask table`.
+注释中有个很重要的`out_of_line`成员,它代表最低的有效位,当它为0的时候,`weak_referrer_t `成员将扩展为多行静态的`hash table`.
 
 其中`weak_referrer_t ` 是一个二维`objc_object`的别名(typedef),通过一个二维指针地址偏移,用下标作hash的`key`,做成了一个弱引用的散列。
 
@@ -713,8 +713,8 @@ _object_get_associative_reference(id object, const void *key)
     return association.autoreleaseReturnedValue();
 }
 ```
-1. 通过`AssociationsManager`拿到`AssociationsHashMap`哈西表
-2. 通过哈西表寻找关联对象
+1. 通过`AssociationsManager`拿到`AssociationsHashMap`哈希表
+2. 通过哈希表寻找关联对象
 3. 剩下的就是更新对象是否初次创建等标记 然后返回对象 
 
 ##### `objc_removeAssociatedObjects()`
@@ -793,7 +793,7 @@ enum {
     OBJC_ASSOCIATION_GETTER_AUTORELEASE = (2 << 8)
 };
 ```
-通过 acquireValue()函数判断使用那种内存关键字.  
+通过 acquireValue()函数判断使用哪种内存关键字.  
 
 ``` objc
 inline void acquireValue() {
@@ -812,7 +812,7 @@ inline void acquireValue() {
 
 ### 关联对象如何实现weak属性？
 
-首先说一下 这个问题问的非常有技术含量,完全考验iOS开发者对底层了解的程度.
+首先说一下 这个问题问得非常有技术含量,完全考验iOS开发者对底层了解的程度.
 
 在为NSObject对象绑定 associated object 时可以指定如下依赖关系：
 
@@ -883,7 +883,7 @@ dealloc
 
 [关联对象参考](https://draveness.me/ao/)
 
-##  Autoreleasepool的原理？所使用的的数据结构是什么？
+##  Autoreleasepool的原理？所使用的数据结构是什么？
 
 
 在ARC下我们使用`@autoreleasepool{}` 关键字 把需要自动管理的代码块圈起来 ,这个过程就是在使用一个`AutoReleasePool`
@@ -1023,7 +1023,7 @@ union isa_t
 
 * TaggedPointer  指针优化
 * !newisa.nonpointer：未优化的 isa 的情况下retain或者release
-* newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出区别 我把相关代码站在下面并且把结论输出出来.
+* newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出区别 我把相关代码贴在下面并且把结论输出出来.
 
 | 内存操作 | objc_retain | objc_release |
 | :------:| :------: | :------: |
@@ -1190,11 +1190,11 @@ ALWAYS_INLINE bool objc_object::rootRelease(bool performDealloc, bool handleUnde
 * NSTimer的循环引用
 * addObserver的循环引用
 * delegate的强引用
-* 大次数循环内存爆涨
+* 大次数循环内存暴涨
 * 非OC对象的内存处理（需手动释放）
 
 
 # 总结
 
-以上就是我们讨论上述一套面试题的 runtime相关问题之 内存管理部分,下一篇讲把剩余的问题收一下尾 感谢各位支持 
+以上就是我们讨论上述一套面试题的 runtime相关问题之 内存管理部分,下一篇将把剩余的问题收一下尾 感谢各位支持 
 

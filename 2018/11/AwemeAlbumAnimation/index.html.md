@@ -58,7 +58,7 @@ typora-root-url: ..
 ``` objc
 __weak __typeof(self) wself = self;
 //加载网络图
-[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/images/logo2.jpg"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/assets/images/20181108AwemeAlbumAnimation/album1.avif"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
     if(!error) {
         wself.musicAlbum.album.image = image;
     }

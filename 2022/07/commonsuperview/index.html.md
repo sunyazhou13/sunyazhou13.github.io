@@ -6,7 +6,6 @@ categories: [系统理论实践]
 tags: [Algorithm, C++]
 typora-root-url: ..
 
-
 ---
 
 ![algorithm](/assets/images/20220701ReverseList/algorithm.avif)
@@ -16,7 +15,6 @@ typora-root-url: ..
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
 # 实现代码
-
 
 ``` objc
 
@@ -55,9 +53,8 @@ typora-root-url: ..
 }
 ```
 
-
 # 总结
 
 本题类似二叉树寻找最近公共父节点,可以参考masonry的实现
 
-[Masonry 算法之 最近公共父视图](https://www.todayios.com/ios-masonry-lca-closest-common-superview/)
+Masonry 算法之 最近公共父视图

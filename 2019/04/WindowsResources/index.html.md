@@ -8,7 +8,6 @@ typora-root-url: ..
 
 ---
 
-
 # 前言
 
 为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具
@@ -32,7 +31,6 @@ PE工具箱制作
 
 下载地址:链接：[http://www.usbrun.com/](http://www.usbrun.com/)
 
-
 ![image](/assets/images/20190424WindowsResources/1.avif)
 
 下载精简版本好后 先把杀毒软件关掉 ！！  双击安装一下此软件到电脑上 ，安装好软件后打开  ，如果软件提示更新，可以忽略，不需要更新！！
@@ -47,21 +45,16 @@ PE工具箱制作
 
 点一键制作然后等制作完成就OK！！ 制作完成之后 点一下模拟启动看下U盘能不能启动，能的话就OK。关掉即可
 
-
 ## 下载系统步骤
-
 
 下面选1个需要的系统版本下载 (U盘容量够大两个系统都可以下载使用 此PE支持原版系统安装)
 
 WIN7 64位（B360B450锐龙二代CPU主板不支持）
-系统下载连接：[链接](http://www.jsgho.net/win7/jsy/35178.html)(技术员纯净版)
-
-
+系统下载连接：链接(技术员纯净版)
 
 ![image](/assets/images/20190424WindowsResources/3.avif)
 
 ![image](/assets/images/20190424WindowsResources/4.avif)
-
 
 ## WIN7~10 64位
 
@@ -79,7 +72,6 @@ ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dv
 
 ![image](/assets/images/20190424WindowsResources/6.avif)
 
-
 ## 设置U盘启动步骤
 
 制作好的U盘插上您需要装系统的电脑上，以下主板U盘快捷启动按键
@@ -96,7 +88,6 @@ ed2k://|file|cn_windows_10_business_edition_version_1803_updated_sep_2018_x64_dv
 出现U盘启动界面 如下图选择  启动WIN10 PE X 64 ，别的不用去选择。 
 
 ![image](/assets/images/20190424WindowsResources/8.avif)
-
 
 ## 分区安装系统步骤
 
@@ -120,15 +111,11 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 
 > 注：固态硬盘需要选择4K，机械硬盘不用现在 ，选择了会导致进不了系统
 
-
 ![image](/assets/images/20190424WindowsResources/11.avif)
-
 
 分区好后关闭分区接口窗口看下一步操作
 
-
 ##  安装系统镜像步骤
-
 
 打开桌面上的电脑店一键还原，如下图  
 
@@ -147,9 +134,7 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 免责条款
 > (本作品仅限网友交流安装系统经验，或可作临时安装测试PC硬件之用，请在安装后24小时内删除，若需要长期使用，请购买正版系统及软件。)
 
-
 ##  激活系统步骤
-
 
 激活工具箱下载连接： 
 
@@ -163,15 +148,12 @@ AHCI模式是主板自带的 新主板都支持 ，如果有的老的主板是ID
 
 教程连接：[http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438](http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438)
 
-
 建议上网其他驱动问题下载：[驱动精灵 标准版](http://www.drivergenius.com/)
-
 
 # 总结
 
 每次装机总忘记一些流程 这里记录下来
 
-
-[参考 PE安装系统教程](https://note.youdao.com/ynoteshare1/index.html?id=e0f8c30393c4f069555d286020f9d394&type=note)  
-[U盘刻录安装原版系统教程](http://05aebac1.wiz03.com/share/s/05HHH13zK4EY2bE37Q00RO3H1CvO101754vQ2bNyFE2nhALV?tdsourcetag=s_pcqq_aiomsg)  
+参考 PE安装系统教程  
+U盘刻录安装原版系统教程  
 [I tell you神奇的镜像下载网站 绝对纯洁](http://msdn.itellyou.cn/)

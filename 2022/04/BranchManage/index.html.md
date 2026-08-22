@@ -6,7 +6,6 @@ categories: [iOS, Swift]
 tags: [Swift, AVFoundation, Git]
 typora-root-url: ..
 
-
 ---
 
 ![git](/assets/images/20220414BranchManage/git.avif)
@@ -14,7 +13,6 @@ typora-root-url: ..
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
-
 
 ## 一种适合客户端开发的分支管理模型
 
@@ -59,9 +57,7 @@ RB分支修改后和如何同步给DEV分支,如果常规开发的话在代码Re
 
 --
 本文撰写自  
-[sunyazhou](https://https://www.sunyazhou.com/)   
+sunyazhou   
 [中] sunyazhou.com   
 此材料受版权保护
-
-
 

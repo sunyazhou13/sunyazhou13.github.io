@@ -22,7 +22,7 @@ typora-root-url: ..
 hexo new "202300202XXXPaper"
 
 ```
-的形式 通过模版生成一个markdown文件.
+的形式 通过模板生成一个markdown文件.
 
 > 具体使用一看看[hexo 指令](https://hexo.io/zh-cn/docs/commands.html)
 
@@ -83,7 +83,7 @@ bundle exec jekyll post "jekyllpost"
 
 ### 疑问
 
-这里生成的markdown没有hexo中的模版那样能自定义,我没找到 如果你感兴趣可以一起研究一下.
+这里生成的markdown没有hexo中的模板那样能自定义,我没找到 如果你感兴趣可以一起研究一下.
 
 [Why isn't there a "jekyll post" command to create posts like in hexo?](https://stackoverflow.com/questions/43416113/why-isnt-there-a-jekyll-post-command-to-create-posts-like-in-hexo)
 

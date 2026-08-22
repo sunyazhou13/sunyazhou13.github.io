@@ -20,14 +20,11 @@ typora-root-url: ..
 * Swift4.2
 * 使用Xcode中的Playground
 
-
 ## 生成随机数
 
 在上一篇中我们大部分时间都在围绕[arcrandom()](https://man.openbsd.org/arc4random.3)函数来介绍随机数.当然也有它的一些变种.eg：arc4random_uniform(),rand(),random().但无论如何这些函数多数都是系统级函数。
 
-
 在swift4.2中 所有的 数字类型(就是普通数据类型中代表数字的)都有一个静态方法`random(in:)`,这个方法将接收一个范围(Range)或者开闭范围,返回一个无序的随机数(a uniform distribution). 这些随机函数将会包含在swift的标准库中,如果跨平台的话标准库函数都是一致的,不像上面介绍的系统随机函数.
-
 
 ``` swift
 
@@ -46,7 +43,7 @@ let between0And5 = UInt8.random() % 6
 
 ```
 
-这种随机数 有可能不够均匀分布,这种非均匀分布的方式就叫[`模偏差`](https://www.quora.com/What-is-modulo-bias).
+这种随机数 有可能不够均匀分布,这种非均匀分布的方式就叫`模偏差`.
 
 那如何解决这种莫偏差的问题呢?
 
@@ -62,7 +59,6 @@ let between0And5 = UInt8.random(in: 0..<6) // → 5
 ``` swift 
 let between0And255 = UInt8.random(in: .min ... .max) // → 190
 ```
-
 
 ### Bool值随机
 
@@ -174,14 +170,12 @@ extension Int {
 
 这个`generator`参数需要总是传入[`inout`](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545),因为在产生新的随机性时，RNGs通常会改变它们的状态。
 
-
 下面看下我们怎么调用自定义随机, 我们需要创建一个可变的并且满足inout的要求的方法.
 
 ``` swift
 var mersenneTwister = MersenneTwisterRNG(...) // assume this exists
 Int.random(in: 10..<20, using: &mersenneTwister)
 ```
-
 
 ### 在自有类型中生成随机值
 
@@ -191,7 +185,6 @@ Int.random(in: 10..<20, using: &mersenneTwister)
 
 * 提供静态随机方法`random() -> Self` 这个方法使用默认的RNG,如果我们规范随机范围的时候这个函数能补充额外参数.以便于我们规范随机的range.  
 * 提供第二个方法`random<T: RandomNumberGenerator>(using generator: inout T) -> Self`这个是生成默认随机数的核心方法.
-
 
 举个扑克游戏中的枚举例子, 这里面我们可以充分利用[`Swift4.2`](https://github.com/apple/swift-evolution/blob/master/proposals/0194-derived-collection-of-enum-cases.md)中的[allCase](https://developer.apple.com/documentation/swift/caseiterable)属性.
 
@@ -219,13 +212,11 @@ let randomSuit = Suit.random() // → clubs
 randomSuit.rawValue // → "♠"
 ```
 
-
 ## 总结
 
 本篇补充了新版Swift4.2中对标准库中的随机函数支持,也介绍了洗牌函数默认随机均匀排列,希望小伙伴们看完有所收获,有问题还请多多指教
 
 全文完
-
 
 [参考](https://oleb.net/blog/2018/06/random-numbers-in-swift/)
 

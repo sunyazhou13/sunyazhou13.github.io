@@ -11,7 +11,6 @@ typora-root-url: ..
 ![banner](/assets/images/20231231FinalSummary/banner.avif)  
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="去打台球的路上">繁华的北京二环东四十条天桥夜景</button>
 
-
 # 前言
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
@@ -157,7 +156,6 @@ typora-root-url: ..
 
 2023年我肤浅的认为工作的基本内容是用自己低廉的技术换取生活的基本保障.没有啥好说的,就是各种茫然的不知所措.没有职业规划,没有远大的理想,只有埋头苦干的坚韧不拔.
 
-
 ### 不善于学习
 
 2023年学习的课程有:
@@ -187,7 +185,7 @@ typora-root-url: ..
 鸿蒙这里只是一些基础
 
 官方资料:
-ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
+ArkUI实战 文档 
 开发者指南： [https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3)
 
 官方内部提供未发布的[SDK IDE以及模拟器 ](https://developer.harmonyos.com/deveco-developer-suite/enabling/kit?currentPage=1&pageSize=100)
@@ -237,7 +235,7 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 
 ### 败家的好物
 
-这一年非常深度使用PDD买东西,而且都很实用,除了其它平台更具性价比外首选pdd,现在买东西养成了一个习惯我把它称为`遛货`,就是我如果很想买一件商品,我就按耐忍住半个月观察一下这个商品价格,如果他跌了就下手,涨了就不买,啥时候跌啥时候买,经过几次`遛货`我发现pdd买贵了投诉官方客服指定能给退,直接投诉到底就完事了.
+这一年非常深度使用PDD买东西,而且都很实用,除了其它平台更具性价比外首选pdd,现在买东西养成了一个习惯我把它称为`遛货`,就是我如果很想买一件商品,我就按捺忍住半个月观察一下这个商品价格,如果他跌了就下手,涨了就不买,啥时候跌啥时候买,经过几次`遛货`我发现pdd买贵了投诉官方客服指定能给退,直接投诉到底就完事了.
 
 今年败家的东西比较少,随着消费降级,自己买生活用品都很少了,下面的是纯业余爱好.
 
@@ -252,7 +250,6 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 * 显示器总成线控版
 * 刨丝器
 
-
 #### 威联通NAS  464C-8G
 
 ![nas](/assets/images/20231231FinalSummary/nas1.avif)  
@@ -265,7 +262,6 @@ ArkUI实战 文档 [https://www.arkui.club/](https://www.arkui.club/)
 ![cue](/assets/images/20231231FinalSummary/cue.avif) 
 
 这个台球杆可以说1倍的价钱双倍的快乐,我选的是几百块钱的手工杆,不是很出名,是一个广东台山的很古老的手工杆品牌.白沙.用着质感和使用体验非常好.我很喜欢这只球杆.它陪伴我打球的过程中有很多运气加持.
-
 
 #### HomePod
 

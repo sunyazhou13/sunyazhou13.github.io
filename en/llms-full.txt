@@ -1221,7 +1221,6 @@ The question is — which cross-platform framework should I bet on? Qt6's RHI ab
 
 This article is a complete record of my research process. **Starting from an iOS developer's mental model**, it horizontally compares the mainstream solutions on the market with quantitative comparisons.
 
-
 In 2026, AI Agents have moved from proof of concept to full-scale production deployment. The LangChain ecosystem is maturing, MCP (Model Context Protocol) has become the de facto standard for tool integration, and `llama.cpp` makes local inference independent of cloud APIs.
 
 Meanwhile, the definition of "cross-platform" has been completely rewritten. An AI Agent product may need to run on the following **6 platforms**:
@@ -2126,7 +2125,7 @@ Back to the original question: **if an AI Agent product needs to cover desktop +
 
 | Type | Link |
 |------|------|
-| Official site | <https://taro.jd.com/> |
+| Official site | <> |
 | Installation | `npm install -g @tarojs/cli` |
 | Chinese documentation | <https://taro-docs.jd.com/> |
 | GitHub | <https://github.com/NervJS/taro> |
@@ -2143,7 +2142,7 @@ Back to the original question: **if an AI Agent product needs to cover desktop +
 | Chinese documentation | <https://reactnative.cn/> |
 | Installation | `npx create-expo-app` |
 | Windows/macOS | <https://microsoft.github.io/react-native-windows/> |
-| HarmonyOS (RN-OH) | <https://gitee.com/openharmony-sig/RNOHDCS> |
+| HarmonyOS (RN-OH) | <> |
 | GitHub | <https://github.com/facebook/react-native> |
 
 > Expo for a quick start. The HarmonyOS adaptation is led by the Huawei Developer Alliance.
@@ -2264,7 +2263,7 @@ Back to the original question: **if an AI Agent product needs to cover desktop +
 | Chinese documentation | <https://doc.qt.ac.cn/> |
 | PySide6 documentation | <https://doc.qt.io/qtforpython-6/> |
 
-> For users in China, the Tsinghua mirror is recommended: `https://mirrors.tuna.tsinghua.edu.cn/qt/`
+> For users in China, the Tsinghua mirror is recommended: `
 
 ---
 
@@ -2344,8 +2343,8 @@ Back to the original question: **if an AI Agent product needs to cover desktop +
 | HarmonyOS Developers | <https://developer.huawei.com/consumer/cn/harmonyos/> | The official HarmonyOS portal |
 | DevEco Studio | <https://developer.huawei.com/consumer/cn/deveco-studio/> | The official HarmonyOS IDE |
 | ArkUI Documentation | <https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui-overview> | HarmonyOS native UI |
-| WeChat Mini Program Docs | <https://developers.weixin.qq.com/miniprogram/dev/> | Official Mini Program development |
-| WeChat Mini Program AI Capabilities | <https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/ai.html> | Built-in AI for Mini Programs |
+| WeChat Mini Program Docs | <> | Official Mini Program development |
+| WeChat Mini Program AI Capabilities | <> | Built-in AI for Mini Programs |
 | uni-app Plugin Marketplace | <https://ext.dcloud.net.cn/> | uni-app/Taro plugins |
 
 ---
@@ -5319,7 +5318,6 @@ Published At: 2025-11-17 05:09:00 +0000
 
 This post carries strong personal opinions; if reading it makes you uncomfortable, please close it right away. This article is only for my personal study notes. You're welcome to repost or share it within the scope of the license — please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-
 # Demystifying AI Coding Agents: Build Your Own Agent with Swift
 
 ![Hero Image](/assets/images/20251117SwiftAIAgent/hero.avif)
@@ -5943,10 +5941,10 @@ Next time you use Claude Code or Cursor, you'll know exactly what's happening un
 **Want to go deeper?** Check out:
 
 * [The complete Nimbo source code](https://github.com/gscalzo/Nimbo)
-* [Anthropic's guide to tool use](https://docs.anthropic.com/en/docs/build-with-claude/tool-use)
+* Anthropic's guide to tool use
 * [OpenAI's function calling documentation](https://platform.openai.com/docs/guides/function-calling)
 
-**Questions? Ideas?** Reach out on [Twitter](https://twitter.com/giordanoscalzo) or [LinkedIn](https://linkedin.com/in/giordanoscalzo). I'd love to see what you build!
+**Questions? Ideas?** Reach out on Twitter or LinkedIn. I'd love to see what you build!
 
 ---
 
@@ -5977,7 +5975,7 @@ In this article, I will describe two simple and commonly used methods for interp
 
 ## UIBezierPath and Bezier Curves
 
-In iOS, we use <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIBezierPath_class/Reference/Reference.html" title="UIBezierPath">UIBezierPath</a> to draw line segments and curve segments. Adding linear segments via <code>addLineToPoint:</code> is very simple, but how do we draw curved shapes?
+In iOS, we use <a href="" title="UIBezierPath">UIBezierPath</a> to draw line segments and curve segments. Adding linear segments via <code>addLineToPoint:</code> is very simple, but how do we draw curved shapes?
 
 Curved segments can be drawn by adding <i>cubic Bezier curves</i> to the path. A cubic Bezier curve is defined by four control points — the positions of these four points define the shape of the curve. In the image below, each point is a 2D (x,y) point in Euclidean space.
 
@@ -6009,7 +6007,7 @@ Perhaps the simplest method of interpolation is to use a <a href="https://en.wik
 
 Curves <b>A</b> and <b>B</b> are both created via Hermite interpolation. Curve <b>A</b> looks good — the points are roughly evenly distributed. However, curve <b>B</b> exhibits kinks and self-intersections due to the irregular distribution of its points.
 
-Another option for fitting a curve through points is to use a <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom spline</a>. Like Hermite curves, Catmull-Rom curves pass through the interpolation points and produce smooth results, but they also provide additional control — a scalar alpha value (between 0.0 and 1.0) that controls the magnitude of the tangents. For details, see this excellent paper titled <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCsQFjAA&amp;url=http%3A%2F%2Fwww.cemyuksel.com%2Fresearch%2Fcatmullrom_param%2Fcatmullrom.pdf&amp;ei=FSdcU47DE-mfyQGgzYDYDQ&amp;usg=AFQjCNHa0SzJ9H6nSDAdCt9GD9jAkFnvMg&amp;sig2=hbl_LJtItSnusxWD-nhzKQ&amp;bvm=bv.65397613,d.aWc">On the Parameterization of Catmull-Rom Curves</a>, which discusses the effect of alpha.
+Another option for fitting a curve through points is to use a <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom spline</a>. Like Hermite curves, Catmull-Rom curves pass through the interpolation points and produce smooth results, but they also provide additional control — a scalar alpha value (between 0.0 and 1.0) that controls the magnitude of the tangents. For details, see this excellent paper titled <a href="">On the Parameterization of Catmull-Rom Curves</a>, which discusses the effect of alpha.
 
 Common alpha values are 0.0, 0.5 and 1.0, corresponding to the <i>uniform</i>, <i>centripetal</i> and <i>chordal</i> parameterizations of the curve respectively.
 ![Uniform, chordal, and centripetal parameterizations](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/UniformChordalCentripetal.avif)
@@ -6171,11 +6169,9 @@ Published At: 2025-02-23 12:17:00 +0000
 
 ![Swift UI](/assets/images/20240727Magnificationgesture/SwiftUI.avif)
 
-
 # Preface
 
 This post carries strong personal opinions; if reading it makes you uncomfortable, please close it right away. This article is only for my personal study notes. You're welcome to repost or share it within the scope of the license — please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
-
 
 ## Background
 
@@ -6184,7 +6180,6 @@ This post carries strong personal opinions; if reading it makes you uncomfortabl
 While studying "Metal.by.Tutorials.4th.2023.12" in 2024, the book mentioned the memory layout of Swift struct instances, so I put these notes together.
 
 ## Size, Stride, Alignment
-
 
 The basics of the memory layout of Swift struct instances
 > March 12, 2018 ∙ Swift Internals ∙ By Greg Heo
@@ -6242,7 +6237,6 @@ struct Puppy {
 
 the size of the struct should match the sizes of its properties:
 
-
 ``` swift
 MemoryLayout<Int>.size + MemoryLayout<Bool>.size
 // returns 9, from 8 + 1
@@ -6280,7 +6274,6 @@ So the actual layout looks like this:
 In other words, if you have a byte pointer to the first element and want to move to the second, the stride is how many bytes you need to advance the pointer.
 
 Why would the size and stride differ? That brings us to the last magic number of memory layout.
-
 
 ## Alignment
 
@@ -6413,7 +6406,6 @@ Say you have an `UnsafeRawPointer` (the equivalent of `void *` in C). You know t
 
 ![size-stride-alignment-summary](/assets/images/20250223SwiftStructMemoryLayout/size-stride-alignment-summary.avif)
 
-
 For most of us, most of the time, we work with high-level collections like arrays and sets and don't need to think about the memory layout underneath.
 
 In other cases, you might need to use low-level APIs on the platform, or interoperate with C code. If you have an array of Swift structs and need C code to read it (or vice versa), then you need to worry about allocating buffers with the correct alignment, ensuring the padding bytes inside the structs line up, and making sure you have the right stride values so the data is interpreted correctly.
@@ -6425,8 +6417,7 @@ Interested in going deeper?
 - ["Data structure alignment" on Wikipedia](https://en.wikipedia.org/wiki/Data_structure_alignment)  
 - The ["Type Layout" article in the Swift docs](https://github.com/apple/swift/blob/master/docs/ABI/TypeLayout.rst), which explains how the size, stride, and alignment of a struct are computed.  
 - [The `getAlignOf` source in LLVM](https://github.com/apple/swift-llvm/blob/stable/lib/IR/Constants.cpp#L1800-L1811)
-- [Swift's `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`, which takes size and alignment parameters](https://developer.apple.com/documentation/swift/unsafemutablerawpointer/allocate(bytecount:alignment:))
-
+- [Swift's `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`, which takes size and alignment parameters](:))
 
 # Summary
 
@@ -7286,7 +7277,6 @@ This bitter life experience is not my fault, and yet it also seems to be. Not my
 
 Whenever I step onto the subway, pull out my phone, open iBook and read Metal by Tutorials 4th 2023 — looking at professional graphics and imaging books that no one around has ever heard of, staring at cold technical points and shader code — I often wonder: are there really people around me like this, people who study strange, obscure functions every day? What are they all doing at this moment? At those times I feel utterly lonely. Perhaps, as Qin Xida says to Xiang Yunfeng in "Northern School Tomb-Raiding Notes": "The strong are destined to be lonely..."
 
-
 ## Work
 
 By now, work is no longer a question of stability; it's a question of when I'll be laid off, collect my "big severance package," and start figuring out what to do next. Every day I struggle and waver between continuing to dig deeper and preparing to job-hunt. I've lost confidence in work — after all, most people's situations are hardly any better than mine. About my current company, all I can say is that I can still cope with the job, because I can't tell which will come first: the company falling apart or me walking away.
@@ -7403,13 +7393,11 @@ Finally, without hobbies, I can't help but ask: do we live to endure the bittern
 
 Once we wore the label of a "hooligan's game," sweating it out on street corners and in alleyways, while we could only look up at high-born snooker and nine-ball, sighing in vain. We were like grass in the cracks of stone, weighed down by the crushing pressure of barely being able to break through — humble, small, cold-shouldered and despised, even nearly strangled without mercy. Ding Junhui has his own villa, and Pan Xiaoting's sports car is quite luxurious too. But we had nothing — only bitter practice after work, drifting from place to place. We used ourselves to prove this sport's existence, tasting all the sour and sweet of the human world. Because of love, we could not let go; because of dreams, our hearts grew immensely strong. We gritted our teeth and persevered, practicing alone — moving how many people to tears and fire. A certain "uncle" heard our anguished cries: Joy took up the great banner and fought side by side with us. Joy filled us with endless hope, and we fought hard for Joy, never giving up, never falling. A band of rebels who refused to bow to fate finally breathed a sigh of pride. Every stroke swung under crushing pressure was a silent strike against fate. And this old man pushed this sport onto the world's Olympic stage, a feat that became a much-told tale. Only then did I learn that billiards could be this great. The Joy Chinese Eight-Ball Masters is already 18 years old; it will surely venture forth into the world's sporting events, wiping away that "hooligan's game" label for us humble billiards lovers while leaving the glory of this sport under the spotlight of the world billiard stage.
 
-
 ### The Future of Billiards
 
-This sport has shown me a fairness of competition I had never felt before — pure skill does the talking. It contains a great deal of technique and knowledge. To ordinary people it probably looks like nothing more than a few wooden sticks and a tabletop with green cloth, but in fact there are many opportunities here waiting to be unearthed: for example, the best-quality cushion rubber comes from [China's Zhenhong Rubber](http://www.j-hrubber.com/) (the rubber strips along the table rails); the best cloth makers are China's [Liberwintex](https://www.liberwintex.com/) and [UK's Strachan 6811](https://strachan.co/zh-hans/). Cue brands of every kind are endorsed by professional players, though plenty are good — Peri, Lis Billiard Club, Lankou, and all sorts of brands, as plentiful as cars. There are also companies making cue tips and chalk, such as Xiaomai tips and HR chalk. Without going deep into this industry, you'd never understand its supply chain — even the slate suppliers, and the Aramith TV balls imported from Belgium. In recent years, Huyi Lighting (a company specializing in shadowless lamps above billiard tables) has become quite popular, and there's also Shenglizhe, which specializes in sofas made for billiards.
+This sport has shown me a fairness of competition I had never felt before — pure skill does the talking. It contains a great deal of technique and knowledge. To ordinary people it probably looks like nothing more than a few wooden sticks and a tabletop with green cloth, but in fact there are many opportunities here waiting to be unearthed: for example, the best-quality cushion rubber comes from China's Zhenhong Rubber (the rubber strips along the table rails); the best cloth makers are China's [Liberwintex](https://www.liberwintex.com/) and [UK's Strachan 6811](https://strachan.co/zh-hans/). Cue brands of every kind are endorsed by professional players, though plenty are good — Peri, Lis Billiard Club, Lankou, and all sorts of brands, as plentiful as cars. There are also companies making cue tips and chalk, such as Xiaomai tips and HR chalk. Without going deep into this industry, you'd never understand its supply chain — even the slate suppliers, and the Aramith TV balls imported from Belgium. In recent years, Huyi Lighting (a company specializing in shadowless lamps above billiard tables) has become quite popular, and there's also Shenglizhe, which specializes in sofas made for billiards.
 
 This is an insider's business. We always say that under the current employment pressure it's hard to find our own second curve. Here's what I'd say: whatever the curve, it takes time and energy to understand and study in depth — every curve is reserved for those who are prepared.
-
 
 ## Buying a Home
 
@@ -7433,7 +7421,6 @@ This system, I think, is something the country should hear feedback on — it is
 ![gjj](/assets/images/20241231FinalSummary/gjj.avif)  
 
 Going through this home purchase left me feeling how close a call it was. For penniless poor people, buying a home in Beijing is truly an enormous challenge. You really don't know whether unemployment or tomorrow comes first! Without parents to catch you in life, and with the state taking away young people's entire income in one go — even emptying parents' wallets — how can there be any consumption left? How could the economy possibly improve? The economy can only stagnate.
-
 
 # Summary
 
@@ -11882,7 +11869,6 @@ Published At: 2023-12-31 08:02:00 +0000
 ![banner](/assets/images/20231231FinalSummary/banner.avif)  
 <button type="button" class="btn btn-info" data-toggle="popover" title="Magotan1990" data-content="on the way to play billiards">Night view of the bustling Dongsi Shitiao overpass on Beijing's Second Ring Road</button>
 
-
 # Preface
 
 This post carries strong personal sentiment; if you feel uncomfortable reading it, please close it as soon as possible. This post is only a personal learning record. Reposting or sharing within the license terms is welcome; please respect copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
@@ -12027,7 +12013,6 @@ So I still need to improve my knowledge and awareness through learning, to work 
 
 In 2023, I shallowly believe that the basic content of work is exchanging my cheap technical skills for basic life security. There's nothing much to say — it's all kinds of dazed bewilderment. No career planning, no grand ideals, only the tenacity of burying my head in hard work.
 
-
 ### Not being good at learning
 
 Courses I studied in 2023:
@@ -12057,7 +12042,7 @@ There's also HarmonyOS development:
 For HarmonyOS, I only covered the basics.
 
 Official materials:
-ArkUI practice documentation: [https://www.arkui.club/](https://www.arkui.club/)
+ArkUI practice documentation: 
 Developer guide: [https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V3/start-overview-0000001478061421-V3?catalogVersion=V3)
 
 The unreleased [SDK, IDE, and simulator](https://developer.harmonyos.com/deveco-developer-suite/enabling/kit?currentPage=1&pageSize=100) provided internally by the official side.
@@ -12122,7 +12107,6 @@ This year I bought fewer frivolous things. With consumption downgrading, I rarel
 * Monitor retrofit controller board
 * Vegetable grater
 
-
 #### QNAP NAS 464C-8G
 
 ![nas](/assets/images/20231231FinalSummary/nas1.avif)  
@@ -12134,7 +12118,6 @@ This gear is enough to store a lifetime of materials, right? It was on JD.com's 
 ![cue](/assets/images/20231231FinalSummary/cue.avif) 
 
 This cue can be said to give double the joy at half the price. I chose a handmade cue costing a few hundred yuan — not a famous brand, but from a very old handmade cue brand in Taishan, Guangdong: Baisha. The feel and playing experience are excellent. I really love this cue. It has accompanied me through many games with plenty of luck on its side.
-
 
 #### HomePod
 
@@ -12449,11 +12432,9 @@ Published At: 2023-09-09 07:55:00 +0000
 
 This article carries strong personal sentiment. If it makes you uncomfortable, please close it as soon as possible. This article is only for personal study records. Reprinting or sharing within the scope of the license is also welcome. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-
 ## The SwiftUI Course
 
 I've been persisting in learning SwiftUI recently. Over the weekend, when I had free time, I finished Chapter 4. What I mean by "watching" is hands-on practice plus tutorial study. Let me record some content that's easy to forget.
-
 
 ### Main Contents
 
@@ -12512,8 +12493,6 @@ Here I recommend checking out the official WWDC20 video [Formatters: Make data h
 
 The video introduces tools that can format data such as dates, units, numbers, and text according to the user's Locale.
 
-
-
 # Summary
 
 Actually, Chapter 5 talks a lot about the high-level wrapping of property wrappers. I think the content is too long; rather than me writing it all out here, you're better off watching the [tutorial video](https://www.bilibili.com/video/BV1bA411y71h/?spm_id_from=333.788&vd_source=9309f71afe97e633abeadc8407870e76) yourself — the explanations are quite thorough.
@@ -12523,7 +12502,7 @@ Secondly, a large portion covers unit testing. Since I'm not too keen on writing
 I've been following this course and hope to gain something from it. Below are the course materials I've organized. Please take a look.
 
 # SwiftUI Introductory Course
-Place the related files of [SwiftUI 入門課程](https://www.youtube.com/playlist?list=PLXM8k1EWy5khONZ9M9ytK8mMrcEOXvGsE) here, along with related links and further reading for each chapter.
+Place the related files of SwiftUI 入門課程 here, along with related links and further reading for each chapter.
 
 ### Chapter 1: Basic Introduction
 Introduces the Xcode interface and the basic architecture of SwiftUI.
@@ -12565,7 +12544,7 @@ Introduces iOS's native data persistence methods and the concept of encoding, an
 * [Modifiers that add Presentation](https://developer.apple.com/documentation/swiftui/view-presentation)
 * The video mentions you can try to **build your own AppStorage property wrapper**. If interested, refer to [this article by SwiftLee](https://www.avanderlee.com/swift/appstorage-explained/
 ), but this is relatively advanced content — you'll need basic Combine concepts and an understanding of ObservableObject and DynamicProperty.
-* When using FileManager, you might need to know [how to get file URLs](https://chaocode.co/blog/getting-url).
+* When using FileManager, you might need to know how to get file URLs.
 
 ---
 
@@ -12576,7 +12555,7 @@ Introduces basic testing concepts, Xcode's testing interface, implements a test,
 * [WWDC20: Localized formatting tools](https://developer.apple.com/videos/play/wwdc2020/10160/), the video introduces tools that can format data such as dates, units, numbers, and text according to the user's Locale.
 * [WWDC19: Introduction to Testing, Test Plans, and CI/CD](https://developer.apple.com/wwdc19/403)
 * Understanding [Locale](https://developer.apple.com/documentation/foundation/locale) — Locale doesn't refer only to language, but combines language and region to provide more precise conventions. For example, even in the same English language, the order of writing dates still differs between countries.
-    - If your app doesn't support other languages yet, **Locale will be set to your project's base language**. For a detailed introduction, see [this article](https://medium.com/swlh/know-your-language-locale-in-swift-beae4fcc5174), which also provides `methods for getting the user's preferred / currently used language`. Before you do localization, you can try getting these values to force-modify the Locale.
+    - If your app doesn't support other languages yet, **Locale will be set to your project's base language**. For a detailed introduction, see this article, which also provides `methods for getting the user's preferred / currently used language`. Before you do localization, you can try getting these values to force-modify the Locale.
   
 * [Adding a background color to the toolbar in iOS 16](https://sarunw.com/posts/swiftui-tabview-color/): the article focuses on the TabBar, but this `toolbarBackground` modifier can also modify the Navigation Bar.
 * You might notice that the TabBar looks different before iOS 14 🥲. If you want to unify it, you can refer to [the code in this article](https://blog.personal-factory.com/2021/12/29/ios15-transparent-navigationbar-and-tabbar-by-default/) to make the changes.
@@ -12600,7 +12579,7 @@ The implementation of the new project includes:
 * 6-5 [The website for quickly generating JSON parsing code](https://app.quicktype.io/) used in the video. Remember, when using auto-generated code, always double-check it yourself, no matter how simple the data is.
 * 6-8 [StateObject documentation](https://developer.apple.com/documentation/swiftui/stateobject): this document briefly introduces the three property wrappers used with `ObservableObject` and their update timing. I suggest reading the init and update parts; come back to it when you encounter StateObject being initialized repeatedly or not updating as expected.
 * 6-8 If you have doubts about the difference between **StateObject and ObservedObject**, refer to onevcat's [this article](https://onevcat.com/2020/06/stateobject/).
-* 6-11 [The difference between onAppear and the task modifier](https://byby.dev/swiftui-task-vs-onappear). I think the differences mentioned in this article are all quite important; besides what's mentioned in the video, it also covers using task with an id.
+* 6-11 The difference between onAppear and the task modifier. I think the differences mentioned in this article are all quite important; besides what's mentioned in the video, it also covers using task with an id.
 * 6-11 If you're unsure about when to use `Task` and `Task.detached`, refer to the **When to use unstructured tasks** and **When to use detached tasks** sections of [this article](https://www.donnywals.com/understanding-unstructured-and-detached-tasks-in-swift/).
   ###### Additionally, the mainstream approach nowadays is to avoid using detached — not because it's bad, but because there's no strong reason to use it (i.e., no need to make your code more complex). However, I personally feel that detached's explicitness is very helpful for initially understanding what your code does, and the errors and warnings arising from its lack of inheritance are also helpful for early learning.
 * 6-11 If you want to learn more about when `onAppear` fires, check out this article on [View lifecycle](https://www.vadimbulavin.com/swiftui-view-lifecycle/).
@@ -13969,7 +13948,7 @@ Now let's write a script to implement it.
 
 As someone who hasn't really studied scripting for many years, I felt quite numb facing this sudden requirement. Miao Shen (the "Cat God") once said: "When many people first encounter a technology they're not good at, they feel a sense of fear, and this fear comes from the unknown!" So how do you solve technical problems you don't understand? -- `ChatGPT`
 
-First open [ChatGPT](https://chat.openai.com/) and enter the following:
+First open ChatGPT and enter the following:
 
 ``` txt
 写个shell脚本 指定 Mac  中Downloads目录下的所有HEIC格式一次批量转成png
@@ -14215,16 +14194,13 @@ Published At: 2023-04-26 03:22:00 +0000
 
 This article has a strong personal flavor; if it makes you uncomfortable, please close it right away. This article is only for personal study notes. You're welcome to repost or share it within the scope of the license agreement, but please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for the support!
 
-
 In my technical understanding, Cocoapods has become one of the essential skills for every iOS developer. Yet, after all these years, just when I thought it had gone out of style, I found that some people still haven't fully mastered it. Today I'm going to share the high-level experience I've accumulated over the years with peers who aren't familiar with this tool.
 
 For most software development teams, a dependency management tool is essential. It installs and manages open-source and private dependencies, thereby improving development efficiency and reducing maintenance costs. Different languages and platforms have their own dependency management tools, such as `npm` for `JavaScript`, `Gradle`, `Maven` for `Jar` packages, `pip` for `Python` packages, `Bundler`, `RubyGems`, and more. This article focuses on `iOS` and explains the usage and some of the principles behind `CocoaPods`.
 
-
 ## CocoaPods — Simple and Easy to Use
 
 For iOS developers, CocoaPods is no stranger — almost every iOS project has it. CocoaPods is built with Ruby and is the dependency management tool for Swift and Objective-C Cocoa projects. On macOS, it's recommended to install it using the default Ruby (all operations below were done with CocoaPods 1.10.1 and Ruby 2.7.2):
-
 
 ``` objc
 sudo gem install cocoapods
@@ -14518,7 +14494,6 @@ podspec = pod Specification, meaning pod specification. It's a Ruby file contain
 | `deprecated` | Whether the library has been deprecated  | |
 | `deprecated_in_favor_of` | The library name that this one has been deprecated in favor of    | |
 
-
 ``` ruby
 Pod::Spec.new do |s|
   s.name             = 'CustomPod'
@@ -14749,7 +14724,6 @@ spec.module_map = 'source/module.modulemap'
 spec.module_map = false
 ```
 
-
 #### Subspecs
 
 `subspec`: a specification for a sub-module. It has double inheritance: the spec automatically inherits all subspecs as dependencies (unless the default spec is specified); subspecs inherit the parent's attributes.
@@ -14846,11 +14820,9 @@ spec.ios.resources = 'Resources_ios/**/*.png'
 
 After understanding the Podfile and podspec specifications, developing your own pod should be a breeze.
 
-
 #### Spec Repo
 
 A Spec Repo is a repository of podspecs, i.e., a place that stores related podspec files. Local sources are stored in `~/.cocoapods/repos`, pulled from git with the directory structure fully preserved. You may notice that the current directory structure of the Master Specs Repo is a bit special; in earlier versions, the Master Spec Repo had everything in the same directory, but having a large number of files in one directory caused the [slow GitHub download](https://github.com/CocoaPods/CocoaPods/issues/4989#issuecomment-193772935) problem. To solve this, a hash-table-style approach was adopted. Specifically, the name is MD5-hashed to obtain a hash value, and the first three characters are used as the directory prefix to distribute the files. In addition, CocoaPods later adopted CDN and trunk to further speed up downloads. If you're interested, refer to [CocoaPods Source management mechanism](http://chuquan.me/2022/01/07/source-analyze-principle/).
-
 
 For example: `md5("CJFoundation") => 044d913fdd5a52b303222c357521f744`; `CJFoundation` is then in the /Specs/0/4/4 directory.
 
@@ -15063,7 +15035,6 @@ end
 
 In the prepare phase, the `pod install` environment is prepared, including the directory structure, version consistency, and the `pre_install` hooks.
 
-
 #### 2. Resolving dependency conflicts (resolve dependencies)
 
 ``` ruby
@@ -15190,7 +15161,6 @@ end
 
 Writes the dependency updates into Podfile.lock and Manifest.lock.
 
-
 #### 7. Completion callbacks (perform post install action)
 
 ``` ruby
@@ -15221,7 +15191,6 @@ As early as 2013, CocoaPods added plugin support, mainly to add features that do
 
 > Many plugins may have been unmaintained for a long time — readers should weigh this carefully before using them.
 
-
 ## Less Common Concepts
 
 CocoaPods' configuration covers almost every aspect of Xcode Build, so there are many less common concepts. Here's an aggregation of links for reference.
@@ -15230,7 +15199,7 @@ CocoaPods' configuration covers almost every aspect of Xcode Build, so there are
 
 * [Modules](https://clang.llvm.org/docs/Modules.html#introduction)
 * [Clang Module](http://chuquan.me/2021/02/11/clang-module/)
-* [Module in LLVM](https://www.stephenw.cc/2017/08/23/llvm-modules/)
+* Module in LLVM
 * Hmap / Xcode Header / CocoaPods Headers
 
 A Header Map is a set of header info mapping tables, indicated by the .hmap suffix, stored overall in Key-Value form; the Key is the header file name, and the Value is the header file's physical address.
@@ -15241,7 +15210,6 @@ Xcode Phases - Headers are divided into public, private, and project in the buil
 * [What are build phases?](https://help.apple.com/xcode/mac/current/#/dev50bab713d)
 * [Xcconfig](https://nshipster.com/xcconfig/): a configuration file used to declare and manage build settings, e.g., to distinguish between different development environments.
 * [On-Demand Resources](https://developer.apple.com/videos/play/wwdc2015/214/): a concept introduced at WWDC 2015 for loading resource files on demand.
-
 
 # Summary
 
@@ -16162,7 +16130,7 @@ First, let's look at several different implementations of the logic to check whe
 * 1. System NSCalendar
 
 ``` objc
-NSDate *date = [NSDate date]; //这里取当前日期,正常应该做为参数传入NSDate
+NSDate *date = [NSDate date]; //这里取当前日期,正常应该作为参数传入NSDate
 BOOL inToday = [[NSCalendar currentCalendar] isDateInToday:date]
 ```
 
@@ -17904,7 +17872,6 @@ This post carries strong personal sentiment; if you feel uncomfortable reading i
 
 ## OOM
 
-
 In iOS development, you may often see apps crash while in use, but when you look at the crash stack in the background, you can't find a crash log. In most cases this is likely a low-memory crash by the system, i.e. `OOM` (another possibility is that the main thread froze, causing the `watchdog` to kill the app). Logs for low-memory crashes usually start with `JetsamEvent`, and contain fields such as memory page size (`pageSize`) and CPU time (`cpuTime`).
 
 #### What is OOM?
@@ -18213,9 +18180,7 @@ Both Facebook and WeChat's Matrix use the exclusion method. During Matrix initia
 
 Most of what we usually discuss is FOOM, because if our program is in the background with a very low priority, even if we don't occupy much memory, the foreground app occupying a lot of memory can still get our background program killed. That's a system mechanism over which we don't have much control. For FOOM, we need to focus on `dirty pages` and `IOKit mappings`, and of course pay attention to system caches such as images and fonts. For monitoring and solving OOM problems, refer to the two open source libraries [Matrix](https://github.com/Tencent/matrix) and [OOMDetector](https://github.com/Tencent/OOMDetector).
 
-
-
-[Practical solution: How Kuaishou's Kuaijian (Kuaishou app) iOS reduced the OOM rate by 80%+](https://www.gushiciku.cn/pl/aHa7)
+Practical solution: How Kuaishou's Kuaijian (Kuaishou app) iOS reduced the OOM rate by 80%+
 
 
 
@@ -18247,7 +18212,6 @@ So, when `NSZombie` is enabled in the app instead of letting it crash directly, 
 ![image](/assets/images/20220711iOSCrashType/1.avif)
 
 Zombies were very useful before RAC came along. But ever since ARC, if you're careful about object ownership, you usually won't run into memory-related crashes.
-
 
 ### 2.`SIGSEGV`
 
@@ -18287,7 +18251,7 @@ This kind of crash is usually easy to identify because the error code is fixed a
 
 # Summary
 
-Crash log types are not limited to the ones above; combined with actual tracking, you'll find the crash information that matters. Take it as a rough guide. If you want more details, please refer to the GNU [source code](http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24)
+Crash log types are not limited to the ones above; combined with actual tracking, you'll find the crash information that matters. Take it as a rough guide. If you want more details, please refer to the GNU source code
 
 [Reference](https://zhuanlan.zhihu.com/p/269371735)  
 [Understanding iOS exception types](https://juejin.cn/post/6844903866128039944)  
@@ -18308,7 +18272,6 @@ Published At: 2022-07-05 00:12:00 +0000
 This post carries strong personal opinions. If reading it makes you uncomfortable, please close it as soon as possible. This article is only for my personal study records; you are also welcome to repost or share it within the scope of the license. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
 # Implementation Code
-
 
 ``` objc
 
@@ -18347,12 +18310,11 @@ This post carries strong personal opinions. If reading it makes you uncomfortabl
 }
 ```
 
-
 # Summary
 
 This problem is similar to finding the nearest common ancestor in a binary tree. For reference, see Masonry's implementation:
 
-[Masonry's Algorithm: The Nearest Common Superview](https://www.todayios.com/ios-masonry-lca-closest-common-superview/)
+Masonry's Algorithm: The Nearest Common Superview
 
 
 URL: https://sunyazhou.com/2022/07/binarytreeorder/index.html.md
@@ -19765,7 +19727,6 @@ Published At: 2022-04-14 00:50:00 +0000
 
 This article carries strong personal sentiment. If it makes you uncomfortable, please close it as soon as possible. This article is only for personal study records. Reprinting or sharing within the scope of the license is also welcome. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-
 ## A Branch Management Model Suitable for Client Development
 
 ![Branch Guide](/assets/images/20220414BranchManage/BranchGuide.avif)
@@ -19809,10 +19770,9 @@ Every team has its own way of managing branches. No approach is inherently bette
 
 --
 This article was written by  
-[sunyazhou](https://https://www.sunyazhou.com/)   
+sunyazhou   
 [CN] sunyazhou.com   
 This material is protected by copyright
-
 
 
 
@@ -20456,8 +20416,7 @@ Published At: 2021-12-23 01:30:00 +0000
 
 This article carries strong personal sentiment. If it makes you uncomfortable, please close it as soon as possible. This article is only for personal study records. Reprinting or sharing within the scope of the license is also welcome. Please respect the copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-First, I'd like to pay tribute to Dai Ming, a developer in the iOS field. I also highly recommend you buy his [course](https://time.geekbang.org/column/intro/161). This article is mainly the notes I took while studying, recording what the master talked about.
-
+First, I'd like to pay tribute to Dai Ming, a developer in the iOS field. I also highly recommend you buy his course. This article is mainly the notes I took while studying, recording what the master talked about.
 
 ## Study Materials
 
@@ -20487,7 +20446,6 @@ The entire body of basic knowledge that iOS developers need to master is divided
 ### Native and Frontend
 
 ![nativeandfemudule](/assets/images/20210722iOSLessonsStudyNotes1/nativeandfemudule.avif)
-
 
 ### Summary
 
@@ -22145,7 +22103,7 @@ Published At: 2020-10-04 11:58:03 +0000
 
 # Using Xcode Configuration Files to Manage Different Environment Settings
 
-![Xcode Build Configration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.avif)
+![Xcode Build Configuration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigurationFile1.avif)
 
 # Preface
 
@@ -22406,7 +22364,7 @@ I've mentioned the following article more than once in earlier posts when discus
 3. Setting a UIView's contentMode or Frame immediately triggers the system to call `drawRect:`
 4. Directly calling `setNeedsDisplay` to set the flag, or `setNeedsDisplayInRect:`, triggers `drawRect:`
 
-> Knowledge expansion: when we manipulate the drawRect method, we're actually operating on the backingStore region in memory that holds the view, for subsequent graphics rendering operations. If this is unclear, see [The rendering process of UIView](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/).
+> Knowledge expansion: when we manipulate the drawRect method, we're actually operating on the backingStore region in memory that holds the view, for subsequent graphics rendering operations. If this is unclear, see [The rendering process of UIView](https://www.sunyazhou.com/2017/10/UIViewRendering/).
 
 ### 5. How UI refreshing works
 
@@ -22418,7 +22376,7 @@ iOS's `MainRunloop` is a 60fps callback — that is, the screen is drawn once ev
 * Drawing of the view's content (if drawRect is overridden)
 * Receiving and processing system touch events
 
-The UI graphics we see are actually the result of continuous cooperation between the CPU and GPU. After [the rendering process of UIView](https://www.sunyazhou.com/2017/10/16/20171016UIViewRendering/), our UI continuously receives the events the system gives us.
+The UI graphics we see are actually the result of continuous cooperation between the CPU and GPU. After [the rendering process of UIView](https://www.sunyazhou.com/2017/10/UIViewRendering/), our UI continuously receives the events the system gives us.
 
 Because the main thread's runloop keeps callback-ing, our UI gets the window for refreshing. Whether rendering or handling events, it's all the result of the runloop working non-stop. In earlier posts we learned that the main thread's runloop is started by default, because we respond to interaction.
 
@@ -23117,7 +23075,7 @@ Published At: 2020-09-02 11:23:24 +0000
 
 This post carries strong personal sentiment; if you feel uncomfortable reading it, please close it as soon as possible. This post is only a personal learning record. Reposting or sharing within the license terms is welcome; please respect copyright and keep the original link. Thank you for your understanding and cooperation. If you find this site helpful, you can subscribe via RSS. Thanks for your support!
 
-In [the previous posts](https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/) we covered memory, associated objects, ARC, AutoreleasePool, weak objects, and NSNotificationCenter. Today we'll talk about Runloop and KVO.
+In [the previous posts](https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/) we covered memory, associated objects, ARC, AutoreleasePool, weak objects, and NSNotificationCenter. Today we'll talk about Runloop and KVO.
 
 
 The main questions answered in this chapter are:
@@ -23532,7 +23490,6 @@ Following the previous two posts, this time we'll talk about the remaining memor
 3. What are the introspection methods in iOS? What are their internal implementation principles?
 4. What's the difference between `class`, `objc_getClass`, and `object_getclass`?
 
-
 ## `Method Swizzle` Caveats
 
 1. **Be aware of the side effects after swapping method implementations** — `method_exchangeImplementations()`. The swapped methods end up being called via `objc_msgSend()`, and the side effects are mainly concentrated in the first argument, as shown in the following example:
@@ -23540,7 +23497,7 @@ Following the previous two posts, this time we'll talk about the remaining memor
 	``` objc
 	objc_msgSend(payment, @selector(quantity))
 	```
-	After the swap, calling the quantity method again may crash. The way to solve this side effect is to use `method_setImplementation()` instead of the swapping approach — that's the most reasonable. For the specific principle, refer to [Objc black magic — some caveats of Method Swizzle](https://www.ctolib.com/topics-103098.html)  
+	After the swap, calling the quantity method again may crash. The way to solve this side effect is to use `method_setImplementation()` instead of the swapping approach — that's the most reasonable. For the specific principle, refer to Objc black magic — some caveats of Method Swizzle  
 
 2. **Avoid swapping parent class methods** 
 
@@ -23735,7 +23692,7 @@ respondsToSelector:
 				返回IMP结果
 ```
 
-That's the whole message forwarding process, which I won't elaborate on here. If you're interested, take a look at the message forwarding part of [Chapter 2](https://www.sunyazhou.com/2020/08/08/20200808iOSinterviewAnswers/).
+That's the whole message forwarding process, which I won't elaborate on here. If you're interested, take a look at the message forwarding part of [Chapter 2](https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2/).
 
 I've listed some commonly used introspection methods above. The other methods basically have nothing special — they all get the isa and perform various internal operations on functions that fetch the relevant attributes and return the result.
 
@@ -28367,11 +28324,9 @@ First, download a tool for creating the boot drive:
 
 Download address: link: [http://www.usbrun.com/](http://www.usbrun.com/)
 
-
 ![image](/assets/images/20190424WindowsResources/1.avif)
 
 After downloading the lite version, turn off your antivirus software first!! Double-click to install it on your computer. Once installed, open it. If the software prompts for an update, you can ignore it — no update needed!
-
 
 Plug in the USB drive
 > [Note: The USB drive will be formatted. If it has any data, copy it out first to avoid losing it.]
@@ -28382,19 +28337,16 @@ If you can't see the device, unplug and replug the USB drive.
 
 Click 一键制作 and wait for it to finish. After it's done, click 模拟启动 to check whether the USB drive can boot. If it can, you're good. Close it.
 
-
 ## Downloading the System
 
 Below, choose one system version to download. (If your USB drive is big enough, you can download both systems. This PE supports installing original systems.)
 
 WIN7 64-bit (B360/B450 Ryzen 2nd gen CPU motherboards not supported)
-System download link: [Link](http://www.jsgho.net/win7/jsy/35178.html) (Technician Clean Edition)
-
+System download link: Link (Technician Clean Edition)
 
 ![image](/assets/images/20190424WindowsResources/3.avif)
 
 ![image](/assets/images/20190424WindowsResources/4.avif)
-
 
 ## WIN7~10 64-bit
 
@@ -28412,7 +28364,6 @@ Copy the downloaded system directly to the USB drive you just made — any locat
 
 ![image](/assets/images/20190424WindowsResources/6.avif)
 
-
 ## Setting Up USB Boot
 
 Plug the prepared USB drive into the computer you want to install the system on. Below are the quick boot keys for common motherboards:
@@ -28429,7 +28380,6 @@ Below is a reference image of the ASUS motherboard quick boot menu for entering 
 When the USB boot screen appears, choose 启动WIN10 PE X 64 as shown below. Don't select anything else.
 
 ![image](/assets/images/20190424WindowsResources/8.avif)
-
 
 ## Partitioning and Installing the System
 
@@ -28455,9 +28405,7 @@ On the new page, you can choose how many partitions to create and how much capac
 
 ![image](/assets/images/20190424WindowsResources/11.avif)
 
-
 After partitioning, close the partition window and proceed to the next step.
-
 
 ## Installing the System Image
 
@@ -28478,9 +28426,7 @@ Open 电脑店一键还原 on the desktop, as shown below:
 Disclaimer
 > (This work is only for users to exchange system installation experience, or to temporarily test PC hardware. Please delete it within 24 hours after installation. If you need long-term use, please purchase genuine systems and software.)
 
-
 ## Activating the System
-
 
 Activation toolbox download links:
 
@@ -28494,17 +28440,14 @@ Activation toolbox download links:
 
 Tutorial link: [http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438](http://note.youdao.com/noteshare?id=40345f63671ea936740aa771cca2d438)
 
-
 For other driver issues, it's recommended to go online and download: [驱动精灵 Standard Edition](http://www.drivergenius.com/)
-
 
 # Summary
 
 I always forget some of the steps when installing a system, so I'm recording them here.
 
-
-[Reference: PE Installation Tutorial](https://note.youdao.com/ynoteshare1/index.html?id=e0f8c30393c4f069555d286020f9d394&type=note)
-[U-Disk Burning Tutorial for Installing Original Systems](http://05aebac1.wiz03.com/share/s/05HHH13zK4EY2bE37Q00RO3H1CvO101754vQ2bNyFE2nhALV?tdsourcetag=s_pcqq_aiomsg)
+Reference: PE Installation Tutorial
+U-Disk Burning Tutorial for Installing Original Systems
 [I tell you — a magical image download site, absolutely clean](http://msdn.itellyou.cn/)
 
 
@@ -28914,7 +28857,6 @@ Published At: 2019-02-15 10:40:15 +0000
 
 First post of the new year. Let me record the tools I've found most useful.
 
-
 ## Snipaste for Screenshots
 
 Whenever there's no internet access, or when I get a new Mac, there's no screenshot software installed, so I had to use the built-in screenshot feature of QQ or WeChat. That forced me to install these two apps. With Snipaste, say goodbye to that.
@@ -28927,13 +28869,11 @@ To use it, hold down `Fn`+`F1` and the screenshot UI appears. Give it a try.
 
 [Download](https://www.snipaste.com/)
 
-
 ## CheatSheet — Shortcut Viewer
 
 CheatSheet quickly brings up the keyboard shortcuts supported by the current app. Just press and hold the command key. Simple and practical.
 
 ![Cheat Sheet](/assets/images/20190215Tools/CheatSheet.avif)
-
 
 > Before using it, you must grant it access permission in Privacy & Security settings. There are image prompts — just follow them.
 
@@ -28948,7 +28888,6 @@ An alternative to Thunder (Xunlei). It supports BT downloads. When you encounter
 As a programmer who once "moved bricks" at Baidu Netdisk, I had to be really good at the most basic business of file upload and download. Back then, Thunder intended to invite me to an interview, but I declined — mainly because the company was too far from where I lived. And from its download throttling strategy, I don't think Thunder is sufficient to drive the internet forward. Third-party tools like Folx have completely replaced Thunder for me.
 
 [Download](https://mac.eltima.com/cn/torrent-client.html)
-
 
 ## IINA — Video Player
 
@@ -28970,7 +28909,6 @@ As an iOS developer, I think not staying up to date on the fruit company's vario
 
 [Download on iTunes](https://itunes.apple.com/cn/app/mactracker/id430255202?mt=12)
 
-
 ## PhotoBulk — Batch Watermark Tool
 
 PhotoBulk can batch-process images, such as adding watermarks in bulk. Once you've set the watermark content, size, and position, you can generate watermarked images in one click. Very convenient.
@@ -28988,7 +28926,6 @@ Mac's support for archive formats is lacking — it only supports zip. The Unarc
 [Download](https://itunes.apple.com/cn/app/the-unarchiver/id425424353?mt=12)
 
 ## HandShaker — Android File Manager for Mac
-
 
 A file management app from Smartisan Technology for managing Android phone content on a Mac. It's powerful, supporting file transfer between devices and categorized management.
 
@@ -29022,7 +28959,6 @@ A third-party NetEase Cloud Music player with a redesigned interface. If you lik
 
 ![iease Music](/assets/images/20190215Tools/ieaseMusic.avif)
 
-
 This third-party one is too flashy and not practical. Better not to install it.
 
 [Download](https://github.com/trazyn/ieaseMusic)
@@ -29032,7 +28968,7 @@ This third-party one is too flashy and not practical. Better not to install it.
 Many apps haven't been organized in time. I'll update sporadically when I have time. Thanks for your support.
 
 [OneV's tool collection](https://onevcat.com/apps/)  
-[Reference: ithome](https://www.ithome.com/0/409/410.htm)
+Reference: ithome
 
 
 
@@ -30728,7 +30664,7 @@ The `album` member variable is exposed in the .h so external code can load netwo
 ``` objc
 __weak __typeof(self) wself = self;
 //load the network image
-[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/images/logo2.jpg"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+[self.musicAlbum.album sd_setImageWithURL:[NSURL URLWithString:@"https://www.sunyazhou.com/assets/images/20181108AwemeAlbumAnimation/album1.avif"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
     if(!error) {
         wself.musicAlbum.album.image = image;
     }
@@ -31553,12 +31489,10 @@ During development, I often encounter a `UIButton` whose tap area is too small, 
 
 Today's article shares the code that solves this problem.
 
-
 # Implementation Approach
 
 * Subclass UIButton and override its `hitTest:` method
 * Subclass UIButton and override the `point:inside:withEvent:` method
-
 
 ## The First Approach
 
@@ -31573,17 +31507,14 @@ override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
 ```
 
-
 * 1. Expand theButton's x by 30 and y by 30 (positive values shrink, negative values expand. The width and height then become 2 * 30 and 2 * 30 respectively)
 * 2. Check whether the tap position is inside the expanded frame.
 * 3. If so, return the button.
 * 4. If not, let the event continue to propagate.
 
-
 > Note: _the code doesn't check whether theButton.alpha == 0, theButton.userInterface... == YES, or whether it's visible — add those checks yourself_
 
 ## The Second Approach
-
 
 Override UIView's point: method
 
@@ -31594,7 +31525,6 @@ override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
 	return biggerFrame.contains(point)
 }
 ```
-
 
 The Objective-C version looks like this:
 
@@ -31607,20 +31537,15 @@ The Objective-C version looks like this:
 }
 ```
 
-
 However, the second approach is actually the UIView judgment made before the hitTest: method is called — it checks whether the tapped point is on this UIView.
 
 Still, the first approach is recommended.
 
-
 ## Core Code
-
 
 Actually, the most core code is:
 
-
 CGRectInset(<#CGRect rect#>, <#CGFloat dx#>, <#CGFloat dy#>)
-
 
 > CGRect CGRectOffset(CGRect rect, CGFloat dx, CGFloat dy) shrinks the rect around its center based on dx and dy.
 
@@ -31628,23 +31553,16 @@ If dx and dy are negative, it expands; if positive, it shrinks.
 
 But you might be puzzled about how the width and height scale down or up.
 
-
 First: let's clarify the meaning of this API. As long as you pass in positive values it shrinks, so the width and height are also scaled based on the dx and dy you pass in.
 
 Because the scaling is centered, the width and height __must be multiplied by 2__ — there are two sides, after all. Shrinking the left side by 30 also requires shrinking the right side by 30, and the same goes for the top and bottom.
 
-
 You can look it up on Google yourself.
 
-
-
-[Reference: Increasing the tap area of a UIButton](https://rolandleth.com/increasing-the-tap-area-of-a-uibutton)  
+Reference: Increasing the tap area of a UIButton  
 [Reference: iOS touch events full guide](https://mp.weixin.qq.com/s/9rvSRt4kfpy7e87EJoaJOQ)
 
 End of article
-
-
-
 
 
 
@@ -32664,14 +32582,11 @@ Shortly after my previous article was published, WWDC2018 kicked off. What I fou
 * Swift 4.2
 * Use Playground in Xcode
 
-
 ## Generating Random Numbers
 
 In the previous article, we spent most of the time discussing random numbers around the [arc4random()](https://man.openbsd.org/arc4random.3) function. Of course, there are also some variants, e.g., arc4random_uniform(), rand(), random(). But regardless, these are mostly system-level functions.
 
-
 In Swift 4.2, all numeric types (i.e., the numeric types among the basic data types) have a static method `random(in:)`. This method accepts a range (Range) or a closed/open range and returns a uniformly distributed random number. These random functions are included in Swift's standard library, so they're consistent across platforms, unlike the system random functions introduced above.
-
 
 ``` swift
 
@@ -32690,7 +32605,7 @@ let between0And5 = UInt8.random() % 6
 
 ```
 
-This kind of random number may not be uniformly distributed. This non-uniform distribution is called [`modulo bias`](https://www.quora.com/What-is-modulo-bias).
+This kind of random number may not be uniformly distributed. This non-uniform distribution is called `modulo bias`.
 
 So how do we solve this modulo bias problem?
 
@@ -32706,7 +32621,6 @@ If we need a random number across the full range of a `numeric data type`, we ca
 ``` swift 
 let between0And255 = UInt8.random(in: .min ... .max) // → 190
 ```
-
 
 ### Random Bool Values
 
@@ -32818,14 +32732,12 @@ extension Int {
 
 The `generator` parameter always needs to be passed as [`inout`](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545), because RNGs typically change their state when generating new randomness.
 
-
 Let's see how to call a custom RNG. We need to create a mutable method that satisfies the inout requirement:
 
 ``` swift
 var mersenneTwister = MersenneTwisterRNG(...) // assume this exists
 Int.random(in: 10..<20, using: &mersenneTwister)
 ```
-
 
 ### Generating Random Values in Your Own Types
 
@@ -32835,7 +32747,6 @@ A custom random protocol needs to satisfy two standard library pattern steps:
 
 * Provide a static random method `random() -> Self` that uses the default RNG. When we need to constrain the random range, this function can take additional parameters to specify the range.
 * Provide a second method `random<T: RandomNumberGenerator>(using generator: inout T) -> Self` — this is the core method for generating random numbers.
-
 
 Here's an example using an enum for a card game, where we can fully utilize the [`Swift 4.2`](https://github.com/apple/swift-evolution/blob/master/proposals/0194-derived-collection-of-enum-cases.md) [allCases](https://developer.apple.com/documentation/swift/caseiterable) property.
 
@@ -32863,13 +32774,11 @@ let randomSuit = Suit.random() // → clubs
 randomSuit.rawValue // → "♠"
 ```
 
-
 ## Summary
 
 This article supplemented the standard library's random function support in the new Swift 4.2, and also introduced the shuffle function's default uniform random permutation. I hope you found this helpful. Please feel free to point out any issues.
 
 End of article
-
 
 [Reference](https://oleb.net/blog/2018/06/random-numbers-in-swift/)
 
@@ -34077,7 +33986,6 @@ Published At: 2018-04-02 14:16:34 +0000
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop6.avif)
 
-
 # Preface
 
 `RunLoop` is a very fundamental concept in `iOS` and `OSX` development. This article starts with the source code of `CFRunLoop` and introduces the concept of `RunLoop` and its underlying implementation principles. After that, it explains how Apple uses `RunLoop` in `iOS` to implement features such as the autorelease pool, delayed callbacks, touch events, and screen refreshes.
@@ -34120,7 +34028,6 @@ function loop() {
 
 This model is often called the [Event Loop](https://en.wikipedia.org/wiki/Event_loop). The `Event Loop` is implemented in many systems and frameworks, such as `Node.js` event handling, the message loop of `Windows` programs, and the `RunLoop` in `OSX/iOS`. The key to implementing this model is: how to `manage events/messages`, and how to make the thread sleep when there are no messages to process to avoid resource consumption, while waking it up immediately when a message arrives.
 
-
 So, `RunLoop` is actually an object that manages the events and messages it needs to handle and provides an entry function to execute the above `Event Loop` logic. After the thread executes this function, it stays inside the "`receive message` -> `wait` -> `process`" loop until the loop ends (for example, when a `quit` message is passed in), and then the function returns.
 
 In `OSX/iOS` systems, two such objects are provided: `NSRunLoop` and `CFRunLoopRef`.  
@@ -34129,10 +34036,9 @@ In `OSX/iOS` systems, two such objects are provided: `NSRunLoop` and `CFRunLoopR
 
 `NSRunLoop` is a wrapper around `CFRunLoopRef` that provides an object-oriented `API`, but these `API`s are not thread-safe.  
 
-The code of CFRunLoopRef is [open source](http://opensource.apple.com/source/CF/CF-855.17/CFRunLoop.c). You can download the entire `CoreFoundation` source code here [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) to look at it.
+The code of CFRunLoopRef is open source. You can download the entire `CoreFoundation` source code here [http://opensource.apple.com/tarballs/CF/](https://opensource.apple.com/tarballs/CF/) to look at it.
 
 (Update: After Swift was open sourced, Apple also maintains a cross-platform version of CoreFoundation: [https://github.com/apple/swift-corelibs-foundation/](https://github.com/apple/swift-corelibs-foundation/). The source code of this version may differ slightly from the implementation in the current `iOS` system, but it's easier to compile and has already been adapted for `Linux/Windows`.)
-
 
 ### The Relationship Between RunLoop and Threads
 
@@ -34181,13 +34087,9 @@ CFRunLoopRef CFRunLoopGetCurrent() {
 }
 ```
 
-
 From the code above, you can see that threads and `RunLoop`s correspond one-to-one, and their relationship is stored in a global `Dictionary`. A thread doesn't have a `RunLoop` when it's first created; if you don't actively get it, it will never exist. The `RunLoop` is created the first time it's fetched, and destroyed when the thread ends. You can only get its `RunLoop` inside a thread (except for the main thread).
 
-
-
 ### RunLoop's Public Interface
-
 
 In `CoreFoundation`, there are 5 classes related to `RunLoop`:
 
@@ -34197,11 +34099,9 @@ In `CoreFoundation`, there are 5 classes related to `RunLoop`:
 * `CFRunLoopTimerRef`
 * `CFRunLoopObserverRef`
 
-
 Among them, the `CFRunLoopModeRef` class is not exposed publicly; it's only encapsulated through `CFRunLoopRef`'s interface. Their relationship is as follows:
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop0.avif)
-
 
 A `RunLoop` contains several `Mode`s, and each `Mode` contains several `Source`s/`Timer`s/`Observer`s. Every time the main function of `RunLoop` is called, only one of these `Mode`s can be specified, and this `Mode` is called the `CurrentMode`. If you need to switch `Mode`s, you can only exit the `Loop` and then re-enter with a different `Mode`. The purpose of this is to separate different groups of `Source`s/`Timer`s/`Observer`s so they don't affect each other.
 
@@ -34210,9 +34110,7 @@ A `RunLoop` contains several `Mode`s, and each `Mode` contains several `Source`s
 * `Source0` only contains a callback (a function pointer), and it can't trigger events by itself. When using it, you need to first call `CFRunLoopSourceSignal(source)` to mark this `Source` as pending, and then manually call `CFRunLoopWakeUp(runloop)` to wake up the `RunLoop` so it can process this event.  
 * `Source1` contains a `mach_port` and a callback (a function pointer), used to send messages between the kernel and other threads. This kind of `Source` can actively wake up the `RunLoop`'s thread. More on that below.
 
-
 **CFRunLoopTimerRef** is a time-based trigger. It's `toll-free bridged` with `NSTimer`, so they can be used interchangeably. It contains a time interval and a callback (a function pointer). When it's added to the `RunLoop`, the `RunLoop` registers the corresponding time points. When the time arrives, the `RunLoop` is woken up to execute that callback.
-
 
 **CFRunLoopObserverRef** is an observer. Each `Observer` contains a callback (a function pointer). When the state of the `RunLoop` changes, the observer receives the change through the callback. Here are the observable time points:
 
@@ -34252,7 +34150,6 @@ struct __CFRunLoop {
 };
 ```
 
-
 There's a concept here called "`CommonModes`": a `Mode` can mark itself with the "`Common`" attribute (by adding its `ModeName` to the "`commonModes`" of the `RunLoop`). Whenever the content of the `RunLoop` changes, the `RunLoop` automatically synchronizes the `Source`/`Observer`/`Timer` in `_commonModeItems` to all `Mode`s marked with the "`Common`" attribute.
 
 Example application scenario: the main thread's `RunLoop` has two preset `Mode`s: `kCFRunLoopDefaultMode` and `UITrackingRunLoopMode`. Both of these `Mode`s are already marked with the "`Common`" attribute. `DefaultMode` is the state the `App` is normally in, and `TrackingRunLoopMode` is the state when tracking a `ScrollView` scroll. When you create a `Timer` and add it to `DefaultMode`, the `Timer` will receive repeated callbacks. But when you scroll a `TableView`, the `RunLoop` switches the `mode` to `TrackingRunLoopMode`, and then the `Timer` won't be called back, nor will it affect the scrolling.
@@ -34290,7 +34187,6 @@ According to Apple's [documentation](https://developer.apple.com/library/content
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop1.avif)
 
 The internal code is below (it's long, so feel free to skip it; there will be explanations later)
-
 
 ``` c
 /// Start with the DefaultMode
@@ -34406,13 +34302,11 @@ int CFRunLoopRunSpecific(runloop, modeName, seconds, stopAfterHandle) {
 
 ```
 
-
 ### RunLoop's Underlying Implementation
 
 From the code above, you can see that the core of `RunLoop` is based on `mach port`. The function it calls when entering sleep is `mach_msg()`. To explain this logic, let me briefly introduce the system architecture of `OSX/iOS`.
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop3.avif)
-
 
 Apple officially divides the entire system into roughly the 4 layers above:
 The application layer includes the graphical apps that users interact with, such as `Spotlight`, `Aqua`, `SpringBoard`, etc.
@@ -34424,12 +34318,10 @@ __Let's take a deeper look at the core architecture of Darwin:__
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop4.avif)
 
-
 Among them, the three components above the hardware layer — `Mach`, `BSD`, and `IOKit` (plus some content not marked above) — together form the `XNU` kernel.
 The inner ring of the `XNU` kernel is called `Mach`. As a microkernel, it only provides a very small number of basic services such as processor scheduling and `IPC` (inter-process communication).  
 The `BSD` layer can be seen as an outer ring around the `Mach` layer, providing features such as process management, file systems, and networking.  
 The `IOKit` layer provides an object-oriented (`C++`) framework for device drivers.
-
 
 The `API`s provided by `Mach` itself are very limited, and Apple doesn't encourage using `Mach`'s `API`s, but these `API`s are very fundamental. Without them, no other work could be done. In `Mach`, everything is implemented through its own objects — processes, threads, and virtual memory are all called "objects". Unlike other architectures, `Mach`'s objects can't call each other directly; inter-object communication can only be done through message passing. "`Message`" is the most fundamental concept in `Mach`. Messages are passed between two ports (`port`), and this is the core of `Mach`'s `IPC` (inter-process communication).
 
@@ -34464,19 +34356,17 @@ mach_msg_return_t mach_msg(
 			mach_port_name_t notify);
 ```
 
-
 To implement message sending and receiving, the `mach_msg()` function actually calls a `Mach` trap, i.e. the function `mach_msg_trap()`. The concept of a trap in `Mach` is equivalent to a system call. When you call `mach_msg_trap()` in user space, it triggers the trap mechanism and switches to kernel space; in kernel space, the kernel's `mach_msg()` function does the actual work, as shown below:
 
 ![Run Loop](/assets/images/20180402RunLoop/RunLoop5.avif)
 
 These concepts can be referenced on Wikipedia: [System_call](http://en.wikipedia.org/wiki/System_call), [Trap_(computing)](http://en.wikipedia.org/wiki/Trap_(computing)).
 
-
 The core of `RunLoop` is a `mach_msg()` (see step 7 in the code above). `RunLoop` calls this function to receive messages. If no one sends a `port` message, the kernel puts the thread in a waiting state. For example, if you run an `iOS` `App` in the simulator and then click pause while the `App` is idle, you'll see the main thread's call stack resting on `mach_msg_trap()`.
 
 For details on how to use `mach port` to send information, you can read [this NSHipster article](http://nshipster.com/inter-process-communication/), or [here](http://segmentfault.com/a/1190000002400329) for the Chinese translation.
 
-For the history of `Mach`, you can read this interesting article: [The Story Behind Mac OS X (3): Avie Tevanian, the Father of Mach](http://www.programmer.com.cn/8121/).
+For the history of `Mach`, you can read this interesting article: The Story Behind Mac OS X (3): Avie Tevanian, the Father of Mach.
 
 ### Features Apple Implements with RunLoop
 
@@ -34584,7 +34474,6 @@ CFRunLoop {
 }
 ```
 
-
 As you can see, the system registers 5 `Mode`s by default:
 
 1. `kCFRunLoopDefaultMode`: the `App`'s default `Mode`; the main thread usually runs in this `Mode`.
@@ -34594,7 +34483,6 @@ As you can see, the system registers 5 `Mode`s by default:
 5. `kCFRunLoopCommonModes`: this is a placeholder `Mode` with no actual effect.
 
 You can see more of Apple's internal `Mode`s [here](http://iphonedevwiki.net/index.php/CFRunLoop), but those `Mode`s are hard to encounter in development.
-
 
 When `RunLoop` performs a callback, it usually goes through a very long function call (`call out`). When you set breakpoints in your code for debugging, you can usually see these functions on the call stack. Below is an organized version of these functions. If you see these long function names in the call stack, you can search here to locate the specific call site:
 
@@ -34635,7 +34523,6 @@ When `RunLoop` performs a callback, it usually goes through a very long function
         /// 9. If the Runloop was woken up by an event from Source1 (port-based), process this event
         __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__(source1);
 
-
     } while (...);
 
     /// 10. Notify Observers that RunLoop is about to exit
@@ -34653,16 +34540,13 @@ The first `Observer` monitors the `Entry` event (about to enter the `Loop`). Ins
 
 The second `Observer` monitors two events: on `BeforeWaiting` (about to sleep), it calls `_objc_autoreleasePoolPop()` and `_objc_autoreleasePoolPush()` to release the old pool and create a new one; on `Exit` (about to exit the `Loop`), it calls `_objc_autoreleasePoolPop()` to release the autorelease pool. This `Observer`'s `order` is `2147483647`, the lowest priority, ensuring its pool is released after all other callbacks.
 
-
 Code executed on the main thread is usually written inside callbacks such as event callbacks and `Timer` callbacks. These callbacks are wrapped by the `AutoreleasePool` created by the `RunLoop`, so memory leaks won't occur, and developers don't need to explicitly create a `Pool` either.
-
 
 #### Event Response
 
 Apple registers a `Source1` (based on `mach port`) to receive system events, and its callback function is `__IOHIDEventSystemClientQueueCallback()`.
 
 When a hardware event (touch/lock screen/shake, etc.) occurs, IOKit.framework first generates an `IOHIDEvent` event, which is received by `SpringBoard`. For details of this process, you can refer to [here](http://iphonedevwiki.net/index.php/IOHIDFamily). `SpringBoard` only receives a few kinds of `Event`s such as button presses (lock screen/mute, etc.), touches, acceleration, and proximity sensors, and then forwards them to the required `App` process via `mach port`. The `Source1` Apple registered then triggers the callback and calls `_UIApplicationHandleEventQueue()` for internal distribution within the app.
-
 
 `_UIApplicationHandleEventQueue()` processes `IOHIDEvent` and wraps it into `UIEvent` for processing or distribution, including recognizing `UIGesture`/handling `screen rotation`/sending to `UIWindow`. Common events such as `UIButton` taps and `touchesBegin`/`Move`/`End`/`Cancel` are all completed in this callback.
 
@@ -34704,9 +34588,7 @@ _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()
 
 If a time point is missed — for example, when a very long task is executed — the callback for that time point is also skipped and won't be executed late. It's like waiting for a bus: if I'm busy playing with my phone at `10:10` and miss that bus, I can only wait for the `10:20` one.
 
-
 `CADisplayLink` is a timer that matches the screen refresh rate (but its actual implementation is more complex and different from `NSTimer`; internally it actually operates a `Source`). If a long task is executed between two screen refreshes, one frame will be skipped (similar to `NSTimer`), causing a feeling of UI jank. When scrolling a `TableView` quickly, even a single-frame stutter can be noticed by the user. `Facebook`'s open-source `AsyncDisplayLink` was created to solve UI jank, and it also uses `RunLoop` internally. I'll write a separate blog post to analyze this later.
-
 
 #### PerformSelecter
 
@@ -34719,7 +34601,6 @@ When you call `performSelector:onThread:`, it actually creates a `Timer` and add
 Actually, the underlying `RunLoop` also uses GCD stuff, such as `dispatch_async()`.
 
 > NSTimer is driven by XNU kernel's `mk_timer`, not by GCD.
-
 
 When you call `dispatch_async(dispatch_get_main_queue(), block)`, `libDispatch` sends a message to the main thread's `RunLoop`. The RunLoop is woken up, takes the `block` from the message, and executes it in the callback `__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__()`. But this logic only applies to dispatching to the main thread; dispatching to other threads is still handled by `libDispatch`.
 
@@ -34739,11 +34620,9 @@ NSURLSession    ->AFNetworking2, Alamofire
 * `NSURLConnection` is an even higher-level wrapper based on `CFNetwork`, providing an object-oriented interface; `AFNetworking` works at this layer.
 * `NSURLSession` is an interface added in `iOS7`. On the surface it's on par with `NSURLConnection`, but underneath it still uses some of `NSURLConnection`'s functionality (such as the `com.apple.NSURLConnectionLoader` thread). `AFNetworking2` and `Alamofire` work at this layer.
 
-
 ##### Below I'll mainly describe the working process of NSURLConnection.
 
 Usually when using `NSURLConnection`, you pass in a `Delegate`. After calling `[connection start]`, this `Delegate` keeps receiving event callbacks. In fact, inside the `start` function, it gets the `CurrentRunLoop`, and adds 4 `Source0`s (i.e. `Source`s that need to be triggered manually) to its `DefaultMode`. `CFMultiplexerSource` is responsible for various `Delegate` callbacks, and `CFHTTPCookieStorage` handles various `Cookie`s.
-
 
 When the network transfer starts, we can see that `NSURLConnection` creates two new threads: `com.apple.NSURLConnectionLoader` and `com.apple.CFSocket.private`. The `CFSocket` thread handles the underlying `socket` connection. The `NSURLConnectionLoader` thread uses a `RunLoop` internally to receive events from the underlying `socket`, and notifies the upper-layer `Delegate` through the `Source0` added earlier.
 
@@ -34751,13 +34630,11 @@ When the network transfer starts, we can see that `NSURLConnection` creates two 
 
 The `RunLoop` in `NSURLConnectionLoader` receives notifications from the underlying `CFSocket` through some `Source`s based on `mach port`. After receiving a notification, it sends notifications to `Source0`s such as `CFMultiplexerSource` at the appropriate time, and wakes up the `Delegate` thread's `RunLoop` to handle these notifications. `CFMultiplexerSource` executes the actual callbacks to the `Delegate` on the `Delegate` thread's `RunLoop`.
 
-
 ### Practical Application Examples of RunLoop
 
 #### AFNetworking
 
-The [AFURLConnectionOperation](https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking%2FAFURLConnectionOperation.m) class is built on `NSURLConnection` and wants to receive `Delegate` callbacks on a background thread. For this, `AFNetworking` creates a dedicated thread and starts a `RunLoop` on it.
-
+The AFURLConnectionOperation class is built on `NSURLConnection` and wants to receive `Delegate` callbacks on a background thread. For this, `AFNetworking` creates a dedicated thread and starts a `RunLoop` on it.
 
 ``` objc
 + (void)networkRequestThreadEntryPoint:(id)__unused object {
@@ -34812,7 +34689,7 @@ Among these, the first two categories can be pushed to background threads throug
 To do this, `ASDK` creates an object called `ASDisplayNode` and wraps `UIView`/`CALayer` inside it. It has properties similar to `UIView`/`CALayer`, such as `frame` and `backgroundColor`. All these properties can be changed on a background thread. Developers can operate the internal `UIView`/`CALayer` only through the `Node`, thus pushing layout and drawing to background threads. But no matter how you operate, these properties always need to be synchronized to the main thread's `UIView`/`CALayer` at some point.
 
 `ASDK` mimics the pattern of the `QuartzCore`/`UIKit` frameworks and implements a similar UI update mechanism: add an `Observer` to the main thread's `RunLoop`, listen for the `kCFRunLoopBeforeWaiting` and `kCFRunLoopExit` events, and when the callback is received, iterate over all the pending tasks previously put into the queue and execute them one by one.
-The specific code can be seen here: [_ASAsyncTransactionGroup](https://github.com/facebook/AsyncDisplayKit/blob/master/AsyncDisplayKit%2FDetails%2FTransactions%2F_ASAsyncTransactionGroup.m).
+The specific code can be seen here: _ASAsyncTransactionGroup.
 
 ### Conclusion
 
@@ -34945,7 +34822,6 @@ A symbol table is a mapping table between memory addresses and function names, f
 
 `<start address>` `<end address>` `<function>` [`<file name>`:`<line number>`]  
 
-
 ### Why Configure a Symbol Table?
 
 To quickly and accurately locate the code `position` where a user's app `Crashes`, we can use a symbol table to `parse` and `restore` the program's `stack` at the point where the app `Crash` occurred.
@@ -34953,7 +34829,6 @@ To quickly and accurately locate the code `position` where a user's app `Crashes
 Here's an example:
 
 ![stack Symbol](/assets/images/20180308WhatIsThedSYM/stackSymbol.avif)
-
 
 The image above shows the crash stack calls we resolved using the symbol table.
 
@@ -34974,7 +34849,6 @@ In general, after the project is compiled, the `dSYM` file is in the same direct
 ![d SYM](/assets/images/20180308WhatIsThedSYM/dSYM1.avif)
 
 ![d SYM](/assets/images/20180308WhatIsThedSYM/dSYM2.avif)
-
 
 > The test here was done in Release mode.
 
@@ -35087,8 +34961,7 @@ Heaviest stack for the target process:
 References:
 
 [Bugly iOS Symbol Table Configuration](https://bugly.qq.com/docs/user-guide/symbol-configuration-ios/?v=1520478187041#dsym_1)  
-[App Launch Time: Past, Present, and Future](https://techblog.toutiao.com/2017/07/05/session413/)
-
+App Launch Time: Past, Present, and Future
 
 End of article.
   
@@ -35863,8 +35736,6 @@ Published At: 2018-02-04 12:24:30 +0000
 
 Recording some Python code during the learning process
 
-
-
 ``` python
 #!/usr/bin/env python
 # coding:utf8
@@ -35872,7 +35743,6 @@ Recording some Python code during the learning process
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-
 
 # Load packages
 from gensim.models import Word2Vec
@@ -35906,7 +35776,7 @@ model.similarity(u'男人',  u'女人')
    
 Tokenization references:  
 
-[HIT-SCIR LTP Tokenization](https://www.ltp-cloud.com/demo/)  
+HIT-SCIR LTP Tokenization  
 [jieba Tokenization](https://github.com/fxsjy/jieba)  
 [Stanford Tokenization](https://nlp.stanford.edu/software/segmenter.shtml)
 
@@ -36285,9 +36155,7 @@ Published At: 2018-01-12 10:32:18 +0000
 ![AVAudioSession](/assets/images/20180112AVAudioSessionCategory/ASPGIntro.avif)
 # Preface
 
-
 The first post of the 2018 new year. Let me sort out the `Category` of `AVAudioSession` to solve the various audio development problems where playback gets interrupted or there is no sound on first launch.
-
 
 ## Opening
 
@@ -36301,7 +36169,6 @@ When things like `plugging/unplugging headphones`, `incoming calls`, or `invokin
 * What should happen after plugging/unplugging headphones?
 * What should happen when a call comes in or the alarm goes off?
 * What should happen when other audio Apps start?
-
 
 ### Default session behavior
 
@@ -36384,8 +36251,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryAudioProcessing NS_DEPRECATED_I
 AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0);
 ```
 
-
-
 `AVAudioSession` divides audio usage scenarios into seven categories. By setting the `Session` to different categories, you can control:
 
 * Whether activating the Session interrupts audio from other Apps that don't support mixing
@@ -36404,7 +36269,6 @@ AVF_EXPORT NSString *const AVAudioSessionCategoryMultiRoute NS_AVAILABLE_IOS(6_0
 | AVAudioSessionCategoryRecord | No | Yes | Recording only |
 | AVAudioSessionCategorySoloAmbient | Yes | Yes | Playback only |
 
-
 You can see that the default is in fact the `AVAudioSessionCategorySoloAmbient` category.  
 From the table we can summarize the following:  
 
@@ -36421,7 +36285,6 @@ From the table we can summarize the following:
 * _`AVAudioSessionCategoryRecord`: With players, there must be recorders. For example, WeChat voice message recording uses this category. Since you want quiet recording, you certainly don't want QQ Music playing, so other playback is interrupted. Think of the WeChat voice message scenario and you'll know when to use it._
 
 * _`AVAudioSessionCategorySoloAmbient`: Also playback-only, but unlike `AVAudioSessionCategoryAmbient`, with this one you can forget about listening to QQ Music — it's for Apps that don't want QQ Music interference, like Rhythm Master. Likewise, the audio is muted when the user locks the screen or mutes; once the screen is locked, you can't play Rhythm Master anymore._
-
 
 Once we understand these seven categories, we can set the appropriate category according to our needs:
 
@@ -36454,13 +36317,9 @@ For example, with the following code:
 
 Now when playing music, if you press the mute switch, you'll find that the music keeps playing and isn't muted.
 
-
 ### Category Options
 
-
-
 The seven categories above can be thought of as seven main scenarios, but these seven certainly can't satisfy all developer needs. `CoreAudio`'s approach is: __first pick one of the seven as the baseline, then fine-tune. `CoreAudio` provides a few options for each `Category` to do the fine-tuning.__
-
 
 After setting the category, you can use:
 
@@ -36484,7 +36343,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 } NS_AVAILABLE_IOS(6_0);
 ```
 
-
 | Option | Applicable Categories | Effect | 
 | :------ | :------ | :------: |
 | AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryPlayAndRecord, AVAudioSessionCategoryPlayback, and AVAudioSessionCategoryMultiRoute | Whether it can mix with other background Apps |
@@ -36499,7 +36357,6 @@ typedef NS_OPTIONS(NSUInteger, AVAudioSessionCategoryOptions)
 | AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers  | -- | -- | iOS 9|
 | AVAudioSessionCategoryOptionAllowBluetoothA2DP  | -- | -- | iOS 10|
 | AVAudioSessionCategoryOptionAllowAirPlay  | -- | Supports Bluetooth A2DP headsets and AirPlay | iOS 10|
-
 
 Below I'll explain the effect of each sub-scenario option:
 
@@ -36558,7 +36415,6 @@ AVF_EXPORT NSString *const AVAudioSessionModeVideoChat NS_AVAILABLE_IOS(7_0);
 AVF_EXPORT NSString *const AVAudioSessionModeSpokenAudio NS_AVAILABLE_IOS(9_0);
 ```
 
-
 We've basically covered the common __main scenarios__. Within each main scenario, you can __fine-tune__ via `Option`. To this end, `CoreAudio` provides seven common fine-tuned sub-scenarios, called `the modes of each category`.
 
 | Mode | Applicable Categories | Scenario | 
@@ -36582,9 +36438,7 @@ After setting the Category, you can use the following code:
 
 This property shows which modes are supported, for validity checks.
 
-
 Now let me talk about specific use cases:
-
 
 * __`AVAudioSessionModeDefault`: Every category defaults to this mode, so to restore the default, set it back to this mode.__
 
@@ -36595,7 +36449,6 @@ Now let me talk about specific use cases:
 * __`AVAudioSessionModeGameChat`: Suited to game apps' capture and playback, e.g. the `GKVoiceChat` object; generally no manual setup is needed.__
 
 > The other modes have little to do with audio apps; generally we only need to pay attention to VoIP or video calls.
-
 
 By calling:
 
@@ -36641,11 +36494,9 @@ Possible values:
 
 * `AVAudioSessionSilenceSecondaryAudioHintTypeEnd`: Indicates that another `App` has started releasing the `Session`.
 
-
 ### Peripheral Changes
 
 Besides other `Apps` and system services, the user's own actions can also affect our `App`. By default, the `AudioSession` picks an optimal output route when the `App` launches — for example, headphones when they're plugged in. But during this, the user might unplug the headphones. How does our app sense this?
-
 
 Likewise, `AVAudioSession` also uses `Notifications` for such situations.
 
@@ -36659,7 +36510,6 @@ Register for `AVAudioSessionRouteChangeNotification` in `NSNotificationCenter`. 
 * `AVAudioSessionRouteChangeReasonKey`: Indicates the reason for the change
 * `AVAudioSessionSilenceSecondaryAudioHintTypeKey`: Has the same meaning as the interruption above.
 
-
 | Enum Value | Meaning |
 | :------ | :------: | 
 | AVAudioSessionRouteChangeReasonUnknown  | Unknown reason |
@@ -36671,14 +36521,12 @@ Register for `AVAudioSessionRouteChangeNotification` in `NSNotificationCenter`. 
 | AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory  | No suitable device for the current Category |
 | AVAudioSessionRouteChangeReasonRouteConfigurationChange  | The route configuration changed |
 
-
 # Summary
 
 `AVAudioSession` builds the context for an audio usage lifecycle. Whether the current state supports recording, what impact it has on other Apps, whether it responds to the system mute switch, how to detect incoming calls — all of these can be implemented through it. What's especially important is that `AVAudioSession` works not only with `AVAudioPlyaer`/`AVAudioRecorder` in `AVFoundation`, but other recording/playback tools such as `AudioUnit` and `AudioQueueService` also need it to provide the context for recording, muting, and the like.
 
-
 [Reference](https://www.jianshu.com/p/3e0a399380df)  
-[Reference 2](http://cinvoke.me/?p=37)
+Reference 2
 
 The End
 
@@ -37259,8 +37107,8 @@ Find `Copy Link`, then open it in a browser.
 The `id=34341360` at the end is the `id` we need, and then you just replace it in the API.
 
 For more tips, refer to an article I wrote before:
-[markdown folding](https://www.sunyazhou.com/2017/10/25/20171025markdownSkill/)    
-[markdown table](https://www.sunyazhou.com/2017/09/29/20170929MarkdownTable/)
+[markdown folding](https://www.sunyazhou.com/2017/10/MarkdownSkill/)    
+[markdown table](https://www.sunyazhou.com/2017/09/MarkdownTable/)
 
 End of article.
 
@@ -37273,7 +37121,6 @@ Published At: 2017-12-19 11:40:13 +0000
 
 ![Audio Pan](/assets/images/20171219AudioPan/AudioPan.avif)
 
-
 # Preface
 
 Recently I've been developing multimedia audio/video related features. I'll record all the problems I encountered here. Below is an example provided by a colleague that I organized, as a reference for when similar problems come up in future development.
@@ -37283,42 +37130,33 @@ Recently I've been developing multimedia audio/video related features. I'll reco
 Recently I was developing audio features involving left/right channel adjustment, using the volume of the left and right channels to achieve a sound surround effect.
 Below is a UI demo.
 
-
 ![Audio Pan Demo](/assets/images/20171219AudioPan/AudioPanDemo.avif)
-
 
 What this actually modifies is similar to the `pan` value in `AVAudioPlayer`
 
 ![Pan Audio Api](/assets/images/20171219AudioPan/PanAudioApi.avif)
 
-
-In a previous article, I also mentioned this [pan value](https://www.sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/)
-
+In a previous article, I also mentioned this [pan value](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/)
 
 You might wonder why this API is called `pan`
 
 In acoustics, this concept has a dedicated name: `声像` (panorama).
 
-[This article](http://underwaysoft.com/writing/books/dsp-develop.html#%E7%BA%BF%E6%80%A7%E5%A3%B0%E5%83%8F%EF%BC%88<span class=cnBracket>Pan</span>%EF%BC%89) provides a brief introduction to some acoustic knowledge. Although I don't know who the author is, they should be a very professional acoustics developer.
+[This article](<span class=cnBracket>Pan</span>%EF%BC%89) provides a brief introduction to some acoustic knowledge. Although I don't know who the author is, they should be a very professional acoustics developer.
 
 Actually, based on our usual understanding, we'd implement the pan value adjustment like this:
-
 
 The left channel volume compensates for the right channel sound, or the right channel compensates for the left channel. The slider's value decides how much to add or subtract on each side. But while the idea is right, the approach is incorrect, because the volume of both sides must be 1.0 at the center, meaning the range is between `-1 ~ 1`. Following this sliding approach would cause the adjustment to be too large.
 
 With this problem in hand, my colleague found a formula to calculate this value
 
-
 ![Pan Algorithm](/assets/images/20171219AudioPan/PanAlgorithm.avif)
-
 
 * `pan` is our slider's `value`
 * `Vl` represents the left channel volume
 * `Vr` represents the right channel volume
 
-
 Based on this formula, we have the following code
-
 
 ``` objc
 
@@ -37336,8 +37174,6 @@ typedef NS_ENUM(NSUInteger, KSYMCChannelType) {
                     volume:(CGFloat)volume;
 
 @end
-
-
 
 @implementation KSYMultiCanvasHelper
 
@@ -37360,7 +37196,6 @@ typedef NS_ENUM(NSUInteger, KSYMCChannelType) {
 The calculation here is quite accurate.
 
 After testing, when the left channel volume is 0, the right channel volume should be about 1.41
-
 
 ## Summary
 
@@ -38453,11 +38288,9 @@ Published At: 2017-09-01 23:17:09 +0000
 
 How to use `charles` to intercept `https` requests on iOS devices
 
-
 ## 1. Install Charles
 
 Just [download it from the official website](https://www.charlesproxy.com/download/). As for cracking, Google it yourself. I'm using Charles version 4.1.3, which should be the latest at the moment.
-
 
 ## 2. HTTP Capture Configuration
 
@@ -38473,9 +38306,7 @@ Port: 8888
 
 ![Wi Fi Ip Porti Phone](/assets/images/20170901CharlesCaptureHttps/WiFiIpPortiPhone.avif)
 
-
 Note: *Here I'm using my own computer's IP as an example. The red area — remember to replace it with your own computer's IP*
-
 
 After setting the proxy, open Charles on your computer. When your phone makes a request, the following popup will appear:
 
@@ -38503,7 +38334,6 @@ Then in
  
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep3.avif)
 
-
 Next, click `Help` -> `SSL Proxying` -> Install Root Certificate
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep4.avif)
@@ -38516,11 +38346,9 @@ The next step is to install the root certificate on your phone
 
 ![Charles Step](/assets/images/20170901CharlesCaptureHttps/CharlesStep6.avif)
 
-
-Now, on the phone with the proxy IP configured (on the iPhone), open the URL directly in Safari: [chls.pro/ssl](https://chls.pro/ssl)
+Now, on the phone with the proxy IP configured (on the iPhone), open the URL directly in Safari: chls.pro/ssl
 
 Your phone will soon show this prompt — click **Allow**
-
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone1.avif)
 
@@ -38534,7 +38362,6 @@ __You must go to General -> About This Phone -> Certificate Trust Settings__ to 
 
 ![i Phone](/assets/images/20170901CharlesCaptureHttps/iPhone3.avif)
 
-
 If you don't trust it, you'll see the following issue when capturing:
 
 ![Charles Root Cer Error](/assets/images/20170901CharlesCaptureHttps/CharlesRootCerError.avif)
@@ -38544,9 +38371,6 @@ If you don't trust it, you'll see the following issue when capturing:
 Finally, here's a screenshot of a successful capture (Alipay's API)
 
 ![Result](/assets/images/20170901CharlesCaptureHttps/Result.avif)
-
-
-
 
 End of article
 
@@ -39218,10 +39042,10 @@ Delegate methods
 
 ![Session Bridge](/assets/images/20170830ARKit/SessionBridge.avif)
 
-`ARSesson` is a bridge connecting the low level and the AR view. All the methods in `ARSCNView` are provided by `ARSession`.
+`ARSession` is a bridge connecting the low level and the AR view. All the methods in `ARSCNView` are provided by `ARSession`.
 
 
-__`ARSesson` mainly has two ways to obtain camera position data__:
+__`ARSession` mainly has two ways to obtain camera position data__:
 
 * push: notify the user by implementing the Session's delegate method `session:didUpdateFrame:`
 * pull: the user can actively fetch the `ARSession`'s `currentFrame` property.
@@ -39539,7 +39363,6 @@ MediaItem *item = [[MediaItem alloc] initWithURL:self.url];
     NSLog(@"%@",[item modelDescription]);
 }];
 
-
 ```
 
 The implementation part
@@ -39606,7 +39429,6 @@ I tried the demo on macOS and editing files works fine, but on iOS I couldn't sa
 - (NSArray *)metadataItems;
 @end
 
-
 ```
 Looking at the code above, you've probably guessed it — this is exactly the real model we need, e.g. the model parsed out of an mp3 file.
 
@@ -39636,8 +39458,6 @@ This protocol exists to support unified parsing of all multimedia files. For exa
                                 withMetadataItem:(AVMetadataItem *)item;
 @end
 ```
-
-
 
 ### MetadataConverterFactory
 
@@ -39669,7 +39489,6 @@ This class is used to uniformly output models that conform to the `MetadataConve
 @end
 ```
 
-
 ### DefaultMetadataConverter
 
 A simple implementation of the `MetadataConverter` protocol.
@@ -39692,9 +39511,7 @@ A simple implementation of the `MetadataConverter` protocol.
     return metadataItem;
 }
 
-
 ```
-
 
 ### ArtworkMetadataConverter
 Implements the `MetadataConverter` protocol to extract the album artwork.
@@ -39859,8 +39676,7 @@ The standard genres used by digital audio originally came from MP3. The ID3 spec
 
 ![gener](/assets/images/20170807LearningAVFoundationAVAssetSenior/gener.avif)
 
-
-Although iTunes uses the predefined genres from the ID3 set, it defines its own genre sets for TV, movies, and audiobooks. [Apple's Genre IDs Appendix](https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/)
+Although iTunes uses the predefined genres from the ID3 set, it defines its own genre sets for TV, movies, and audiobooks. Apple's Genre IDs Appendix
 
 The example code already includes these genres, so I won't elaborate further — please refer to the demo.
 
@@ -39903,7 +39719,6 @@ The example code already includes these genres, so I won't elaborate further —
     }];
 }
 
-
 - (NSURL *)tempURL {
     // Get the Caches directory path
     NSString *cachesDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -39932,7 +39747,6 @@ Published At: 2017-07-13 10:55:15 +0000
 
 ![whatisnewsinios](/assets/images/20170713ios11NewSkills/whatisnewsinios11.avif)
 
-
 ## Availability Checking API
 
 In Swift code, you often see that a certain API is available since iOS 10.0
@@ -39950,7 +39764,6 @@ Like the following code
 In Xcode 9, the compiler adds Objective-C version of API availability checking
 
 ##### Mark method availability with the `API_AVAILABLE` macro
-
 
 ``` objc
 @interface ViewController : UIViewController
@@ -40003,10 +39816,9 @@ If your project wants to use this new LLVM feature, you need to modify the `Ungu
 
 ![availability](/assets/images/20170713ios11NewSkills/availability.avif)
 
-
 ## Static Analysis
 
-In an earlier article I talked about [Static Analysis](http://www.sunyazhou.com/2017/06/20/enable-static-analyer/)
+In an earlier article I talked about [Static Analysis](https://www.sunyazhou.com/2017/06/EnableStaticAnalyer/)
 
 Here I'll talk about the changes
 
@@ -40020,7 +39832,6 @@ When we mistakenly judge an NSNumber, static analysis gives us a hint
 In Xcode 9, you can directly change such ignored problems into errors
 
 ![static](/assets/images/20170713ios11NewSkills/static.avif)
-
 
 ## Enable LTO and Set It to Incremental Mode
 
@@ -40040,9 +39851,7 @@ Enable LTO
 
 It's said to optimize the package size and runtime speed by about 10%
 
-
 ## GCD Unified Queue Identifier
-
 
 The unified queue identifier refers to queues created in various places scattered around the project. If the queue identifiers are the same, they will be bound together in the kernel, which can improve efficiency by 30%. Apple hasn't told us how the kernel does this, but it provides this suggestion: if a category of operations are similar in importance or other attributes, or if the developer wants scattered code in the project to be controlled in the same queue, then we can specify a common identifier when creating the queue. The system will then bind queues with the same identifier together in the kernel for management
 
@@ -40057,10 +39866,9 @@ As in the following code, if the app uses the same string everywhere, efficiency
 
 > Honestly speaking, in a project it's unavoidable to have file uploads/downloads or time-consuming tasks. Making everything one queue clearly doesn't fit the business requirements. If you want to keep queues with a single identifier as much as possible, you can only do it based on business categories. It's worth trying when you get the chance
 
-
 End
 
-[Reference](https://techblog.toutiao.com/2017/07/05/session0-2/)
+Reference
 
 
 
@@ -40132,18 +39940,15 @@ First, let me pay tribute to the authors of RSA
 
 For the principles of RSA asymmetric encryption and all that..., please Baidu it yourself
 
-
 ## The Detour
 
 Recently my development work involved how to use RSA for authentication and other techniques... Honestly, I searched around and simply couldn't find a single piece of code that truly works across iOS, Android, and the web.
 It wasted several days of development time — there wasn't a single reliable solution that works. So I have to write a blog post
 and share the code that actually works. (Honestly, I really wanted to curse at the time — the results Baidu served up were a pile of garbage.)
 
-
 # Implementation
 
 ## Step 1: Generate a Key Pair
-
 
 ### Generate the raw RSA private key file rsa_private_key.pem
 
@@ -40164,8 +39969,6 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 ```
 
 > As you can see above, the corresponding public key can be generated from the private key. Therefore, we use the private key `private_key.pem` on the *server side* and distribute the *public key* to frontends such as `android` and `ios`
-> 
-
 
 ## Step 2: PHP Implementation
 
@@ -40333,7 +40136,6 @@ public class Rsa {
 __*Note:*__ When initializing the `Cipher` object, be sure to specify the `"RSA/ECB/PKCS1Padding"` format, e.g., `Cipher.getInstance("RSA/ECB/PKCS1Padding");`
 Open the `rsa_public_key.pem` file and replace `RSA_PUBLICE` in the code above with its content.
 
-
 ## Step 4: iOS Implementation
 
 iOS doesn't provide a direct API for RSA encryption. Most approaches found online also rely on handling X.509 certificates. However, X.509 certificates are signed — when the `openssl_pkey_get_private` method in PHP obtains the key, the signature must be passed as the second parameter, and implementing X.509 certificate encryption/decryption on Android is not easy either. Here, we take advantage of iOS's compatibility with C programs and use the openssl API to implement RSA encryption and decryption. Here's the code:
@@ -40354,7 +40156,6 @@ CRSA.h code
 #import <openssl/rsa.h>
 #import <openssl/pem.h>
 #import <openssl/err.h>
-
 
 typedef enum {
     KeyTypePublic,
@@ -40381,7 +40182,6 @@ typedef enum {
 - (NSString *)decryptByRsa:(NSString*)content withKeyType:(KeyType)keyType;
 
 @end
-
 
 ```
 
@@ -40470,7 +40270,6 @@ CRSA.m
     
     return NO;
 }
-
 
 - (BOOL)importRSAKeyFromeStringWithType:(KeyType)type andKey:(NSString *)key{
     if (key.length == 0) { return NO; }
@@ -40595,7 +40394,6 @@ CRSA.m
     return len;
 }
 
-
 //---------------encryption utility methods
 - (NSString *)base64EncodedStringForData:(NSData *)data
 {
@@ -40662,12 +40460,10 @@ CRSA.m
     return (outputLength >= 4)? result: nil;
 }
 
-
 - (NSData *)base64DecodedDataForString:(NSString *)string
 {
     return [self dataWithBase64EncodedString:string];
 }
-
 
 - (NSData *)dataWithBase64EncodedString:(NSString *)string
 {
@@ -40780,9 +40576,7 @@ NSString *publicKey = @"-----BEGIN PUBLIC KEY-----\n此处替换生成的公钥 
     // explore the rest yourself, it's not difficult  
 ```
 
-
 The openssl API package can be obtained from the include folder of the openssl tool used in Step 1 to generate the RSA keys.
-
 
 Let me explain how to integrate openssl into an iOS project:
 
@@ -40795,7 +40589,6 @@ Drag the openssl library _(the folder containing `include` & `lib`)_ into the pr
 
 Then go to project targets -> `Build Settings`
 
-
 * Find **Header Search Paths**, add `"${SRCROOT}/Libraries/openssl/include"` for your project
 * Find **Library Search Paths**, add `"${SRCROOT}/Libraries/openssl/lib"` 
 
@@ -40803,9 +40596,7 @@ Then it should work. If you run into problems in the middle, check whether the d
 
 --
 
-
 ## Finally, the pitfalls I encountered with RSA encryption
-
 
 When encrypting on iOS and generating the digest for Android, Android couldn't parse it (sometimes the parsed result started with a bunch of garbled characters). This is a base64 problem. I recommend Android use the native one.
 
@@ -40828,7 +40619,7 @@ One last thing: this is a very simple cross-platform RSA solution. To those who 
 
 The End
 
-[Reference](https://www.lvtao.net/dev/android_ios_php_openssl.html)
+Reference
 
 
 
@@ -40962,7 +40753,6 @@ Published At: 2017-06-16 10:11:19 +0000
 
 ![Album Detail](/assets/images/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.avif)
 
-
 # Preface
 This chapter covers `AVAsset` metadata (which can be simply understood as the model information of an audio format such as mp3: title: xxxx, artist: Andy Lau, album: Love You for Ten Thousand Years... and the sources of such data). In this sense, the field information is a property of `AVAsset`. `AV Foundation` handles the metadata of various audio formats through the `AVAsset` wrapper, __such as extracting the cover artwork from an mp3 file__. Here's what this chapter covers:
 
@@ -40998,8 +40788,6 @@ This chapter covers `AVAsset` metadata (which can be simply understood as the mo
 #### __Saving Metadata__
 ---
 
-
-
 ### __Understanding the `AVAsset` Asset__
 `AVAsset` is an immutable abstract class that defines the mixed presentation of media assets. It contains the audio/video **tracks**, **formats**, **duration**, as well as **metadata NSData** (binary bytes).
 
@@ -41025,12 +40813,9 @@ Here's _**`AVAsset.tracks`**_:
 
 Asset tracks can be accessed through the `tracks` property. This property returns an NSArray whose elements are all the tracks contained in the asset. In addition, `AVAsset` can also find the corresponding track by identifier, media type, or media characteristics. This makes it easy to retrieve the set of tracks we need in more advanced processing later.
 
-
-
 #### __Creating Assets__
 
 When creating an `AVAsset` object for an existing media asset, you do it by initializing it with a URL. Generally it's a local file URL, but it can also be a remote resource URL.
-
 
 ``` objc
     NSURL *assetURL = //....
@@ -41040,7 +40825,6 @@ When creating an `AVAsset` object for an existing media asset, you do it by init
 > ....
 
 `AVAsset` is an abstract class and cannot be instantiated directly. When you create an instance using the `assetWithURL:` method, you're actually creating `AVURLAsset`, a subclass of `AVAsset`. Sometimes you'll use this class directly, because it allows you to fine-tune how the asset is created by passing a dictionary of options. For example, when creating an asset for use in audio or video editing scenarios, you might want to pass a dictionary of options telling the program to provide more precise duration and timing information, such as:
-
 
 ``` objc
 
@@ -41085,7 +40869,6 @@ Above is how to get video assets stored in the photo album (this approach was de
 
 A common place to get media is the user's iPod library. The `MediaPlayer` framework provides APIs for querying and retrieving items in the iPod library. When you find the item you want, you can get a stored URL and use it to initialize an asset, as in the following example:
 
-
 ``` objc
     //Artist
     MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:@"刘德华" forProperty:MPMediaItemPropertyArtist];
@@ -41108,15 +40891,12 @@ A common place to get media is the user's iPod library. The `MediaPlayer` framew
     }
 ```
 
-
 The `MediaPlayer` framework provides a class called `MPMediaPropertyPredicate` that helps users build the query statements used to find specific content in the iPod library.
 The example above looks up the song `爱你一万年` in `刘德华`'s `真永远` (the "True Eternity" album). After the query completes, it returns the media item's asset URL property (`MPMediaItemPropertyAssetURL`), which is then used to create the `AVAsset`.
 
 ##### macOS iTunes Library
 
 On macOS (formerly OS X), iTunes is the user's media hub. To identify assets in the library, we usually parse the iTunes Music Library.xml file in the iTunes music directory to get the relevant data. However, after Mac OS X 10.8 Mountain Lion, there's a simpler way — the `iTunesLibrary` framework.
-
-
 
 ``` objc 
 ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
@@ -41135,7 +40915,6 @@ ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
     }
     
 ```
-
 
 The `iTunesLibrary` framework doesn't provide concrete query APIs like the `MediaPlayer` framework does. However, developers can use the standard Cocoa `NSPredicate` (predicate) class to build complex queries. After filtering out the desired set of media items, you can use the `location` property of `ITLibMediaItem` to get a URL and create an `AVAsset`.
 
@@ -41199,7 +40978,6 @@ Here we create an AVAsset from a `QuickTime` movie in the bundle and asynchronou
 > (1) Each call to `loadValuesAsynchronouslyForKeys:completionHandler:` invokes the `completionHandler` block only once; the number of callback invocations is not determined by the number of keys passed to the method.
 > (2) You need to call `statusOfValueForKey:error:` for each requested property; you can't assume all properties return the same status value.
 
-
 ### __Media Metadata__
 
 When building a media application, it's very important to understand how the media is organized. Simply showing a list of file names might be acceptable when there aren't many files, but it becomes a real pain when you need to display large batches of files. What we really need is _a way to describe the media so that users can easily find, identify, and organize it._ The main media formats we work with in `AV Foundation` (*.mp4, *.mp3, *.mov, *.mkv...) can all embed metadata that describes their content. Since each media format describes its content differently, devising a universal strategy for parsing files in various media formats requires some understanding of the underlying technologies. However, `AV Foundation` makes this easy, because it lets developers ignore most format-specific details; for handling media metadata, `AV Foundation` provides a unified approach.
@@ -41250,7 +41028,7 @@ Although there are many media formats, the ones we mainly encounter in the Apple
 	![mp4Atom](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4Atom.avif)
 	*MPEG-4 atom structure — real measurement*
 
-	The metadata of `MPEG-4` files is stored in /moov/udat/meta/ilst. There's no standard for the keys used in the `atom`s; everyone follows the keys defined in Apple's unpublished iTunes metadata specification by convention. Although it was never formally released, the documentation for the iTunes metadata format has long been widely known online (I've always wondered — does that count as a release or not? If it was released, why is it still described as unpublished? If it wasn't released, how did it become so well known?). You can refer to the [mp4v2 library](https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki) documentation for more mp4 details.
+	The metadata of `MPEG-4` files is stored in /moov/udat/meta/ilst. There's no standard for the keys used in the `atom`s; everyone follows the keys defined in Apple's unpublished iTunes metadata specification by convention. Although it was never formally released, the documentation for the iTunes metadata format has long been widely known online (I've always wondered — does that count as a release or not? If it was released, why is it still described as unpublished? If it wasn't released, how did it become so well known?). You can refer to the mp4v2 library documentation for more mp4 details.
 
 	`mp4` is the standard extension for MPEG-4 media, e.g. `.m4v`, `.m4a`, `.m4p`, `.m4b`. These variants all use the `MPEG-4` container format, and some also include additional extensions.
 	You only need to remember a few points:
@@ -41269,7 +41047,6 @@ Although there are many media formats, the ones we mainly encounter in the Apple
 
 	The rest of the data in the `ID3` block is made up of frames — key-value pairs describing different metadata. Each frame has a __10-byte header with the actual tag name__, followed by 4 bytes indicating the size, then 2 more bytes defining option flags.
 
-
 	 id3 | version (2 bytes) | revision (remaining bytes) | flag (2 bytes) | size (4 bytes) |
 
 	The remaining bytes of the frame contain the actual metadata value. If the value is a text type, the first byte of the tag contains the actual metadata value. If the value is a text type, the first byte of the tag is used to define the encoding type, e.g. Ox00 represents `ISO-8859-1`, and other encoding types are also supported. The ID3 structure is shown in the figure below.
@@ -41280,9 +41057,7 @@ Although there are many media formats, the ones we mainly encounter in the Apple
 
 > `AV Foundation` supports reading all `ID3v2` tag formats, but `ID3v2` deserves an asterisk. The layout of `ID3v2.2` differs from that of `ID3v2.3` and later versions. Note that some tags consist of 3 characters instead of 4; for example, a song's comment info is stored in the COM frame when the tag is `ID3v2.2`, but when the same song uses an `ID3v2.3` tag or newer, the song's comment info is stored in the COMM frame. The character constants defined by the framework only apply to `ID3v2.3` and later; in the upcoming demo we'll show through code how to remain forward-compatible with `ID3v2.2`.
 
-
 ### __Using Metadata__
-
 
 `AVAsset` and `AVAssetTrack` can query metadata.
 
@@ -41312,9 +41087,7 @@ To access metadata for a specific format, call the `metadataForFormat:` method o
         //Process the metadata (AVMetadataItems)
     }];
 
-
 ```
-
 
 ### __Finding Metadata__
 
@@ -41347,7 +41120,6 @@ Here we use the following method to get the standard objects matching the key an
 ``` objc
 + (NSArray<AVMetadataItem *> *)metadataItemsFromArray:(NSArray<AVMetadataItem *> *)metadataItems withKey:(id)key keySpace:(AVMetadataKeySpace)keySpace;
 ```
-
 
 ### Using AVMetadataItem
 
@@ -41409,7 +41181,6 @@ To solve this problem, we need to create a category extension for `AVMetadataIte
 
 That's it for the basics. In the next post, I'll write a demo showing how the different metadata formats can be parsed in a unified way.
 
-
 End of article
 
 
@@ -41446,7 +41217,6 @@ The most common usage pattern is to generate the needed values in the **vertex s
 * Animation effects — keyframe interpolation, particle systems
 * User-programmable anti-aliasing methods
 
-
 ## GLSL Notes
 
 * **GLSL supports function overloading** (i.e., a parent class defines a method, and a subclass overrides it — this is called overloading)
@@ -41471,7 +41241,7 @@ GLSL has three basic data types:
 ```
 
 __**Note: GLSL does not support pointers. GLSL treats vectors and matrices as basic data types**__  
-[Vector (vector)](http://baike.baidu.com/link?url=XKZL51jLByIFnqrj3vaZ-4cnL-AedjBKiVBcD7pEGQG26Jmb9RYl7QOrX4Mwck-mT0nNlzD8UtzXi4ueVYNGkdO1b2uARr59UAih7ulWRvO): a line segment with a starting position and direction, also called a **vector** (don't be intimidated by these terms — I remember learning about vectors in high school math).
+Vector (vector): a line segment with a starting position and direction, also called a **vector** (don't be intimidated by these terms — I remember learning about vectors in high school math).
 
 ## Vectors
 
@@ -41647,9 +41417,7 @@ void main(void)
   v_texCoord = a_texCoord0;
 }
 
-
 ```
-
 
 `uniform`: Generally used by the application to set initialization values related to the vertex shader and fragment shader. Initialization at declaration is not allowed. The `uniform` qualifier marks a type of global variable that cannot be changed for a given primitive (`primitive`). It can receive parameters passed from the `OpenGL` application.  
 
@@ -41698,7 +41466,6 @@ void main()
   lightColor = texture2D(s_lightMap, v_texCoord);
   gl_FragColor = baseColor * (lightColor + 0.25);
 }
-
 
 ```
 
@@ -41757,11 +41524,9 @@ v4.xxyy;    // Duplicates components
 
 Finally, I recommend a GLSL editing and debugging tool: [OpenGL Shader Builder (Graphics Tools.dmg)](http://adcdownload.apple.com/Developer_Tools/Graphics_Tools_for_Xcode_7.2/Graphics_Tools_for_Xcode_7.2.dmg)
 
-
 # Summary:
 
 Since my memory isn't great and I sometimes can't find things, I've collected some terminology and concepts with explanations to make it easier for future learners to study.
-
 
 References:  
 [GLSL基础](http://www.cnblogs.com/luweimy/p/4208570.html?utm_source=tuicool&utm_medium=referral)
@@ -41917,19 +41682,14 @@ Published At: 2017-04-29 09:15:21 +0000
 # Preface
 > No matter when you graduate or when you start working, this article of mine will be the chapter I recommend to you before you step onto campus or while you're in college. __If you study well, you must keep it up; studying poorly doesn't mean there's no chance in the future__, and if you plan to major in something computer-related, I can tell you everything I've learned and the essential study gear I used, holding nothing back, and it can save you most of your study budget.
 
-
 # Computer Science Study Path
-
 
 [Computer Science Study Path](https://hackway.org/docs/cs/intro)  
 ![learn CS Line](/assets/images/20170429CmputerScienceAndTechnologyClassic/learnCSLine.avif)
 
-
 It is said the site owner is a Peking University student who compiled a computer science study path based on prestigious American universities' CS curricula.
 
 The link above is the most recently updated source for learning CS courses, last updated on 2023/06/30 ↑↑↑.
-
-
 
 ## Three Main Aspects
 
@@ -41937,11 +41697,10 @@ The link above is the most recently updated source for learning CS courses, last
 * Skills
 * Gear
 
-
 ### Books
 Let's start with books — the classic must-haves for computer science in college.
 
-* [C Programming Language (Tan Haoqiang)](http://baike.baidu.com/link?url=rVNBy5FqKGq6YBb22T6Sj0IrRCeFj_SKf9QLjV7avP1cXIelBdhMza-y9Xu4fBHk0ynNI-RiFxbGySk68agqb1zrrQ2xPBZO9-WiqQe3AJy8IHEtHGBWGnxcwJlf77xiVaN3VdvdSn9_OaHodVRmuSl8MbPLBh5e0JzEhE0ikuNIGivWRklNzsL2WTD6WOJT) __Must-learn__  
+* C Programming Language (Tan Haoqiang) __Must-learn__  
 ![C Language](/assets/images/20170429CmputerScienceAndTechnologyClassic/CLanguage.avif)
 
 * [Tsinghua University Press Computer Science Series: Data Structures (C Language Edition)](https://item.jd.com/11076338.html) __Must-learn__  
@@ -41969,10 +41728,10 @@ The books above can be bought in print. As for Python, Java, JS, Node.js, machin
 
 * [Free Programming Books Index (Chinese)](https://github.com/sunyazhou13/free-programming-books-zh_CN) This is the reason you don't need to buy books — all the computer-related technical books, video tutorials, blogs, and other resources are all here. Yes, you read that right: one link does it all.
 * Learn how to set up your own blog, so you can record what you learn and boost your influence.
-  For details, refer to my article [How to Build a Hexo Blog](http://localhost:4000/2017/02/10/build-hexo-blog-Tutorial/)
+  For details, refer to my article [How to Build a Hexo Blog](https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial/)
 * Try to get up one hour earlier each day to read and preview what will be covered in class.
 * Read the blogs of masters in the field.
-* Subscribe to various blogs for new posts (I recommend an app called [Reeder](http://www.0daydown.com/12/436535.html))   
+* Subscribe to various blogs for new posts (I recommend an app called Reeder)   
 ![Reeder](/assets/images/20170429CmputerScienceAndTechnologyClassic/Reeder.avif)
 
 (Beginners probably don't yet know who the masters in each field are; you can figure that out gradually.)
@@ -41983,7 +41742,6 @@ I'm studying the iOS direction, so here's a GitHub link to learning resources an
 
 Below is my Reeder  
 ![Reeder Detail](/assets/images/20170429CmputerScienceAndTechnologyClassic/ReederDetail.avif)
-
 
 ### Gear
 
@@ -42049,7 +41807,6 @@ When I grow old, I'll definitely put this in my museum.
   
   
 
-
 ### Summary
 
 It's fair to say that after reading this article, at least you'll know how to study and how to find study materials easily.
@@ -42077,7 +41834,6 @@ In the end it's still over 8K. But this is already relatively frugal. If you get
 
 Yes, 5K is enough — this is actually the most economical option. If you don't buy a phone and don't buy a mouse and keyboard either, it's just over 4K. Whether you're a fresh graduate or a college student, remember to spend money where it counts, and make the most of your gear. Especially during college, you simply don't need anything that fancy — as long as it works. Once you graduate and become self-sufficient, buying whatever you want won't be a problem.
 
-
 **Make your college life a bit more organized.**
 
 The End
@@ -42094,7 +41850,6 @@ Published At: 2017-04-20 16:35:42 +0000
 ## Preface
 
 Having seen countless times how people always create files using a `timestamp + arc4random()`, I felt deeply frustrated. Doesn't the operating system provide a relevant function? So I found the following code to deal with filename conflicts when creating files.
-
 
 ``` objc
 /* Create a recording file */
@@ -42124,8 +41879,6 @@ During the process
 After completion
 ![done](/assets/images/20170420UniqueFilenameInSystem/done.avif)
 
-
-
 *__Remember that the file suffix needs to include `XXXXXX`__* — each `X` represents one character of `digits + letters`
 *Note*: It's best to use 6 X's or more. [See Linux reference](http://man7.org/linux/man-pages/man3/mkstemp.3.html)
 
@@ -42133,8 +41886,7 @@ The key is to understand the following two functions:
 
 [strdup() is a commonly used string copy function in C](http://baike.baidu.com/item/strdup/5522525)
 
-[mkstemp() creates and opens a file with a unique filename in the system](http://baike.baidu.com/link?url=wFhfkOVXafm15-4vGfxEQiQynIG7BG2yYAurwzS4uHKmby2C2lfhiO2T6WAqbdc3nOP9mEOVTMaBqxOc2eZps7_JIAsIWI0p11pEIl7Vku_)
-
+mkstemp() creates and opens a file with a unique filename in the system
 
 OK, hope this helps
 
@@ -42456,7 +42208,7 @@ Like this:
 }
 ```
 
-Here it is recommended to call the `[self.recorder prepareToRecord]` method to pre-configure the recording instance, similar to creating an `AVAudioPlayer` in the [previous chapter](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/). Both are necessary steps to run the low-level `Audio Queue` initialization. This `prepareToRecord` method also creates a file at the location specified by the given URL parameter, which reduces the latency when recording starts.
+Here it is recommended to call the `[self.recorder prepareToRecord]` method to pre-configure the recording instance, similar to creating an `AVAudioPlayer` in the [previous chapter](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/). Both are necessary steps to run the low-level `Audio Queue` initialization. This `prepareToRecord` method also creates a file at the location specified by the given URL parameter, which reduces the latency when recording starts.
 
 Audio Format
 --
@@ -42508,12 +42260,12 @@ CF_ENUM(AudioFormatID)
 Here `kAudioFormatLinearPCM` writes the uncompressed audio stream to the file. This is the raw data, offering the highest fidelity but also the largest file size. Choosing formats like ACC`kAudioFormatMPEG4AAC` or AppleIMA4`kAudioFormatAppleLossless` will significantly reduce the file size while still maintaining audio quality.
 > *Note:*
 > *The specified audio format must match the file type of the URL you write to. If you record a xxx.wav file, it must follow the Waveform Audio File Format (WAVE) requirements, i.e., little-endian LinearPCM. If the value specified for `AVFormatIDKey` is not `kAudioFormatLinearPCM`, an error will occur. NSError will return an error like the following:*
-> *The operation couldn't be completed. (OSState error 1718449215.)*
+> *The operation couldn't be completed. (OSStatus error 1718449215.)*
 
 Sample Rate
 --
 
-In the code above, `AVSampleRateKey` is used to define the sample rate of the recorder. **The sample rate defines the number of samples taken per second of the input analog audio signal.** Using a **low sample rate**, such as 8kHz, results in a coarse, AM radio-like recording quality, though the file size is smaller; using a **44.1kHz sample rate (CD-quality sample rate)** yields very high quality content, but the file is larger. There are no strict rules about which sample rate to use, but developers should try to stick to **standard sample rates, such as 8000Hz, 16000Hz (16kHz), 22050Hz (22.05kHz), or 44100Hz (44.1kHz), and of course 48000Hz and 96000Hz** (kHz stands for kilohertz). Sample rates above 48000 or 96000 are meaningless to the human ear. Ultimately, it's our ears that do the judging. (The [previous chapter](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/) mentioned that **the audible frequency range of the human ear starts from a low of 20Hz up to a high of 20kHz**, so recording is best done at 2x that frequency.)
+In the code above, `AVSampleRateKey` is used to define the sample rate of the recorder. **The sample rate defines the number of samples taken per second of the input analog audio signal.** Using a **low sample rate**, such as 8kHz, results in a coarse, AM radio-like recording quality, though the file size is smaller; using a **44.1kHz sample rate (CD-quality sample rate)** yields very high quality content, but the file is larger. There are no strict rules about which sample rate to use, but developers should try to stick to **standard sample rates, such as 8000Hz, 16000Hz (16kHz), 22050Hz (22.05kHz), or 44100Hz (44.1kHz), and of course 48000Hz and 96000Hz** (kHz stands for kilohertz). Sample rates above 48000 or 96000 are meaningless to the human ear. Ultimately, it's our ears that do the judging. (The [previous chapter](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/) mentioned that **the audible frequency range of the human ear starts from a low of 20Hz up to a high of 20kHz**, so recording is best done at 2x that frequency.)
 
 Number of Channels
 --
@@ -42601,9 +42353,9 @@ In `AppDelegate`, import `#import <AVFoundation/AVFoundation.h>` and add the fol
 }
 ```
 
-This `AVAudioSessionCategoryPlayAndRecord` is one of those categories described in the [previous chapter](http://sunyazhou.com/2017/03/17/Learning-AV-Foundation-AVAudioPlayer/). We need the **record + play** functionality.
+This `AVAudioSessionCategoryPlayAndRecord` is one of those categories described in the [previous chapter](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/). We need the **record + play** functionality.
 
-Next, configure the permission information in the plist file. You can refer to the article [Access privacy-sensitive data](http://localhost:4000/2017/03/20/Access-privacy-sensitive-data-private-access-permission/) and fill in the required access permission information.
+Next, configure the permission information in the plist file. You can refer to the article [Access privacy-sensitive data](https://www.sunyazhou.com/2017/03/AccessPrivacySensitive/) and fill in the required access permission information.
 
 ![plist1](/assets/images/20170328LearningAVFoundationAVAudioRecorder/FillInfo.avif)
 
@@ -43545,7 +43297,6 @@ Introduction
 Recently I've been learning `AV Foundation`. I want to record what I've learned and also refer to some blog posts.
 The topic of this issue is `AVAudioPlayer`.
 
-
 Audio Basics
 --
 
@@ -43565,7 +43316,7 @@ He laid out a classic audio playback flow (using MP3 as an example)
 7. Repeat steps 1-6 until playback completes
 
 In the iOS system, Apple encapsulated the above process and provided interfaces at different levels
-![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.avif)  
+![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.png)  
 > This is the interface hierarchy of CoreAudio  
 
 Below is a functional description of the mid- and high-level interfaces:
@@ -43588,10 +43339,7 @@ As you can see, Apple provides a very rich set of interfaces that can satisfy al
 * If your app needs to stream audio and store it at the same time, then AudioFileStreamer plus AudioQueue can help you. You can first download the audio data to the local disk, then while downloading, read the local audio file using interfaces like NSFileHandler and hand it to AudioFileStreamer or AudioFile to parse and separate the audio frames. The separated audio frames can then be sent to AudioQueue for decoding and playback. If it's a local file, you can simply read and parse the file directly. (Both of these are fairly straightforward approaches. This kind of requirement can also be implemented using AVFoundation plus a local server. AVAudioPlayer sends the request to the local server, the local server forwards it, obtains the data, stores it, and passes it on to AVAudioPlayer. Another trickier approach is to first download the audio into a file, and once a certain amount of data has been downloaded, give the file path to AVAudioPlayer for playback. Of course, this approach will have problems after seeking in the audio.)
 * If you are developing a professional music player and need to apply audio effects (equalizer, reverb) to the audio, then in addition to reading and parsing data, you also need to use AudioConverter to convert the audio data into PCM data, and then use AudioUnit + AUGraph for audio effects processing and playback (but currently most apps with audio effects develop their own effects modules to process PCM data, because developing this part yourself gives stronger customization and extensibility. After PCM data is processed by the effects processor, it can be played using AudioUnit. Of course, AudioQueue also supports playing PCM data directly.). The diagram below describes the flow of audio playback using AudioFile + AudioConverter + AudioUnit
 
-![audio Unit Play](http://msching.github.io/images/iOS-audio/audioUnitPlay.avif)
-
 All of the above content is reproduced from [码农人生](http://msching.github.io/blog/2014/07/07/audio-in-ios/). I hope he doesn't mind. If there are any problems, I'll remove it immediately.
-
 
    
 
@@ -43605,7 +43353,7 @@ The main functions of `AVAudioSession` include the following:
 * Controls and coordinates the app's input/output devices (for example, microphone, headphones, phone speaker, Bluetooth connected external speakers, or AirPlay)
 * Coordinates your app's audio playback with the system and the behavior of other apps (for example, it needs to be interrupted when there's a phone call, resumed when the call ends, and whether the song should also be muted when the mute button is pressed, etc.)
 
-![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.avif)
+![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png)
 
 *Note: AVAudioSession has been used since iOS 6. Before that it was called AudioSession.*
 
@@ -43615,7 +43363,6 @@ How to use `AVAudioPlayer`
 In my blog I try to use code rather than a thousand words
 Before using `AVAudioPlayer`, you need to import `#import <AVFoundation/AVFoundation.h>` in the `AppDelegate`  
 and start the audio session
-
 
 ``` objc  
 
@@ -43647,7 +43394,6 @@ Remember to enable background playback
 ![Backgounrd Play](/assets/images/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.avif)  
 or modify it in the plist
 ![Plist Modify](/assets/images/20170317LearningAVFoundationAVAudioPlayer/PlistModify.avif)  
-
 
 The code below creates the audio player
 
@@ -43727,7 +43473,6 @@ Creating it requires an `NSURL` representing the path of the file to be played. 
 Here let me talk about `[audioPlayer prepareToPlay]`
 __Calling this function is to obtain the required audio hardware and preload the buffer of the `Audio Queue`.__ Of course, you can skip this method and call `[audioPlayer play]` directly, but __calling the `play` method also implicitly activates it__. Calling `prepareToPlay` is to reduce the latency between the preset loading when creating the player and hearing the sound output.
 
-
 ``` objc
 
 @implementation ViewController
@@ -43752,12 +43497,10 @@ __Calling this function is to obtain the required audio hardware and preload the
     
 }
 
-
 ```
 
 > Call the code that creates the player in `initWithNibName` or `awakeFromNib`  
 I'll explain `[self setupNotifications];` later  
-
 
 First, let me add some common method wrappers, such as __play, pause, stop__
 ``` objc 
@@ -43844,7 +43587,7 @@ If you need to continuously refresh the playback progress bar on the lock screen
 }
 ```
 
-> Reference [iOS background running - background music playback](http://www.iliunian.com/2831.html) 
+> Reference iOS background running - background music playback 
 
 Below we'll introduce  
 `[self setupNotifications];` which registers observers to pause music playback when the audio is unexpectedly interrupted or the headphones are unplugged
@@ -43870,11 +43613,9 @@ Here's the implementation code:
                object:[AVAudioSession sharedInstance]];
 }
 
-
 ```
 
 *Note: remember to add `[[NSNotificationCenter defaultCenter] removeObserver:self]` in dealloc*
-
 
 Scenarios where the audio is unexpectedly interrupted include receiving a phone call while listening to music, or holding down the Home button to use Siri
 
@@ -43914,8 +43655,6 @@ Below is the specific method implementation
         }
     }
 }
-
-
 
 ```
 
@@ -43988,7 +43727,6 @@ Get `NSString *portType = previousOutput.portType`
 If `[portType isEqualToString:AVAudioSessionPortHeadphones]`
 
 If it's headphones `AVAudioSessionPortHeadphones`, then pause playback
-
 
 That's all the code logic for interruption and route changes
 
@@ -44705,11 +44443,11 @@ Published At: 2017-02-10 10:24:25 +0000
 
 # Tutorial for Building a Hexo Blog
 
-> [Migrating from Jekyll to Hexo to Build a Personal Blog](http://www.ezlippi.com/blog/2016/02/jekyll-to-hexo.html)  
+> Migrating from Jekyll to Hexo to Build a Personal Blog  
 
-> [Building Your Own Blog System with HEXO + Github](http://www.czhzero.com/2016/06/25/hexoblog/)
+> Building Your Own Blog System with HEXO + Github
 
-> [Building a Personal Blog with Hexo and Github Pages](http://skx926.com/2016/01/26/build-hexo/)
+> Building a Personal Blog with Hexo and Github Pages
 
 ### 1 Basic Features
 
@@ -44730,7 +44468,7 @@ For the donation/tip feature, just search on Jianshu — there are many articles
 
 ### 3 SSL (Custom Domain with HTTPS Support)
 
-[HTTPS support](https://gbin.me/2017/08/03/Hexo-deployed-in-github-and-coding/)
+HTTPS support
 
 
 
@@ -45247,110 +44985,6 @@ Note: the code above is for `macOS` development.
 
 
 
-URL: https://sunyazhou.com/2017/01/SpringFestival/index.html.md
-Published At: 2017-01-28 13:42:34 +0000
-
-# Going Home for Spring Festival 2017
-
-![7df258f2ecddcf81](http://p1.bqimg.com/584350/7df258f2ecddcf81.avif)
-> I practiced regular script calligraphy for a year. Thanks to the help of my fellow townsman **Pan Xu**, my calligraphy has improved significantly.
-
-
-Departure
---
-
-Standing there with my suitcase, waiting for the subway to go home for the New Year — another year has passed.
-![035a303723a4b623](http://p1.bqimg.com/584350/035a303723a4b623.avif)
-All these years, I've always felt like I'm no different from a migrant worker — just dressed a bit nicer, but deep down I'm still a migrant worker at heart.
-
-
-
-High-speed Rail
---
-
-Opening my eyes, I saw this black land covered with a layer of snow — I must be almost home.
-![Markdown](http://p1.bpimg.com/584350/5addde1fe4d65611.avif)
-I'm a young man who walked out from this black soil. For 23 years I never left this black land, and now I've been working in Beijing for years. No qualification to buy a house, no license plate to buy a car — I can only ride my beloved Niu M1 scooter to work every day. (Honestly, I'm crushed inside.) Only the smog keeps me company, and occasionally Beijing and its locals come to visit me.
-
-I joined Baidu at 24, and now it's been almost 3 years. Thinking about it, I haven't changed jobs in a long time. The salary is pitifully low. Thinking about that factory chief who focuses on AI research every single day, I really want to refuse to work for him anymore.
-
-
-Transit Station
---
-
-Damn, the train has arrived (I plan to buy an apartment here in the future).
-![Markdown](http://i1.piimg.com/584350/698eb97cae2b2dea.avif)
-Just off the train, I was instantly pierced by that familiar cold. A cold so familiar — I had already put on my
-[Lindun shoes](https://item.taobao.com/item.htm?spm=a230r.1.14.9.pmOPas&id=36777946060&ns=1&abbucket=15#detail). Only friends familiar with the Northeast know what Lindun shoes are.
-> The Lindun shoes made in Lindian County, Daqing City, are commonly known as **"old man shoes"**. I won't post a photo — I think these are a cultural heritage that Northeasterners can be proud of, worthy of applying for World Cultural Heritage status. Without these shoes in the Ice City, it would be hard to survive the long, harsh winter. A pair costs only 33 yuan and comes with a pair of woolen insoles. Honestly, this is the conscience of Northeastern industry — these shoes won't fall apart or lose their soles for a whole year. They're very warm to wear all winter. If you don't believe me, ask any Northeasterner you know.
-> Of course, if you're not familiar with the brands, you might not know which to buy. From my memory, only the Linjia and Shuangli brands were good, but the factories probably went bankrupt long ago — at 33 yuan a pair, there's no money to be made. For friends who want to buy or are traveling to the Northeast, I suggest just buying any pair — they're all the same, and they're cheap anyway.
-![Markdown](http://p1.bqimg.com/584350/fb737f626882c66b.avif)
-
-Snacks
---
-
-
-As the old saying goes: "Dumplings when you board, noodles when you land." This saying is quite philosophical. I even looked it up on Baidu.
-But I still want to eat Harbin's Xijiade dumplings.
-![Markdown](http://p1.bqimg.com/584350/042feb2337732f5e.avif)
-> Trust me, if you visit Harbin, you must try **Xijiade Dumplings** and **Dongfang Dumpling King**.
-> If you don't try them, you'll never know what a proper dumpling tastes like. Nobody does dumplings as thoroughly as they do — the wrapper, size, thickness, curvature, all have dedicated measuring tools. If making dumplings were an app, Xijiade would be the Alipay of dumplings. But the frustrating thing is that these traditional national enterprises don't embrace the internet — they don't support any online payment, not Alipay, WeChat, or Baidu Wallet. I really think the CEO of Xijiade should hire me as their Internet President to develop their traditional business using the internet. I'm critical of this closed business model. This is a new era in China — to develop, you must keep up with the times. You can't close your doors and lock yourself in. I suspect the boss of Xijiade doesn't believe in the changes the internet can bring. I must criticize him on this point — he needs to summon the ability of Li Hongzhang, who single-handedly stood against an entire nation. Keep learning and advance with the times.
-
-
-
-Ice and Snow World
---
-
-It's a bit embarrassing to admit, but after living in Harbin for years, I'd never been to **Ice and Snow World**. (I was poor when I was a student.) Tickets on Nuomi cost at least 360 yuan per person, which is definitely a bit expensive.
-
-After starting work and earning money, I had to fulfill this dream from my student days. So I asked my eldest sister to treat me — haha.
-
-![Markdown](http://p1.bqimg.com/584350/d449b5d2f5debbed.avif)
-
-![Markdown](http://i1.piimg.com/584350/f894381b5bd3aaee.avif)
-![Markdown](http://i1.piimg.com/584350/d1115c4e6d7981ab.avif)
-
-
-> This world is all about human imagination. I never thought ice and snow could be turned into such amazing things. Only after going did I realize that with imagination and creativity, even ordinary things can be so interesting. One thing to remember: it's best to have a car when visiting the World. I suggest renting a car or asking a relative who has one. Otherwise, you'll have to take an unlicensed cab back, which is really annoying. As for ride-hailing apps like Didi — in the driver's words, **"None of that Didi stuff works."** This is indeed frustrating. It's a pain when everyone finishes playing and can't get back. The government needs to step up regulation of these taxi drivers.
-
-
-Beautiful Ice City
---
-![Markdown](http://i1.piimg.com/584350/a9abec8d1c2c56e0.avif)
-![Markdown](http://i1.piimg.com/584350/7bf35db34b720d2a.avif)
-![Markdown](http://i1.piimg.com/584350/dc97959821ac8fa2.avif)
-![Markdown](http://i1.piimg.com/584350/a260c895027dd64c.avif)
-> Russian architecture can be seen everywhere in Harbin. In front of Harbin Station (the first two photos), dating back to 1907, someone with a name ending in "-sky" opened a tea house. The buildings still stand near Gogol Street. If you haven't been, go take a look. The last photo shows ruins undergoing rescue restoration.
-
-
-Red Sausage
---
-Harbin has something famous that seems to be called red sausage, but if you're not a local, it's hard to know where to buy the authentic kind. Today I can tell you what authentic Harbin red sausage is.
-![Markdown](http://i1.piimg.com/584350/1736e20ba1e625f5.avif)
-
-![Markdown](http://p1.bpimg.com/584350/40a9d97bdeee2b05.avif)
-
-> You've probably heard of Qiulin red sausage, and most people think red sausage should be the Qiulin brand. Actually, it seems to be from the Qiulin Lidosi series of food products.
-> If you want to buy authentic red sausage, I recommend 2 brands and 2 locations:
-
-  * **Shangwei Red Sausage**
-
-  This Shangwei is located at No. 514 Hongqi Street, Daowai District (opposite Heilongjiang Institute of Engineering). It's a front-store, back-factory operation. It's so famous because Shangwei red sausage is entirely handmade, beloved by the people of Heilongjiang. Many people love its distinctive flavor. Others don't like it because they think it has too much garlic — haha. Either way, it tastes the same to me, nothing special. If I ever move back to Harbin, I'll definitely learn how to make red sausage — making it yourself is the only way to be sure! This red sausage is so popular that you have to line up at 5 AM. They sell hundreds of jin every day, and once it's gone, it's gone — especially during holidays.
-  * **Qiulin Lidosi Red Sausage**
-
-    This is in the basement of the green building shown in the photo above. Wherever you see a long line, that's the most authentic spot to buy Qiulin red sausage. Don't believe anyone who says Qiulin red sausage has moved — it hasn't changed location in decades, how could it suddenly move? It's all tricks of business competition. They can't fool this programmer. (No. 319 East Dazhi Street, near Qiulin International Shopping Center. 15245082279, (0451)58938888)
-This is the place in the photo below.
-![Markdown](http://p1.bqimg.com/584350/b4c23a2cdd0e057b.avif)
-
-From now on, don't ask anyone where to buy the best red sausage. The places listed above are the most authentic.
-
-Going Home
---
-![Markdown](http://p1.bpimg.com/584350/8f60e12618c08949.avif)
-Looking at the sunset in my hometown, I'm really almost home — Hailun City.
-
-
-
 URL: https://sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate/index.html.md
 Published At: 2017-01-18 13:44:57 +0000
 
@@ -45373,7 +45007,6 @@ Here are the iOS technical categories:
 * CocoaPods
 * File-related
 
-
 Audio
 --
 
@@ -45389,27 +45022,24 @@ __[iOS Audio Playback (9): Play While Caching](http://msching.github.io/blog/201
 
 > The above content comes from [码农人生](http://msching.github.io/). I've had exchanges with this guy; his knowledge of low-level audio technology is quite thorough, suitable for beginners and intermediate developers to study, learn, and use.
 
-
 Graphics Processing
 --
 
 __[Basics](https://objccn.io/issue-21-1/)__ a series of tutorials that can be read straight through  
 __[GPUImage](https://github.com/BradLarson/GPUImage)__ library   
 __[iOS GPUImage Source Code Analysis (1)](http://mp.weixin.qq.com/s/pg2vPYftkfghoQswxJFIvw)__
-__[Open-Sourcing a Camera App Published on the App Store](http://hawk0620.github.io/blog/2017/02/17/zpcamera-opensource-share/)__
-
+__Open-Sourcing a Camera App Published on the App Store__
 
 Graphics & Images
 --
-__[Face Recognition Based on OpenCV](https://www.objccn.io/issue-21-9/)__  
+__Face Recognition Based on OpenCV__  
 __[Image Editing](https://github.com/3tinkers/TKImageView)__
-
 
 Animation
 --
 
-__[Analysis of the Draggable Unread Bubble Dismissal in QQ](http://kittenyang.com/drawablebubble/)__  
-__[iOS Custom Pull-Down Line Animation](http://kittenyang.com/curvelineanimation/)__  
+__Analysis of the Draggable Unread Bubble Dismissal in QQ__  
+__iOS Custom Pull-Down Line Animation__  
 __[A Library Covering All iOS Animation Effects](https://github.com/sunyazhou13/Animations)__
 __[pop](https://github.com/facebook/pop)__
 
@@ -45417,44 +45047,35 @@ __[pop](https://github.com/facebook/pop)__
 > Those are the general animation posts, 2 of which are from Kitten  
 > Continually updated
 
-
 Transition Animation
 --
-
 
 __WWDC 2013 Session Notes - ViewController Transitions in iOS 7__ This post by 喵神 is a must-read
 
 __[UIPresentationController Tutorial: Getting Started](https://www.raywenderlich.com/139277/uipresentationcontroller-tutorial-getting-started)__ requires a VPN (翻墙)  
-*(By the way, let me explain the term "翻墙" (climbing the wall). The formal term for it is 科学上网 (scientific internet access); in slang it's called 自备梯子 (bring your own ladder), because at first everyone used [云梯VPN](https://www.yuntipub.com/) to access foreign websites. Our country set up a huge local-area network behind a crappy firewall. Although it has hindered the development of world civilization and technology, it also blocks some unhealthy content — for instance, what if one day you build a lathe and make a submachine gun, haha. So getting over that firewall is commonly known as "翻墙" (wall climbing).)*
+*(By the way, let me explain the term "翻墙" (climbing the wall). The formal term for it is 科学上网 (scientific internet access); in slang it's called 自备梯子 (bring your own ladder), because at first everyone used 云梯VPN to access foreign websites. Our country set up a huge local-area network behind a crappy firewall. Although it has hindered the development of world civilization and technology, it also blocks some unhealthy content — for instance, what if one day you build a lathe and make a submachine gun, haha. So getting over that firewall is commonly known as "翻墙" (wall climbing).)*
 
 __[Custom View Controller Transition Animation and a Small Pull-Down Menu Demo | AppCoda Translation Series](http://wxgbridgeq.github.io/blog/2015/08/10/custom-transition-animation/)__
 
 > You can also search GitHub for __[Transition](https://github.com/search?l=Objective-C&o=desc&q=Transition&s=stars&type=Repositories&utf8=%E2%9C%93)__  
 > There are many such transition animations; I won't introduce them one by one.
 
-
 ASDK (AsyncDisplayKit)
 --
 
 __[Official Documentation](http://asyncdisplaykit.org/)__ (requires a VPN)  
-__[Chinese Translation](http://reactnative.cn/docs/0.46/getting-started.html)__  
+__Chinese Translation__  
 __[AsyncDisplayKit 2.0 Tutorial: Getting Started](https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started)__  
 __[AsyncDisplayKit 2.0 Tutorial: Automatic Layout](https://www.raywenderlich.com/124696/asyncdisplaykit-2-0-tutorial-automatic-layout)__  
-__[Translation of the Official AsyncDisplayKit Documentation](http://awhisper.github.io/2016/05/04/AsyncDisplayKit%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/)__  
-__[AsyncDisplayKit Source Code Analysis (1): Outline](http://awhisper.github.io/2016/05/06/AsyncDisplayKit%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/)__  
-__[AsyncDisplayKit Source Code Analysis (2): Asynchronous Rendering](http://awhisper.github.io/2016/12/16/AysncDisplayKit%E5%88%86%E6%9E%90-%E4%BA%8C/)__  
+__Translation of the Official AsyncDisplayKit Documentation__  
+__AsyncDisplayKit Source Code Analysis (1): Outline__  
+__AsyncDisplayKit Source Code Analysis (2): Asynchronous Rendering__  
 __[Performance Tuning with ASDK - Improving the Rendering Performance of iOS UIs](http://draveness.me/asdk-rendering/)__
 
-
 > The posts above come from __[raywenderlich](https://www.raywenderlich.com/)__  
-> The source code analyses come from __[折腾范儿の味精
-> ](http://awhisper.github.io/)__, the blog of a colleague from the Baidu Read team  
+> The source code analyses come from __折腾范儿の味精
+>__, the blog of a colleague from the Baidu Read team  
 > Here I want to share my views on ASDK. I've tried to read the source code and the official documentation, and I found that this is not something you can just start using right away. It's almost like having a beginner learn **UIKit** all over again — integration is quite simple, but just the layout system alone is enough for a developer to study for a while, and you can't use Masonry with it. However, for a page with simple functionality that needs performance tuning, it's worth considering.
-
-
-
-
-
 
 Swift-related
 --
@@ -45464,11 +45085,9 @@ __[A Must-Read for Swift 3: Understanding the New GCD API Through Use Cases](htt
 
 > Continually updating...
 
-
 Math & Graphics
 --
 __[Mathematics for Graphics](https://jackschaedler.github.io/)__ e.g., Fourier transform
-
 
 Architecture
 --
@@ -45477,10 +45096,8 @@ __[Casa's Blog](http://casatwy.com/)__
 > I have to comment on this Casa guy. He's the only iOS architect I truly admire. In my words, this is what a real architect in a programmer's mind looks like, not those so-called architects who merely sound impressive. When I worked at Baidu Cloud (the one you see as Baidu Netdisk), there was a T8 architect sitting right across from me. That architect was so idle every day that I really wanted to kick his ass. He modified the iOS program without even removing the xib references, which eventually caused a crash in production. I actually really want to give him a piece of advice: no matter how awesome your skills are, you should keep writing code every day. Remember the words of Confucius: 『吾尝终日而思矣，不如须臾之所学也』(I once spent all day pondering, but it wasn't as good as a moment of learning).  
 > This Casa guy showed me what an architecture engineer and a business engineer are. He's someone who can truly write architecture code and then throw it to the business engineers, saying: follow this approach.
 
-
 Masonry
 --
-__[](http://tutuge.me/2015/05/23/autolayout-example-with-masonry/)__  
 __[Interesting AutoLayout Examples - Implemented with Masonry](http://tutuge.me/2015/05/23/autolayout-example-with-masonry/)__  
 __[Interesting AutoLayout Examples 2 - Implemented with Masonry](http://tutuge.me/2015/08/08/autolayout-example-with-masonry2/)__ 
 __[Interesting AutoLayout Examples 3 - Implemented with Masonry](http://tutuge.me/2015/12/14/autolayout-example-with-masonry3/)__ 
@@ -45488,16 +45105,14 @@ __[Interesting AutoLayout Examples 4 - Implemented with Masonry](http://tutuge.m
 __[Interesting AutoLayout Examples 5 - Implemented with Masonry](http://tutuge.me/2017/03/12/autolayout-example-with-masonry5/)__  
 
 __[iOS Auto Layout Framework - Masonry in Detail](http://www.jianshu.com/p/ea74b230c70d)__  
-__[Masonry — Using Pure Code for Adaptive Auto Layout in iOS Apps](http://www.ios122.com/2015/09/masonry/)__ Chinese translation
+__Masonry — Using Pure Code for Adaptive Auto Layout in iOS Apps__ Chinese translation
 
 > By the way, I personally think that to learn Masonry, you only need to read the Chinese translation first and then go through 土土哥's (Brother Tutu's) tutorial, and you'll get it. 土土哥's Masonry tutorial is basically the Chinese documentation. Very well written.
-
 
 CocoaPods
 --
 
 __[Using CocoaPods for Dependency Management in iOS Programs](http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/)__ A must-read article by 巧神
-
 
 File-related
 --
@@ -45505,62 +45120,59 @@ File-related
 __[File List](https://github.com/sunyazhou13/FileExplorer)__  
 __[HYFileManager](https://github.com/sunyazhou13/HYFileManager)__  
 
-
-
-
 Blog List
 --
 
 | Blog URL                                     | RSS URL                                    |
 | ---------------------------------------- | :--------------------------------------- |
 | [OneV's Den](http://onevcat.com)         | <http://onevcat.com/atom.xml>            |
-| [破船之家](http://beyondvincent.com)         | <http://beyondvincent.com/atom.xml>      |
-| [NSHipster](http://nshipster.cn)         | <http://nshipster.cn/feed.xml>           |
-| [Limboy 无网不剩](http://blog.leezhong.com/) | <http://feeds.feedburner.com/lzyy>       |
+| 破船之家         | <>      |
+| NSHipster         | <>           |
+| Limboy 无网不剩 | <>       |
 | [唐巧的技术博客](http://blog.devtang.com)       | <http://blog.devtang.com/atom.xml>       |
 | [Lex iOS notes](http://ios.lextang.com)  | <http://ios.lextang.com/rss>             |
 | [念茜的博客](http://nianxi.net)               | <http://nianxi.net/feed.xml>             |
-| [Xcode Dev](http://blog.xcodev.com)      | <http://blog.xcodev.com/atom.xml>        |
-| [Ted's Homepage](http://wufawei.com/)    | <http://wufawei.com/feed>                |
-| [txx's blog](http://blog.t-xx.me)        | <http://blog.t-xx.me/atom.xml>           |
-| [KEVIN BLOG](http://imkevin.me)          | <http://imkevin.me/rss>                  |
+| Xcode Dev      | <>        |
+| Ted's Homepage    | <>                |
+| txx's blog        | <>           |
+| KEVIN BLOG          | <>                  |
 | [阿毛的蛋疼地](http://www.xiangwangfeng.com)   | <http://www.xiangwangfeng.com/atom.xml>  |
 | [亚庆的 Blog](http://billwang1990.github.io) | <http://billwang1990.github.io/atom.xml> |
-| [Nonomori](http://nonomori.farbox.com)   | <http://nonomori.farbox.com/feed>        |
-| [言无不尽](http://tang3w.com)                | <http://tang3w.com/atom.xml>             |
+| Nonomori   | <>        |
+| 言无不尽                | <>             |
 | [Wonderffee's Blog](http://wonderffee.github.io) | <http://wonderffee.github.io/atom.xml>   |
 | [I'm TualatriX](http://imtx.me)          | <http://imtx.me/feed/latest/>            |
-| [vclwei](http://vclwei.com)              | <http://vclwei.com/posts.rss>            |
-| [Cocoabit](http://blog.cocoabit.com)     | <http://blog.cocoabit.com/atom.xml>      |
-| [nixzhu on scriptogr.am](http://nixzhu.me) | <http://nixzhu.me/feed>                  |
+| [vclwei](http://vclwei.com)              | <>            |
+| Cocoabit     | <>      |
+| nixzhu on scriptogr.am | <>                  |
 | [不会开机的男孩](http://studentdeng.github.io)  | <http://studentdeng.github.io/atom.xml>  |
-| [Nico](http://www.taofengping.com)       | <http://www.taofengping.com/rss.xml>     |
-| [阿峰的技术窝窝](http://hufeng825.github.io)    | <http://hufeng825.github.io/atom.xml>    |
-| [answer_huang](http://answerhuang.duapp.com) | <http://answerhuang.duapp.com/index.php/feed/> |
-| [webfrogs](http://webfrogs.me)           | <http://webfrogs.me/feed/>               |
-| [代码手工艺人](http://joeyio.com)              | <http://joeyio.com/atom.xml>             |
+| Nico       | <>     |
+| [阿峰的技术窝窝](http://hufeng825.github.io)    | <>    |
+| answer_huang | <> |
+| webfrogs           | <>               |
+| 代码手工艺人              | <>             |
 | [Lancy's Blog](http://gracelancy.com)    | <http://gracelancy.com/atom.xml>         |
-| [I'm Allen](http://www.imallen.com)      | <http://www.imallen.com/atom.xml>        |
-| [Travis' Blog](http://imi.im/)           | <http://imi.im/feed>                     |
-| [王中周的技术博客](http://wangzz.github.io/)     | <http://wangzz.github.io/atom.xml>       |
-| [会写代码的猪](http://jiajun.org/)             | <http://gaosboy.com/feed/atom/>          |
+| I'm Allen      | <>        |
+| Travis' Blog           | <>                     |
+| [王中周的技术博客](http://wangzz.github.io/)     | <>       |
+| [会写代码的猪](http://jiajun.org/)             | <>          |
 | [克伟的博客](http://wangkewei.cnblogs.com/)   | <http://feed.cnblogs.com/blog/u/23857/rss> |
 | [摇滚诗人](http://cnblogs.com/biosli)        | <http://feed.cnblogs.com/blog/u/35410/rss> |
 | [Luke's Homepage](http://geeklu.com/)    | <http://geeklu.com/feed/>                |
 | [萧宸宇](http://iiiyu.com/)                 | <http://iiiyu.com/atom.xml>              |
 | [Yuan博客](http://www.heyuan110.com/)      | <http://www.heyuan110.com/?feed=rss2>    |
-| [Shining IO](http://shiningio.com/)      | <http://shiningio.com/atom.xml>          |
+| Shining IO      | <>          |
 | [YIFEIYANG--易飞扬的博客](http://www.yifeiyang.net/) | <http://www.yifeiyang.net/feed>          |
-| [KooFrank's Blog](http://koofrank.com/)  | <http://koofrank.com/rss>                |
-| [hello it works](http://helloitworks.com) | <http://helloitworks.com/feed>           |
+| KooFrank's Blog  | <>                |
+| hello it works | <>           |
 | [码农人生](http://msching.github.io/)        | <http://msching.github.io/atom.xml>      |
 | [玉令天下的Blog](http://yulingtianxia.com)    | <http://yulingtianxia.com/atom.xml>      |
 | [不掏蜂窝的熊](http://www.hotobear.com/)       | <http://www.hotobear.com/?feed=rss2>     |
-| [猫·仁波切](https://andelf.github.io/)       | <https://andelf.github.io/atom.xml>      |
-| [煲仔饭](http://ivoryxiong.org/)            | <http://ivoryxiong.org/feed.xml>         |
-| [里脊串的开发随笔](http://adad184.com)           | <http://adad184.com/atom.xml>            |
-| [Chun Tips](http://chun.tips/)           | <http://chun.tips/atom.xml>              |
-| [Why's blog - 汪海的实验室](http://blog.callmewhy.com/) | <http://blog.callmewhy.com/atom.xml>     |
+| [猫·仁波切](https://andelf.github.io/)       | <>      |
+| 煲仔饭            | <>         |
+| [里脊串的开发随笔](http://adad184.com)           | <>            |
+| Chun Tips           | <>              |
+| Why's blog - 汪海的实验室 | <>     |
 
 
 

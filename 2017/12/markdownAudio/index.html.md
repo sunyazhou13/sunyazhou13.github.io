@@ -62,7 +62,7 @@ https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66
 
 
 更多技巧可参考以前写的一篇文章  
-[markdown折叠](https://www.sunyazhou.com/2017/10/25/20171025markdownSkill/)    
-[markdown 表格](https://www.sunyazhou.com/2017/09/29/20170929MarkdownTable/)
+[markdown折叠](https://www.sunyazhou.com/2017/10/MarkdownSkill/)    
+[markdown 表格](https://www.sunyazhou.com/2017/09/MarkdownTable/)
 
 全文完

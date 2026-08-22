@@ -21,7 +21,7 @@ typora-root-url: ..
 
 | 快捷键 | 用途 | 备注 |
 | ------| ------ | ------ |
-| ⌘(Command) + `B` |  进入到类或者对象的定义文件中中 | 类似Xcode中的  ⌘(Command) + `→`|
+| ⌘(Command) + `B` |  进入到类或者对象的定义文件中 | 类似Xcode中的  ⌘(Command) + `→`|
 | ⌘(Command) +  ⇧(Shift) + ⌫(Back) |  与上面相反,返回上一级 | 类似Xcode中的  ⌘(Command) + `←`|
 | | | |
 | | | |
@@ -124,7 +124,7 @@ aboutToDisappear(): void {
 
 生命周期流程如下图所示，下图展示的是被**@Entry装饰的组件（首页）生命周期。  
 ![Entry Life Cycle](/assets/images/20240119ArkTSBasic/EntryLifeCycle.avif)  
-**由此可知, @Component组件的声明周期方法 中间包含了@Entry方法全部生命周期方法调用.**
+**由此可知, @Component组件的生命周期方法 中间包含了@Entry方法全部生命周期方法调用.**
 
 示例代码演示了一个LifeCycle中 添加一个Child子组件,点击按钮push到新页面LifeCycleDetail
 
@@ -251,7 +251,7 @@ struct LifeCycleDetail {
   }
 }
 ```
-当我们启动预览的时候声明周期函数如下:
+当我们启动预览的时候生命周期函数如下:
 
 ``` sh
 app Log: LiftCycle aboutToAppear
@@ -454,7 +454,7 @@ struct LearnDetail {
 }
 ```
 
-以上是是如何使用 @Styles装饰器的代码, [参考官方@Styles文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
+以上是如何使用 @Styles装饰器的代码, [参考官方@Styles文档](https://developer.harmonyos.com/cn/docs/documentation/doc-guides-V2/arkts-style-0000001630145729-V2)
 
 ### @Extend装饰器: 定义扩展组件样式
 
@@ -606,7 +606,7 @@ struct LearnDetailProp1 {
 
 ### @Link装饰器:父子双向同步
 
-示例代码如果
+示例代码如下
 
 ``` ts
 // @Link装饰状态数据，方便父与子组件之问进行数据传递与同步 父State <--------->prop 双向传递
@@ -737,7 +737,7 @@ struct  LearnDetailLink1 {
 @Consume('a') c: number;
 ```
 
-显然这修饰器是统一标识 类型一直 根据文档说明如下
+显然这修饰器是统一标识 类型一致 根据文档说明如下
 
 | @Provide变量装饰器 | 	说明  |
 | ------| ------ |
@@ -895,7 +895,7 @@ struct ForEachDemo {
 
 ![For Each](/assets/images/20240119ArkTSBasic/ForEach.avif)
 
-这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在Harmonry4.1中*) => {}__
+这里有个坑, __ForEach(this.tags, (tag : string*这里必须标注类型在HarmonyOS4.1中*) => {}__
 
 如果不标注类型就容易报错
 

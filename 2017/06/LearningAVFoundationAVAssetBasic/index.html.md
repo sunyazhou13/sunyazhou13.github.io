@@ -10,7 +10,6 @@ typora-root-url: ..
 
 ![Album Detail](/assets/images/20170616LearningAVFoundationAVAssetBasic/AlbumDetail.avif)
 
-
 # 前言
 本篇讲述的`AVAsset`元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年.... 等这些数据的来源). 当然这种意义上的字段信息 属于`AVAsset`的一个属性。`AV Foundation`通过`AVAsset`封装来处理各种音频的元数据, __比如从mp3文件中解析出来封面图(artwork)__等。 本章的具体内容如下:
 
@@ -45,8 +44,6 @@ typora-root-url: ..
   
 #### __保存元数据__
 ---
-
-
 
 ### __理解`AVAsset`资源含义__  
 `AVAsset`是一个不可变的抽象类,定义媒体资源混合呈现方式.里面包含音视频的**曲目**、**格式**、**时长**, 以及**元数据NSData**(二进制的bytes).
@@ -88,7 +85,6 @@ _**`AVAsset.tracks`**_ 如下
 > ....
 
 `AVAsset`是个抽象类, 它不能直接被实例化. 当使用`assetWithURL:`方法创建实例时,实际上是创建了`AVAsset`的子类`AVURLAsset` 有时候会直接使用这个类, 因为它允许通过传递选项字典来精细调整资源的创建方式, 举个例子,比如创建 用在音频或视频编辑场景中的资源, 可能希望传递一个选项(option)的字典来告诉程序提供更精确的时长和计时等信息 例如:
-
 
 ``` objc
 
@@ -133,7 +129,6 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 
 我们获取媒体的一个常见位置就是用户的iPod库. `MediaPlayer` framework 框架提供了API, 用于在iPod库中查询和获取条目. 当找到想获取的item时, 可以得到一个存储的URL并使用这个得到的URL初始化一个资源, 如下例所示:  
 
-
 ``` objc
     //艺术家
     MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:@"刘德华" forProperty:MPMediaItemPropertyArtist];
@@ -156,15 +151,12 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     }
 ```
 
-
 `MediaPlayer`framework提供了一个为`MPMediaPropertyPredicate`的类,用户帮助用户在iPod库中查找到具体内容所用的查询语句
 上边举例一个例子: 在`刘德华`的`真永远`(真永远专辑)  唱片中查找`爱你一万年`这首歌, 执行完查询 会返回这个媒体 条目的资源URL属性(`MPMediaItemPropertyAssetURL`). 并使用这个属性创建`AVAsset`
 
 ##### macOS iTunes库
 
 在 macOS(以前叫 OS X)上, iTunes是用户的媒体资源中心. 要识别这个库中的资源, 我们通常要对iTunes音乐目录中的iTunes Music Library.xml 文件进行解析, 从而得到相关数据. 不过在 Mac OS X 10.8山狮之后 有了比较简单的方法--`iTunesLibrary`framework.
-
-
 
 ``` objc 
 ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
@@ -183,7 +175,6 @@ ITLibrary *library = [ITLibrary libraryWithAPIVersion:@"1.0" error:nil];
     }
     
 ```
-
 
 `iTunesLibrary`框架并没有像MediaPlayer框架那样给出具体的查询API. 不过开发者可使用标准的Cocoa NSPredicate(谓词)类来构建一个复杂的查询,当筛出需要的media item集合后，可使用`ITLibMediaItem`的`location`属性得到一个URL并创建`AVAsset`.
 
@@ -247,7 +238,6 @@ typedef enum AVKeyValueStatus : NSInteger {
 > (1) 每次调用 `loadValuesAsynchronouslyForKeys:completionHandler:`方法时只会调用一次`completionHandler`block, 调用这个callback的次数不是根据传递给这个方法的key个数决定的.
 > (2) 需要为每个请求的属性调用`statusOfValueForKey:error:`,不能假设所有属性都返回相同的状态值.
 
-
 ### __媒体元数据__
 	
 当创建一个媒体应用程序时,了解该媒体的组织格式非常重要, 简单的展示一堆文件名也许在文件不多的时候还能接受, 如果大规模批量的文件需要展示就比较蛋疼了, 我们真正需要的是 _找到一种方法对媒体进行描述,当用户可以方便的找到、识别和组织这些媒体._ 我们所使用的`AV Foundation`中的主要媒体格式(*.mp4、*.mp3、*.mov、*.mkv.....)都可以嵌入描述其内容的元数据.因为各种媒体格式的描述不尽相同,要搞一套通用的策略去解析各种媒体的格式文件,这要求我们对底层技术有一些了解.不过`AV Foundation`让这些变得简单,因为它使开发者不需要考虑大多数特定格式的细节; 在处理媒体元数据方面, AV Foundation`提供了一套统一的方法.
@@ -267,8 +257,8 @@ typedef enum AVKeyValueStatus : NSInteger {
 	
 	![Atom Inspector](/assets/images/20170616LearningAVFoundationAVAssetBasic/AtomInspector.avif)
 	
-	下载地址:[Atom Inspector 猛击这里](http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg)  貌似需要登录开发者帐号
-	下载中心:[苹果官方软件下载中心](https://developer.apple.com/download/more/)  貌似需要登录开发者帐号 
+	下载地址:[Atom Inspector 猛击这里](http://adcdownload.apple.com/QuickTime/atom_inspector/atom_inspector.dmg)  貌似需要登录开发者账号
+	下载中心:[苹果官方软件下载中心](https://developer.apple.com/download/more/)  貌似需要登录开发者账号 
 	
 	下图就是atom格式
 	![Quick Time Atom Structure New](/assets/images/20170616LearningAVFoundationAVAssetBasic/QuickTimeAtomStructureNew.avif)
@@ -298,7 +288,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	![mp4Atom](/assets/images/20170616LearningAVFoundationAVAssetBasic/mp4Atom.avif)
 	*MPEG-4 atom结构 实测结果*
 	
-	`MPEG-4`文件的元数据保存在`/moov/udat/meta/ilst`中. 对于`atom`中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考[mp4v2库](https://code.google.com/archive/p/mp4v2/wikis/iTunesMetadata.wiki)文档了解更多mp4内容.
+	`MPEG-4`文件的元数据保存在`/moov/udat/meta/ilst`中. 对于`atom`中使用key没有标准, 大家都墨守成规的遵循苹果尚未发布的iTunes元数据规范中对key的定义. 虽然没有正式的发布,但iTunes元数据格式的相关文档已经在网上广为人知了(我就很纳闷 这算是发了版本还是没发,发了怎么还是尚未公布,没发怎么又广为人知...). 可以参考mp4v2库文档了解更多mp4内容.
 	
 	`mp4`是对MPEG-4媒体的标准扩展.eg: `.m4v`、`.m4a`、`.m4p`、`.m4b`.这些变体使用的都是`MPEG-4`容器格式,也有些包含了附加的扩展功能.  
 	大家只需要记住几点:
@@ -328,9 +318,7 @@ typedef enum AVKeyValueStatus : NSInteger {
 	
 > `AV Foundation`支持所有`ID3v2`标签格式的读取操作,但是`ID3v2`是要加星号的.`ID3v2.2`的布局和`ID3v2.3`及之后版本的布局不同. 需要注意:有些标签由3个字符组成,而不是4个字符, 比如一首歌曲的标注信息, 当标签为`ID3v2.2`时,是被保存到COM帧中,但当同一首歌使用`ID3v2.3`标签或更新版本的标签时,歌曲的标注信息会被保存在COMM帧中,框架定义的字符常量只适用于`ID3v2.3`及以后版本,后续demo中我们通过代码演示如何向前兼容`ID3v2.2`.
 
-
 ### __使用元数据__
-
 
 `AVAsset`和`AVAssetTrack`可以实现查询元数据功能  
 
@@ -361,9 +349,7 @@ typedef enum AVKeyValueStatus : NSInteger {
         //处理metadata (AVMetadataItems)
     }];
 
-
 ```
-
 
 ### __查找元数据__
 
@@ -396,7 +382,6 @@ typedef enum AVKeyValueStatus : NSInteger {
 ``` objc
 + (NSArray<AVMetadataItem *> *)metadataItemsFromArray:(NSArray<AVMetadataItem *> *)metadataItems withKey:(id)key keySpace:(AVMetadataKeySpace)keySpace;
 ```
-
 
 ### 使用AVMetadataItem
 
@@ -457,6 +442,5 @@ AVMetadataItem 可以理解成它是一个 专用于元数据的 字典(key: val
 ```
 
 基础篇部分讲解到这里 下一篇 会写个demo演示一下元数据的各种不同格式如何统一解析
-
 
 全文完

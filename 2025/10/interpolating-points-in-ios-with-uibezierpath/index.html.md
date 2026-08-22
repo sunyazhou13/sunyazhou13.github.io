@@ -22,7 +22,7 @@ typora-root-url: ..
 
 ## UIBezierPath 和贝塞尔曲线
 
-在 iOS 中，我们使用 <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIBezierPath_class/Reference/Reference.html" title="UIBezierPath">UIBezierPath</a> 绘制直线段和曲线段。通过 <code>addLineToPoint:</code> 添加线性段非常简单，但如何绘制曲线形状呢？
+在 iOS 中，我们使用 <a href="" title="UIBezierPath">UIBezierPath</a> 绘制直线段和曲线段。通过 <code>addLineToPoint:</code> 添加线性段非常简单，但如何绘制曲线形状呢？
 
 可以通过在路径中添加<i>三次贝塞尔曲线</i>来绘制曲线段。三次贝塞尔曲线由四个控制点定义——这四个点的位置定义了曲线的形状。在下图中，每个点都是欧几里得空间中的 2D (x,y) 点。
 
@@ -54,7 +54,7 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 
 曲线 <b>A</b> 和 <b>B</b> 都是通过 Hermite 插值创建的。曲线 <b>A</b> 看起来很好——点大致均匀分布。然而，曲线 <b>B</b> 由于点的不规则分布而出现扭结和自相交。
 
-另一种用曲线拟合点的选择是使用 <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom 样条曲线</a>。与 Hermite 曲线一样，Catmull-Rom 曲线会穿过插值点并生成平滑结果，但它们还提供额外的控制——一个标量 alpha 值（在 0.0 和 1.0 之间），用于控制切线幅度。有关详细信息，请参阅这篇出色的论文，标题为 <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCsQFjAA&amp;url=http%3A%2F%2Fwww.cemyuksel.com%2Fresearch%2Fcatmullrom_param%2Fcatmullrom.pdf&amp;ei=FSdcU47DE-mfyQGgzYDYDQ&amp;usg=AFQjCNHa0SzJ9H6nSDAdCt9GD9jAkFnvMg&amp;sig2=hbl_LJtItSnusxWD-nhzKQ&amp;bvm=bv.65397613,d.aWc">关于 Catmull-Rom 曲线的参数化</a>，其中讨论了 alpha 的影响。
+另一种用曲线拟合点的选择是使用 <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline">Catmull-Rom 样条曲线</a>。与 Hermite 曲线一样，Catmull-Rom 曲线会穿过插值点并生成平滑结果，但它们还提供额外的控制——一个标量 alpha 值（在 0.0 和 1.0 之间），用于控制切线幅度。有关详细信息，请参阅这篇出色的论文，标题为 <a href="">关于 Catmull-Rom 曲线的参数化</a>，其中讨论了 alpha 的影响。
 
 常用的 alpha 值为 0.0、0.5 和 1.0，分别对应曲线的<i>均匀</i>、<i>向心</i>和<i>弦长</i>参数化。
 ![均匀、弦长和向心参数化](/assets/images/20251020InterpolatingPointsIniOSwithUIBezierPath/UniformChordalCentripetal.avif)

@@ -8,7 +8,7 @@ typora-root-url: ..
 
 ---
 
-![Xcode Build Configration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigrationFile1.avif)
+![Xcode Build Configuration File](/assets/images/20201004XcodeBuildXcconfigFile/XcodeBuildConfigurationFile1.avif)
 
 # 前言
 

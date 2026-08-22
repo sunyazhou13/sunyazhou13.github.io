@@ -14,7 +14,7 @@ typora-root-url: ..
 
 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
 
-[前几篇](https://www.sunyazhou.com/tags/iOS%E9%9D%A2%E8%AF%95%E9%A2%98/)我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO
+[前几篇](https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/)我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO
 
 
 本章的主要回答的问题如下:

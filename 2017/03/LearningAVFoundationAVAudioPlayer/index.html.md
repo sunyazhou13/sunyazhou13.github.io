@@ -15,7 +15,6 @@ typora-root-url: ..
 最近在学习`AV Foundation` 试图把学习内容记录下来 并参考一些博客文章
 本期的内容是`AVAudioPlayer`
 
-
 音频知识基础  
 --
 
@@ -35,7 +34,7 @@ typora-root-url: ..
 7. 重复1-6步直到播放完成
 
 在iOS系统中apple对上述的流程进行了封装并提供了不同层次的接口 
-![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.avif)  
+![core audio layers](https://developer.apple.com/library/content/documentation/MusicAudio/Conceptual/CoreAudioOverview/Art/core_audio_layers_2x.png)  
 > 这是CoreAudio的接口层次  
 
 下面对其中的中高层接口进行功能说明：
@@ -58,10 +57,7 @@ typora-root-url: ..
 * 如果你的app需要对音频进行流播放并且同时存储，那么AudioFileStreamer加AudioQueue能够帮到你，你可以先把音频数据下载到本地，一边下载一边用NSFileHandler等接口读取本地音频文件并交给AudioFileStreamer或者AudioFile解析分离音频帧，分离出来的音频帧可以送给AudioQueue进行解码和播放。如果是本地文件直接读取文件解析即可。（这两个都是比较直接的做法，这类需求也可以用AVFoundation+本地server的方式实现，AVAudioPlayer会把请求发送给本地server，由本地server转发出去，获取数据后在本地server中存储并转送给AVAudioPlayer。另一个比较trick的做法是先把音频下载到文件中，在下载到一定量的数据后把文件路径给AVAudioPlayer播放，当然这种做法在音频seek后就回有问题了。）
 * 如果你正在开发一个专业的音乐播放软件，需要对音频施加音效（均衡器、混响器），那么除了数据的读取和解析以外还需要用到AudioConverter来把音频数据转换成PCM数据，再由AudioUnit+AUGraph来进行音效处理和播放（但目前多数带音效的app都是自己开发音效模块来坐PCM数据的处理，这部分功能自行开发在自定义性和扩展性上会比较强一些。PCM数据通过音效器处理完成后就可以使用AudioUnit播放了，当然AudioQueue也支持直接使对PCM数据进行播放。）。下图描述的就是使用AudioFile + AudioConverter + AudioUnit进行音频播放的流程
 
-![audio Unit Play](http://msching.github.io/images/iOS-audio/audioUnitPlay.avif)
-
 以上内容均转自[码农人生](http://msching.github.io/blog/2014/07/07/audio-in-ios/) 希望大神不要介意 如果有问题 我可立即清除
-
 
    
 
@@ -75,7 +71,7 @@ typora-root-url: ..
 * 控制协调app输入输出设备（比如 麦克风，耳机、手机外放比如蓝牙连接一个外置音响 或airplay）
 * 协调你的app的音频播放和系统以及其他app行为（例如有电话时需要打断，电话结束时需要恢复，按下静音按钮时是否歌曲也要静音等）
 
-![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.avif)
+![aspg intro](https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Art/aspg_intro_2x.png)
 
 *注：AVAudioSession iOS6以后使用 以前叫AudioSession*
 
@@ -85,7 +81,6 @@ typora-root-url: ..
 在我的博客里面我尽量使用code胜过千言万语
 使用`AVAudioPlayer`之前需要在`AppDelegate`里面导入`#import <AVFoundation/AVFoundation.h>`  
 并且启动音频会话
-
 
 ``` objc  
 
@@ -117,7 +112,6 @@ typora-root-url: ..
 ![Backgounrd Play](/assets/images/20170317LearningAVFoundationAVAudioPlayer/BackgounrdPlay.avif)  
 或者在plist里面修改
 ![Plist Modify](/assets/images/20170317LearningAVFoundationAVAudioPlayer/PlistModify.avif)  
-
 
 下面就是创建音频播放器代码
 
@@ -196,7 +190,6 @@ typora-root-url: ..
 这里说一下`[audioPlayer prepareToPlay]`
 __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue`的缓冲区.__ 当然也可以不调用这个方法直接调用 `[audioPlayer play]`，但当  __调用`play`方法时也会隐性激活__,调用`prepareToPlay`是为了减少 创建播放器时预设加载和听到声音输出之间的延时 
 
-
 ``` objc
 
 @implementation ViewController
@@ -221,12 +214,10 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
     
 }
 
-
 ```
 
 > 在`initWithNibName`或`awakeFromNib`时候调用一下创建播放器的代码  
 这个`[self setupNotifications];`后面说  
-
 
 先添加一些常见的方法封装 比如 __播放、暂停、停止__
 ``` objc 
@@ -313,7 +304,7 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
 }
 ```
 
-> 参考[IOS后台运行 之 后台播放音乐](http://www.iliunian.com/2831.html) 
+> 参考IOS后台运行 之 后台播放音乐 
 
 下面我们来介绍一下
 `[self setupNotifications];`注册监听 音频意外中断和耳机拔出时要暂停音乐播放
@@ -339,11 +330,9 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
                object:[AVAudioSession sharedInstance]];
 }
 
-
 ```
 
 *注：记得在delloc里面`[[NSNotificationCenter defaultCenter] removeObserver:self]`*
-
 
 意外中断音频发生的场景 例如 听歌过程中来电话或者 按住home键使用siri 
 
@@ -383,8 +372,6 @@ __调用这个函数是为了取得需要的音频硬件并预加载`Audio Queue
         }
     }
 }
-
-
 
 ```
 
@@ -459,7 +446,6 @@ typedef NS_ENUM(NSUInteger, AVAudioSessionRouteChangeReason)
 如果`[portType isEqualToString:AVAudioSessionPortHeadphones]`
 
 如果是耳机`AVAudioSessionPortHeadphones`则暂停播放
-
 
 以上就是中断和线路切换的一些代码逻辑
 

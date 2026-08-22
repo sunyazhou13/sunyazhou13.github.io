@@ -35,7 +35,6 @@ GLSL编写的着色器函数是对每个数据同时执行的。
 * 动画效果 -- 关键帧插值，粒子系统
 * 用户可编程的反走样方法
 
-
 ## GLSL注意
 
 * **GLSL支持函数重载**(就是父类定义方法,子类复写该方法叫重载)
@@ -60,7 +59,7 @@ GLSL有三种基本数据类型:
 ```
 
 __**注意:GLSL不支持指针,GLSL把向量和矩阵作为基本数据类型**__  
-[向量(vector)](http://baike.baidu.com/link?url=XKZL51jLByIFnqrj3vaZ-4cnL-AedjBKiVBcD7pEGQG26Jmb9RYl7QOrX4Mwck-mT0nNlzD8UtzXi4ueVYNGkdO1b2uARr59UAih7ulWRvO):有起始位置有方向的线段,也称作 **矢量**(不要被这些名词吓到,我记得这个向量是我高二的时候数学学的东西).
+向量(vector):有起始位置有方向的线段,也称作 **矢量**(不要被这些名词吓到,我记得这个向量是我高二的时候数学学的东西).
 
 ## 矢量
 
@@ -235,9 +234,7 @@ void main(void)
   v_texCoord = a_texCoord0;
 }
 
-
 ```
-
 
 `uniform`:一般是应用程序用于设定顶点着色器和片断着色器相关初始化值.不允许声明时初始化.`uniform`限定符标记的是一种全局变量,该变量对于一个图元（`primitive`）来说是不可更改的 它可以从`OpenGL`应用程序中接收传递来的参数  
 
@@ -285,7 +282,6 @@ void main()
   lightColor = texture2D(s_lightMap, v_texCoord);
   gl_FragColor = baseColor * (lightColor + 0.25);
 }
-
 
 ```
 
@@ -344,13 +340,10 @@ v4.xxyy;    // 重复分量
 
 最后推荐一个GLSL编辑调试工具[OpenGL Shader Builder(Graphics Tools.dmg)](http://adcdownload.apple.com/Developer_Tools/Graphics_Tools_for_Xcode_7.2/Graphics_Tools_for_Xcode_7.2.dmg)
 
-
 # 总结:
 
 由于本人记性不好使 找东西有时候总找不到 把一些 名词知识点收录出来并加以解释 方便后来的学习者学习.
 
-
-参考:  
 [GLSL基础](http://www.cnblogs.com/luweimy/p/4208570.html?utm_source=tuicool&utm_medium=referral)
 
 [iOS开发-OpenGL ES入门教程2](http://www.jianshu.com/p/ee597b2bd399)  
