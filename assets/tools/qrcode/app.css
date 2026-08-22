@@ -1,0 +1,260 @@
+/**
+ * 二维码生成解析工具样式
+ * 独立于博客主题，仅作用于 #qrcode-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#qrcode-app {
+  --qr-border: rgba(128, 128, 128, 0.35);
+  --qr-border-strong: rgba(128, 128, 128, 0.55);
+  --qr-bg: rgba(128, 128, 128, 0.07);
+  --qr-bg-hover: rgba(128, 128, 128, 0.14);
+  --qr-text: inherit;
+  --qr-text-muted: rgba(128, 128, 128, 0.95);
+  --qr-accent: #2f6fde;
+  --qr-accent-text: #fff;
+  --qr-ok: #1a7f4b;
+  --qr-err: #c0392b;
+  --qr-radius: 8px;
+}
+
+html[mode='dark'] #qrcode-app {
+  --qr-bg: rgba(255, 255, 255, 0.06);
+  --qr-bg-hover: rgba(255, 255, 255, 0.12);
+  --qr-text-muted: rgba(190, 190, 190, 0.95);
+  --qr-accent: #5b8ff0;
+  --qr-ok: #57c288;
+  --qr-err: #e2735f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #qrcode-app {
+    --qr-bg: rgba(255, 255, 255, 0.06);
+    --qr-bg-hover: rgba(255, 255, 255, 0.12);
+    --qr-text-muted: rgba(190, 190, 190, 0.95);
+    --qr-accent: #5b8ff0;
+    --qr-ok: #57c288;
+    --qr-err: #e2735f;
+  }
+}
+
+#qrcode-app .qr-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#qrcode-app .qr-hint {
+  color: var(--qr-text-muted);
+}
+
+#qrcode-app .qr-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0.8rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--qr-border);
+  border-radius: var(--qr-radius);
+  background: var(--qr-bg);
+}
+
+#qrcode-app .qr-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+#qrcode-app .qr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#qrcode-app .qr-label {
+  font-size: 0.85rem;
+  color: var(--qr-text-muted);
+  margin: 0;
+}
+
+#qrcode-app .qr-input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--qr-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+#qrcode-app .qr-input:focus {
+  outline: none;
+  border-color: var(--qr-accent);
+}
+
+#qrcode-app .qr-input::placeholder {
+  color: var(--qr-text-muted);
+  opacity: 0.7;
+}
+
+#qrcode-app .qr-result {
+  min-height: 72px;
+  word-break: break-all;
+  user-select: all;
+}
+
+#qrcode-app .qr-opt-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+}
+
+#qrcode-app .qr-select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--qr-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#qrcode-app .qr-select:focus {
+  outline: none;
+  border-color: var(--qr-accent);
+}
+
+#qrcode-app .qr-btn {
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--qr-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#qrcode-app .qr-btn:hover:not(:disabled) { background: var(--qr-bg-hover); }
+#qrcode-app .qr-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#qrcode-app .qr-btn-primary {
+  min-width: 6.5rem;
+  font-weight: 500;
+}
+
+#qrcode-app .qr-btn-primary:active {
+  background: var(--qr-accent);
+  border-color: var(--qr-accent);
+  color: var(--qr-accent-text);
+}
+
+#qrcode-app .qr-btn-copy {
+  flex: none;
+  font-size: 0.82rem;
+}
+
+#qrcode-app .qr-btn-copy.qr-copied {
+  color: var(--qr-ok);
+  border-color: var(--qr-ok);
+}
+
+#qrcode-app .qr-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+}
+
+#qrcode-app .qr-placeholder {
+  width: 100%;
+  padding: 1.6rem 1rem;
+  border: 1px dashed var(--qr-border-strong);
+  border-radius: var(--qr-radius);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--qr-text-muted);
+  box-sizing: border-box;
+}
+
+#qrcode-app .qr-canvas {
+  max-width: 100%;
+  border: 1px solid var(--qr-border);
+  border-radius: 4px;
+  background: #fff;
+}
+
+#qrcode-app .qr-meta {
+  font-size: 0.82rem;
+  color: var(--qr-text-muted);
+}
+
+#qrcode-app .qr-drop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 1.2rem 1rem;
+  border: 1px dashed var(--qr-border-strong);
+  border-radius: var(--qr-radius);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+#qrcode-app .qr-drop.qr-drag {
+  border-color: var(--qr-accent);
+  background: var(--qr-bg-hover);
+}
+
+#qrcode-app .qr-decode-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#qrcode-app .qr-decode-result[hidden],
+#qrcode-app .qr-error[hidden] {
+  display: none;
+}
+
+#qrcode-app .qr-dec-img {
+  max-width: 240px;
+  max-height: 240px;
+  align-self: center;
+  border: 1px solid var(--qr-border);
+  border-radius: 4px;
+  background: #fff;
+}
+
+#qrcode-app .qr-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#qrcode-app .qr-error {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--qr-err);
+  border-radius: var(--qr-radius);
+  color: var(--qr-err);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 576px) {
+  #qrcode-app .qr-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #qrcode-app .qr-btn-copy { margin-left: auto; }
+}

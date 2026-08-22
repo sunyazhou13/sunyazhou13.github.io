@@ -1,0 +1,148 @@
+/**
+ * 进制转换工具样式（基础版，未做暗色专项适配）
+ * 独立于博客主题，仅作用于 #bc-app 容器。
+ */
+
+#bc-app {
+  --bc-border: rgba(128, 128, 128, 0.35);
+  --bc-border-strong: rgba(128, 128, 128, 0.55);
+  --bc-bg: rgba(128, 128, 128, 0.07);
+  --bc-bg-hover: rgba(128, 128, 128, 0.14);
+  --bc-text-muted: rgba(128, 128, 128, 0.92);
+  --bc-accent: #2f6fde;
+  --bc-accent-text: #fff;
+  --bc-ok: #1a7f4b;
+  --bc-err: #c0392b;
+  --bc-radius: 8px;
+}
+
+#bc-app .bc-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#bc-app .bc-hint {
+  color: var(--bc-text-muted);
+}
+
+#bc-app .bc-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#bc-app .bc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--bc-border);
+  border-radius: var(--bc-radius);
+  background: var(--bc-bg);
+}
+
+#bc-app .bc-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--bc-text-muted);
+  margin: 0;
+}
+
+#bc-app .bc-sub {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+#bc-app .bc-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  flex: none;
+}
+
+#bc-app .bc-dot-red { background: #e05a4d; }
+#bc-app .bc-dot-orange { background: #e08a3c; }
+#bc-app .bc-dot-green { background: #3cae6c; }
+#bc-app .bc-dot-blue { background: #4a7fe0; }
+
+#bc-app .bc-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+#bc-app .bc-row .bc-input {
+  flex: 1 1 auto;
+}
+
+#bc-app .bc-input {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--bc-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: border-color 0.15s ease;
+}
+
+#bc-app .bc-input:focus {
+  outline: none;
+  border-color: var(--bc-accent);
+}
+
+#bc-app .bc-input::placeholder {
+  color: var(--bc-text-muted);
+  opacity: 0.7;
+}
+
+#bc-app .bc-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--bc-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#bc-app .bc-btn:hover:not(:disabled) {
+  background: var(--bc-bg-hover);
+}
+
+#bc-app .bc-btn-copy.bc-copied {
+  color: var(--bc-ok);
+  border-color: var(--bc-ok);
+}
+
+#bc-app .bc-error {
+  margin-top: 0.8rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--bc-err);
+  border-radius: var(--bc-radius);
+  color: var(--bc-err);
+  font-size: 0.88rem;
+}
+
+#bc-app .bc-error[hidden] {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  #bc-app .bc-row {
+    flex-direction: column;
+  }
+  #bc-app .bc-btn-copy {
+    align-self: flex-end;
+  }
+}
