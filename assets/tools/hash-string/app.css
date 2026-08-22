@@ -1,0 +1,266 @@
+/**
+ * 字符串 Hash 工具样式
+ * 独立于博客主题，仅作用于 #hsh-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#hsh-app {
+  --hsh-border: rgba(128, 128, 128, 0.35);
+  --hsh-border-strong: rgba(128, 128, 128, 0.55);
+  --hsh-bg: rgba(128, 128, 128, 0.07);
+  --hsh-bg-hover: rgba(128, 128, 128, 0.14);
+  --hsh-text: inherit;
+  --hsh-text-muted: rgba(128, 128, 128, 0.95);
+  --hsh-accent: #2f6fde;
+  --hsh-accent-text: #fff;
+  --hsh-ok: #1a7f4b;
+  --hsh-warn: #a05c00;
+  --hsh-err: #c0392b;
+  --hsh-radius: 8px;
+}
+
+html[mode='dark'] #hsh-app {
+  --hsh-bg: rgba(255, 255, 255, 0.06);
+  --hsh-bg-hover: rgba(255, 255, 255, 0.12);
+  --hsh-text-muted: rgba(190, 190, 190, 0.95);
+  --hsh-accent: #5b8ff0;
+  --hsh-ok: #57c288;
+  --hsh-warn: #e0a94e;
+  --hsh-err: #e2735f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #hsh-app {
+    --hsh-bg: rgba(255, 255, 255, 0.06);
+    --hsh-bg-hover: rgba(255, 255, 255, 0.12);
+    --hsh-text-muted: rgba(190, 190, 190, 0.95);
+    --hsh-accent: #5b8ff0;
+    --hsh-ok: #57c288;
+    --hsh-warn: #e0a94e;
+    --hsh-err: #e2735f;
+  }
+}
+
+#hsh-app .hsh-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#hsh-app .hsh-hint {
+  color: var(--hsh-text-muted);
+}
+
+#hsh-app .hsh-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--hsh-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+#hsh-app .hsh-badge-ok { color: var(--hsh-ok); border-color: var(--hsh-ok); }
+#hsh-app .hsh-badge-warn { color: var(--hsh-warn); border-color: var(--hsh-warn); }
+#hsh-app .hsh-badge-error { color: var(--hsh-err); border-color: var(--hsh-err); }
+#hsh-app .hsh-badge-loading { color: var(--hsh-text-muted); }
+
+#hsh-app .hsh-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--hsh-border);
+  border-radius: var(--hsh-radius);
+  background: var(--hsh-bg);
+}
+
+#hsh-app .hsh-label {
+  font-size: 0.85rem;
+  color: var(--hsh-text-muted);
+  margin: 0;
+}
+
+#hsh-app .hsh-input {
+  width: 100%;
+  min-height: 96px;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--hsh-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+#hsh-app .hsh-input:focus {
+  outline: none;
+  border-color: var(--hsh-accent);
+}
+
+#hsh-app .hsh-input::placeholder {
+  color: var(--hsh-text-muted);
+  opacity: 0.7;
+}
+
+#hsh-app .hsh-options {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  margin: 0.8rem 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--hsh-border);
+  border-radius: var(--hsh-radius);
+  background: var(--hsh-bg);
+}
+
+#hsh-app .hsh-options label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+#hsh-app .hsh-options input[type='checkbox'] {
+  accent-color: var(--hsh-accent);
+}
+
+#hsh-app .hsh-space {
+  margin: 0.8rem 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--hsh-border);
+  border-radius: var(--hsh-radius);
+  background: var(--hsh-bg);
+}
+
+#hsh-app .hsh-space-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0 0 0.4rem;
+}
+
+#hsh-app .hsh-space-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.25rem 1rem;
+  font-size: 0.88rem;
+}
+
+#hsh-app .hsh-space-list li {
+  padding: 0.15rem 0;
+}
+
+#hsh-app .hsh-space-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--hsh-warn);
+}
+
+#hsh-app .hsh-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+#hsh-app .hsh-placeholder {
+  padding: 1.6rem 1rem;
+  border: 1px dashed var(--hsh-border-strong);
+  border-radius: var(--hsh-radius);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--hsh-text-muted);
+}
+
+#hsh-app .hsh-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--hsh-border);
+  border-radius: var(--hsh-radius);
+  background: var(--hsh-bg);
+}
+
+#hsh-app .hsh-row.hsh-row-error { border-color: var(--hsh-err); }
+
+#hsh-app .hsh-algo {
+  flex: none;
+  width: 5.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+#hsh-app .hsh-algo::after {
+  content: '';
+}
+
+#hsh-app .hsh-hash {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0.15rem 0;
+  font-family: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.82rem;
+  word-break: break-all;
+  user-select: all;
+  background: transparent;
+}
+
+#hsh-app .hsh-row-error .hsh-hash { color: var(--hsh-err); font-family: inherit; font-size: 0.85rem; }
+
+#hsh-app .hsh-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--hsh-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#hsh-app .hsh-btn:hover:not(:disabled) { background: var(--hsh-bg-hover); }
+#hsh-app .hsh-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#hsh-app .hsh-btn-copy {
+  flex: none;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+#hsh-app .hsh-btn-copy.hsh-copied {
+  color: var(--hsh-ok);
+  border-color: var(--hsh-ok);
+}
+
+@media (max-width: 576px) {
+  #hsh-app .hsh-row { flex-wrap: wrap; }
+  #hsh-app .hsh-algo { width: auto; min-width: 4rem; }
+  #hsh-app .hsh-btn-copy { margin-left: auto; }
+}
+
+/* 生成按钮组（点击生成交互） */
+#hsh-app .hsh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+#hsh-app .hsh-btn-algo {
+  min-width: 6.5rem;
+  font-weight: 500;
+}
