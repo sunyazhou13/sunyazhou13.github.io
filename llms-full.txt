@@ -1,4 +1,396 @@
 
+URL: https://sunyazhou.com/2026/08/jekyllcomposecompleteguide/index.html.md
+Published At: 2026-08-22 06:24:00 +0000
+
+# Jekyll-compose完全指南:你可能不知道的七个命令
+
+# 前言
+
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
+
+# 背景
+
+上一篇[文章](/2026/08/jekyllpostscaffoldmultilang)里给博客做了类 Hexo 的文章模板和多语言创建, 当时为了确认 `bundle exec jekyll post` 的能力边界, 把本机安装的 jekyll-compose 0.12.0 源码从头到尾翻了一遍. 翻完发现这个 gem 的功能比我以为的多得多——大多数人(包括之前的我)只会用 `jekyll post` 一个命令, 其实它有完整的草稿工作流.
+
+索性把源码里挖出来的东西整理成一篇完全指南, 所有内容均基于本机 jekyll-compose 0.12.0 源码, 不是网上二手资料.
+
+# 命令全景
+
+jekyll-compose 一共提供 **7 个子命令**, 覆盖"草稿 → 发布"的完整生命周期:
+
+| 命令 | 语法 | 作用 |
+| --- | --- | --- |
+| `post` | `jekyll post "标题"` | 在 `_posts/` 创建带 `YYYY-MM-DD-` 前缀的文章 |
+| `draft` | `jekyll draft "标题"` | 在 `_drafts/` 创建草稿, **无日期前缀** |
+| `publish` | `jekyll publish _drafts/xxx.md` | 草稿转正: 移到 `_posts/`, 文件名加日期前缀, front matter 补 `date` 字段 |
+| `unpublish` | `jekyll unpublish _posts/2026-08-22-xxx.md` | 反向操作: 移回 `_drafts/`, 去掉日期前缀, **删除 `date` 字段** |
+| `rename` | `jekyll rename _posts/旧文件.md "新标题"` | 改名三件套: 文件名, front matter 的 `title`, 可选改日期 |
+| `compose` | `jekyll compose "标题"` | 统一入口, 用 `--post` / `--draft` / `-c 集合名` 指定建到哪, 默认 post |
+| `page` | `jekyll page about` | 创建静态页面, 支持 `路径/名称` 形式建子目录页面 |
+
+其中 `draft → publish → unpublish` 这套是它最核心的设计: **先写草稿、写完再转正**, Hexo 的 `hexo publish` 就是学它的. 草稿模式下本地预览用 `jekyll serve --drafts`, 写满意了再 `publish` 转正, 不会出现"半成品直接发布"的尴尬.
+
+# 公共选项
+
+所有命令共享一批选项:
+
+| 选项 | 说明 | 适用命令 |
+| --- | --- | --- |
+| `-d, --date 日期` | 指定文章日期, 补发旧文很有用 | post / draft / publish / rename |
+| `-l, --layout 布局` | 指定 layout, 默认 `post` | 全部 |
+| `-x, --extension 扩展名` | 文件扩展名, 默认 `markdown`, 可改 `md` | 全部 |
+| `-f, --force` | 同名文件已存在时强制覆盖 | 全部 |
+| `--timestamp-format 格式` | 自定义 `date` 字段的时间格式 | post / publish |
+| `--config 文件` | 用指定配置文件创建 | 全部 |
+| `--now` | rename 专用, 日期改为当前时间 | rename |
+| `-c, --collection 集合` | 建到自定义集合, 如 `-c wiki` → `_wiki/` | compose |
+
+## 常用场景示例
+
+补发一篇旧日期的文章:
+
+``` sh
+bundle exec jekyll post "OldPost" -d 2026-08-01
+```
+
+把去年就该发的草稿转正, 日期就用当时写的:
+
+``` sh
+bundle exec jekyll publish _drafts/old-draft.md -d 2025-12-01
+```
+
+文章写完想改标题, 文件名和 front matter 一起改:
+
+``` sh
+bundle exec jekyll rename _posts/2026-08-22-old-title.md "New Title"
+```
+
+# _config.yml 配置项
+
+jekyll-compose 只有两个配置项, 都在 `jekyll_compose` 命名空间下:
+
+## default_front_matter: 按集合注入 front matter
+
+``` yaml
+jekyll_compose:
+  default_front_matter:
+    posts:          # post 命令用
+      categories: [iOS]
+      tags: []
+      typora-root-url: ..
+      math: true
+    drafts:         # draft 命令用
+      layout: draft
+    wiki:           # compose -c wiki 用, 键 = 集合名
+      foo: bar
+```
+
+**注意这里有个大坑**: 配置键是**集合名**, 所以是复数 `posts` 而不是 `post`. 源码里写死了 `front_matter_defaults_for("posts")`, 写成 `post` 不会报任何错, 静默不生效——这是不翻源码根本发现不了的.
+
+## auto_open: 创建后自动打开编辑器
+
+``` yaml
+jekyll_compose:
+  auto_open: true
+```
+
+需要配合环境变量, 优先级 `JEKYLL_EDITOR` > `VISUAL` > `EDITOR`. 比如用 Typora 打开:
+
+``` sh
+# ~/.zshrc
+export JEKYLL_EDITOR="open -a Typora"
+```
+
+配置后 `jekyll post` 创建完文件直接弹出编辑器, 和 `hexo new` 的体验对齐了.
+
+# 源码级行为细节
+
+这几个细节都是翻 `lib/` 目录源码确认的, 每一个都可能坑到人:
+
+## slug 化规则
+
+文件名来自 `Jekyll::Utils.slugify`: 非 ASCII 字符全部丢弃、空格转连字符、统一转小写. 所以**中文标题会生成只有日期前缀的文件名**, 习惯是传英文标题, 建完把 front matter 里的 `title` 改成中文.
+
+## date 是 UTC
+
+`Time.now` 格式化输出带 `+0000`, 也就是说下午两点写的文章, front matter 里是 `06:00 +0000` 这种. 介意的话发布前手动改成 `+0800`.
+
+## front matter 合并顺序
+
+生成顺序是 `{layout, title}` ← `default_front_matter` 配置 ← `date`, 即配置项里什么字段都能加进来, `date` 永远最后写入不会被覆盖.
+
+## 同名文件直接报错
+
+文件已存在会抛异常退出, 不会提示是否覆盖, 除非显式加 `-f`.
+
+## 路径全部硬编码
+
+`_posts/`、`_drafts/` 写死在源码里, 没有任何配置能改. 这就是多语言博客(比如本站 `_posts/en/` 的结构)没法直接用它的原因, 只能靠包装脚本创建后移动——具体方案见上一篇文章.
+
+# 版本现状
+
+0.12.0 发布于 2019 年, 是到目前为止的最后一个版本. 官方仓库 [jekyll/jekyll-compose](https://github.com/jekyll/jekyll-compose) 处于维护停滞状态, 只修 bug 不加功能. 所以别指望它将来原生支持正文模板或语言子目录, 有这类需求趁早在自己博客的 `tools/` 目录里解决.
+
+另外 `rename` 和 `publish` 对多语言目录有个天然缺陷: 它们只在 `_posts/` ↔ `_drafts/` 之间搬文件, `_posts/en/` 里的文件不认识. 多语言站的文章改名, 老老实实 `mv` 两份文件.
+
+# 总结
+
+- jekyll-compose 有 7 个命令, `draft/publish/unpublish` 草稿工作流是最被低估的功能
+- 两个配置项: `default_front_matter`(注意键是复数集合名)和 `auto_open`(配合 `JEKYLL_EDITOR` 环境变量)
+- 源码级限制: 路径硬编码、无正文模板、slug 丢中文、date 用 UTC
+- 项目 2019 年起停止迭代, 深度定制只能靠自己的脚本
+
+工具虽小, 把源码翻一遍能把每个命令的能力边界摸清楚, 用起来心里有底. 这篇和上一篇的模板方案配合, 建站工作流算是彻底理顺了.
+
+
+
+URL: https://sunyazhou.com/2026/08/jekyllpostscaffoldmultilang/index.html.md
+Published At: 2026-08-22 06:06:00 +0000
+
+# Jekyll博客支持类Hexo的文章模板与多语言创建
+
+# 前言
+
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
+
+# 背景
+
+写博客这几年,建文章的流程一直有点别扭. 本站基于 Jekyll + Chirpy 主题,创建文章用的是 [jekyll-compose](https://github.com/jekyll/jekyll-compose) 提供的命令:
+
+``` sh
+bundle exec jekyll post "My New Post"
+```
+
+之前从 Hexo 转过来的朋友都知道, Hexo 有个非常好用的机制: `hexo new` 会从 `scaffolds/post.md` 模板创建文章,模板里的通用文案(比如本站每篇文章开头那段"前言"声明)自动带出来,不用每次手打或复制.
+
+而 Jekyll 这边有两个痛点:
+
+1. **没有正文模板**: jekyll-compose 只生成 front matter,正文空的,每篇文章开头那段声明要手动粘贴
+2. **多语言不友好**: 本站用 [jekyll-polyglot](https://github.com/untra/polyglot) 做了中英双语,中文文章放 `_posts/`,英文文章放 `_posts/en/`,但 `jekyll post` 命令只往 `_posts/` 里建,英文版要手动复制改名
+
+这次把这两个问题一起解决了, 用一个包装脚本实现了类 Hexo 的模板机制 + 一条命令创建多语言文章.
+
+# 现状分析
+
+动手之前先翻了 jekyll-compose 0.12.0 的源码,确认了两件事:
+
+## 路径写死,无法指定语言目录
+
+`lib/jekyll/commands/post.rb` 里:
+
+``` ruby
+class PostFileInfo < Compose::FileInfo
+  def path
+    "_posts/#{file_name}"
+  end
+end
+```
+
+创建路径硬编码为 `_posts/`,没有任何参数或配置可以指定子目录. 想让命令直接建到 `_posts/en/` 是不可能的,只能创建后移动.
+
+## 不支持正文模板
+
+`lib/jekyll-compose/file_info.rb` 里:
+
+``` ruby
+def content(custom_front_matter = {})
+  front_matter = YAML.dump({
+    "layout" => params.layout,
+    "title"  => params.title,
+  }.merge(custom_front_matter))
+
+  front_matter + "---\n"
+end
+```
+
+`content` 方法只输出 YAML front matter 就结束了, 没有任何读取模板文件注入正文的逻辑. 也就是说插件层面根本不提供这个能力, 只能在脚本层做.
+
+唯一可配置的是 `default_front_matter`, 往 front matter 里合并自定义字段, 这个后面会用到.
+
+## 多语言的识别机制
+
+本站的 polyglot 配置:
+
+``` yaml
+languages: ["zh", "en"]
+default_lang: "zh"
+lang_from_path: true
+```
+
+`lang_from_path: true` 表示从路径推断语言: `_posts/` 根目录是默认语言中文, `_posts/en/` 下的文章自动识别为英文, **不需要**在 front matter 里手写 `lang: en`.
+
+还有一个关键点: 中英文两个版本必须**文件名完全一致**, polyglot 才会把它们识别为同一篇文章的互译, 生成 hreflang 标签和语言切换链接.
+
+# 实现方案
+
+整体思路很直接: 写一个 `tools/newpost.sh` 包装脚本, 调用 jekyll-compose 创建文章后, 自动处理目录移动和模板注入.
+
+## 目录结构
+
+``` sh
+tools/
+├── newpost.sh              # 文章创建脚本
+└── scaffolds/              # 正文模板目录(类 hexo scaffolds)
+    ├── post.md             # 中文模板
+    └── post.en.md          # 英文模板
+```
+
+## 正文模板
+
+`tools/scaffolds/post.md`, 就是本站每篇文章的标准开头:
+
+``` markdown
+# 前言
+
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
+```
+
+`tools/scaffolds/post.en.md` 是对应的英文版. 想改通用文案, 直接改模板文件即可, 对之后所有新文章生效, 和 Hexo 改 `scaffolds/post.md` 一个体验.
+
+## front matter 模板
+
+jekyll-compose 原生支持在 `_config.yml` 里配置默认 front matter:
+
+``` yaml
+jekyll_compose:
+  default_front_matter:
+    posts:
+      categories: [iOS]
+      tags: []
+      typora-root-url: ..
+```
+
+**注意这里有个坑**: 配置键必须是 `posts`(复数), 写成 `post` 会静默不生效. 源码里写死了 `front_matter_defaults_for("posts")`, 不翻源码根本发现不了.
+
+## 创建脚本
+
+`tools/newpost.sh` 核心逻辑:
+
+``` bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+EN_DIR="$ROOT/_posts/en"
+
+# 解析参数: 第一个参数若是 zh/en/both 且后面还有标题, 则按显式模式; 否则视为标题
+if [[ "$1" == zh || "$1" == en || "$1" == both ]] && [[ $# -ge 2 ]]; then
+  LANG_ARG="$1"
+  TITLE="$2"
+else
+  TITLE="$1"
+  # 默认模式: _posts/en/ 存在则双语, 否则只建中文
+  if [[ -d "$EN_DIR" ]]; then
+    LANG_ARG="both"
+  else
+    LANG_ARG="zh"
+  fi
+fi
+
+create_post() {
+  # 输出形如 "New post created at \e[36m_posts/xxx.md\e[0m "
+  # 需去掉前缀和 ANSI 颜色码, 否则路径判断会失败
+  bundle exec jekyll post "$TITLE" 2>&1 \
+    | grep "New post created at" \
+    | sed -e $'s/\x1b\\[[0-9;]*m//g' \
+          -e 's/^New post created at //' \
+          -e 's/[[:space:]]*$//'
+}
+
+# 将模板内容追加到文章正文
+apply_scaffold() {
+  local file="$1" lang="$2" s
+  if [[ "$lang" == "en" ]]; then
+    s="$ROOT/tools/scaffolds/post.en.md"
+  else
+    s="$ROOT/tools/scaffolds/post.md"
+  fi
+  [[ -f "$s" ]] || return 0
+  printf '\n' >> "$file"
+  cat "$s" >> "$file"
+}
+
+FILE=$(create_post)
+
+case "$LANG_ARG" in
+  zh)
+    apply_scaffold "$ROOT/$FILE" zh
+    ;;
+  en)
+    [[ -d "$EN_DIR" ]] || mkdir -p "$EN_DIR"
+    mv "$ROOT/$FILE" "$EN_DIR/"
+    apply_scaffold "$EN_DIR/$(basename "$FILE")" en
+    ;;
+  both)
+    [[ -d "$EN_DIR" ]] || mkdir -p "$EN_DIR"
+    # 先复制干净的英文版(未注入中文模板), 再分别注入各自模板
+    cp "$ROOT/$FILE" "$EN_DIR/$(basename "$FILE")"
+    apply_scaffold "$ROOT/$FILE" zh
+    apply_scaffold "$EN_DIR/$(basename "$FILE")" en
+    ;;
+esac
+```
+
+# 使用方法
+
+``` sh
+# 最常用: 直接传标题, 默认创建双语
+bash tools/newpost.sh "My New Post"
+
+# 只建中文
+bash tools/newpost.sh zh "My New Post"
+
+# 只建英文(自动建到 _posts/en/)
+bash tools/newpost.sh en "My New Post"
+
+# 强制双语(_posts/en/ 不存在时也会创建目录)
+bash tools/newpost.sh both "My New Post"
+```
+
+默认模式的逻辑: 检测 `_posts/en/` 目录, 存在就同时建中英两份, 不存在就只建中文. 一条命令下去, 生成效果:
+
+``` markdown
+---
+layout: post
+title: My New Post
+date: 2026-08-22 06:06 +0000
+categories:
+- iOS
+tags: []
+typora-root-url: ".."
+---
+
+# 前言
+
+本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!
+```
+
+英文版自动换成英文 Preface 模板, 中英文文件名一致, polyglot 直接识别为互译.
+
+# 踩坑记录
+
+这次踩的坑都记录一下, 每一个都是翻源码才定位到的:
+
+1. **ANSI 颜色码污染输出**: jekyll 输出的 `New post created at` 后面带着 `\e[36m` 颜色转义序列, 直接 sed 去前缀后路径前面残留转义符, `-f` 判断永远失败, 解析时必须先把 `\x1b\[[0-9;]*m` 剥掉
+2. **配置键复数**: `jekyll_compose.default_front_matter` 下面的键是 `posts` 不是 `post`, 写错没有任何报错, 静默不生效
+3. **同一篇文章不能建两次**: 双语版必须"先建一份再复制", 连续跑两次 `jekyll post` 同名会报文件已存在
+4. **标题只能用英文**: jekyll-compose 的 slug 化会丢弃所有非 ASCII 字符, 中文标题会生成只有日期的文件名. 习惯是传英文标题, 建完再把 front matter 里的 `title` 改成中文
+
+# 总结
+
+整个改动只涉及三个文件, 不动主题不改插件, 完全脚本层解决:
+
+| 文件 | 改动内容 |
+| --- | --- |
+| `tools/newpost.sh` | 新增, 包装 jekyll-compose 的创建脚本 |
+| `tools/scaffolds/post.md` | 新增, 中文正文模板 |
+| `tools/scaffolds/post.en.md` | 新增, 英文正文模板 |
+| `_config.yml` | 新增 `jekyll_compose.default_front_matter.posts` 配置 |
+
+从 Hexo 迁移到 Jekyll 快九年了, scaffolds 这个机制一直是念叨的缺失项, 这次算是补齐了. 建文章从"跑命令 + 手动复制改名 + 粘贴前言"变成一条命令, 双语文章文件名一致性也有保证了.
+
+
+
 URL: https://sunyazhou.com/2026/08/cmu15/index.html.md
 Published At: 2026-08-20 04:16:00 +0000
 
