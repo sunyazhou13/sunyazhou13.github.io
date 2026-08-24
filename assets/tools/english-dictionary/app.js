@@ -317,9 +317,9 @@
 
       onProgress(done, total, T.downloadPrepare);
 
-      // 4 路并行下载（浏览器对同一域名允许 6 个并发连接，4 路平衡速度与稳定性）
+      // 6 路并行下载（浏览器对同域名允许 6 个并发连接，充分利用）
       // 单个分片 120 秒超时兜底
-      const CONCURRENCY = 4;
+      const CONCURRENCY = 6;
       let failed = [];
       let queue = [...toDownload];
 
