@@ -1,0 +1,250 @@
+/**
+ * PAG 动画预览器样式
+ * 独立于博客主题，仅作用于 #pv-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#pv-app {
+  --pv-border: rgba(128, 128, 128, 0.35);
+  --pv-border-strong: rgba(128, 128, 128, 0.55);
+  --pv-bg: rgba(128, 128, 128, 0.07);
+  --pv-bg-hover: rgba(128, 128, 128, 0.14);
+  --pv-text: #212529;
+  --pv-text-muted: rgba(128, 128, 128, 0.95);
+  --pv-accent: #2f6fde;
+  --pv-accent-text: #fff;
+  --pv-ok: #1a7f4b;
+  --pv-warn: #a05c00;
+  --pv-err: #c0392b;
+  --pv-radius: 8px;
+  --pv-canvas-bg: #f0f0f0;
+}
+
+html[mode='dark'] #pv-app {
+  --pv-text: #e9ecef;
+  --pv-text-muted: rgba(190, 190, 190, 0.95);
+  --pv-accent: #5b8ff0;
+  --pv-bg: rgba(255, 255, 255, 0.06);
+  --pv-bg-hover: rgba(255, 255, 255, 0.12);
+  --pv-canvas-bg: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #pv-app {
+    --pv-text: #e9ecef;
+    --pv-text-muted: rgba(190, 190, 190, 0.95);
+    --pv-accent: #5b8ff0;
+    --pv-bg: rgba(255, 255, 255, 0.06);
+    --pv-bg-hover: rgba(255, 255, 255, 0.12);
+    --pv-canvas-bg: #1a1a1a;
+  }
+}
+
+#pv-app {
+  color: var(--pv-text);
+}
+
+/* 上传区域 */
+.pv-upload {
+  border: 2px dashed var(--pv-border-strong);
+  border-radius: var(--pv-radius);
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: var(--pv-bg);
+  margin-bottom: 1.2rem;
+}
+.pv-upload:hover, .pv-upload.pv-dragover {
+  border-color: var(--pv-accent);
+  background: var(--pv-bg-hover);
+}
+.pv-upload i {
+  font-size: 2rem;
+  color: var(--pv-accent);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+.pv-upload-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.pv-upload-hint {
+  font-size: 0.85rem;
+  color: var(--pv-text-muted);
+  margin-top: 0.3rem;
+}
+
+/* 预览区 */
+.pv-preview-wrap {
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-radius);
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+  background: var(--pv-canvas-bg);
+  position: relative;
+}
+.pv-canvas {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pv-canvas canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+.pv-empty {
+  color: var(--pv-text-muted);
+  font-size: 0.95rem;
+}
+
+/* 加载中遮罩 */
+.pv-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.95rem;
+  gap: 0.5rem;
+}
+
+/* 控制栏 */
+.pv-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--pv-border);
+  flex-wrap: wrap;
+  background: var(--pv-bg);
+}
+.pv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--pv-border-strong);
+  border-radius: var(--pv-radius);
+  background: transparent;
+  color: var(--pv-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pv-btn:hover {
+  background: var(--pv-bg-hover);
+  border-color: var(--pv-accent);
+}
+.pv-btn.pv-active {
+  background: var(--pv-accent);
+  border-color: var(--pv-accent);
+  color: var(--pv-accent-text);
+}
+.pv-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.pv-seek {
+  flex: 1;
+  min-width: 120px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--pv-border);
+  border-radius: 2px;
+  outline: none;
+}
+.pv-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pv-accent);
+  cursor: pointer;
+}
+.pv-seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--pv-accent);
+  cursor: pointer;
+  border: none;
+}
+.pv-time {
+  font-size: 0.8rem;
+  color: var(--pv-text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 信息面板 */
+.pv-info {
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-radius);
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+.pv-info-title {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+.pv-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+.pv-info-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+.pv-info-label {
+  color: var(--pv-text-muted);
+}
+.pv-info-value {
+  font-weight: 500;
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: 0.85rem;
+}
+
+/* 背景色选择 */
+.pv-bg-select {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.pv-bg-label {
+  font-size: 0.85rem;
+  color: var(--pv-text-muted);
+  margin-right: 0.3rem;
+}
+.pv-bg-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--pv-border);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.pv-bg-dot:hover {
+  transform: scale(1.1);
+}
+.pv-bg-dot.pv-active {
+  border-color: var(--pv-accent);
+  box-shadow: 0 0 0 2px var(--pv-accent);
+}
+
+/* 状态提示 */
+.pv-status {
+  font-size: 0.9rem;
+  color: var(--pv-text-muted);
+  min-height:  1.4rem;
+  margin-bottom: 0.8rem;
+}
+.pv-status.pv-err { color: var(--pv-err); }
