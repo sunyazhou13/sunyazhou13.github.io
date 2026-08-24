@@ -115,14 +115,21 @@
    * ════════════════════════════════════════════════════════════ */
 
   const DB_NAME = 'ecdict-cache';
-  const DB_VERSION = 3; // 升级到 340 万词条词库，旧缓存会被清除
+  const DB_VERSION = 4; // 升级到 340 万词条词库 + 修复 CORS 多源下载
   const STORE_NAME = 'shards';
   const META_STORE = 'meta';
   // 词库分片不再随博客仓库分发（26 个分片共 236MB，会撑爆 git 历史），
-  // 改从独立数据仓库的 GitHub Releases 按需下载。
-  // 迁移时只需改这一行；备用源可切 raw 分支：
-  //   https://raw.githubusercontent.com/sunyazhou13/english-dictionary-data/main/
-  const SHARD_BASE = 'https://github.com/sunyazhou13/english-dictionary-data/releases/download/v1/';
+  // 改从独立数据仓库按需下载。
+  //
+  // ⚠️ CORS 说明：GitHub Releases 下载会 302 重定向到 objects.githubusercontent.com，
+  //    该域名不发送 CORS 头，浏览器 fetch 直接报 "Failed to fetch"。
+  //    因此必须使用支持 CORS 的源，按优先级排列：
+  const SHARD_SOURCES = [
+    // 1. jsDelivr CDN — 全球加速，CORS 完整，content-type 正确
+    'https://cdn.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
+    // 2. GitHub Raw — CORS 支持，但国内访问可能较慢
+    'https://raw.githubusercontent.com/sunyazhou13/english-dictionary-data/main/',
+  ];
   const LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
   let _db = null;
@@ -239,6 +246,29 @@
     }
   }
 
+  /**
+   * 多源分片下载 —— 依次尝试 SHARD_SOURCES 中的每个源，
+   * 第一个返回有效 JSON 的源即采用，避免单一源 CORS 不可用或临时故障导致下载失败。
+   * @returns {Promise<object>} 解析后的词库分片 JSON
+   */
+  async function fetchShardJson(letter, timeoutMs) {
+    let lastErr = null;
+    for (const base of SHARD_SOURCES) {
+      const url = base + letter + '.json';
+      try {
+        const resp = await fetchWithTimeout(url, timeoutMs);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && typeof data === 'object') return data;
+        }
+        lastErr = new Error('HTTP ' + resp.status + ' @ ' + base);
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('All shard sources failed for: ' + letter);
+  }
+
   const _shardCache = {};
 
   async function getShard(letter) {
@@ -254,12 +284,8 @@
       }
     } catch (e) { /* IndexedDB 不可用时降级为每次 fetch */ }
 
-    // 下载分片（30 秒超时）
-    const url = SHARD_BASE + letter + '.json';
-    const resp = await fetchWithTimeout(url, 30000);
-    if (!resp.ok) throw new Error('词库分片加载失败: ' + letter);
-    const data = await resp.json();
-
+    // 下载分片（30 秒超时，多源 fallback）
+    const data = await fetchShardJson(letter, 30000);
     _shardCache[letter] = data;
 
     try { await dbPut(STORE_NAME, letter, data); } catch (e) { /* ignore */ }
@@ -290,25 +316,28 @@
       onProgress(done, total, T.downloadPrepare);
 
       // 逐个下载（避免同时 26 个请求），单个分片 120 秒超时兜底
+      let failed = [];
       for (const letter of toDownload) {
         onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
         try {
-          const url = SHARD_BASE + letter + '.json';
-          const resp = await fetchWithTimeout(url, 120000);
-          if (resp.ok) {
-            const data = await resp.json();
-            _shardCache[letter] = data;
-            try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
-          }
-        } catch (e) { /* 单个失败不影响整体 */ }
+          const data = await fetchShardJson(letter, 120000);
+          _shardCache[letter] = data;
+          try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
+        } catch (e) {
+          failed.push(letter);
+        }
         done++;
         onProgress(done, total, done < total ? T.downloadFetching + LETTERS[done].toUpperCase() + '.json …' : T.downloadComplete);
       }
 
-      // 标记全量下载完成
-      try { await dbPut(META_STORE, 'fullDownloaded', Date.now()); } catch (e) {}
+      // 标记全量下载完成（有失败则不标记，提示用户）
+      if (failed.length === 0) {
+        try { await dbPut(META_STORE, 'fullDownloaded', Date.now()); } catch (e) {}
+      }
 
-      onProgress(total, total, T.downloadComplete);
+      onProgress(total, total, failed.length > 0
+        ? T.downloadError + ' (' + failed.length + ' 分片失败: ' + failed.join(',').toUpperCase() + ')'
+        : T.downloadComplete);
     } finally {
       _downloading = false;
     }
