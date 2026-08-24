@@ -53,6 +53,13 @@
       'status-init-fail': 'PAG 引擎初始化失败',
       'progress-label': '进度',
       'transparent': '透明',
+      'layer-precompose': '预合成',
+      'layer-image': '图像',
+      'layer-text': '文本',
+      'layer-shape': '形状',
+      'layer-solid': '纯色',
+      'layer-null': '空',
+      'layer-unknown': '未知',
     },
     en: {
       'upload-title': 'Click or drag a PAG file here',
@@ -85,6 +92,13 @@
       'status-init-fail': 'PAG engine initialization failed',
       'progress-label': 'Progress',
       'transparent': 'Transparent',
+      'layer-precompose': 'PreCompose',
+      'layer-image': 'Image',
+      'layer-text': 'Text',
+      'layer-shape': 'Shape',
+      'layer-solid': 'Solid',
+      'layer-null': 'Null',
+      'layer-unknown': 'Unknown',
     }
   };
 
@@ -110,6 +124,9 @@
   var $status = document.getElementById('pv-status');
   var $info = document.getElementById('pv-info');
   var $infoGrid = document.getElementById('pv-info-grid');
+  var $layers = document.getElementById('pv-layers');
+  var $layersTree = document.getElementById('pv-layers-tree');
+  var $layersCount = document.getElementById('pv-layers-count');
 
   /* 状态 */
   var pagModule = null;
@@ -320,6 +337,98 @@
     html += infoRow(T('height'), pagFile.height() + ' px');
     html += infoRow(T('taglevel'), pagFile.tagLevel());
     $infoGrid.innerHTML = html;
+    updateLayers();
+  }
+
+  /* 图层结构面板 */
+  function updateLayers() {
+    if (!$layersTree || !pagFile) return;
+    var count = pagFile.numChildren ? pagFile.numChildren() : 0;
+    if ($layersCount) $layersCount.textContent = count + ' ' + (LANG === 'zh' ? '个图层' : 'layers');
+    if (count === 0) {
+      $layersTree.innerHTML = '<div style="color:var(--pv-text-muted);padding:0.5rem 0;">' +
+        (LANG === 'zh' ? '无图层信息' : 'No layer info') + '</div>';
+      $layers.style.display = 'block';
+      return;
+    }
+    var html = buildLayerTree(pagFile, 0);
+    $layersTree.innerHTML = html;
+    $layers.style.display = 'block';
+    /* 绑定点击事件 */
+    var items = $layersTree.querySelectorAll('.pv-layer-item');
+    items.forEach(function (item) {
+      item.addEventListener('click', function () {
+        items.forEach(function (el) { el.classList.remove('pv-selected'); });
+        item.classList.add('pv-selected');
+        var startFrame = parseInt(item.getAttribute('data-start') || '0', 10);
+        var durFrame = parseInt(item.getAttribute('data-dur') || '0', 10);
+        if (durFrame > 0 && pagView && pagFile) {
+          var total = getNumFrames();
+          if (total > 0) {
+            var progress = startFrame / total;
+            pagView.setProgress(progress);
+            isPlaying = false;
+            updatePlayButton();
+            if ($seek) $seek.value = progress * 1000;
+            var durSec = getDurationSec();
+            var cur = progress * durSec;
+            if ($time) $time.textContent = formatTime(cur) + ' / ' + formatTime(durSec);
+          }
+        }
+      });
+    });
+  }
+
+  function buildLayerTree(composition, depth) {
+    if (!composition || !composition.numChildren) return '';
+    var count = composition.numChildren();
+    if (!count) return '';
+    var html = '';
+    for (var i = 0; i < count; i++) {
+      try {
+        var layer = composition.getLayerAt(i);
+        if (!layer) continue;
+        var typeCode = layer.layerType ? layer.layerType() : 0;
+        var typeName = getLayerTypeName(typeCode);
+        var icon = getLayerTypeIcon(typeCode);
+        var name = layer.layerName ? layer.layerName() : ('Layer ' + i);
+        var startFrame = layer.startTime ? Math.round(layer.startTime() / 1_000_000 * pagFile.frameRate()) : 0;
+        var durationFrame = layer.duration ? Math.round(layer.duration() / 1_000_000 * pagFile.frameRate()) : 0;
+        var isVisible = layer.visible ? layer.visible() : true;
+        var pad = depth * 16;
+        var cls = 'pv-layer-item' + (isVisible ? '' : ' pv-hidden');
+        html += '<div class="' + cls + '" style="padding-left:' + (8 + pad) + 'px" ' +
+                'data-start="' + startFrame + '" data-dur="' + durationFrame + '">' +
+                '<span class="pv-layer-icon">' + icon + '</span>' +
+                '<span class="pv-layer-name" title="' + escapeHtml(name) + '">' + escapeHtml(name) + '</span>' +
+                '<span class="pv-layer-type">' + typeName + '</span>' +
+                '<span class="pv-layer-attrs">' + startFrame + '-' + (startFrame + durationFrame) + 'f</span>' +
+                '</div>';
+        /* PreCompose 类型尝试递归（受限于 Web binding 可能不可用） */
+        if (typeCode === 6 && layer.numChildren) {
+          html += buildLayerTree(layer, depth + 1);
+        }
+      } catch (e) {
+        html += '<div style="padding-left:' + (8 + depth * 16) + 'px;color:var(--pv-err);font-size:0.8rem;">' +
+                'Error reading layer ' + i + ': ' + escapeHtml(e.message || String(e)) + '</div>';
+      }
+    }
+    return html;
+  }
+
+  function getLayerTypeName(code) {
+    var map = {
+      0: T('layer-unknown'), 1: T('layer-null'), 2: T('layer-solid'),
+      3: T('layer-text'), 4: T('layer-shape'), 5: T('layer-image'), 6: T('layer-precompose')
+    };
+    return map[code] || T('layer-unknown');
+  }
+
+  function getLayerTypeIcon(code) {
+    var map = {
+      0: '?', 1: '∅', 2: '■', 3: 'T', 4: '◎', 5: '🖼', 6: '⧉'
+    };
+    return map[code] || '?';
   }
 
   function infoRow(label, value) {

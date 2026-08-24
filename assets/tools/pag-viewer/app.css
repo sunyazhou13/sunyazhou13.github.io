@@ -248,3 +248,75 @@ html[mode='dark'] #pv-app {
   margin-bottom: 0.8rem;
 }
 .pv-status.pv-err { color: var(--pv-err); }
+
+/* 图层结构面板 */
+.pv-layers {
+  border: 1px solid var(--pv-border);
+  border-radius: var(--pv-radius);
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.pv-layers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+.pv-layers-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.pv-layers-count {
+  font-size: 0.8rem;
+  color: var(--pv-text-muted);
+}
+.pv-layers-tree {
+  font-size: 0.85rem;
+}
+.pv-layer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.pv-layer-item:hover {
+  background: var(--pv-bg-hover);
+}
+.pv-layer-item.pv-selected {
+  background: rgba(47, 111, 222, 0.15);
+  outline: 1px solid var(--pv-accent);
+}
+.pv-layer-item.pv-hidden {
+  opacity: 0.5;
+}
+.pv-layer-icon {
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+.pv-layer-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pv-layer-type {
+  font-size: 0.75rem;
+  color: var(--pv-text-muted);
+  background: var(--pv-bg);
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.pv-layer-attrs {
+  font-size: 0.75rem;
+  color: var(--pv-text-muted);
+  margin-left: 0.3rem;
+  flex-shrink: 0;
+}
