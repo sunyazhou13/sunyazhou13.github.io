@@ -1,0 +1,428 @@
+/**
+ * 图片主色调提取工具样式
+ * 独立于博客主题，仅作用于 #cp-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#cp-app {
+  --cp-border: rgba(128, 128, 128, 0.35);
+  --cp-border-strong: rgba(128, 128, 128, 0.55);
+  --cp-bg: rgba(128, 128, 128, 0.07);
+  --cp-bg-hover: rgba(128, 128, 128, 0.14);
+  --cp-text: inherit;
+  --cp-text-muted: rgba(128, 128, 128, 0.95);
+  --cp-accent: #2f6fde;
+  --cp-accent-text: #fff;
+  --cp-ok: #1a7f4b;
+  --cp-err: #c0392b;
+  --cp-radius: 8px;
+  --cp-mono: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  /* 语法高亮（GitHub Light 配色） */
+  --cp-tok-comment: #6a737d;
+  --cp-tok-string: #032f62;
+  --cp-tok-hex: #005cc5;
+  --cp-tok-number: #005cc5;
+  --cp-tok-keyword: #d73a49;
+  --cp-tok-type: #6f42c1;
+  --cp-tok-var: #e36209;
+}
+
+html[mode='dark'] #cp-app {
+  --cp-bg: rgba(255, 255, 255, 0.06);
+  --cp-bg-hover: rgba(255, 255, 255, 0.12);
+  --cp-text-muted: rgba(190, 190, 190, 0.95);
+  --cp-accent: #5b8ff0;
+  --cp-ok: #57c288;
+  --cp-err: #e2735f;
+  /* 语法高亮（GitHub Dark 配色） */
+  --cp-tok-comment: #8b949e;
+  --cp-tok-string: #a5d6ff;
+  --cp-tok-hex: #79c0ff;
+  --cp-tok-number: #79c0ff;
+  --cp-tok-keyword: #ff7b72;
+  --cp-tok-type: #d2a8ff;
+  --cp-tok-var: #ffa657;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #cp-app {
+    --cp-bg: rgba(255, 255, 255, 0.06);
+    --cp-bg-hover: rgba(255, 255, 255, 0.12);
+    --cp-text-muted: rgba(190, 190, 190, 0.95);
+    --cp-accent: #5b8ff0;
+    --cp-ok: #57c288;
+    --cp-err: #e2735f;
+    --cp-tok-comment: #8b949e;
+    --cp-tok-string: #a5d6ff;
+    --cp-tok-hex: #79c0ff;
+    --cp-tok-number: #79c0ff;
+    --cp-tok-keyword: #ff7b72;
+    --cp-tok-type: #d2a8ff;
+    --cp-tok-var: #ffa657;
+  }
+}
+
+/* hidden 属性兜底（flex/grid 父元素下可能失效） */
+#cp-app [hidden] {
+  display: none !important;
+}
+
+/* ---------- 顶部横幅与拖拽区 ---------- */
+
+#cp-app .cp-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#cp-app .cp-hint {
+  color: var(--cp-text-muted);
+}
+
+#cp-app .cp-drop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 1.2rem 1rem;
+  border: 1px dashed var(--cp-border-strong);
+  border-radius: var(--cp-radius);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+#cp-app .cp-drop.cp-drag {
+  border-color: var(--cp-accent);
+  background: var(--cp-bg-hover);
+}
+
+/* ---------- 工作区布局 ---------- */
+
+#cp-app .cp-workarea {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 820px) {
+  #cp-app .cp-workarea {
+    grid-template-columns: 1fr 320px;
+    align-items: start;
+  }
+  #cp-app .cp-full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- 画布预览 ---------- */
+
+#cp-app .cp-canvas-wrap {
+  position: relative;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  overflow: hidden;
+  background: #fff;
+}
+
+#cp-app .cp-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  height: auto;
+}
+
+#cp-app .cp-img-info {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  font-family: var(--cp-mono);
+  pointer-events: none;
+}
+
+/* ---------- 侧栏面板 ---------- */
+
+#cp-app .cp-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#cp-app .cp-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  background: var(--cp-bg);
+}
+
+#cp-app .cp-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+#cp-app .cp-setting {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#cp-app .cp-label {
+  font-size: 0.85rem;
+  color: var(--cp-text-muted);
+  margin: 0;
+}
+
+#cp-app .cp-select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+#cp-app .cp-select:focus {
+  outline: none;
+  border-color: var(--cp-accent);
+}
+
+/* ---------- 按钮 ---------- */
+
+#cp-app .cp-btn {
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+#cp-app .cp-btn:hover:not(:disabled) { background: var(--cp-bg-hover); }
+#cp-app .cp-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#cp-app .cp-btn-primary {
+  min-width: 6.5rem;
+  font-weight: 500;
+  border-color: var(--cp-accent);
+  background: var(--cp-accent);
+  color: var(--cp-accent-text);
+}
+
+#cp-app .cp-btn-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+#cp-app .cp-btn-primary:active {
+  opacity: 0.75;
+}
+
+#cp-app .cp-btn-copy {
+  flex: none;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+#cp-app .cp-btn-copy.cp-copied {
+  color: var(--cp-ok);
+  border-color: var(--cp-ok);
+}
+
+/* ---------- 加载指示器 ---------- */
+
+#cp-app .cp-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.88rem;
+  color: var(--cp-text-muted);
+}
+
+#cp-app .cp-loading::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cp-border-strong);
+  border-top-color: var(--cp-accent);
+  border-radius: 50%;
+  animation: cp-spin 0.8s linear infinite;
+}
+
+@keyframes cp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- 调色板结果 ---------- */
+
+#cp-app .cp-palette {
+  display: flex;
+  flex-direction: column;
+}
+
+#cp-app .cp-color-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  transition: transform 0.15s ease;
+}
+
+#cp-app .cp-color-item:hover {
+  transform: scale(1.01);
+}
+
+#cp-app .cp-color-tag {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+#cp-app .cp-color-hex {
+  font-family: var(--cp-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  user-select: all;
+}
+
+#cp-app .cp-color-rgb {
+  font-size: 0.82rem;
+  font-family: var(--cp-mono);
+  opacity: 0.85;
+}
+
+#cp-app .cp-color-pct {
+  margin-left: auto;
+  font-size: 0.82rem;
+  font-family: var(--cp-mono);
+  opacity: 0.85;
+}
+
+#cp-app .cp-color-actions {
+  display: flex;
+  gap: 0.3rem;
+  flex: none;
+}
+
+/* 按钮在彩色背景上的可见性 */
+#cp-app .cp-light-bg .cp-btn-copy {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+#cp-app .cp-dark-bg .cp-btn-copy {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---------- 代码生成 ---------- */
+
+#cp-app .cp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--cp-border);
+  margin-bottom: 0.5rem;
+}
+
+#cp-app .cp-tab {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--cp-text-muted);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+#cp-app .cp-tab:hover {
+  color: var(--cp-text);
+}
+
+#cp-app .cp-tab-active {
+  color: var(--cp-accent);
+  border-bottom-color: var(--cp-accent);
+  font-weight: 500;
+}
+
+#cp-app .cp-code-block {
+  margin: 0 0 0.5rem 0;
+  padding: 0.8rem;
+  border: 1px solid var(--cp-border);
+  border-radius: 6px;
+  background: var(--cp-bg);
+  overflow-x: auto;
+  max-height: 360px;
+}
+
+#cp-app .cp-code-block code {
+  font-family: var(--cp-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--cp-text);
+}
+
+#cp-app .cp-code-block-tall {
+  max-height: 560px;
+}
+
+/* 语法高亮 token 样式 */
+#cp-app .tok-c { color: var(--cp-tok-comment); font-style: italic; }
+#cp-app .tok-s { color: var(--cp-tok-string); }
+#cp-app .tok-h { color: var(--cp-tok-hex); font-weight: 600; }
+#cp-app .tok-n { color: var(--cp-tok-number); }
+#cp-app .tok-k { color: var(--cp-tok-keyword); font-weight: 500; }
+#cp-app .tok-t { color: var(--cp-tok-type); }
+#cp-app .tok-v { color: var(--cp-tok-var); }
+
+/* ---------- 错误提示 ---------- */
+
+#cp-app .cp-error {
+  margin-top: 0.8rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--cp-err);
+  border-radius: var(--cp-radius);
+  color: var(--cp-err);
+  font-size: 0.88rem;
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 576px) {
+  #cp-app .cp-color-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  #cp-app .cp-color-pct {
+    margin-left: 0;
+  }
+  #cp-app .cp-color-actions {
+    margin-left: auto;
+  }
+}

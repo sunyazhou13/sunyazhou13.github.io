@@ -1,0 +1,323 @@
+/* ===== 3D 模型多视口分析工具 ===== */
+
+#tv3d-app { margin-top: 1rem; }
+
+.tv3d-banner {
+  display: flex;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ---- 工具栏 ---- */
+.tv3d-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.tv3d-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.tv3d-btn:hover:not(:disabled) { border-color: #2f6fde; }
+.tv3d-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.tv3d-btn-primary { background: #2f6fde; border-color: #2f6fde; color: #fff; }
+.tv3d-btn-primary:hover:not(:disabled) { background: #2560c4; }
+[mode='dark'] .tv3d-btn:hover:not(:disabled) { border-color: #5b8ff0; }
+[mode='dark'] .tv3d-btn-primary { background: #5b8ff0; border-color: #5b8ff0; color: #101418; }
+
+.tv3d-hint { font-size: 0.82rem; opacity: 0.65; }
+.tv3d-sep {
+  width: 1px;
+  height: 1.3rem;
+  background: rgba(128, 128, 128, 0.4);
+  margin: 0 0.3rem;
+}
+
+/* ---- 视口舞台 ---- */
+.tv3d-stage {
+  position: relative;
+  height: 540px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #1a1a1a;
+  user-select: none;
+  touch-action: none;
+}
+#tv3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 四视口覆盖格：hover 高亮 + 标题 + 事件分区 */
+.tv3d-cells {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.tv3d-cell {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-sizing: border-box;
+  transition: box-shadow 0.1s ease;
+}
+.tv3d-cell[data-vp="0"], .tv3d-cell[data-vp="1"] { border-top: none; }
+.tv3d-cell[data-vp="0"], .tv3d-cell[data-vp="2"] { border-left: none; }
+.tv3d-cell[data-vp="1"], .tv3d-cell[data-vp="3"] { border-right: none; }
+.tv3d-cell[data-vp="2"], .tv3d-cell[data-vp="3"] { border-bottom: none; }
+.tv3d-cell:hover,
+.tv3d-cell.hover {
+  box-shadow: inset 0 0 0 2px #40a9ff;
+  z-index: 2;
+}
+.tv3d-cell-title {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+/* UV 视口内「无 UV 坐标」提示：半透明遮罩 + 生成投影 UV 按钮 */
+.tv3d-uv-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  background: rgba(10, 12, 16, 0.55);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  z-index: 1;
+}
+.tv3d-uv-hint small {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.75rem;
+}
+.tv3d-mini {
+  pointer-events: auto;
+  padding: 1px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.tv3d-mini:hover { border-color: #40a9ff; color: #40a9ff; }
+
+/* 移动端视口标签 */
+.tv3d-tabs { display: none; }
+.tv3d-tabs button {
+  flex: 1;
+  padding: 0.35rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-left-width: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.tv3d-tabs button:first-child { border-left-width: 1px; border-radius: 6px 0 0 6px; }
+.tv3d-tabs button:last-child { border-radius: 0 6px 6px 0; }
+.tv3d-tabs button.active {
+  background: rgba(64, 169, 255, 0.22);
+  color: #fff;
+  border-color: #40a9ff;
+}
+
+.tv3d-dropmask {
+  position: absolute;
+  inset: 10px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #40a9ff;
+  border-radius: 8px;
+  background: rgba(26, 26, 26, 0.82);
+  color: #40a9ff;
+  font-size: 1.05rem;
+  pointer-events: none;
+}
+.tv3d-status {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  z-index: 3;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv3d-measure-label {
+  position: absolute;
+  z-index: 4;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #69f0ae;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  transform: translate(-50%, -140%);
+}
+
+/* ---- 面板 ---- */
+.tv3d-panel {
+  margin-top: 1.4rem;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 10px;
+}
+.tv3d-title {
+  margin: 0 0 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.tv3d-sliders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.9rem 1.4rem;
+}
+.tv3d-slider label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  margin-bottom: 0.3rem;
+}
+.tv3d-slider output {
+  font-variant-numeric: tabular-nums;
+  color: #2f6fde;
+}
+[mode='dark'] .tv3d-slider output { color: #5b8ff0; }
+.tv3d-slider input[type="range"] { width: 100%; }
+.tv3d-override { margin-top: 1rem; }
+.tv3d-check { display: block; font-size: 0.88rem; margin-bottom: 0.7rem; cursor: pointer; }
+.tv3d-override .tv3d-sliders { margin-top: 0.5rem; }
+.tv3d-override .tv3d-slider input:disabled { opacity: 0.4; }
+
+.tv3d-measurebar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+.tv3d-inline { font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+.tv3d-select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.tv3d-error {
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #ff7875;
+  border-radius: 8px;
+  color: #cf1322;
+  background: rgba(255, 77, 79, 0.08);
+  font-size: 0.88rem;
+  word-break: break-all;
+}
+[mode='dark'] .tv3d-error { color: #ff9c9c; }
+
+/* ---- 截图标注层 ---- */
+.tv3d-annot {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.88);
+}
+.tv3d-annot-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.tv3d-annot-bar .tv3d-btn { color: rgba(255, 255, 255, 0.85); border-color: rgba(255, 255, 255, 0.3); }
+.tv3d-annot-bar .tv3d-btn:hover:not(:disabled) { border-color: #40a9ff; }
+.tv3d-annot-bar .tv3d-btn-primary { color: #fff; }
+.tv3d-tool.active { border-color: #40a9ff; color: #40a9ff; }
+.tv3d-colors { display: inline-flex; gap: 0.35rem; }
+.tv3d-color {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.tv3d-color.active { border-color: #fff; }
+.tv3d-annot-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem;
+}
+#tv3d-annot-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+  cursor: crosshair;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- 移动端：单视口 + 标签切换 ---- */
+@media (max-width: 767px) {
+  .tv3d-stage { height: 66vh; }
+  .tv3d-cells { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .tv3d-cell { display: none; border: none !important; }
+  .tv3d-cell.active { display: block; }
+  .tv3d-tabs {
+    display: flex;
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    right: 8px;
+    z-index: 3;
+  }
+  .tv3d-tabs button { pointer-events: auto; }
+}

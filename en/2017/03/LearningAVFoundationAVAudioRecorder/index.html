@@ -1,0 +1,1777 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Learning AV Foundation(Chapter 3)AVAudioRecorder" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta name="twitter:description" property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/en/2017/03/LearningAVFoundationAVAudioRecorder/" /><meta property="og:url" content="https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-03-28T09:40:18+00:00" /><meta property="article:modified_time" content="2017-03-28T09:40:18+00:00" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta name="twitter:title" content="Learning AV Foundation(Chapter 3)AVAudioRecorder" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"孙亚洲"},"dateModified":"2017-03-28T09:40:18+00:00","datePublished":"2017-03-28T09:40:18+00:00","description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","headline":"Learning AV Foundation(Chapter 3)AVAudioRecorder","image":"https://www.sunyazhou.com/assets/images/avatar.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.sunyazhou.com/assets/images/avatar.jpg"},"name":"孙亚洲"},"url":"https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/"}</script><title>Learning AV Foundation(Chapter 3)AVAudioRecorder | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="stylesheet" href="/assets/AISource/glightbox/glightbox.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/js/code-copy.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script src="/assets/AISource/glightbox/glightbox.min.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/en/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/en/">迈腾大队长</a></div><div class="site-subtitle font-italic">外来务工人员mark一下</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/en/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/archives/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/categories/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tags/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tools/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-toolbox ml-xl-3 mr-xl-3"></i> <span>TOOLS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/projects/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>PROJECTS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/about/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/2017/03/LearningAVFoundationAVAudioRecorder/" title="中文" aria-label="切换到中文"> <i class="lang-toggle-icon fas fa-language lang-invisible"></i> <i class="lang-toggle-icon fas fa-earth-asia "></i> </a> <span class="icon-border"></span> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/en/"> 主页 </a> </span> <span>Learning AV Foundation(Chapter 3)AVAudioRecorder</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><article class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Learning AV Foundation(Chapter 3)AVAudioRecorder</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Tue, Mar 28, 2017, 9:40 AM +0000" > 2017-03-28 <i class="unloaded">2017-03-28T09:40:18+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sat, Aug 22, 2026, 12:16 PM +0800" > 08-22 <i class="unloaded">2026-08-22T04:16:26+00:00</i> </span></div></div><div class="post-content"><p><a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/cover.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/cover.avif" alt="cover" /></a></p><h2 id="preface">Preface</h2><p>In <code class="language-plaintext highlighter-rouge">AV Foundation</code>, using the <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code> class to add audio recording is just as simple as using <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code>. Both are built on top of the <code class="language-plaintext highlighter-rouge">Audio Queue Server</code>, and both support the <code class="language-plaintext highlighter-rouge">macOS</code> and <code class="language-plaintext highlighter-rouge">iOS</code> platforms. You can record from the built-in microphone, as well as from a digital audio interface or an external USB microphone.</p><h2 id="main-topics-of-this-post">Main topics of this post:</h2><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>How to create AVAudioRecorder
+    1. Audio format
+    2. Sample rate
+    3. Number of channels
+Create a demo
+    1. Configure the audio session
+    2. Implement recording
+    3. Visualize the sound wave with Audio Metering
+</pre></table></code></div></div><p>Before creating an <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code>, let’s first take a look at its methods and member variables.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="n">isRecording</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">recording</span><span class="p">;</span><span class="c1">//是否正在录音</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">settings</span><span class="p">;</span><span class="c1">//录音配置：采样率、音频格式、通道数...</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span><span class="p">;</span><span class="c1">//录音文件存放URL</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">)</span> <span class="n">NSTimeInterval</span> <span class="n">currentTime</span><span class="p">;</span><span class="c1">//录音时长</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="n">isMeteringEnabled</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">meteringEnabled</span><span class="p">;</span><span class="c1">//是否监控声波</span>
+</pre></table></code></div></div><p>Instance methods of <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code>:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">prepareToRecord</span><span class="p">;</span><span class="c1">//为录音准备缓冲区</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">record</span><span class="p">;</span><span class="c1">//录音开始，暂停后调用会恢复录音</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">recordAtTime</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">time</span><span class="p">;</span><span class="c1">//在指定时间后开始录音</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">recordForDuration</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span> <span class="n">duration</span><span class="p">;</span><span class="c1">//按指定时长录音</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">recordAtTime</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">time</span> 
+         <span class="nf">forDuration</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">duration</span><span class="p">;</span><span class="c1">//上面2个的合体</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">pause</span><span class="p">;</span> <span class="c1">//暂停录音</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stop</span><span class="p">;</span> <span class="c1">//停止录音</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">deleteRecording</span><span class="p">;</span><span class="c1">//删除录音，必须先停止录音再删除</span>
+</pre></table></code></div></div><p>Delegate methods of <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code>:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="c1">//Called when recording finishes</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">audioRecorderDidFinishRecording</span><span class="p">:(</span><span class="n">AVAudioRecorder</span> <span class="o">*</span><span class="p">)</span><span class="nv">recorder</span> 
+                           <span class="nf">successfully</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">flag</span><span class="p">;</span>
+<span class="c1">//Called when a recording encoding error occurs</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">audioRecorderEncodeErrorDidOccur</span><span class="p">:(</span><span class="n">AVAudioRecorder</span> <span class="o">*</span><span class="p">)</span><span class="nv">recorder</span> 
+                                   <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+</pre></table></code></div></div><h2 id="how-to-create-an-avaudiorecorder">How to create an <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code></h2><p>Here are the parameters required to create an <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code> object:</p><ul><li>The path URL on the local disk where the audio stream is written during recording<li><code class="language-plaintext highlighter-rouge">settings</code> recording configuration: a dictionary of key-value parameters such as sample rate, audio format, number of channels, etc.<li>An <code class="language-plaintext highlighter-rouge">NSError</code> pointer for error reporting</ul><p>Like this:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="cm">/**
+ Create a recorder
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">createRecorder</span> <span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">directory</span> <span class="o">=</span> <span class="n">NSTemporaryDirectory</span><span class="p">();</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">filePath</span> <span class="o">=</span> <span class="p">[</span><span class="n">directory</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="s">@"voice1.m4a"</span><span class="p">];</span>
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">filePath</span><span class="p">];</span>
+    
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">setting</span> <span class="o">=</span> <span class="p">@{</span><span class="n">AVFormatIDKey</span> <span class="o">:</span> <span class="err">@</span><span class="p">(</span><span class="n">kAudioFormatMPEG4AAC</span><span class="p">),</span>
+                              <span class="nl">AVSampleRateKey:</span> <span class="mf">@22050.0f</span><span class="p">,</span>
+                              <span class="nl">AVNumberOfChannelsKey:</span> <span class="mi">@1</span><span class="p">};</span>
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AVAudioRecorder</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithURL</span><span class="p">:</span><span class="n">url</span>
+                                                <span class="nl">settings:</span><span class="n">setting</span>
+                                                   <span class="nl">error:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">prepareToRecord</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Recorder Create Error: %@"</span><span class="p">,</span> <span class="p">[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>Here it is recommended to call the <code class="language-plaintext highlighter-rouge">[self.recorder prepareToRecord]</code> method to pre-configure the recording instance, similar to creating an <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code> in the <a href="https://www.sunyazhou.com/en/2017/03/LearningAVFoundationAVAudioPlayer/">previous chapter</a>. Both are necessary steps to run the low-level <code class="language-plaintext highlighter-rouge">Audio Queue</code> initialization. This <code class="language-plaintext highlighter-rouge">prepareToRecord</code> method also creates a file at the location specified by the given URL parameter, which reduces the latency when recording starts.</p><h2 id="audio-format">Audio Format</h2><p>The <code class="language-plaintext highlighter-rouge">AVFormatIDKey</code> key specifies the recording format. Besides <code class="language-plaintext highlighter-rouge">kAudioFormatMPEG4AAC</code>, the following formats are also available:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre><span class="n">CF_ENUM</span><span class="p">(</span><span class="n">AudioFormatID</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">kAudioFormatLinearPCM</span>               <span class="o">=</span> <span class="err">'</span><span class="n">lpcm</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAC3</span>                     <span class="o">=</span> <span class="err">'</span><span class="n">ac</span><span class="o">-</span><span class="mi">3</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormat60958AC3</span>                <span class="o">=</span> <span class="err">'</span><span class="n">cac3</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAppleIMA4</span>               <span class="o">=</span> <span class="err">'</span><span class="n">ima4</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC</span>                <span class="o">=</span> <span class="err">'</span><span class="n">aac</span> <span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4CELP</span>               <span class="o">=</span> <span class="err">'</span><span class="n">celp</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4HVXC</span>               <span class="o">=</span> <span class="err">'</span><span class="n">hvxc</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4TwinVQ</span>             <span class="o">=</span> <span class="err">'</span><span class="n">twvq</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMACE3</span>                   <span class="o">=</span> <span class="err">'</span><span class="n">MAC3</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMACE6</span>                   <span class="o">=</span> <span class="err">'</span><span class="n">MAC6</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatULaw</span>                    <span class="o">=</span> <span class="err">'</span><span class="n">ulaw</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatALaw</span>                    <span class="o">=</span> <span class="err">'</span><span class="n">alaw</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatQDesign</span>                 <span class="o">=</span> <span class="err">'</span><span class="n">QDMC</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatQDesign2</span>                <span class="o">=</span> <span class="err">'</span><span class="n">QDM2</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatQUALCOMM</span>                <span class="o">=</span> <span class="err">'</span><span class="n">Qclp</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEGLayer1</span>              <span class="o">=</span> <span class="err">'</span><span class="p">.</span><span class="n">mp1</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEGLayer2</span>              <span class="o">=</span> <span class="err">'</span><span class="p">.</span><span class="n">mp2</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEGLayer3</span>              <span class="o">=</span> <span class="err">'</span><span class="p">.</span><span class="n">mp3</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatTimeCode</span>                <span class="o">=</span> <span class="err">'</span><span class="n">time</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMIDIStream</span>              <span class="o">=</span> <span class="err">'</span><span class="n">midi</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatParameterValueStream</span>    <span class="o">=</span> <span class="err">'</span><span class="n">apvs</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAppleLossless</span>           <span class="o">=</span> <span class="err">'</span><span class="n">alac</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_HE</span>             <span class="o">=</span> <span class="err">'</span><span class="n">aach</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_LD</span>             <span class="o">=</span> <span class="err">'</span><span class="n">aacl</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_ELD</span>            <span class="o">=</span> <span class="err">'</span><span class="n">aace</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_ELD_SBR</span>        <span class="o">=</span> <span class="err">'</span><span class="n">aacf</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_ELD_V2</span>         <span class="o">=</span> <span class="err">'</span><span class="n">aacg</span><span class="err">'</span><span class="p">,</span>    
+    <span class="n">kAudioFormatMPEG4AAC_HE_V2</span>          <span class="o">=</span> <span class="err">'</span><span class="n">aacp</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatMPEG4AAC_Spatial</span>        <span class="o">=</span> <span class="err">'</span><span class="n">aacs</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAMR</span>                     <span class="o">=</span> <span class="err">'</span><span class="n">samr</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAMR_WB</span>                  <span class="o">=</span> <span class="err">'</span><span class="n">sawb</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatAudible</span>                 <span class="o">=</span> <span class="err">'</span><span class="n">AUDB</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatiLBC</span>                    <span class="o">=</span> <span class="err">'</span><span class="n">ilbc</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatDVIIntelIMA</span>             <span class="o">=</span> <span class="mh">0x6D730011</span><span class="p">,</span>
+    <span class="n">kAudioFormatMicrosoftGSM</span>            <span class="o">=</span> <span class="mh">0x6D730031</span><span class="p">,</span>
+    <span class="n">kAudioFormatAES3</span>                    <span class="o">=</span> <span class="err">'</span><span class="n">aes3</span><span class="err">'</span><span class="p">,</span>
+    <span class="n">kAudioFormatEnhancedAC3</span>             <span class="o">=</span> <span class="err">'</span><span class="n">ec</span><span class="o">-</span><span class="mi">3</span><span class="err">'</span>
+<span class="p">};</span>
+
+</pre></table></code></div></div><p>Here <code class="language-plaintext highlighter-rouge">kAudioFormatLinearPCM</code> writes the uncompressed audio stream to the file. This is the raw data, offering the highest fidelity but also the largest file size. Choosing formats like ACC<code class="language-plaintext highlighter-rouge">kAudioFormatMPEG4AAC</code> or AppleIMA4<code class="language-plaintext highlighter-rouge">kAudioFormatAppleLossless</code> will significantly reduce the file size while still maintaining audio quality.</p><blockquote><p><em>Note:</em> <em>The specified audio format must match the file type of the URL you write to. If you record a xxx.wav file, it must follow the Waveform Audio File Format (WAVE) requirements, i.e., little-endian LinearPCM. If the value specified for <code class="language-plaintext highlighter-rouge">AVFormatIDKey</code> is not <code class="language-plaintext highlighter-rouge">kAudioFormatLinearPCM</code>, an error will occur. NSError will return an error like the following:</em> <em>The operation couldn’t be completed. (OSStatus error 1718449215.)</em></p></blockquote><h2 id="sample-rate">Sample Rate</h2><p>In the code above, <code class="language-plaintext highlighter-rouge">AVSampleRateKey</code> is used to define the sample rate of the recorder. <strong>The sample rate defines the number of samples taken per second of the input analog audio signal.</strong> Using a <strong>low sample rate</strong>, such as 8kHz, results in a coarse, AM radio-like recording quality, though the file size is smaller; using a <strong>44.1kHz sample rate (CD-quality sample rate)</strong> yields very high quality content, but the file is larger. There are no strict rules about which sample rate to use, but developers should try to stick to <strong>standard sample rates, such as 8000Hz, 16000Hz (16kHz), 22050Hz (22.05kHz), or 44100Hz (44.1kHz), and of course 48000Hz and 96000Hz</strong> (kHz stands for kilohertz). Sample rates above 48000 or 96000 are meaningless to the human ear. Ultimately, it’s our ears that do the judging. (The <a href="https://www.sunyazhou.com/en/2017/03/LearningAVFoundationAVAudioPlayer/">previous chapter</a> mentioned that <strong>the audible frequency range of the human ear starts from a low of 20Hz up to a high of 20kHz</strong>, so recording is best done at 2x that frequency.)</p><h2 id="number-of-channels">Number of Channels</h2><p><code class="language-plaintext highlighter-rouge">AVNumberOfChannelsKey</code> is used to define the number of channels for the recorded audio content. <strong>Setting the default value 1 means recording in mono</strong>, <strong>while setting 2 means recording in stereo</strong>. Unless you are recording with external hardware, you should generally create mono recordings. The number of channels here refers to the number of inputs on the recording device, which can be understood as the built-in microphone or an external microphone, such as the one on an Apple headset.</p><blockquote><p>The above covers the basic concepts of <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code>. <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code> supports <strong>unlimited recording duration</strong>, and you can also start recording <strong>from a specific point in the future</strong> or <strong>record for a specified duration</strong>.</p></blockquote><h2 id="network-streaming">Network Streaming</h2><p>The <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code> audio player can only play local files and loads all audio data at once. But what if we sometimes need to download while listening? <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code> does not support playing network streaming audio in this form. To play such network streams, we need to use the audio queue service <code class="language-plaintext highlighter-rouge">Audio Queue Services</code> from the <code class="language-plaintext highlighter-rouge">AudioToolbox</code> framework.</p><p><strong>The audio queue service consists of 3 parts:</strong></p><blockquote><ul><li>3 buffers<li>1 buffer queue<li>1 callback</ul></blockquote><p><strong>1. Below is how the audio queue service works for recording:</strong></p><p><a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServiceRecord.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServiceRecord.avif" alt="Queue Service Record" /></a></p><p><strong>2. Below is how the audio queue service works for playback:</strong></p><p><a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServicePlay.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/QueueServicePlay.avif" alt="Queue Service Play" /></a></p><p>Of course, we don’t need to implement this ourselves in C functions. There’s an open-source library <a href="https://github.com/sunyazhou13/FreeStreamer">FreeStreamer</a>.</p><p>Using FreeStreamer</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre><span class="cp">#import &lt;FreeStreamer/FreeStreamer.h&gt;
+</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">initAudioStream</span><span class="p">];</span>
+    <span class="c1">//Play network streaming audio</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioStream</span> <span class="nf">play</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="cm">/* Initialize the network streaming object */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">initAudioStream</span><span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">urlStr</span> <span class="o">=</span> <span class="s">@"http://sc1.111ttt.com/2016/1/02/24/195242042236.mp3"</span><span class="p">;</span>
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">URLWithString</span><span class="p">:</span><span class="n">urlStr</span><span class="p">];</span>
+    <span class="c1">//Create an FSAudioStream object</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">audioStream</span> <span class="o">=</span> <span class="p">[[</span><span class="n">FSAudioStream</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithUrl</span><span class="p">:</span><span class="n">url</span><span class="p">];</span>
+    <span class="c1">//Set the playback error callback block</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">audioStream</span><span class="p">.</span><span class="n">onFailure</span> <span class="o">=</span> <span class="o">^</span><span class="p">(</span><span class="n">FSAudioStreamError</span> <span class="n">error</span><span class="p">,</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">){</span>
+          <span class="n">NSLog</span><span class="p">(</span><span class="s">@"播放过程中发生错误，错误信息：%@"</span><span class="p">,</span><span class="n">description</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="c1">//Set the completion callback block</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">audioStream</span><span class="p">.</span><span class="n">onCompletion</span> <span class="o">=</span> <span class="o">^</span><span class="p">(){</span>
+          <span class="n">NSLog</span><span class="p">(</span><span class="s">@"播放完成!"</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioStream</span> <span class="nf">setVolume</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">];</span><span class="c1">//Set the volume</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>That’s drifting a bit off topic. Let’s get back to the main subject. This chapter won’t include this in the demo, I hope you’ll understand.</p><h1 id="now-lets-write-an-avaudiorecorder-demo-to-implement-the-above-features">Now let’s write an <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code> demo to implement the above features</h1><h2 id="configuring-the-audio-session">Configuring the Audio Session</h2><p>First, create an AVAudioRecorderDemo project for the iOS platform — I’m sure everyone is very familiar with this.</p><p>In <code class="language-plaintext highlighter-rouge">AppDelegate</code>, import <code class="language-plaintext highlighter-rouge">#import &lt;AVFoundation/AVFoundation.h&gt;</code> and add the following configuration code:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
+    
+    <span class="n">AVAudioSession</span> <span class="o">*</span><span class="n">session</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVAudioSession</span> <span class="nf">sharedInstance</span><span class="p">];</span>
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">session</span> <span class="nf">setCategory</span><span class="p">:</span><span class="n">AVAudioSessionCategoryPlayAndRecord</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Category Error: %@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+    <span class="p">}</span>
+    
+    <span class="c1">//Activate the session</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">session</span> <span class="nf">setActive</span><span class="p">:</span><span class="nb">YES</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Activation Error: %@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>This <code class="language-plaintext highlighter-rouge">AVAudioSessionCategoryPlayAndRecord</code> is one of those categories described in the <a href="https://www.sunyazhou.com/en/2017/03/LearningAVFoundationAVAudioPlayer/">previous chapter</a>. We need the <strong>record + play</strong> functionality.</p><p>Next, configure the permission information in the plist file. You can refer to the article <a href="https://www.sunyazhou.com/en/2017/03/AccessPrivacySensitive/">Access privacy-sensitive data</a> and fill in the required access permission information.</p><p><a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/FillInfo.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/FillInfo.avif" alt="plist1" /></a></p><p>Then choose SourceCode <a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/SourceCode.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/SourceCode.avif" alt="plist2" /></a></p><p>And fill in:</p><div class="language-xml highlighter-rouge"><div class="code-header"> <span data-label-text="XML"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c">&lt;!-- 🎤 Microphone --&gt;</span>
+<span class="nt">&lt;key&gt;</span>NSMicrophoneUsageDescription<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;string&gt;</span>$(PRODUCT_NAME) microphone use<span class="nt">&lt;/string&gt;</span>
+</pre></table></code></div></div><p>All the above is for local authorization access. Remember that if the authorization is denied on the first attempt, the user must manually go to General - Settings to configure it, otherwise it will never work. If you don’t add this local authorization, the app will crash.</p><h2 id="recording-implementation">Recording Implementation</h2><p>First, let’s wrap a class called <code class="language-plaintext highlighter-rouge">BDRecoder</code>. This class is responsible for all audio recording, pausing, saving recorded files, etc., and exposes callbacks via blocks. <code class="language-plaintext highlighter-rouge">BDRecoder.h</code> looks like this. In the future, when refining it, we could add a delegate to handle logic such as unexpected interruptions during recording or route switching.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre><span class="c1">//</span>
+<span class="c1">//  BDRecorder.h</span>
+<span class="c1">//  AVAudioRecorderDemo</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by sunyazhou on 2017/3/29.</span>
+<span class="c1">//  Copyright © 2017 Baidu, Inc. All rights reserved.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+</span>
+<span class="k">@class</span> <span class="nc">MemoModel</span><span class="p">;</span>
+<span class="c1">//Callback when recording stops</span>
+<span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">^</span><span class="n">BDRecordingStopCompletionHanlder</span><span class="p">)(</span><span class="n">BOOL</span><span class="p">);</span>
+<span class="c1">//Callback when saving the recording finishes</span>
+<span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">^</span><span class="n">BDRecordingSaveCompletionHanlder</span><span class="p">)(</span><span class="n">BOOL</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+
+<span class="k">@interface</span> <span class="nc">BDRecorder</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="cm">/**
+ * Get the current recording time externally
+ * hours:minutes:seconds  Of course, microseconds and milliseconds can be added later, just a format string like 00:03:02
+ */</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">formattedCurrentTime</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">record</span><span class="p">;</span> <span class="c1">//开始录音</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">pause</span><span class="p">;</span>  <span class="c1">//暂停录音</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">stopWithCompletionHandler</span><span class="p">:(</span><span class="n">BDRecordingStopCompletionHanlder</span><span class="p">)</span><span class="nv">handler</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">saveRecordingWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span>
+            <span class="nf">completionHandler</span><span class="p">:(</span><span class="n">BDRecordingSaveCompletionHanlder</span><span class="p">)</span><span class="nv">handler</span><span class="p">;</span>
+
+<span class="cm">/**
+ Playback of the recorded file
+ 
+ @param memo the memo model of the file currently being played
+ @return whether playback started successfully
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">playbackURL</span><span class="p">:(</span><span class="n">MemoModel</span> <span class="o">*</span><span class="p">)</span><span class="nv">memo</span><span class="p">;</span>
+<span class="k">@end</span>
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">BDRecoder.m</code></p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+</pre><td class="rouge-code"><pre><span class="c1">//</span>
+<span class="c1">//  BDRecorder.m</span>
+<span class="c1">//  AVAudioRecorderDemo</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by sunyazhou on 2017/3/29.</span>
+<span class="c1">//  Copyright © 2017 Baidu, Inc. All rights reserved.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import "BDRecorder.h"
+</span>
+<span class="cp">#import "MemoModel.h"
+</span>
+<span class="k">@interface</span> <span class="nc">BDRecorder</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">AVAudioRecorderDelegate</span><span class="o">&gt;</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">AVAudioPlayer</span> <span class="o">*</span><span class="n">player</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">AVAudioRecorder</span> <span class="o">*</span><span class="n">recorder</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">BDRecordingStopCompletionHanlder</span> <span class="n">completionHandler</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">BDRecorder</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span> <span class="p">{</span>
+    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">temDir</span> <span class="o">=</span> <span class="n">NSTemporaryDirectory</span><span class="p">();</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">filePath</span> <span class="o">=</span> <span class="p">[</span><span class="n">temDir</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="s">@"test1.caf"</span><span class="p">];</span>
+        <span class="n">NSURL</span> <span class="o">*</span><span class="n">fileURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">filePath</span><span class="p">];</span>
+        
+        <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">setting</span> <span class="o">=</span> <span class="p">@{</span><span class="n">AVFormatIDKey</span><span class="o">:</span> <span class="err">@</span><span class="p">(</span><span class="n">kAudioFormatAppleIMA4</span><span class="p">),</span>
+                                  <span class="nl">AVSampleRateKey:</span> <span class="mf">@44100.0f</span><span class="p">,</span>
+                                  <span class="nl">AVNumberOfChannelsKey:</span> <span class="mi">@1</span><span class="p">,</span>
+                                  <span class="nl">AVEncoderBitDepthHintKey:</span> <span class="mi">@16</span><span class="p">,</span>
+                                  <span class="nl">AVEncoderAudioQualityKey:</span> <span class="err">@</span><span class="p">(</span><span class="n">AVAudioQualityMedium</span><span class="p">)</span>
+                                  <span class="p">};</span>
+        <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AVAudioRecorder</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithURL</span><span class="p">:</span><span class="n">fileURL</span> <span class="nf">settings</span><span class="p">:</span><span class="n">setting</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+            <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">prepareToRecord</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Create Recorder Error: %@"</span><span class="p">,[</span><span class="n">error</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+        <span class="p">}</span> 
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">record</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">record</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">pause</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">pause</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">stopWithCompletionHandler</span><span class="p">:(</span><span class="n">BDRecordingStopCompletionHanlder</span><span class="p">)</span><span class="nv">handler</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">completionHandler</span> <span class="o">=</span> <span class="n">handler</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">stop</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">saveRecordingWithName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">name</span>
+            <span class="nf">completionHandler</span><span class="p">:(</span><span class="n">BDRecordingSaveCompletionHanlder</span><span class="p">)</span><span class="nv">handler</span> <span class="p">{</span>
+    <span class="n">NSTimeInterval</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSDate</span> <span class="nf">timeIntervalSinceReferenceDate</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"%@-%f.caf"</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">docDir</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">documentsDirectory</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">destPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">docDir</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="n">filename</span><span class="p">];</span>
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">srcURL</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">url</span><span class="p">;</span>
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">destURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">destPath</span><span class="p">];</span>
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+    <span class="n">BOOL</span> <span class="n">success</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSFileManager</span> <span class="nf">defaultManager</span><span class="p">]</span> <span class="nf">copyItemAtURL</span><span class="p">:</span><span class="n">srcURL</span> <span class="nf">toURL</span><span class="p">:</span><span class="n">destURL</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">MemoModel</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="n">MemoModel</span> <span class="nf">memoWithTitle</span><span class="p">:</span><span class="n">name</span> <span class="nf">url</span><span class="p">:</span><span class="n">destURL</span><span class="p">];</span>
+        <span class="n">handler</span><span class="p">(</span><span class="nb">YES</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">documentsDirectory</span> <span class="p">{</span>
+    <span class="n">NSArray</span> <span class="o">*</span><span class="n">paths</span> <span class="o">=</span> <span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">paths</span> <span class="nf">objectAtIndex</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">audioRecorderDidFinishRecording</span><span class="p">:(</span><span class="n">AVAudioRecorder</span> <span class="o">*</span><span class="p">)</span><span class="nv">recorder</span>
+                           <span class="nf">successfully</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">flag</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">completionHandler</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">completionHandler</span><span class="p">(</span><span class="n">flag</span><span class="p">);</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><p>Here, <code class="language-plaintext highlighter-rouge">self.completionHandler</code> temporarily stores the block when <code class="language-plaintext highlighter-rouge">stopWithCompletionHandler</code> is called externally, so that we can notify the outside when recording finishes, allowing a UIAlertView to be shown for saving, etc.</p><p>When recording stops and the recording enters the naming stage, let the outside call <code class="language-plaintext highlighter-rouge">saveRecordingWithName:completionHandler</code> with the file name. We then get the URL from <code class="language-plaintext highlighter-rouge">self.recorder.url</code> and copy it to the documents directory with the given name.</p><p>Next we need to implement <code class="language-plaintext highlighter-rouge">playbackURL:</code>, which takes a <code class="language-plaintext highlighter-rouge">MemoModel</code> parameter. This <code class="language-plaintext highlighter-rouge">MemoModel</code> is a model object holding the file name, url, etc.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;
+</span>
+<span class="k">@interface</span> <span class="nc">MemoModel</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">dateString</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">timeString</span><span class="p">;</span>
+
+<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">memoWithTitle</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span> <span class="nf">url</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">deleteMemo</span><span class="p">;</span>
+<span class="k">@end</span>
+<span class="c1">//For the concrete implementation, please refer to my final demo</span>
+</pre></table></code></div></div><p>To implement the playback part we need to create a player. Here we simply create an <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code>.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="cm">/**
+ Playback of the recorded file
+ 
+ @param memo the memo model of the file currently being played
+ @return whether playback started successfully
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">playbackURL</span><span class="p">:(</span><span class="n">MemoModel</span> <span class="o">*</span><span class="p">)</span><span class="nv">memo</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">player</span> <span class="nf">stop</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">player</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AVAudioPlayer</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithContentsOfURL</span><span class="p">:</span><span class="n">memo</span><span class="p">.</span><span class="n">url</span> <span class="nf">error</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">player</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">player</span> <span class="nf">prepareToPlay</span><span class="p">];</span>
+        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>Here we pass <code class="language-plaintext highlighter-rouge">memo.url</code> to the current player for playback. This is a simple implementation; if you need something more complex, please refer to the <code class="language-plaintext highlighter-rouge">AVAudioPlayer</code> chapter I explained previously.</p><p>Finally, let’s add the code for the time display part.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="cm">/**
+ * Get the current recording time externally
+ * hours:minutes:seconds  Of course, microseconds and milliseconds can be added later, just a format string like 00:03:02
+ */</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">formattedCurrentTime</span><span class="p">;</span>
+
+</pre></table></code></div></div><p>Here we need to override the <code class="language-plaintext highlighter-rouge">formattedCurrentTime</code> getter to obtain a time format such as 00:00:00.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="cm">/**
+ Return the current recording time formatted as HH:mm:ss
+ 
+ @return the assembled string
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">formattedCurrentTime</span> <span class="p">{</span>
+    <span class="n">NSUInteger</span> <span class="n">time</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">currentTime</span><span class="p">;</span>
+    <span class="n">NSInteger</span> <span class="n">hours</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">);</span>
+    <span class="n">NSInteger</span> <span class="n">minutes</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="n">NSInteger</span> <span class="n">seconds</span> <span class="o">=</span> <span class="n">time</span> <span class="o">%</span> <span class="mi">60</span><span class="p">;</span>
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">format</span> <span class="o">=</span> <span class="s">@"%02i:%02i:%02i"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="n">format</span><span class="p">,</span> <span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>That roughly covers the process of wrapping <code class="language-plaintext highlighter-rouge">BDRecorder</code>.</p><p>Below is the UI setup for <code class="language-plaintext highlighter-rouge">ViewController</code>. After setting up the time format, we need to create a timer in <code class="language-plaintext highlighter-rouge">ViewController</code> to update the recording time on the UI, because <code class="language-plaintext highlighter-rouge">self.recorder.currentTime</code> is a read-only property and provides no setter, so we can’t observe the recorder’s property changes via KVO.</p><p>Here’s the code:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+</pre><td class="rouge-code"><pre><span class="c1">//</span>
+<span class="c1">//  ViewController.m</span>
+<span class="c1">//  AVAudioRecorderDemo</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by sunyazhou on 2017/3/28.</span>
+<span class="c1">//  Copyright © 2017 Baidu, Inc. All rights reserved.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import "ViewController.h"
+</span>
+<span class="cp">#import &lt;Masonry/Masonry.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+</span>
+<span class="cp">#import "BDRecorder.h"
+#import "LevelMeterView.h"
+#import "MemoModel.h"
+#import "MemoCell.h"
+#import "LevelPair.h"
+</span>
+<span class="cp">#define MEMOS_ARCHIVE    @"memos.archive"
+</span>
+<span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">UITableViewDelegate</span><span class="p">,</span> <span class="n">UITableViewDataSource</span><span class="o">&gt;</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSMutableArray</span> <span class="o">&lt;</span><span class="n">MemoModel</span> <span class="o">*&gt;*</span><span class="n">memos</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">BDRecorder</span> <span class="o">*</span><span class="n">recorder</span><span class="p">;</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSTimer</span> <span class="o">*</span><span class="n">timer</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">CADisplayLink</span> <span class="o">*</span><span class="n">levelTimer</span><span class="p">;</span>
+
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIView</span> <span class="o">*</span><span class="n">containerView</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">recordButton</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">stopButton</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UILabel</span> <span class="o">*</span><span class="n">timeLabel</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">LevelMeterView</span> <span class="o">*</span><span class="n">levelMeterView</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">weak</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">UITableView</span> <span class="o">*</span><span class="n">tableview</span><span class="p">;</span>
+
+
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+    
+    <span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="o">=</span> <span class="p">[[</span><span class="n">BDRecorder</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">memos</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="nf">array</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stopButton</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">recordImage</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIImage</span> <span class="nf">imageNamed</span><span class="p">:</span><span class="s">@"record"</span><span class="p">]</span> <span class="nf">imageWithRenderingMode</span><span class="p">:</span><span class="n">UIImageRenderingModeAlwaysOriginal</span><span class="p">];</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">pauseImage</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIImage</span> <span class="nf">imageNamed</span><span class="p">:</span><span class="s">@"pause"</span><span class="p">]</span> <span class="nf">imageWithRenderingMode</span><span class="p">:</span><span class="n">UIImageRenderingModeAlwaysOriginal</span><span class="p">];</span>
+    <span class="n">UIImage</span> <span class="o">*</span><span class="n">stopImage</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIImage</span> <span class="nf">imageNamed</span><span class="p">:</span><span class="s">@"stop"</span><span class="p">]</span> <span class="nf">imageWithRenderingMode</span><span class="p">:</span><span class="n">UIImageRenderingModeAlwaysOriginal</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recordButton</span> <span class="nf">setImage</span><span class="p">:</span><span class="n">recordImage</span> <span class="nf">forState</span><span class="p">:</span><span class="n">UIControlStateNormal</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recordButton</span> <span class="nf">setImage</span><span class="p">:</span><span class="n">pauseImage</span> <span class="nf">forState</span><span class="p">:</span><span class="n">UIControlStateSelected</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">stopButton</span> <span class="nf">setImage</span><span class="p">:</span><span class="n">stopImage</span> <span class="nf">forState</span><span class="p">:</span><span class="n">UIControlStateNormal</span><span class="p">];</span>
+    
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="nf">dataWithContentsOfURL</span><span class="p">:[</span><span class="n">self</span> <span class="nf">archiveURL</span><span class="p">]];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_memos</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="nf">array</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">_memos</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSKeyedUnarchiver</span> <span class="nf">unarchiveObjectWithData</span><span class="p">:</span><span class="n">data</span><span class="p">];</span>
+    <span class="p">}</span>
+    
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableview</span> <span class="nf">registerNib</span><span class="p">:[</span><span class="n">UINib</span> <span class="nf">nibWithNibName</span><span class="p">:</span><span class="s">@"MemoCell"</span> <span class="nf">bundle</span><span class="p">:[</span><span class="n">NSBundle</span> <span class="nf">mainBundle</span><span class="p">]]</span> <span class="n">forCellReuseIdentifier</span><span class="o">:</span><span class="s">@"MemoCell"</span><span class="p">];</span>
+    
+    
+    <span class="p">[</span><span class="n">self</span> <span class="nf">layoutSubveiws</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">layoutSubveiws</span><span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_left</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_right</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">centerX</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_centerX</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">tableview</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">);</span>
+    <span class="p">}];</span>
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableview</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">mas_top</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+    <span class="p">}];</span>
+    
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timeLabel</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">centerX</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">mas_centerX</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="mi">@25</span><span class="p">);</span>
+    <span class="p">}];</span>
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recordButton</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">mas_left</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">mas_bottom</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">width</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="mi">@71</span><span class="p">);</span>
+    <span class="p">}];</span>
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">stopButton</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">mas_right</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">containerView</span><span class="p">.</span><span class="n">mas_bottom</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">width</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="mi">@71</span><span class="p">);</span>
+    <span class="p">}];</span>
+    
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">view</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">height</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="mi">@30</span><span class="p">);</span>
+        <span class="n">make</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">tableview</span><span class="p">.</span><span class="n">mas_top</span><span class="p">);</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nf">timerWithTimeInterval</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+                                         <span class="nl">target:</span><span class="n">self</span>
+                                       <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">updateTimeDisplay</span><span class="p">)</span>
+                                       <span class="nl">userInfo:</span><span class="nb">nil</span>
+                                        <span class="nl">repeats:</span><span class="nb">YES</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">NSRunLoop</span> <span class="nf">mainRunLoop</span><span class="p">]</span> <span class="nf">addTimer</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">forMode</span><span class="p">:</span><span class="n">NSRunLoopCommonModes</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stopTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">updateTimeDisplay</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timeLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">formattedCurrentTime</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startMeterTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CADisplayLink</span> <span class="nf">displayLinkWithTarget</span><span class="p">:</span><span class="n">self</span> <span class="nf">selector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">updateMeter</span><span class="p">)];</span>
+<span class="c1">//    if ([self.levelTimer respondsToSelector:@selector(setPreferredFramesPerSecond:)]) {</span>
+<span class="c1">//        self.levelTimer.preferredFramesPerSecond = 5;</span>
+<span class="c1">//    } else {</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span><span class="p">.</span><span class="n">frameInterval</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">//    }</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">addToRunLoop</span><span class="p">:[</span><span class="n">NSRunLoop</span> <span class="nf">currentRunLoop</span><span class="p">]</span>
+                          <span class="nl">forMode:</span><span class="n">NSRunLoopCommonModes</span><span class="p">];</span>
+    
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stopMeterTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span> <span class="nf">resetLevelMeter</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">updateMeter</span> <span class="p">{</span>
+    <span class="n">LevelPair</span> <span class="o">*</span><span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">levels</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">levels</span><span class="p">.</span><span class="n">level</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span><span class="p">.</span><span class="n">peakLevel</span> <span class="o">=</span> <span class="n">levels</span><span class="p">.</span><span class="n">peakLevel</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span> <span class="nf">setNeedsDisplay</span><span class="p">];</span>
+    
+<span class="p">}</span>
+
+<span class="cp">#pragma mark -
+#pragma mark - UITableViewDelegate
+</span><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">memos</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="n">MemoCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nf">dequeueReusableCellWithIdentifier</span><span class="p">:</span><span class="s">@"MemoCell"</span><span class="p">];</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">memos</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="nf">row</span><span class="p">];</span>
+    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">didSelectRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span><span class="p">{</span>
+    <span class="n">MemoModel</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">memos</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="nf">row</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">playbackURL</span><span class="p">:</span><span class="n">model</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">canEditRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">commitEditingStyle</span><span class="p">:(</span><span class="n">UITableViewCellEditingStyle</span><span class="p">)</span><span class="nv">editingStyle</span> <span class="nf">forRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">editingStyle</span> <span class="o">==</span> <span class="n">UITableViewCellEditingStyleDelete</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">MemoModel</span> <span class="o">*</span><span class="n">memo</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">memos</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="nf">row</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">memo</span> <span class="nf">deleteMemo</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">memos</span> <span class="nf">removeObjectAtIndex</span><span class="p">:</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">saveMemos</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">tableView</span> <span class="nf">deleteRowsAtIndexPaths</span><span class="p">:@[</span><span class="n">indexPath</span><span class="p">]</span> <span class="nf">withRowAnimation</span><span class="p">:</span><span class="n">UITableViewRowAnimationAutomatic</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">tableView</span><span class="p">:(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">heightForRowAtIndexPath</span><span class="p">:(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">80</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等
+</span><span class="k">-</span> <span class="p">(</span><span class="n">IBAction</span><span class="p">)</span><span class="nf">record</span><span class="p">:(</span><span class="n">UIButton</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stopButton</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">sender</span> <span class="nf">isSelected</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">stopMeterTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">stopTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">pause</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">startMeterTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">startTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">record</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">sender</span> <span class="nf">setSelected</span><span class="p">:</span><span class="o">!</span><span class="p">[</span><span class="n">sender</span> <span class="nf">isSelected</span><span class="p">]];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">IBAction</span><span class="p">)</span><span class="nf">stopRecording</span><span class="p">:(</span><span class="n">UIButton</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">stopMeterTimer</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">recordButton</span><span class="p">.</span><span class="n">selected</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stopButton</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">stopWithCompletionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">delayInSeconds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">01</span><span class="p">;</span>
+        <span class="n">dispatch_time_t</span> <span class="n">popTime</span> <span class="o">=</span> <span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span> <span class="p">(</span><span class="n">delayInSeconds</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">));</span>
+        <span class="n">dispatch_after</span><span class="p">(</span><span class="n">popTime</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="p">[</span><span class="n">self</span> <span class="nf">showSaveDialog</span><span class="p">];</span>
+        <span class="p">});</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">showSaveDialog</span> <span class="p">{</span>
+    <span class="n">UIAlertController</span> <span class="o">*</span><span class="n">alertController</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIAlertController</span> <span class="nf">alertControllerWithTitle</span><span class="p">:</span><span class="s">@"保存录音"</span> <span class="nf">message</span><span class="p">:</span><span class="s">@"输入名称"</span> <span class="n">preferredStyle</span><span class="o">:</span><span class="n">UIAlertControllerStyleAlert</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">alertController</span> <span class="nf">addTextFieldWithConfigurationHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">UITextField</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">textField</span><span class="p">)</span> <span class="p">{</span>
+       <span class="n">textField</span><span class="p">.</span><span class="n">placeholder</span> <span class="o">=</span> <span class="s">@"我的录音"</span><span class="p">;</span>
+    <span class="p">}];</span>
+    <span class="n">UIAlertAction</span> <span class="o">*</span><span class="n">cancelAction</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIAlertAction</span> <span class="nf">actionWithTitle</span><span class="p">:</span><span class="s">@"Cancel"</span> <span class="nf">style</span><span class="p">:</span><span class="n">UIAlertActionStyleCancel</span> <span class="n">handler</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+    <span class="n">UIAlertAction</span> <span class="o">*</span><span class="n">okAction</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIAlertAction</span> <span class="nf">actionWithTitle</span><span class="p">:</span><span class="s">@"OK"</span> <span class="nf">style</span><span class="p">:</span><span class="n">UIAlertActionStyleDefault</span> <span class="n">handler</span><span class="o">:^</span><span class="p">(</span><span class="n">UIAlertAction</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="n">alertController</span><span class="p">.</span><span class="n">textFields</span><span class="p">.</span><span class="n">firstObject</span> <span class="nf">text</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">saveRecordingWithName</span><span class="p">:</span><span class="n">filename</span> <span class="nf">completionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">success</span><span class="p">,</span> <span class="n">id</span> <span class="n">object</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">memos</span> <span class="nf">insertObject</span><span class="p">:</span><span class="n">object</span> <span class="nf">atIndex</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span>
+                <span class="p">[</span><span class="n">self</span> <span class="nf">saveMemos</span><span class="p">];</span>
+                <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableview</span> <span class="nf">reloadData</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error saving file: %@"</span><span class="p">,</span> <span class="p">[</span><span class="n">object</span> <span class="nf">localizedDescription</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}];</span>
+    <span class="p">}];</span>
+    <span class="p">[</span><span class="n">alertController</span> <span class="nf">addAction</span><span class="p">:</span><span class="n">cancelAction</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">alertController</span> <span class="nf">addAction</span><span class="p">:</span><span class="n">okAction</span><span class="p">];</span>
+    
+    <span class="p">[</span><span class="n">self</span> <span class="nf">presentViewController</span><span class="p">:</span><span class="n">alertController</span> <span class="nf">animated</span><span class="p">:</span><span class="nb">YES</span> <span class="n">completion</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="cp">#pragma mark - Memo Archiving
+</span><span class="c1">//Save the memo model, here simply stored via archiving</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">saveMemos</span> <span class="p">{</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">fileData</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSKeyedArchiver</span> <span class="nf">archivedDataWithRootObject</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">memos</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">fileData</span> <span class="nf">writeToURL</span><span class="p">:[</span><span class="n">self</span> <span class="nf">archiveURL</span><span class="p">]</span> <span class="nf">atomically</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="c1">//The path where the archive is stored</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="n">archiveURL</span> <span class="p">{</span>
+    <span class="n">NSArray</span> <span class="o">*</span><span class="n">paths</span> <span class="o">=</span> <span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">docsDir</span> <span class="o">=</span> <span class="p">[</span><span class="n">paths</span> <span class="nf">objectAtIndex</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">archivePath</span> <span class="o">=</span> <span class="p">[</span><span class="n">docsDir</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="n">MEMOS_ARCHIVE</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">archivePath</span><span class="p">];</span>
+<span class="p">}</span>
+
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">didReceiveMemoryWarning</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">didReceiveMemoryWarning</span><span class="p">];</span>
+    <span class="c1">// Dispose of any resources that can be recreated.</span>
+<span class="p">}</span>
+
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><p>The code is a bit long, so let me briefly explain it. You can refer to the final demo.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSMutableArray</span> <span class="o">&lt;</span><span class="n">MemoModel</span> <span class="o">*&gt;*</span><span class="n">memos</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">BDRecorder</span> <span class="o">*</span><span class="n">recorder</span><span class="p">;</span>
+
+</pre></table></code></div></div><p>Declare an array to hold the model objects to be played, including name, file URL, date, etc.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSTimer</span> <span class="o">*</span><span class="n">timer</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">CADisplayLink</span> <span class="o">*</span><span class="n">levelTimer</span><span class="p">;</span>
+</pre></table></code></div></div><p>One timer is used to refresh the recording time. <code class="language-plaintext highlighter-rouge">levelTimer</code> is used to refresh the waveform display, also known as <code class="language-plaintext highlighter-rouge">Audio Metering</code>, to meter the audio.</p><p>In <code class="language-plaintext highlighter-rouge">BDRecorder</code>, we added:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="n">LevelPair</span> <span class="o">*</span><span class="p">)</span><span class="n">levels</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">updateMeters</span><span class="p">];</span>
+    <span class="kt">float</span> <span class="n">avgPower</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">averagePowerForChannel</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kt">float</span> <span class="n">peakPower</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">peakPowerForChannel</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kt">float</span> <span class="n">linearLevel</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">meterTable</span> <span class="nf">valueForPower</span><span class="p">:</span><span class="n">avgPower</span><span class="p">];</span>
+    <span class="kt">float</span> <span class="n">linearPeak</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">meterTable</span> <span class="nf">valueForPower</span><span class="p">:</span><span class="n">peakPower</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">LevelPair</span> <span class="nf">levelsWithLevel</span><span class="p">:</span><span class="n">linearLevel</span> <span class="nf">peakLevel</span><span class="p">:</span><span class="n">linearPeak</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>These two methods 1. averagePowerForChannel retrieves the average trough value 2. peakPowerForChannel retrieves the peak value Both methods return a floating-point value representing the sound level in decibels (dB). The range of this value is <code class="language-plaintext highlighter-rouge">0dB(fullscale) ~ -160dB</code>, where 0dB is the maximum and -160dB is the minimum.</p><p><strong>Enabling audio metering (need to enable it in <code class="language-plaintext highlighter-rouge">BDRecorder</code>, as shown below) brings some extra overhead, but I think it’s worth it, since showing visual effects is what matters most. If <code class="language-plaintext highlighter-rouge">meteringEnabled</code> is enabled, the audio recorder will compute decibel values for the captured audio samples.</strong></p><p><strong>How to enable Audio Metering:</strong></p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">meteringEnabled</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+</pre></table></code></div></div><p>Before updating, we call the following code:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="n">LevelPair</span> <span class="o">*</span><span class="p">)</span><span class="n">levels</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">updateMeters</span><span class="p">];</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>Each time before reading values, you need to call <code class="language-plaintext highlighter-rouge">[self.recorder updateMeters]</code> to get the latest values; otherwise the values may not be accurate enough.</p><p>Then, using the <code class="language-plaintext highlighter-rouge">valueForPower:</code> method declared by the <code class="language-plaintext highlighter-rouge">MeterTable</code> class, we convert the two thresholds above into linear values.</p><p><strong>That is, the decibel values are converted from the logarithmic range of <code class="language-plaintext highlighter-rouge">-160 ~ 0</code> to a linear range of 0 to 1.</strong></p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre><td class="rouge-code"><pre><span class="c1">//</span>
+<span class="c1">//  MeterTable.m</span>
+<span class="c1">//  AVAudioRecorderDemo</span>
+<span class="c1">//</span>
+<span class="c1">//  Created by sunyazhou on 2017/4/5.</span>
+<span class="c1">//  Copyright © 2017 Baidu, Inc. All rights reserved.</span>
+<span class="c1">//</span>
+
+<span class="cp">#import "MeterTable.h"
+</span>
+
+<span class="cp">#define MIN_DB -60.0f
+#define TABLE_SIZE 300
+</span>
+<span class="k">@implementation</span> <span class="nc">MeterTable</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">_scaleFactor</span><span class="p">;</span>
+    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">_meterTable</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">init</span> <span class="p">{</span>
+    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">float</span> <span class="n">dbResolution</span> <span class="o">=</span> <span class="n">MIN_DB</span> <span class="o">/</span> <span class="p">(</span><span class="n">TABLE_SIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        
+        <span class="n">_meterTable</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="nf">arrayWithCapacity</span><span class="p">:</span><span class="n">TABLE_SIZE</span><span class="p">];</span>
+        <span class="n">_scaleFactor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span> <span class="o">/</span> <span class="n">dbResolution</span><span class="p">;</span>
+        
+        <span class="kt">float</span> <span class="n">minAmp</span> <span class="o">=</span> <span class="n">dbToAmp</span><span class="p">(</span><span class="n">MIN_DB</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">ampRange</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="o">-</span> <span class="n">minAmp</span><span class="p">;</span>
+        <span class="kt">float</span> <span class="n">invAmpRange</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="n">ampRange</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">TABLE_SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">float</span> <span class="n">decibels</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">dbResolution</span><span class="p">;</span>
+            <span class="kt">float</span> <span class="n">amp</span> <span class="o">=</span> <span class="n">dbToAmp</span><span class="p">(</span><span class="n">decibels</span><span class="p">);</span>
+            <span class="kt">float</span> <span class="n">adjAmp</span> <span class="o">=</span> <span class="p">(</span><span class="n">amp</span> <span class="o">-</span> <span class="n">minAmp</span><span class="p">)</span> <span class="o">*</span> <span class="n">invAmpRange</span><span class="p">;</span>
+            <span class="n">_meterTable</span><span class="p">[</span><span class="nf">i</span><span class="p">]</span> <span class="o">=</span> <span class="err">@</span><span class="p">(</span><span class="n">adjAmp</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">float</span> <span class="nf">dbToAmp</span><span class="p">(</span><span class="kt">float</span> <span class="n">dB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">powf</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mo">05</span><span class="n">f</span> <span class="o">*</span> <span class="n">dB</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="nf">valueForPower</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">power</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">power</span> <span class="o">&lt;</span> <span class="n">MIN_DB</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">power</span> <span class="o">*</span> <span class="n">_scaleFactor</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_meterTable</span><span class="p">[</span><span class="nf">index</span><span class="p">]</span> <span class="nf">floatValue</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><blockquote><p><strong>This class creates an array <code class="language-plaintext highlighter-rouge">_meterTable</code> that stores the conversion results from the decibel values before calculation to those resolved at a certain decibel resolution. The resolution used here is <code class="language-plaintext highlighter-rouge">-0.2dB</code>. The resolution level can be modified via the two macros <code class="language-plaintext highlighter-rouge">MIN_DB</code> and <code class="language-plaintext highlighter-rouge">TABLE_SIZE</code>. Each decibel value is converted to a linear-range value by calling <code class="language-plaintext highlighter-rouge">dbToAmp:</code>, placing it within the range <code class="language-plaintext highlighter-rouge">0(-60dB) ~ 1()</code>. These range values then form a parallel curve, computed with square root and stored in an internal lookup table. Later, if needed externally, you can retrieve it by calling <code class="language-plaintext highlighter-rouge">valueForPower:</code>.</strong></p></blockquote><p>Then it is saved to an instance of <code class="language-plaintext highlighter-rouge">LevelPair</code> and returned. This instance is very simple — it stores two values, one <code class="language-plaintext highlighter-rouge">level</code> and one <code class="language-plaintext highlighter-rouge">peakLevel</code>.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">LevelPair</span> <span class="p">:</span> <span class="nc">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="kt">float</span> <span class="n">level</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="kt">float</span> <span class="n">peakLevel</span><span class="p">;</span>
+
+<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">levelsWithLevel</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">level</span> <span class="nf">peakLevel</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">peakLevel</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithLevel</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">level</span> <span class="nf">peakLevel</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">peakLevel</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>In <code class="language-plaintext highlighter-rouge">ViewController</code>, the related UI is displayed:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nf">timerWithTimeInterval</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+                                         <span class="nl">target:</span><span class="n">self</span>
+                                       <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">updateTimeDisplay</span><span class="p">)</span>
+                                       <span class="nl">userInfo:</span><span class="nb">nil</span>
+                                        <span class="nl">repeats:</span><span class="nb">YES</span><span class="p">];</span>
+    <span class="p">[[</span><span class="n">NSRunLoop</span> <span class="nf">mainRunLoop</span><span class="p">]</span> <span class="nf">addTimer</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">forMode</span><span class="p">:</span><span class="n">NSRunLoopCommonModes</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stopTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">updateTimeDisplay</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">timeLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">recorder</span><span class="p">.</span><span class="n">formattedCurrentTime</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startMeterTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CADisplayLink</span> <span class="nf">displayLinkWithTarget</span><span class="p">:</span><span class="n">self</span> <span class="nf">selector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">updateMeter</span><span class="p">)];</span>
+<span class="c1">//    if ([self.levelTimer respondsToSelector:@selector(setPreferredFramesPerSecond:)]) {</span>
+<span class="c1">//        self.levelTimer.preferredFramesPerSecond = 5;</span>
+<span class="c1">//    } else {</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span><span class="p">.</span><span class="n">frameInterval</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">//    }</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">addToRunLoop</span><span class="p">:[</span><span class="n">NSRunLoop</span> <span class="nf">currentRunLoop</span><span class="p">]</span>
+                          <span class="nl">forMode:</span><span class="n">NSRunLoopCommonModes</span><span class="p">];</span>
+    
+<span class="p">}</span>
+
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stopMeterTimer</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="nf">invalidate</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelTimer</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span> <span class="nf">resetLevelMeter</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">updateMeter</span> <span class="p">{</span>
+    <span class="n">LevelPair</span> <span class="o">*</span><span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">levels</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">levels</span><span class="p">.</span><span class="n">level</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span><span class="p">.</span><span class="n">peakLevel</span> <span class="o">=</span> <span class="n">levels</span><span class="p">.</span><span class="n">peakLevel</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">levelMeterView</span> <span class="nf">setNeedsDisplay</span><span class="p">];</span>
+    
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>This handles the timers.</p><p>Event handling:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="cp">#pragma mark - event response 所有触发的事件响应 按钮、通知、分段控件等
+</span><span class="k">-</span> <span class="p">(</span><span class="n">IBAction</span><span class="p">)</span><span class="nf">record</span><span class="p">:(</span><span class="n">UIButton</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stopButton</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">sender</span> <span class="nf">isSelected</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">stopMeterTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">stopTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">pause</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">startMeterTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">startTimer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">record</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">sender</span> <span class="nf">setSelected</span><span class="p">:</span><span class="o">!</span><span class="p">[</span><span class="n">sender</span> <span class="nf">isSelected</span><span class="p">]];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">IBAction</span><span class="p">)</span><span class="nf">stopRecording</span><span class="p">:(</span><span class="n">UIButton</span> <span class="o">*</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">stopMeterTimer</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">recordButton</span><span class="p">.</span><span class="n">selected</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">stopButton</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">recorder</span> <span class="nf">stopWithCompletionHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">delayInSeconds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">01</span><span class="p">;</span>
+        <span class="n">dispatch_time_t</span> <span class="n">popTime</span> <span class="o">=</span> <span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span> <span class="p">(</span><span class="n">delayInSeconds</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">));</span>
+        <span class="n">dispatch_after</span><span class="p">(</span><span class="n">popTime</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="p">[</span><span class="n">self</span> <span class="nf">showSaveDialog</span><span class="p">];</span>
+        <span class="p">});</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><p>Here the data is saved using archiving.</p><p><code class="language-plaintext highlighter-rouge">BDRecorder</code> doesn’t handle unexpected interruptions, such as external microphones or unexpected incoming calls. If you need to handle these, you can declare a few delegates in <code class="language-plaintext highlighter-rouge">BDRecorder</code> to listen to the audio session notifications. Since this is for learning purposes, I’ll stop here. If there’s strong demand, I’ll follow up and make it open source.</p><p>Many people struggle with how to draw a better waveform. I used the demo from the book’s author to implement the waveform rendering view.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+</pre><td class="rouge-code"><pre><span class="cp">#import "LevelMeterView.h"
+</span>
+<span class="cp">#import "LevelMeterColorThreshold.h"
+</span>
+<span class="k">@interface</span> <span class="nc">LevelMeterView</span> <span class="p">()</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSUInteger</span> <span class="n">ledCount</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">ledBackgroundColor</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">ledBorderColor</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">colorThresholds</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">LevelMeterView</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">initWithFrame</span><span class="p">:(</span><span class="n">CGRect</span><span class="p">)</span><span class="nv">frame</span> <span class="p">{</span>
+    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">initWithFrame</span><span class="p">:</span><span class="n">frame</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">setupView</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">initWithCoder</span><span class="p">:(</span><span class="n">NSCoder</span> <span class="o">*</span><span class="p">)</span><span class="nv">coder</span> <span class="p">{</span>
+    <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">initWithCoder</span><span class="p">:</span><span class="n">coder</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">setupView</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupView</span> <span class="p">{</span>
+    
+    <span class="n">self</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">clearColor</span><span class="p">];</span>
+    
+    <span class="n">_ledCount</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+    
+    <span class="n">_ledBackgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">colorWithWhite</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span> <span class="nf">alpha</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">35</span><span class="n">f</span><span class="p">];</span>
+    <span class="n">_ledBorderColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">blackColor</span><span class="p">];</span>
+    
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">greenColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">colorWithRed</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">458</span> <span class="nf">green</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span> <span class="n">blue</span><span class="o">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">396</span> <span class="n">alpha</span><span class="o">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span><span class="p">];</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">yellowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">colorWithRed</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span> <span class="nf">green</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">930</span> <span class="n">blue</span><span class="o">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">315</span> <span class="n">alpha</span><span class="o">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span><span class="p">];</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">redColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">colorWithRed</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span> <span class="nf">green</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">325</span> <span class="n">blue</span><span class="o">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">329</span> <span class="n">alpha</span><span class="o">:</span><span class="mi">1</span><span class="p">.</span><span class="mo">000</span><span class="p">];</span>
+    
+    <span class="n">_colorThresholds</span> <span class="o">=</span> <span class="p">@[[</span><span class="n">LevelMeterColorThreshold</span> <span class="nf">colorThresholdWithMaxValue</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span> <span class="nf">color</span><span class="p">:</span><span class="n">greenColor</span> <span class="n">name</span><span class="o">:</span><span class="s">@"green"</span><span class="p">],</span>
+                         <span class="p">[</span><span class="n">LevelMeterColorThreshold</span> <span class="nf">colorThresholdWithMaxValue</span><span class="p">:</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span> <span class="nf">color</span><span class="p">:</span><span class="n">yellowColor</span> <span class="n">name</span><span class="o">:</span><span class="s">@"yellow"</span><span class="p">],</span>
+                         <span class="p">[</span><span class="n">LevelMeterColorThreshold</span> <span class="nf">colorThresholdWithMaxValue</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span> <span class="nf">color</span><span class="p">:</span><span class="n">redColor</span> <span class="n">name</span><span class="o">:</span><span class="s">@"red"</span><span class="p">]];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">drawRect</span><span class="p">:(</span><span class="n">CGRect</span><span class="p">)</span><span class="nv">rect</span> <span class="p">{</span>
+    
+    <span class="n">CGContextRef</span> <span class="n">context</span> <span class="o">=</span> <span class="n">UIGraphicsGetCurrentContext</span><span class="p">();</span>
+    
+    <span class="n">CGContextTranslateCTM</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CGRectGetHeight</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">bounds</span><span class="p">));</span>
+    <span class="n">CGContextRotateCTM</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span> <span class="o">-</span><span class="n">M_PI_2</span><span class="p">);</span>
+    <span class="n">CGRect</span> <span class="n">bounds</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">.,</span> <span class="mi">0</span><span class="p">.,</span> <span class="p">[</span><span class="n">self</span> <span class="nf">bounds</span><span class="p">].</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="nf">bounds</span><span class="p">].</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">);</span>
+    
+    
+    <span class="n">CGFloat</span> <span class="n">lightMinValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    
+    <span class="n">NSInteger</span> <span class="n">peakLED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">peakLevel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">peakLED</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">peakLevel</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">peakLED</span> <span class="o">&gt;=</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">peakLED</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">ledIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">ledIndex</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">;</span> <span class="n">ledIndex</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        
+        <span class="n">UIColor</span> <span class="o">*</span><span class="n">ledColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">colorThresholds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nf">color</span><span class="p">];</span>
+        
+        <span class="n">CGFloat</span> <span class="n">ledMaxValue</span> <span class="o">=</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span> <span class="p">(</span><span class="n">ledIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">colorIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">colorIndex</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">colorThresholds</span><span class="p">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">colorIndex</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">LevelMeterColorThreshold</span> <span class="o">*</span><span class="n">currThreshold</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">colorThresholds</span><span class="p">[</span><span class="nf">colorIndex</span><span class="p">];</span>
+            <span class="n">LevelMeterColorThreshold</span> <span class="o">*</span><span class="n">nextThreshold</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">colorThresholds</span><span class="p">[</span><span class="n">colorIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">currThreshold</span><span class="p">.</span><span class="n">maxValue</span> <span class="o">&lt;=</span> <span class="n">ledMaxValue</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ledColor</span> <span class="o">=</span> <span class="n">nextThreshold</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="n">CGRectGetHeight</span><span class="p">(</span><span class="n">bounds</span><span class="p">);</span>
+        <span class="n">CGFloat</span> <span class="n">width</span> <span class="o">=</span> <span class="n">CGRectGetWidth</span><span class="p">(</span><span class="n">bounds</span><span class="p">);</span>
+        
+        <span class="n">CGRect</span> <span class="n">ledRect</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="p">((</span><span class="n">CGFloat</span><span class="p">)</span> <span class="n">ledIndex</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">ledCount</span><span class="p">));</span>
+        
+        <span class="c1">// Fill background color</span>
+        <span class="n">CGContextSetFillColorWithColor</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">ledBackgroundColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">);</span>
+        <span class="n">CGContextFillRect</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">ledRect</span><span class="p">);</span>
+        
+        <span class="c1">// Draw Light</span>
+        <span class="n">CGFloat</span> <span class="n">lightIntensity</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ledIndex</span> <span class="o">==</span> <span class="n">peakLED</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">lightIntensity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">lightIntensity</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">((</span><span class="n">self</span><span class="p">.</span><span class="n">level</span> <span class="o">-</span> <span class="n">lightMinValue</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ledMaxValue</span> <span class="o">-</span> <span class="n">lightMinValue</span><span class="p">));</span>
+        <span class="p">}</span>
+        
+        <span class="n">UIColor</span> <span class="o">*</span><span class="n">fillColor</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lightIntensity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fillColor</span> <span class="o">=</span> <span class="n">ledColor</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lightIntensity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CGColorRef</span> <span class="n">color</span> <span class="o">=</span> <span class="n">CGColorCreateCopyWithAlpha</span><span class="p">([</span><span class="n">ledColor</span> <span class="nf">CGColor</span><span class="p">],</span> <span class="n">lightIntensity</span><span class="p">);</span>
+            <span class="n">fillColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">colorWithCGColor</span><span class="p">:</span><span class="n">color</span><span class="p">];</span>
+            <span class="n">CGColorRelease</span><span class="p">(</span><span class="n">color</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="n">CGContextSetFillColorWithColor</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">fillColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">);</span>
+        <span class="n">UIBezierPath</span> <span class="o">*</span><span class="n">fillPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="nf">bezierPathWithRoundedRect</span><span class="p">:</span><span class="n">ledRect</span> <span class="nf">cornerRadius</span><span class="p">:</span><span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">];</span>
+        <span class="n">CGContextAddPath</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">fillPath</span><span class="p">.</span><span class="n">CGPath</span><span class="p">);</span>
+        
+        <span class="c1">// Stroke border</span>
+        <span class="n">CGContextSetStrokeColorWithColor</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">ledBorderColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">);</span>
+        <span class="n">UIBezierPath</span> <span class="o">*</span><span class="n">strokePath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="nf">bezierPathWithRoundedRect</span><span class="p">:</span><span class="n">CGRectInset</span><span class="p">(</span><span class="n">ledRect</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">)</span> <span class="nf">cornerRadius</span><span class="p">:</span><span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">];</span>
+        <span class="n">CGContextAddPath</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">strokePath</span><span class="p">.</span><span class="n">CGPath</span><span class="p">);</span>
+        
+        <span class="n">CGContextDrawPath</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">kCGPathFillStroke</span><span class="p">);</span>
+        
+        <span class="n">lightMinValue</span> <span class="o">=</span> <span class="n">ledMaxValue</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">CGFloat</span> <span class="nf">clamp</span><span class="p">(</span><span class="n">CGFloat</span> <span class="n">intensity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">intensity</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">intensity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">intensity</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">resetLevelMeter</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">peakLevel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">setNeedsDisplay</span><span class="p">];</span>
+<span class="p">}</span>
+
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>Here we’ve given the thresholds for level and peak. There are many open-source views from third parties you can research on your own. It’s quite simple — it’s just the process of quantifying the relevant thresholds.</p><h2 id="summary">Summary</h2><p>The learning of <code class="language-plaintext highlighter-rouge">AVAudioRecorder</code> is now fairly complete. I’ll keep recording my learning notes and technical knowledge as I go.</p><p><a class="popup" href="/assets/images/20170328LearningAVFoundationAVAudioRecorder/FinalDemo.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170328LearningAVFoundationAVAudioRecorder/FinalDemo.avif" alt="Final Demo" /></a></p><p><strong>Final <a href="https://github.com/sunyazhou13/AVAudioRecorderDemo">Demo</a></strong></p><p>Your corrections are welcome. End of article.</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/en/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/en/tags/macos/" class="post-tag no-text-decoration" >macOS</a> <a href="/en/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a> <a href="/en/tags/avfoundation/" class="post-tag no-text-decoration" >AVFoundation</a> <a href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/" class="post-tag no-text-decoration" >音视频</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Learning AV Foundation(Chapter 3)AVAudioRecorder - 迈腾大队长&url=https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Learning AV Foundation(Chapter 3)AVAudioRecorder - 迈腾大队长&u=https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Learning AV Foundation(Chapter 3)AVAudioRecorder - 迈腾大队长&url=https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=Learning AV Foundation(Chapter 3)AVAudioRecorder - 迈腾大队长&url=https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></article></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recently Updated</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/07/crossplatformdesktopframeworkcomparison/">Cross-Platform Desktop Framework Selection Deep Dive: An iOS Developer's Qt6 Journey</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Table of Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Keep Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/en/2017/03/LearningAVFoundationAVSpeechSynthesizer/"><div class="card-body"> <span class="timeago small" > 2017-03-11 <i class="unloaded">2017-03-11T12:38:53+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Learning AV Foundation (Part 1) Chinese Text-to-Speech</h3><div class="text-muted small"><p> Preface I’ve been studying the AV Foundation framework recently and found a book called AV Foundation开发秘籍：实践掌握iOS &amp; OS X 应用的视听处理技术 Then I Googled and found the English version is called L...</p></div></div></a></div><div class="card"> <a href="/en/2017/03/LearningAVFoundationAVAudioPlayer/"><div class="card-body"> <span class="timeago small" > 2017-03-17 <i class="unloaded">2017-03-17T10:26:06+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Learning AV Foundation (2): AVAudioPlayer</h3><div class="text-muted small"><p> Introduction Recently I’ve been learning AV Foundation. I want to record what I’ve learned and also refer to some blog posts. The topic of this issue is AVAudioPlayer. Audio Basics The proce...</p></div></div></a></div><div class="card"> <a href="/en/2017/03/AccessPrivacySensitive/"><div class="card-body"> <span class="timeago small" > 2017-03-29 <i class="unloaded">2017-03-29T10:54:40+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Access privacy-sensitive data</h3><div class="text-muted small"><p> Before you access the camera, contacts, and other privacy-sensitive data, you must request authorization. Otherwise, your app will crash when you try to access that private data. Xcode will log som...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/en/2017/03/CheckNSWindowisFullScreen/" class="btn btn-outline-primary"><p>判断NSWindow是否全屏</p></a> <a href="/en/2017/03/AccessPrivacySensitive/" class="btn btn-outline-primary"><p>Access privacy-sensitive data</p></a></div><div class="giscus-container pt-3"> <script> (function () { 'use strict'; var THEME_LIGHT = 'light'; var THEME_DARK = 'dark_dimmed'; function currentTheme() { var mode = document.documentElement.getAttribute('mode'); if (mode === 'dark') { return THEME_DARK; } if (mode === 'light') { return THEME_LIGHT; } return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? THEME_DARK : THEME_LIGHT; } function giscusLang() { var lang = 'zh-Hans'; if (lang.indexOf('zh') === 0) { return 'zh-CN'; } return lang.slice(0, 2); } function loadGiscus() { var s = document.createElement('script'); var attrs = { src: 'https://giscus.app/client.js', 'data-repo': 'sunyazhou13/sunyazhou13.github.io', 'data-repo-id': 'MDEwOlJlcG9zaXRvcnkzODc1NTk1OA==', 'data-category': 'Announcements', 'data-category-id': 'DIC_kwDOAk9eds4DDwpN', 'data-mapping': 'pathname', 'data-strict': '0', 'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-theme': currentTheme(), 'data-input-position': 'bottom', 'data-lang': giscusLang(), 'data-loading': 'lazy', crossorigin: 'anonymous', async: '' }; Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); }); document.querySelector('.giscus-container').appendChild(s); } /* follow the mode toggle: update giscus theme without reloading */ function updateGiscusTheme() { var iframe = document.querySelector('iframe.giscus-frame'); if (!iframe) { return; } iframe.contentWindow.postMessage( { giscus: { setConfig: { theme: currentTheme() } } }, 'https://giscus.app' ); } new MutationObserver(function (mutations) { mutations.forEach(function (m) { if (m.attributeName === 'mode') { updateGiscusTheme(); } }); }).observe(document.documentElement, { attributes: true }); loadGiscus(); })(); </script></div></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script> <script> (function() { if (typeof GLightbox === 'undefined') return; if (document.querySelector('.popup') === null) return; GLightbox({ selector: '.popup' }); /* Fix Chrome a11y warning: "Blocked aria-hidden on an element because its descendant retained focus". Blur the trigger link *before* GLightbox applies aria-hidden to the page wrapper; capture phase guarantees this runs ahead of GLightbox's own click handler. */ document.addEventListener('click', function(e) { var link = e.target && e.target.closest ? e.target.closest('a.popup') : null; if (link && link.blur) link.blur(); }, true); })(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

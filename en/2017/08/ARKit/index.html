@@ -1,0 +1,959 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="ARKit" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="Preface" /><meta name="twitter:description" property="og:description" content="Preface" /><link rel="canonical" href="https://www.sunyazhou.com/en/2017/08/ARKit/" /><meta property="og:url" content="https://www.sunyazhou.com/2017/08/ARKit/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-08-30T14:50:43+00:00" /><meta property="article:modified_time" content="2017-08-30T14:50:43+00:00" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta name="twitter:title" content="ARKit" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"孙亚洲"},"dateModified":"2017-08-30T14:50:43+00:00","datePublished":"2017-08-30T14:50:43+00:00","description":"Preface","headline":"ARKit","image":"https://www.sunyazhou.com/assets/images/avatar.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2017/08/ARKit/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.sunyazhou.com/assets/images/avatar.jpg"},"name":"孙亚洲"},"url":"https://www.sunyazhou.com/2017/08/ARKit/"}</script><title>ARKit | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="stylesheet" href="/assets/AISource/glightbox/glightbox.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/js/code-copy.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script src="/assets/AISource/glightbox/glightbox.min.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/en/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/en/">迈腾大队长</a></div><div class="site-subtitle font-italic">外来务工人员mark一下</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/en/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/archives/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/categories/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tags/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tools/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-toolbox ml-xl-3 mr-xl-3"></i> <span>TOOLS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/projects/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>PROJECTS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/about/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/2017/08/ARKit/" title="中文" aria-label="切换到中文"> <i class="lang-toggle-icon fas fa-language lang-invisible"></i> <i class="lang-toggle-icon fas fa-earth-asia "></i> </a> <span class="icon-border"></span> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/en/"> 主页 </a> </span> <span>ARKit</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><article class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>ARKit</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Aug 30, 2017, 2:50 PM +0000" > 2017-08-30 <i class="unloaded">2017-08-30T14:50:43+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sat, Aug 22, 2026, 12:16 PM +0800" > 08-22 <i class="unloaded">2026-08-22T04:16:26+00:00</i> </span></div></div><div class="post-content"><h1 id="preface">Preface</h1><p><a class="popup" href="/assets/images/20170830ARKit/ARKitPreview.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARKitPreview.avif" alt="AR Kit Preview" /></a></p><p>This article starts with a broad introduction and gradually narrows down to detailed specifics — in other words, it moves from coarse-grained to fine-grained. If you have any questions along the way, let’s pool our wisdom and I’d appreciate your corrections.</p><h1 id="main-content">Main Content</h1><ul><li><strong>Introduction to AR Technology</strong><li><strong>How ARKit Works and Its Workflow</strong><li><strong>Simple ARKit Code Implementation</strong><li><strong>Overview of All ARKit Framework APIs</strong><li><strong>ARSCNView Introduction</strong><li><strong>ARSession Introduction</strong><li><strong>ARCamera Introduction</strong><li><strong>Capturing Planes with ARKit</strong><li><strong>AR Code Demo Implementation</strong></ul><h2 id="introduction-to-ar-technology">Introduction to AR Technology</h2><h4 id="ar-technology-at-a-glance">AR Technology at a Glance</h4><ul><li>Augmented Reality (AR) is a technology that computes the position and angle of a camera’s image in real time and overlays corresponding images, videos, and 3D models. The goal of this technology is to superimpose the virtual world onto the real world on the screen and enable interaction.<li>The technical elements needed to implement an AR scene:<ol><li>Multimedia capture of real-world images: e.g., a camera<li>3D modeling: three-dimensional models<li>Sensor tracking: mainly tracks the six-axis changes of moving objects in the real world. The six axes are X, Y, and Z displacement and rotation. The three displacement axes determine an object’s orientation and size, while the three rotation axes determine the region in which the object is displayed.<li>Coordinate recognition and transformation: a 3D model isn’t displayed in the real-world image as a plain frame coordinate point, but as a three-dimensional matrix coordinate.<li>AR can also support some interaction with virtual objects (optional) <a class="popup" href="/assets/images/20170830ARKit/ARDirection.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARDirection.avif" alt="AR Direction" /></a></ol></ul><h4 id="arkit-overview-and-features">ARKit Overview and Features</h4><ul><li>The <code class="language-plaintext highlighter-rouge">ARKit</code> framework provides two AR technologies:<ul><li><strong>Augmented reality based on 3D scenes (<code class="language-plaintext highlighter-rouge">SceneKit</code>)</strong><li><strong>Augmented reality based on 2D scenes (<code class="language-plaintext highlighter-rouge">SpriktKit</code>)</strong></ul><blockquote><p>Generally, the mainstream approach is 3D-based. <code class="language-plaintext highlighter-rouge">ARkit</code> is compatible with the <code class="language-plaintext highlighter-rouge">SceneKit</code> and <code class="language-plaintext highlighter-rouge">SpriktKit</code> frameworks (Apple’s game engines).</p></blockquote><li>Why does displaying AR effects depend on <strong>Apple’s game engine frameworks — the 3D engine <code class="language-plaintext highlighter-rouge">SceneKit</code> and the 2D engine <code class="language-plaintext highlighter-rouge">SpriktKit</code>? Because only a game engine can load object models.</strong><blockquote><p>Although the view in <code class="language-plaintext highlighter-rouge">ARKit</code> (<strong><code class="language-plaintext highlighter-rouge">ARSCNView</code></strong>) inherits from <code class="language-plaintext highlighter-rouge">SCNView</code>, and <code class="language-plaintext highlighter-rouge">SCNView</code> inherits from <code class="language-plaintext highlighter-rouge">UIView</code>, the <code class="language-plaintext highlighter-rouge">ARKit</code> framework itself currently only contains camera tracking and cannot directly load object models, so it has to rely on a game engine to load ARKit content. (I think Apple is fully leveraging and consolidating its existing resources while promoting its own frameworks — killing two birds with one stone.) Also, so far I haven’t seen any <code class="language-plaintext highlighter-rouge">ARKit</code> support for <code class="language-plaintext highlighter-rouge">Unity3D</code> or <code class="language-plaintext highlighter-rouge">Cocoas2D</code>.</p></blockquote></ul><h4 id="how-ios-11-supports-arkit">How iOS 11 Supports <code class="language-plaintext highlighter-rouge">ARKit</code></h4><p>Although iOS 11 introduced <code class="language-plaintext highlighter-rouge">ARKit</code>, not all iOS 11 systems support it.</p><ul><li>Requires CPU A9 or later (iPhone 6s and later, plus iPhone SE)</ul><p>Development environment</p><ul><li>Xcode version: Xcode 9 or later<li>System: iOS 11 or later<li>iOS device: A9 processor or later (iPhone 6s and later)<li>macOS: 10.12.4 or later</ul><h4 id="xcodes-built-in-template-mostly-unused">Xcode’s Built-in Template (Mostly Unused)</h4><p><a class="popup" href="/assets/images/20170830ARKit/ARKitModel.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARKitModel.avif" alt="AR Kit Model" /></a></p><p>Demo</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ViewController</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">ARSCNViewDelegate</span><span class="o">&gt;</span>
+<span class="c1">//AR view: displays the 3D interface</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">IBOutlet</span> <span class="n">ARSCNView</span> <span class="o">*</span><span class="n">sceneView</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+    
+<span class="k">@implementation</span> <span class="nc">ViewController</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewDidLoad</span><span class="p">];</span>
+
+    <span class="c1">//Scene delegate</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+    
+    <span class="c1">// Display frame rate</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">showsStatistics</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+    
+    <span class="c1">// Create a scene</span>
+    <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"art.scnassets/ship.scn"</span><span class="p">];</span>
+    
+    <span class="c1">// Set the scene to the view</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">scene</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillAppear</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewWillAppear</span><span class="p">:</span><span class="n">animated</span><span class="p">];</span>
+    
+    <span class="c1">// World coordinate system configuration</span>
+    <span class="n">ARWorldTrackingSessionConfiguration</span> <span class="o">*</span><span class="n">configuration</span> <span class="o">=</span> <span class="p">[</span><span class="n">ARWorldTrackingSessionConfiguration</span> <span class="nf">new</span><span class="p">];</span>
+    
+    <span class="c1">// Run the 3D scene session</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">session</span> <span class="nf">runWithConfiguration</span><span class="p">:</span><span class="n">configuration</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">viewWillDisappear</span><span class="p">:</span><span class="n">animated</span><span class="p">];</span>
+    
+    <span class="c1">// Pause</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">sceneView</span><span class="p">.</span><span class="n">session</span> <span class="nf">pause</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">didReceiveMemoryWarning</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="nf">didReceiveMemoryWarning</span><span class="p">];</span>
+    <span class="c1">// Release any cached data, images, etc that aren't in use.</span>
+<span class="p">}</span>
+
+<span class="cp">#pragma mark - ARSCNViewDelegate
+</span>
+
+<span class="c1">// Create a node for the current anchor (think of a node as a UIView)</span>
+<span class="cm">/*
+// Override to create and configure nodes for anchors added to the view's session.
+- (SCNNode *)renderer:(id&lt;SCNSceneRenderer&gt;)renderer nodeForAnchor:(ARAnchor *)anchor {
+    SCNNode *node = [SCNNode new];
+ 
+    // Add geometry to the node...
+ 
+    return node;
+}
+*/</span>
+
+<span class="c1">//Session error</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didFailWithError</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span> <span class="p">{</span>
+    <span class="c1">// Present an error message to the user</span>
+    
+<span class="p">}</span>
+
+<span class="c1">//Interrupted, similar to audio playback being interrupted, e.g., foreground/background switching, phone calls, Siri</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionWasInterrupted</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="p">{</span>
+    <span class="c1">// Inform the user that the session has been interrupted, for example, by presenting an overlay</span>
+    
+<span class="p">}</span>
+
+<span class="c1">//Session ended</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionInterruptionEnded</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="p">{</span>
+    <span class="c1">// Reset tracking and/or remove existing anchors if consistent tracking is required</span>
+    
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="how-arkit-works-and-its-workflow">How ARKit Works and Its Workflow</h2><h3 id="main-content-1">Main Content</h3><p><a class="popup" href="/assets/images/20170830ARKit/RenderingARKit.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/RenderingARKit.avif" alt="Rendering AR Kit" /></a></p><p><code class="language-plaintext highlighter-rouge">ARKit</code> is not a framework that runs standalone; it must work together with <code class="language-plaintext highlighter-rouge">SceneKit</code>. Without <code class="language-plaintext highlighter-rouge">SceneKit</code>, <code class="language-plaintext highlighter-rouge">ARKit</code> is no different from an ordinary camera.</p><blockquote><p><em>The tricky part: the matrix transformation of 3D coordinates</em> (3D X/Y/Z, 4x4 coordinates)</p></blockquote><p>Below is a diagram of all of ARKit’s .h header files (derived subclasses not listed).</p><p><a class="popup" href="/assets/images/20170830ARKit/ARDefines.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARDefines.avif" alt="AR Defines" /></a></p><ul><li>Core classes in the ARKit framework:<li><strong><code class="language-plaintext highlighter-rouge">ARScnView</code></strong><li><strong><code class="language-plaintext highlighter-rouge">ARSession</code></strong><li><p><strong><code class="language-plaintext highlighter-rouge">ARCamera</code></strong></p><li><p><code class="language-plaintext highlighter-rouge">ARKit</code> demo example implementation:</p><ul><li>Detect planes and add objects</ul><li>AR — augmented reality — means displaying a virtual 3D model in the real-world image captured by the camera. This process can be divided into two steps:<ol><li>The camera captures the real-world image (implemented by ARKit)<li>Display the virtual 3D model in the image (implemented by SceneKit)</ol><li>The relationship between the <code class="language-plaintext highlighter-rouge">ARKit</code> and <code class="language-plaintext highlighter-rouge">SceneKit</code> frameworks</ul><p><a class="popup" href="/assets/images/20170830ARKit/ARKitUML.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARKitUML.avif" alt="AR Kit UML" /></a></p><ol><li><code class="language-plaintext highlighter-rouge">ARSCNView</code> –&gt; <code class="language-plaintext highlighter-rouge">SCNView</code>(SceneKit.framework)–&gt;<code class="language-plaintext highlighter-rouge">UIView</code>(UIKit.framework)<li>ARSCNView is a view container that manages an <code class="language-plaintext highlighter-rouge">ARSession</code>.<li>In a complete AR experience, <code class="language-plaintext highlighter-rouge">ARKit</code> is only responsible for transforming the real-world view into a 3D scene. This process mainly consists of two stages:<ul><li>ARCamera is responsible for capturing the camera’s view.<li>ARSession is responsible for building the 3D scene.</ul><li><p>In a complete AR experience, displaying virtual objects in the 3D scene is done by the <code class="language-plaintext highlighter-rouge">SceneKit</code> framework.</p><blockquote><p>Every virtual object is a node (SCNNode), every node makes up a scene (SCNScene), and countless scenes form the 3D world.</p></blockquote><blockquote><p>Think of it as UIViewController’s <code class="language-plaintext highlighter-rouge">[view addSubview:xxxView];</code></p></blockquote></ol><h3 id="how-arkit-works">How ARKit Works</h3><h4 id="the-relationship-between-arscnview-and-arsession">The Relationship Between ARSCNView and ARSession</h4><p>Before that, let’s first understand the naming and meaning of <code class="language-plaintext highlighter-rouge">Session</code> and <code class="language-plaintext highlighter-rouge">Context</code>.</p><p><code class="language-plaintext highlighter-rouge">Session</code>, literally translated: session<br /> <code class="language-plaintext highlighter-rouge">Context</code>, literally translated: context</p><p><em>In the iOS frameworks, classes with a session or context suffix generally don’t do the work themselves. Their role is usually twofold</em>:</p><ul><li><strong>Managing other classes and helping them build communication bridges — the benefit is decoupling</strong><li><strong>Taking charge of helping us manage memory in complex environments</strong></ul><p><em>The difference between <code class="language-plaintext highlighter-rouge">Session</code> and <code class="language-plaintext highlighter-rouge">Context</code></em></p><ul><li>A session involves hardware (generally dealing with hardware), e.g., camera capture <code class="language-plaintext highlighter-rouge">ARSession</code>, audio <code class="language-plaintext highlighter-rouge">AVAudioSession</code>, network-related <code class="language-plaintext highlighter-rouge">NSURLSession</code>, etc.<li>A context generally doesn’t involve hardware, e.g., <code class="language-plaintext highlighter-rouge">CGGraphicContext</code>, <code class="language-plaintext highlighter-rouge">EAGLContext</code> drawing contexts, and the Context in custom transitions — not going to enumerate them all.</ul><p>Back to the main topic. As mentioned above, to make</p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> and <code class="language-plaintext highlighter-rouge">ARCamera</code> work together in coordination (<code class="language-plaintext highlighter-rouge">ARSCNView</code> and <code class="language-plaintext highlighter-rouge">ARCamera</code> have no direct relationship with each other)</p><ul><li><strong>ARSCNView —–&gt; ARCamera or</strong><li><strong>ARSCNView &lt;—– ARCamera</strong></ul><blockquote><p><strong><code class="language-plaintext highlighter-rouge">ARSCNView</code> has an <code class="language-plaintext highlighter-rouge">ARFrame</code> (a property/member variable), and <code class="language-plaintext highlighter-rouge">ARFrame</code> contains <code class="language-plaintext highlighter-rouge">ARCamera</code> (a property/member variable)</strong></p></blockquote><p>we need a communication bridge to schedule and coordinate the process from image capture to visual rendering. <strong>This bridge is <code class="language-plaintext highlighter-rouge">ARSession</code>.</strong></p><p><a class="popup" href="/assets/images/20170830ARKit/ARKitSession.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARKitSession.avif" alt="AR Kit Session" /></a></p><p>To run an <code class="language-plaintext highlighter-rouge">ARSession</code>, you must specify a “session tracking configuration” object, <code class="language-plaintext highlighter-rouge">ARConfiguration</code>. <code class="language-plaintext highlighter-rouge">ARConfiguration</code>’s main purpose is to track the camera’s position in the 3D world and capture feature scenes — <strong>such as detecting planes</strong>. This class plays a big role.</p><ul><li><code class="language-plaintext highlighter-rouge">ARConfiguration</code> is a parent class. To achieve better AR effects, Apple recommends using its subclass <code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration</code> (this class only supports devices with the <code class="language-plaintext highlighter-rouge">A9</code> chip or later).</ul><p>Note: <em>The former <code class="language-plaintext highlighter-rouge">ARWorldTrackingSessionConfiguration</code> is now deprecated.</em></p><p><a class="popup" href="/assets/images/20170830ARKit/ARWorldTrackingConfiguration.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARWorldTrackingConfiguration.avif" alt="AR World Tracking Configuration" /></a></p><h4 id="arframe-and-arworldtrackingconfiguration">ARFrame and ARWorldTrackingConfiguration</h4><p>There are two participants in the bridge <code class="language-plaintext highlighter-rouge">ARSession</code> builds:</p><ol><li>ARFrame<li>ARWorldTrackingConfiguration</ol><p><code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration</code> (3D world tracking configuration) is responsible for tracking the device’s <strong>orientation, position, and detecting what the camera captures</strong>.</p><p>Internally, it implements a large set of algorithms and invokes the necessary sensors on the iPhone to detect the phone’s <strong>movement, rotation, and translation</strong> (six-axis position/orientation changes).</p><p>When <code class="language-plaintext highlighter-rouge">ARWorldTrackingConfiguration</code> computes the camera’s position in the 3D world, it hands this <strong>position data</strong> to <code class="language-plaintext highlighter-rouge">ARSession</code> for management. The class corresponding to the camera’s <strong>position data</strong> is <code class="language-plaintext highlighter-rouge">ARFrame</code>.</p><blockquote><p><code class="language-plaintext highlighter-rouge">ARSession</code> has a property called <code class="language-plaintext highlighter-rouge">currentFrame</code>, which is an instance of <code class="language-plaintext highlighter-rouge">ARFrame</code>.</p></blockquote><p><code class="language-plaintext highlighter-rouge">ARCamera</code> is only responsible for capturing images; it doesn’t participate in data processing. It’s one part of the 3D scene. Every 3D Scene has a Camera, and this Camera determines the field of view in which we see objects.</p><p>Here’s the relationship among the three:</p><p><a class="popup" href="/assets/images/20170830ARKit/RelationshipARFrame.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/RelationshipARFrame.avif" alt="Relationship AR Frame" /></a></p><blockquote><p><code class="language-plaintext highlighter-rouge">ARFrame</code> contains the <code class="language-plaintext highlighter-rouge">CVPixelBufferRef</code> (capturedImage) and <code class="language-plaintext highlighter-rouge">ARCamera</code> we need — that is, the raw data of the image we need.</p></blockquote><p><strong>ARCamera’s position in the 3D world</strong></p><p><a class="popup" href="/assets/images/20170830ARKit/Coordinate.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/Coordinate.avif" alt="Coordinate" /></a></p><h3 id="arkit-workflow">ARKit Workflow</h3><p><a class="popup" href="/assets/images/20170830ARKit/ARWorkflow.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARWorkflow.avif" alt="AR Workflow" /></a> Image source: <a href="http://www.jianshu.com/p/0492c7122d2f">坤小</a></p><ol><li><code class="language-plaintext highlighter-rouge">ARSCNView</code> loads the scene <code class="language-plaintext highlighter-rouge">SCNScene</code>.<li><code class="language-plaintext highlighter-rouge">SCNScene</code> starts the camera <code class="language-plaintext highlighter-rouge">ARCamera</code>, which begins capturing the scene.<li>After <code class="language-plaintext highlighter-rouge">ARCamera</code> captures the scene, <code class="language-plaintext highlighter-rouge">ARSCNView</code> starts passing the scene data to <code class="language-plaintext highlighter-rouge">ARSession</code>.<li><code class="language-plaintext highlighter-rouge">ARSession</code> tracks the scene via <code class="language-plaintext highlighter-rouge">ARConfiguration</code> (or its subclass) and returns an <code class="language-plaintext highlighter-rouge">ARFrame</code>.<li>Add a child node (3D object model) to the <code class="language-plaintext highlighter-rouge">ARSCNView</code>’s scene.</ol><blockquote><p><code class="language-plaintext highlighter-rouge">ARConfiguration</code> tracks the camera’s position for the purpose of <strong>computing the 3D object model’s real matrix position relative to the camera when adding the 3D object model</strong>.</p></blockquote><p>Note: <strong>In the 3D coordinate system</strong>:</p><ul><li>The world coordinate system corresponds to a UIView’s <code class="language-plaintext highlighter-rouge">Frame</code>.<li>The local coordinate system corresponds to a UIView’s <code class="language-plaintext highlighter-rouge">bounds</code>.</ul><blockquote><p>Coordinate system transformation is one of the harder parts of ARKit.</p></blockquote><h2 id="simple-arkit-code-implementation">Simple ARKit Code Implementation</h2><p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemo1.zip">Code ARKitDemo1</a></p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">touchesBegan</span><span class="p">:(</span><span class="n">NSSet</span><span class="o">&lt;</span><span class="n">UITouch</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">touches</span> <span class="nf">withEvent</span><span class="p">:(</span><span class="n">UIEvent</span> <span class="o">*</span><span class="p">)</span><span class="nv">event</span><span class="p">{</span>
+    <span class="c1">//1. Use the scene to load the scn file</span>
+    
+    <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"Models.scnassets/vase/vase.scn"</span><span class="p">];</span>
+    <span class="n">SCNNode</span> <span class="o">*</span><span class="n">plantNode</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    
+    <span class="c1">//2. Adjust the position and add the node to the current screen</span>
+    <span class="n">plantNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    
+    
+    <span class="c1">//3. Add the airplane node to the current screen</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">arSceneView</span><span class="p">.</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">plantNode</span><span class="p">];</span>
+    
+<span class="p">}</span>
+</pre></table></code></div></div><p>One more thing to add here:</p><blockquote><p>Let’s set aside the relationships among <code class="language-plaintext highlighter-rouge">ARSCNView</code>, <code class="language-plaintext highlighter-rouge">UIViewController</code>, and <code class="language-plaintext highlighter-rouge">UIView</code> for now.</p></blockquote><p><strong>Let’s only talk about the relationships among <code class="language-plaintext highlighter-rouge">ARSCNView</code>, <code class="language-plaintext highlighter-rouge">scene</code>, and <code class="language-plaintext highlighter-rouge">node</code></strong>.</p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> is a view that inherits from UIView.</p><p><code class="language-plaintext highlighter-rouge">ARSCNView</code> has a property (member variable) called <code class="language-plaintext highlighter-rouge">scene</code>, which is like the VC.</p><p><code class="language-plaintext highlighter-rouge">scene</code> has <code class="language-plaintext highlighter-rouge">rootNode</code>, just as a VC has <code class="language-plaintext highlighter-rouge">self.view</code>.</p><p><strong>Think of <code class="language-plaintext highlighter-rouge">scene</code> as the VC.</strong><br /> <strong>Think of <code class="language-plaintext highlighter-rouge">rootNode</code> as <code class="language-plaintext highlighter-rouge">self.view</code>.</strong></p><p>We know that self.view can add subviews via:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nf">addSubview</span><span class="p">:</span><span class="n">xxx</span><span class="p">];</span>
+</pre></table></code></div></div><p>So node has the corresponding method:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="p">[</span><span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">xxxNode</span><span class="p">];</span>
+</pre></table></code></div></div><blockquote><p>Note: <em><strong>Every scene has one and only one root node; all other nodes are children of the root node.</strong></em></p></blockquote><h2 id="overview-of-all-arkit-framework-apis">Overview of All ARKit Framework APIs</h2><p><a class="popup" href="/assets/images/20170830ARKit/ARDefines.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/ARDefines.avif" alt="AR Defines" /></a></p><p>Let’s use the same diagram above. Here we aim to dissect all the APIs so everyone understands what ARKit contains.</p><h4 id="aranchor">ARAnchor</h4><p><code class="language-plaintext highlighter-rouge">ARAnchor</code> represents an object’s position and orientation in 3D space. (ARAnchor is commonly known as a 3D anchor, similar to CALayer’s Anchor in the UIKit framework.)</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARAnchor</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//Unique identifier of the anchor</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUUID</span> <span class="o">*</span><span class="n">identifier</span><span class="p">;</span>
+
+<span class="c1">//The anchor's rotation/transform matrix, defining the anchor's rotation, position, and scale. A 4x4 matrix.</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">transform</span><span class="p">;</span>
+
+<span class="c1">//Initializer — generally we don't need to call it. When adding a 3D object, ARKit notifies us of the object's anchor via its delegate</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithTransform</span><span class="p">:(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nv">transform</span><span class="p">;</span>
+
+</pre></table></code></div></div><blockquote><p><code class="language-plaintext highlighter-rouge">ARFrame</code> also represents an object’s position and orientation, but <code class="language-plaintext highlighter-rouge">ARFrame</code> typically denotes the AR camera’s <strong>position</strong> and <strong>orientation</strong>, the timestamp of camera tracking, and the captured camera image frame (CVPixelBufferRef).</p></blockquote><h4 id="arerror">ARError</h4><p><code class="language-plaintext highlighter-rouge">ARError</code> is an error description class, e.g., unsupported device, session interruption when running in the background, etc.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="n">FOUNDATION_EXTERN</span> <span class="n">NSString</span> <span class="o">*</span><span class="k">const</span> <span class="n">ARErrorDomain</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="nf">NS_ERROR_ENUM</span><span class="p">(</span><span class="n">ARErrorDomain</span><span class="p">,</span> <span class="n">ARErrorCode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/** Unsupported session configuration. */</span>
+    <span class="n">ARErrorCodeUnsupportedConfiguration</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    
+    <span class="cm">/** A sensor required to run the session is not available. */</span>
+    <span class="n">ARErrorCodeSensorUnavailable</span>          <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
+    
+    <span class="cm">/** A sensor failed to provide the required input. */</span>
+    <span class="n">ARErrorCodeSensorFailed</span>               <span class="o">=</span> <span class="mi">102</span><span class="p">,</span>
+    
+    <span class="cm">/** App does not have permission to use the camera. The user may change this in settings. */</span>
+    <span class="n">ARErrorCodeCameraUnauthorized</span>         <span class="o">=</span> <span class="mi">103</span><span class="p">,</span>
+    
+    <span class="cm">/** World tracking has encountered a fatal error. */</span>
+    <span class="n">ARErrorCodeWorldTrackingFailed</span>        <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></table></code></div></div><h4 id="arframe">ARFrame</h4><p><code class="language-plaintext highlighter-rouge">ARFrame</code> mainly tracks the current state, e.g., image frame, timestamp, position, orientation, and other parameters.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARFrame</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//Timestamp</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSTimeInterval</span> <span class="n">timestamp</span><span class="p">;</span>
+
+<span class="c1">//Image frame</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CVPixelBufferRef</span> <span class="n">capturedImage</span><span class="p">;</span>
+
+<span class="c1">//Camera (indicates which camera this ARFrame belongs to — the iPhone 7 Plus has two cameras)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARCamera</span> <span class="o">*</span><span class="n">camera</span><span class="p">;</span>
+
+<span class="c1">//Returns the anchor data captured by the current camera (when a 3D virtual model is added to ARKit, the anchor is the model's position in AR)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">anchors</span><span class="p">;</span>
+
+<span class="c1">//Lighting, referring to light intensity, generally 0–2000, default 1000</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARLightEstimate</span> <span class="o">*</span><span class="n">lightEstimate</span><span class="p">;</span>
+
+<span class="c1">//Feature points (should be for detecting planes or faces — Apple has built-in face recognition). Only available with world tracking configuration</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARPointCloud</span> <span class="o">*</span><span class="n">rawFeaturePoints</span><span class="p">;</span>
+
+<span class="c1">//Searches for a 3D model based on a 2D coordinate point. This method is typically used when we tap a point on the phone screen to capture the 3D model at that point. Why does it return an array? Easy to understand: the phone screen is a rectangle — a 2D space — while the camera captures a rectangular frustum projected outward from this 2D space. Tapping a point on the screen is like shooting a ray from the edge of this frustum, and there may be multiple 3D object models along that ray.</span>
+<span class="n">point</span><span class="err">：</span><span class="mi">2</span><span class="n">D</span><span class="err">坐标点（手机屏幕某一点）</span>
+<span class="n">ARHitTestResultType</span><span class="err">：捕捉类型</span>  <span class="err">点还是面</span>
+<span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="err">：追踪结果数组</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">hitTest</span><span class="p">:(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span> <span class="nf">types</span><span class="p">:(</span><span class="n">ARHitTestResultType</span><span class="p">)</span><span class="nv">types</span><span class="p">;</span>
+
+<span class="c1">//Coordinate transform of the camera's window (can be used to adapt to camera rotation in portrait/landscape)</span>
+<span class="k">-</span><span class="p">(</span><span class="n">CGAffineTransform</span><span class="p">)</span><span class="nf">displayTransformWithViewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span> <span class="nf">orientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>Here’s a tip: how do you write a class if you don’t want to provide an <code class="language-plaintext highlighter-rouge">init:</code> method?</p><p>We all know that every <code class="language-plaintext highlighter-rouge">class</code> in Objective-C inherits from <code class="language-plaintext highlighter-rouge">NSObject</code>, and <code class="language-plaintext highlighter-rouge">NSObject</code> has methods like <code class="language-plaintext highlighter-rouge">init:</code> and <code class="language-plaintext highlighter-rouge">dealloc:</code>.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARAnchor</span> <span class="p">(</span><span class="nl">Unavailable</span><span class="p">)</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">new</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span>
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>The trick used here is to write a Category, override the method, and mark it with <code class="language-plaintext highlighter-rouge">NS_UNAVAILABLE</code>.</p></blockquote><h4 id="arhittestresult">ARHitTestResult</h4><p><code class="language-plaintext highlighter-rouge">ARHitTestResult</code> is the result of a tap callback. This class is mainly used for <strong>interaction between the real world and virtual objects in the 3D scene</strong> in AR technology. For example, moving or dragging 3D virtual objects in the camera — you can use this class to get the results captured by ARKit.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARHitTestResultType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Point</span>
+    <span class="n">ARHitTestResultTypeFeaturePoint</span>              <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span>
+	<span class="c1">//Horizontal plane, y is 0.    </span>
+    <span class="n">ARHitTestResultTypeEstimatedHorizontalPlane</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">),</span>
+    
+    <span class="c1">//Existing plane</span>
+    <span class="n">ARHitTestResultTypeExistingPlane</span>             <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">),</span>
+    
+    <span class="c1">//Existing anchor and plane</span>
+    <span class="n">ARHitTestResultTypeExistingPlaneUsingExtent</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">),</span>
+<span class="p">}</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">ARHitTestResult</span><span class="p">.</span><span class="n">ResultType</span><span class="p">);</span>
+
+<span class="k">@interface</span> <span class="nc">ARHitTestResult</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//Capture type</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARHitTestResultType</span> <span class="n">type</span><span class="p">;</span>
+
+<span class="c1">//Distance between the 3D virtual object and the camera (in meters)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">distance</span><span class="p">;</span>
+
+<span class="c1">//Local coordinate matrix (world coordinates are relative to the camera as the scene origin, while each 3D object has its own scene, and local coordinates are relative to that scene). Similar to the difference between frame and bounds</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">localTransform</span><span class="p">;</span>
+
+<span class="c1">//World coordinate matrix</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">worldTransform</span><span class="p">;</span>
+
+<span class="c1">//Anchor (a 3D virtual object has a position in the virtual world, given by SCNVector3: a 3D vector in SceneKit), while the anchor is the object's position in the AR real scene — a 4x4 matrix</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARAnchor</span> <span class="o">*</span><span class="n">anchor</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>Here’s what you need to understand:</p><ul><li><p><strong>matrix_float4x4</strong> <strong>worldTransform</strong>: the world coordinate system, <strong>with the camera as the scene’s origin (0,0,0,0)</strong> — i.e., radiating outward from the camera as the center, the 3D object’s position is referenced to this origin. This is equivalent to a 2D UIView’s frame (absolute coordinates).</p><li><p><strong>matrix_float4x4</strong> <strong>localTransform</strong>: the local coordinate system, referenced to a node as the parent, equivalent to the coordinates relative to this parent scene.</p><li><p><strong>matrix_float4x4</strong>: <a href="http://www.opengl-tutorial.org/cn/beginners-tutorials/tutorial-3-matrices/">For the 4x4 matrix, see here</a></p></ul><h4 id="arlightestimate">ARLightEstimate</h4><p><code class="language-plaintext highlighter-rouge">ARLightEstimate</code></p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARLightEstimate</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//Ambient light intensity, range 0–2000, default 1000</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">ambientIntensity</span><span class="p">;</span>
+
+<span class="c1">//Ambient color temperature</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">ambientColorTemperature</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><h4 id="arplaneanchor">ARPlaneAnchor</h4><p><code class="language-plaintext highlighter-rouge">ARPlaneAnchor</code> is a subclass derived from <code class="language-plaintext highlighter-rouge">ARAnchor</code> — a plane anchor. <code class="language-plaintext highlighter-rouge">ARKit</code> can automatically recognize flat surfaces and add an anchor to the scene. Of course, to actually see the plane effect in the real world, we need to render an anchor ourselves using <code class="language-plaintext highlighter-rouge">SCNNode</code>.</p><blockquote><p>An anchor is just a position.</p></blockquote><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARPlaneAnchor</span> <span class="p">:</span> <span class="nc">ARAnchor</span>
+
+<span class="c1">//Plane type — currently only one: the horizontal plane </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARPlaneAnchorAlignment</span> <span class="n">alignment</span><span class="p">;</span>
+
+<span class="c1">//3-axis vector struct, the center point of the plane  x/y/z</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">center</span><span class="p">;</span>
+
+<span class="c1">//3-axis vector struct, the size of the plane (width and height)  x/y/z</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">extent</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arpointcloud">ARPointCloud</h4><p><code class="language-plaintext highlighter-rouge">ARPointCloud</code> is point-cloud rendering.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARPointCloud</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//Point count</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUInteger</span> <span class="n">count</span><span class="p">;</span>
+
+<span class="c1">//The collection of each point's position (a struct with * means an array of structs)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="k">const</span> <span class="n">vector_float3</span> <span class="o">*</span><span class="n">points</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arconfiguration">ARConfiguration</h4><p><code class="language-plaintext highlighter-rouge">ARConfiguration</code> is the session tracking configuration.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="c1">//Tracking alignment</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARWorldAlignment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* Camera position vector (0, -1, 0) /
+    ARWorldAlignmentGravity,
+    /* Camera position and orientation. vector (0, -1, 0)    heading: (0, 0, -1) */</span>
+    <span class="n">ARWorldAlignmentGravityAndHeading</span><span class="p">,</span>
+    <span class="cm">/* Camera orientation. */</span>
+    <span class="n">ARWorldAlignmentCamera</span>
+<span class="p">}</span> <span class="p">;</span>
+
+<span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARPlaneDetection</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ARPlaneDetectionNone</span>        <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">ARPlaneDetectionHorizontal</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span> <span class="c1">//探测平面是水平横向</span>
+<span class="p">}</span> <span class="p">;</span>
+
+
+<span class="k">@interface</span> <span class="nc">ARConfiguration</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//Whether the current device supports it — generally devices below the A9 chip don't</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isSupported</span><span class="p">;</span>
+
+<span class="c1">//World coordinate alignment </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">ARWorldAlignment</span> <span class="n">worldAlignment</span><span class="p">;</span>
+
+<span class="c1">//Whether to enable adaptive lighting, default is YES</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="n">isLightEstimationEnabled</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">lightEstimationEnabled</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="c1">//World session tracking configuration. Apple recommends using this class. It has only one property, which helps us track planes captured by the camera</span>
+<span class="k">@interface</span> <span class="nc">ARWorldTrackingSessionConfiguration</span> <span class="p">:</span> <span class="nc">ARConfiguration</span>
+
+<span class="c1">//Detection type</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">)</span> <span class="n">ARPlaneDetection</span> <span class="n">planeDetection</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>The configuration’s subclass: ARWorldTrackingSessionConfiguration, in the same API file.</p></blockquote><h4 id="arskview">ARSKView</h4><p><code class="language-plaintext highlighter-rouge">ARSKView</code> is the 2D AR view. This basically doesn’t need much explanation — it’s the same as <code class="language-plaintext highlighter-rouge">ARSCNView</code>, so I won’t repeat the introduction.</p><h4 id="arscnview--key-introduction">ARSCNView — Key Introduction</h4><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARSCNView</span> <span class="p">:</span> <span class="nc">SCNView</span>
+
+<span class="c1">//Delegate</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">ARSCNViewDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+
+<span class="c1">//AR session</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">ARSession</span> <span class="o">*</span><span class="n">session</span><span class="p">;</span>
+
+<span class="c1">//Scene</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span><span class="p">;</span>
+
+<span class="c1">//Whether to automatically adapt lighting</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">automaticallyUpdatesLighting</span><span class="p">;</span>
+
+<span class="c1">//Returns the anchor for the corresponding node. A node is a 3D virtual object whose coordinates are in the virtual scene, while the ARAnchor is the real-world coordinate in ARKit</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nf">anchorForNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span><span class="p">;</span>
+
+<span class="c1">//Returns the node for the corresponding anchor</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">nodeForAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="cm">/**
+
+
+ */</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARHitTestResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">hitTest</span><span class="p">:(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">point</span> <span class="nf">types</span><span class="p">:(</span><span class="n">ARHitTestResultType</span><span class="p">)</span><span class="nv">types</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><blockquote><p>Searching for 3D models based on 2D coordinate points. This method is typically used when we tap a point on the phone screen and want to capture the 3D model at that point. Why does it return an array? Easy to understand: the phone screen is a rectangle — a two-dimensional space — while the camera captures a rectangular frustum projected outward from this 2D space. Tapping a point on the screen can be understood as shooting a ray from the edge of this frustum, and there may be multiple 3D object models along that ray. point: the 2D coordinate point (a point on the phone screen). ARHitTestResultType: the capture type — point or plane. (NSArray&lt;ARHitTestResult *&gt; *): the array of tracking results — see the ARHitTestResult class introduction in this chapter. The results in the array are sorted from near to far.</p></blockquote><p>Delegate methods</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre><td class="rouge-code"><pre><span class="c1">//The delegate internally implements SCNSceneRendererDelegate (the SceneKit delegate) and ARSessionObserver (ARSession observation, KVO mechanism)</span>
+<span class="cp">#pragma mark - ARSCNViewDelegate
+</span><span class="k">@protocol</span> <span class="nc">ARSCNViewDelegate</span> <span class="o">&lt;</span><span class="n">SCNSceneRendererDelegate</span><span class="p">,</span> <span class="n">ARSessionObserver</span><span class="o">&gt;</span>
+<span class="k">@optional</span>
+
+<span class="c1">//The anchor for a custom node</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">nodeForAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//Called when a node is added. Through this delegate method, we can learn the anchor (AR real-world coordinate) where a virtual object is added to the AR scene</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didAddNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//The node is about to be updated</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">willUpdateNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//The node has been updated</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didUpdateNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="c1">//Remove node</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didRemoveNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><h4 id="arsession--key-introduction">ARSession — Key Introduction</h4><p><a class="popup" href="/assets/images/20170830ARKit/SessionBridge.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/SessionBridge.avif" alt="Session Bridge" /></a></p><p><code class="language-plaintext highlighter-rouge">ARSession</code> is a bridge connecting the low level and the AR view. All the methods in <code class="language-plaintext highlighter-rouge">ARSCNView</code> are provided by <code class="language-plaintext highlighter-rouge">ARSession</code>.</p><p><strong><code class="language-plaintext highlighter-rouge">ARSession</code> mainly has two ways to obtain camera position data</strong>:</p><ul><li>push: notify the user by implementing the Session’s delegate method <code class="language-plaintext highlighter-rouge">session:didUpdateFrame:</code><li>pull: the user can actively fetch the <code class="language-plaintext highlighter-rouge">ARSession</code>’s <code class="language-plaintext highlighter-rouge">currentFrame</code> property.</ul><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARSession</span> <span class="p">:</span> <span class="nc">NSObject</span>
+
+<span class="c1">//Delegate</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span> <span class="n">id</span> <span class="o">&lt;</span><span class="n">ARSessionDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+
+<span class="c1">//Specifies the queue on which the delegate is called (the main queue has no delay; background queues do). Defaults to the main queue if not specified</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">dispatch_queue_t</span> <span class="n">delegateQueue</span><span class="p">;</span>
+
+<span class="c1">//The camera's current position (computed by the session tracking configuration)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARFrame</span> <span class="o">*</span><span class="n">currentFrame</span><span class="p">;</span>
+
+<span class="c1">//Session configuration</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARConfiguration</span> <span class="o">*</span><span class="n">configuration</span><span class="p">;</span>
+
+<span class="c1">//Run the session (this line of code is the key to starting AR)</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">runWithConfiguration</span><span class="p">:(</span><span class="n">ARConfiguration</span> <span class="o">*</span><span class="p">)</span><span class="nv">configuration</span> <span class="n">NS_SWIFT_UNAVAILABLE</span><span class="p">(</span><span class="s">"Use run(_:options:) instead"</span><span class="p">);</span>
+
+<span class="c1">//Run the session, but with an extra parameter ARSessionRunOptions: it defines the behavior when the session disconnects and reconnects.</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">runWithConfiguration</span><span class="p">:(</span><span class="n">ARConfiguration</span> <span class="o">*</span><span class="p">)</span><span class="nv">configuration</span> <span class="nf">options</span><span class="p">:(</span><span class="n">ARSessionRunOptions</span><span class="p">)</span><span class="nv">options</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">run</span><span class="p">(</span><span class="n">_</span><span class="o">:</span><span class="n">options</span><span class="o">:</span><span class="p">));</span>
+
+<span class="c1">//Pause the session</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">pause</span><span class="p">;</span>
+
+<span class="c1">//Add an anchor</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">anchor</span><span class="o">:</span><span class="p">));</span>
+
+<span class="c1">//Remove an anchor</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">removeAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">remove</span><span class="p">(</span><span class="n">anchor</span><span class="o">:</span><span class="p">));</span>
+
+<span class="k">@end</span>
+
+</pre></table></code></div></div><blockquote><p>Running a session, <strong>runWithConfiguration:options:</strong> — options is an <code class="language-plaintext highlighter-rouge">ARSessionRunOptions</code> enum.<br /> This method defines the behavior when the session disconnects and reconnects.</p></blockquote><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">ARSessionRunOptions</span><span class="p">)</span> <span class="p">{</span>
+	 <span class="c1">//Reset tracking</span>
+    <span class="n">ARSessionRunOptionResetTracking</span>           <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span>
+    
+    <span class="c1">//Remove existing anchors</span>
+    <span class="n">ARSessionRunOptionRemoveExistingAnchors</span>   <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>Now let’s look at <code class="language-plaintext highlighter-rouge">ARSession</code>’s delegate.</p><p><code class="language-plaintext highlighter-rouge">ARSession</code> has two kinds:</p><ul><li>KVO observer: ARSessionObserver<li>delegate: ARSessionDelegate</ul><blockquote><p>Even I find this design odd.</p></blockquote><p>ARSessionObserver looks like this:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre><span class="k">@protocol</span> <span class="nc">ARSessionObserver</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="k">@optional</span>
+
+<span class="c1">//Session failed</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didFailWithError</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+<span class="c1">//The camera's tracking state changed</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">cameraDidChangeTrackingState</span><span class="p">:(</span><span class="n">ARCamera</span> <span class="o">*</span><span class="p">)</span><span class="nv">camera</span><span class="p">;</span>
+
+<span class="c1">//Session unexpectedly interrupted (after starting ARSession, moving the app to the background can cause the session to be interrupted)</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionWasInterrupted</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+
+<span class="c1">//Session resumed after interruption (briefly going to the background and returning to the app resumes automatically)</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">sessionInterruptionEnded</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span><span class="p">;</span>
+
+<span class="c1">//Session output an audio data `CMSampleBufferRef` </span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didOutputAudioSampleBuffer</span><span class="p">:(</span><span class="n">CMSampleBufferRef</span><span class="p">)</span><span class="nv">audioSampleBuffer</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>ARSessionDelegate looks like this:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="err">相机位置发生改变</span> <span class="err">就是相机的位置有变动</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didUpdateFrame</span><span class="p">:(</span><span class="n">ARFrame</span> <span class="o">*</span><span class="p">)</span><span class="nv">frame</span><span class="p">;</span>
+
+<span class="c1">// Anchors added</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didAddAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="c1">//Update anchors</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didUpdateAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="c1">//Remove anchors</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">session</span><span class="p">:(</span><span class="n">ARSession</span> <span class="o">*</span><span class="p">)</span><span class="nv">session</span> <span class="nf">didRemoveAnchors</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ARAnchor</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">anchors</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><p>That’s all for <code class="language-plaintext highlighter-rouge">ARSession</code>.</p><h4 id="arcamera--key-introduction">ARCamera — Key Introduction</h4><p><code class="language-plaintext highlighter-rouge">ARCamera</code> is a camera — the hub connecting the virtual scene and the real scene.</p><p>In <code class="language-plaintext highlighter-rouge">ARKit</code>, it’s the camera that captures real-world images; in SceneKit, it’s the camera in the 3D virtual world.</p><blockquote><p>In games — typically first-person 3D games — the hero is a 3D camera. The picture we see on our computer screen is exactly what this camera captures.</p></blockquote><p>Generally, we don’t need to create an <code class="language-plaintext highlighter-rouge">ARCamera</code> instance ourselves, because every time an <code class="language-plaintext highlighter-rouge">ARSCNView</code> is initialized, it creates an <code class="language-plaintext highlighter-rouge">ARCamera</code> instance for us by default. This camera is also the position of the camera lens and the origin of the 3D world <strong>(0,0,0)</strong>.</p><p>As for <code class="language-plaintext highlighter-rouge">ARCamera</code>’s API, we usually don’t need to care — <code class="language-plaintext highlighter-rouge">ARKit</code> configures it by default.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="k">@interface</span> <span class="nc">ARCamera</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span>
+
+<span class="c1">//4x4 matrix representing the camera's position, similar to an anchor</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">transform</span><span class="p">;</span>
+
+<span class="c1">//The vector Euler angles of the camera's orientation (rotation), for x/y/z respectively</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">vector_float3</span> <span class="n">eulerAngles</span><span class="p">;</span>
+
+<span class="c1">//Camera tracking state (the enum values are introduced below)</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARTrackingState</span> <span class="n">trackingState</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">//Tracking reason</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">ARTrackingStateReason</span> <span class="n">trackingStateReason</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">//Camera intrinsics, a 3x3 matrix  </span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float3x3</span> <span class="n">intrinsics</span><span class="p">;</span>
+
+<span class="c1">//Camera resolution</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">CGSize</span> <span class="n">imageResolution</span><span class="p">;</span>
+
+<span class="c1">//Projection matrix</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">matrix_float4x4</span> <span class="n">projectionMatrix</span><span class="p">;</span>
+
+
+<span class="c1">//Create camera using x, y, z position </span>
+<span class="k">-</span> <span class="p">(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nf">projectPoint</span><span class="p">:(</span><span class="n">vector_float3</span><span class="p">)</span><span class="nv">point</span> <span class="nf">orientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span> <span class="nf">viewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span><span class="p">;</span>
+ 
+<span class="c1">//Create the camera projection matrix — near plane distance, far plane distance</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nf">projectionMatrixForOrientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span> <span class="nf">viewportSize</span><span class="p">:(</span><span class="n">CGSize</span><span class="p">)</span><span class="nv">viewportSize</span> <span class="nf">zNear</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">zNear</span> <span class="nf">zFar</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">zFar</span><span class="p">;</span>
+
+<span class="c1">//Create the camera projection matrix</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">matrix_float4x4</span><span class="p">)</span><span class="nf">viewMatrixForOrientation</span><span class="p">:(</span><span class="n">UIInterfaceOrientation</span><span class="p">)</span><span class="nv">orientation</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></table></code></div></div><blockquote><p>The near and far plane distances mentioned above — see the diagram: <a class="popup" href="/assets/images/20170830ARKit/Distance1.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/Distance1.avif" alt="Distance" /></a> — taken from <a href="http://www.jianshu.com/p/bc151ff65cef">Projection Transform</a> <a class="popup" href="/assets/images/20170830ARKit/Distance2.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/Distance2.avif" alt="Distance" /></a> This falls within the scope of OpenGL. If you’re interested, you can study it.</p></blockquote><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="c1">//Camera tracking state enum</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARTrackingState</span><span class="p">)</span> <span class="p">{</span>
+	 <span class="cm">/* Not available */</span>
+    <span class="n">ARTrackingStateNotAvailable</span><span class="p">,</span>
+    
+    <span class="cm">/* Limited */</span>
+    <span class="n">ARTrackingStateLimited</span><span class="p">,</span>
+    
+    <span class="cm">/* Normal. */</span>
+    <span class="n">ARTrackingStateNormal</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">//Tracking reason</span>
+<span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">ARTrackingStateReason</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* None. */</span>
+    <span class="n">ARTrackingStateReasonNone</span><span class="p">,</span>
+    
+    <span class="c1">//Initializing</span>
+    <span class="n">ARTrackingStateReasonInitializing</span><span class="p">,</span>
+    
+    <span class="cm">/* Excessive motion. */</span>
+    <span class="n">ARTrackingStateReasonExcessiveMotion</span><span class="p">,</span>
+    
+    <span class="cm">/** Insufficient features. */</span>
+    <span class="n">ARTrackingStateReasonInsufficientFeatures</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>One thing involved here is called <code class="language-plaintext highlighter-rouge">eulerAngles</code> — <a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E8%A7%92">Euler angles</a> <a class="popup" href="/assets/images/20170830ARKit/EulerAngles.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/EulerAngles.avif" alt="Euler Angles" /></a> Euler angles solve orientation problems like rotation matrices for 3D objects. There’s one plane that’s stationary and one that moves. Based on the angle at which the two planes intersect relative to the center, or through sin/cos, you can solve problems like angle labeling and rotation matrices. For details, refer to the Wikipedia explanation. (I studied it for a while and still got lost — forgive me!)</p></blockquote><h4 id="capturing-planes-with-arkit">Capturing Planes with ARKit</h4><p><a class="popup" href="/assets/images/20170830ARKit/PlaneDetective.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20170830ARKit/PlaneDetective.avif" alt="Plane Detective" /></a></p><p><a href="https://github.com/sunyazhou13/ARDemos/blob/master/ARDemoPlaneDetective.zip">Plane detection demo</a></p><p>Let me show the core code.</p><p>Called when a node is added (after plane detection mode is enabled, if ARKit detects a plane, it automatically adds a plane node).</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre><span class="cp">#pragma mark -
+#pragma mark - ARSCNViewDelegate 代理
+</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">renderer</span><span class="p">:(</span><span class="n">id</span> <span class="o">&lt;</span><span class="n">SCNSceneRenderer</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">renderer</span> <span class="nf">didAddNode</span><span class="p">:(</span><span class="n">SCNNode</span> <span class="o">*</span><span class="p">)</span><span class="nv">node</span> <span class="nf">forAnchor</span><span class="p">:(</span><span class="n">ARAnchor</span> <span class="o">*</span><span class="p">)</span><span class="nv">anchor</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">anchor</span> <span class="nf">isMemberOfClass</span><span class="p">:[</span><span class="n">ARPlaneAnchor</span> <span class="nf">class</span><span class="p">]])</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"捕捉到平地"</span><span class="p">);</span>
+        <span class="c1">//Add a 3D plane model. ARKit only has detection capability; an anchor is a spatial position. To see this space more clearly, we need to add a 3D plane model to render it</span>
+        <span class="c1">//1. Get the detected plane anchor</span>
+        <span class="n">ARPlaneAnchor</span> <span class="o">*</span><span class="n">planeAnchor</span> <span class="o">=</span> <span class="p">(</span><span class="n">ARPlaneAnchor</span> <span class="o">*</span><span class="p">)</span><span class="n">anchor</span><span class="p">;</span>
+        <span class="c1">//2. Create a 3D object model (the plane detected by the system is an irregularly sized rectangle; here we turn it into a rectangle and scale the plane)</span>
+        <span class="c1">//Create a box — parameters: width, height, length, chamfer radius</span>
+        <span class="n">SCNBox</span> <span class="o">*</span><span class="n">plane</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNBox</span> <span class="nf">boxWithWidth</span><span class="p">:</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">3</span> <span class="nf">height</span><span class="p">:</span><span class="mi">0</span> <span class="n">length</span><span class="o">:</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">extent</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">3</span> <span class="n">chamferRadius</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+        <span class="c1">//3. Render the 3D model with a material — the default model is white</span>
+        <span class="n">plane</span><span class="p">.</span><span class="n">firstMaterial</span><span class="p">.</span><span class="n">diffuse</span><span class="p">.</span><span class="n">contents</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">cyanColor</span><span class="p">];</span>
+        
+        <span class="c1">//4. Create a node based on the 3D object model</span>
+        <span class="n">SCNNode</span> <span class="o">*</span><span class="n">planeNode</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNNode</span> <span class="nf">nodeWithGeometry</span><span class="p">:</span><span class="n">plane</span><span class="p">];</span>
+        <span class="c1">//5. Set the node's position to the anchor and center of the detected plane. In SceneKit, a node's position is a vector coordinate SCNVector3Make based on the 3D coordinate system</span>
+        <span class="n">planeNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+        
+        <span class="p">[</span><span class="n">node</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">planeNode</span><span class="p">];</span>
+        
+        <span class="c1">//6. When a plane is detected, add a 3D model onto the plane 2 seconds later</span>
+        
+        <span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">)),</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="c1">//1. Create a vase scene</span>
+            <span class="n">SCNScene</span> <span class="o">*</span><span class="n">scene</span> <span class="o">=</span> <span class="p">[</span><span class="n">SCNScene</span> <span class="nf">sceneNamed</span><span class="p">:</span><span class="s">@"Models.scnassets/vase/vase.scn"</span><span class="p">];</span>
+            <span class="c1">//2. Get the vase node (a scene can have multiple nodes; here, the vase node is simply the first child node of the scene)</span>
+            <span class="c1">//Every scene has one and only one root node; all other nodes are children of the root node</span>
+            <span class="n">SCNNode</span> <span class="o">*</span><span class="n">vaseNode</span> <span class="o">=</span> <span class="n">scene</span><span class="p">.</span><span class="n">rootNode</span><span class="p">.</span><span class="n">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            
+            <span class="c1">//4. Set the vase node's position to the detected plane's position; if not set, it defaults to the origin, i.e., the camera position</span>
+            <span class="n">vaseNode</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">SCNVector3Make</span><span class="p">(</span><span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">planeAnchor</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+            
+            <span class="c1">//5. Add the vase node to the current screen</span>
+            <span class="c1">//!!!Important: the vase node is added to the node captured by the delegate, not to the AR view's root node, because the detected plane anchor is in a local coordinate system, not the world coordinate system</span>
+            <span class="p">[</span><span class="n">node</span> <span class="nf">addChildNode</span><span class="p">:</span><span class="n">vaseNode</span><span class="p">];</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><h4 id="ar-code-demo-implementation">AR Code Demo Implementation</h4><p><a href="https://github.com/sunyazhou13/ARDemos">All related demos repository</a></p><p>References</p><p><a href="http://metalkit.org/2017/07/29/using-arkit-with-metal.html">Using ARKit with Metal</a></p><p><a href="http://www.jianshu.com/p/c97b230fa391">坤小’s posts 1–10</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/en/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/en/tags/macos/" class="post-tag no-text-decoration" >macOS</a> <a href="/en/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=ARKit - 迈腾大队长&u=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=ARKit - 迈腾大队长&url=https://www.sunyazhou.com/2017/08/ARKit/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></article></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recently Updated</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/07/crossplatformdesktopframeworkcomparison/">Cross-Platform Desktop Framework Selection Deep Dive: An iOS Developer's Qt6 Journey</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Table of Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Keep Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/en/2017/02/macOSsimulateKeyboradNSEvent/"><div class="card-body"> <span class="timeago small" > 2017-02-22 <i class="unloaded">2017-02-22T16:17:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Simulating Keyboard Events on macOS</h3><div class="text-muted small"><p> Recently I’ve been developing a remote assistance feature for macOS, which requires mapping keyboard events coming from Windows and simulating them as macOS NSEvents. Events on macOS are simulate...</p></div></div></a></div><div class="card"> <a href="/en/2022/08/nsstringenum/"><div class="card-body"> <span class="timeago small" > 2022-08-22 <i class="unloaded">2022-08-22T11:23:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>String Enums in iOS Development</h3><div class="text-muted small"><p> Preface This article carries a strong personal tone. If you find it uncomfortable to read, please close it immediately. This article is intended only as a personal study record. You are welcome to...</p></div></div></a></div><div class="card"> <a href="/en/2022/12/gradientlayeranimation/"><div class="card-body"> <span class="timeago small" > 2022-12-07 <i class="unloaded">2022-12-07T08:00:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Replicating the QQ Music Radial Gradient Animation</h3><div class="text-muted small"><p> Preface This article is strongly personal in tone. If you find it uncomfortable to read, please close it as soon as possible. This article is only a personal learning record. You are welcome to ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/en/2017/08/LearningAVFoundationAVAssetSenior/" class="btn btn-outline-primary"><p>Learning AV Foundation (4) AVAsset Metadata (Advanced)</p></a> <a href="/en/2017/09/CharlesCaptureHttps/" class="btn btn-outline-primary"><p>How to Use Charles to Intercept HTTPS Requests</p></a></div><div class="giscus-container pt-3"> <script> (function () { 'use strict'; var THEME_LIGHT = 'light'; var THEME_DARK = 'dark_dimmed'; function currentTheme() { var mode = document.documentElement.getAttribute('mode'); if (mode === 'dark') { return THEME_DARK; } if (mode === 'light') { return THEME_LIGHT; } return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? THEME_DARK : THEME_LIGHT; } function giscusLang() { var lang = 'zh-Hans'; if (lang.indexOf('zh') === 0) { return 'zh-CN'; } return lang.slice(0, 2); } function loadGiscus() { var s = document.createElement('script'); var attrs = { src: 'https://giscus.app/client.js', 'data-repo': 'sunyazhou13/sunyazhou13.github.io', 'data-repo-id': 'MDEwOlJlcG9zaXRvcnkzODc1NTk1OA==', 'data-category': 'Announcements', 'data-category-id': 'DIC_kwDOAk9eds4DDwpN', 'data-mapping': 'pathname', 'data-strict': '0', 'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-theme': currentTheme(), 'data-input-position': 'bottom', 'data-lang': giscusLang(), 'data-loading': 'lazy', crossorigin: 'anonymous', async: '' }; Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); }); document.querySelector('.giscus-container').appendChild(s); } /* follow the mode toggle: update giscus theme without reloading */ function updateGiscusTheme() { var iframe = document.querySelector('iframe.giscus-frame'); if (!iframe) { return; } iframe.contentWindow.postMessage( { giscus: { setConfig: { theme: currentTheme() } } }, 'https://giscus.app' ); } new MutationObserver(function (mutations) { mutations.forEach(function (m) { if (m.attributeName === 'mode') { updateGiscusTheme(); } }); }).observe(document.documentElement, { attributes: true }); loadGiscus(); })(); </script></div></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script> <script> (function() { if (typeof GLightbox === 'undefined') return; if (document.querySelector('.popup') === null) return; GLightbox({ selector: '.popup' }); /* Fix Chrome a11y warning: "Blocked aria-hidden on an element because its descendant retained focus". Blur the trigger link *before* GLightbox applies aria-hidden to the page wrapper; capture phase guarantees this runs ahead of GLightbox's own click handler. */ document.addEventListener('click', function(e) { var link = e.target && e.target.closest ? e.target.closest('a.popup') : null; if (link && link.blur) link.blur(); }, true); })(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

@@ -1,0 +1,38 @@
+<p>Paste any XML / RSS / SML snippet to browse it as a structured tree; supports formatting, squeezing into a single line, one-click copy and download. Everything runs locally in your browser — your content is never uploaded.</p>
+
+<link rel="stylesheet" href="/assets/tools/xml-viewer/app.css" />
+
+<div id="xv-app">
+  <textarea id="xv-input" spellcheck="false" aria-label="XML input"></textarea>
+
+  <div class="xv-bar">
+    <button type="button" class="xv-btn xv-btn-ghost" id="xv-sample" aria-label="Load sample">Sample</button>
+    <button type="button" class="xv-btn" id="xv-fmt">Format</button>
+    <button type="button" class="xv-btn" id="xv-minify">Minify</button>
+    <button type="button" class="xv-btn" id="xv-copy">Copy</button>
+    <button type="button" class="xv-btn" id="xv-download">Download .xml</button>
+    <button type="button" class="xv-btn" id="xv-tree-window">New window</button>
+    <span class="xv-status" id="xv-status" role="status" aria-hidden="true"></span>
+  </div>
+
+  <div class="xv-error" id="xv-error" hidden=""></div>
+
+  <div class="xv-placeholder" id="xv-placeholder">
+    <p>No XML content yet.</p>
+    <p>Click "Sample" to load a demo, or paste your XML above.</p>
+  </div>
+
+  <div class="xv-tree-wrap" id="xv-tree-wrap" hidden="">
+    <div class="xv-tree-head">
+      <span class="xv-meta" id="xv-tree-meta"></span>
+      <input type="search" class="xv-tree-search" id="xv-tree-search" placeholder="Search nodes…" aria-label="Search nodes" />
+      <button type="button" class="xv-btn" id="xv-tree-expand">Expand all</button>
+      <button type="button" class="xv-btn" id="xv-tree-collapse">Collapse deep</button>
+    </div>
+    <div class="xv-tree" id="xv-tree" role="tree"></div>
+  </div>
+</div>
+
+<script src="/assets/tools/xml-viewer/app.js" defer=""></script>
+
+<p><em>（内容由AI生成，仅供参考）</em></p>

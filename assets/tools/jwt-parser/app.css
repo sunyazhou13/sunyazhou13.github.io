@@ -1,0 +1,234 @@
+/**
+ * JWT 解析工具样式
+ * 独立于博客主题，仅作用于 #jp-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#jp-app {
+  --jp-border: rgba(128, 128, 128, 0.35);
+  --jp-border-strong: rgba(128, 128, 128, 0.55);
+  --jp-bg: rgba(128, 128, 128, 0.07);
+  --jp-bg-hover: rgba(128, 128, 128, 0.14);
+  --jp-text-muted: rgba(128, 128, 128, 0.95);
+  --jp-accent: #2f6fde;
+  --jp-accent-text: #fff;
+  --jp-ok: #1a7f4b;
+  --jp-warn: #a05c00;
+  --jp-err: #c0392b;
+  --jp-radius: 8px;
+  --jp-kw: #7b2fbe;
+  --jp-str: #1a7f4b;
+  --jp-num: #c0760a;
+  --jp-empty: var(--jp-text-muted);
+}
+
+html[mode='dark'] #jp-app {
+  --jp-bg: rgba(255, 255, 255, 0.06);
+  --jp-bg-hover: rgba(255, 255, 255, 0.12);
+  --jp-text-muted: rgba(190, 190, 190, 0.95);
+  --jp-accent: #5b8ff0;
+  --jp-ok: #57c288;
+  --jp-warn: #e0a94e;
+  --jp-err: #e2735f;
+  --jp-kw: #c9a0ff;
+  --jp-str: #8fd6a8;
+  --jp-num: #ecb75f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #jp-app {
+    --jp-bg: rgba(255, 255, 255, 0.06);
+    --jp-bg-hover: rgba(255, 255, 255, 0.12);
+    --jp-text-muted: rgba(190, 190, 190, 0.95);
+    --jp-accent: #5b8ff0;
+    --jp-ok: #57c288;
+    --jp-warn: #e0a94e;
+    --jp-err: #e2735f;
+    --jp-kw: #c9a0ff;
+    --jp-str: #8fd6a8;
+    --jp-num: #ecb75f;
+  }
+}
+
+#jp-app .jp-input-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--jp-border);
+  border-radius: var(--jp-radius);
+  background: var(--jp-bg);
+}
+
+#jp-app .jp-input-panel textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--jp-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+#jp-app .jp-input-panel textarea:focus { outline: none; border-color: var(--jp-accent); }
+
+#jp-app .jp-input-actions,
+#jp-app .jp-plain-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#jp-app .jp-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--jp-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#jp-app .jp-btn:hover:not(:disabled) { background: var(--jp-bg-hover); }
+#jp-app .jp-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#jp-app .jp-btn-primary {
+  background: var(--jp-accent);
+  border-color: var(--jp-accent);
+  color: var(--jp-accent-text);
+}
+
+#jp-app .jp-btn-primary:hover:not(:disabled) { opacity: 0.88; background: var(--jp-accent); }
+
+#jp-app .jp-status {
+  margin: 0.8rem 0 0;
+  padding: 0.5rem 0.9rem;
+  border-left: 3px solid var(--jp-accent);
+  border-radius: 4px;
+  background: var(--jp-bg);
+  font-size: 0.9rem;
+}
+
+#jp-app .jp-status.jp-warn { border-left-color: var(--jp-warn); }
+
+#jp-app .jp-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+#jp-app .jp-card {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--jp-border);
+  border-radius: var(--jp-radius);
+  background: var(--jp-bg);
+}
+
+#jp-app .jp-card-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+#jp-app .jp-json {
+  margin: 0;
+  max-height: 300px;
+  overflow: auto;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  background: var(--jp-bg-hover);
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+#jp-app .jp-pline { padding-left: 1.3em; }
+#jp-app .jp-key { color: var(--jp-accent); }
+#jp-app .jp-str { color: var(--jp-str); }
+#jp-app .jp-num { color: var(--jp-num); }
+#jp-app .jp-bool { color: var(--jp-kw); }
+#jp-app .jp-null { color: var(--jp-text-muted); }
+#jp-app .jp-bracket { color: var(--jp-text-muted); }
+
+#jp-app .jp-exp-val {
+  color: var(--jp-err);
+  font-weight: 700;
+  border-bottom: 2px dotted var(--jp-err);
+}
+
+#jp-app .jp-exp {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--jp-border-strong);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--jp-accent);
+}
+
+#jp-app .jp-exp.jp-expired { color: var(--jp-err); border-color: var(--jp-err); }
+
+#jp-app .jp-sig-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--jp-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+#jp-app .jp-sig-ok { color: var(--jp-ok); border-color: var(--jp-ok); }
+#jp-app .jp-sig-fail { color: var(--jp-err); border-color: var(--jp-err); }
+#jp-app .jp-sig-warn { color: var(--jp-warn); border-color: var(--jp-warn); }
+#jp-app .jp-sig-loading { color: var(--jp-text-muted); }
+
+#jp-app .jp-sig-detail {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--jp-text-muted);
+}
+
+#jp-app .jp-tamper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+#jp-app .jp-hint-text { font-size: 0.82rem; color: var(--jp-text-muted); }
+
+#jp-app #jp-plain {
+  width: 100%;
+  margin-bottom: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--jp-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  resize: vertical;
+}
+
+#jp-app #jp-plain:focus { outline: none; border-color: var(--jp-accent); }
+
+#jp-app #jp-signed {
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--jp-border-strong);
+  border-radius: 6px;
+  background: var(--jp-bg-hover);
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+  white-space: pre-wrap;
+  color: var(--jp-ok);
+}

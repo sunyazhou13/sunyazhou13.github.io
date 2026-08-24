@@ -1,0 +1,791 @@
+<!DOCTYPE html><html lang="en" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Understanding RunLoop in Depth" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><meta name="twitter:description" property="og:description" content="嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者." /><link rel="canonical" href="https://www.sunyazhou.com/en/2018/04/RunLoop/" /><meta property="og:url" content="https://www.sunyazhou.com/2018/04/RunLoop/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2018-04-02T14:16:34+00:00" /><meta property="article:modified_time" content="2018-04-02T14:16:34+00:00" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta name="twitter:title" content="Understanding RunLoop in Depth" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"孙亚洲"},"dateModified":"2018-04-02T14:16:34+00:00","datePublished":"2018-04-02T14:16:34+00:00","description":"嗨,我是孙亚洲(@sunyazhou13),一名来自祖国北国冰城的iOS开发者.","headline":"Understanding RunLoop in Depth","image":"https://www.sunyazhou.com/assets/images/avatar.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2018/04/RunLoop/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.sunyazhou.com/assets/images/avatar.jpg"},"name":"孙亚洲"},"url":"https://www.sunyazhou.com/2018/04/RunLoop/"}</script><title>Understanding RunLoop in Depth | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="stylesheet" href="/assets/AISource/glightbox/glightbox.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/js/code-copy.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script src="/assets/AISource/glightbox/glightbox.min.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/en/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/en/">迈腾大队长</a></div><div class="site-subtitle font-italic">外来务工人员mark一下</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/en/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/archives/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/categories/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tags/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/tools/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-toolbox ml-xl-3 mr-xl-3"></i> <span>TOOLS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/projects/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>PROJECTS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/en/tabs/about/" class="nav-link d-flex justify-content-start nav-link-start align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/2018/04/RunLoop/" title="中文" aria-label="切换到中文"> <i class="lang-toggle-icon fas fa-language lang-invisible"></i> <i class="lang-toggle-icon fas fa-earth-asia "></i> </a> <span class="icon-border"></span> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/en/"> 主页 </a> </span> <span>Understanding RunLoop in Depth</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><article class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Understanding RunLoop in Depth</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Apr 2, 2018, 2:16 PM +0000" > 2018-04-02 <i class="unloaded">2018-04-02T14:16:34+00:00</i> </span></div><div> 最后更新: <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sat, Aug 22, 2026, 12:16 PM +0800" > 08-22 <i class="unloaded">2026-08-22T04:16:26+00:00</i> </span></div></div><div class="post-content"><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop6.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop6.avif" alt="Run Loop" /></a></p><h1 id="preface">Preface</h1><p><code class="language-plaintext highlighter-rouge">RunLoop</code> is a very fundamental concept in <code class="language-plaintext highlighter-rouge">iOS</code> and <code class="language-plaintext highlighter-rouge">OSX</code> development. This article starts with the source code of <code class="language-plaintext highlighter-rouge">CFRunLoop</code> and introduces the concept of <code class="language-plaintext highlighter-rouge">RunLoop</code> and its underlying implementation principles. After that, it explains how Apple uses <code class="language-plaintext highlighter-rouge">RunLoop</code> in <code class="language-plaintext highlighter-rouge">iOS</code> to implement features such as the autorelease pool, delayed callbacks, touch events, and screen refreshes.</p><h2 id="contents">Contents</h2><ul><li>The concept of RunLoop<li>The relationship between RunLoop and threads<li>RunLoop’s public interface<li>RunLoop’s Mode<li>RunLoop’s internal logic<li>RunLoop’s underlying implementation<li>Features Apple implements with RunLoop<ol><li>AutoreleasePool<li>Event response<li>Gesture recognition<li>UI updates<li>Timers<li>PerformSelecter<li>About GCD<li>About network requests</ol><li>Practical application examples of RunLoop<ol><li>AFNetworking<li>AsyncDisplayKit</ol></ul><h3 id="the-concept-of-runloop">The Concept of RunLoop</h3><p>Generally speaking, a thread can only execute one task at a time, and once the task is done, the thread exits. If we need a mechanism that allows a thread to handle events at any time without exiting, the usual code logic looks like this:</p><div class="language-swift highlighter-rouge"><div class="code-header"> <span data-label-text="Swift"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="n">function</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">initialize</span><span class="p">();</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">message</span> <span class="o">=</span> <span class="nf">get_next_message</span><span class="p">();</span>
+        <span class="nf">process_message</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">message</span> <span class="o">!=</span> <span class="n">quit</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>This model is often called the <a href="https://en.wikipedia.org/wiki/Event_loop">Event Loop</a>. The <code class="language-plaintext highlighter-rouge">Event Loop</code> is implemented in many systems and frameworks, such as <code class="language-plaintext highlighter-rouge">Node.js</code> event handling, the message loop of <code class="language-plaintext highlighter-rouge">Windows</code> programs, and the <code class="language-plaintext highlighter-rouge">RunLoop</code> in <code class="language-plaintext highlighter-rouge">OSX/iOS</code>. The key to implementing this model is: how to <code class="language-plaintext highlighter-rouge">manage events/messages</code>, and how to make the thread sleep when there are no messages to process to avoid resource consumption, while waking it up immediately when a message arrives.</p><p>So, <code class="language-plaintext highlighter-rouge">RunLoop</code> is actually an object that manages the events and messages it needs to handle and provides an entry function to execute the above <code class="language-plaintext highlighter-rouge">Event Loop</code> logic. After the thread executes this function, it stays inside the “<code class="language-plaintext highlighter-rouge">receive message</code> -&gt; <code class="language-plaintext highlighter-rouge">wait</code> -&gt; <code class="language-plaintext highlighter-rouge">process</code>” loop until the loop ends (for example, when a <code class="language-plaintext highlighter-rouge">quit</code> message is passed in), and then the function returns.</p><p>In <code class="language-plaintext highlighter-rouge">OSX/iOS</code> systems, two such objects are provided: <code class="language-plaintext highlighter-rouge">NSRunLoop</code> and <code class="language-plaintext highlighter-rouge">CFRunLoopRef</code>.</p><p><code class="language-plaintext highlighter-rouge">CFRunLoopRef</code> is in the <code class="language-plaintext highlighter-rouge">CoreFoundation</code> framework. It provides pure <code class="language-plaintext highlighter-rouge">C</code> function <code class="language-plaintext highlighter-rouge">API</code>s, and all these <code class="language-plaintext highlighter-rouge">API</code>s are thread-safe.</p><p><code class="language-plaintext highlighter-rouge">NSRunLoop</code> is a wrapper around <code class="language-plaintext highlighter-rouge">CFRunLoopRef</code> that provides an object-oriented <code class="language-plaintext highlighter-rouge">API</code>, but these <code class="language-plaintext highlighter-rouge">API</code>s are not thread-safe.</p><p>The code of CFRunLoopRef is open source. You can download the entire <code class="language-plaintext highlighter-rouge">CoreFoundation</code> source code here <a href="https://opensource.apple.com/tarballs/CF/">http://opensource.apple.com/tarballs/CF/</a> to look at it.</p><p>(Update: After Swift was open sourced, Apple also maintains a cross-platform version of CoreFoundation: <a href="https://github.com/apple/swift-corelibs-foundation/">https://github.com/apple/swift-corelibs-foundation/</a>. The source code of this version may differ slightly from the implementation in the current <code class="language-plaintext highlighter-rouge">iOS</code> system, but it’s easier to compile and has already been adapted for <code class="language-plaintext highlighter-rouge">Linux/Windows</code>.)</p><h3 id="the-relationship-between-runloop-and-threads">The Relationship Between RunLoop and Threads</h3><p>First, in <code class="language-plaintext highlighter-rouge">iOS</code> development you’ll encounter two thread objects: <code class="language-plaintext highlighter-rouge">pthread_t</code> and <code class="language-plaintext highlighter-rouge">NSThread</code>. In the past, Apple had a document stating that <code class="language-plaintext highlighter-rouge">NSThread</code> was just a wrapper around <code class="language-plaintext highlighter-rouge">pthread_t</code>, but that document is no longer valid. Now they might both be directly wrapped from the lowest-level <code class="language-plaintext highlighter-rouge">mach thread</code>. Apple doesn’t provide an interface to convert between these two objects, but no matter what, it’s certain that <code class="language-plaintext highlighter-rouge">pthread_t</code> and <code class="language-plaintext highlighter-rouge">NSThread</code> correspond one-to-one. For example, you can get the main thread via <code class="language-plaintext highlighter-rouge">pthread_main_thread_np()</code> or <code class="language-plaintext highlighter-rouge">[NSThread mainThread]</code>; you can also get the current thread via <code class="language-plaintext highlighter-rouge">pthread_self()</code> or <code class="language-plaintext highlighter-rouge">[NSThread currentThread]</code>. <code class="language-plaintext highlighter-rouge">CFRunLoop</code> is managed based on <code class="language-plaintext highlighter-rouge">pthread</code>.</p><p>Apple doesn’t allow creating a <code class="language-plaintext highlighter-rouge">RunLoop</code> directly. It only provides two functions to obtain one automatically: <code class="language-plaintext highlighter-rouge">CFRunLoopGetMain()</code> and <code class="language-plaintext highlighter-rouge">CFRunLoopGetCurrent()</code>. The logic inside these two functions goes roughly like this:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre><td class="rouge-code"><pre><span class="c1">/// Global dictionary, key is pthread_t, value is CFRunLoopRef</span>
+<span class="k">static</span> <span class="n">CFMutableDictionaryRef</span> <span class="n">loopsDic</span><span class="p">;</span>
+<span class="c1">/// Lock for accessing loopsDic</span>
+<span class="k">static</span> <span class="n">CFSpinLock_t</span> <span class="n">loopsLock</span><span class="p">;</span>
+ 
+<span class="c1">/// Get the RunLoop corresponding to a pthread.</span>
+<span class="n">CFRunLoopRef</span> <span class="nf">_CFRunLoopGet</span><span class="p">(</span><span class="n">pthread_t</span> <span class="kr">thread</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">OSSpinLockLock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">loopsLock</span><span class="p">);</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">loopsDic</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// First entry: initialize the global dict and create a RunLoop for the main thread.</span>
+        <span class="n">loopsDic</span> <span class="o">=</span> <span class="n">CFDictionaryCreateMutable</span><span class="p">();</span>
+        <span class="n">CFRunLoopRef</span> <span class="n">mainLoop</span> <span class="o">=</span> <span class="n">_CFRunLoopCreate</span><span class="p">();</span>
+        <span class="n">CFDictionarySetValue</span><span class="p">(</span><span class="n">loopsDic</span><span class="p">,</span> <span class="n">pthread_main_thread_np</span><span class="p">(),</span> <span class="n">mainLoop</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// Get it directly from the dictionary.</span>
+    <span class="n">CFRunLoopRef</span> <span class="n">loop</span> <span class="o">=</span> <span class="n">CFDictionaryGetValue</span><span class="p">(</span><span class="n">loopsDic</span><span class="p">,</span> <span class="kr">thread</span><span class="p">));</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">loop</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">/// If not found, create one</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">_CFRunLoopCreate</span><span class="p">();</span>
+        <span class="n">CFDictionarySetValue</span><span class="p">(</span><span class="n">loopsDic</span><span class="p">,</span> <span class="kr">thread</span><span class="p">,</span> <span class="n">loop</span><span class="p">);</span>
+        <span class="c1">/// Register a callback to destroy the corresponding RunLoop when the thread is destroyed.</span>
+        <span class="n">_CFSetTSD</span><span class="p">(...,</span> <span class="kr">thread</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">__CFFinalizeRunLoop</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="n">OSSpinLockUnLock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">loopsLock</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">loop</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="n">CFRunLoopRef</span> <span class="nf">CFRunLoopGetMain</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">_CFRunLoopGet</span><span class="p">(</span><span class="n">pthread_main_thread_np</span><span class="p">());</span>
+<span class="p">}</span>
+ 
+<span class="n">CFRunLoopRef</span> <span class="nf">CFRunLoopGetCurrent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">_CFRunLoopGet</span><span class="p">(</span><span class="n">pthread_self</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>From the code above, you can see that threads and <code class="language-plaintext highlighter-rouge">RunLoop</code>s correspond one-to-one, and their relationship is stored in a global <code class="language-plaintext highlighter-rouge">Dictionary</code>. A thread doesn’t have a <code class="language-plaintext highlighter-rouge">RunLoop</code> when it’s first created; if you don’t actively get it, it will never exist. The <code class="language-plaintext highlighter-rouge">RunLoop</code> is created the first time it’s fetched, and destroyed when the thread ends. You can only get its <code class="language-plaintext highlighter-rouge">RunLoop</code> inside a thread (except for the main thread).</p><h3 id="runloops-public-interface">RunLoop’s Public Interface</h3><p>In <code class="language-plaintext highlighter-rouge">CoreFoundation</code>, there are 5 classes related to <code class="language-plaintext highlighter-rouge">RunLoop</code>:</p><ul><li><code class="language-plaintext highlighter-rouge">CFRunLoopRef</code><li><code class="language-plaintext highlighter-rouge">CFRunLoopModeRef</code><li><code class="language-plaintext highlighter-rouge">CFRunLoopSourceRef</code><li><code class="language-plaintext highlighter-rouge">CFRunLoopTimerRef</code><li><code class="language-plaintext highlighter-rouge">CFRunLoopObserverRef</code></ul><p>Among them, the <code class="language-plaintext highlighter-rouge">CFRunLoopModeRef</code> class is not exposed publicly; it’s only encapsulated through <code class="language-plaintext highlighter-rouge">CFRunLoopRef</code>’s interface. Their relationship is as follows:</p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop0.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop0.avif" alt="Run Loop" /></a></p><p>A <code class="language-plaintext highlighter-rouge">RunLoop</code> contains several <code class="language-plaintext highlighter-rouge">Mode</code>s, and each <code class="language-plaintext highlighter-rouge">Mode</code> contains several <code class="language-plaintext highlighter-rouge">Source</code>s/<code class="language-plaintext highlighter-rouge">Timer</code>s/<code class="language-plaintext highlighter-rouge">Observer</code>s. Every time the main function of <code class="language-plaintext highlighter-rouge">RunLoop</code> is called, only one of these <code class="language-plaintext highlighter-rouge">Mode</code>s can be specified, and this <code class="language-plaintext highlighter-rouge">Mode</code> is called the <code class="language-plaintext highlighter-rouge">CurrentMode</code>. If you need to switch <code class="language-plaintext highlighter-rouge">Mode</code>s, you can only exit the <code class="language-plaintext highlighter-rouge">Loop</code> and then re-enter with a different <code class="language-plaintext highlighter-rouge">Mode</code>. The purpose of this is to separate different groups of <code class="language-plaintext highlighter-rouge">Source</code>s/<code class="language-plaintext highlighter-rouge">Timer</code>s/<code class="language-plaintext highlighter-rouge">Observer</code>s so they don’t affect each other.</p><p><strong>CFRunLoopSourceRef</strong> is where events are generated. There are two versions of <code class="language-plaintext highlighter-rouge">Source</code>: <code class="language-plaintext highlighter-rouge">Source0</code> and <code class="language-plaintext highlighter-rouge">Source1</code>.</p><ul><li><code class="language-plaintext highlighter-rouge">Source0</code> only contains a callback (a function pointer), and it can’t trigger events by itself. When using it, you need to first call <code class="language-plaintext highlighter-rouge">CFRunLoopSourceSignal(source)</code> to mark this <code class="language-plaintext highlighter-rouge">Source</code> as pending, and then manually call <code class="language-plaintext highlighter-rouge">CFRunLoopWakeUp(runloop)</code> to wake up the <code class="language-plaintext highlighter-rouge">RunLoop</code> so it can process this event.<li><code class="language-plaintext highlighter-rouge">Source1</code> contains a <code class="language-plaintext highlighter-rouge">mach_port</code> and a callback (a function pointer), used to send messages between the kernel and other threads. This kind of <code class="language-plaintext highlighter-rouge">Source</code> can actively wake up the <code class="language-plaintext highlighter-rouge">RunLoop</code>’s thread. More on that below.</ul><p><strong>CFRunLoopTimerRef</strong> is a time-based trigger. It’s <code class="language-plaintext highlighter-rouge">toll-free bridged</code> with <code class="language-plaintext highlighter-rouge">NSTimer</code>, so they can be used interchangeably. It contains a time interval and a callback (a function pointer). When it’s added to the <code class="language-plaintext highlighter-rouge">RunLoop</code>, the <code class="language-plaintext highlighter-rouge">RunLoop</code> registers the corresponding time points. When the time arrives, the <code class="language-plaintext highlighter-rouge">RunLoop</code> is woken up to execute that callback.</p><p><strong>CFRunLoopObserverRef</strong> is an observer. Each <code class="language-plaintext highlighter-rouge">Observer</code> contains a callback (a function pointer). When the state of the <code class="language-plaintext highlighter-rouge">RunLoop</code> changes, the observer receives the change through the callback. Here are the observable time points:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="nf">CF_OPTIONS</span><span class="p">(</span><span class="n">CFOptionFlags</span><span class="p">,</span> <span class="n">CFRunLoopActivity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">kCFRunLoopEntry</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">),</span> <span class="c1">// 即将进入Loop</span>
+    <span class="n">kCFRunLoopBeforeTimers</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">),</span> <span class="c1">// 即将处理 Timer</span>
+    <span class="n">kCFRunLoopBeforeSources</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">),</span> <span class="c1">// 即将处理 Source</span>
+    <span class="n">kCFRunLoopBeforeWaiting</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">),</span> <span class="c1">// 即将进入休眠</span>
+    <span class="n">kCFRunLoopAfterWaiting</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">),</span> <span class="c1">// 刚从休眠中唤醒</span>
+    <span class="n">kCFRunLoopExit</span>          <span class="o">=</span> <span class="p">(</span><span class="mi">1UL</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">),</span> <span class="c1">// 即将退出Loop</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>The <code class="language-plaintext highlighter-rouge">Source</code>/<code class="language-plaintext highlighter-rouge">Timer</code>/<code class="language-plaintext highlighter-rouge">Observer</code> mentioned above are collectively called <code class="language-plaintext highlighter-rouge">__mode item__</code>. An <code class="language-plaintext highlighter-rouge">item</code> can be added to multiple <code class="language-plaintext highlighter-rouge">mode</code>s at the same time. However, adding an <code class="language-plaintext highlighter-rouge">item</code> to the same <code class="language-plaintext highlighter-rouge">mode</code> repeatedly has no effect. If a <code class="language-plaintext highlighter-rouge">mode</code> doesn’t have any <code class="language-plaintext highlighter-rouge">item</code>, the <code class="language-plaintext highlighter-rouge">RunLoop</code> will exit directly without entering the loop.</p><h3 id="runloops-mode">RunLoop’s Mode</h3><p>Here’s roughly what the <code class="language-plaintext highlighter-rouge">CFRunLoopMode</code> and <code class="language-plaintext highlighter-rouge">CFRunLoop</code> structures look like:</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="k">struct</span> <span class="n">__CFRunLoopMode</span> <span class="p">{</span>
+    <span class="n">CFStringRef</span> <span class="n">_name</span><span class="p">;</span>            <span class="c1">// Mode Name, 例如 @"kCFRunLoopDefaultMode"</span>
+    <span class="n">CFMutableSetRef</span> <span class="n">_sources0</span><span class="p">;</span>    <span class="c1">// Set</span>
+    <span class="n">CFMutableSetRef</span> <span class="n">_sources1</span><span class="p">;</span>    <span class="c1">// Set</span>
+    <span class="n">CFMutableArrayRef</span> <span class="n">_observers</span><span class="p">;</span> <span class="c1">// Array</span>
+    <span class="n">CFMutableArrayRef</span> <span class="n">_timers</span><span class="p">;</span>    <span class="c1">// Array</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+ 
+<span class="k">struct</span> <span class="n">__CFRunLoop</span> <span class="p">{</span>
+    <span class="n">CFMutableSetRef</span> <span class="n">_commonModes</span><span class="p">;</span>     <span class="c1">// Set</span>
+    <span class="n">CFMutableSetRef</span> <span class="n">_commonModeItems</span><span class="p">;</span> <span class="c1">// Set&lt;Source/Observer/Timer&gt;</span>
+    <span class="n">CFRunLoopModeRef</span> <span class="n">_currentMode</span><span class="p">;</span>    <span class="c1">// Current Runloop Mode</span>
+    <span class="n">CFMutableSetRef</span> <span class="n">_modes</span><span class="p">;</span>           <span class="c1">// Set</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+</pre></table></code></div></div><p>There’s a concept here called “<code class="language-plaintext highlighter-rouge">CommonModes</code>”: a <code class="language-plaintext highlighter-rouge">Mode</code> can mark itself with the “<code class="language-plaintext highlighter-rouge">Common</code>” attribute (by adding its <code class="language-plaintext highlighter-rouge">ModeName</code> to the “<code class="language-plaintext highlighter-rouge">commonModes</code>” of the <code class="language-plaintext highlighter-rouge">RunLoop</code>). Whenever the content of the <code class="language-plaintext highlighter-rouge">RunLoop</code> changes, the <code class="language-plaintext highlighter-rouge">RunLoop</code> automatically synchronizes the <code class="language-plaintext highlighter-rouge">Source</code>/<code class="language-plaintext highlighter-rouge">Observer</code>/<code class="language-plaintext highlighter-rouge">Timer</code> in <code class="language-plaintext highlighter-rouge">_commonModeItems</code> to all <code class="language-plaintext highlighter-rouge">Mode</code>s marked with the “<code class="language-plaintext highlighter-rouge">Common</code>” attribute.</p><p>Example application scenario: the main thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code> has two preset <code class="language-plaintext highlighter-rouge">Mode</code>s: <code class="language-plaintext highlighter-rouge">kCFRunLoopDefaultMode</code> and <code class="language-plaintext highlighter-rouge">UITrackingRunLoopMode</code>. Both of these <code class="language-plaintext highlighter-rouge">Mode</code>s are already marked with the “<code class="language-plaintext highlighter-rouge">Common</code>” attribute. <code class="language-plaintext highlighter-rouge">DefaultMode</code> is the state the <code class="language-plaintext highlighter-rouge">App</code> is normally in, and <code class="language-plaintext highlighter-rouge">TrackingRunLoopMode</code> is the state when tracking a <code class="language-plaintext highlighter-rouge">ScrollView</code> scroll. When you create a <code class="language-plaintext highlighter-rouge">Timer</code> and add it to <code class="language-plaintext highlighter-rouge">DefaultMode</code>, the <code class="language-plaintext highlighter-rouge">Timer</code> will receive repeated callbacks. But when you scroll a <code class="language-plaintext highlighter-rouge">TableView</code>, the <code class="language-plaintext highlighter-rouge">RunLoop</code> switches the <code class="language-plaintext highlighter-rouge">mode</code> to <code class="language-plaintext highlighter-rouge">TrackingRunLoopMode</code>, and then the <code class="language-plaintext highlighter-rouge">Timer</code> won’t be called back, nor will it affect the scrolling.</p><p>Sometimes you need a <code class="language-plaintext highlighter-rouge">Timer</code> to receive callbacks in both <code class="language-plaintext highlighter-rouge">Mode</code>s. One way is to add this <code class="language-plaintext highlighter-rouge">Timer</code> to both <code class="language-plaintext highlighter-rouge">Mode</code>s separately. Another way is to add the <code class="language-plaintext highlighter-rouge">Timer</code> to the top-level <code class="language-plaintext highlighter-rouge">RunLoop</code>’s “<code class="language-plaintext highlighter-rouge">commonModeItems</code>”. The “<code class="language-plaintext highlighter-rouge">commonModeItems</code>” is automatically updated by the <code class="language-plaintext highlighter-rouge">RunLoop</code> to all <code class="language-plaintext highlighter-rouge">Mode</code>s with the “<code class="language-plaintext highlighter-rouge">Common</code>” attribute.</p><p>The only two <code class="language-plaintext highlighter-rouge">Mode</code> management interfaces <code class="language-plaintext highlighter-rouge">CFRunLoop</code> exposes publicly are:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">CFRunLoopAddCommonMode</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">runloop</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">);</span>
+<span class="n">CFRunLoopRunInMode</span><span class="p">(</span><span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">,</span> <span class="p">...);</span>
+</pre></table></code></div></div><p>Here are the interfaces <code class="language-plaintext highlighter-rouge">Mode</code> exposes for managing <code class="language-plaintext highlighter-rouge">mode items</code>:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="n">CFRunLoopAddSource</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopSourceRef</span> <span class="n">source</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">);</span>
+<span class="n">CFRunLoopAddObserver</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopObserverRef</span> <span class="n">observer</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">);</span>
+<span class="n">CFRunLoopAddTimer</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopTimerRef</span> <span class="n">timer</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">mode</span><span class="p">);</span>
+<span class="n">CFRunLoopRemoveSource</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopSourceRef</span> <span class="n">source</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">);</span>
+<span class="n">CFRunLoopRemoveObserver</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopObserverRef</span> <span class="n">observer</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">);</span>
+<span class="n">CFRunLoopRemoveTimer</span><span class="p">(</span><span class="n">CFRunLoopRef</span> <span class="n">rl</span><span class="p">,</span> <span class="n">CFRunLoopTimerRef</span> <span class="n">timer</span><span class="p">,</span> <span class="n">CFStringRef</span> <span class="n">mode</span><span class="p">);</span>
+</pre></table></code></div></div><p>You can only operate on the internal <code class="language-plaintext highlighter-rouge">mode</code>s through the <code class="language-plaintext highlighter-rouge">mode name</code>. When you pass in a new <code class="language-plaintext highlighter-rouge">mode name</code> but there’s no corresponding <code class="language-plaintext highlighter-rouge">mode</code> inside the <code class="language-plaintext highlighter-rouge">RunLoop</code>, the <code class="language-plaintext highlighter-rouge">RunLoop</code> automatically creates the corresponding <code class="language-plaintext highlighter-rouge">CFRunLoopModeRef</code> for you. For a <code class="language-plaintext highlighter-rouge">RunLoop</code>, its internal <code class="language-plaintext highlighter-rouge">mode</code>s can only be added, never deleted.</p><p>Apple publicly provides two <code class="language-plaintext highlighter-rouge">Mode</code>s: <code class="language-plaintext highlighter-rouge">kCFRunLoopDefaultMode</code> (<code class="language-plaintext highlighter-rouge">NSDefaultRunLoopMode</code>) and <code class="language-plaintext highlighter-rouge">UITrackingRunLoopMode</code>. You can use these two <code class="language-plaintext highlighter-rouge">Mode Name</code>s to operate their corresponding <code class="language-plaintext highlighter-rouge">Mode</code>s.</p><p>Apple also provides a string for operating the <code class="language-plaintext highlighter-rouge">Common</code> mark: <code class="language-plaintext highlighter-rouge">kCFRunLoopCommonModes</code> (<code class="language-plaintext highlighter-rouge">NSRunLoopCommonModes</code>). You can use this string to operate <code class="language-plaintext highlighter-rouge">Common Items</code>, or to mark a <code class="language-plaintext highlighter-rouge">Mode</code> as “<code class="language-plaintext highlighter-rouge">Common</code>”. Be careful to distinguish this string from other <code class="language-plaintext highlighter-rouge">mode name</code>s when using it.</p><h3 id="runloops-internal-logic">RunLoop’s Internal Logic</h3><p>According to Apple’s <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW23">documentation</a>, here’s roughly the internal logic of <code class="language-plaintext highlighter-rouge">RunLoop</code>:</p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop1.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop1.avif" alt="Run Loop" /></a></p><p>The internal code is below (it’s long, so feel free to skip it; there will be explanations later)</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+</pre><td class="rouge-code"><pre><span class="c1">/// Start with the DefaultMode</span>
+<span class="kt">void</span> <span class="nf">CFRunLoopRun</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CFRunLoopRunSpecific</span><span class="p">(</span><span class="n">CFRunLoopGetCurrent</span><span class="p">(),</span> <span class="n">kCFRunLoopDefaultMode</span><span class="p">,</span> <span class="mf">1.0e10</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="c1">/// Start with a specified Mode, allowing the RunLoop timeout to be set</span>
+<span class="kt">int</span> <span class="nf">CFRunLoopRunInMode</span><span class="p">(</span><span class="n">CFStringRef</span> <span class="n">modeName</span><span class="p">,</span> <span class="n">CFTimeInterval</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">Boolean</span> <span class="n">stopAfterHandle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CFRunLoopRunSpecific</span><span class="p">(</span><span class="n">CFRunLoopGetCurrent</span><span class="p">(),</span> <span class="n">modeName</span><span class="p">,</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">returnAfterSourceHandled</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="c1">/// The implementation of RunLoop</span>
+<span class="kt">int</span> <span class="nf">CFRunLoopRunSpecific</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">modeName</span><span class="p">,</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">stopAfterHandle</span><span class="p">)</span> <span class="p">{</span>
+    
+    <span class="c1">/// First find the corresponding mode based on modeName</span>
+    <span class="n">CFRunLoopModeRef</span> <span class="n">currentMode</span> <span class="o">=</span> <span class="n">__CFRunLoopFindMode</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">modeName</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="c1">/// If there are no source/timer/observer in the mode, return directly.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">__CFRunLoopModeIsEmpty</span><span class="p">(</span><span class="n">currentMode</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+    
+    <span class="c1">/// 1. Notify Observers: RunLoop is about to enter the loop.</span>
+    <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopEntry</span><span class="p">);</span>
+    
+    <span class="c1">/// Internal function, enter the loop</span>
+    <span class="n">__CFRunLoopRun</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">returnAfterSourceHandled</span><span class="p">)</span> <span class="p">{</span>
+        
+        <span class="n">Boolean</span> <span class="n">sourceHandledThisLoop</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">retVal</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">do</span> <span class="p">{</span>
+ 
+            <span class="c1">/// 2. Notify Observers: RunLoop is about to trigger Timer callbacks.</span>
+            <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopBeforeTimers</span><span class="p">);</span>
+            <span class="c1">/// 3. Notify Observers: RunLoop is about to trigger Source0 (non-port) callbacks.</span>
+            <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopBeforeSources</span><span class="p">);</span>
+            <span class="c1">/// Execute the added blocks</span>
+            <span class="n">__CFRunLoopDoBlocks</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">);</span>
+            
+            <span class="c1">/// 4. RunLoop triggers Source0 (non-port) callbacks.</span>
+            <span class="n">sourceHandledThisLoop</span> <span class="o">=</span> <span class="n">__CFRunLoopDoSources0</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">stopAfterHandle</span><span class="p">);</span>
+            <span class="c1">/// Execute the added blocks</span>
+            <span class="n">__CFRunLoopDoBlocks</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">);</span>
+ 
+            <span class="c1">/// 5. If a Source1 (port-based) is in the ready state, process this Source1 directly and then jump to message processing.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">__Source0DidDispatchPortLastTime</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Boolean</span> <span class="n">hasMsg</span> <span class="o">=</span> <span class="n">__CFRunLoopServiceMachPort</span><span class="p">(</span><span class="n">dispatchPort</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">hasMsg</span><span class="p">)</span> <span class="k">goto</span> <span class="n">handle_msg</span><span class="p">;</span>
+            <span class="p">}</span>
+            
+            <span class="c1">/// Notify Observers: the RunLoop's thread is about to enter sleep.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sourceHandledThisLoop</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopBeforeWaiting</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="c1">/// 7. Call mach_msg to wait for messages on the mach_port. The thread will sleep until it's woken up by one of the following events.</span>
+            <span class="c1">/// • An event from a port-based Source.</span>
+            <span class="c1">/// • A Timer has fired</span>
+            <span class="c1">/// • The RunLoop's own timeout has been reached</span>
+            <span class="c1">/// • Manually woken up by some other caller</span>
+            <span class="n">__CFRunLoopServiceMachPort</span><span class="p">(</span><span class="n">waitSet</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">msg_buffer</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">livePort</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">mach_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">MACH_RCV_MSG</span><span class="p">,</span> <span class="n">port</span><span class="p">);</span> <span class="c1">// thread wait for receive msg</span>
+            <span class="p">}</span>
+ 
+            <span class="c1">/// 8. Notify Observers: the RunLoop's thread has just been woken up.</span>
+            <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopAfterWaiting</span><span class="p">);</span>
+            
+            <span class="c1">/// A message was received; process it.</span>
+            <span class="nl">handle_msg:</span>
+ 
+            <span class="c1">/// 9.1 If a Timer has fired, trigger that Timer's callback.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">msg_is_timer</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">__CFRunLoopDoTimers</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">mach_absolute_time</span><span class="p">())</span>
+            <span class="p">}</span> 
+ 
+            <span class="c1">/// 9.2 If there's a block dispatched to the main_queue, execute the block.</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">msg_is_dispatch</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+            <span class="p">}</span> 
+ 
+            <span class="c1">/// 9.3 If a Source1 (port-based) has emitted an event, process this event</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">CFRunLoopSourceRef</span> <span class="n">source1</span> <span class="o">=</span> <span class="n">__CFRunLoopModeFindSourceForMachPort</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">livePort</span><span class="p">);</span>
+                <span class="n">sourceHandledThisLoop</span> <span class="o">=</span> <span class="n">__CFRunLoopDoSource1</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">source1</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">sourceHandledThisLoop</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">mach_msg</span><span class="p">(</span><span class="n">reply</span><span class="p">,</span> <span class="n">MACH_SEND_MSG</span><span class="p">,</span> <span class="n">reply</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            
+            <span class="c1">/// Execute the blocks added to the Loop</span>
+            <span class="n">__CFRunLoopDoBlocks</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">);</span>
+            
+ 
+            <span class="k">if</span> <span class="p">(</span><span class="n">sourceHandledThisLoop</span> <span class="o">&amp;&amp;</span> <span class="n">stopAfterHandle</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">/// The parameter passed when entering the loop says to return after processing the event.</span>
+                <span class="n">retVal</span> <span class="o">=</span> <span class="n">kCFRunLoopRunHandledSource</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">timeout</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">/// The timeout marked by the passed parameter has been exceeded</span>
+                <span class="n">retVal</span> <span class="o">=</span> <span class="n">kCFRunLoopRunTimedOut</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">__CFRunLoopIsStopped</span><span class="p">(</span><span class="n">runloop</span><span class="p">))</span> <span class="p">{</span>
+                <span class="c1">/// Forcibly stopped by an external caller</span>
+                <span class="n">retVal</span> <span class="o">=</span> <span class="n">kCFRunLoopRunStopped</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">__CFRunLoopModeIsEmpty</span><span class="p">(</span><span class="n">runloop</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">))</span> <span class="p">{</span>
+                <span class="c1">/// There are no more source/timer/observer</span>
+                <span class="n">retVal</span> <span class="o">=</span> <span class="n">kCFRunLoopRunFinished</span><span class="p">;</span>
+            <span class="p">}</span>
+            
+            <span class="c1">/// If there's no timeout, the mode isn't empty, and the loop hasn't been stopped, continue looping.</span>
+        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">retVal</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// 10. Notify Observers: RunLoop is about to exit.</span>
+    <span class="n">__CFRunLoopDoObservers</span><span class="p">(</span><span class="n">rl</span><span class="p">,</span> <span class="n">currentMode</span><span class="p">,</span> <span class="n">kCFRunLoopExit</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><h3 id="runloops-underlying-implementation">RunLoop’s Underlying Implementation</h3><p>From the code above, you can see that the core of <code class="language-plaintext highlighter-rouge">RunLoop</code> is based on <code class="language-plaintext highlighter-rouge">mach port</code>. The function it calls when entering sleep is <code class="language-plaintext highlighter-rouge">mach_msg()</code>. To explain this logic, let me briefly introduce the system architecture of <code class="language-plaintext highlighter-rouge">OSX/iOS</code>.</p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop3.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop3.avif" alt="Run Loop" /></a></p><p>Apple officially divides the entire system into roughly the 4 layers above: The application layer includes the graphical apps that users interact with, such as <code class="language-plaintext highlighter-rouge">Spotlight</code>, <code class="language-plaintext highlighter-rouge">Aqua</code>, <code class="language-plaintext highlighter-rouge">SpringBoard</code>, etc. The application framework layer consists of the frameworks developers work with, such as <code class="language-plaintext highlighter-rouge">Cocoa</code>. The core framework layer includes various core frameworks, <code class="language-plaintext highlighter-rouge">OpenGL</code>, and other content. <code class="language-plaintext highlighter-rouge">Darwin</code> is the core of the operating system, including the system kernel, drivers, <code class="language-plaintext highlighter-rouge">Shell</code>, and other content. This layer is open source, and all its source code can be found on <a href="https://opensource.apple.com/">opensource.apple.com</a>.</p><p><strong>Let’s take a deeper look at the core architecture of Darwin:</strong></p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop4.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop4.avif" alt="Run Loop" /></a></p><p>Among them, the three components above the hardware layer — <code class="language-plaintext highlighter-rouge">Mach</code>, <code class="language-plaintext highlighter-rouge">BSD</code>, and <code class="language-plaintext highlighter-rouge">IOKit</code> (plus some content not marked above) — together form the <code class="language-plaintext highlighter-rouge">XNU</code> kernel. The inner ring of the <code class="language-plaintext highlighter-rouge">XNU</code> kernel is called <code class="language-plaintext highlighter-rouge">Mach</code>. As a microkernel, it only provides a very small number of basic services such as processor scheduling and <code class="language-plaintext highlighter-rouge">IPC</code> (inter-process communication).<br /> The <code class="language-plaintext highlighter-rouge">BSD</code> layer can be seen as an outer ring around the <code class="language-plaintext highlighter-rouge">Mach</code> layer, providing features such as process management, file systems, and networking.<br /> The <code class="language-plaintext highlighter-rouge">IOKit</code> layer provides an object-oriented (<code class="language-plaintext highlighter-rouge">C++</code>) framework for device drivers.</p><p>The <code class="language-plaintext highlighter-rouge">API</code>s provided by <code class="language-plaintext highlighter-rouge">Mach</code> itself are very limited, and Apple doesn’t encourage using <code class="language-plaintext highlighter-rouge">Mach</code>’s <code class="language-plaintext highlighter-rouge">API</code>s, but these <code class="language-plaintext highlighter-rouge">API</code>s are very fundamental. Without them, no other work could be done. In <code class="language-plaintext highlighter-rouge">Mach</code>, everything is implemented through its own objects — processes, threads, and virtual memory are all called “objects”. Unlike other architectures, <code class="language-plaintext highlighter-rouge">Mach</code>’s objects can’t call each other directly; inter-object communication can only be done through message passing. “<code class="language-plaintext highlighter-rouge">Message</code>” is the most fundamental concept in <code class="language-plaintext highlighter-rouge">Mach</code>. Messages are passed between two ports (<code class="language-plaintext highlighter-rouge">port</code>), and this is the core of <code class="language-plaintext highlighter-rouge">Mach</code>’s <code class="language-plaintext highlighter-rouge">IPC</code> (inter-process communication).</p><p><code class="language-plaintext highlighter-rouge">Mach</code>’s message definition is in the <code class="language-plaintext highlighter-rouge">&lt;mach/message.h&gt;</code> header file and is very simple:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+  <span class="n">mach_msg_header_t</span> <span class="n">header</span><span class="p">;</span>
+  <span class="n">mach_msg_body_t</span> <span class="n">body</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">mach_msg_base_t</span><span class="p">;</span>
+ 
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+  <span class="n">mach_msg_bits_t</span> <span class="n">msgh_bits</span><span class="p">;</span>
+  <span class="n">mach_msg_size_t</span> <span class="n">msgh_size</span><span class="p">;</span>
+  <span class="n">mach_port_t</span> <span class="n">msgh_remote_port</span><span class="p">;</span>
+  <span class="n">mach_port_t</span> <span class="n">msgh_local_port</span><span class="p">;</span>
+  <span class="n">mach_port_name_t</span> <span class="n">msgh_voucher_port</span><span class="p">;</span>
+  <span class="n">mach_msg_id_t</span> <span class="n">msgh_id</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">mach_msg_header_t</span><span class="p">;</span>
+</pre></table></code></div></div><p>A <code class="language-plaintext highlighter-rouge">Mach</code> message is actually a binary data packet (<code class="language-plaintext highlighter-rouge">BLOB</code>). Its header defines the current port <code class="language-plaintext highlighter-rouge">local_port</code> and the target port <code class="language-plaintext highlighter-rouge">remote_port</code>. Sending and receiving messages are done through the same <code class="language-plaintext highlighter-rouge">API</code>, and its <code class="language-plaintext highlighter-rouge">option</code> marks the direction of message transfer:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">mach_msg_return_t</span> <span class="nf">mach_msg</span><span class="p">(</span>
+			<span class="n">mach_msg_header_t</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span>
+			<span class="n">mach_msg_option_t</span> <span class="n">option</span><span class="p">,</span>
+			<span class="n">mach_msg_size_t</span> <span class="n">send_size</span><span class="p">,</span>
+			<span class="n">mach_msg_size_t</span> <span class="n">rcv_size</span><span class="p">,</span>
+			<span class="n">mach_port_name_t</span> <span class="n">rcv_name</span><span class="p">,</span>
+			<span class="n">mach_msg_timeout_t</span> <span class="n">timeout</span><span class="p">,</span>
+			<span class="n">mach_port_name_t</span> <span class="n">notify</span><span class="p">);</span>
+</pre></table></code></div></div><p>To implement message sending and receiving, the <code class="language-plaintext highlighter-rouge">mach_msg()</code> function actually calls a <code class="language-plaintext highlighter-rouge">Mach</code> trap, i.e. the function <code class="language-plaintext highlighter-rouge">mach_msg_trap()</code>. The concept of a trap in <code class="language-plaintext highlighter-rouge">Mach</code> is equivalent to a system call. When you call <code class="language-plaintext highlighter-rouge">mach_msg_trap()</code> in user space, it triggers the trap mechanism and switches to kernel space; in kernel space, the kernel’s <code class="language-plaintext highlighter-rouge">mach_msg()</code> function does the actual work, as shown below:</p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoop5.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoop5.avif" alt="Run Loop" /></a></p><p>These concepts can be referenced on Wikipedia: <a href="http://en.wikipedia.org/wiki/System_call">System_call</a>, <a href="http://en.wikipedia.org/wiki/Trap_(computing)">Trap_(computing)</a>.</p><p>The core of <code class="language-plaintext highlighter-rouge">RunLoop</code> is a <code class="language-plaintext highlighter-rouge">mach_msg()</code> (see step 7 in the code above). <code class="language-plaintext highlighter-rouge">RunLoop</code> calls this function to receive messages. If no one sends a <code class="language-plaintext highlighter-rouge">port</code> message, the kernel puts the thread in a waiting state. For example, if you run an <code class="language-plaintext highlighter-rouge">iOS</code> <code class="language-plaintext highlighter-rouge">App</code> in the simulator and then click pause while the <code class="language-plaintext highlighter-rouge">App</code> is idle, you’ll see the main thread’s call stack resting on <code class="language-plaintext highlighter-rouge">mach_msg_trap()</code>.</p><p>For details on how to use <code class="language-plaintext highlighter-rouge">mach port</code> to send information, you can read <a href="http://nshipster.com/inter-process-communication/">this NSHipster article</a>, or <a href="http://segmentfault.com/a/1190000002400329">here</a> for the Chinese translation.</p><p>For the history of <code class="language-plaintext highlighter-rouge">Mach</code>, you can read this interesting article: The Story Behind Mac OS X (3): Avie Tevanian, the Father of Mach.</p><h3 id="features-apple-implements-with-runloop">Features Apple Implements with RunLoop</h3><p>First, let’s look at the state of the <code class="language-plaintext highlighter-rouge">RunLoop</code> after the <code class="language-plaintext highlighter-rouge">App</code> starts:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+</pre><td class="rouge-code"><pre><span class="n">CFRunLoop</span> <span class="p">{</span>
+    <span class="n">current</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">kCFRunLoopDefaultMode</span>
+    <span class="n">common</span> <span class="n">modes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">UITrackingRunLoopMode</span>
+        <span class="n">kCFRunLoopDefaultMode</span>
+    <span class="p">}</span>
+ 
+    <span class="n">common</span> <span class="n">mode</span> <span class="n">items</span> <span class="o">=</span> <span class="p">{</span>
+ 
+        <span class="c1">// source0 (manual)</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_UIApplicationHandleEventQueue</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">PurpleEventSignalCallback</span> <span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">FBSSerialQueueRunLoopSourceHandler</span><span class="p">}}</span>
+ 
+        <span class="c1">// source1 (mach port)</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">17923</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">12039</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">16647</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">PurpleEventCallback</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">2407</span><span class="p">,</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_ZL20notify_port_callbackP12__CFMachPortPvlS1_</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">1</span><span class="n">c03</span><span class="p">,</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">__IOHIDEventSystemClientAvailabilityCallback</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">1</span><span class="n">b03</span><span class="p">,</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">__IOHIDEventSystemClientQueueCallback</span><span class="p">}}</span>
+        <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="n">port</span> <span class="o">=</span> <span class="mi">1903</span><span class="p">,</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">__IOMIGMachPortPortCallback</span><span class="p">}}</span>
+ 
+        <span class="c1">// Ovserver</span>
+        <span class="n">CFRunLoopObserver</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2147483647</span><span class="p">,</span> <span class="n">activities</span> <span class="o">=</span> <span class="mh">0x1</span><span class="p">,</span> <span class="c1">// Entry</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_wrapRunLoopWithAutoreleasePoolHandler</span><span class="p">}</span>
+        <span class="n">CFRunLoopObserver</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">activities</span> <span class="o">=</span> <span class="mh">0x20</span><span class="p">,</span>          <span class="c1">// BeforeWaiting</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_UIGestureRecognizerUpdateObserver</span><span class="p">}</span>
+        <span class="n">CFRunLoopObserver</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">1999000</span><span class="p">,</span> <span class="n">activities</span> <span class="o">=</span> <span class="mh">0xa0</span><span class="p">,</span>    <span class="c1">// BeforeWaiting | Exit</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_afterCACommitHandler</span><span class="p">}</span>
+        <span class="n">CFRunLoopObserver</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">2000000</span><span class="p">,</span> <span class="n">activities</span> <span class="o">=</span> <span class="mh">0xa0</span><span class="p">,</span>    <span class="c1">// BeforeWaiting | Exit</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv</span><span class="p">}</span>
+        <span class="n">CFRunLoopObserver</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">2147483647</span><span class="p">,</span> <span class="n">activities</span> <span class="o">=</span> <span class="mh">0xa0</span><span class="p">,</span> <span class="c1">// BeforeWaiting | Exit</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_wrapRunLoopWithAutoreleasePoolHandler</span><span class="p">}</span>
+ 
+        <span class="c1">// Timer</span>
+        <span class="n">CFRunLoopTimer</span> <span class="p">{</span><span class="n">firing</span> <span class="o">=</span> <span class="n">No</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="mf">3.1536e+09</span><span class="p">,</span> <span class="n">tolerance</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">next</span> <span class="n">fire</span> <span class="n">date</span> <span class="o">=</span> <span class="mi">453098071</span> <span class="p">(</span><span class="o">-</span><span class="mi">4421</span><span class="p">.</span><span class="mi">76019</span> <span class="err">@</span> <span class="mi">96223387169499</span><span class="p">),</span>
+            <span class="n">callout</span> <span class="o">=</span> <span class="n">_ZN2CAL14timer_callbackEP16__CFRunLoopTimerPv</span> <span class="p">(</span><span class="n">QuartzCore</span><span class="p">.</span><span class="n">framework</span><span class="p">)}</span>
+    <span class="p">},</span>
+ 
+    <span class="n">modes</span> <span class="err">＝</span> <span class="p">{</span>
+        <span class="n">CFRunLoopMode</span>  <span class="p">{</span>
+            <span class="n">sources0</span> <span class="o">=</span>  <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">sources1</span> <span class="o">=</span>  <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">timers</span> <span class="o">=</span>    <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+        <span class="p">},</span>
+ 
+        <span class="n">CFRunLoopMode</span>  <span class="p">{</span>
+            <span class="n">sources0</span> <span class="o">=</span>  <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">sources1</span> <span class="o">=</span>  <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+            <span class="n">timers</span> <span class="o">=</span>    <span class="p">{</span> <span class="cm">/* same as 'common mode items' */</span> <span class="p">},</span>
+        <span class="p">},</span>
+ 
+        <span class="n">CFRunLoopMode</span>  <span class="p">{</span>
+            <span class="n">sources0</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="n">callout</span> <span class="o">=</span> <span class="n">FBSSerialQueueRunLoopSourceHandler</span><span class="p">}}</span>
+            <span class="p">},</span>
+            <span class="n">sources1</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">CFRunLoopObserver</span> <span class="o">&gt;</span><span class="p">{</span><span class="n">activities</span> <span class="o">=</span> <span class="mh">0xa0</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="mi">2000000</span><span class="p">,</span>
+                    <span class="n">callout</span> <span class="o">=</span> <span class="n">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv</span><span class="p">}</span>
+            <span class="p">)},</span>
+            <span class="n">timers</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+        <span class="p">},</span>
+ 
+        <span class="n">CFRunLoopMode</span>  <span class="p">{</span>
+            <span class="n">sources0</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="n">callout</span> <span class="o">=</span> <span class="n">PurpleEventSignalCallback</span><span class="p">}}</span>
+            <span class="p">},</span>
+            <span class="n">sources1</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">CFRunLoopSource</span> <span class="p">{</span><span class="n">order</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="n">callout</span> <span class="o">=</span> <span class="n">PurpleEventCallback</span><span class="p">}}</span>
+            <span class="p">},</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+            <span class="n">timers</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+        <span class="p">},</span>
+        
+        <span class="n">CFRunLoopMode</span>  <span class="p">{</span>
+            <span class="n">sources0</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+            <span class="n">sources1</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+            <span class="n">timers</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>As you can see, the system registers 5 <code class="language-plaintext highlighter-rouge">Mode</code>s by default:</p><ol><li><code class="language-plaintext highlighter-rouge">kCFRunLoopDefaultMode</code>: the <code class="language-plaintext highlighter-rouge">App</code>’s default <code class="language-plaintext highlighter-rouge">Mode</code>; the main thread usually runs in this <code class="language-plaintext highlighter-rouge">Mode</code>.<li><code class="language-plaintext highlighter-rouge">UITrackingRunLoopMode</code>: the UI tracking <code class="language-plaintext highlighter-rouge">Mode</code>, used by <code class="language-plaintext highlighter-rouge">ScrollView</code> to track touch scrolling, ensuring that scrolling isn’t affected by other <code class="language-plaintext highlighter-rouge">Mode</code>s.<li><code class="language-plaintext highlighter-rouge">UIInitializationRunLoopMode</code>: the first <code class="language-plaintext highlighter-rouge">Mode</code> entered when the <code class="language-plaintext highlighter-rouge">App</code> just starts; it’s no longer used after startup completes.<li><code class="language-plaintext highlighter-rouge">GSEventReceiveRunLoopMode</code>: the internal <code class="language-plaintext highlighter-rouge">Mode</code> for receiving system events; you usually don’t need it.<li><code class="language-plaintext highlighter-rouge">kCFRunLoopCommonModes</code>: this is a placeholder <code class="language-plaintext highlighter-rouge">Mode</code> with no actual effect.</ol><p>You can see more of Apple’s internal <code class="language-plaintext highlighter-rouge">Mode</code>s <a href="http://iphonedevwiki.net/index.php/CFRunLoop">here</a>, but those <code class="language-plaintext highlighter-rouge">Mode</code>s are hard to encounter in development.</p><p>When <code class="language-plaintext highlighter-rouge">RunLoop</code> performs a callback, it usually goes through a very long function call (<code class="language-plaintext highlighter-rouge">call out</code>). When you set breakpoints in your code for debugging, you can usually see these functions on the call stack. Below is an organized version of these functions. If you see these long function names in the call stack, you can search here to locate the specific call site:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre><span class="p">{</span>
+    <span class="c1">/// 1. Notify Observers that RunLoop is about to be entered</span>
+    <span class="c1">/// Here an Observer creates the AutoreleasePool: _objc_autoreleasePoolPush();</span>
+    <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopEntry</span><span class="p">);</span>
+    <span class="k">do</span> <span class="p">{</span>
+
+        <span class="c1">/// 2. Notify Observers: about to trigger Timer callbacks.</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopBeforeTimers</span><span class="p">);</span>
+        <span class="c1">/// 3. Notify Observers: about to trigger Source (non-port-based, Source0) callbacks.</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopBeforeSources</span><span class="p">);</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__</span><span class="p">(</span><span class="n">block</span><span class="p">);</span>
+
+        <span class="c1">/// 4. Trigger Source0 (non-port-based) callbacks.</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__</span><span class="p">(</span><span class="n">source0</span><span class="p">);</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__</span><span class="p">(</span><span class="n">block</span><span class="p">);</span>
+
+        <span class="c1">/// 6. Notify Observers that RunLoop is about to sleep</span>
+        <span class="c1">/// Here an Observer releases and creates a new AutoreleasePool: _objc_autoreleasePoolPop(); _objc_autoreleasePoolPush();</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopBeforeWaiting</span><span class="p">);</span>
+
+        <span class="c1">/// 7. sleep to wait msg.</span>
+        <span class="n">mach_msg</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">mach_msg_trap</span><span class="p">();</span>
+        
+
+        <span class="c1">/// 8. Notify Observers that the thread has been woken up</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopAfterWaiting</span><span class="p">);</span>
+
+        <span class="c1">/// 9. If woken up by a Timer, call back the Timer</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span>
+
+        <span class="c1">/// 9. If woken up by dispatch, execute all blocks put into the main queue via methods like dispatch_async</span>
+        <span class="n">__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__</span><span class="p">(</span><span class="n">dispatched_block</span><span class="p">);</span>
+
+        <span class="c1">/// 9. If the Runloop was woken up by an event from Source1 (port-based), process this event</span>
+        <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__</span><span class="p">(</span><span class="n">source1</span><span class="p">);</span>
+
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(...);</span>
+
+    <span class="c1">/// 10. Notify Observers that RunLoop is about to exit</span>
+    <span class="c1">/// Here an Observer releases the AutoreleasePool: _objc_autoreleasePoolPop();</span>
+    <span class="n">__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</span><span class="p">(</span><span class="n">kCFRunLoopExit</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><h4 id="autoreleasepool">AutoreleasePool</h4><p>After the App starts, Apple registers two <code class="language-plaintext highlighter-rouge">Observer</code>s on the main thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code>, both with the callback <code class="language-plaintext highlighter-rouge">_wrapRunLoopWithAutoreleasePoolHandler()</code>.</p><p>The first <code class="language-plaintext highlighter-rouge">Observer</code> monitors the <code class="language-plaintext highlighter-rouge">Entry</code> event (about to enter the <code class="language-plaintext highlighter-rouge">Loop</code>). Inside its callback, it calls <code class="language-plaintext highlighter-rouge">_objc_autoreleasePoolPush()</code> to create an autorelease pool. Its <code class="language-plaintext highlighter-rouge">order</code> is <code class="language-plaintext highlighter-rouge">-2147483647</code>, the highest priority, ensuring the pool is created before all other callbacks.</p><p>The second <code class="language-plaintext highlighter-rouge">Observer</code> monitors two events: on <code class="language-plaintext highlighter-rouge">BeforeWaiting</code> (about to sleep), it calls <code class="language-plaintext highlighter-rouge">_objc_autoreleasePoolPop()</code> and <code class="language-plaintext highlighter-rouge">_objc_autoreleasePoolPush()</code> to release the old pool and create a new one; on <code class="language-plaintext highlighter-rouge">Exit</code> (about to exit the <code class="language-plaintext highlighter-rouge">Loop</code>), it calls <code class="language-plaintext highlighter-rouge">_objc_autoreleasePoolPop()</code> to release the autorelease pool. This <code class="language-plaintext highlighter-rouge">Observer</code>’s <code class="language-plaintext highlighter-rouge">order</code> is <code class="language-plaintext highlighter-rouge">2147483647</code>, the lowest priority, ensuring its pool is released after all other callbacks.</p><p>Code executed on the main thread is usually written inside callbacks such as event callbacks and <code class="language-plaintext highlighter-rouge">Timer</code> callbacks. These callbacks are wrapped by the <code class="language-plaintext highlighter-rouge">AutoreleasePool</code> created by the <code class="language-plaintext highlighter-rouge">RunLoop</code>, so memory leaks won’t occur, and developers don’t need to explicitly create a <code class="language-plaintext highlighter-rouge">Pool</code> either.</p><h4 id="event-response">Event Response</h4><p>Apple registers a <code class="language-plaintext highlighter-rouge">Source1</code> (based on <code class="language-plaintext highlighter-rouge">mach port</code>) to receive system events, and its callback function is <code class="language-plaintext highlighter-rouge">__IOHIDEventSystemClientQueueCallback()</code>.</p><p>When a hardware event (touch/lock screen/shake, etc.) occurs, IOKit.framework first generates an <code class="language-plaintext highlighter-rouge">IOHIDEvent</code> event, which is received by <code class="language-plaintext highlighter-rouge">SpringBoard</code>. For details of this process, you can refer to <a href="http://iphonedevwiki.net/index.php/IOHIDFamily">here</a>. <code class="language-plaintext highlighter-rouge">SpringBoard</code> only receives a few kinds of <code class="language-plaintext highlighter-rouge">Event</code>s such as button presses (lock screen/mute, etc.), touches, acceleration, and proximity sensors, and then forwards them to the required <code class="language-plaintext highlighter-rouge">App</code> process via <code class="language-plaintext highlighter-rouge">mach port</code>. The <code class="language-plaintext highlighter-rouge">Source1</code> Apple registered then triggers the callback and calls <code class="language-plaintext highlighter-rouge">_UIApplicationHandleEventQueue()</code> for internal distribution within the app.</p><p><code class="language-plaintext highlighter-rouge">_UIApplicationHandleEventQueue()</code> processes <code class="language-plaintext highlighter-rouge">IOHIDEvent</code> and wraps it into <code class="language-plaintext highlighter-rouge">UIEvent</code> for processing or distribution, including recognizing <code class="language-plaintext highlighter-rouge">UIGesture</code>/handling <code class="language-plaintext highlighter-rouge">screen rotation</code>/sending to <code class="language-plaintext highlighter-rouge">UIWindow</code>. Common events such as <code class="language-plaintext highlighter-rouge">UIButton</code> taps and <code class="language-plaintext highlighter-rouge">touchesBegin</code>/<code class="language-plaintext highlighter-rouge">Move</code>/<code class="language-plaintext highlighter-rouge">End</code>/<code class="language-plaintext highlighter-rouge">Cancel</code> are all completed in this callback.</p><h4 id="gesture-recognition">Gesture Recognition</h4><p>When <code class="language-plaintext highlighter-rouge">_UIApplicationHandleEventQueue()</code> above recognizes a gesture, it first calls <code class="language-plaintext highlighter-rouge">Cancel</code> to interrupt the current <code class="language-plaintext highlighter-rouge">touchesBegin</code>/<code class="language-plaintext highlighter-rouge">Move</code>/<code class="language-plaintext highlighter-rouge">End</code> callback sequence. Then the system marks the corresponding <code class="language-plaintext highlighter-rouge">UIGestureRecognizer</code> as pending.</p><p>Apple registers an <code class="language-plaintext highlighter-rouge">Observer</code> to monitor the <code class="language-plaintext highlighter-rouge">BeforeWaiting</code> (the <code class="language-plaintext highlighter-rouge">Loop</code> is about to sleep) event. This <code class="language-plaintext highlighter-rouge">Observer</code>’s callback is <code class="language-plaintext highlighter-rouge">_UIGestureRecognizerUpdateObserver()</code>. Inside it, it gets all the <code class="language-plaintext highlighter-rouge">GestureRecognizer</code>s that were just marked as pending and executes the <code class="language-plaintext highlighter-rouge">GestureRecognizer</code> callbacks.</p><p>Whenever there’s a change in <code class="language-plaintext highlighter-rouge">UIGestureRecognizer</code> (creation/destruction/state change), this callback handles it accordingly.</p><h4 id="ui-updates">UI Updates</h4><p>When you’re manipulating the <code class="language-plaintext highlighter-rouge">UI</code>, such as changing <code class="language-plaintext highlighter-rouge">Frame</code>s, updating the <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code> hierarchy, or manually calling the <code class="language-plaintext highlighter-rouge">setNeedsLayout</code>/<code class="language-plaintext highlighter-rouge">setNeedsDisplay</code> methods of <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code>, the <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code> is marked as pending and submitted to a global container.</p><p>Apple registers an <code class="language-plaintext highlighter-rouge">Observer</code> to listen for the <code class="language-plaintext highlighter-rouge">BeforeWaiting</code> (about to sleep) and <code class="language-plaintext highlighter-rouge">Exit</code> (about to exit the <code class="language-plaintext highlighter-rouge">Loop</code>) events. The callback executes a very long function: <code class="language-plaintext highlighter-rouge">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()</code>. This function iterates over all pending <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CAlayer</code>s to perform the actual drawing and adjustments, and updates the <code class="language-plaintext highlighter-rouge">UI</code>.</p><p>Here’s roughly the call stack inside this function:</p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv</span><span class="p">()</span>
+    <span class="n">QuartzCore</span><span class="o">:</span><span class="n">CA</span><span class="o">::</span><span class="n">Transaction</span><span class="o">::</span><span class="n">observer_callback</span><span class="o">:</span>
+        <span class="n">CA</span><span class="o">::</span><span class="n">Transaction</span><span class="o">::</span><span class="n">commit</span><span class="p">();</span>
+            <span class="n">CA</span><span class="o">::</span><span class="n">Context</span><span class="o">::</span><span class="n">commit_transaction</span><span class="p">();</span>
+                <span class="n">CA</span><span class="o">::</span><span class="n">Layer</span><span class="o">::</span><span class="n">layout_and_display_if_needed</span><span class="p">();</span>
+                    <span class="n">CA</span><span class="o">::</span><span class="n">Layer</span><span class="o">::</span><span class="n">layout_if_needed</span><span class="p">();</span>
+                        <span class="p">[</span><span class="n">CALayer</span> <span class="n">layoutSublayers</span><span class="p">];</span>
+                            <span class="p">[</span><span class="n">UIView</span> <span class="n">layoutSubviews</span><span class="p">];</span>
+                    <span class="n">CA</span><span class="o">::</span><span class="n">Layer</span><span class="o">::</span><span class="n">display_if_needed</span><span class="p">();</span>
+                        <span class="p">[</span><span class="n">CALayer</span> <span class="n">display</span><span class="p">];</span>
+                            <span class="p">[</span><span class="n">UIView</span> <span class="n">drawRect</span><span class="p">];</span>
+
+</pre></table></code></div></div><h4 id="timers">Timers</h4><p><code class="language-plaintext highlighter-rouge">NSTimer</code> is actually <code class="language-plaintext highlighter-rouge">CFRunLoopTimerRef</code>; the two are <code class="language-plaintext highlighter-rouge">toll-free bridged</code>. After an <code class="language-plaintext highlighter-rouge">NSTimer</code> is registered with the <code class="language-plaintext highlighter-rouge">RunLoop</code>, the <code class="language-plaintext highlighter-rouge">RunLoop</code> registers events for its repeated time points. For example, the time points <code class="language-plaintext highlighter-rouge">10:00</code>, <code class="language-plaintext highlighter-rouge">10:10</code>, <code class="language-plaintext highlighter-rouge">10:20</code>. To save resources, the <code class="language-plaintext highlighter-rouge">RunLoop</code> doesn’t call back this <code class="language-plaintext highlighter-rouge">Timer</code> at very precise times. A <code class="language-plaintext highlighter-rouge">Timer</code> has a property called <code class="language-plaintext highlighter-rouge">Tolerance</code>, which indicates the maximum allowable error after a time point is reached.</p><p>If a time point is missed — for example, when a very long task is executed — the callback for that time point is also skipped and won’t be executed late. It’s like waiting for a bus: if I’m busy playing with my phone at <code class="language-plaintext highlighter-rouge">10:10</code> and miss that bus, I can only wait for the <code class="language-plaintext highlighter-rouge">10:20</code> one.</p><p><code class="language-plaintext highlighter-rouge">CADisplayLink</code> is a timer that matches the screen refresh rate (but its actual implementation is more complex and different from <code class="language-plaintext highlighter-rouge">NSTimer</code>; internally it actually operates a <code class="language-plaintext highlighter-rouge">Source</code>). If a long task is executed between two screen refreshes, one frame will be skipped (similar to <code class="language-plaintext highlighter-rouge">NSTimer</code>), causing a feeling of UI jank. When scrolling a <code class="language-plaintext highlighter-rouge">TableView</code> quickly, even a single-frame stutter can be noticed by the user. <code class="language-plaintext highlighter-rouge">Facebook</code>’s open-source <code class="language-plaintext highlighter-rouge">AsyncDisplayLink</code> was created to solve UI jank, and it also uses <code class="language-plaintext highlighter-rouge">RunLoop</code> internally. I’ll write a separate blog post to analyze this later.</p><h4 id="performselecter">PerformSelecter</h4><p>When you call <code class="language-plaintext highlighter-rouge">performSelecter:afterDelay:</code> on <code class="language-plaintext highlighter-rouge">NSObject</code>, it internally creates a <code class="language-plaintext highlighter-rouge">Timer</code> and adds it to the current thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code>. So if the current thread has no <code class="language-plaintext highlighter-rouge">RunLoop</code>, this method won’t work.</p><p>When you call <code class="language-plaintext highlighter-rouge">performSelector:onThread:</code>, it actually creates a <code class="language-plaintext highlighter-rouge">Timer</code> and adds it to the corresponding thread. Likewise, if the corresponding thread has no <code class="language-plaintext highlighter-rouge">RunLoop</code>, this method also won’t work.</p><h4 id="about-gcd">About GCD</h4><p>Actually, the underlying <code class="language-plaintext highlighter-rouge">RunLoop</code> also uses GCD stuff, such as <code class="language-plaintext highlighter-rouge">dispatch_async()</code>.</p><blockquote><p>NSTimer is driven by XNU kernel’s <code class="language-plaintext highlighter-rouge">mk_timer</code>, not by GCD.</p></blockquote><p>When you call <code class="language-plaintext highlighter-rouge">dispatch_async(dispatch_get_main_queue(), block)</code>, <code class="language-plaintext highlighter-rouge">libDispatch</code> sends a message to the main thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code>. The RunLoop is woken up, takes the <code class="language-plaintext highlighter-rouge">block</code> from the message, and executes it in the callback <code class="language-plaintext highlighter-rouge">__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__()</code>. But this logic only applies to dispatching to the main thread; dispatching to other threads is still handled by <code class="language-plaintext highlighter-rouge">libDispatch</code>.</p><h4 id="about-network-requests">About Network Requests</h4><p>In iOS, the network request interfaces from the bottom up have the following layers:</p><div class="language-c highlighter-rouge"><div class="code-header"> <span data-label-text="C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">CFSocket</span>
+<span class="n">CFNetwork</span>       <span class="o">-&gt;</span><span class="n">ASIHttpRequest</span>
+<span class="n">NSURLConnection</span> <span class="o">-&gt;</span><span class="n">AFNetworking</span>
+<span class="n">NSURLSession</span>    <span class="o">-&gt;</span><span class="n">AFNetworking2</span><span class="p">,</span> <span class="n">Alamofire</span>
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">CFSocket</code> is the lowest-level interface, only responsible for <code class="language-plaintext highlighter-rouge">socket</code> communication.<li><code class="language-plaintext highlighter-rouge">CFNetwork</code> is a higher-level wrapper based on interfaces like <code class="language-plaintext highlighter-rouge">CFSocket</code>; <code class="language-plaintext highlighter-rouge">ASIHttpRequest</code> works at this layer.<li><code class="language-plaintext highlighter-rouge">NSURLConnection</code> is an even higher-level wrapper based on <code class="language-plaintext highlighter-rouge">CFNetwork</code>, providing an object-oriented interface; <code class="language-plaintext highlighter-rouge">AFNetworking</code> works at this layer.<li><code class="language-plaintext highlighter-rouge">NSURLSession</code> is an interface added in <code class="language-plaintext highlighter-rouge">iOS7</code>. On the surface it’s on par with <code class="language-plaintext highlighter-rouge">NSURLConnection</code>, but underneath it still uses some of <code class="language-plaintext highlighter-rouge">NSURLConnection</code>’s functionality (such as the <code class="language-plaintext highlighter-rouge">com.apple.NSURLConnectionLoader</code> thread). <code class="language-plaintext highlighter-rouge">AFNetworking2</code> and <code class="language-plaintext highlighter-rouge">Alamofire</code> work at this layer.</ul><h5 id="below-ill-mainly-describe-the-working-process-of-nsurlconnection">Below I’ll mainly describe the working process of NSURLConnection.</h5><p>Usually when using <code class="language-plaintext highlighter-rouge">NSURLConnection</code>, you pass in a <code class="language-plaintext highlighter-rouge">Delegate</code>. After calling <code class="language-plaintext highlighter-rouge">[connection start]</code>, this <code class="language-plaintext highlighter-rouge">Delegate</code> keeps receiving event callbacks. In fact, inside the <code class="language-plaintext highlighter-rouge">start</code> function, it gets the <code class="language-plaintext highlighter-rouge">CurrentRunLoop</code>, and adds 4 <code class="language-plaintext highlighter-rouge">Source0</code>s (i.e. <code class="language-plaintext highlighter-rouge">Source</code>s that need to be triggered manually) to its <code class="language-plaintext highlighter-rouge">DefaultMode</code>. <code class="language-plaintext highlighter-rouge">CFMultiplexerSource</code> is responsible for various <code class="language-plaintext highlighter-rouge">Delegate</code> callbacks, and <code class="language-plaintext highlighter-rouge">CFHTTPCookieStorage</code> handles various <code class="language-plaintext highlighter-rouge">Cookie</code>s.</p><p>When the network transfer starts, we can see that <code class="language-plaintext highlighter-rouge">NSURLConnection</code> creates two new threads: <code class="language-plaintext highlighter-rouge">com.apple.NSURLConnectionLoader</code> and <code class="language-plaintext highlighter-rouge">com.apple.CFSocket.private</code>. The <code class="language-plaintext highlighter-rouge">CFSocket</code> thread handles the underlying <code class="language-plaintext highlighter-rouge">socket</code> connection. The <code class="language-plaintext highlighter-rouge">NSURLConnectionLoader</code> thread uses a <code class="language-plaintext highlighter-rouge">RunLoop</code> internally to receive events from the underlying <code class="language-plaintext highlighter-rouge">socket</code>, and notifies the upper-layer <code class="language-plaintext highlighter-rouge">Delegate</code> through the <code class="language-plaintext highlighter-rouge">Source0</code> added earlier.</p><p><a class="popup" href="/assets/images/20180402RunLoop/RunLoopNetwork.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20180402RunLoop/RunLoopNetwork.avif" alt="Run Loop Network" /></a></p><p>The <code class="language-plaintext highlighter-rouge">RunLoop</code> in <code class="language-plaintext highlighter-rouge">NSURLConnectionLoader</code> receives notifications from the underlying <code class="language-plaintext highlighter-rouge">CFSocket</code> through some <code class="language-plaintext highlighter-rouge">Source</code>s based on <code class="language-plaintext highlighter-rouge">mach port</code>. After receiving a notification, it sends notifications to <code class="language-plaintext highlighter-rouge">Source0</code>s such as <code class="language-plaintext highlighter-rouge">CFMultiplexerSource</code> at the appropriate time, and wakes up the <code class="language-plaintext highlighter-rouge">Delegate</code> thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code> to handle these notifications. <code class="language-plaintext highlighter-rouge">CFMultiplexerSource</code> executes the actual callbacks to the <code class="language-plaintext highlighter-rouge">Delegate</code> on the <code class="language-plaintext highlighter-rouge">Delegate</code> thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code>.</p><h3 id="practical-application-examples-of-runloop">Practical Application Examples of RunLoop</h3><h4 id="afnetworking">AFNetworking</h4><p>The AFURLConnectionOperation class is built on <code class="language-plaintext highlighter-rouge">NSURLConnection</code> and wants to receive <code class="language-plaintext highlighter-rouge">Delegate</code> callbacks on a background thread. For this, <code class="language-plaintext highlighter-rouge">AFNetworking</code> creates a dedicated thread and starts a <code class="language-plaintext highlighter-rouge">RunLoop</code> on it.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">networkRequestThreadEntryPoint</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">__unused</span> <span class="n">object</span> <span class="p">{</span>
+    <span class="k">@autoreleasepool</span> <span class="p">{</span>
+        <span class="p">[[</span><span class="n">NSThread</span> <span class="nf">currentThread</span><span class="p">]</span> <span class="nf">setName</span><span class="p">:</span><span class="s">@"AFNetworking"</span><span class="p">];</span>
+        <span class="n">NSRunLoop</span> <span class="o">*</span><span class="n">runLoop</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSRunLoop</span> <span class="nf">currentRunLoop</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">runLoop</span> <span class="nf">addPort</span><span class="p">:[</span><span class="n">NSMachPort</span> <span class="nf">port</span><span class="p">]</span> <span class="nf">forMode</span><span class="p">:</span><span class="n">NSDefaultRunLoopMode</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">runLoop</span> <span class="nf">run</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="k">+</span> <span class="p">(</span><span class="n">NSThread</span> <span class="o">*</span><span class="p">)</span><span class="n">networkRequestThread</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">NSThread</span> <span class="o">*</span><span class="n">_networkRequestThread</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">oncePredicate</span><span class="p">;</span>
+    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">oncePredicate</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">_networkRequestThread</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSThread</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithTarget</span><span class="p">:</span><span class="n">self</span> <span class="nf">selector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">networkRequestThreadEntryPoint</span><span class="o">:</span><span class="p">)</span> <span class="n">object</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">_networkRequestThread</span> <span class="nf">start</span><span class="p">];</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="n">_networkRequestThread</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>Before a <code class="language-plaintext highlighter-rouge">RunLoop</code> starts, it must have at least one <code class="language-plaintext highlighter-rouge">Timer</code>/<code class="language-plaintext highlighter-rouge">Observer</code>/<code class="language-plaintext highlighter-rouge">Source</code> inside. So <code class="language-plaintext highlighter-rouge">AFNetworking</code> creates a new <code class="language-plaintext highlighter-rouge">NSMachPort</code> and adds it before <code class="language-plaintext highlighter-rouge">[runLoop run]</code>. Normally, the caller needs to hold this <code class="language-plaintext highlighter-rouge">NSMachPort</code> (<code class="language-plaintext highlighter-rouge">mach_port</code>) and send messages to the <code class="language-plaintext highlighter-rouge">loop</code> through this <code class="language-plaintext highlighter-rouge">port</code> from an external thread; but here, the <code class="language-plaintext highlighter-rouge">port</code> is only added to keep the <code class="language-plaintext highlighter-rouge">RunLoop</code> from exiting, not for actually sending messages.</p><div class="language-objc highlighter-rouge"><div class="code-header"> <span data-label-text="Objective-C"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">start</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">lock</span> <span class="nf">lock</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">self</span> <span class="nf">isCancelled</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">cancelConnection</span><span class="p">)</span> <span class="nf">onThread</span><span class="p">:[[</span><span class="n">self</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">networkRequestThread</span><span class="p">]</span> <span class="n">withObject</span><span class="o">:</span><span class="nb">nil</span> <span class="n">waitUntilDone</span><span class="o">:</span><span class="nb">NO</span> <span class="n">modes</span><span class="o">:</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">runLoopModes</span> <span class="nf">allObjects</span><span class="p">]];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">([</span><span class="n">self</span> <span class="nf">isReady</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">AFOperationExecutingState</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">self</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">operationDidStart</span><span class="p">)</span> <span class="nf">onThread</span><span class="p">:[[</span><span class="n">self</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">networkRequestThread</span><span class="p">]</span> <span class="n">withObject</span><span class="o">:</span><span class="nb">nil</span> <span class="n">waitUntilDone</span><span class="o">:</span><span class="nb">NO</span> <span class="n">modes</span><span class="o">:</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">runLoopModes</span> <span class="nf">allObjects</span><span class="p">]];</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">lock</span> <span class="nf">unlock</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>When this background thread needs to execute a task, <code class="language-plaintext highlighter-rouge">AFNetworking</code> throws the task into the background thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code> by calling <code class="language-plaintext highlighter-rouge">[NSObject performSelector:onThread:..]</code>.</p><h4 id="asyncdisplaykit">AsyncDisplayKit</h4><p><a href="https://github.com/facebook/AsyncDisplayKit">AsyncDisplayKit</a> is a framework released by Facebook to keep the UI smooth. Here’s roughly how it works:</p><p>Once a heavy task appears on the <code class="language-plaintext highlighter-rouge">UI</code> thread, the UI stutters. Such tasks are usually divided into 3 categories: <code class="language-plaintext highlighter-rouge">layout</code>, <code class="language-plaintext highlighter-rouge">drawing</code>, and <code class="language-plaintext highlighter-rouge">UI object operations</code>.</p><p>Layout usually includes operations such as calculating view sizes, calculating text heights, and recomputing the layout of subviews. Drawing generally includes text drawing (e.g. <code class="language-plaintext highlighter-rouge">CoreText</code>), image drawing (e.g. pre-decompression), and element drawing (<code class="language-plaintext highlighter-rouge">Quartz</code>), etc. <code class="language-plaintext highlighter-rouge">UI</code> object operations usually include creating, setting properties of, and destroying UI objects such as <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code>.</p><p>Among these, the first two categories can be pushed to background threads through various methods, while the last category can only be done on the main thread. Sometimes later operations need to depend on the results of earlier operations (for example, creating a <code class="language-plaintext highlighter-rouge">TextView</code> may require pre-computing the text size). What <code class="language-plaintext highlighter-rouge">ASDK</code> does is push as many tasks as possible to the background, and delay the ones it can’t (such as view creation and property adjustments) as much as possible.</p><p>To do this, <code class="language-plaintext highlighter-rouge">ASDK</code> creates an object called <code class="language-plaintext highlighter-rouge">ASDisplayNode</code> and wraps <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code> inside it. It has properties similar to <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code>, such as <code class="language-plaintext highlighter-rouge">frame</code> and <code class="language-plaintext highlighter-rouge">backgroundColor</code>. All these properties can be changed on a background thread. Developers can operate the internal <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code> only through the <code class="language-plaintext highlighter-rouge">Node</code>, thus pushing layout and drawing to background threads. But no matter how you operate, these properties always need to be synchronized to the main thread’s <code class="language-plaintext highlighter-rouge">UIView</code>/<code class="language-plaintext highlighter-rouge">CALayer</code> at some point.</p><p><code class="language-plaintext highlighter-rouge">ASDK</code> mimics the pattern of the <code class="language-plaintext highlighter-rouge">QuartzCore</code>/<code class="language-plaintext highlighter-rouge">UIKit</code> frameworks and implements a similar UI update mechanism: add an <code class="language-plaintext highlighter-rouge">Observer</code> to the main thread’s <code class="language-plaintext highlighter-rouge">RunLoop</code>, listen for the <code class="language-plaintext highlighter-rouge">kCFRunLoopBeforeWaiting</code> and <code class="language-plaintext highlighter-rouge">kCFRunLoopExit</code> events, and when the callback is received, iterate over all the pending tasks previously put into the queue and execute them one by one. The specific code can be seen here: _ASAsyncTransactionGroup.</p><h3 id="conclusion">Conclusion</h3><p><code class="language-plaintext highlighter-rouge">RunLoop</code> needs to be understood deeply</p><p>End</p><p><a href="https://blog.ibireme.com/2015/05/18/runloop/#base">Reference</a></p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/ios/'>iOS</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/en/tags/ios/" class="post-tag no-text-decoration" >iOS</a> <a href="/en/tags/macos/" class="post-tag no-text-decoration" >macOS</a> <a href="/en/tags/objective-c/" class="post-tag no-text-decoration" >Objective-C</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Understanding RunLoop in Depth - 迈腾大队长&url=https://www.sunyazhou.com/2018/04/RunLoop/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Understanding RunLoop in Depth - 迈腾大队长&u=https://www.sunyazhou.com/2018/04/RunLoop/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Understanding RunLoop in Depth - 迈腾大队长&url=https://www.sunyazhou.com/2018/04/RunLoop/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=Understanding RunLoop in Depth - 迈腾大队长&url=https://www.sunyazhou.com/2018/04/RunLoop/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></article></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recently Updated</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllpostscaffoldmultilang/">Jekyll Blog with Hexo-style Post Scaffolds and Multi-language Creation</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/08/jekyllcomposecompleteguide/">A Complete Guide to jekyll-compose - Seven Commands You May Not Know</a><li><a href="/en/2026/07/crossplatformdesktopframeworkcomparison/">Cross-Platform Desktop Framework Selection Deep Dive: An iOS Developer's Qt6 Journey</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Table of Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Keep Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/en/2017/02/macOSsimulateKeyboradNSEvent/"><div class="card-body"> <span class="timeago small" > 2017-02-22 <i class="unloaded">2017-02-22T16:17:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Simulating Keyboard Events on macOS</h3><div class="text-muted small"><p> Recently I’ve been developing a remote assistance feature for macOS, which requires mapping keyboard events coming from Windows and simulating them as macOS NSEvents. Events on macOS are simulate...</p></div></div></a></div><div class="card"> <a href="/en/2022/08/nsstringenum/"><div class="card-body"> <span class="timeago small" > 2022-08-22 <i class="unloaded">2022-08-22T11:23:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>String Enums in iOS Development</h3><div class="text-muted small"><p> Preface This article carries a strong personal tone. If you find it uncomfortable to read, please close it immediately. This article is intended only as a personal study record. You are welcome to...</p></div></div></a></div><div class="card"> <a href="/en/2022/12/gradientlayeranimation/"><div class="card-body"> <span class="timeago small" > 2022-12-07 <i class="unloaded">2022-12-07T08:00:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Replicating the QQ Music Radial Gradient Animation</h3><div class="text-muted small"><p> Preface This article is strongly personal in tone. If you find it uncomfortable to read, please close it as soon as possible. This article is only a personal learning record. You are welcome to ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/en/2018/03/Swft4ArraySkills/" class="btn btn-outline-primary"><p>Array Techniques in Swift 4</p></a> <a href="/en/2018/05/AudioUnit/" class="btn btn-outline-primary"><p>AudioUnit</p></a></div><div class="giscus-container pt-3"> <script> (function () { 'use strict'; var THEME_LIGHT = 'light'; var THEME_DARK = 'dark_dimmed'; function currentTheme() { var mode = document.documentElement.getAttribute('mode'); if (mode === 'dark') { return THEME_DARK; } if (mode === 'light') { return THEME_LIGHT; } return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? THEME_DARK : THEME_LIGHT; } function giscusLang() { var lang = 'zh-Hans'; if (lang.indexOf('zh') === 0) { return 'zh-CN'; } return lang.slice(0, 2); } function loadGiscus() { var s = document.createElement('script'); var attrs = { src: 'https://giscus.app/client.js', 'data-repo': 'sunyazhou13/sunyazhou13.github.io', 'data-repo-id': 'MDEwOlJlcG9zaXRvcnkzODc1NTk1OA==', 'data-category': 'Announcements', 'data-category-id': 'DIC_kwDOAk9eds4DDwpN', 'data-mapping': 'pathname', 'data-strict': '0', 'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-theme': currentTheme(), 'data-input-position': 'bottom', 'data-lang': giscusLang(), 'data-loading': 'lazy', crossorigin: 'anonymous', async: '' }; Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); }); document.querySelector('.giscus-container').appendChild(s); } /* follow the mode toggle: update giscus theme without reloading */ function updateGiscusTheme() { var iframe = document.querySelector('iframe.giscus-frame'); if (!iframe) { return; } iframe.contentWindow.postMessage( { giscus: { setConfig: { theme: currentTheme() } } }, 'https://giscus.app' ); } new MutationObserver(function (mutations) { mutations.forEach(function (m) { if (m.attributeName === 'mode') { updateGiscusTheme(); } }); }).observe(document.documentElement, { attributes: true }); loadGiscus(); })(); </script></div></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script> <script> (function() { if (typeof GLightbox === 'undefined') return; if (document.querySelector('.popup') === null) return; GLightbox({ selector: '.popup' }); /* Fix Chrome a11y warning: "Blocked aria-hidden on an element because its descendant retained focus". Blur the trigger link *before* GLightbox applies aria-hidden to the page wrapper; capture phase guarantees this runs ahead of GLightbox's own click handler. */ document.addEventListener('click', function(e) { var link = e.target && e.target.closest ? e.target.closest('a.popup') : null; if (link && link.blur) link.blur(); }, true); })(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/en/tags/objective-c/">Objective C</a> <a class="post-tag" href="/en/tags/ios/">iOS</a> <a class="post-tag" href="/en/tags/macos/">macOS</a> <a class="post-tag" href="/en/tags/skills/">skills</a> <a class="post-tag" href="/en/tags/swift/">Swift</a> <a class="post-tag" href="/en/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/en/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/en/tags/c++/">C++</a> <a class="post-tag" href="/en/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/en/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

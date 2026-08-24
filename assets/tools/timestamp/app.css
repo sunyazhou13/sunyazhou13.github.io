@@ -1,0 +1,371 @@
+/**
+ * 时间戳转换工具样式
+ * 独立于博客主题，仅作用于 #ts-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#ts-app {
+  --ts-border: rgba(128, 128, 128, 0.35);
+  --ts-border-strong: rgba(128, 128, 128, 0.55);
+  --ts-bg: rgba(128, 128, 128, 0.07);
+  --ts-bg-hover: rgba(128, 128, 128, 0.14);
+  --ts-text: inherit;
+  --ts-text-muted: rgba(128, 128, 128, 0.95);
+  --ts-accent: #2f6fde;
+  --ts-accent-text: #fff;
+  --ts-ok: #1a7f4b;
+  --ts-radius: 8px;
+  --ts-mono: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* 语法高亮配色 */
+  --ts-tok-comment: #6a737d;
+  --ts-tok-string: #032f62;
+  --ts-tok-number: #005cc5;
+  --ts-tok-keyword: #d73a49;
+  --ts-tok-attr: #6f42c1;
+  --ts-tok-prop: #e36209;
+}
+
+html[mode='dark'] #ts-app {
+  --ts-bg: rgba(255, 255, 255, 0.06);
+  --ts-bg-hover: rgba(255, 255, 255, 0.12);
+  --ts-text-muted: rgba(190, 190, 190, 0.95);
+  --ts-accent: #5b8ff0;
+  --ts-ok: #57c288;
+  --ts-tok-comment: #8b949e;
+  --ts-tok-string: #a5d6ff;
+  --ts-tok-number: #79c0ff;
+  --ts-tok-keyword: #ff7b72;
+  --ts-tok-attr: #d2a8ff;
+  --ts-tok-prop: #ffa657;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #ts-app {
+    --ts-bg: rgba(255, 255, 255, 0.06);
+    --ts-bg-hover: rgba(255, 255, 255, 0.12);
+    --ts-text-muted: rgba(190, 190, 190, 0.95);
+    --ts-accent: #5b8ff0;
+    --ts-ok: #57c288;
+    --ts-tok-comment: #8b949e;
+    --ts-tok-string: #a5d6ff;
+    --ts-tok-number: #79c0ff;
+    --ts-tok-keyword: #ff7b72;
+    --ts-tok-attr: #d2a8ff;
+    --ts-tok-prop: #ffa657;
+  }
+}
+
+/* ---------- 实时时钟 ---------- */
+
+#ts-app .ts-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.2rem 1rem;
+  border: 1px solid var(--ts-border);
+  border-radius: var(--ts-radius);
+  background: var(--ts-bg);
+  margin-bottom: 1rem;
+}
+
+#ts-app .ts-clock-date {
+  font-size: 1rem;
+  color: var(--ts-text-muted);
+}
+
+#ts-app .ts-clock-time {
+  font-family: var(--ts-mono);
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+#ts-app .ts-clock-ms {
+  color: var(--ts-accent);
+  font-size: 1.6rem;
+}
+
+#ts-app .ts-clock-ts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1rem;
+  margin-top: 0.4rem;
+  font-family: var(--ts-mono);
+  font-size: 0.82rem;
+}
+
+#ts-app .ts-clock-ts-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#ts-app .ts-clock-ts-label {
+  color: var(--ts-text-muted);
+  font-size: 0.78rem;
+}
+
+#ts-app .ts-clock-ts-val {
+  user-select: all;
+  font-weight: 500;
+}
+
+#ts-app .ts-clock-iso {
+  font-family: var(--ts-mono);
+  font-size: 0.82rem;
+  color: var(--ts-text-muted);
+  user-select: all;
+}
+
+#ts-app .ts-clock-copy {
+  margin-top: 0.3rem;
+}
+
+/* ---------- 通用按钮 ---------- */
+
+#ts-app .ts-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#ts-app .ts-btn:hover:not(:disabled) { background: var(--ts-bg-hover); }
+#ts-app .ts-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#ts-app .ts-btn-primary {
+  background: var(--ts-accent);
+  border-color: var(--ts-accent);
+  color: var(--ts-accent-text);
+}
+
+#ts-app .ts-btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+  background: var(--ts-accent);
+}
+
+#ts-app .ts-btn-copy {
+  flex: none;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+#ts-app .ts-btn-copy.ts-copied {
+  color: var(--ts-ok);
+  border-color: var(--ts-ok);
+}
+
+#ts-app .ts-copied {
+  color: var(--ts-ok);
+  border-color: var(--ts-ok);
+}
+
+/* ---------- 面板 ---------- */
+
+#ts-app .ts-panel {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--ts-border);
+  border-radius: var(--ts-radius);
+  background: var(--ts-bg);
+  margin-bottom: 1rem;
+}
+
+#ts-app .ts-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+}
+
+#ts-app .ts-hint {
+  font-size: 0.85rem;
+  color: var(--ts-text-muted);
+  margin: 0 0 0.5rem;
+}
+
+#ts-app .ts-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+#ts-app .ts-label {
+  font-size: 0.85rem;
+  color: var(--ts-text-muted);
+  min-width: 3rem;
+}
+
+#ts-app .ts-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-family: var(--ts-mono);
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease;
+}
+
+#ts-app .ts-input:focus {
+  outline: none;
+  border-color: var(--ts-accent);
+}
+
+#ts-app .ts-input::placeholder {
+  color: var(--ts-text-muted);
+  opacity: 0.7;
+}
+
+#ts-app .ts-date-input {
+  width: auto;
+  min-width: 0;
+  flex: none;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-family: var(--ts-mono);
+  font-size: 0.9rem;
+}
+
+#ts-app .ts-date-input:focus {
+  outline: none;
+  border-color: var(--ts-accent);
+}
+
+#ts-app .ts-date-input::-webkit-calendar-picker-indicator {
+  filter: var(--ts-cal-filter, none);
+}
+
+/* ---------- 转换结果 ---------- */
+
+#ts-app .ts-result {
+  margin-top: 0.5rem;
+}
+
+#ts-app .ts-res-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--ts-border);
+}
+
+#ts-app .ts-res-item:last-child {
+  border-bottom: none;
+}
+
+#ts-app .ts-res-label {
+  flex: none;
+  width: 6rem;
+  font-size: 0.82rem;
+  color: var(--ts-text-muted);
+}
+
+#ts-app .ts-res-val {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ts-mono);
+  font-size: 0.85rem;
+  word-break: break-all;
+  user-select: all;
+}
+
+/* ---------- 代码块 ---------- */
+
+#ts-app .ts-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--ts-border);
+  margin-bottom: 0.5rem;
+}
+
+#ts-app .ts-tab {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--ts-text-muted);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+#ts-app .ts-tab:hover { color: var(--ts-text); }
+
+#ts-app .ts-tab-active {
+  color: var(--ts-accent);
+  border-bottom-color: var(--ts-accent);
+  font-weight: 500;
+}
+
+#ts-app .ts-code-block {
+  margin: 0 0 0.5rem 0;
+  padding: 0.8rem;
+  border: 1px solid var(--ts-border);
+  border-radius: 6px;
+  background: var(--ts-bg);
+  overflow-x: auto;
+  max-height: 480px;
+}
+
+#ts-app .ts-code-block code {
+  font-family: var(--ts-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--ts-text);
+}
+
+/* 语法高亮 token */
+#ts-app .ts-tok-c { color: var(--ts-tok-comment); font-style: italic; }
+#ts-app .ts-tok-s { color: var(--ts-tok-string); }
+#ts-app .ts-tok-n { color: var(--ts-tok-number); }
+#ts-app .ts-tok-k { color: var(--ts-tok-keyword); font-weight: 500; }
+#ts-app .ts-tok-a { color: var(--ts-tok-attr); }
+#ts-app .ts-tok-p { color: var(--ts-tok-prop); }
+
+/* ---------- 错误提示 ---------- */
+
+#ts-app .ts-error {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--ts-accent);
+  border-radius: var(--ts-radius);
+  color: var(--ts-accent);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+#ts-app [hidden] { display: none !important; }
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 576px) {
+  #ts-app .ts-clock-time {
+    font-size: 1.8rem;
+  }
+  #ts-app .ts-clock-ms {
+    font-size: 1.2rem;
+  }
+  #ts-app .ts-res-label {
+    width: 5rem;
+  }
+  #ts-app .ts-res-item {
+    flex-wrap: wrap;
+  }
+}
