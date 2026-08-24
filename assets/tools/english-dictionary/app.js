@@ -125,9 +125,11 @@
   //    该域名不发送 CORS 头，浏览器 fetch 直接报 "Failed to fetch"。
   //    因此必须使用支持 CORS 的源，按优先级排列：
   const SHARD_SOURCES = [
-    // 1. jsDelivr CDN — 全球加速，CORS 完整，content-type 正确
+    // 1. jsDelivr Fastly 节点 — 国内通常比主域名快
+    'https://fastly.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
+    // 2. jsDelivr 主域名 — 备用
     'https://cdn.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
-    // 2. GitHub Raw — CORS 支持，但国内访问可能较慢
+    // 3. GitHub Raw — CORS 支持，但国内访问较慢，作为最后兜底
     'https://raw.githubusercontent.com/sunyazhou13/english-dictionary-data/main/',
   ];
   const LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -315,20 +317,34 @@
 
       onProgress(done, total, T.downloadPrepare);
 
-      // 逐个下载（避免同时 26 个请求），单个分片 120 秒超时兜底
+      // 4 路并行下载（浏览器对同一域名允许 6 个并发连接，4 路平衡速度与稳定性）
+      // 单个分片 120 秒超时兜底
+      const CONCURRENCY = 4;
       let failed = [];
-      for (const letter of toDownload) {
-        onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
-        try {
-          const data = await fetchShardJson(letter, 120000);
-          _shardCache[letter] = data;
-          try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
-        } catch (e) {
-          failed.push(letter);
+      let queue = [...toDownload];
+
+      async function downloadWorker() {
+        while (queue.length > 0) {
+          const letter = queue.shift();
+          if (!letter) break;
+          onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
+          try {
+            const data = await fetchShardJson(letter, 120000);
+            _shardCache[letter] = data;
+            try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
+          } catch (e) {
+            failed.push(letter);
+          }
+          done++;
+          const nextLetter = queue[0];
+          onProgress(done, total, nextLetter
+            ? T.downloadFetching + nextLetter.toUpperCase() + '.json …'
+            : T.downloadComplete);
         }
-        done++;
-        onProgress(done, total, done < total ? T.downloadFetching + LETTERS[done].toUpperCase() + '.json …' : T.downloadComplete);
       }
+
+      // 启动 CONCURRENCY 个 worker
+      await Promise.all(Array.from({ length: Math.min(CONCURRENCY, toDownload.length) }, downloadWorker));
 
       // 标记全量下载完成（有失败则不标记，提示用户）
       if (failed.length === 0) {
