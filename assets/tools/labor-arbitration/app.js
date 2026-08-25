@@ -358,6 +358,7 @@
     var leaveDays = parseFloat(document.getElementById('unpaid-leave-days').value) || 0;
     var overtime = parseFloat(document.getElementById('overtime-pay').value) || 0;
     var yearEndPay = parseFloat(document.getElementById('year-end-pay').value) || 0;
+    var baseSalaryVal = parseFloat(document.getElementById('base-salary').value) || 0;
 
     // 计算补偿年限（N）
     var n = Math.floor(years);
@@ -376,13 +377,21 @@
       mainComp = 0;
     }
 
+    // 日均工资：优先使用基本工资，未填写时使用月平均工资
+    var dailyWage = 0;
+    if (baseSalaryVal > 0) {
+      dailyWage = baseSalaryVal / 21.75;
+    } else {
+      dailyWage = avgMonthly / 21.75;
+    }
+
     // 未休年假工资：日工资 * 天数 * 200%
-    var dailyWage = avgMonthly / 21.75;
     var leaveComp = leaveDays > 0 ? dailyWage * leaveDays * 2 : 0;
 
     var total = mainComp + leaveComp + overtime + yearEndPay;
 
     document.getElementById('compensation-main').textContent = '¥ ' + formatMoney(mainComp);
+    document.getElementById('compensation-daily').textContent = '¥ ' + formatMoney(dailyWage);
     document.getElementById('compensation-leave').textContent = '¥ ' + formatMoney(leaveComp);
     document.getElementById('compensation-overtime').textContent = '¥ ' + formatMoney(overtime);
     document.getElementById('compensation-bonus').textContent = '¥ ' + formatMoney(yearEndPay);
