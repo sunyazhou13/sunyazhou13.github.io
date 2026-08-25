@@ -789,11 +789,8 @@
       dailyWage = parseFloat(dailyWageText.replace(/[¥,\s]/g, ''));
     }
 
-    // 计算补偿年限（N）
-    var n = Math.floor(years);
-    var decimal = years - n;
-    if (decimal >= 0.5) n += 1;
-    else if (decimal > 0) n += 0.5;
+    // 计算补偿年限（N）—— 严格按用户输入值，不做任何取整
+    var n = years;
 
     var mainComp = 0;
     if (type === 'illegal') {
@@ -806,8 +803,8 @@
       mainComp = 0;
     }
 
-    // 未休年假工资：日工资 * 天数 * 200%
-    var leaveComp = leaveDays > 0 ? dailyWage * leaveDays * 2 : 0;
+    // 未休年假工资：日工资 * 天数 * 300%
+    var leaveComp = leaveDays > 0 ? dailyWage * leaveDays * 3 : 0;
 
     var total = mainComp + leaveComp + overtime + yearEndPay;
 
@@ -832,7 +829,7 @@
       var cParts = [];
       // N 值说明
       var typeMap = { 'illegal': '违法解除（2N）', 'legal-n': '合法解除未提前30日通知（N+1）', 'legal': '合法解除/协商一致（N）', 'resign': '主动辞职（无补偿）' };
-      cParts.push('<div class="la-formula-step">① 补偿年限 N = ' + years + '年 → 取整后 N = ' + n + '（不满半年按0.5，满半年不满1年按1）</div>');
+      cParts.push('<div class="la-formula-step">① 补偿年限 N = ' + years + '年（严格按输入值，不取整）</div>');
       cParts.push('<div class="la-formula-step">② 离职类型：' + (typeMap[type] || type) + '</div>');
       if (type === 'illegal') {
         cParts.push('<div class="la-formula-step">③ 赔偿金 = 月平均工资 ¥' + formatMoney(avgMonthly) + ' × N(' + n + ') × 2 = <span class="la-result-highlight">¥ ' + formatMoney(mainComp) + '</span></div>');
@@ -844,7 +841,7 @@
         cParts.push('<div class="la-formula-step">③ 主动辞职无经济补偿</div>');
       }
       if (leaveDays > 0) {
-        cParts.push('<div class="la-formula-step">④ 未休年假工资 = 日工资 ¥' + formatMoney(dailyWage) + ' × ' + leaveDays + '天 × 200% = <span class="la-result-highlight">¥ ' + formatMoney(leaveComp) + '</span></div>');
+        cParts.push('<div class="la-formula-step">④ 未休年假工资 = 日工资 ¥' + formatMoney(dailyWage) + ' × ' + leaveDays + '天 × 300% = <span class="la-result-highlight">¥ ' + formatMoney(leaveComp) + '</span></div>');
       }
       if (overtime > 0) {
         cParts.push('<div class="la-formula-step">⑤ 加班费 = <span class="la-result-highlight">¥ ' + formatMoney(overtime) + '</span>（用户输入）</div>');
