@@ -8,6 +8,47 @@
   var salaryMode = 'quick';
   var monthData = [];
 
+  // 城市最低工资数据（2026年8月最新）
+  var cityData = {
+    beijing:     { name: '北京',     min: 2540, max: 35000, note: '不含个人社保/公积金' },
+    shanghai:    { name: '上海',     min: 2740, max: 40000, note: '不含个人社保/公积金' },
+    shenzhen:    { name: '深圳',     min: 2700, max: 38000, note: '' },
+    guangzhou:   { name: '广州',     min: 2680, max: 35000, note: '' },
+    hangzhou:    { name: '杭州',     min: 2660, max: 33000, note: '' },
+    nanjing:     { name: '南京',     min: 2660, max: 30000, note: '' },
+    suzhou:      { name: '苏州',     min: 2660, max: 32000, note: '' },
+    tianjin:     { name: '天津',     min: 2510, max: 28000, note: '' },
+    chengdu:     { name: '成都',     min: 2100, max: 25000, note: '' },
+    chongqing:   { name: '重庆',     min: 2330, max: 24000, note: '' },
+    wuhan:       { name: '武汉',     min: 2400, max: 22000, note: '' },
+    xian:        { name: '西安',     min: 2376, max: 20000, note: '' },
+    qingdao:     { name: '青岛',     min: 2400, max: 22000, note: '' },
+    jinan:       { name: '济南',     min: 2400, max: 20000, note: '' },
+    zhengzhou:   { name: '郑州',     min: 2350, max: 18000, note: '' },
+    hefei:       { name: '合肥',     min: 2320, max: 18000, note: '' },
+    foshan:      { name: '佛山',     min: 2300, max: 18000, note: '' },
+    dongguan:    { name: '东莞',     min: 2300, max: 18000, note: '' },
+    dalian:      { name: '大连',     min: 2230, max: 17000, note: '' },
+    shenyang:    { name: '沈阳',     min: 2230, max: 16000, note: '' },
+    changchun:   { name: '长春',     min: 2230, max: 15000, note: '' },
+    nanchang:    { name: '南昌',     min: 2240, max: 15000, note: '' },
+    haikou:      { name: '海口',     min: 2250, max: 16000, note: '' },
+    xiamen:      { name: '厦门',     min: 2265, max: 20000, note: '' },
+    fuzhou:      { name: '福州',     min: 2265, max: 18000, note: '' },
+    harbin:      { name: '哈尔滨',   min: 2270, max: 14000, note: '' },
+    wulumuqi:    { name: '乌鲁木齐', min: 2270, max: 16000, note: '' },
+    huhehaote:   { name: '呼和浩特', min: 2380, max: 17000, note: '' },
+    shijiazhuang:{ name: '石家庄',   min: 2380, max: 16000, note: '' },
+    changsha:    { name: '长沙',     min: 2200, max: 18000, note: '' },
+    lanzhou:     { name: '兰州',     min: 2200, max: 14000, note: '' },
+    nanning:     { name: '南宁',     min: 2200, max: 15000, note: '' },
+    guiyang:     { name: '贵阳',     min: 2130, max: 14000, note: '' },
+    kunming:     { name: '昆明',     min: 2170, max: 15000, note: '' },
+    yinchuan:    { name: '银川',     min: 2235, max: 14000, note: '' },
+    xining:      { name: '西宁',     min: 2080, max: 13000, note: '' },
+    lasa:        { name: '拉萨',     min: 2360, max: 18000, note: '' }
+  };
+
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
@@ -276,44 +317,60 @@
     var btn = document.getElementById('btn-fill-sample');
     if (!btn) return;
     btn.addEventListener('click', function() {
-      // 快速模式：真实工资示例
-      var samples = [
-        38350, 38350, 38750, 38350, 43839.66, 38350,
-        38350, 38350, 38350, 38350, 38350, 38550
-      ];
+      var city = getSelectedCity();
+      var minSalary = city ? city.min : 2200;
+      var maxSalary = city ? city.max : 20000;
+
+      // 快速模式：根据城市工资标准在[最低工资, 平均工资上限]间随机生成
       var inputs = document.querySelectorAll('.salary-input');
-      inputs.forEach(function(inp, i) {
-        if (samples[i] !== undefined) inp.value = samples[i];
+      inputs.forEach(function(inp) {
+        inp.value = randomSalary(minSalary, maxSalary);
       });
 
-      // 年终奖：62720 计入第2个月
-      bonusItems = [{ amount: 62720, method: 'month', month: 2 }];
+      // 年终奖：随机生成一笔，平摊到12个月
+      var bonusAmount = Math.floor(minSalary * 2 + Math.random() * minSalary * 4);
+      bonusItems = [{ amount: bonusAmount, method: 'spread', month: 1 }];
       renderBonusList();
 
-      // 不计入项目：红包 600
-      excludeItems = [{ name: '红包', amount: 600 }];
+      // 不计入项目：随机生成一项
+      var excludeAmount = Math.floor(200 + Math.random() * 800);
+      excludeItems = [{ name: '节日福利', amount: excludeAmount }];
       renderExcludeList();
 
-      // 基本工资示例（用户需按实际合同填写）
+      // 基本工资示例（取最低工资的约1.5~2倍，用户需按实际合同修改）
       var baseInput = document.getElementById('base-salary');
-      if (baseInput) baseInput.value = 8000;
+      if (baseInput) baseInput.value = Math.floor(minSalary * (1.5 + Math.random()));
 
-      // 明细模式示例（用户工资单风格）
+      // 明细模式示例（按城市标准随机）
       var detailRows = document.querySelectorAll('#detail-tbody tr');
-      detailRows.forEach(function(row, i) {
+      detailRows.forEach(function(row) {
         var base = row.querySelector('.detail-base');
         var bonus = row.querySelector('.detail-bonus');
         var social = row.querySelector('.detail-social');
         var fund = row.querySelector('.detail-fund');
         var tax = row.querySelector('.detail-tax');
-        if (base) base.value = 18000 + i * 500;
-        if (bonus) bonus.value = Math.floor(Math.random() * 3000);
-        if (social) social.value = 2000 + Math.floor(Math.random() * 500);
-        if (fund) fund.value = 3000 + Math.floor(Math.random() * 500);
-        if (tax) tax.value = 1500 + Math.floor(Math.random() * 1000);
+        var rowBase = randomSalary(minSalary, maxSalary);
+        if (base) base.value = rowBase;
+        if (bonus) bonus.value = Math.floor(rowBase * 0.1 * Math.random());
+        if (social) social.value = Math.floor(rowBase * 0.1);
+        if (fund) fund.value = Math.floor(rowBase * 0.12);
+        if (tax) tax.value = Math.floor(rowBase * 0.05);
       });
       updateDetailTotals();
     });
+  }
+
+  function getSelectedCity() {
+    var select = document.getElementById('city-select');
+    if (!select) return null;
+    var key = select.value;
+    return key && cityData[key] ? cityData[key] : null;
+  }
+
+  function randomSalary(min, max) {
+    // 在[min, max]间生成一个合理的工资，带有少量随机波动
+    var base = min + (max - min) * (0.3 + Math.random() * 0.5); // 集中在30%~80%区间
+    return Math.floor(base / 10) * 10; // 取整到10元
   }
 
   // ===== 配置保存与导入 =====
@@ -330,8 +387,10 @@
   }
 
   function saveConfig() {
+    var citySelect = document.getElementById('city-select');
     var config = {
       version: '1.1',
+      city: citySelect ? citySelect.value : '',
       salaryMode: salaryMode,
       salaries: [],
       detailMode: {},
@@ -474,6 +533,12 @@
         // 恢复基本工资
         if (config.baseSalary) setVal('base-salary', config.baseSalary);
 
+        // 恢复城市选择
+        if (config.city) {
+          var citySelect = document.getElementById('city-select');
+          if (citySelect) citySelect.value = config.city;
+        }
+
         // 恢复赔偿参数
         if (config.workYears) setVal('work-years', config.workYears);
         if (config.dismissType) {
@@ -516,7 +581,11 @@
           setVal('tpl-committee', t.committee);
         }
 
-        alert('配置导入成功！');
+        // 自动触发计算
+        calcAverage();
+        calcCompensation();
+
+        alert('配置导入成功！已自动完成计算。');
       } catch (err) {
         alert('配置文件格式错误，请检查JSON文件');
       }

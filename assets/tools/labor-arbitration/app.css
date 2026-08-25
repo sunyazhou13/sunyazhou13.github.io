@@ -668,6 +668,68 @@
   margin-bottom: 0.25rem;
 }
 
+/* --- 配置卡片 --- */
+.la-config-card {
+  background: #fff;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(255,193,7,0.12);
+}
+
+.la-config-card .la-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #856404;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px dashed #ffc107;
+}
+
+.la-config-card .la-card-header::before {
+  content: '\2699';
+  font-size: 1.3rem;
+}
+
+.la-config-card .la-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.la-config-card .la-form-row {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.la-config-card .la-form-row label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.la-config-card .la-form-row select {
+  font-size: 0.95rem;
+  padding: 0.6rem 0.8rem;
+}
+
+.la-config-card .la-actions {
+  margin: 0;
+  align-items: flex-end;
+}
+
+.la-config-card .la-note {
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
 /* --- 法律卡片网格 --- */
 .la-law-grid {
   display: grid;
