@@ -336,6 +336,69 @@
   font-family: "SF Mono", Monaco, Inconsolata, monospace;
 }
 
+/* --- 年终奖列表 --- */
+.la-bonus-list {
+  margin-bottom: 0.5rem;
+}
+
+.la-bonus-empty {
+  color: #adb5bd;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.la-bonus-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.la-bonus-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.la-bonus-method {
+  flex: 1;
+  color: #1565c0;
+}
+
+.la-bonus-amount {
+  font-weight: 600;
+  color: #1565c0;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
+.la-bonus-remove {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.la-bonus-remove:hover {
+  background: #f8d7da;
+  border-radius: 4px;
+}
+
+.la-bonus-total {
+  text-align: right;
+  font-weight: 600;
+  color: #1565c0;
+  padding: 0.25rem 0.75rem;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
 /* --- 年终奖区域 --- */
 .la-bonus-row {
   background: #e7f3ff;
@@ -452,6 +515,45 @@
 .la-result-value {
   color: var(--primary-color, #007bff);
   font-weight: 600;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
+/* --- 计算过程面板 --- */
+.la-formula-panel {
+  background: #e8f5e9;
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.la-formula-panel .la-panel-title {
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.la-formula-step {
+  color: #37474f;
+  margin-bottom: 0.3rem;
+}
+
+.la-formula-step code {
+  background: #fff;
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+  font-size: 0.85rem;
+  color: #1b5e20;
+}
+
+.la-formula-step .la-result-highlight {
+  color: #d32f2f;
+  font-weight: 700;
   font-family: "SF Mono", Monaco, Inconsolata, monospace;
 }
 
