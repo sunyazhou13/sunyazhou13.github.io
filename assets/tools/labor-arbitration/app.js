@@ -10,43 +10,56 @@
 
   // 城市最低工资数据（2026年8月最新）
   var cityData = {
-    beijing:     { name: '北京',     min: 2540, max: 35000, note: '不含个人社保/公积金' },
-    shanghai:    { name: '上海',     min: 2740, max: 40000, note: '不含个人社保/公积金' },
-    shenzhen:    { name: '深圳',     min: 2700, max: 38000, note: '' },
-    guangzhou:   { name: '广州',     min: 2680, max: 35000, note: '' },
-    hangzhou:    { name: '杭州',     min: 2660, max: 33000, note: '' },
-    nanjing:     { name: '南京',     min: 2660, max: 30000, note: '' },
-    suzhou:      { name: '苏州',     min: 2660, max: 32000, note: '' },
-    tianjin:     { name: '天津',     min: 2510, max: 28000, note: '' },
-    chengdu:     { name: '成都',     min: 2100, max: 25000, note: '' },
-    chongqing:   { name: '重庆',     min: 2330, max: 24000, note: '' },
-    wuhan:       { name: '武汉',     min: 2400, max: 22000, note: '' },
-    xian:        { name: '西安',     min: 2376, max: 20000, note: '' },
-    qingdao:     { name: '青岛',     min: 2400, max: 22000, note: '' },
-    jinan:       { name: '济南',     min: 2400, max: 20000, note: '' },
-    zhengzhou:   { name: '郑州',     min: 2350, max: 18000, note: '' },
-    hefei:       { name: '合肥',     min: 2320, max: 18000, note: '' },
-    foshan:      { name: '佛山',     min: 2300, max: 18000, note: '' },
-    dongguan:    { name: '东莞',     min: 2300, max: 18000, note: '' },
-    dalian:      { name: '大连',     min: 2230, max: 17000, note: '' },
-    shenyang:    { name: '沈阳',     min: 2230, max: 16000, note: '' },
-    changchun:   { name: '长春',     min: 2230, max: 15000, note: '' },
-    nanchang:    { name: '南昌',     min: 2240, max: 15000, note: '' },
-    haikou:      { name: '海口',     min: 2250, max: 16000, note: '' },
-    xiamen:      { name: '厦门',     min: 2265, max: 20000, note: '' },
-    fuzhou:      { name: '福州',     min: 2265, max: 18000, note: '' },
-    harbin:      { name: '哈尔滨',   min: 2270, max: 14000, note: '' },
-    wulumuqi:    { name: '乌鲁木齐', min: 2270, max: 16000, note: '' },
-    huhehaote:   { name: '呼和浩特', min: 2380, max: 17000, note: '' },
-    shijiazhuang:{ name: '石家庄',   min: 2380, max: 16000, note: '' },
-    changsha:    { name: '长沙',     min: 2200, max: 18000, note: '' },
-    lanzhou:     { name: '兰州',     min: 2200, max: 14000, note: '' },
-    nanning:     { name: '南宁',     min: 2200, max: 15000, note: '' },
-    guiyang:     { name: '贵阳',     min: 2130, max: 14000, note: '' },
-    kunming:     { name: '昆明',     min: 2170, max: 15000, note: '' },
-    yinchuan:    { name: '银川',     min: 2235, max: 14000, note: '' },
-    xining:      { name: '西宁',     min: 2080, max: 13000, note: '' },
-    lasa:        { name: '拉萨',     min: 2360, max: 18000, note: '' }
+    beijing:     { name: '北京',     min: 2540, max: 35000, note: '不含个人社保/公积金', geo: [116.4, 39.9] },
+    shanghai:    { name: '上海',     min: 2740, max: 40000, note: '不含个人社保/公积金', geo: [121.5, 31.2] },
+    shenzhen:    { name: '深圳',     min: 2700, max: 38000, note: '', geo: [114.1, 22.5] },
+    guangzhou:   { name: '广州',     min: 2680, max: 35000, note: '', geo: [113.3, 23.1] },
+    hangzhou:    { name: '杭州',     min: 2660, max: 33000, note: '', geo: [120.2, 30.3] },
+    nanjing:     { name: '南京',     min: 2660, max: 30000, note: '', geo: [118.8, 32.1] },
+    suzhou:      { name: '苏州',     min: 2660, max: 32000, note: '', geo: [120.6, 31.3] },
+    tianjin:     { name: '天津',     min: 2510, max: 28000, note: '', geo: [117.2, 39.1] },
+    chengdu:     { name: '成都',     min: 2100, max: 25000, note: '', geo: [104.1, 30.7] },
+    chongqing:   { name: '重庆',     min: 2330, max: 24000, note: '', geo: [106.5, 29.6] },
+    wuhan:       { name: '武汉',     min: 2400, max: 22000, note: '', geo: [114.3, 30.6] },
+    xian:        { name: '西安',     min: 2376, max: 20000, note: '', geo: [108.9, 34.3] },
+    qingdao:     { name: '青岛',     min: 2400, max: 22000, note: '', geo: [120.4, 36.1] },
+    jinan:       { name: '济南',     min: 2400, max: 20000, note: '', geo: [117.0, 36.7] },
+    zhengzhou:   { name: '郑州',     min: 2350, max: 18000, note: '', geo: [113.6, 34.8] },
+    hefei:       { name: '合肥',     min: 2320, max: 18000, note: '', geo: [117.3, 31.9] },
+    foshan:      { name: '佛山',     min: 2300, max: 18000, note: '', geo: [113.1, 23.0] },
+    dongguan:    { name: '东莞',     min: 2300, max: 18000, note: '', geo: [113.8, 23.0] },
+    dalian:      { name: '大连',     min: 2230, max: 17000, note: '', geo: [121.6, 38.9] },
+    shenyang:    { name: '沈阳',     min: 2230, max: 16000, note: '', geo: [123.4, 41.8] },
+    changchun:   { name: '长春',     min: 2230, max: 15000, note: '', geo: [125.3, 43.9] },
+    nanchang:    { name: '南昌',     min: 2240, max: 15000, note: '', geo: [115.9, 28.7] },
+    haikou:      { name: '海口',     min: 2250, max: 16000, note: '', geo: [110.3, 20.0] },
+    xiamen:      { name: '厦门',     min: 2265, max: 20000, note: '', geo: [118.1, 24.5] },
+    fuzhou:      { name: '福州',     min: 2265, max: 18000, note: '', geo: [119.3, 26.1] },
+    harbin:      { name: '哈尔滨',   min: 2270, max: 14000, note: '', geo: [126.6, 45.8] },
+    wulumuqi:    { name: '乌鲁木齐', min: 2270, max: 16000, note: '', geo: [87.6, 43.8] },
+    huhehaote:   { name: '呼和浩特', min: 2380, max: 17000, note: '', geo: [111.7, 40.8] },
+    shijiazhuang:{ name: '石家庄',   min: 2380, max: 16000, note: '', geo: [114.5, 38.0] },
+    changsha:    { name: '长沙',     min: 2200, max: 18000, note: '', geo: [113.0, 28.2] },
+    lanzhou:     { name: '兰州',     min: 2200, max: 14000, note: '', geo: [103.8, 36.1] },
+    nanning:     { name: '南宁',     min: 2200, max: 15000, note: '', geo: [108.3, 22.8] },
+    kunming:     { name: '昆明',     min: 2070, max: 15000, note: '', geo: [102.7, 25.0] },
+    gui:         { name: '贵阳',     min: 2130, max: 14000, note: '', geo: [106.7, 26.6] },
+    yinchuan:    { name: '银川',     min: 2050, max: 13000, note: '', geo: [106.3, 38.5] },
+    xining:      { name: '西宁',     min: 2050, max: 12000, note: '', geo: [101.8, 36.6] },
+    lhasa:       { name: '拉萨',     min: 2100, max: 15000, note: '', geo: [91.1, 29.7] },
+    taiyuan:     { name: '太原',     min: 2180, max: 16000, note: '', geo: [112.5, 37.9] },
+    yantai:      { name: '烟台',     min: 2200, max: 16000, note: '', geo: [121.4, 37.5] },
+    weifang:     { name: '潍坊',     min: 2200, max: 14000, note: '', geo: [119.2, 36.7] },
+    xuzhou:      { name: '徐州',     min: 2280, max: 15000, note: '', geo: [117.2, 34.3] },
+    wuxi:        { name: '无锡',     min: 2490, max: 25000, note: '', geo: [120.3, 31.6] },
+    ningbo:      { name: '宁波',     min: 2490, max: 26000, note: '', geo: [121.6, 29.8] },
+    huzhou:      { name: '湖州',     min: 2490, max: 18000, note: '', geo: [120.1, 30.9] },
+    shaoxing:    { name: '绍兴',     min: 2490, max: 20000, note: '', geo: [120.6, 30.0] },
+    wenzhou:     { name: '温州',     min: 2490, max: 20000, note: '', geo: [120.7, 28.0] },
+    jinhua:      { name: '金华',     min: 2490, max: 18000, note: '', geo: [119.7, 29.1] },
+    taizhou_zj:  { name: '台州',     min: 2490, max: 18000, note: '', geo: [121.4, 28.7] },
+    quzhou:      { name: '衢州',     min: 2490, max: 15000, note: '', geo: [118.9, 28.9] },
+    jiaxing:     { name: '嘉兴',     min: 2490, max: 20000, note: '', geo: [120.8, 30.7] }
   };
 
   document.addEventListener('DOMContentLoaded', init);
@@ -63,6 +76,7 @@
     bindTemplateGenerator();
     bindFillSample();
     bindConfigControls();
+    initCityMap();
   }
 
   // ===== 标签页切换 =====
@@ -943,6 +957,136 @@
     if (preview) preview.textContent = doc;
     if (section) section.style.display = 'block';
     if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ===== 城市地图选择器（ECharts）=====
+  var cityMapInstance = null;
+
+  function initCityMap() {
+    var container = document.getElementById('city-map-container');
+    if (!container) return;
+
+    loadECharts(function() {
+      if (typeof echarts === 'undefined') {
+        container.innerHTML = '<div style="padding:2rem;text-align:center;color:#6c757d;font-size:0.9rem;">地图加载失败，请使用上方下拉框选择城市</div>';
+        return;
+      }
+      fetchChinaMap(function(geoJson) {
+        if (!geoJson) {
+          container.innerHTML = '<div style="padding:2rem;text-align:center;color:#6c757d;font-size:0.9rem;">地图数据加载失败，请使用上方下拉框选择城市</div>';
+          return;
+        }
+        renderCityMap(container, geoJson);
+      });
+    });
+  }
+
+  function loadECharts(cb) {
+    if (typeof echarts !== 'undefined') { cb(); return; }
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js';
+    script.onload = cb;
+    script.onerror = function() { cb(); };
+    document.head.appendChild(script);
+  }
+
+  function fetchChinaMap(cb) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json', true);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        try { cb(JSON.parse(xhr.responseText)); } catch(e) { cb(null); }
+      } else { cb(null); }
+    };
+    xhr.onerror = function() { cb(null); };
+    xhr.send();
+  }
+
+  function renderCityMap(container, geoJson) {
+    echarts.registerMap('china', geoJson);
+
+    var scatterData = [];
+    Object.keys(cityData).forEach(function(key) {
+      var c = cityData[key];
+      if (c.geo) {
+        scatterData.push({
+          name: c.name,
+          value: c.geo.concat(c.min),
+          key: key
+        });
+      }
+    });
+
+    var option = {
+      backgroundColor: 'transparent',
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.seriesType === 'scatter') {
+            return '<b>' + params.name + '</b><br/>最低工资：¥' + params.value[2].toLocaleString();
+          }
+          return params.name;
+        }
+      },
+      geo: {
+        map: 'china',
+        roam: true,
+        zoom: 1.2,
+        label: { show: false },
+        itemStyle: {
+          areaColor: '#e3f2fd',
+          borderColor: '#90caf9',
+          borderWidth: 1
+        },
+        emphasis: {
+          itemStyle: { areaColor: '#bbdefb' }
+        }
+      },
+      series: [{
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: scatterData,
+        symbolSize: function(val) {
+          return 10 + Math.min(val[2] / 500, 14);
+        },
+        label: {
+          show: true,
+          formatter: '{b}',
+          fontSize: 11,
+          color: '#1565c0',
+          position: 'right',
+          distance: 4
+        },
+        itemStyle: {
+          color: '#1976d2',
+          borderColor: '#fff',
+          borderWidth: 2,
+          shadowBlur: 4,
+          shadowColor: 'rgba(25,118,210,0.3)'
+        },
+        emphasis: {
+          scale: 1.5,
+          itemStyle: { color: '#dc3545', borderColor: '#fff', borderWidth: 3 }
+        }
+      }]
+    };
+
+    cityMapInstance = echarts.init(container);
+    cityMapInstance.setOption(option);
+
+    cityMapInstance.on('click', function(params) {
+      if (params.componentType === 'series' && params.data && params.data.key) {
+        var select = document.getElementById('city-select');
+        if (select) {
+          select.value = params.data.key;
+          select.dispatchEvent(new Event('change'));
+        }
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      if (cityMapInstance) cityMapInstance.resize();
+    });
   }
 
   // ===== 工具函数 =====
