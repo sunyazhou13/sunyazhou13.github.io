@@ -1,0 +1,674 @@
+/* ========== 劳动仲裁助手样式 ========== */
+
+/* --- 标签页 --- */
+.la-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.la-tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #6c757d;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  top: 2px;
+}
+
+.la-tab:hover {
+  color: #495057;
+  background: #f8f9fa;
+}
+
+.la-tab.active {
+  color: var(--primary-color, #007bff);
+  border-bottom-color: var(--primary-color, #007bff);
+  font-weight: 600;
+}
+
+/* --- 面板 --- */
+.la-panel {
+  display: none;
+}
+
+.la-panel.active {
+  display: block;
+  animation: laFadeIn 0.25s ease;
+}
+
+@keyframes laFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 通用区块 --- */
+.la-section {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.la-section h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #212529;
+}
+
+.la-section h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+  color: #343a40;
+}
+
+.la-hint {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.la-note {
+  display: block;
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+.la-required {
+  color: #dc3545;
+}
+
+/* --- 工资模式切换 --- */
+.la-mode-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 0.25rem;
+}
+
+.la-mode-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.la-mode-btn:hover {
+  background: rgba(0,0,0,0.05);
+  color: #495057;
+}
+
+.la-mode-btn.active {
+  background: var(--primary-color, #007bff);
+  color: #fff;
+  font-weight: 500;
+}
+
+.la-mode-panel {
+  display: none;
+}
+
+.la-mode-panel.active {
+  display: block;
+}
+
+/* --- 快速模式：工资输入网格 --- */
+.la-salary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.la-salary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.la-salary-item label {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.la-salary-item input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.15s;
+}
+
+.la-salary-item input:focus {
+  outline: none;
+  border-color: var(--primary-color, #007bff);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* --- 明细模式：工资表格 --- */
+.la-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.la-detail-table th,
+.la-detail-table td {
+  border: 1px solid #e9ecef;
+  padding: 0.5rem 0.4rem;
+  text-align: center;
+}
+
+.la-detail-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.la-detail-table td input {
+  width: 90px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.la-detail-table td input:focus {
+  outline: none;
+  border-color: var(--primary-color, #007bff);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.la-month-cell {
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+}
+
+.la-month-total {
+  font-weight: 600;
+  color: var(--primary-color, #007bff);
+  min-width: 100px;
+}
+
+/* --- 表单行 --- */
+.la-form-row {
+  margin-bottom: 1rem;
+}
+
+.la-form-row label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: #343a40;
+}
+
+.la-form-row input,
+.la-form-row select,
+.la-form-row textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.la-form-row input:focus,
+.la-form-row select:focus,
+.la-form-row textarea:focus {
+  outline: none;
+  border-color: var(--primary-color, #007bff);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.la-form-row select {
+  cursor: pointer;
+  background: #fff;
+}
+
+.la-form-row textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* --- 内联分组 --- */
+.la-inline-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.la-inline-group input,
+.la-inline-group select {
+  flex: 1;
+  min-width: 100px;
+}
+
+.la-inline-group .la-btn {
+  white-space: nowrap;
+}
+
+.la-btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* --- 不计入项目列表 --- */
+.la-exclude-list {
+  margin-bottom: 0.5rem;
+}
+
+.la-exclude-empty {
+  color: #adb5bd;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.la-exclude-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.la-exclude-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.la-exclude-name {
+  flex: 1;
+  color: #856404;
+}
+
+.la-exclude-amount {
+  font-weight: 600;
+  color: #856404;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
+.la-exclude-remove {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.la-exclude-remove:hover {
+  background: #f8d7da;
+  border-radius: 4px;
+}
+
+.la-exclude-total {
+  text-align: right;
+  font-weight: 600;
+  color: #856404;
+  padding: 0.25rem 0.75rem;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
+/* --- 年终奖区域 --- */
+.la-bonus-row {
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color, #007bff);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.la-bonus-row .la-note {
+  color: #495057;
+}
+
+/* --- 表单分组 --- */
+.la-form-group {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  background: #fafbfc;
+}
+
+.la-form-group h4 {
+  margin: -1.25rem -1.25rem 1rem -1.25rem;
+  padding: 0.75rem 1.25rem;
+  background: #e9ecef;
+  border-radius: 8px 8px 0 0;
+  font-size: 1rem;
+}
+
+/* --- 按钮 --- */
+.la-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+  flex-wrap: wrap;
+}
+
+.la-btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.la-btn-primary {
+  background: var(--primary-color, #007bff);
+  color: #fff;
+  border-color: var(--primary-color, #007bff);
+}
+
+.la-btn-primary:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+}
+
+.la-btn-ghost {
+  background: #fff;
+  color: var(--primary-color, #007bff);
+  border-color: var(--primary-color, #007bff);
+}
+
+.la-btn-ghost:hover {
+  background: var(--primary-color, #007bff);
+  color: #fff;
+}
+
+.la-btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* --- 结果框 --- */
+.la-result-box {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.la-result-box.la-highlight {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.la-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #dee2e6;
+}
+
+.la-result-item:last-child {
+  border-bottom: none;
+}
+
+.la-result-item.la-total {
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+  border-top: 2px solid #ffc107;
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.la-result-label {
+  color: #495057;
+}
+
+.la-result-value {
+  color: var(--primary-color, #007bff);
+  font-weight: 600;
+  font-family: "SF Mono", Monaco, Inconsolata, monospace;
+}
+
+.la-divider {
+  height: 1px;
+  background: #dee2e6;
+  margin: 0.5rem 0;
+}
+
+/* --- 声明 --- */
+.la-notice {
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color, #007bff);
+  padding: 1rem 1.25rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.875rem;
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* --- 时间线 --- */
+.la-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.la-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e9ecef;
+}
+
+.la-timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.la-timeline-dot {
+  position: absolute;
+  left: -1.85rem;
+  top: 0.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--primary-color, #007bff);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px #e9ecef;
+}
+
+.la-timeline-content {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.la-timeline-content h4 {
+  margin: 0 0 0.75rem 0;
+  color: #212529;
+}
+
+.la-timeline-content ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #495057;
+  line-height: 1.8;
+}
+
+.la-timeline-content ul li {
+  margin-bottom: 0.25rem;
+}
+
+.la-tip {
+  background: #fff3cd;
+  border-left: 3px solid #ffc107;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.75rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.85rem;
+  color: #856404;
+}
+
+/* --- 警告框 --- */
+.la-warning-box {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.la-warning-box h4 {
+  color: #856404;
+  margin-bottom: 0.75rem;
+}
+
+.la-warning-box ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #856404;
+  line-height: 1.8;
+}
+
+.la-warning-box ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* --- 法律卡片网格 --- */
+.la-law-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.la-law-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.la-law-card strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #212529;
+}
+
+.la-law-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* --- 预览框 --- */
+.la-preview-box {
+  background: #f8f9fa;
+}
+
+.la-document {
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 2rem;
+  font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 0.95rem;
+  min-height: 300px;
+}
+
+/* --- 打印优化 --- */
+@media print {
+  .la-tabs,
+  .la-actions,
+  .la-section:not(:has(.la-document)) {
+    display: none !important;
+  }
+  .la-panel {
+    display: block !important;
+  }
+  .la-document {
+    border: none;
+    padding: 0;
+  }
+}
+
+/* --- 响应式 --- */
+@media (max-width: 768px) {
+  .la-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .la-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .la-salary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .la-law-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .la-result-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .la-section {
+    padding: 1rem;
+  }
+
+  .la-detail-table {
+    font-size: 0.75rem;
+  }
+
+  .la-detail-table td input {
+    width: 60px;
+    padding: 0.25rem;
+  }
+
+  .la-inline-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
