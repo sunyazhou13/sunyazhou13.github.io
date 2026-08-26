@@ -1,206 +1,567 @@
 /**
- * 时间戳转换工具样式
+ * 时间戳转换工具样式 v3（UI 美化重写）
  * 独立于博客主题，仅作用于 #ts-app 容器。
+ * 设计语言：柔和主题色渐变的卡片化工具台，聚焦光晕 + 微抬升交互。
+ * 保留 v2 全部类名与交互点（ts-tz-flash / ts-copied / ts-tab-active 等）。
  * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
  */
 
 #ts-app {
-  --ts-border: rgba(128, 128, 128, 0.35);
-  --ts-border-strong: rgba(128, 128, 128, 0.55);
-  --ts-bg: rgba(128, 128, 128, 0.07);
-  --ts-bg-hover: rgba(128, 128, 128, 0.14);
-  --ts-text: inherit;
-  --ts-text-muted: rgba(128, 128, 128, 0.95);
-  --ts-accent: #2f6fde;
+  --ts-radius: 14px;
+  --ts-radius-sm: 9px;
+  --ts-radius-pill: 999px;
+  --ts-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* 亮色主题 */
+  --ts-accent: #4a7bff;
+  --ts-accent-2: #7c6bff;
+  --ts-accent-soft: rgba(74, 123, 255, 0.12);
+  --ts-accent-soft-2: rgba(124, 107, 255, 0.1);
   --ts-accent-text: #fff;
-  --ts-ok: #1a7f4b;
-  --ts-radius: 8px;
-  --ts-mono: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --ts-ok: #1a9e5c;
+  --ts-warn: #d98a00;
+  --ts-border: rgba(106, 124, 158, 0.2);
+  --ts-border-strong: rgba(106, 124, 158, 0.38);
+  --ts-bg: rgba(255, 255, 255, 0.72);
+  --ts-bg-solid: #ffffff;
+  --ts-bg-hover: rgba(74, 123, 255, 0.08);
+  --ts-text: inherit;
+  --ts-text-muted: rgba(82, 95, 118, 0.86);
+  --ts-shadow: 0 1px 2px rgba(23, 33, 53, 0.05), 0 10px 28px -14px rgba(23, 33, 53, 0.18);
+  --ts-shadow-hover: 0 2px 4px rgba(23, 33, 53, 0.06), 0 16px 36px -16px rgba(23, 33, 53, 0.26);
+  --ts-ring: 0 0 0 3px rgba(74, 123, 255, 0.16), 0 0 0 1px var(--ts-accent);
+  --ts-code-bg: #0f1420;
+  --ts-cal-filter: none;
 
-  /* 语法高亮配色 */
-  --ts-tok-comment: #6a737d;
-  --ts-tok-string: #032f62;
-  --ts-tok-number: #005cc5;
-  --ts-tok-keyword: #d73a49;
-  --ts-tok-attr: #6f42c1;
-  --ts-tok-prop: #e36209;
-}
-
-html[mode='dark'] #ts-app {
-  --ts-bg: rgba(255, 255, 255, 0.06);
-  --ts-bg-hover: rgba(255, 255, 255, 0.12);
-  --ts-text-muted: rgba(190, 190, 190, 0.95);
-  --ts-accent: #5b8ff0;
-  --ts-ok: #57c288;
-  --ts-tok-comment: #8b949e;
-  --ts-tok-string: #a5d6ff;
+  /* 语法高亮配色（代码块统一深底） */
+  --ts-tok-comment: #7a8699;
+  --ts-tok-string: #7ee2a8;
   --ts-tok-number: #79c0ff;
-  --ts-tok-keyword: #ff7b72;
+  --ts-tok-keyword: #ff7b9c;
   --ts-tok-attr: #d2a8ff;
-  --ts-tok-prop: #ffa657;
+  --ts-tok-prop: #ffb86b;
+
+  font-variant-numeric: tabular-nums;
+}html[mode='dark'] #ts-app {
+  --ts-accent: #5b8cff;
+  --ts-accent-2: #8a7bff;
+  --ts-accent-soft: rgba(91, 140, 255, 0.14);
+  --ts-accent-soft-2: rgba(138, 123, 255, 0.12);
+  --ts-ok: #3ddc84;
+  --ts-warn: #ffb020;
+  --ts-border: rgba(138, 156, 190, 0.16);
+  --ts-border-strong: rgba(138, 156, 190, 0.34);
+  --ts-bg: rgba(255, 255, 255, 0.045);
+  --ts-bg-solid: rgba(23, 30, 46, 0.6);
+  --ts-bg-hover: rgba(91, 140, 255, 0.1);
+  --ts-text-muted: rgba(185, 197, 216, 0.8);
+  --ts-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.5);
+  --ts-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+  --ts-ring: 0 0 0 3px rgba(91, 140, 255, 0.22), 0 0 0 1px var(--ts-accent);
+  --ts-cal-filter: invert(0.82) hue-rotate(180deg);
 }
 
 @media (prefers-color-scheme: dark) {
   html:not([mode='light']) #ts-app {
-    --ts-bg: rgba(255, 255, 255, 0.06);
-    --ts-bg-hover: rgba(255, 255, 255, 0.12);
-    --ts-text-muted: rgba(190, 190, 190, 0.95);
-    --ts-accent: #5b8ff0;
-    --ts-ok: #57c288;
-    --ts-tok-comment: #8b949e;
-    --ts-tok-string: #a5d6ff;
-    --ts-tok-number: #79c0ff;
-    --ts-tok-keyword: #ff7b72;
-    --ts-tok-attr: #d2a8ff;
-    --ts-tok-prop: #ffa657;
+    --ts-accent: #5b8cff;
+    --ts-accent-2: #8a7bff;
+    --ts-accent-soft: rgba(91, 140, 255, 0.14);
+    --ts-accent-soft-2: rgba(138, 123, 255, 0.12);
+    --ts-ok: #3ddc84;
+    --ts-warn: #ffb020;
+    --ts-border: rgba(138, 156, 190, 0.16);
+    --ts-border-strong: rgba(138, 156, 190, 0.34);
+    --ts-bg: rgba(255, 255, 255, 0.045);
+    --ts-bg-solid: rgba(23, 30, 46, 0.6);
+    --ts-bg-hover: rgba(91, 140, 255, 0.1);
+    --ts-text-muted: rgba(185, 197, 216, 0.8);
+    --ts-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.5);
+    --ts-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+    --ts-ring: 0 0 0 3px rgba(91, 140, 255, 0.22), 0 0 0 1px var(--ts-accent);
+    --ts-cal-filter: invert(0.82) hue-rotate(180deg);
   }
+}/* ---------- 基础 ---------- */
+
+#ts-app,
+#ts-app *,
+#ts-app *::before,
+#ts-app *::after {
+  box-sizing: border-box;
+}
+
+#ts-app {
+  margin: 0;
+  padding: 0;
+  color: var(--ts-text);
+  line-height: 1.5;
+}
+
+#ts-app ::selection {
+  background: var(--ts-accent-soft);
+  color: inherit;
+}
+
+#ts-app [hidden] {
+  display: none !important;
+}
+
+/* 细滚动条 */
+#ts-app *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+#ts-app *::-webkit-scrollbar-track {
+  background: transparent;
+}
+#ts-app *::-webkit-scrollbar-thumb {
+  background: var(--ts-border-strong);
+  border-radius: 8px;
+}
+#ts-app *::-webkit-scrollbar-thumb:hover {
+  background: var(--ts-accent);
 }
 
 /* ---------- 实时时钟 ---------- */
 
 #ts-app .ts-clock {
+  position: relative;
+  overflow: hidden;
+  padding: 1.6rem 1.2rem 1.2rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: calc(var(--ts-radius) + 2px);
+  background:
+    radial-gradient(120% 140% at 12% 0%, var(--ts-accent-soft) 0%, transparent 55%),
+    radial-gradient(120% 140% at 88% 100%, var(--ts-accent-soft-2) 0%, transparent 55%),
+    var(--ts-bg-solid);
+  box-shadow: var(--ts-shadow);
+  margin-bottom: 1.2rem;
+}
+
+#ts-app .ts-clock::before,
+#ts-app .ts-clock::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#ts-app .ts-clock::before {
+  width: 160px;
+  height: 160px;
+  top: -70px;
+  right: 12%;
+  background: var(--ts-accent);
+  opacity: 0.12;
+  filter: blur(28px);
+}
+
+#ts-app .ts-clock::after {
+  width: 120px;
+  height: 120px;
+  bottom: -52px;
+  left: 8%;
+  background: var(--ts-accent-2);
+  opacity: 0.1;
+  filter: blur(24px);
+}
+
+#ts-app .ts-clock-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
-  padding: 1.2rem 1rem;
-  border: 1px solid var(--ts-border);
-  border-radius: var(--ts-radius);
-  background: var(--ts-bg);
-  margin-bottom: 1rem;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+  position: relative;
 }
 
 #ts-app .ts-clock-date {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--ts-text-muted);
+  letter-spacing: 0.02em;
 }
 
 #ts-app .ts-clock-time {
   font-family: var(--ts-mono);
-  font-size: 2.4rem;
-  font-weight: 600;
+  font-size: 2.7rem;
+  font-weight: 700;
   letter-spacing: 1px;
-  line-height: 1.2;
+  line-height: 1.15;
+  background: linear-gradient(120deg, var(--ts-accent), var(--ts-accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 #ts-app .ts-clock-ms {
   color: var(--ts-accent);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: var(--ts-mono);
+  margin-left: 0.15rem;
 }
 
-#ts-app .ts-clock-ts {
+#ts-app .ts-clock-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.4rem 1rem;
-  margin-top: 0.4rem;
+  gap: 0.45rem 1.1rem;
+  margin-top: 0.45rem;
   font-family: var(--ts-mono);
   font-size: 0.82rem;
 }
 
 #ts-app .ts-clock-ts-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.35rem;
+  padding: 0.18rem 0.65rem;
+  border: 1px solid var(--ts-border);
+  border-radius: var(--ts-radius-pill);
+  background: var(--ts-bg);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+#ts-app .ts-clock-ts-item:hover {
+  border-color: var(--ts-accent);
+  background: var(--ts-accent-soft);
 }
 
 #ts-app .ts-clock-ts-label {
   color: var(--ts-text-muted);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 #ts-app .ts-clock-ts-val {
   user-select: all;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 #ts-app .ts-clock-iso {
+  display: block;
   font-family: var(--ts-mono);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--ts-text-muted);
   user-select: all;
+  text-align: center;
+  margin-top: 0.15rem;
 }
 
 #ts-app .ts-clock-copy {
-  margin-top: 0.3rem;
+  margin-top: 0.7rem;
+}/* ---------- 时区 ---------- */
+
+#ts-app .ts-tz-section {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--ts-border);
 }
 
-/* ---------- 通用按钮 ---------- */
+#ts-app .ts-tz-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--ts-text-muted);
+  font-weight: 500;
+}
 
-#ts-app .ts-btn {
-  padding: 0.4rem 1rem;
+#ts-app .ts-tz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#ts-app .ts-tz-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.84rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--ts-radius-sm);
+  transition: background 0.2s ease;
+}
+
+#ts-app .ts-tz-item:hover {
+  background: var(--ts-bg-hover);
+}
+
+/* 本地与 UTC 默认行：主题色名称 */
+#ts-app .ts-tz-item[data-tz='Local'] .ts-tz-name,
+#ts-app .ts-tz-item[data-tz='UTC'] .ts-tz-name {
+  color: var(--ts-accent);
+}
+
+#ts-app .ts-tz-name {
+  color: var(--ts-text-muted);
+  min-width: 5rem;
+  font-size: 0.78rem;
+}
+
+#ts-app .ts-tz-val {
+  flex: 1;
+  font-family: var(--ts-mono);
+  user-select: all;
+  font-weight: 500;
+}
+
+#ts-app .ts-tz-select {
+  flex: 1;
+  max-width: 16rem;
+  min-width: 8rem;
+  padding: 0.4rem 0.7rem;
   border: 1px solid var(--ts-border-strong);
-  border-radius: 6px;
-  background: transparent;
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
   color: inherit;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-#ts-app .ts-btn:hover:not(:disabled) { background: var(--ts-bg-hover); }
-#ts-app .ts-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+#ts-app .ts-tz-select:hover,
+#ts-app .ts-tz-select:focus {
+  outline: none;
+  border-color: var(--ts-accent);
+}
+
+#ts-app .ts-btn-locate {
+  flex: none;
+  white-space: nowrap;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+  border-color: var(--ts-accent);
+  color: var(--ts-accent);
+  background: var(--ts-accent-soft);
+  border-radius: var(--ts-radius-pill);
+}
+
+#ts-app .ts-btn-locate:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--ts-accent), var(--ts-accent-2));
+  color: var(--ts-accent-text);
+  border-color: transparent;
+  box-shadow: 0 6px 18px -8px var(--ts-accent);
+}
+
+#ts-app .ts-tz-search-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+#ts-app .ts-tz-search {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
+  color: inherit;
+  font-size: 0.82rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+#ts-app .ts-tz-search:focus {
+  outline: none;
+  border-color: var(--ts-accent);
+  box-shadow: var(--ts-ring);
+  background: var(--ts-bg-solid);
+}
+
+#ts-app .ts-tz-search::placeholder {
+  color: var(--ts-text-muted);
+  opacity: 0.75;
+}
+
+#ts-app .ts-tz-item.ts-tz-flash {
+  border-radius: var(--ts-radius-sm);
+  animation: tsTzFlash 1.8s ease;
+}
+
+@keyframes tsTzFlash {
+  0% {
+    background: transparent;
+    transform: scale(1);
+  }
+  25% {
+    background: var(--ts-accent-soft);
+    transform: scale(1.02);
+  }
+  100% {
+    background: transparent;
+    transform: scale(1);
+  }
+}
+
+/* ---------- 快捷预设 ---------- */
+
+#ts-app .ts-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+#ts-app .ts-preset-btn {
+  padding: 0.38rem 0.9rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: var(--ts-radius-pill);
+  background: var(--ts-bg);
+  color: inherit;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#ts-app .ts-preset-btn:hover {
+  background: var(--ts-accent-soft);
+  border-color: var(--ts-accent);
+  color: var(--ts-accent);
+  transform: translateY(-1px);
+}/* ---------- 通用按钮 ---------- */
+
+#ts-app .ts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 1.05rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
+  color: inherit;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+#ts-app .ts-btn:hover:not(:disabled) {
+  background: var(--ts-bg-hover);
+  border-color: var(--ts-accent);
+  transform: translateY(-1px);
+}
+
+#ts-app .ts-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+#ts-app .ts-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 #ts-app .ts-btn-primary {
-  background: var(--ts-accent);
-  border-color: var(--ts-accent);
+  background: linear-gradient(135deg, var(--ts-accent), var(--ts-accent-2));
+  border-color: transparent;
   color: var(--ts-accent-text);
+  font-weight: 500;
+  box-shadow: 0 6px 18px -10px var(--ts-accent);
 }
 
 #ts-app .ts-btn-primary:hover:not(:disabled) {
-  opacity: 0.9;
-  background: var(--ts-accent);
+  opacity: 0.92;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -10px var(--ts-accent);
 }
 
 #ts-app .ts-btn-copy {
   flex: none;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.82rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: var(--ts-radius-pill);
 }
 
-#ts-app .ts-btn-copy.ts-copied {
-  color: var(--ts-ok);
-  border-color: var(--ts-ok);
+#ts-app .ts-btn-copy:hover:not(:disabled) {
+  background: var(--ts-accent-soft);
+  border-color: var(--ts-accent);
+  color: var(--ts-accent);
 }
 
+#ts-app .ts-btn-copy.ts-copied,
 #ts-app .ts-copied {
-  color: var(--ts-ok);
-  border-color: var(--ts-ok);
+  color: var(--ts-ok) !important;
+  border-color: var(--ts-ok) !important;
+  background: rgba(26, 158, 92, 0.08) !important;
+}
+
+#ts-app .ts-btn-sm {
+  padding: 0.28rem 0.6rem;
+  font-size: 0.76rem;
+  border-radius: var(--ts-radius-sm);
+}
+
+#ts-app .ts-btn-icon {
+  padding: 0.12rem 0.45rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: 50%;
 }
 
 /* ---------- 面板 ---------- */
 
 #ts-app .ts-panel {
-  padding: 0.8rem 1rem;
+  padding: 1.05rem 1.15rem;
   border: 1px solid var(--ts-border);
   border-radius: var(--ts-radius);
   background: var(--ts-bg);
-  margin-bottom: 1rem;
+  box-shadow: var(--ts-shadow);
+  margin-bottom: 1.05rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#ts-app .ts-panel:hover {
+  border-color: var(--ts-border-strong);
+  box-shadow: var(--ts-shadow-hover);
+  transform: translateY(-1px);
 }
 
 #ts-app .ts-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0 0 0.6rem;
+  font-size: 0.98rem;
+  font-weight: 650;
+  margin: 0 0 0.55rem;
+  padding-left: 0.6rem;
+  position: relative;
+  letter-spacing: 0.01em;
+}
+
+#ts-app .ts-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1em;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--ts-accent), var(--ts-accent-2));
 }
 
 #ts-app .ts-hint {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--ts-text-muted);
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.6rem;
 }
 
 #ts-app .ts-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem 0.6rem;
+  gap: 0.5rem 0.7rem;
   margin-bottom: 0.5rem;
 }
 
 #ts-app .ts-label {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--ts-text-muted);
   min-width: 3rem;
 }
@@ -208,69 +569,82 @@ html[mode='dark'] #ts-app {
 #ts-app .ts-input {
   flex: 1;
   min-width: 200px;
-  padding: 0.4rem 0.6rem;
+  padding: 0.48rem 0.75rem;
   border: 1px solid var(--ts-border-strong);
-  border-radius: 6px;
-  background: transparent;
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
   color: inherit;
   font-family: var(--ts-mono);
   font-size: 0.9rem;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 #ts-app .ts-input:focus {
   outline: none;
   border-color: var(--ts-accent);
+  box-shadow: var(--ts-ring);
+  background: var(--ts-bg-solid);
 }
 
 #ts-app .ts-input::placeholder {
   color: var(--ts-text-muted);
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 #ts-app .ts-date-input {
   width: auto;
   min-width: 0;
   flex: none;
-  padding: 0.4rem 0.6rem;
+  padding: 0.45rem 0.6rem;
   border: 1px solid var(--ts-border-strong);
-  border-radius: 6px;
-  background: transparent;
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
   color: inherit;
   font-family: var(--ts-mono);
   font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #ts-app .ts-date-input:focus {
   outline: none;
   border-color: var(--ts-accent);
+  box-shadow: var(--ts-ring);
 }
 
 #ts-app .ts-date-input::-webkit-calendar-picker-indicator {
-  filter: var(--ts-cal-filter, none);
-}
-
-/* ---------- 转换结果 ---------- */
+  filter: var(--ts-cal-filter);
+  cursor: pointer;
+}/* ---------- 转换结果 ---------- */
 
 #ts-app .ts-result {
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
 }
 
 #ts-app .ts-res-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0;
-  border-bottom: 1px solid var(--ts-border);
+  gap: 0.6rem;
+  padding: 0.42rem 0.6rem;
+  border-radius: var(--ts-radius-sm);
+  transition: background 0.18s ease;
 }
 
-#ts-app .ts-res-item:last-child {
-  border-bottom: none;
+#ts-app .ts-res-item:hover {
+  background: var(--ts-bg-hover);
+}
+
+#ts-app .ts-res-item + .ts-res-item {
+  border-top: 1px solid var(--ts-border);
+}
+
+#ts-app .ts-res-note {
+  color: var(--ts-warn);
+  font-size: 0.82rem;
 }
 
 #ts-app .ts-res-label {
   flex: none;
-  width: 6rem;
+  width: 6.5rem;
   font-size: 0.82rem;
   color: var(--ts-text-muted);
 }
@@ -282,90 +656,246 @@ html[mode='dark'] #ts-app {
   font-size: 0.85rem;
   word-break: break-all;
   user-select: all;
+  font-weight: 500;
 }
 
-/* ---------- 代码块 ---------- */
+/* ---------- 历史记录 ---------- */
+
+#ts-app .ts-history {
+  margin-bottom: 1.05rem;
+  padding: 1.05rem 1.15rem;
+  border: 1px solid var(--ts-border);
+  border-radius: var(--ts-radius);
+  background: var(--ts-bg);
+  box-shadow: var(--ts-shadow);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+#ts-app .ts-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+#ts-app .ts-history-title {
+  font-size: 0.92rem;
+  font-weight: 650;
+  margin: 0;
+  padding-left: 0.6rem;
+  position: relative;
+}
+
+#ts-app .ts-history-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1em;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--ts-accent), var(--ts-accent-2));
+}
+
+#ts-app .ts-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+#ts-app .ts-history-empty {
+  color: var(--ts-text-muted);
+  font-size: 0.82rem;
+  padding: 0.6rem 0.2rem;
+  border: 1px dashed var(--ts-border);
+  border-radius: var(--ts-radius-sm);
+  text-align: center;
+}
+
+#ts-app .ts-history-item {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--ts-border);
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-size: 0.82rem;
+}
+
+#ts-app .ts-history-item:hover {
+  background: var(--ts-accent-soft);
+  border-color: var(--ts-accent);
+  transform: translateX(2px);
+}
+
+#ts-app .ts-history-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+
+#ts-app .ts-history-time {
+  color: var(--ts-text-muted);
+  font-family: var(--ts-mono);
+  font-size: 0.74rem;
+}
+
+#ts-app .ts-history-type {
+  color: var(--ts-accent);
+  font-size: 0.74rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+#ts-app .ts-history-input {
+  color: var(--ts-text);
+  font-family: var(--ts-mono);
+  word-break: break-all;
+  font-weight: 500;
+}
+
+#ts-app .ts-history-output {
+  color: var(--ts-text-muted);
+  word-break: break-all;
+}/* ---------- 代码块 ---------- */
 
 #ts-app .ts-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
+  gap: 0.15rem;
   border-bottom: 1px solid var(--ts-border);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 #ts-app .ts-tab {
-  padding: 0.4rem 0.8rem;
+  padding: 0.45rem 0.9rem;
   border: none;
-  background: transparent;
+  background: none;
   color: var(--ts-text-muted);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-family: inherit;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  border-radius: 6px 6px 0 0;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
-#ts-app .ts-tab:hover { color: var(--ts-text); }
+#ts-app .ts-tab:hover {
+  color: var(--ts-text);
+  background: var(--ts-bg-hover);
+}
 
 #ts-app .ts-tab-active {
   color: var(--ts-accent);
   border-bottom-color: var(--ts-accent);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 #ts-app .ts-code-block {
-  margin: 0 0 0.5rem 0;
-  padding: 0.8rem;
-  border: 1px solid var(--ts-border);
-  border-radius: 6px;
-  background: var(--ts-bg);
+  margin: 0 0 0.6rem;
+  padding: 0.95rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-code-bg);
   overflow-x: auto;
   max-height: 480px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 #ts-app .ts-code-block code {
   font-family: var(--ts-mono);
   font-size: 0.82rem;
-  line-height: 1.5;
+  line-height: 1.6;
   white-space: pre;
-  color: var(--ts-text);
+  color: #d7e0ee;
 }
 
 /* 语法高亮 token */
 #ts-app .ts-tok-c { color: var(--ts-tok-comment); font-style: italic; }
 #ts-app .ts-tok-s { color: var(--ts-tok-string); }
 #ts-app .ts-tok-n { color: var(--ts-tok-number); }
-#ts-app .ts-tok-k { color: var(--ts-tok-keyword); font-weight: 500; }
+#ts-app .ts-tok-k { color: var(--ts-tok-keyword); font-weight: 600; }
 #ts-app .ts-tok-a { color: var(--ts-tok-attr); }
 #ts-app .ts-tok-p { color: var(--ts-tok-prop); }
 
-/* ---------- 错误提示 ---------- */
+/* ---------- 错误/提示条 ---------- */
 
 #ts-app .ts-error {
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--ts-accent);
-  border-radius: var(--ts-radius);
-  color: var(--ts-accent);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  position: relative;
+  padding: 0.65rem 1rem 0.65rem 2.4rem;
+  border: 1px solid var(--ts-border-strong);
+  border-radius: var(--ts-radius-sm);
+  background: var(--ts-bg);
+  box-shadow: var(--ts-shadow);
+  color: var(--ts-text);
+  font-size: 0.88rem;
+  margin-bottom: 1.05rem;
+  animation: tsTipIn 0.22s ease;
 }
 
-#ts-app [hidden] { display: none !important; }
+#ts-app .ts-error::before {
+  content: 'ℹ';
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+  color: var(--ts-accent);
+}
+
+#ts-app .ts-error.ts-success {
+  border-color: rgba(26, 158, 92, 0.45);
+  background: rgba(26, 158, 92, 0.06);
+}
+
+#ts-app .ts-error.ts-success::before {
+  content: '✓';
+  color: var(--ts-ok);
+}
+
+@keyframes tsTipIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* ---------- 响应式 ---------- */
 
 @media (max-width: 576px) {
   #ts-app .ts-clock-time {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   #ts-app .ts-clock-ms {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   #ts-app .ts-res-label {
-    width: 5rem;
+    width: 5.5rem;
   }
   #ts-app .ts-res-item {
     flex-wrap: wrap;
+  }
+  #ts-app .ts-clock-row {
+    gap: 0.35rem 0.7rem;
+  }
+  #ts-app .ts-panel,
+  #ts-app .ts-history {
+    padding: 0.85rem 0.9rem;
+  }
+  #ts-app .ts-clock {
+    padding: 1.3rem 0.9rem 1rem;
+  }
+  #ts-app .ts-tz-select {
+    max-width: none;
   }
 }
