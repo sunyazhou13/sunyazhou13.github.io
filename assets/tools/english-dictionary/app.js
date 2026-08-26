@@ -282,17 +282,18 @@
   /**
    * 带超时的 fetch —— 超时覆盖「响应头 + 响应体」全程（旧版仅在 header 到达后
    * 就 clearTimeout，慢源 / 断流源的 body 读取会无限挂起，单 worker 被锁死后
-   * 整个下载队列停摆）。返回 { resp, text }：resp 供读 status 等，text 为完整
-   * 响应体；超时即 abort，body 读取随之中断，调用方 catch 后按该源失败处理。
+   * 整个下载队列停摆）。返回 { resp, text }，asBuffer 时返回 { resp, buf }；
+   * init 为透传的 fetch 选项（如 Range 请求头）；超时即 abort，body 读取随之
+   * 中断，调用方 catch 后按该源失败处理。
    */
-  async function fetchWithTimeout(url, timeoutMs, sessionSignal) {
+  async function fetchWithTimeout(url, timeoutMs, sessionSignal, init, asBuffer) {
     const ctrl = new AbortController();
     linkAbort(sessionSignal, ctrl);
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      const resp = await fetch(url, { signal: ctrl.signal });
-      const text = await resp.text();
-      return { resp, text };
+      const resp = await fetch(url, Object.assign({ signal: ctrl.signal }, init || {}));
+      const body = asBuffer ? await resp.arrayBuffer() : await resp.text();
+      return asBuffer ? { resp, buf: body } : { resp, text: body };
     } finally {
       clearTimeout(timer);
     }
@@ -303,10 +304,11 @@
   // 成功源记忆键：值为上次成功下载分片的 SHARD_SOURCES 索引
   const SHARD_FAST_SOURCE_KEY = 'ed_shard_fast_source';
 
-  // 大分片专属通道（方案 A）：jsDelivr 对 >20MB 单文件固定返回 403（body 含 "20 MB"），
-  // 仅 raw.githubusercontent.com 无此限制，且大文件下载需 10~30s+，须放宽超时。
-  const BIG_SHARD_TIMEOUT_MS = 60000;       // 大通道单请求超时
-  const BIG_SHARD_SOURCE_INDEX = 2;         // 大通道唯一源：raw.githubusercontent.com（在 SHARD_SOURCES 中的索引）
+  // 大分片专属通道（根治方案）：jsDelivr 对 >20MB 单文件固定返回 403（body 含 "20 MB"），
+  // 仅 raw.githubusercontent.com 无此限制，但 raw 在境内对大文件动辄断流（实测 2MB Range
+  // 一段 25s 内 0 字节），再大超时也只是干等。故数据仓库将超限分片拆成 <20MB 子文件
+  // （c → c_1/c_2，s → s_1/s_2），交由 jsDelivr 快源分发，前端按清单拼合（见
+  // fetchBigShardSingle）。BIG_SHARD_SOURCE_INDEX 随 Range 方案一并废弃。
   const BIG_SHARD_MARKER_20MB = '20 MB';    // jsDelivr 超限 403 响应体的特征子串
   const BIG_SHARDS_KEY = 'ed_big_shards';   // 大分片持久化记忆键：JSON 数组（如 ["c","s"]）
 
@@ -338,19 +340,31 @@
     } catch (e) { /* ignore */ }
   }
 
-  // 大通道单源下载：仅 raw.githubusercontent.com，单请求超时 60s。
-  // 下载成功后交调用方写 IndexedDB 与 _shardCache；失败原样抛出（不破既有失败重试）。
-  async function fetchBigShardSingle(letter, sessionSignal) {
-    const url = SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX] + letter + '.json';
-    const { resp, text } = await fetchWithTimeout(url, BIG_SHARD_TIMEOUT_MS, sessionSignal);
-    if (!resp.ok) {
-      throw new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
+  // 大通道分段下载（根治方案）：raw 单源经实测在境内对大文件动辄断流（2MB Range
+  // 一段 25s 内 0 字节、512KB 一段也仅 47KB/s），再长的超时也只是让用户干等；而
+  // jsDelivr 对 <20MB 文件快且稳（普通分片即证）。故在数据仓库将超限分片拆成
+  // <20MB 子文件（c → c_1/c_2，s → s_1/s_2），此处按拆分清单逐份走普通三源竞速
+  // 下载（单份 ≤13MB，1~3s 可成），再 Object.assign 拼合为一完整分片；某份失败
+  // 原样抛错入失败分片重试。进度经 onStage 上报「部分 x/y」。
+  // @param {Function} [onStage] 可选：下载阶段回调 (stageText)
+  const BIG_SPLIT_PARTS = { c: 2, s: 2 }; // 大分片 → 子文件份数（与数据仓拆分约定一致）
+  async function fetchBigShardSingle(letter, sessionSignal, onStage) {
+    letter = String(letter).toLowerCase();
+    const parts = BIG_SPLIT_PARTS[letter] || 0;
+    if (!parts) {
+      throw new Error('No big-shard split plan for: ' + letter);
     }
-    const data = JSON.parse(text);
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid JSON @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
+    let merged = {};
+    for (let i = 1; i <= parts; i++) {
+      if (onStage) onStage('部分 ' + i + '/' + parts);
+      // 子文件走普通竞速通道（不在大分片记忆内，天然路由到三源并发），<20MB 由 jsDelivr 快速分发
+      const part = await fetchShardJson(letter + '_' + i, undefined, sessionSignal);
+      merged = Object.assign(merged, part);
     }
-    return data;
+    if (!merged || typeof merged !== 'object' || !Object.keys(merged).length) {
+      throw new Error('Invalid merged big shard: ' + letter);
+    }
+    return merged;
   }
 
   /**
@@ -359,19 +373,21 @@
    *    取第一个成功解析出有效 JSON 的源立即返回（记忆中的源优先排列），
    *    全部失败才抛错；某源返回 403 且响应体含 "20 MB"（jsDelivr 单文件上限）
    *    即动态识别为大分片，持久化记忆后本轮立即转入大通道重试。
-   *  - 大分片（已记忆）：跳过 jsdelivr 两源，直连 raw.githubusercontent.com 单源，
-   *    单请求超时放宽到 60s。成功写 IndexedDB 与 _shardCache 由调用方负责，
-   *    失败仍按原流程抛错进入失败分片重试。
-   * timeoutMs 可覆盖默认单请求超时（大分片走专属 60s，不受其约束）。
+   *  - 大分片（已记忆）：避开 jsDelivr 对 >20MB 的必然 403，按拆分清单逐份拉取
+   *    <20MB 子文件（走同一三源竞速通道），Object.assign 拼合为一完整分片，
+   *    经 onStage 上报「部分 x/y」。成功写 IndexedDB 与 _shardCache 由调用方
+   *    负责，失败仍抛错进入失败分片重试。
+   * timeoutMs 可覆盖普通分片默认单请求超时（大分片子文件同样受其约束）。
+   * onStage：可选阶段进度回调（大分片拼合时回调「部分 x/y」）。
    * @returns {Promise<object>} 解析后的词库分片 JSON
    */
-  async function fetchShardJson(letter, timeoutMs, sessionSignal) {
+  async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
     const t = timeoutMs || SHARD_SOURCE_TIMEOUT_MS;
     letter = String(letter).toLowerCase();
 
     // 已知大分片：直达大通道，不浪费 jsdelivr 两源的必然 403
     if (readBigShards().indexOf(letter) >= 0) {
-      return fetchBigShardSingle(letter, sessionSignal);
+      return fetchBigShardSingle(letter, sessionSignal, onStage);
     }
 
     // 成功源记忆优先：上次命中的源排最前（并发竞速下顺序仅作优先级体现）
@@ -421,7 +437,7 @@
 
     // 动态识别出的大分片：记忆已写入，本轮立即转入大通道重试
     if (bigHit) {
-      return fetchBigShardSingle(letter, sessionSignal);
+      return fetchBigShardSingle(letter, sessionSignal, onStage);
     }
     throw lastErr || new Error('All shard sources failed for: ' + letter);
   }
@@ -496,7 +512,10 @@
           if (!letter) break;
           onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
           try {
-            const data = await fetchShardJson(letter);
+            const data = await fetchShardJson(letter, undefined, undefined, (stage) => {
+              // 大分片分段下载：段进度实时回流到界面（如“下载 S.JSON … 段 7/13”）
+              onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json … ' + stage);
+            });
             _shardCache[letter] = data;
             try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
             done++; // 只有真正写库成功才计入进度，失败分片不虚增
