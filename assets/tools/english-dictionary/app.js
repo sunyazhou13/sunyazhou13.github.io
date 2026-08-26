@@ -301,6 +301,9 @@
 
   // 单请求超时：多源并发竞速后总等待 ≈ 最慢一源 8s，显著低于改造前逐源串行 + 30s 的最坏 90s
   const SHARD_SOURCE_TIMEOUT_MS = 8000;
+  // 大分片子文件单独放宽超时：c_1/c_2/s_1/s_2 单份 10.9~12.7MB，8s 在慢网络或
+  // 6 路并发拥挤时可能不够，放宽到 20s（仍有三源竞速兜底，jsDelivr 快源 200 即立即返回）
+  const BIG_SUB_TIMEOUT_MS = 20000;
   // 成功源记忆键：值为上次成功下载分片的 SHARD_SOURCES 索引
   const SHARD_FAST_SOURCE_KEY = 'ed_shard_fast_source';
 
@@ -357,8 +360,9 @@
     let merged = {};
     for (let i = 1; i <= parts; i++) {
       if (onStage) onStage('部分 ' + i + '/' + parts);
-      // 子文件走普通竞速通道（不在大分片记忆内，天然路由到三源并发），<20MB 由 jsDelivr 快速分发
-      const part = await fetchShardJson(letter + '_' + i, undefined, sessionSignal);
+      // 子文件走普通竞速通道（不在大分片记忆内，天然路由到三源并发），<20MB 由 jsDelivr 快速分发；
+      // 超时单独放宽到 BIG_SUB_TIMEOUT_MS，避免慢网络/并发拥挤下 10~13MB 子文件 8s 超时失败
+      const part = await fetchShardJson(letter + '_' + i, BIG_SUB_TIMEOUT_MS, sessionSignal);
       merged = Object.assign(merged, part);
     }
     if (!merged || typeof merged !== 'object' || !Object.keys(merged).length) {
@@ -381,12 +385,14 @@
    * onStage：可选阶段进度回调（大分片拼合时回调「部分 x/y」）。
    * @returns {Promise<object>} 解析后的词库分片 JSON
    */
-  async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
+async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
     const t = timeoutMs || SHARD_SOURCE_TIMEOUT_MS;
     letter = String(letter).toLowerCase();
 
-    // 已知大分片：直达大通道，不浪费 jsdelivr 两源的必然 403
-    if (readBigShards().indexOf(letter) >= 0) {
+    // 静态拆分清单（BIG_SPLIT_PARTS）或历史记忆命中的大分片：无条件直达大通道。
+    // 不依赖 localStorage —— 首次下载（无痕/新浏览器）也能直接按子文件分块下载，
+    // 避免先抢 >20MB 原文件、等 jsdelivr 403、raw 超时再转圈的多重浪费。
+    if (BIG_SPLIT_PARTS[letter] || readBigShards().indexOf(letter) >= 0) {
       return fetchBigShardSingle(letter, sessionSignal, onStage);
     }
 
