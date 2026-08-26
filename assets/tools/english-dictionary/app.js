@@ -132,8 +132,10 @@
   const DB_VERSION = 4; // 升级到 340 万词条词库 + 修复 CORS 多源下载
   const STORE_NAME = 'shards';
   const META_STORE = 'meta';
-  // 词库分片不再随博客仓库分发（26 个分片共 236MB，会撑爆 git 历史），
-  // 改从独立数据仓库按需下载。
+  // 词库分片已归档到本站 assets/tools/english-dictionary/data/
+  //（26 字母 + c/s 拆分子片 = 30 文件，283MB），只随 Pages 部署仓分发，
+  // 不入源码仓 git 历史（见 .gitignore）。主源与工具页同源零 CORS，
+  // jsDelivr 独立数据仓仅作兜底。
   //
   // ⚠️ CORS 说明：GitHub Releases 下载会 302 重定向到 objects.githubusercontent.com，
   //    该域名不发送 CORS 头，浏览器 fetch 直接报 "Failed to fetch"。
