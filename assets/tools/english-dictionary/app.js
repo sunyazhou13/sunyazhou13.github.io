@@ -280,15 +280,19 @@
    * ════════════════════════════════════════════════════════════ */
 
   /**
-   * 带超时的 fetch —— 单个请求挂住时中止，避免流程永远卡住
-   * sessionSignal：外部会话级 abort 信号（新查询时取消本请求），可为空
+   * 带超时的 fetch —— 超时覆盖「响应头 + 响应体」全程（旧版仅在 header 到达后
+   * 就 clearTimeout，慢源 / 断流源的 body 读取会无限挂起，单 worker 被锁死后
+   * 整个下载队列停摆）。返回 { resp, text }：resp 供读 status 等，text 为完整
+   * 响应体；超时即 abort，body 读取随之中断，调用方 catch 后按该源失败处理。
    */
   async function fetchWithTimeout(url, timeoutMs, sessionSignal) {
     const ctrl = new AbortController();
     linkAbort(sessionSignal, ctrl);
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      return await fetch(url, { signal: ctrl.signal });
+      const resp = await fetch(url, { signal: ctrl.signal });
+      const text = await resp.text();
+      return { resp, text };
     } finally {
       clearTimeout(timer);
     }
@@ -338,11 +342,11 @@
   // 下载成功后交调用方写 IndexedDB 与 _shardCache；失败原样抛出（不破既有失败重试）。
   async function fetchBigShardSingle(letter, sessionSignal) {
     const url = SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX] + letter + '.json';
-    const resp = await fetchWithTimeout(url, BIG_SHARD_TIMEOUT_MS, sessionSignal);
+    const { resp, text } = await fetchWithTimeout(url, BIG_SHARD_TIMEOUT_MS, sessionSignal);
     if (!resp.ok) {
       throw new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
     }
-    const data = await resp.json();
+    const data = JSON.parse(text);
     if (!data || typeof data !== 'object') {
       throw new Error('Invalid JSON @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
     }
@@ -379,19 +383,18 @@
     const attempts = order.map(idx => (async () => {
       const url = SHARD_SOURCES[idx] + letter + '.json';
       try {
-        const resp = await fetchWithTimeout(url, t, sessionSignal);
+        const { resp, text } = await fetchWithTimeout(url, t, sessionSignal);
         if (resp.ok) {
-          const data = await resp.json();
-          if (data && typeof data === 'object') return { ok: true, idx, data };
+          try {
+            const data = JSON.parse(text);
+            if (data && typeof data === 'object') return { ok: true, idx, data };
+          } catch (e) { /* 解析失败按无效 JSON 处理 */ }
           return { ok: false, idx, err: new Error('Invalid JSON @ ' + SHARD_SOURCES[idx]) };
         }
         // 403 + "20 MB" 特征 = jsDelivr 单文件 20MB 上限，动态识别为大分片并记忆
-        if (resp.status === 403) {
-          const body = await resp.text().catch(() => '');
-          if (body && body.indexOf(BIG_SHARD_MARKER_20MB) >= 0) {
-            rememberBigShard(letter);
-            return { ok: false, idx, big: true };
-          }
+        if (resp.status === 403 && text && text.indexOf(BIG_SHARD_MARKER_20MB) >= 0) {
+          rememberBigShard(letter);
+          return { ok: false, idx, big: true };
         }
         return { ok: false, idx, err: new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[idx]) };
       } catch (e) {
