@@ -27,6 +27,9 @@
       speak: '发音',
       placeholder: '输入单词或中文，按回车或点击「查词」',
       loading: '正在查询',
+      routeLoading: '查询中…',
+      routeFail: '查询失败或服务不可用',
+      routeLocalEmpty: '本地词库暂无释义',
       emptyInput: '请输入要查询的单词或中文',
       translateFail: '翻译服务暂时不可用，请稍后重试',
       notFound: '未找到"',
@@ -42,6 +45,8 @@
       srcLocal: '本地词库',
       srcAPI: 'Dictionary API',
       srcTranslate: 'MyMemory',
+      srcEdge: 'Bing / Edge 翻译',
+      zhLookupNote: '由中文「{zh}」翻译，按平行英文词 {en} 查词典',
       downloadBtn: '下载完整词库',
       downloadHint: '约 235MB，下载后离线可用',
       downloading: '下载中…',
@@ -51,6 +56,8 @@
       downloadFetching: '下载 ',
       downloadComplete: '全部完成',
       downloadError: '下载中断，请点击重试',
+      downloadInterrupted: '下载中断：成功 {ok}/{total}，失败分片: {list}',
+      retryFailedBtn: '重试失败分片',
       clearCache: '清除缓存',
       clearCacheConfirm: '确定清除已缓存的词库吗？清除后需重新下载才能离线查词。',
       clearing: '清除中…',
@@ -69,6 +76,9 @@
       speak: 'Pronounce',
       placeholder: 'Enter a word or Chinese text, then press Enter or click "Look up"',
       loading: 'Looking up',
+      routeLoading: 'Loading…',
+      routeFail: 'Unavailable',
+      routeLocalEmpty: 'No local entry found',
       emptyInput: 'Please enter a word or Chinese text',
       translateFail: 'Translation service is temporarily unavailable. Please try again later.',
       notFound: 'No results for "',
@@ -84,6 +94,8 @@
       srcLocal: 'Local',
       srcAPI: 'Dictionary API',
       srcTranslate: 'MyMemory',
+      srcEdge: 'Microsoft Edge Translate',
+      zhLookupNote: 'Translated from Chinese "{zh}", looked up as English "{en}"',
       downloadBtn: 'Download Full Dictionary',
       downloadHint: '~235MB, enables offline lookup',
       downloading: 'Downloading…',
@@ -93,6 +105,8 @@
       downloadFetching: 'Downloading ',
       downloadComplete: 'Complete',
       downloadError: 'Download interrupted, click to retry',
+      downloadInterrupted: 'Download interrupted: {ok}/{total} done, failed shards: {list}',
+      retryFailedBtn: 'Retry Failed Shards',
       clearCache: 'Clear Cache',
       clearCacheConfirm: 'Clear the cached dictionary? You will need to re-download it for offline lookup.',
       clearing: 'Clearing…',
@@ -232,14 +246,46 @@
   }
 
   /* ════════════════════════════════════════════════════════════
+   * 查询会话（取消上一轮 + 逐路独立渲染）
+   * ════════════════════════════════════════════════════════════ */
+
+  // 自增会话 token：每次新查询 +1，旧会话的异步回调发现 token 过期后不再写 DOM
+  let _sessionId = 0;
+  // 当前查询仍在运行的 AbortController 集合（仅"单词查询触发"的按需分片/释义/翻译）
+  const _sessionAborts = new Set();
+
+  function abortAllQueries() {
+    for (const c of _sessionAborts) {
+      try { c.abort(); } catch (e) { /* ignore */ }
+    }
+    _sessionAborts.clear();
+  }
+
+  // 外部会话 signal 被 abort 时联动中止目标 controller（避免依赖 AbortSignal.any 的兼容性问题）
+  function linkAbort(signal, ctrl) {
+    if (!signal) return;
+    if (signal.aborted) {
+      try { ctrl.abort(); } catch (e) { /* ignore */ }
+      return;
+    }
+    const h = () => {
+      try { ctrl.abort(); } catch (e) { /* ignore */ }
+      signal.removeEventListener('abort', h);
+    };
+    signal.addEventListener('abort', h);
+  }
+
+  /* ════════════════════════════════════════════════════════════
    * 分片获取（按需下载 + 缓存）
    * ════════════════════════════════════════════════════════════ */
 
   /**
    * 带超时的 fetch —— 单个请求挂住时中止，避免流程永远卡住
+   * sessionSignal：外部会话级 abort 信号（新查询时取消本请求），可为空
    */
-  async function fetchWithTimeout(url, timeoutMs) {
+  async function fetchWithTimeout(url, timeoutMs, sessionSignal) {
     const ctrl = new AbortController();
+    linkAbort(sessionSignal, ctrl);
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
       return await fetch(url, { signal: ctrl.signal });
@@ -248,32 +294,71 @@
     }
   }
 
+  // 单请求超时：多源并发竞速后总等待 ≈ 最慢一源 8s，显著低于改造前逐源串行 + 30s 的最坏 90s
+  const SHARD_SOURCE_TIMEOUT_MS = 8000;
+  // 成功源记忆键：值为上次成功下载分片的 SHARD_SOURCES 索引
+  const SHARD_FAST_SOURCE_KEY = 'ed_shard_fast_source';
+
+  function readFastSource() {
+    try {
+      const v = Number(localStorage.getItem(SHARD_FAST_SOURCE_KEY));
+      return Number.isInteger(v) && v >= 0 && v < SHARD_SOURCES.length ? v : -1;
+    } catch (e) { return -1; }
+  }
+
+  function saveFastSource(idx) {
+    try { localStorage.setItem(SHARD_FAST_SOURCE_KEY, String(idx)); } catch (e) { /* ignore */ }
+  }
+
   /**
-   * 多源分片下载 —— 依次尝试 SHARD_SOURCES 中的每个源，
-   * 第一个返回有效 JSON 的源即采用，避免单一源 CORS 不可用或临时故障导致下载失败。
+   * 多源分片下载 —— 对全部 SHARD_SOURCES 并发竞速（每源独立 8s 超时），
+   * 取第一个成功解析出有效 JSON 的源立即返回（记忆中的源优先排列），
+   * 全部失败才抛错，避免单一源 CORS 不可用或临时故障导致长时间干等。
+   * timeoutMs 可覆盖默认单请求超时。
    * @returns {Promise<object>} 解析后的词库分片 JSON
    */
-  async function fetchShardJson(letter, timeoutMs) {
-    let lastErr = null;
-    for (const base of SHARD_SOURCES) {
-      const url = base + letter + '.json';
+  async function fetchShardJson(letter, timeoutMs, sessionSignal) {
+    const t = timeoutMs || SHARD_SOURCE_TIMEOUT_MS;
+
+    // 成功源记忆优先：上次命中的源排最前（并发竞速下顺序仅作优先级体现）
+    const fastSrc = readFastSource();
+    const order = fastSrc >= 0
+      ? [fastSrc].concat(SHARD_SOURCES.map((_, i) => i).filter(i => i !== fastSrc))
+      : SHARD_SOURCES.map((_, i) => i);
+
+    const attempts = order.map(idx => (async () => {
+      const url = SHARD_SOURCES[idx] + letter + '.json';
       try {
-        const resp = await fetchWithTimeout(url, timeoutMs);
-        if (resp.ok) {
-          const data = await resp.json();
-          if (data && typeof data === 'object') return data;
-        }
-        lastErr = new Error('HTTP ' + resp.status + ' @ ' + base);
+        const resp = await fetchWithTimeout(url, t, sessionSignal);
+        if (!resp.ok) return { ok: false, idx, err: new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[idx]) };
+        const data = await resp.json();
+        if (data && typeof data === 'object') return { ok: true, idx, data };
+        return { ok: false, idx, err: new Error('Invalid JSON @ ' + SHARD_SOURCES[idx]) };
       } catch (e) {
-        lastErr = e;
+        return { ok: false, idx, err: e };
       }
+    })());
+
+    // 逐个取最先 settle 的结果：首个成功立即返回并更新记忆；全失败才抛错
+    let lastErr = null;
+    let pending = attempts;
+    while (pending.length > 0) {
+      const settled = await Promise.race(
+        pending.map(p => p.then(v => ({ v, p }), e => ({ v: { ok: false, err: e }, p })))
+      );
+      pending = pending.filter(p => p !== settled.p);
+      if (settled.v.ok) {
+        saveFastSource(settled.v.idx);
+        return settled.v.data;
+      }
+      if (settled.v.err) lastErr = settled.v.err;
     }
     throw lastErr || new Error('All shard sources failed for: ' + letter);
   }
 
   const _shardCache = {};
 
-  async function getShard(letter) {
+  async function getShard(letter, sessionSignal) {
     letter = letter.toLowerCase();
     if (letter in _shardCache) return _shardCache[letter];
 
@@ -286,8 +371,8 @@
       }
     } catch (e) { /* IndexedDB 不可用时降级为每次 fetch */ }
 
-    // 下载分片（30 秒超时，多源 fallback）
-    const data = await fetchShardJson(letter, 30000);
+    // 下载分片（默认单请求 8s，多源并发竞速，成功源记忆优先；sessionSignal 供新查询取消）
+    const data = await fetchShardJson(letter, SHARD_SOURCE_TIMEOUT_MS, sessionSignal);
     _shardCache[letter] = data;
 
     try { await dbPut(STORE_NAME, letter, data); } catch (e) { /* ignore */ }
@@ -301,6 +386,16 @@
 
   let _downloading = false;
 
+  // 上次下载失败的分片（持久化到 meta，供「重试失败分片」按钮使用与刷新后恢复）
+  const FAILED_SHARDS_KEY = 'failedShards';
+
+  async function readFailedShards() {
+    try {
+      const v = await dbGet(META_STORE, FAILED_SHARDS_KEY);
+      return Array.isArray(v) ? v.filter(x => typeof x === 'string' && /^[a-z]$/i.test(x)) : [];
+    } catch (e) { return []; }
+  }
+
   async function downloadAllShards(onProgress) {
     if (_downloading) return;
     _downloading = true;
@@ -313,12 +408,13 @@
 
       const toDownload = LETTERS.filter(l => !cachedSet.has(l));
       const total = LETTERS.length;
+      // done 只统计成功分片：起点是已缓存数（成功计入），每成功一个 +1
       let done = total - toDownload.length;
 
       onProgress(done, total, T.downloadPrepare);
 
       // 6 路并行下载（浏览器对同域名允许 6 个并发连接，充分利用）
-      // 单个分片 120 秒超时兜底
+      // 单请求 8s 超时兜底，多源并发竞速
       const CONCURRENCY = 6;
       let failed = [];
       let queue = [...toDownload];
@@ -329,13 +425,13 @@
           if (!letter) break;
           onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
           try {
-            const data = await fetchShardJson(letter, 120000);
+            const data = await fetchShardJson(letter);
             _shardCache[letter] = data;
             try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
+            done++; // 只有真正写库成功才计入进度，失败分片不虚增
           } catch (e) {
             failed.push(letter);
           }
-          done++;
           const nextLetter = queue[0];
           onProgress(done, total, nextLetter
             ? T.downloadFetching + nextLetter.toUpperCase() + '.json …'
@@ -346,13 +442,20 @@
       // 启动 CONCURRENCY 个 worker
       await Promise.all(Array.from({ length: Math.min(CONCURRENCY, toDownload.length) }, downloadWorker));
 
-      // 标记全量下载完成（有失败则不标记，提示用户）
+      // 持久化失败分片（重试按钮、刷新后恢复都依赖它）；全成功则清空该键
+      try { await dbPut(META_STORE, FAILED_SHARDS_KEY, failed); } catch (e) {}
+
+      // 只有全部分片成功才标记全量下载完成
       if (failed.length === 0) {
         try { await dbPut(META_STORE, 'fullDownloaded', Date.now()); } catch (e) {}
       }
 
-      onProgress(total, total, failed.length > 0
-        ? T.downloadError + ' (' + failed.length + ' 分片失败: ' + failed.join(',').toUpperCase() + ')'
+      // 最终进度：如实汇报成功 X/26，不再用 total 冒充 100%
+      onProgress(done, total, failed.length > 0
+        ? T.downloadInterrupted
+            .replace('{ok}', String(done))
+            .replace('{total}', String(total))
+            .replace('{list}', failed.map(l => l.toUpperCase()).join(','))
         : T.downloadComplete);
     } finally {
       _downloading = false;
@@ -366,7 +469,7 @@
   /**
    * @returns {object|null} {translation, phonetic, pos, tags, fields, collins, oxford}
    */
-  async function localLookup(word) {
+  async function localLookup(word, sessionSignal) {
     word = word.trim().toLowerCase();
     if (!word) return null;
 
@@ -374,7 +477,7 @@
     if (!/[a-z]/.test(letter)) return null;
 
     try {
-      const shard = await getShard(letter);
+      const shard = await getShard(letter, sessionSignal);
       const entry = shard[word];
       if (!entry) return null;
 
@@ -399,13 +502,18 @@
    * ════════════════════════════════════════════════════════════ */
 
   const DICT_API = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  // 释义请求 8s 超时兜底：dictionaryapi.dev 挂起时中止，避免拖慢结果渲染
+  const DICT_TIMEOUT_MS = 8000;
 
-  async function fetchDictAPI(word) {
+  async function fetchDictAPI(word, sessionSignal) {
     word = word.trim().toLowerCase();
     if (!word) return null;
 
+    const ctrl = new AbortController();
+    linkAbort(sessionSignal, ctrl);
+    const timer = setTimeout(() => ctrl.abort(), DICT_TIMEOUT_MS);
     try {
-      const resp = await fetch(DICT_API + encodeURIComponent(word));
+      const resp = await fetch(DICT_API + encodeURIComponent(word), { signal: ctrl.signal });
       if (!resp.ok) return null;
       const data = await resp.json();
       if (!Array.isArray(data) || data.length === 0) return null;
@@ -441,25 +549,105 @@
       return { meanings, phonetic, audioUrl };
     } catch (e) {
       return null;
+    } finally {
+      clearTimeout(timer);
     }
   }
 
   /* ════════════════════════════════════════════════════════════
-   * MyMemory 翻译 API
+   * Edge (Microsoft Bing) 翻译 API — 纯前端免 key 直连
+   * ════════════════════════════════════════════════════════════ */
+
+  const EDGE_TRANSLATE_API = 'https://edge.microsoft.com/translate/translatetext';
+  // Edge 端点要求 BCP-47 语言码：zh → zh-Hans，en 不变
+  function edgeLang(lang) {
+    return lang === 'zh' ? 'zh-Hans' : lang;
+  }
+
+  // 最近一次成功的翻译来源：'edge' | 'mymemory' | null（供结果来源标注动态显示）
+  let _lastTranslateSource = null;
+
+  /**
+   * Edge 翻译端点直连：POST + JSON 字符串数组请求体。
+   * 该端点响应 Content-Type 为 text/plain，但接受 application/json 请求体。
+   * 2 秒超时兜底，任何失败返回 null，不影响另一路并行请求。
+   */
+  async function edgeTranslate(text, from, to, sessionSignal) {
+    const ctrl = new AbortController();
+    linkAbort(sessionSignal, ctrl);
+    const timer = setTimeout(() => ctrl.abort(), 2000);
+    try {
+      const resp = await fetch(
+        EDGE_TRANSLATE_API + '?from=' + encodeURIComponent(edgeLang(from)) + '&to=' + encodeURIComponent(edgeLang(to)),
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify([text]),
+          signal: ctrl.signal,
+        }
+      );
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      return data?.[0]?.translations?.[0]?.text || null;
+    } catch (e) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  /* ════════════════════════════════════════════════════════════
+   * MyMemory 翻译 API（与 Edge 并行竞速的第二路）
    * ════════════════════════════════════════════════════════════ */
 
   const TRANSLATE_API = 'https://api.mymemory.translated.net/get?q=';
 
-  async function translate(text, from, to) {
+  /**
+   * MyMemory 翻译：2 秒超时，任何失败返回 null，不影响另一路并行请求。
+   */
+  async function myMemoryTranslate(text, from, to, sessionSignal) {
     const url = TRANSLATE_API + encodeURIComponent(text) + '&langpair=' + from + '|' + to;
+    const ctrl = new AbortController();
+    linkAbort(sessionSignal, ctrl);
+    // MyMemory 免费接口响应偏慢，2s 常被掐断导致该路失败只剩 Bing 一行；放宽到 5s，
+    // Edge 一路保持 2s 超时不变，提升双路并排成功率
+    const timer = setTimeout(() => ctrl.abort(), 5000);
     try {
-      const resp = await fetch(url);
+      const resp = await fetch(url, { signal: ctrl.signal });
       if (!resp.ok) return null;
       const data = await resp.json();
       return data.responseData?.translatedText || null;
     } catch (e) {
       return null;
+    } finally {
+      clearTimeout(timer);
     }
+  }
+
+  /**
+   * 在线翻译总入口：Edge 与 MyMemory 两路并行请求，Edge 2s / MyMemory 5s 超时。
+   * 用 Promise.allSettled 收集两路结果，两路都返回有效译文时全部保留（供双路展示），
+   * 任一路失败则对应项 ok=false；两路都失败才返回 null（保留本地词库兜底路径）。
+   * @returns {{edge:{ok:boolean,text:string|null}, mymemory:{ok:boolean,text:string|null}}|null}
+   */
+  async function translate(text, from, to) {
+    const [edgeR, mmR] = await Promise.allSettled([
+      edgeTranslate(text, from, to),
+      myMemoryTranslate(text, from, to),
+    ]);
+
+    const edgeText = (edgeR.status === 'fulfilled' && edgeR.value) ? edgeR.value : null;
+    const mmText = (mmR.status === 'fulfilled' && mmR.value) ? mmR.value : null;
+
+    if (!edgeText && !mmText) return null;
+
+    // 记录最终来源（Edge 优先用于来源标注，渲染层则按实际非空路单独展示）
+    _lastTranslateSource = edgeText ? 'edge' : 'mymemory';
+
+    return {
+      edge: { ok: !!edgeText, text: edgeText },
+      mymemory: { ok: !!mmText, text: mmText },
+    };
   }
 
   /* ════════════════════════════════════════════════════════════
@@ -808,131 +996,364 @@
     }).join('');
   }
 
-  /**
-   * 渲染查词结果（有道风格）
-   */
-  function renderResult(data) {
-    const parts = [];
+  /* ════════════════════════════════════════════════════════════
+   * 逐路渲染（查询会话：骨架 + 各路独立占位与填充）
+   * ════════════════════════════════════════════════════════════ */
 
-    // ── 单词标题行 ──
+  /**
+   * 词头 HTML（word + 发音按钮 + 音标 + 标签行）
+   */
+  function buildWordHeaderHtml(word, phonetic, badgesHtml, audioUrl) {
+    const parts = [];
     parts.push('<div class="ed-word-header">');
     parts.push('<div class="ed-word-main">');
-    parts.push('<span class="ed-word">' + escapeHtml(data.word) + '</span>');
+    parts.push('<span class="ed-word">' + escapeHtml(word) + '</span>');
 
-    // 发音按钮
-    if (data.word && /^[a-zA-Z]/.test(data.word)) {
+    if (word && /^[a-zA-Z]/.test(word)) {
       parts.push(
         '<button type="button" class="ed-btn-speak" ' +
-        'data-word="' + escapeHtml(data.word) + '"' +
-        (data.audioUrl ? ' data-audio="' + escapeHtml(data.audioUrl) + '"' : '') +
+        'data-word="' + escapeHtml(word) + '"' +
+        (audioUrl ? ' data-audio="' + escapeHtml(audioUrl) + '"' : '') +
         ' aria-label="' + T.speak + '"><i class="fas fa-volume-up"></i></button>'
       );
     }
 
     parts.push('</div>'); // ed-word-main
 
-    // 音标
-    if (data.phonetic) {
-      parts.push('<span class="ed-phonetic">/' + escapeHtml(data.phonetic) + '/</span>');
+    if (phonetic) {
+      parts.push('<span class="ed-phonetic">/' + escapeHtml(phonetic) + '/</span>');
     }
+    if (badgesHtml) {
+      parts.push('<div class="ed-badges-row">' + badgesHtml + '</div>');
+    }
+    parts.push('</div>'); // ed-word-header
+    return parts.join('');
+  }
 
-    // 标签行：词性 + 考试等级 + Collins 星级 + 牛津核心词
+  /**
+   * 查询开始：一次铺开固定骨架，各路均带"查询中…"占位（谁完成谁单独填充）
+   */
+  function renderQuerySkeleton(word) {
+    // 词头（word 已知；音标/标签由后续各路异步补齐）
+    const header = '<div id="ed-slot-header"></div>';
+
+    // 本地词库槽：占位
+    const local = '<div class="ed-section ed-section-local" id="ed-slot-local">' +
+      '<div class="ed-section-title">' + T.localTitle + '</div>' +
+      '<div class="ed-route-note">' + T.routeLoading + '</div></div>';
+
+    // 翻译槽：Edge / MyMemory 两行独立占位
+    const trans = '<div class="ed-section ed-section-translate" id="ed-slot-translate">' +
+      '<div class="ed-section-title">' + T.translateTitle + '</div>' +
+      '<div class="ed-translation-text" style="margin:6px 0" id="ed-t-edge">' +
+      '<span class="ed-tag-badge">' + escapeHtml(T.srcEdge) + '</span> ' +
+      '<span class="ed-route-note">' + T.routeLoading + '</span></div>' +
+      '<div class="ed-translation-text" style="margin:6px 0" id="ed-t-mm">' +
+      '<span class="ed-tag-badge">' + escapeHtml(T.srcTranslate) + '</span> ' +
+      '<span class="ed-route-note">' + T.routeLoading + '</span></div>' +
+      '</div>';
+
+    // 在线词典槽：占位
+    const api = '<div class="ed-section ed-section-api" id="ed-slot-api">' +
+      '<div class="ed-section-title">' + T.engDefsTitle + '</div>' +
+      '<div class="ed-route-note">' + T.routeLoading + '</div></div>';
+
+    // 来源行（各路完成后逐步累积）
+    const sources = '<div class="ed-sources" id="ed-slot-sources"></div>';
+
+    showContent(header + local + trans + api + sources);
+  }
+
+  /**
+   * 词头独立更新（本地/API/翻译任一路先回来都可刷新音标、标签、发音按钮）
+   */
+  function updateWordHeader(live) {
+    const el = document.getElementById('ed-slot-header');
+    if (!el) return;
+
     const badges = [];
-    const posCodes = parsePosCodes(data.pos);
-    for (const code of posCodes) {
+    for (const code of parsePosCodes(live.pos)) {
       badges.push('<span class="ed-pos-badge">' + escapeHtml(POS_MAP[code]) + '</span>');
     }
-    if (data.oxford) {
+    if (live.oxford) {
       badges.push('<span class="ed-oxford-badge" title="' + T.oxfordTitle + '">' + T.oxfordBadge + '</span>');
     }
-    if (data.collins) {
-      badges.push(renderCollinsStars(data.collins));
+    if (live.collins) {
+      badges.push(renderCollinsStars(live.collins));
     }
-    if (data.tags && data.tags.length > 0) {
-      badges.push(renderTagBadges(data.tags));
-    }
-
-    if (badges.length > 0) {
-      parts.push('<div class="ed-badges-row">' + badges.join('') + '</div>');
+    if (live.tags && live.tags.length > 0) {
+      badges.push(renderTagBadges(live.tags));
     }
 
-    parts.push('</div>'); // ed-word-header
+    let html = buildWordHeaderHtml(live.word, live.phonetic, badges.join(''), live.audioUrl);
 
-    // ── 专业领域标注 ──
-    if (data.fields && data.fields.length > 0) {
-      parts.push('<div class="ed-fields-row">' + renderFieldBadges(data.fields) + '</div>');
+    // 专业领域标注
+    if (live.fields && live.fields.length > 0) {
+      html += '<div class="ed-fields-row">' + renderFieldBadges(live.fields) + '</div>';
     }
 
-    // ── 中文释义（本地词库）──
-    if (data.localTranslation) {
-      const lines = data.localTranslation.split('\n');
-      parts.push('<div class="ed-section ed-section-local">');
-      parts.push('<div class="ed-section-title">' + T.localTitle + '</div>');
-      parts.push('<div class="ed-translation">');
+    el.innerHTML = html;
+  }
+
+  /**
+   * 本地词库槽：命中填翻译，未命中填空占位，不影响其它路
+   */
+  function renderLocalSlot(result) {
+    const el = document.getElementById('ed-slot-local');
+    if (!el) return;
+    if (result && result.translation) {
+      const lines = result.translation.split('\n');
+      let inner = '<div class="ed-section-title">' + T.localTitle + '</div><div class="ed-translation">';
       for (const line of lines) {
-        if (line.trim()) {
-          parts.push('<p>' + escapeHtml(line) + '</p>');
-        }
+        if (line.trim()) inner += '<p>' + escapeHtml(line) + '</p>';
       }
-      parts.push('</div>');
-      parts.push('</div>');
+      inner += '</div>';
+      el.innerHTML = inner;
+    } else {
+      el.innerHTML = '<div class="ed-section-title">' + T.localTitle + '</div>' +
+        '<div class="ed-route-note">' + T.routeLocalEmpty + '</div>';
     }
+  }
 
-    // ── 翻译结果（中英互译）──
-    if (data.translatedText) {
-      parts.push('<div class="ed-section ed-section-translate">');
-      parts.push('<div class="ed-section-title">' + T.translateTitle + '</div>');
-      parts.push('<div class="ed-translation-text">' + escapeHtml(data.translatedText) + '</div>');
-      parts.push('</div>');
-    }
+  /**
+   * 翻译槽某一路独立填充/失败（edge 或 mymemory 各自一行）
+   */
+  function renderTranslateRow(elId, badge, ok, text) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.innerHTML = '<span class="ed-tag-badge">' + escapeHtml(badge) + '</span> ' +
+      (ok && text
+        ? '<span>' + escapeHtml(text) + '</span>'
+        : '<span class="ed-route-note">' + T.routeFail + '</span>');
+  }
 
-    // ── 英文详细释义（API）──
-    if (data.meanings && data.meanings.length > 0) {
-      parts.push('<div class="ed-section ed-section-api">');
-      parts.push('<div class="ed-section-title">' + T.engDefsTitle + '</div>');
-
-      for (const m of data.meanings) {
-        parts.push('<div class="ed-pos-group">');
-        if (m.partOfSpeech) {
-          parts.push('<span class="ed-api-pos">' + escapeHtml(m.partOfSpeech) + '</span>');
-        }
-        parts.push('<ol class="ed-defs">');
-        const maxDefs = Math.min(m.definitions.length, 5);
-        for (let i = 0; i < maxDefs; i++) {
-          const d = m.definitions[i];
-          parts.push('<li>');
-          parts.push('<span class="ed-def">' + escapeHtml(d.definition) + '</span>');
-          if (d.example) {
-            parts.push('<span class="ed-example">' + escapeHtml(d.example) + '</span>');
-          }
-          parts.push('</li>');
-        }
-        parts.push('</ol>');
-
-        if (m.synonyms && m.synonyms.length > 0) {
-          parts.push('<div class="ed-syn-ant"><span class="ed-syn-label">syn: </span>');
-          parts.push('<span class="ed-syn-list">' + escapeHtml(m.synonyms.slice(0, 8).join(', ')) + '</span></div>');
-        }
-        if (m.antonyms && m.antonyms.length > 0) {
-          parts.push('<div class="ed-syn-ant"><span class="ed-syn-label">ant: </span>');
-          parts.push('<span class="ed-syn-list">' + escapeHtml(m.antonyms.slice(0, 8).join(', ')) + '</span></div>');
-        }
-
-        parts.push('</div>');
+  /**
+   * API 释义 HTML（复用原 renderResult 的释义结构）
+   */
+  function buildApiMeaningsHtml(meanings) {
+    const parts = ['<div class="ed-section-title">' + T.engDefsTitle + '</div>'];
+    for (const m of meanings) {
+      parts.push('<div class="ed-pos-group">');
+      if (m.partOfSpeech) {
+        parts.push('<span class="ed-api-pos">' + escapeHtml(m.partOfSpeech) + '</span>');
       }
+      parts.push('<ol class="ed-defs">');
+      const maxDefs = Math.min(m.definitions.length, 5);
+      for (let i = 0; i < maxDefs; i++) {
+        const d = m.definitions[i];
+        parts.push('<li>');
+        parts.push('<span class="ed-def">' + escapeHtml(d.definition) + '</span>');
+        if (d.example) {
+          parts.push('<span class="ed-example">' + escapeHtml(d.example) + '</span>');
+        }
+        parts.push('</li>');
+      }
+      parts.push('</ol>');
+
+      if (m.synonyms && m.synonyms.length > 0) {
+        parts.push('<div class="ed-syn-ant"><span class="ed-syn-label">syn: </span>');
+        parts.push('<span class="ed-syn-list">' + escapeHtml(m.synonyms.slice(0, 8).join(', ')) + '</span></div>');
+      }
+      if (m.antonyms && m.antonyms.length > 0) {
+        parts.push('<div class="ed-syn-ant"><span class="ed-syn-label">ant: </span>');
+        parts.push('<span class="ed-syn-list">' + escapeHtml(m.antonyms.slice(0, 8).join(', ')) + '</span></div>');
+      }
+
       parts.push('</div>');
     }
+    return parts.join('');
+  }
 
-    // ── 数据来源 ──
+  /**
+   * 在线词典槽：命中填释义，失败填失败占位，不影响其它路
+   */
+  function renderApiSlot(meanings, ok) {
+    const el = document.getElementById('ed-slot-api');
+    if (!el) return;
+    if (ok && meanings && meanings.length > 0) {
+      el.innerHTML = '<div class="ed-section ed-section-api">' + buildApiMeaningsHtml(meanings) + '</div>';
+    } else {
+      el.innerHTML = '<div class="ed-section-title">' + T.engDefsTitle + '</div>' +
+        '<div class="ed-route-note">' + T.routeFail + '</div>';
+    }
+  }
+
+  /**
+   * 来源行：各路完成后逐步累积
+   */
+  function updateSourcesHtml(live) {
+    const el = document.getElementById('ed-slot-sources');
+    if (!el) return;
     const sources = [];
-    if (data.fromLocal) sources.push(T.srcLocal);
-    if (data.fromAPI) sources.push(T.srcAPI);
-    if (data.fromTranslate) sources.push(T.srcTranslate);
-    if (sources.length > 0) {
-      parts.push('<div class="ed-sources">' + T.sources + escapeHtml(sources.join(' · ')) + '</div>');
-    }
+    if (live.fromLocal) sources.push(T.srcLocal);
+    if (live.fromAPI) sources.push(T.srcAPI);
+    if (live.edgeText) sources.push(T.srcEdge);
+    if (live.mymemoryText) sources.push(T.srcTranslate);
+    el.innerHTML = sources.length > 0 ? T.sources + escapeHtml(sources.join(' · ')) : '';
+  }
 
-    showContent(parts.join(''));
+  /* ════════════════════════════════════════════════════════════
+   * 查询结果缓存（独立 IndexedDB 库）
+   * 背景：词库分片缓存只覆盖本地释义一路，Dictionary API 释义与
+   *       Edge/MyMemory 翻译每次查词仍发网络请求（0.3~0.7s）。
+   * 选型：IndexedDB 无法在既有库上无损新增 store —— bump ecdict-cache
+   *       的 DB_VERSION 会触发 onupgradeneeded 里的删除逻辑，清掉已下载
+   *       的分片；因此使用独立库 ed-query-cache，与词库分片缓存完全隔离。
+   * 规则：缓存键 = 规范化输入（trim + 小写）；值 = {word, local, api,
+   *       edge, mymemory, ts}，同一词四路成功结果 merge 进同一条记录，
+   *       失败路不写（不为失败路伪造成功值）；ts 超过 TTL 视为过期回源。
+   * ════════════════════════════════════════════════════════════ */
+
+  const QUERY_DB_NAME = 'ed-query-cache';
+  const QUERY_DB_VERSION = 1;
+  const QUERY_STORE = 'queries';
+  // TTL = 30 天：词典释义/翻译均属低频变化数据，7 天会拉低重复查询命中率；
+  // 失败路不写 + 过期自动回源 + 「清除缓存」手动兜底，风险可控。
+  const QUERY_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+  let _qdb = null;
+  let _qdbBroken = false;
+
+  function openQueryDB() {
+    if (_qdb) return Promise.resolve(_qdb);
+    if (_qdbBroken) return Promise.reject(new Error('Query cache unavailable'));
+    return new Promise((resolve, reject) => {
+      let req;
+      try {
+        req = indexedDB.open(QUERY_DB_NAME, QUERY_DB_VERSION);
+      } catch (e) {
+        _qdbBroken = true;
+        reject(e);
+        return;
+      }
+      let settled = false;
+      // 与 openDB 相同的超时兜底：避免打开请求被永远排队挂死
+      const timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        _qdbBroken = true;
+        reject(new Error('Query cache open timeout'));
+      }, 4000);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(QUERY_STORE)) {
+          db.createObjectStore(QUERY_STORE);
+        }
+      };
+      req.onsuccess = (e) => {
+        if (settled) { // 超时后才到达的成功，连接已无意义，直接关掉
+          try { e.target.result.close(); } catch (err) { /* ignore */ }
+          return;
+        }
+        settled = true;
+        clearTimeout(timer);
+        _qdb = e.target.result;
+        _qdb.onversionchange = () => {
+          try { _qdb.close(); } catch (err) { /* ignore */ }
+          _qdb = null;
+        };
+        resolve(_qdb);
+      };
+      req.onerror = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        reject(req.error);
+      };
+      // onblocked 不做处理，交给超时兜底
+    });
+  }
+
+  function qdbGet(key) {
+    return openQueryDB().then(db => new Promise((resolve, reject) => {
+      const tx = db.transaction(QUERY_STORE, 'readonly');
+      const req = tx.objectStore(QUERY_STORE).get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(req.error);
+    }));
+  }
+
+  function qdbClear() {
+    return openQueryDB().then(db => new Promise((resolve, reject) => {
+      const tx = db.transaction(QUERY_STORE, 'readwrite');
+      tx.objectStore(QUERY_STORE).clear();
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(tx.error);
+    })).catch(() => { /* 库不可用时静默忽略 */ });
+  }
+
+  // 缓存键 = 规范化输入（trim + 小写），中英文统一
+  function normalizeQueryKey(text) {
+    return text.trim().toLowerCase();
+  }
+
+  // 读缓存：未命中 / 过期（含 ts 缺失）一律视为未命中
+  async function readQueryCache(key) {
+    try {
+      const c = await qdbGet(key);
+      if (!c || !c.ts) return null;
+      if (Date.now() - c.ts > QUERY_TTL_MS) return null;
+      return c;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // 写缓存：merge 到同键（保留其它路已写入字段），patch 只含成功结果键；
+  // 任一路失败则不传该键，避免伪造成功值。写入失败/配额超限静默忽略。
+  function saveQueryCache(key, patch) {
+    openQueryDB()
+      .then(db => new Promise((resolve, reject) => {
+        const tx = db.transaction(QUERY_STORE, 'readwrite');
+        const store = tx.objectStore(QUERY_STORE);
+        const getReq = store.get(key);
+        getReq.onsuccess = () => {
+          const merged = Object.assign({}, getReq.result || {}, patch, { ts: Date.now() });
+          store.put(merged, key);
+        };
+        getReq.onerror = () => reject(getReq.error);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
+      }))
+      .catch(() => { /* 静默忽略 */ });
+  }
+
+  // 命中缓存：依次回填词头/本地/API/翻译/来源各槽（仍走 valid() 守卫）。
+  // 返回 true 表示四路已填充，调用方应跳过在线请求直接收尾。
+  function applyQueryCache(c, valid) {
+    if (!valid()) return false;
+
+    const local = c.local && c.local.translation ? c.local : null;
+    const api = c.api && c.api.meanings && c.api.meanings.length ? c.api : null;
+
+    const live = {
+      word: c.word || '',
+      phonetic: (local && local.phonetic) || (api && api.phonetic) || '',
+      pos: (local && local.pos) || '',
+      tags: (local && local.tags) || [],
+      fields: (local && local.fields) || [],
+      collins: (local && local.collins) || 0,
+      oxford: (local && local.oxford) || 0,
+      audioUrl: (api && api.audioUrl) || '',
+    };
+    updateWordHeader(live);
+
+    renderLocalSlot(local);
+    renderApiSlot(api ? api.meanings : null, !!api);
+    renderTranslateRow('ed-t-edge', T.srcEdge, !!c.edge, c.edge || '');
+    renderTranslateRow('ed-t-mm', T.srcTranslate, !!c.mymemory, c.mymemory || '');
+
+    const sources = [];
+    if (local) sources.push(T.srcLocal);
+    if (api) sources.push(T.srcAPI);
+    if (c.edge) sources.push(T.srcEdge);
+    if (c.mymemory) sources.push(T.srcTranslate);
+    const el = document.getElementById('ed-slot-sources');
+    if (el) el.innerHTML = sources.length > 0 ? T.sources + escapeHtml(sources.join(' · ')) : '';
+
+    return true;
   }
 
   /* ════════════════════════════════════════════════════════════
@@ -946,7 +1367,12 @@
       return;
     }
 
-    showLoading();
+    // ── 查询会话：先取消上一轮仍在跑的并行任务，再开启新会话 ──
+    abortAllQueries();
+    const mySession = ++_sessionId;
+    const sessionCtrl = new AbortController();
+    _sessionAborts.add(sessionCtrl);
+    const valid = () => _sessionId === mySession && !sessionCtrl.signal.aborted;
 
     const result = {
       word: text,
@@ -959,75 +1385,206 @@
       localTranslation: '',
       meanings: null,
       translatedText: '',
+      edgeText: '',
+      mymemoryText: '',
       audioUrl: '',
       fromLocal: false,
       fromAPI: false,
       fromTranslate: false,
+      translateSource: null,
     };
 
     if (isChinese(text)) {
-      // 中文输入：先翻译成英文
-      const translated = await translate(text, 'zh', 'en');
-      if (translated) {
-        result.translatedText = translated;
-        result.fromTranslate = true;
-        const translatedWord = translated.split(/[\s,;.]+/)[0];
-        if (isEnglishWord(translatedWord)) {
-          result.word = translatedWord;
-          await enrichEnglishWord(result);
+      result.word = text;
+    } else {
+      result.word = text.split(/[\s,;.]+/)[0];
+    }
+
+    // 铺开骨架：词头 + 本地/翻译(Edge/MyMemory)/API 四路"查询中…"占位
+    showLoading();
+    renderQuerySkeleton(result.word);
+    updateWordHeader(result);
+
+    if (isChinese(text)) {
+      // 中文输入：Edge 与 MyMemory 各自并行翻译成英文，
+      // 任一先返回的有效译文首词驱动一次后续本地/API 查词
+      let lookupLaunched = false;
+      let transSettled = 0;
+
+      const qkey = normalizeQueryKey(text);
+
+      const launchLookup = () => {
+        if (lookupLaunched || !valid()) return;
+        const ew = (result.edgeText || result.mymemoryText || '').trim().split(/[\s,;.]+/)[0];
+        if (!isEnglishWord(ew)) return;
+        lookupLaunched = true;
+        result.word = ew;
+        result.translateSource = result.edgeText ? 'edge' : 'mymemory';
+        // 中文查词观感：词头被替换为翻译出的英文词，紧随词头下方插一行说明，
+        // 让用户明白「由中文翻译成平行英文词再查词典」而非查询错乱
+        const elHeader = document.getElementById('ed-slot-header');
+        if (elHeader && !document.getElementById('ed-zh-lookup-note')) {
+          const note = document.createElement('div');
+          note.id = 'ed-zh-lookup-note';
+          note.className = 'ed-zh-lookup-note';
+          note.style.cssText = 'margin:2px 0 10px;font-size:12px;color:#8a8a8a;';
+          note.textContent = T.zhLookupNote.replace('{zh}', text).replace('{en}', ew);
+          elHeader.insertAdjacentElement('afterend', note);
         }
-      } else {
-        showPlaceholder(T.translateFail);
-        return;
+        updateWordHeader(result);
+
+        localLookup(ew, sessionCtrl.signal).then(ld => {
+          if (!valid()) return;
+          if (ld) {
+            result.localTranslation = ld.translation;
+            result.phonetic = ld.phonetic || result.phonetic;
+            result.pos = ld.pos;
+            result.tags = ld.tags;
+            result.fields = ld.fields;
+            result.collins = ld.collins;
+            result.oxford = ld.oxford;
+            result.fromLocal = true;
+            renderLocalSlot(ld);
+          } else {
+            renderLocalSlot(null);
+          }
+          updateWordHeader(result);
+          updateSourcesHtml(result);
+        });
+
+        fetchDictAPI(ew, sessionCtrl.signal).then(ad => {
+          if (!valid()) return;
+          if (ad) {
+            if (!result.phonetic && ad.phonetic) result.phonetic = ad.phonetic;
+            result.audioUrl = ad.audioUrl;
+            result.meanings = ad.meanings;
+            result.fromAPI = true;
+          }
+          renderApiSlot(ad ? ad.meanings : null, !!ad);
+          updateWordHeader(result);
+          updateSourcesHtml(result);
+        });
+      };
+
+      // 两路翻译都落定但仍未得到可查英文词时，把本地/API 槽置为占位，不长期"查询中"
+      const maybeFailLookupSlots = () => {
+        transSettled++;
+        if (transSettled >= 2 && !lookupLaunched && valid()) {
+          renderLocalSlot(null);
+          renderApiSlot(null, false);
+        }
+      };
+
+      // 翻译结果统一落点：在线返回或缓存命中都走这里（词头变换局部逻辑保持不变）
+      const applyEdge = (t) => {
+        result.edgeText = t || '';
+        result.fromTranslate = !!(result.edgeText || result.mymemoryText);
+        if (result.edgeText) result.translateSource = 'edge';
+        renderTranslateRow('ed-t-edge', T.srcEdge, !!t, t || '');
+        updateSourcesHtml(result);
+        launchLookup();
+        maybeFailLookupSlots();
+      };
+      const applyMm = (t) => {
+        result.mymemoryText = t || '';
+        result.fromTranslate = !!(result.edgeText || result.mymemoryText);
+        if (!result.edgeText && result.mymemoryText) result.translateSource = 'mymemory';
+        renderTranslateRow('ed-t-mm', T.srcTranslate, !!t, t || '');
+        updateSourcesHtml(result);
+        launchLookup();
+        maybeFailLookupSlots();
+      };
+
+      // 查询结果缓存优先：命中则用缓存译文秒回翻译槽，并跳过对应的在线翻译请求；
+      // 中文输入的英文联想结果块（local/api）不缓存，仍走在线，不破坏词头变换逻辑。
+      const zhCached = await readQueryCache(qkey);
+      let edgeFromCache = false;
+      let mmFromCache = false;
+      if (zhCached) {
+        if (zhCached.edge) {
+          edgeFromCache = true;
+          applyEdge(zhCached.edge);
+        }
+        if (zhCached.mymemory) {
+          mmFromCache = true;
+          applyMm(zhCached.mymemory);
+        }
+      }
+      if (!edgeFromCache) {
+        edgeTranslate(text, 'zh', 'en', sessionCtrl.signal).then(t => {
+          if (!valid()) return;
+          applyEdge(t);
+          if (t) saveQueryCache(qkey, { edge: t });
+        });
+      }
+      if (!mmFromCache) {
+        myMemoryTranslate(text, 'zh', 'en', sessionCtrl.signal).then(t => {
+          if (!valid()) return;
+          applyMm(t);
+          if (t) saveQueryCache(qkey, { mymemory: t });
+        });
       }
     } else {
-      // 英文输入：查词 + 翻译成中文（并发执行）
-      result.word = text.split(/[\s,;.]+/)[0];
-      const [, translated] = await Promise.all([
-        enrichEnglishWord(result),
-        translate(text, 'en', 'zh'),
-      ]);
-      if (translated) {
-        result.translatedText = translated;
-        result.fromTranslate = true;
+      // 英文输入：本地释义 + API 释义 + Edge/MyMemory 翻译 四路并行，
+      // 每一路完成即独立填充对应容器，互不等待
+      // 查询结果缓存优先：命中且未过期则四路秒回，不再发起任何在线请求
+      const qkey = normalizeQueryKey(text);
+      const cached = await readQueryCache(qkey);
+      if (cached && applyQueryCache(cached, valid)) {
+        return;
       }
-    }
 
-    if (!result.fromLocal && !result.fromAPI && !result.fromTranslate) {
-      showPlaceholder(T.notFound + text + T.notFoundSuffix);
-      return;
-    }
+      localLookup(result.word, sessionCtrl.signal).then(ld => {
+        if (!valid()) return;
+        if (ld) {
+          result.localTranslation = ld.translation;
+          result.phonetic = ld.phonetic || result.phonetic;
+          result.pos = ld.pos;
+          result.tags = ld.tags;
+          result.fields = ld.fields;
+          result.collins = ld.collins;
+          result.oxford = ld.oxford;
+          result.fromLocal = true;
+          renderLocalSlot(ld);
+          saveQueryCache(qkey, { word: result.word, local: ld });
+        } else {
+          renderLocalSlot(null);
+        }
+        updateWordHeader(result);
+        updateSourcesHtml(result);
+      });
 
-    renderResult(result);
-  }
+      fetchDictAPI(result.word, sessionCtrl.signal).then(ad => {
+        if (!valid()) return;
+        if (ad) {
+          if (!result.phonetic && ad.phonetic) result.phonetic = ad.phonetic;
+          result.audioUrl = ad.audioUrl;
+          result.meanings = ad.meanings;
+          result.fromAPI = true;
+          saveQueryCache(qkey, { word: result.word, api: ad });
+        }
+        renderApiSlot(ad ? ad.meanings : null, !!ad);
+        updateWordHeader(result);
+        updateSourcesHtml(result);
+      });
 
-  /**
-   * 用本地词库 + Dictionary API 并发补充信息
-   */
-  async function enrichEnglishWord(result) {
-    const [localData, apiData] = await Promise.all([
-      localLookup(result.word),
-      fetchDictAPI(result.word),
-    ]);
+      edgeTranslate(text, 'en', 'zh', sessionCtrl.signal).then(t => {
+        if (!valid()) return;
+        result.edgeText = t || '';
+        if (t) result.translateSource = 'edge';
+        renderTranslateRow('ed-t-edge', T.srcEdge, !!t, t || '');
+        updateSourcesHtml(result);
+        if (t) saveQueryCache(qkey, { edge: t });
+      });
 
-    if (localData) {
-      result.localTranslation = localData.translation;
-      result.phonetic = localData.phonetic || result.phonetic;
-      result.pos = localData.pos;
-      result.tags = localData.tags;
-      result.fields = localData.fields;
-      result.collins = localData.collins;
-      result.oxford = localData.oxford;
-      result.fromLocal = true;
-    }
-
-    if (apiData) {
-      if (!result.phonetic && apiData.phonetic) {
-        result.phonetic = apiData.phonetic;
-      }
-      result.audioUrl = apiData.audioUrl;
-      result.meanings = apiData.meanings;
-      result.fromAPI = true;
+      myMemoryTranslate(text, 'en', 'zh', sessionCtrl.signal).then(t => {
+        if (!valid()) return;
+        result.mymemoryText = t || '';
+        if (t && !result.edgeText) result.translateSource = 'mymemory';
+        renderTranslateRow('ed-t-mm', T.srcTranslate, !!t, t || '');
+        updateSourcesHtml(result);
+        if (t) saveQueryCache(qkey, { mymemory: t });
+      });
     }
   }
 
@@ -1051,8 +1608,16 @@
           '<div class="ed-progress-bar" style="width:' + pct + '%"></div>' +
           '<span class="ed-progress-text">' + done + '/' + total + ' (' + pct + '%) ' + escapeHtml(msg) + '</span>';
       });
-      elDownloadBtn.textContent = T.reDownload;
-      elDownloadBtn.classList.add('ed-btn-secondary');
+      // 下载结束后按剩余失败分片定按钮文案：
+      // 还有失败 -> 「重试失败分片(N)」，仅下次点击会补下失败分片；全部补齐 -> 真正 100% 完成态
+      const failedAfter = await readFailedShards();
+      if (failedAfter.length > 0) {
+        elDownloadBtn.textContent = T.retryFailedBtn + '(' + failedAfter.length + ')';
+        elDownloadBtn.classList.remove('ed-btn-secondary');
+      } else {
+        elDownloadBtn.textContent = T.reDownload;
+        elDownloadBtn.classList.add('ed-btn-secondary');
+      }
     } catch (e) {
       // 任何异常都要恢复按钮，让用户可以重试，绝不卡死
       elDownloadBtn.textContent = T.downloadBtn;
@@ -1094,6 +1659,9 @@
         tx.onabort = () => reject(tx.error);
       });
     } catch (e) { /* IndexedDB 不可用时只清内存缓存也算成功 */ }
+
+    // 2.5 清空查询结果缓存（独立库 ed-query-cache），让下次查询恢复走在线
+    try { await qdbClear(); } catch (e) { /* 查询缓存不可用时忽略 */ }
 
     // 3. 重置下载按钮与进度区
     if (elDownloadBtn) {
@@ -1206,6 +1774,16 @@
 
     // 显示缓存状态
     updateCacheStatus();
+
+    // 刷新页面后恢复「上次有失败分片」的按钮态：显示「重试失败分片(N)」，避免误以为词库已完整
+    if (elDownloadBtn) {
+      readFailedShards().then(fs => {
+        if (fs.length > 0) {
+          elDownloadBtn.textContent = T.retryFailedBtn + '(' + fs.length + ')';
+          elDownloadBtn.classList.remove('ed-btn-secondary');
+        }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
