@@ -139,12 +139,15 @@
   //    该域名不发送 CORS 头，浏览器 fetch 直接报 "Failed to fetch"。
   //    因此必须使用支持 CORS 的源，按优先级排列：
   const SHARD_SOURCES = [
-    // 1. jsDelivr 主域名 — 实测 6MB/s，首选
+    // 1. 站点同源资源目录（词库已归档到本站 assets/tools/english-dictionary/data/）—
+    //    www.sunyazhou.com 实测 3.8MB/s，且与工具页完全同源，无 CORS 无劫持
+    'https://www.sunyazhou.com/assets/tools/english-dictionary/data/',
+    // 2. GitHub Pages 裸域兜底 — 实测 2MB/s，CORS Access-Control-Allow-Origin: *
+    'https://sunyazhou13.github.io/assets/tools/english-dictionary/data/',
+    // 3. jsDelivr 主域名（独立数据仓 @main）— 兜底，实测 6MB/s
     'https://cdn.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
-    // 2. jsDelivr Gcore 节点 — 实测 6MB/s，与主域缓存独立互备
+    // 4. jsDelivr Gcore 节点 — 兜底，与主域缓存独立互备
     'https://gcore.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
-    // 3. GitHub Raw — 仅理论兜底（国内实测秒断，几乎立即被竞速剔除，不拖速度）
-    'https://raw.githubusercontent.com/sunyazhou13/english-dictionary-data/main/',
   ];
   const LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -291,8 +294,32 @@
     linkAbort(sessionSignal, ctrl);
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      const resp = await fetch(url, Object.assign({ signal: ctrl.signal }, init || {}));
-      const body = asBuffer ? await resp.arrayBuffer() : await resp.text();
+      let resp, body;
+      try {
+        resp = await fetch(url, Object.assign({ signal: ctrl.signal }, init || {}));
+        body = asBuffer ? await resp.arrayBuffer() : await resp.text();
+      } catch (e) {
+        // fetch 可能被浏览器扩展（如 XHR/请求检查类）劫持或跨域拦截而失败；
+        // 复杂 init（如 Range）或已被中止时不兜底，原样抛错；普通 GET 用原生 XHR 重试
+        if (init || ctrl.signal.aborted) throw e;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.timeout = timeoutMs;
+        const xhrAbort = () => xhr.abort();
+        ctrl.signal.addEventListener('abort', xhrAbort, { once: true });
+        const xhrData = await new Promise((res, rej) => {
+          xhr.onload = () => res(asBuffer ? { s: xhr.status, b: xhr.response } : { s: xhr.status, t: xhr.responseText });
+          xhr.onerror = () => rej(new Error('XHR network error: ' + url));
+          xhr.ontimeout = () => rej(new Error('XHR timeout: ' + url));
+          xhr.onabort = () => rej(new Error('XHR aborted: ' + url));
+          if (asBuffer) xhr.responseType = 'arraybuffer';
+          xhr.send();
+        });
+        const ok = xhrData.s >= 200 && xhrData.s < 300;
+        return asBuffer
+          ? { resp: { ok, status: xhrData.s }, buf: xhrData.b }
+          : { resp: { ok, status: xhrData.s }, text: xhrData.t };
+      }
       return asBuffer ? { resp, buf: body } : { resp, text: body };
     } finally {
       clearTimeout(timer);
@@ -359,13 +386,13 @@
       throw new Error('No big-shard split plan for: ' + letter);
     }
     let merged = {};
-    for (let i = 1; i <= parts; i++) {
-      if (onStage) onStage('部分 ' + i + '/' + parts);
-      // 子文件走普通竞速通道（不在大分片记忆内，天然路由到三源并发），<20MB 由 jsDelivr 快速分发；
-      // 超时单独放宽到 BIG_SUB_TIMEOUT_MS，避免慢网络/并发拥挤下 10~13MB 子文件 8s 超时失败
-      const part = await fetchShardJson(letter + '_' + i, BIG_SUB_TIMEOUT_MS, sessionSignal);
-      merged = Object.assign(merged, part);
-    }
+    // 子文件并发拉取：c_1/c_2 同 worker 内并发（2 条连接），总耗时减半
+    if (onStage) onStage('部分 1-' + parts);
+    const subs = await Promise.all(
+      Array.from({ length: parts }, (_, i) =>
+        fetchShardJson(letter + '_' + (i + 1), BIG_SUB_TIMEOUT_MS, sessionSignal))
+    );
+    for (const part of subs) merged = Object.assign(merged, part);
     if (!merged || typeof merged !== 'object' || !Object.keys(merged).length) {
       throw new Error('Invalid merged big shard: ' + letter);
     }
@@ -498,27 +525,30 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       const cachedSet = new Set(cachedKeys.map(k => String(k).toLowerCase()));
 
       const toDownload = LETTERS.filter(l => !cachedSet.has(l));
-      const total = LETTERS.length;
+      const TOTAL_COUNT = LETTERS.length;
       // done 只统计成功分片：起点是已缓存数（成功计入），每成功一个 +1
-      let done = total - toDownload.length;
+      let done = TOTAL_COUNT - toDownload.length;
 
-      onProgress(done, total, T.downloadPrepare);
+      onProgress(done, TOTAL_COUNT, T.downloadPrepare);
 
       // 6 路并行下载（浏览器对同域名允许 6 个并发连接，充分利用）
-      // 单请求 8s 超时兜底，多源并发竞速
       const CONCURRENCY = 6;
       let failed = [];
-      let queue = [...toDownload];
+      // 大分片（c/s，需拆多份子文件）与普通分片分流：先独占连接快速啃完普通分片，
+      // 再单独下大分片（子文件已并发），避免 2 份 ~11MB 子文件与普通分片抢连接导致超时
+      const isBigShard = l => !!(BIG_SPLIT_PARTS[String(l).toLowerCase()] || readBigShards().indexOf(l) >= 0);
+      const bigList = toDownload.filter(isBigShard);
+      let queue = [...toDownload.filter(l => !isBigShard(l))];
 
       async function downloadWorker() {
         while (queue.length > 0) {
           const letter = queue.shift();
           if (!letter) break;
-          onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json …');
+          onProgress(done, TOTAL_COUNT, T.downloadFetching + letter.toUpperCase() + '.json …');
           try {
             const data = await fetchShardJson(letter, undefined, undefined, (stage) => {
-              // 大分片分段下载：段进度实时回流到界面（如“下载 S.JSON … 段 7/13”）
-              onProgress(done, total, T.downloadFetching + letter.toUpperCase() + '.json … ' + stage);
+              // 大分片分段下载：段进度实时回流（如“下载 S.JSON … 段 1-2”）
+              onProgress(done, TOTAL_COUNT, T.downloadFetching + letter.toUpperCase() + '.json … ' + stage);
             });
             _shardCache[letter] = data;
             try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
@@ -527,14 +557,17 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
             failed.push(letter);
           }
           const nextLetter = queue[0];
-          onProgress(done, total, nextLetter
+          onProgress(done, TOTAL_COUNT, nextLetter
             ? T.downloadFetching + nextLetter.toUpperCase() + '.json …'
             : T.downloadComplete);
         }
       }
 
-      // 启动 CONCURRENCY 个 worker
-      await Promise.all(Array.from({ length: Math.min(CONCURRENCY, toDownload.length) }, downloadWorker));
+      // 阶段一：普通分片全量并发
+      await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, downloadWorker));
+      // 阶段二：大分片独占连接（2 个大分片 × 内部分别并发 2 子文件 = 4 条连接，不超上限）
+      queue = [...bigList];
+      await Promise.all(Array.from({ length: Math.min(2, queue.length) }, downloadWorker));
 
       // 持久化失败分片（重试按钮、刷新后恢复都依赖它）；全成功则清空该键
       try { await dbPut(META_STORE, FAILED_SHARDS_KEY, failed); } catch (e) {}
@@ -545,10 +578,10 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       }
 
       // 最终进度：如实汇报成功 X/26，不再用 total 冒充 100%
-      onProgress(done, total, failed.length > 0
+      onProgress(done, TOTAL_COUNT, failed.length > 0
         ? T.downloadInterrupted
             .replace('{ok}', String(done))
-            .replace('{total}', String(total))
+            .replace('{total}', String(TOTAL_COUNT))
             .replace('{list}', failed.map(l => l.toUpperCase()).join(','))
         : T.downloadComplete);
     } finally {
