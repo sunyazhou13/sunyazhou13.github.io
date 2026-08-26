@@ -139,11 +139,11 @@
   //    该域名不发送 CORS 头，浏览器 fetch 直接报 "Failed to fetch"。
   //    因此必须使用支持 CORS 的源，按优先级排列：
   const SHARD_SOURCES = [
-    // 1. jsDelivr Fastly 节点 — 国内通常比主域名快
-    'https://fastly.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
-    // 2. jsDelivr 主域名 — 备用
+    // 1. jsDelivr 主域名 — 实测 6MB/s，首选
     'https://cdn.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
-    // 3. GitHub Raw — CORS 支持，但国内访问较慢，作为最后兜底
+    // 2. jsDelivr Gcore 节点 — 实测 6MB/s，与主域缓存独立互备
+    'https://gcore.jsdelivr.net/gh/sunyazhou13/english-dictionary-data@main/',
+    // 3. GitHub Raw — 仅理论兜底（国内实测秒断，几乎立即被竞速剔除，不拖速度）
     'https://raw.githubusercontent.com/sunyazhou13/english-dictionary-data/main/',
   ];
   const LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -299,11 +299,12 @@
     }
   }
 
-  // 单请求超时：多源并发竞速后总等待 ≈ 最慢一源 8s，显著低于改造前逐源串行 + 30s 的最坏 90s
-  const SHARD_SOURCE_TIMEOUT_MS = 8000;
-  // 大分片子文件单独放宽超时：c_1/c_2/s_1/s_2 单份 10.9~12.7MB，8s 在慢网络或
-  // 6 路并发拥挤时可能不够，放宽到 20s（仍有三源竞速兜底，jsDelivr 快源 200 即立即返回）
-  const BIG_SUB_TIMEOUT_MS = 20000;
+  // 单请求超时：jsDelivr 各分片压缩后仅 1.5~1.8MB，但境内慢速时段实测仅 30~50KB/s
+  //（1.6MB 需 40s+，旧 8s 只够下 320KB 必然超时失败）。放宽到 60s：四源并发竞速，
+  // 任一源先完成即返回（raw 秒断不占时），总等待 ≈ 最快源完成时间
+  const SHARD_SOURCE_TIMEOUT_MS = 60000;
+  // 大分片子文件同理：压缩后 1.6~1.9MB，慢速时段 60s 内足够完成（与普通分片同标准）
+  const BIG_SUB_TIMEOUT_MS = 60000;
   // 成功源记忆键：值为上次成功下载分片的 SHARD_SOURCES 索引
   const SHARD_FAST_SOURCE_KEY = 'ed_shard_fast_source';
 
@@ -396,11 +397,9 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       return fetchBigShardSingle(letter, sessionSignal, onStage);
     }
 
-    // 成功源记忆优先：上次命中的源排最前（并发竞速下顺序仅作优先级体现）
-    const fastSrc = readFastSource();
-    const order = fastSrc >= 0
-      ? [fastSrc].concat(SHARD_SOURCES.map((_, i) => i).filter(i => i !== fastSrc))
-      : SHARD_SOURCES.map((_, i) => i);
+    // 固定快源优先顺序（cdn → gcore → raw 兜底），不做成功源记忆：
+    // 双快源实测 ~6MB/s，竞速毫秒级分胜负，旧记忆只会把慢源排前拖慢
+    const order = SHARD_SOURCES.map((_, i) => i);
 
     const attempts = order.map(idx => (async () => {
       const url = SHARD_SOURCES[idx] + letter + '.json';
@@ -434,7 +433,6 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       );
       pending = pending.filter(p => p !== settled.p);
       if (settled.v.ok) {
-        saveFastSource(settled.v.idx);
         return settled.v.data;
       }
       if (settled.v.big) bigHit = true;
