@@ -991,15 +991,33 @@
   }
 
   function fetchChinaMap(cb) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json', true);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        try { cb(JSON.parse(xhr.responseText)); } catch(e) { cb(null); }
-      } else { cb(null); }
+    // 优先从本地加载（避免跨域和网络波动问题）
+    var localPath = '/assets/tools/labor-arbitration/china-map.geo.json';
+
+    function loadRemote() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json', true);
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          try { cb(JSON.parse(xhr.responseText)); } catch(e) { cb(null); }
+        } else { cb(null); }
+      };
+      xhr.onerror = function() { cb(null); };
+      xhr.send();
+    }
+
+    var xhrLocal = new XMLHttpRequest();
+    xhrLocal.open('GET', localPath, true);
+    xhrLocal.onload = function() {
+      if (xhrLocal.status === 200) {
+        try { cb(JSON.parse(xhrLocal.responseText)); }
+        catch(e) { loadRemote(); }
+      } else {
+        loadRemote();
+      }
     };
-    xhr.onerror = function() { cb(null); };
-    xhr.send();
+    xhrLocal.onerror = loadRemote;
+    xhrLocal.send();
   }
 
   function renderCityMap(container, geoJson) {
