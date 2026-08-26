@@ -299,6 +299,13 @@
   // 成功源记忆键：值为上次成功下载分片的 SHARD_SOURCES 索引
   const SHARD_FAST_SOURCE_KEY = 'ed_shard_fast_source';
 
+  // 大分片专属通道（方案 A）：jsDelivr 对 >20MB 单文件固定返回 403（body 含 "20 MB"），
+  // 仅 raw.githubusercontent.com 无此限制，且大文件下载需 10~30s+，须放宽超时。
+  const BIG_SHARD_TIMEOUT_MS = 60000;       // 大通道单请求超时
+  const BIG_SHARD_SOURCE_INDEX = 2;         // 大通道唯一源：raw.githubusercontent.com（在 SHARD_SOURCES 中的索引）
+  const BIG_SHARD_MARKER_20MB = '20 MB';    // jsDelivr 超限 403 响应体的特征子串
+  const BIG_SHARDS_KEY = 'ed_big_shards';   // 大分片持久化记忆键：JSON 数组（如 ["c","s"]）
+
   function readFastSource() {
     try {
       const v = Number(localStorage.getItem(SHARD_FAST_SOURCE_KEY));
@@ -310,15 +317,58 @@
     try { localStorage.setItem(SHARD_FAST_SOURCE_KEY, String(idx)); } catch (e) { /* ignore */ }
   }
 
+  // 大分片记忆读取：仅保留合法单字母
+  function readBigShards() {
+    try {
+      const v = JSON.parse(localStorage.getItem(BIG_SHARDS_KEY) || '[]');
+      return Array.isArray(v) ? v.filter(x => typeof x === 'string' && /^[a-z]$/i.test(x)) : [];
+    } catch (e) { return []; }
+  }
+
+  // 大分片记忆写入（幂等，排序后落盘）
+  function rememberBigShard(letter) {
+    try {
+      const set = new Set(readBigShards());
+      set.add(String(letter).toLowerCase());
+      localStorage.setItem(BIG_SHARDS_KEY, JSON.stringify(Array.from(set).sort()));
+    } catch (e) { /* ignore */ }
+  }
+
+  // 大通道单源下载：仅 raw.githubusercontent.com，单请求超时 60s。
+  // 下载成功后交调用方写 IndexedDB 与 _shardCache；失败原样抛出（不破既有失败重试）。
+  async function fetchBigShardSingle(letter, sessionSignal) {
+    const url = SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX] + letter + '.json';
+    const resp = await fetchWithTimeout(url, BIG_SHARD_TIMEOUT_MS, sessionSignal);
+    if (!resp.ok) {
+      throw new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
+    }
+    const data = await resp.json();
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid JSON @ ' + SHARD_SOURCES[BIG_SHARD_SOURCE_INDEX]);
+    }
+    return data;
+  }
+
   /**
-   * 多源分片下载 —— 对全部 SHARD_SOURCES 并发竞速（每源独立 8s 超时），
-   * 取第一个成功解析出有效 JSON 的源立即返回（记忆中的源优先排列），
-   * 全部失败才抛错，避免单一源 CORS 不可用或临时故障导致长时间干等。
-   * timeoutMs 可覆盖默认单请求超时。
+   * 分片下载 —— 按字母路由到普通 / 大分片专属通道：
+   *  - 普通分片：对全部 SHARD_SOURCES 并发竞速（每源独立 8s 超时），
+   *    取第一个成功解析出有效 JSON 的源立即返回（记忆中的源优先排列），
+   *    全部失败才抛错；某源返回 403 且响应体含 "20 MB"（jsDelivr 单文件上限）
+   *    即动态识别为大分片，持久化记忆后本轮立即转入大通道重试。
+   *  - 大分片（已记忆）：跳过 jsdelivr 两源，直连 raw.githubusercontent.com 单源，
+   *    单请求超时放宽到 60s。成功写 IndexedDB 与 _shardCache 由调用方负责，
+   *    失败仍按原流程抛错进入失败分片重试。
+   * timeoutMs 可覆盖默认单请求超时（大分片走专属 60s，不受其约束）。
    * @returns {Promise<object>} 解析后的词库分片 JSON
    */
   async function fetchShardJson(letter, timeoutMs, sessionSignal) {
     const t = timeoutMs || SHARD_SOURCE_TIMEOUT_MS;
+    letter = String(letter).toLowerCase();
+
+    // 已知大分片：直达大通道，不浪费 jsdelivr 两源的必然 403
+    if (readBigShards().indexOf(letter) >= 0) {
+      return fetchBigShardSingle(letter, sessionSignal);
+    }
 
     // 成功源记忆优先：上次命中的源排最前（并发竞速下顺序仅作优先级体现）
     const fastSrc = readFastSource();
@@ -330,10 +380,20 @@
       const url = SHARD_SOURCES[idx] + letter + '.json';
       try {
         const resp = await fetchWithTimeout(url, t, sessionSignal);
-        if (!resp.ok) return { ok: false, idx, err: new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[idx]) };
-        const data = await resp.json();
-        if (data && typeof data === 'object') return { ok: true, idx, data };
-        return { ok: false, idx, err: new Error('Invalid JSON @ ' + SHARD_SOURCES[idx]) };
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && typeof data === 'object') return { ok: true, idx, data };
+          return { ok: false, idx, err: new Error('Invalid JSON @ ' + SHARD_SOURCES[idx]) };
+        }
+        // 403 + "20 MB" 特征 = jsDelivr 单文件 20MB 上限，动态识别为大分片并记忆
+        if (resp.status === 403) {
+          const body = await resp.text().catch(() => '');
+          if (body && body.indexOf(BIG_SHARD_MARKER_20MB) >= 0) {
+            rememberBigShard(letter);
+            return { ok: false, idx, big: true };
+          }
+        }
+        return { ok: false, idx, err: new Error('HTTP ' + resp.status + ' @ ' + SHARD_SOURCES[idx]) };
       } catch (e) {
         return { ok: false, idx, err: e };
       }
@@ -341,6 +401,7 @@
 
     // 逐个取最先 settle 的结果：首个成功立即返回并更新记忆；全失败才抛错
     let lastErr = null;
+    let bigHit = false;
     let pending = attempts;
     while (pending.length > 0) {
       const settled = await Promise.race(
@@ -351,7 +412,13 @@
         saveFastSource(settled.v.idx);
         return settled.v.data;
       }
+      if (settled.v.big) bigHit = true;
       if (settled.v.err) lastErr = settled.v.err;
+    }
+
+    // 动态识别出的大分片：记忆已写入，本轮立即转入大通道重试
+    if (bigHit) {
+      return fetchBigShardSingle(letter, sessionSignal);
     }
     throw lastErr || new Error('All shard sources failed for: ' + letter);
   }
@@ -371,7 +438,8 @@
       }
     } catch (e) { /* IndexedDB 不可用时降级为每次 fetch */ }
 
-    // 下载分片（默认单请求 8s，多源并发竞速，成功源记忆优先；sessionSignal 供新查询取消）
+    // 下载分片（普通分片：单请求 8s，多源并发竞速，成功源记忆优先；
+    // 大分片自动走专属大通道：跳 jsdelivr、直连 raw、60s 超时；sessionSignal 供新查询取消）
     const data = await fetchShardJson(letter, SHARD_SOURCE_TIMEOUT_MS, sessionSignal);
     _shardCache[letter] = data;
 
