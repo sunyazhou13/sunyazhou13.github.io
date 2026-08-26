@@ -702,6 +702,60 @@
   align-items: flex-end;
 }
 
+/* 配置区域：左侧地图 + 右侧控件 */
+.la-config-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.la-config-map {
+  min-width: 0;
+}
+
+.la-config-map .la-map-section {
+  margin-top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.la-config-map .la-map-header {
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.la-config-map #city-map-container {
+  flex: 1;
+  min-height: 360px;
+  height: auto;
+}
+
+.la-config-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.la-config-sidebar .la-form-row {
+  margin-bottom: 0;
+}
+
+.la-config-sidebar .la-form-row select {
+  width: 100%;
+}
+
+.la-config-sidebar .la-actions {
+  margin: 0;
+  justify-content: flex-start;
+}
+
+.la-config-sidebar .la-actions .la-btn {
+  flex: 1;
+}
+
 .la-config-card .la-form-row {
   margin-bottom: 0;
   flex: 1;
@@ -874,5 +928,19 @@
   .la-inline-group {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* 配置区域移动端堆叠 */
+  .la-config-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .la-config-map #city-map-container {
+    min-height: 280px;
+    height: 280px;
+  }
+
+  .la-config-sidebar .la-actions {
+    justify-content: stretch;
   }
 }
