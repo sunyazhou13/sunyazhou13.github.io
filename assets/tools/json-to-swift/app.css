@@ -1,0 +1,534 @@
+/**
+ * JSON → Swift Codable 互转工具样式
+ * 独立于博客主题，仅作用于 #js2s-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#js2s-app {
+  --js2s-border: rgba(128, 128, 128, 0.35);
+  --js2s-border-strong: rgba(128, 128, 128, 0.55);
+  --js2s-bg: rgba(128, 128, 128, 0.07);
+  --js2s-bg-hover: rgba(128, 128, 128, 0.14);
+  --js2s-text: inherit;
+  --js2s-text-muted: rgba(128, 128, 128, 0.95);
+  --js2s-accent: #2f6fde;
+  --js2s-accent-text: #fff;
+  --js2s-ok: #1a7f4b;
+  --js2s-err: #c0392b;
+  --js2s-radius: 8px;
+  --js2s-code-bg: #0d1117;
+  --js2s-code-fg: #c9d1d9;
+  --js2s-code-caret: #c9d1d9;
+}
+
+html[mode='dark'] #js2s-app {
+  --js2s-bg: rgba(255, 255, 255, 0.06);
+  --js2s-bg-hover: rgba(255, 255, 255, 0.12);
+  --js2s-text-muted: rgba(190, 190, 190, 0.95);
+  --js2s-accent: #5b8ff0;
+  --js2s-ok: #57c288;
+  --js2s-err: #e2735f;
+  --js2s-code-bg: #0d1117;
+  --js2s-code-fg: #c9d1d9;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #js2s-app {
+    --js2s-bg: rgba(255, 255, 255, 0.06);
+    --js2s-bg-hover: rgba(255, 255, 255, 0.12);
+    --js2s-text-muted: rgba(190, 190, 190, 0.95);
+    --js2s-accent: #5b8ff0;
+    --js2s-ok: #57c288;
+    --js2s-err: #e2735f;
+    --js2s-code-bg: #0d1117;
+    --js2s-code-fg: #c9d1d9;
+  }
+}
+
+#js2s-app .js2s-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#js2s-app .js2s-hint {
+  color: var(--js2s-text-muted);
+}
+
+#js2s-app .js2s-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+#js2s-app .js2s-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--js2s-border);
+  margin: 0 0.2rem;
+}
+
+#js2s-app .js2s-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#js2s-app .js2s-btn:hover:not(:disabled) {
+  background: var(--js2s-bg-hover);
+}
+
+#js2s-app .js2s-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* 方向按钮的 active 高亮 */
+#js2s-app .js2s-btn.js2s-btn-active {
+  background: var(--js2s-accent);
+  border-color: var(--js2s-accent);
+  color: var(--js2s-accent-text);
+  font-weight: 700;
+}
+
+#js2s-app .js2s-btn.js2s-btn-active:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+#js2s-app .js2s-btn.js2s-copied {
+  color: var(--js2s-ok);
+  border-color: var(--js2s-ok);
+}
+
+#js2s-app .js2s-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin: 0.4rem 0 1rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--js2s-border);
+  border-radius: var(--js2s-radius);
+  background: var(--js2s-bg);
+}
+
+#js2s-app .js2s-style {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin: 0 0 1rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--js2s-border);
+  border-radius: var(--js2s-radius);
+  background: var(--js2s-bg);
+}
+
+#js2s-app .js2s-style-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--js2s-text-muted);
+}
+
+#js2s-app .js2s-select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#js2s-app .js2s-select:focus {
+  outline: none;
+  border-color: var(--js2s-accent);
+}
+
+#js2s-app .js2s-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+#js2s-app .js2s-text {
+  width: 8.5rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+#js2s-app .js2s-text:focus {
+  outline: none;
+  border-color: var(--js2s-accent);
+}
+
+#js2s-app .js2s-switch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+#js2s-app .js2s-switch input[type='checkbox'] {
+  accent-color: var(--js2s-accent);
+  width: 1rem;
+  height: 1rem;
+}
+
+#js2s-app .js2s-tabs {
+  display: inline-flex;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+#js2s-app .js2s-tab {
+  padding: 0.35rem 1rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#js2s-app .js2s-tab + .js2s-tab {
+  border-left: 1px solid var(--js2s-border-strong);
+}
+
+#js2s-app .js2s-tab.js2s-tab-active {
+  background: var(--js2s-accent);
+  color: var(--js2s-accent-text);
+}
+
+#js2s-app .js2s-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+#js2s-app .js2s-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+#js2s-app .js2s-label {
+  font-size: 0.85rem;
+  color: var(--js2s-text-muted);
+  margin: 0;
+}
+
+#js2s-app .js2s-textarea {
+  width: 100%;
+  min-height: 320px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: var(--js2s-radius);
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  font-family: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  line-height: 1.55;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+#js2s-app .js2s-textarea:focus {
+  outline: none;
+  border-color: var(--js2s-accent);
+}
+
+#js2s-app .js2s-textarea::placeholder {
+  color: var(--js2s-text-muted);
+  opacity: 0.7;
+}
+
+/* ---------- 输入区高亮背景（pre 永远显示） ---------- */
+#js2s-app .js2s-input-wrap {
+  position: relative;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: var(--js2s-radius);
+  background: var(--js2s-code-bg);
+  overflow: hidden;
+  min-height: 320px;
+}
+
+#js2s-app .js2s-input-wrap:focus-within {
+  border-color: var(--js2s-accent);
+}
+
+#js2s-app .js2s-input-pre {
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  background: transparent;
+  font-size: 0.88rem;
+  font-family: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 320px;
+  pointer-events: none;
+  color: var(--js2s-code-fg);
+}
+
+#js2s-app .js2s-input-pre code.hljs {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;
+  min-height: 320px;
+  overflow: visible;
+  font-family: inherit;
+  tab-size: 2;
+}
+
+/* textarea 透明覆盖在 pre 上：caret 可见、高亮仅起背景作用 */
+#js2s-app #js2s-input {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent !important;
+  color: transparent;
+  caret-color: var(--js2s-code-caret);
+  padding: 0.7rem 0.8rem;
+  font-size: 0.88rem;
+  font-family: 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  line-height: 1.55;
+  resize: none;
+  z-index: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#js2s-app #js2s-input::placeholder {
+  color: var(--js2s-text-muted);
+  opacity: 0.7;
+}
+
+#js2s-app #js2s-input::selection {
+  background: rgba(47, 111, 222, 0.35);
+  color: transparent;
+}
+
+#js2s-app .js2s-output {
+  background: var(--js2s-bg);
+}
+
+/* ---------- Highlight.js 输出区高亮 ---------- */
+#js2s-app .js2s-output-wrap {
+  position: relative;
+  border: 1px solid var(--js2s-border-strong);
+  border-radius: var(--js2s-radius);
+  overflow: hidden;
+  background: var(--js2s-code-bg);
+  /* 高度与 textarea rows=16 一致 */
+  min-height: 360px;
+}
+
+#js2s-app .js2s-output-pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow: visible;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+  min-height: 360px;
+}
+
+#js2s-app .js2s-output-pre code.hljs {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+  display: block;
+  overflow: visible;
+  tab-size: 2;
+}
+
+/* 隐藏的 textarea 供复制用 */
+#js2s-app .js2s-output {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  resize: none;
+}
+
+/* JSON 模式（示例 JSON 输出） */
+#js2s-app .js2s-output-wrap.js2s-json-mode .js2s-output-pre code.hljs {
+  color: var(--js2s-code-fg);
+}
+
+/* ----- Highlight.js GitHub Dark 配色 ----- */
+/* 兜底：hljs 加载前也要可见 */
+#js2s-app .js2s-input-code,
+#js2s-app .js2s-output-code {
+  color: var(--js2s-code-fg) !important;
+}
+
+.hljs {
+  color: var(--js2s-code-fg);
+  background: transparent;
+}
+.hljs-keyword  { color: #ff7b72; }   /* 关键字 */
+.hljs-built_in { color: #ffa657; }   /* 框架类型 */
+.hljs-type     { color: #79c0ff; }   /* 自定义类型 */
+.hljs-literal  { color: #79c0ff; }   /* 字面量 */
+.hljs-number   { color: #79c0ff; }   /* 数字 */
+.hljs-operator { color: #c9d1d9; }
+.hljs-punctuation { color: #c9d1d9; }
+.hljs-string   { color: #a5d6ff; }   /* 字符串 */
+.hljs-attr     { color: #79c0ff; }   /* JSON key / 属性 */
+.hljs-comment  { color: #8b949e; font-style: italic; }
+.hljs-doctag   { color: #8b949e; }
+.hljs-params   { color: #c9d1d9; }
+.hljs-function .hljs-title,
+.hljs-title.function { color: #d2a8ff; }  /* func name */
+.hljs-variable { color: #ffa657; }
+.hljs-meta     { color: #79c0ff; }
+.hljs-section  { color: #1f6feb; font-weight: bold; }
+.hljs-tag      { color: #7ee787; }
+.hljs-name     { color: #7ee787; }
+.hljs-attribute { color: #79c0ff; }
+.hljs-symbol   { color: #79c0ff; }
+.hljs-regexp   { color: #a5d6ff; }
+.hljs-deletion { color: #ffa198; background: rgba(255,123,114,0.1); }
+.hljs-addition { color: #7ee787; background: rgba(126,231,135,0.1); }
+
+/* JSON 高亮覆盖 */
+.language-json .hljs-attr { color: #79c0ff; }
+.language-json .hljs-string { color: #a5d6ff; }
+.language-json .hljs-number { color: #79c0ff; }
+.language-json .hljs-literal { color: #79c0ff; }
+.language-json .hljs-punctuation { color: #c9d1d9; }
+
+#js2s-app .js2s-error {
+  margin-top: 0.8rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--js2s-err);
+  border-radius: var(--js2s-radius);
+  color: var(--js2s-err);
+  font-size: 0.88rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#js2s-app .js2s-note {
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--js2s-text-muted);
+}
+
+@media (max-width: 1180px) {
+  #js2s-app .js2s-grid {
+    grid-template-columns: 1fr;
+  }
+  #js2s-app .js2s-tabs {
+    margin-left: 0;
+  }
+}
+
+/* ===== 代码块右上角复制按钮 ===== */
+#js2s-app .js2s-code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--js2s-code-fg);
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+  pointer-events: auto;
+}
+
+#js2s-app .js2s-code-copy svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* 悬停 wrap 时显示按钮 */
+#js2s-app .js2s-input-wrap:hover .js2s-code-copy,
+#js2s-app .js2s-output-wrap:hover .js2s-code-copy {
+  opacity: 1;
+}
+
+#js2s-app .js2s-code-copy:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+#js2s-app .js2s-code-copy:active {
+  opacity: 0.6;
+}
+
+/* 复制成功提示 */
+#js2s-app .js2s-copy-tip {
+  display: none;
+  font-size: 12px;
+  white-space: nowrap;
+  color: inherit;
+}
+
+#js2s-app .js2s-code-copy.js2s-copied {
+  color: var(--js2s-ok);
+  border-color: rgba(26, 127, 75, 0.5);
+  background: rgba(26, 127, 75, 0.12);
+  opacity: 1;
+}
+
+#js2s-app .js2s-code-copy.js2s-copied .js2s-copy-tip {
+  display: inline;
+}
+
+#js2s-app .js2s-code-copy.js2s-copied svg {
+  display: none;
+}
