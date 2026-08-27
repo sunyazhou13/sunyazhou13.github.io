@@ -28,7 +28,7 @@
       placeholder: '输入单词或中文，按回车或点击「查词」',
       loading: '正在查询',
       routeLoading: '查询中…',
-      routeFail: '查询失败或服务不可用',
+      routeFail: '在线释义服务暂时不可用，请稍后重试（或检查浏览器扩展是否拦截网络请求）',
       routeLocalEmpty: '本地词库暂无释义',
       emptyInput: '请输入要查询的单词或中文',
       translateFail: '翻译服务暂时不可用，请稍后重试',
@@ -77,7 +77,7 @@
       placeholder: 'Enter a word or Chinese text, then press Enter or click "Look up"',
       loading: 'Looking up',
       routeLoading: 'Loading…',
-      routeFail: 'Unavailable',
+      routeFail: 'Online definitions temporarily unavailable. Please try again later (or check if a browser extension is blocking network requests).',
       routeLocalEmpty: 'No local entry found',
       emptyInput: 'Please enter a word or Chinese text',
       translateFail: 'Translation service is temporarily unavailable. Please try again later.',
@@ -681,20 +681,30 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
     } catch (e) {
       // XHR fallback: 某些浏览器扩展会劫持 window.fetch，
       // XMLHttpRequest 走独立通道，可绕开拦截。
+      // 同时用外部 setTimeout 硬兜底——扩展若也劫持了 XHR
+      //（send 不执行 / 事件不触发 / timeout 失效），Promise 会永久挂起。
       try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.timeout = DICT_TIMEOUT_MS;
         const result = await new Promise((resolve) => {
+          let settled = false;
+          const done = (val) => {
+            if (settled) return;
+            settled = true;
+            resolve(val);
+          };
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.timeout = DICT_TIMEOUT_MS;
           xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
-              try { resolve(parse(JSON.parse(xhr.responseText))); }
-              catch (err) { resolve(null); }
-            } else { resolve(null); }
+              try { done(parse(JSON.parse(xhr.responseText))); }
+              catch (err) { done(null); }
+            } else { done(null); }
           };
-          xhr.onerror = () => resolve(null);
-          xhr.ontimeout = () => resolve(null);
-          xhr.send();
+          xhr.onerror = () => done(null);
+          xhr.ontimeout = () => done(null);
+          try { xhr.send(); } catch (sendErr) { done(null); }
+          // 外部硬超时：即使 XHR 被扩展完全劫持，15+3 秒内必定 resolve
+          setTimeout(() => done(null), DICT_TIMEOUT_MS + 3000);
         });
         return result;
       } catch (xhrErr) { return null; }
@@ -737,24 +747,33 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       const data = await resp.json();
       return data?.[0]?.translations?.[0]?.text || null;
     } catch (e) {
-      // XHR fallback: 某些扩展会拦截 window.fetch，XMLHttpRequest 走独立通道可绕开
+      // XHR fallback: 某些扩展会拦截 window.fetch，XMLHttpRequest 走独立通道可绕开。
+      // 同时用外部 setTimeout 硬兜底——防止扩展也劫持了 XHR 导致 Promise 永久挂起。
       try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', url, true);
-        xhr.timeout = 8000;
-        xhr.setRequestHeader('Content-Type', 'application/json');
         const result = await new Promise((resolve) => {
+          let settled = false;
+          const done = (val) => {
+            if (settled) return;
+            settled = true;
+            resolve(val);
+          };
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', url, true);
+          xhr.timeout = 8000;
+          xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
               try {
                 const data = JSON.parse(xhr.responseText);
-                resolve(data?.[0]?.translations?.[0]?.text || null);
-              } catch (err) { resolve(null); }
-            } else { resolve(null); }
+                done(data?.[0]?.translations?.[0]?.text || null);
+              } catch (err) { done(null); }
+            } else { done(null); }
           };
-          xhr.onerror = () => resolve(null);
-          xhr.ontimeout = () => resolve(null);
-          xhr.send(JSON.stringify([text]));
+          xhr.onerror = () => done(null);
+          xhr.ontimeout = () => done(null);
+          try { xhr.send(JSON.stringify([text])); } catch (sendErr) { done(null); }
+          // 外部硬超时：即使 XHR 被扩展完全劫持，11 秒内必定 resolve
+          setTimeout(() => done(null), 11000);
         });
         return result;
       } catch (xhrErr) { return null; }
@@ -783,23 +802,32 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       const data = await resp.json();
       return data.responseData?.translatedText || null;
     } catch (e) {
-      // XHR fallback: 某些扩展会拦截 window.fetch
+      // XHR fallback: 某些扩展会拦截 window.fetch。
+      // 同时用外部 setTimeout 硬兜底——防止扩展也劫持了 XHR 导致 Promise 永久挂起。
       try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.timeout = 5000;
         const result = await new Promise((resolve) => {
+          let settled = false;
+          const done = (val) => {
+            if (settled) return;
+            settled = true;
+            resolve(val);
+          };
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.timeout = 5000;
           xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
               try {
                 const data = JSON.parse(xhr.responseText);
-                resolve(data.responseData?.translatedText || null);
-              } catch (err) { resolve(null); }
-            } else { resolve(null); }
+                done(data.responseData?.translatedText || null);
+              } catch (err) { done(null); }
+            } else { done(null); }
           };
-          xhr.onerror = () => resolve(null);
-          xhr.ontimeout = () => resolve(null);
-          xhr.send();
+          xhr.onerror = () => done(null);
+          xhr.ontimeout = () => done(null);
+          try { xhr.send(); } catch (sendErr) { done(null); }
+          // 外部硬超时：即使 XHR 被扩展完全劫持，8 秒内必定 resolve
+          setTimeout(() => done(null), 8000);
         });
         return result;
       } catch (xhrErr) { return null; }
@@ -813,14 +841,29 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
    * 用 Promise.allSettled 收集两路结果，两路都返回有效译文时全部保留（供双路展示），
    * 任一路失败则对应项 ok=false；两路都失败才返回 null（保留本地词库兜底路径）。
    * 失败时通过 XHR fallback 重试以绕开可能劫持 fetch 的浏览器扩展。
+   * 整体用 Promise.race 加 15 秒硬兜底——即使两路都被扩展劫持也必定 resolve。
    * @returns {{edge:{ok:boolean,text:string|null}, mymemory:{ok:boolean,text:string|null}}|null}
    */
   async function translate(text, from, to) {
-    const [edgeR, mmR] = await Promise.allSettled([
-      edgeTranslate(text, from, to),
-      myMemoryTranslate(text, from, to),
+    const racePromise = Promise.race([
+      Promise.allSettled([
+        edgeTranslate(text, from, to),
+        myMemoryTranslate(text, from, to),
+      ]),
+      new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Translate timeout')), 15000);
+      }),
     ]);
 
+    let results;
+    try {
+      results = await racePromise;
+    } catch (timeoutErr) {
+      // 15 秒硬超时：即使扩展劫持了两路，也返回 null，不永久挂起
+      return null;
+    }
+
+    const [edgeR, mmR] = results;
     const edgeText = (edgeR.status === 'fulfilled' && edgeR.value) ? edgeR.value : null;
     const mmText = (mmR.status === 'fulfilled' && mmR.value) ? mmR.value : null;
 
