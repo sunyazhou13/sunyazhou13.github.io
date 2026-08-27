@@ -632,21 +632,19 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
 
   const DICT_API = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
   // 释义请求 8s 超时兜底：dictionaryapi.dev 挂起时中止，避免拖慢结果渲染
-  const DICT_TIMEOUT_MS = 8000;
+  const DICT_TIMEOUT_MS = 15000;
 
   async function fetchDictAPI(word, sessionSignal) {
     word = word.trim().toLowerCase();
     if (!word) return null;
 
+    const url = DICT_API + encodeURIComponent(word);
     const ctrl = new AbortController();
     linkAbort(sessionSignal, ctrl);
     const timer = setTimeout(() => ctrl.abort(), DICT_TIMEOUT_MS);
-    try {
-      const resp = await fetch(DICT_API + encodeURIComponent(word), { signal: ctrl.signal });
-      if (!resp.ok) return null;
-      const data = await resp.json();
-      if (!Array.isArray(data) || data.length === 0) return null;
 
+    async function parse(data) {
+      if (!Array.isArray(data) || data.length === 0) return null;
       const meanings = [];
       for (const entry of data) {
         if (!entry.meanings) continue;
@@ -664,7 +662,6 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
           });
         }
       }
-
       let phonetic = '';
       let audioUrl = '';
       for (const entry of data) {
@@ -674,10 +671,33 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
           if (!audioUrl && p.audio) audioUrl = p.audio;
         }
       }
-
       return { meanings, phonetic, audioUrl };
+    }
+
+    try {
+      const resp = await fetch(url, { signal: ctrl.signal });
+      if (!resp.ok) return null;
+      return parse(await resp.json());
     } catch (e) {
-      return null;
+      // XHR fallback: 某些浏览器扩展会劫持 window.fetch，
+      // XMLHttpRequest 走独立通道，可绕开拦截。
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.timeout = DICT_TIMEOUT_MS;
+        const result = await new Promise((resolve) => {
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try { resolve(parse(JSON.parse(xhr.responseText))); }
+              catch (err) { resolve(null); }
+            } else { resolve(null); }
+          };
+          xhr.onerror = () => resolve(null);
+          xhr.ontimeout = () => resolve(null);
+          xhr.send();
+        });
+        return result;
+      } catch (xhrErr) { return null; }
     } finally {
       clearTimeout(timer);
     }
@@ -699,27 +719,45 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
   /**
    * Edge 翻译端点直连：POST + JSON 字符串数组请求体。
    * 该端点响应 Content-Type 为 text/plain，但接受 application/json 请求体。
-   * 2 秒超时兜底，任何失败返回 null，不影响另一路并行请求。
+   * 8 秒超时兜底（覆盖扩展劫持/慢响应），失败返回 null，不影响另一路并行请求。
    */
   async function edgeTranslate(text, from, to, sessionSignal) {
+    const url = EDGE_TRANSLATE_API + '?from=' + encodeURIComponent(edgeLang(from)) + '&to=' + encodeURIComponent(edgeLang(to));
     const ctrl = new AbortController();
     linkAbort(sessionSignal, ctrl);
-    const timer = setTimeout(() => ctrl.abort(), 2000);
+    const timer = setTimeout(() => ctrl.abort(), 8000);
     try {
-      const resp = await fetch(
-        EDGE_TRANSLATE_API + '?from=' + encodeURIComponent(edgeLang(from)) + '&to=' + encodeURIComponent(edgeLang(to)),
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify([text]),
-          signal: ctrl.signal,
-        }
-      );
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([text]),
+        signal: ctrl.signal,
+      });
       if (!resp.ok) return null;
       const data = await resp.json();
       return data?.[0]?.translations?.[0]?.text || null;
     } catch (e) {
-      return null;
+      // XHR fallback: 某些扩展会拦截 window.fetch，XMLHttpRequest 走独立通道可绕开
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.timeout = 8000;
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        const result = await new Promise((resolve) => {
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data?.[0]?.translations?.[0]?.text || null);
+              } catch (err) { resolve(null); }
+            } else { resolve(null); }
+          };
+          xhr.onerror = () => resolve(null);
+          xhr.ontimeout = () => resolve(null);
+          xhr.send(JSON.stringify([text]));
+        });
+        return result;
+      } catch (xhrErr) { return null; }
     } finally {
       clearTimeout(timer);
     }
@@ -732,14 +770,12 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
   const TRANSLATE_API = 'https://api.mymemory.translated.net/get?q=';
 
   /**
-   * MyMemory 翻译：2 秒超时，任何失败返回 null，不影响另一路并行请求。
+   * MyMemory 翻译：5 秒超时，任何失败返回 null，不影响另一路并行请求。
    */
   async function myMemoryTranslate(text, from, to, sessionSignal) {
     const url = TRANSLATE_API + encodeURIComponent(text) + '&langpair=' + from + '|' + to;
     const ctrl = new AbortController();
     linkAbort(sessionSignal, ctrl);
-    // MyMemory 免费接口响应偏慢，2s 常被掐断导致该路失败只剩 Bing 一行；放宽到 5s，
-    // Edge 一路保持 2s 超时不变，提升双路并排成功率
     const timer = setTimeout(() => ctrl.abort(), 5000);
     try {
       const resp = await fetch(url, { signal: ctrl.signal });
@@ -747,16 +783,36 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       const data = await resp.json();
       return data.responseData?.translatedText || null;
     } catch (e) {
-      return null;
+      // XHR fallback: 某些扩展会拦截 window.fetch
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.timeout = 5000;
+        const result = await new Promise((resolve) => {
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try {
+                const data = JSON.parse(xhr.responseText);
+                resolve(data.responseData?.translatedText || null);
+              } catch (err) { resolve(null); }
+            } else { resolve(null); }
+          };
+          xhr.onerror = () => resolve(null);
+          xhr.ontimeout = () => resolve(null);
+          xhr.send();
+        });
+        return result;
+      } catch (xhrErr) { return null; }
     } finally {
       clearTimeout(timer);
     }
   }
 
   /**
-   * 在线翻译总入口：Edge 与 MyMemory 两路并行请求，Edge 2s / MyMemory 5s 超时。
+   * 在线翻译总入口：Edge 与 MyMemory 两路并行请求，Edge 8s / MyMemory 5s 超时。
    * 用 Promise.allSettled 收集两路结果，两路都返回有效译文时全部保留（供双路展示），
    * 任一路失败则对应项 ok=false；两路都失败才返回 null（保留本地词库兜底路径）。
+   * 失败时通过 XHR fallback 重试以绕开可能劫持 fetch 的浏览器扩展。
    * @returns {{edge:{ok:boolean,text:string|null}, mymemory:{ok:boolean,text:string|null}}|null}
    */
   async function translate(text, from, to) {
