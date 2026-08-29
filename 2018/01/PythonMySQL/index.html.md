@@ -189,7 +189,7 @@ __数据库导出和导入,当然也可以导出导入数据表.__
 
 ### 使用Python操作MySQL
 
-这个没啥就是coding部分,使用之前把点击[这里下载](/assets/images/20180113PythonMySQL/DoubanMovieClean.txt)这个文本文件
+这个没啥就是coding部分,使用之前把点击[这里下载](/https://github.com/sunyazhou13/blogfiles/blob/main/DoubanMovieClean.txtassets/images/20180113PythonMySQL/DoubanMovieClean.txt)这个文本文件
 
 
 我们用`sublime text`新建一个`text.py`文件
