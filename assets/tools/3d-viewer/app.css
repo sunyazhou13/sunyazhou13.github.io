@@ -1,16 +1,72 @@
-/* ===== 3D 模型多视口分析工具 ===== */
+/* ===== 3D 模型多视口分析工具 v2（渐变背景 + 光影 + 动画） ===== */
 
-#tv3d-app { margin-top: 1rem; }
+#tv3d-app {
+  --tv3d-accent: #2f6fde;
+  --tv3d-accent-2: #7c5cff;
+  --tv3d-accent-grad: linear-gradient(135deg, #2f6fde, #7c5cff);
+  --tv3d-accent-soft: rgba(47, 111, 222, 0.12);
+  --tv3d-border: rgba(100, 116, 139, 0.18);
+  --tv3d-border-strong: rgba(100, 116, 139, 0.34);
+  --tv3d-bg: rgba(255, 255, 255, 0.72);
+  --tv3d-card: rgba(255, 255, 255, 0.7);
+  --tv3d-text-muted: rgba(82, 95, 118, 0.86);
+  --tv3d-shadow: 0 1px 2px rgba(23, 33, 53, 0.05), 0 10px 28px -14px rgba(23, 33, 53, 0.16);
+  --tv3d-shadow-hover: 0 4px 10px rgba(23, 33, 53, 0.08), 0 18px 40px -16px rgba(47, 111, 222, 0.28);
+  --tv3d-ring: 0 0 0 3px rgba(47, 111, 222, 0.18), 0 0 0 1px var(--tv3d-accent);
 
+  margin-top: 1rem;
+  padding: 1.1rem 1rem;
+  border-radius: 16px;
+  font-variant-numeric: tabular-nums;
+  /* 贯穿全高的蓝紫渐变氛围 */
+  background:
+    radial-gradient(130% 85% at 100% 0%, rgba(47, 111, 222, 0.12), transparent 72%),
+    radial-gradient(130% 85% at 0% 100%, rgba(124, 92, 255, 0.1), transparent 72%);
+  animation: tv3d-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+[mode='dark'] #tv3d-app,
+html[mode='dark'] #tv3d-app {
+  --tv3d-accent: #5b8ff0;
+  --tv3d-accent-2: #a78bfa;
+  --tv3d-accent-grad: linear-gradient(135deg, #5b8ff0, #a78bfa);
+  --tv3d-accent-soft: rgba(91, 143, 240, 0.14);
+  --tv3d-border: rgba(148, 163, 184, 0.16);
+  --tv3d-border-strong: rgba(148, 163, 184, 0.32);
+  --tv3d-bg: rgba(255, 255, 255, 0.04);
+  --tv3d-card: rgba(23, 30, 46, 0.45);
+  --tv3d-text-muted: rgba(185, 197, 216, 0.8);
+  --tv3d-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.5);
+  --tv3d-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 18px 40px -16px rgba(91, 143, 240, 0.4);
+  --tv3d-ring: 0 0 0 3px rgba(91, 143, 240, 0.22), 0 0 0 1px var(--tv3d-accent);
+  background:
+    radial-gradient(130% 85% at 100% 0%, rgba(91, 143, 240, 0.14), transparent 72%),
+    radial-gradient(130% 85% at 0% 100%, rgba(167, 139, 250, 0.12), transparent 72%);
+}
+
+#tv3d-app *,
+#tv3d-app *::before,
+#tv3d-app *::after { box-sizing: border-box; }
+
+@keyframes tv3d-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- 提示条 ---- */
 .tv3d-banner {
   display: flex;
   justify-content: center;
-  padding: 0.45rem 0.8rem;
-  margin-bottom: 0.8rem;
-  border: 1px solid rgba(128, 128, 128, 0.35);
-  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--tv3d-border);
+  border-radius: 10px;
   font-size: 0.85rem;
-  opacity: 0.8;
+  color: var(--tv3d-text-muted);
+  background: var(--tv3d-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: tv3d-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
 }
 
 /* ---- 工具栏 ---- */
@@ -18,43 +74,64 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.8rem;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+  animation: tv3d-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
 }
 .tv3d-btn {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 6px;
-  background: transparent;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--tv3d-border-strong);
+  border-radius: 9px;
+  background: var(--tv3d-bg);
   color: inherit;
   font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
-.tv3d-btn:hover:not(:disabled) { border-color: #2f6fde; }
+.tv3d-btn:hover:not(:disabled) {
+  border-color: var(--tv3d-accent);
+  box-shadow: var(--tv3d-ring);
+  transform: translateY(-1px);
+}
 .tv3d-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.tv3d-btn-primary { background: #2f6fde; border-color: #2f6fde; color: #fff; }
-.tv3d-btn-primary:hover:not(:disabled) { background: #2560c4; }
-[mode='dark'] .tv3d-btn:hover:not(:disabled) { border-color: #5b8ff0; }
-[mode='dark'] .tv3d-btn-primary { background: #5b8ff0; border-color: #5b8ff0; color: #101418; }
+.tv3d-btn-primary {
+  background: var(--tv3d-accent-grad);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px -2px rgba(47, 111, 222, 0.5);
+}
+.tv3d-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(47, 111, 222, 0.6);
+}
 
-.tv3d-hint { font-size: 0.82rem; opacity: 0.65; }
+.tv3d-hint { font-size: 0.82rem; color: var(--tv3d-text-muted); }
 .tv3d-sep {
   width: 1px;
   height: 1.3rem;
-  background: rgba(128, 128, 128, 0.4);
+  background: var(--tv3d-border-strong);
   margin: 0 0.3rem;
 }
 
-/* ---- 视口舞台 ---- */
+/* ---- 视口舞台（深色画框化，悬浮于浅渐变背景上） ---- */
 .tv3d-stage {
   position: relative;
   height: 540px;
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #14161c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 44px -20px rgba(20, 30, 60, 0.5), inset 0 0 0 1px rgba(124, 92, 255, 0.06);
   user-select: none;
   touch-action: none;
+  transition: box-shadow 0.2s ease;
+  animation: tv3d-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+.tv3d-stage:hover {
+  box-shadow: 0 22px 52px -18px rgba(47, 111, 222, 0.45), inset 0 0 0 1px rgba(124, 92, 255, 0.12);
 }
 #tv3d-canvas {
   position: absolute;
@@ -76,7 +153,7 @@
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-sizing: border-box;
-  transition: box-shadow 0.1s ease;
+  transition: box-shadow 0.12s ease;
 }
 .tv3d-cell[data-vp="0"], .tv3d-cell[data-vp="1"] { border-top: none; }
 .tv3d-cell[data-vp="0"], .tv3d-cell[data-vp="2"] { border-left: none; }
@@ -84,7 +161,7 @@
 .tv3d-cell[data-vp="2"], .tv3d-cell[data-vp="3"] { border-bottom: none; }
 .tv3d-cell:hover,
 .tv3d-cell.hover {
-  box-shadow: inset 0 0 0 2px #40a9ff;
+  box-shadow: inset 0 0 0 2px var(--tv3d-accent);
   z-index: 2;
 }
 .tv3d-cell-title {
@@ -102,7 +179,7 @@
   letter-spacing: 0.02em;
   pointer-events: none;
 }
-/* UV 视口内「无 UV 坐标」提示：半透明遮罩 + 生成投影 UV 按钮 */
+/* UV 视口内「无 UV 坐标」提示 */
 .tv3d-uv-hint {
   position: absolute;
   inset: 0;
@@ -132,8 +209,9 @@
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.72rem;
   cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
-.tv3d-mini:hover { border-color: #40a9ff; color: #40a9ff; }
+.tv3d-mini:hover { border-color: var(--tv3d-accent); color: var(--tv3d-accent); }
 
 /* 移动端视口标签 */
 .tv3d-tabs { display: none; }
@@ -146,13 +224,14 @@
   color: rgba(255, 255, 255, 0.65);
   font-size: 0.82rem;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .tv3d-tabs button:first-child { border-left-width: 1px; border-radius: 6px 0 0 6px; }
 .tv3d-tabs button:last-child { border-radius: 0 6px 6px 0; }
 .tv3d-tabs button.active {
-  background: rgba(64, 169, 255, 0.22);
+  background: rgba(91, 143, 240, 0.22);
   color: #fff;
-  border-color: #40a9ff;
+  border-color: var(--tv3d-accent);
 }
 
 .tv3d-dropmask {
@@ -162,10 +241,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #40a9ff;
-  border-radius: 8px;
-  background: rgba(26, 26, 26, 0.82);
-  color: #40a9ff;
+  border: 2px dashed var(--tv3d-accent);
+  border-radius: 10px;
+  background: rgba(20, 22, 28, 0.82);
+  color: var(--tv3d-accent);
   font-size: 1.05rem;
   pointer-events: none;
 }
@@ -195,12 +274,17 @@
   transform: translate(-50%, -140%);
 }
 
-/* ---- 面板 ---- */
+/* ---- 面板（玻璃卡片化） ---- */
 .tv3d-panel {
   margin-top: 1.4rem;
-  padding: 1.1rem 1.3rem;
-  border: 1px solid rgba(128, 128, 128, 0.35);
-  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--tv3d-border);
+  border-radius: 14px;
+  background: var(--tv3d-card);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: var(--tv3d-shadow);
+  animation: tv3d-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
 }
 .tv3d-title {
   margin: 0 0 0.9rem;
@@ -220,10 +304,9 @@
 }
 .tv3d-slider output {
   font-variant-numeric: tabular-nums;
-  color: #2f6fde;
+  color: var(--tv3d-accent);
 }
-[mode='dark'] .tv3d-slider output { color: #5b8ff0; }
-.tv3d-slider input[type="range"] { width: 100%; }
+.tv3d-slider input[type="range"] { width: 100%; accent-color: var(--tv3d-accent); }
 .tv3d-override { margin-top: 1rem; }
 .tv3d-check { display: block; font-size: 0.88rem; margin-bottom: 0.7rem; cursor: pointer; }
 .tv3d-override .tv3d-sliders { margin-top: 0.5rem; }
@@ -238,18 +321,20 @@
 .tv3d-inline { font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem; }
 .tv3d-select {
   padding: 0.3rem 0.5rem;
-  border: 1px solid rgba(128, 128, 128, 0.45);
+  border: 1px solid var(--tv3d-border-strong);
   border-radius: 6px;
-  background: transparent;
+  background: var(--tv3d-bg);
   color: inherit;
   font-size: 0.85rem;
 }
+.tv3d-select:focus { outline: none; border-color: var(--tv3d-accent); box-shadow: var(--tv3d-ring); }
 
 .tv3d-error {
   margin-top: 1rem;
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid #ff7875;
-  border-radius: 8px;
+  border-left: 3px solid #ff7875;
+  border-radius: 10px;
   color: #cf1322;
   background: rgba(255, 77, 79, 0.08);
   font-size: 0.88rem;
@@ -272,13 +357,13 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
-  background: #1a1a1a;
+  background: #14161c;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 .tv3d-annot-bar .tv3d-btn { color: rgba(255, 255, 255, 0.85); border-color: rgba(255, 255, 255, 0.3); }
-.tv3d-annot-bar .tv3d-btn:hover:not(:disabled) { border-color: #40a9ff; }
+.tv3d-annot-bar .tv3d-btn:hover:not(:disabled) { border-color: var(--tv3d-accent); }
 .tv3d-annot-bar .tv3d-btn-primary { color: #fff; }
-.tv3d-tool.active { border-color: #40a9ff; color: #40a9ff; }
+.tv3d-tool.active { border-color: var(--tv3d-accent); color: var(--tv3d-accent); }
 .tv3d-colors { display: inline-flex; gap: 0.35rem; }
 .tv3d-color {
   width: 22px;
@@ -320,4 +405,18 @@
     z-index: 3;
   }
   .tv3d-tabs button { pointer-events: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #tv3d-app,
+  #tv3d-app .tv3d-banner,
+  #tv3d-app .tv3d-toolbar,
+  #tv3d-app .tv3d-stage,
+  #tv3d-app .tv3d-panel {
+    animation: none;
+  }
+  #tv3d-app .tv3d-stage:hover,
+  #tv3d-app .tv3d-btn:hover {
+    transform: none;
+  }
 }

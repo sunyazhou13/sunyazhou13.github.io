@@ -1,80 +1,252 @@
 /**
- * 进制转换工具样式（基础版，未做暗色专项适配）
- * 独立于博客主题，仅作用于 #bc-app 容器。
+ * 进制转换工具样式 v4（渐变背景拉高：贯穿全高 + 字段玻璃半透明）
+ * 转换类定位：克制但精致。渐变用于背景氛围 + 按钮 + 聚焦光晕 + 头部点缀。
+ * 暗色模式适配 Chirpy 的 html[mode='dark'] 属性 + 系统偏好。
  */
 
 #bc-app {
-  --bc-border: rgba(128, 128, 128, 0.35);
-  --bc-border-strong: rgba(128, 128, 128, 0.55);
-  --bc-bg: rgba(128, 128, 128, 0.07);
-  --bc-bg-hover: rgba(128, 128, 128, 0.14);
-  --bc-text-muted: rgba(128, 128, 128, 0.92);
-  --bc-accent: #2f6fde;
+  --bc-radius: 14px;
+  --bc-radius-sm: 10px;
+  --bc-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* 亮色主题 */
+  --bc-accent: #3b82f6;
+  --bc-accent-2: #8b5cf6;
+  --bc-accent-grad: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --bc-accent-soft: rgba(59, 130, 246, 0.12);
+  --bc-accent-soft-2: rgba(139, 92, 246, 0.1);
   --bc-accent-text: #fff;
-  --bc-ok: #1a7f4b;
-  --bc-err: #c0392b;
-  --bc-radius: 8px;
+  --bc-ok: #10b981;
+  --bc-ok-grad: linear-gradient(135deg, #10b981, #06b6d4);
+  --bc-err: #ef4444;
+  --bc-warn: #f59e0b;
+  --bc-border: rgba(100, 116, 139, 0.18);
+  --bc-border-strong: rgba(100, 116, 139, 0.34);
+  --bc-bg: rgba(255, 255, 255, 0.72);
+  --bc-bg-solid: #ffffff;
+  --bc-bg-hover: rgba(59, 130, 246, 0.06);
+  /* 字段卡片：半透明玻璃，让下层渐变透出，每个进制字段都有渐变底 */
+  --bc-card: rgba(255, 255, 255, 0.7);
+  --bc-text: inherit;
+  --bc-text-muted: rgba(82, 95, 118, 0.86);
+  --bc-shadow: 0 1px 2px rgba(23, 33, 53, 0.05), 0 10px 28px -14px rgba(23, 33, 53, 0.16);
+  --bc-shadow-hover: 0 4px 10px rgba(23, 33, 53, 0.08), 0 18px 40px -16px rgba(59, 130, 246, 0.28);
+  --bc-ring: 0 0 0 3px rgba(59, 130, 246, 0.18), 0 0 0 1px var(--bc-accent);
+  --bc-glow: 0 0 0 1px var(--bc-accent), 0 8px 24px -6px rgba(59, 130, 246, 0.35);
+
+  font-variant-numeric: tabular-nums;
+
+  /* 渐变背景：贯穿全高（顶部 + 底部角落双向延伸，覆盖所有字段） */
+  padding: 1.1rem 1rem;
+  border-radius: var(--bc-radius);
+  background:
+    radial-gradient(130% 85% at 100% 0%, rgba(59, 130, 246, 0.11), transparent 72%),
+    radial-gradient(130% 85% at 0% 100%, rgba(139, 92, 246, 0.09), transparent 72%);
 }
+
+html[mode='dark'] #bc-app {
+  --bc-accent: #60a5fa;
+  --bc-accent-2: #a78bfa;
+  --bc-accent-grad: linear-gradient(135deg, #60a5fa, #a78bfa);
+  --bc-accent-soft: rgba(96, 165, 250, 0.14);
+  --bc-accent-soft-2: rgba(167, 139, 250, 0.12);
+  --bc-ok: #34d399;
+  --bc-ok-grad: linear-gradient(135deg, #34d399, #22d3ee);
+  --bc-err: #f87171;
+  --bc-warn: #fbbf24;
+  --bc-border: rgba(148, 163, 184, 0.16);
+  --bc-border-strong: rgba(148, 163, 184, 0.32);
+  --bc-bg: rgba(255, 255, 255, 0.04);
+  --bc-bg-solid: rgba(23, 30, 46, 0.6);
+  --bc-bg-hover: rgba(96, 165, 250, 0.1);
+  --bc-card: rgba(23, 30, 46, 0.45);
+  --bc-text-muted: rgba(185, 197, 216, 0.8);
+  --bc-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.5);
+  --bc-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 18px 40px -16px rgba(96, 165, 250, 0.4);
+  --bc-ring: 0 0 0 3px rgba(96, 165, 250, 0.22), 0 0 0 1px var(--bc-accent);
+  --bc-glow: 0 0 0 1px var(--bc-accent), 0 8px 24px -6px rgba(96, 165, 250, 0.5);
+  background:
+    radial-gradient(130% 85% at 100% 0%, rgba(96, 165, 250, 0.16), transparent 72%),
+    radial-gradient(130% 85% at 0% 100%, rgba(167, 139, 250, 0.14), transparent 72%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #bc-app {
+    --bc-accent: #60a5fa;
+    --bc-accent-2: #a78bfa;
+    --bc-accent-grad: linear-gradient(135deg, #60a5fa, #a78bfa);
+    --bc-accent-soft: rgba(96, 165, 250, 0.14);
+    --bc-accent-soft-2: rgba(167, 139, 250, 0.12);
+    --bc-ok: #34d399;
+    --bc-ok-grad: linear-gradient(135deg, #34d399, #22d3ee);
+    --bc-err: #f87171;
+    --bc-warn: #fbbf24;
+    --bc-border: rgba(148, 163, 184, 0.16);
+    --bc-border-strong: rgba(148, 163, 184, 0.32);
+    --bc-bg: rgba(255, 255, 255, 0.04);
+    --bc-bg-solid: rgba(23, 30, 46, 0.6);
+    --bc-bg-hover: rgba(96, 165, 250, 0.1);
+    --bc-card: rgba(23, 30, 46, 0.45);
+    --bc-text-muted: rgba(185, 197, 216, 0.8);
+    --bc-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.5);
+    --bc-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 18px 40px -16px rgba(96, 165, 250, 0.4);
+    --bc-ring: 0 0 0 3px rgba(96, 165, 250, 0.22), 0 0 0 1px var(--bc-accent);
+    --bc-glow: 0 0 0 1px var(--bc-accent), 0 8px 24px -6px rgba(96, 165, 250, 0.5);
+    background:
+      radial-gradient(130% 85% at 100% 0%, rgba(96, 165, 250, 0.16), transparent 72%),
+      radial-gradient(130% 85% at 0% 100%, rgba(167, 139, 250, 0.14), transparent 72%);
+  }
+}
+
+/* ---------- 基础 ---------- */
+
+#bc-app,
+#bc-app *,
+#bc-app *::before,
+#bc-app *::after {
+  box-sizing: border-box;
+}
+
+#bc-app {
+  margin: 0;
+  color: var(--bc-text);
+  line-height: 1.5;
+}
+
+#bc-app ::selection {
+  background: var(--bc-accent-soft);
+  color: inherit;
+}
+
+#bc-app [hidden] {
+  display: none !important;
+}
+
+/* 细滚动条 */
+#bc-app *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+#bc-app *::-webkit-scrollbar-track {
+  background: transparent;
+}
+#bc-app *::-webkit-scrollbar-thumb {
+  background: var(--bc-border-strong);
+  border-radius: 8px;
+}
+#bc-app *::-webkit-scrollbar-thumb:hover {
+  background: var(--bc-accent);
+}
+
+/* ---------- 提示条（头部） ---------- */
 
 #bc-app .bc-banner {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  padding: 0.8rem 1rem 0.8rem 1rem;
   font-size: 0.9rem;
+  color: var(--bc-text-muted);
+  background: var(--bc-bg);
+  border: 1px solid var(--bc-border);
+  border-radius: var(--bc-radius-sm);
 }
 
-#bc-app .bc-hint {
-  color: var(--bc-text-muted);
+#bc-app .bc-banner::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bc-accent-grad);
+  box-shadow: 0 0 0 4px var(--bc-accent-soft);
 }
+
+/* ---------- 字段网格 ---------- */
 
 #bc-app .bc-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
+
+/* ---------- 字段卡片（玻璃半透明，透出下层渐变） ---------- */
 
 #bc-app .bc-field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 0.8rem 1rem;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
   border: 1px solid var(--bc-border);
   border-radius: var(--bc-radius);
-  background: var(--bc-bg);
+  background: var(--bc-card);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: var(--bc-shadow);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  animation: bc-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+#bc-app .bc-field:nth-child(1) { animation-delay: 0.04s; }
+#bc-app .bc-field:nth-child(2) { animation-delay: 0.10s; }
+#bc-app .bc-field:nth-child(3) { animation-delay: 0.16s; }
+#bc-app .bc-field:nth-child(4) { animation-delay: 0.22s; }
+
+#bc-app .bc-field:hover {
+  border-color: var(--bc-border-strong);
+  box-shadow: var(--bc-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* 聚焦整张卡片高亮 + 光晕 */
+#bc-app .bc-field:focus-within {
+  border-color: var(--bc-accent);
+  box-shadow: var(--bc-shadow-hover), var(--bc-glow);
+}
+
+@keyframes bc-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- 标签 ---------- */
 
 #bc-app .bc-label {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--bc-text-muted);
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bc-text);
   margin: 0;
 }
 
 #bc-app .bc-sub {
-  font-size: 0.75rem;
-  opacity: 0.7;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--bc-text-muted);
+  opacity: 0.8;
 }
 
 #bc-app .bc-dot {
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.62rem;
+  height: 0.62rem;
   border-radius: 50%;
   flex: none;
 }
+#bc-app .bc-dot-red { background: #f87171; box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18); }
+#bc-app .bc-dot-orange { background: #fb923c; box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.18); }
+#bc-app .bc-dot-green { background: #34d399; box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18); }
+#bc-app .bc-dot-blue { background: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18); }
 
-#bc-app .bc-dot-red { background: #e05a4d; }
-#bc-app .bc-dot-orange { background: #e08a3c; }
-#bc-app .bc-dot-green { background: #3cae6c; }
-#bc-app .bc-dot-blue { background: #4a7fe0; }
+/* ---------- 输入行 ---------- */
 
 #bc-app .bc-row {
   display: flex;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 #bc-app .bc-row .bc-input {
@@ -83,53 +255,70 @@
 
 #bc-app .bc-input {
   width: 100%;
-  padding: 0.5rem 0.7rem;
+  padding: 0.6rem 0.8rem;
   border: 1px solid var(--bc-border-strong);
-  border-radius: 6px;
-  background: transparent;
-  color: inherit;
-  font-size: 0.95rem;
-  font-family: inherit;
+  border-radius: var(--bc-radius-sm);
+  background: var(--bc-bg);
+  color: var(--bc-text);
+  font-size: 0.98rem;
+  font-family: var(--bc-mono);
   line-height: 1.5;
-  transition: border-color 0.15s ease;
+  letter-spacing: 0.02em;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+#bc-app .bc-input::placeholder {
+  color: var(--bc-text-muted);
+  opacity: 0.6;
 }
 
 #bc-app .bc-input:focus {
   outline: none;
   border-color: var(--bc-accent);
+  background: var(--bc-bg-solid);
+  box-shadow: var(--bc-ring);
 }
 
-#bc-app .bc-input::placeholder {
-  color: var(--bc-text-muted);
-  opacity: 0.7;
-}
+/* ---------- 按钮（渐变填充） ---------- */
 
 #bc-app .bc-btn {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--bc-border-strong);
-  border-radius: 6px;
-  background: transparent;
-  color: inherit;
-  font-size: 0.82rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--bc-radius-sm);
+  background: var(--bc-accent-grad);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 2px 8px -2px rgba(59, 130, 246, 0.5);
+  transition: filter 0.16s ease, transform 0.1s ease, box-shadow 0.16s ease;
 }
 
 #bc-app .bc-btn:hover:not(:disabled) {
-  background: var(--bc-bg-hover);
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.6);
+}
+
+#bc-app .bc-btn:active {
+  transform: scale(0.97);
 }
 
 #bc-app .bc-btn-copy.bc-copied {
-  color: var(--bc-ok);
-  border-color: var(--bc-ok);
+  background: var(--bc-ok-grad);
+  box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.5);
 }
 
+/* ---------- 错误态 ---------- */
+
 #bc-app .bc-error {
-  margin-top: 0.8rem;
-  padding: 0.7rem 1rem;
+  margin-top: 0.9rem;
+  padding: 0.75rem 1rem;
   border: 1px solid var(--bc-err);
-  border-radius: var(--bc-radius);
+  border-left: 3px solid var(--bc-err);
+  border-radius: var(--bc-radius-sm);
+  background: rgba(239, 68, 68, 0.06);
   color: var(--bc-err);
   font-size: 0.88rem;
 }
@@ -144,5 +333,16 @@
   }
   #bc-app .bc-btn-copy {
     align-self: flex-end;
+  }
+}
+
+/* 尊重减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  #bc-app .bc-field {
+    animation: none;
+  }
+  #bc-app .bc-field:hover,
+  #bc-app .bc-btn:hover {
+    transform: none;
   }
 }
