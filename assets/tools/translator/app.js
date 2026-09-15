@@ -455,6 +455,7 @@ function scheduleAuto() {
 }
 
 async function doTranslate() {
+  clearTimeout(debounceTimer); // 取消待执行的自动翻译，避免「输入停顿自动触发」与「手动点击/切换语言」叠加，导致同一文本重复请求（百度字符双计）
   const text = elInput.value.trim();
   if (!text) { elDetect.textContent = ''; return; }
   const fromWasAuto = elFrom.value === 'auto';

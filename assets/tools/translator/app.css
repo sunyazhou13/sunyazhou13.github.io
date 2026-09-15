@@ -1,5 +1,5 @@
 /* 多语在线翻译工具样式 */
-.tr-app {
+#tr-app {
   max-width: 960px;
   margin: 0 auto;
   font-size: 15px;
@@ -42,20 +42,6 @@
 }
 .tr-select:focus { border-color: #2f6fde; box-shadow: 0 0 0 2px rgba(47,111,222,0.15); }
 
-.tr-enginebar {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.55rem;
-  flex-wrap: wrap;
-}
-.tr-engine-label {
-  font-size: 0.85rem;
-  color: #667;
-  white-space: nowrap;
-}
-.tr-engine-select { flex: 1 1 260px; min-width: 200px; }
-
 .tr-usage {
   font-size: 0.78rem;
   color: #8893a7;
@@ -83,15 +69,6 @@
 }
 .tr-swap:hover { background: #eef4ff; }
 .tr-swap:active { transform: rotate(180deg); }
-
-.tr-panels {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-@media (max-width: 680px) {
-  .tr-panels { grid-template-columns: 1fr; }
-}
 
 .tr-panel {
   display: flex;
@@ -157,7 +134,6 @@
   font-size: 0.76rem;
   color: #99a;
 }
-.tr-loading { color: #2f6fde; }
 .tr-source { color: #8893a7; }
 
 .tr-detect {
@@ -167,22 +143,6 @@
 }
 .tr-detect b { color: #2f6fde; }
 
-.tr-actions-row {
-  display: flex;
-  gap: 0.6rem;
-  margin-top: 0.9rem;
-  flex-wrap: wrap;
-}
-.tr-btn {
-  padding: 0.55rem 1.1rem;
-  border-radius: 8px;
-  border: 1px solid #cfd6e4;
-  background: #fff;
-  color: #2a2a2a;
-  cursor: pointer;
-  font-size: 0.92rem;
-}
-.tr-btn:hover { background: #f4f7fc; }
 .tr-btn-primary {
   background: #2f6fde;
   border-color: #2f6fde;
@@ -215,15 +175,15 @@
 .tr-results .tr-output { min-height: 118px; }
 .tr-results .tr-panel-head { padding: 0.45rem 0.7rem; }
 
-/* 引擎品牌色边框 + 头部底色 */
-.tr-card-baidu    { border-left: 3px solid #2f6fde !important; }
-.tr-card-baidu .tr-panel-head    { background: #f1f5ff !important; }
-.tr-card-youdao   { border-left: 3px solid #7a5af8 !important; }
-.tr-card-youdao .tr-panel-head   { background: #f6f2ff !important; }
-.tr-card-edge     { border-left: 3px solid #0e8f7f !important; }
-.tr-card-edge .tr-panel-head     { background: #e9f7f5 !important; }
-.tr-card-mymemory { border-left: 3px solid #d98a00 !important; }
-.tr-card-mymemory .tr-panel-head { background: #fff8eb !important; }
+/* 引擎品牌色：用 data-card 属性选择（与页面 HTML 一致，避免类名与属性不匹配导致不生效） */
+[data-card="baidu"]    { border-left: 3px solid #2f6fde !important; }
+[data-card="baidu"] .tr-panel-head    { background: #f1f5ff !important; }
+[data-card="youdao"]   { border-left: 3px solid #7a5af8 !important; }
+[data-card="youdao"] .tr-panel-head   { background: #f6f2ff !important; }
+[data-card="edge"]     { border-left: 3px solid #0e8f7f !important; }
+[data-card="edge"] .tr-panel-head     { background: #e9f7f5 !important; }
+[data-card="mymemory"] { border-left: 3px solid #d98a00 !important; }
+[data-card="mymemory"] .tr-panel-head { background: #fff8eb !important; }
 
 /* 引擎徽标：左侧小色点 + 文字 */
 .tr-badge {
