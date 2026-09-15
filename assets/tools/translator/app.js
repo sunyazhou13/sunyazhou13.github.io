@@ -1,5 +1,5 @@
 // 多语在线翻译工具 —— 零依赖 ES module
-// 数据源：Edge / Microsoft Bing 翻译 + MyMemory（均 keyless、CORS 友好，纯前端免后端直连）
+// 数据源（4 路）：Edge / MyMemory（keyless、CORS 友好）+ 百度 / 有道（JSONP + 站长密钥）
 // 自动检测：纯前端 Unicode 字符区间启发式（不依赖任何在线检测接口）
 
 const EDGE_TRANSLATE_API = 'https://edge.microsoft.com/translate/translatetext';
@@ -85,9 +85,8 @@ function detectLang(text) {
   if (has(/[֐-׿]/)) return 'he';                  // 希伯来
   if (has(/[฀-๿]/)) return 'th';                  // 泰文
   if (has(/[က-ၿ]/)) return 'my';                  // 缅甸
-  if (has(/[က-ၟ]/)) return 'my';
   if (has(/[ក-៟]/)) return 'km';                  // 高棉
-  if (has(/[Devanagari]/) || has(/[ऀ-ॿ]/)) return 'hi'; // 天城文
+  if (has(/[ऀ-ॿ]/)) return 'hi'; // 天城文（印地语等）
   if (has(/[一-鿿]/)) return 'zh-Hans';           // CJK 汉字（无假名/谚文时默认中文）
   if (has(/[À-ɏA-Za-z]/)) return 'en';           // 拉丁字母默认英语
   return 'en';
@@ -303,87 +302,131 @@ async function youdaoTranslate(text, from, to) {
   return out;
 }
 
-// ── 自动竞速（默认）：四引擎并行，按 key 可用性 + 额度护栏启用 ──
-async function _autoTranslate(text, from, to, prefix) {
-  let baiduSkipped = false, youdaoSkipped = false;
-  const jobs = [];
-  if (BAIDU_APP_ID && BAIDU_KEY) {
-    if (baiduQuotaRemaining(text)) jobs.push(['Baidu', baiduTranslate(text, from, to)]);
-    else baiduSkipped = true; // 本月免费额度已用尽
+// ── 多引擎对照（默认交互）：四引擎同时发起，各自独立出结果，互不干扰 ──
+// 每个引擎包装为 runEngine → { text, reason }：text 为译文；reason 为失败原因分类
+//（null=成功 / 'key'=未配置密钥 / 'quota'=免费额度用尽 / 'fail'=请求失败或不支持该语种）
+const ENGINES = [
+  { key: 'baidu',    fn: (t, f, o) => baiduTranslate(t, f, o) },
+  { key: 'youdao',   fn: (t, f, o) => youdaoTranslate(t, f, o) },
+  { key: 'edge',     fn: (t, f, o) => edgeTranslate(t, f, o) },
+  { key: 'mymemory', fn: (t, f, o) => myMemoryTranslate(t, f, o) },
+];
+async function runEngine(eng, text, from, to) {
+  if (eng.key === 'baidu' && !(BAIDU_APP_ID && BAIDU_KEY)) return { text: null, reason: 'key' };
+  if (eng.key === 'baidu' && !baiduQuotaRemaining(text)) return { text: null, reason: 'quota' };
+  if (eng.key === 'youdao' && !(YOUDAO_APP_KEY && YOUDAO_KEY)) return { text: null, reason: 'key' };
+  if (eng.key === 'youdao' && !youdaoQuotaRemaining()) return { text: null, reason: 'quota' };
+  try {
+    const out = await eng.fn(text, from, to);
+    return { text: out, reason: out ? null : 'fail' };
+  } catch (e) {
+    return { text: null, reason: 'fail' };
   }
-  if (YOUDAO_APP_KEY && YOUDAO_KEY) {
-    if (youdaoQuotaRemaining()) jobs.push(['Youdao', youdaoTranslate(text, from, to)]);
-    else youdaoSkipped = true; // 今日免费次数已用尽
-  }
-  jobs.push(['Edge', edgeTranslate(text, from, to)]);
-  jobs.push(['MyMemory', myMemoryTranslate(text, from, to)]);
-  let out = null, src = null;
-  await Promise.all(jobs.map(([name, p]) => p.then(r => { if (r && !out) { out = r; src = name; } })));
-  let notice = prefix ? prefix + '；' : '';
-  if (baiduSkipped) notice += '百度本月免费额度已用尽，已自动切换至免费翻译通道；';
-  if (youdaoSkipped) notice += '有道今日免费次数已用尽，已自动切换至免费翻译通道；';
-  return { text: out, source: src, notice };
 }
 
-// ── 总入口：用户可在界面选择优先引擎；选「自动」走 _autoTranslate 竞速，选具体引擎则只用该引擎（不可用/失败自动降级）──
-async function translate(text, from, to, prefer) {
-  prefer = prefer || 'auto';
-  if (prefer === 'auto') return _autoTranslate(text, from, to, '');
-  const map = {
-    edge:     ['Edge', edgeTranslate],
-    mymemory: ['MyMemory', myMemoryTranslate],
-    baidu:    ['Baidu', baiduTranslate],
-    youdao:   ['Youdao', youdaoTranslate],
-  };
-  const entry = map[prefer];
-  if (!entry) return _autoTranslate(text, from, to, '');
-  const [name, fn] = entry;
-  let avail = true, why = '';
-  if (prefer === 'baidu' && !(BAIDU_APP_ID && BAIDU_KEY)) { avail = false; why = '百度未配置密钥'; }
-  if (prefer === 'youdao' && !(YOUDAO_APP_KEY && YOUDAO_KEY)) { avail = false; why = '有道未配置密钥'; }
-  if (prefer === 'baidu' && avail && !baiduQuotaRemaining(text)) { avail = false; why = '百度本月免费额度已用尽'; }
-  if (prefer === 'youdao' && avail && !youdaoQuotaRemaining()) { avail = false; why = '有道今日免费次数已用尽'; }
-  if (avail) {
-    const r = await fn(text, from, to);
-    if (r) return { text: r, source: name, notice: '' };
-    return _autoTranslate(text, from, to, name + ' 本次请求失败，已自动改用其它通道');
-  }
-  return _autoTranslate(text, from, to, why + '，已自动改用其它通道');
+// 各引擎卡片的多语言文案
+const CARD_LABELS = {
+  baidu:    { name: TR_EN ? 'Baidu' : '百度翻译',  idle: TR_EN ? 'Waiting…' : '等待翻译…' },
+  youdao:   { name: TR_EN ? 'Youdao' : '有道智云', idle: TR_EN ? 'Waiting…' : '等待翻译…' },
+  edge:     { name: 'Edge',                        idle: TR_EN ? 'Waiting…' : '等待翻译…' },
+  mymemory: { name: 'MyMemory',                    idle: TR_EN ? 'Waiting…' : '等待翻译…' },
+};
+
+function reasonText(reason) {
+  if (reason === 'key')   return TR_EN ? 'Not configured' : '未配置密钥';
+  if (reason === 'quota') return TR_EN ? 'Free quota used up' : '免费额度已用尽';
+  return TR_EN ? 'Request failed / language not supported' : '请求失败或该语种暂不支持';
 }
 
-// ── TTS：Web Speech 为主，有道/百度兜底 zh/en ──
-function playAudio(url) { const a = new Audio(url); a.play().catch(() => {}); }
+// 更新单个引擎卡片：state = 'loading' | 'done' | 'error' | 'idle'
+function setCard(eng, state, msg) {
+  const card = elResults.querySelector('[data-card="' + eng + '"]');
+  if (!card) return;
+  const out = card.querySelector('[data-out]');
+  const status = card.querySelector('[data-status]');
+  if (state === 'loading') {
+    out.textContent = '';
+    out.classList.add('tr-placeholder');
+    status.textContent = TR_EN ? 'Translating…' : '翻译中…';
+    status.className = 'tr-source tr-status-loading';
+  } else if (state === 'done') {
+    out.textContent = msg;
+    out.classList.remove('tr-placeholder');
+    status.textContent = '';
+    status.className = 'tr-source';
+  } else if (state === 'error') {
+    out.textContent = '';
+    out.classList.add('tr-placeholder');
+    status.textContent = msg;
+    status.className = 'tr-source tr-status-error';
+  } else { // idle
+    out.textContent = CARD_LABELS[eng] ? CARD_LABELS[eng].idle : '等待翻译…';
+    out.classList.add('tr-placeholder');
+    status.textContent = '';
+    status.className = 'tr-source';
+  }
+}
+
+// ── TTS：中文优先用有道真人发音，英文及所有其它语种走浏览器原生 Web Speech ──
+function playAudio(url) {
+  return new Promise((resolve, reject) => {
+    const a = new Audio(url);
+    a.onerror = () => reject(new Error('audio load error'));
+    a.onended = () => resolve();
+    a.play().then(resolve).catch(reject);
+  });
+}
 function speak(text, lang) {
   if (!text) return;
+  const trimmed = text.trim();
+  // 中文优先用有道真人发音
+  if (lang === 'zh-Hans' || lang === 'zh-Hant' || lang === 'zh-CN') {
+    const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(trimmed) + '&type=1';
+    playAudio(url).catch(() => speakWeb(text, lang));
+    return;
+  }
+  // 英文
+  if (lang === 'en') {
+    // 英文单词（无空格）：有道真人发音
+    if (!/\s/.test(trimmed)) {
+      const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(trimmed) + '&type=1';
+      playAudio(url).catch(() => speakWeb(text, lang));
+      return;
+    }
+    // 英文句子/短语：StreamElements Amy（更自然的真人朗读女声）
+    const url = 'https://api.streamelements.com/kappa/v2/speech?voice=Amy&text=' + encodeURIComponent(trimmed);
+    playAudio(url).catch(() => speakWeb(text, lang));
+    return;
+  }
+  // 其它语种 fallback 到浏览器语音
+  speakWeb(text, lang);
+}
+function speakWeb(text, lang) {
   if ('speechSynthesis' in window) {
     try {
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = (lang === 'zh-Hans' || lang === 'zh-Hant') ? 'zh-CN' : lang;
+      u.lang = lang;
       u.rate = 1;
       window.speechSynthesis.speak(u);
-      return;
-    } catch (e) { /* fall through */ }
+    } catch (e) { /* ignore */ }
   }
-  if (lang === 'zh-Hans' || lang === 'zh-Hant') playAudio('https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(text) + '&type=1');
-  else if (lang === 'en') playAudio('https://fanyi.baidu.com/gettts?lan=en&spd=3&source=web&text=' + encodeURIComponent(text));
 }
 
 // ── UI 绑定 ──
-let elFrom, elTo, elSwap, elInput, elOutput, elClear, elCopy, elTranslate,
-    elDetect, elLoading, elSource, elCount, elErr, elSpeakIn, elSpeakOut,
-    elEngine, elUsage;
+let elFrom, elTo, elSwap, elInput, elClear, elTranslate,
+    elDetect, elCount, elErr, elSpeakIn, elUsage, elResults;
 
 function fillSelect(sel, withAuto) {
   sel.innerHTML = '';
   if (withAuto) {
     const o = document.createElement('option');
-    o.value = 'auto'; o.textContent = '自动检测'; sel.appendChild(o);
+    o.value = 'auto'; o.textContent = TR_EN ? 'Auto-detect' : '自动检测'; sel.appendChild(o);
   }
   for (const l of LANGS) {
     const o = document.createElement('option');
     o.value = l.code;
-    o.textContent = l.name + '（' + l.native + '）';
+    o.textContent = TR_EN ? (l.name + ' (' + l.native + ')') : (l.name + '（' + l.native + '）');
     sel.appendChild(o);
   }
 }
@@ -397,59 +440,48 @@ function scheduleAuto() {
 
 async function doTranslate() {
   const text = elInput.value.trim();
-  if (!text) { setOutput('', false); elDetect.textContent = ''; return; }
+  if (!text) { elDetect.textContent = ''; return; }
+  const fromWasAuto = elFrom.value === 'auto';
   let from = elFrom.value;
   let detectedName = '';
   if (from === 'auto') {
     const d = detectLang(text);
     from = d || 'en';
-    detectedName = LANG_NAME[from] ? '检测到：' + LANG_NAME[from] : '';
+    detectedName = LANG_NAME[from] ? (TR_EN ? 'Detected: ' : '检测到：') + LANG_NAME[from] : '';
     elDetect.innerHTML = detectedName ? ('<b>' + detectedName + '</b>') : '';
   } else {
     elDetect.textContent = '';
   }
   const to = elTo.value;
-  if (from === to) { setOutput('源语言与目标语言相同，无需翻译。', false); return; }
+  let sameLangHint = '';
+  if (from === to) {
+    if (!fromWasAuto) { // 手动选择相同语言 → 明确提示并停止，避免无效翻译
+      elErr.textContent = TR_EN ? 'Source and target languages are the same - no translation needed.' : '源语言与目标语言相同，无需翻译。';
+      elErr.classList.add('show');
+      return;
+    }
+    // 自动检测结果恰与目标语言相同（如输入英文、目标语言默认英语）：不拦截，交由引擎处理并给出引导
+    sameLangHint = TR_EN
+      ? '（Source auto-detected as ' + (LANG_NAME[from] || from) + ', same as target - returned as-is; switch the target language to translate.）'
+      : '（源语言自动检测为' + (LANG_NAME[from] || from) + '，与目标语言相同，已原样返回；如需翻译请切换目标语言）';
+    elDetect.innerHTML = (detectedName ? ('<b>' + detectedName + '</b>；') : '') + sameLangHint;
+  }
+  elErr.classList.remove('show');
 
   const mySession = ++trSession;
-  const prefer = elEngine ? elEngine.value : 'auto';
-  elLoading.textContent = '翻译中…';
-  elErr.classList.remove('show');
-  try {
-    const { text: out, source, notice } = await translate(text, from, to, prefer);
+  for (const eng of ENGINES) setCard(eng.key, 'loading');
+  // 四引擎并发，各自完成后更新各自的卡片（谁快谁先显示，互不阻塞、互不影响）
+  await Promise.all(ENGINES.map(async (eng) => {
+    const r = await runEngine(eng, text, from, to);
     if (mySession !== trSession) return; // 已被更新的翻译取代，丢弃本次结果
-    if (out) {
-      setOutput(out, false);
-      elSource.textContent = [source ? '来源：' + source : '', notice].filter(Boolean).join(' ');
-    } else {
-      setOutput('', false);
-      elErr.textContent = '翻译服务暂时不可用，请稍后重试（或检查浏览器扩展是否拦截网络请求）。';
-      elErr.classList.add('show');
-      elSource.textContent = '';
-    }
-    updateUsage(); // 每次翻译后刷新用量（百度/有道可能已累加）
-  } catch (e) {
-    if (mySession !== trSession) return;
-    setOutput('', false);
-    elErr.textContent = '翻译出错：' + (e && e.message ? e.message : e);
-    elErr.classList.add('show');
-  } finally {
-    if (mySession === trSession) elLoading.textContent = '';
-  }
-}
-
-function setOutput(text, placeholder) {
-  if (!text) {
-    elOutput.textContent = placeholder ? '译文将显示在这里' : '';
-    elOutput.classList.add('tr-placeholder');
-  } else {
-    elOutput.textContent = text;
-    elOutput.classList.remove('tr-placeholder');
-  }
+    if (r.text) setCard(eng.key, 'done', r.text);
+    else setCard(eng.key, 'error', reasonText(r.reason));
+  }));
+  if (mySession === trSession) updateUsage(); // 刷新用量（百度/有道可能已累加）
 }
 
 function updateCount() {
-  elCount.textContent = elInput.value.length + ' 字';
+  elCount.textContent = elInput.value.length + (TR_EN ? ' chars' : ' 字');
 }
 
 // ── 用量显示：实时读取 localStorage 展示百度(字符/月)与有道(请求/天)免费额度 ──
@@ -489,54 +521,59 @@ function doSwap() {
   if (a === 'auto') a = detectLang(elInput.value) || 'en'; // 互换时把「自动检测」解析为实际语言
   const b = elTo.value;
   elFrom.value = b; elTo.value = a;
-  const inText = elInput.value;
-  const outText = elOutput.classList.contains('tr-placeholder') ? '' : elOutput.textContent;
-  if (outText) {
-    elInput.value = outText;
-    setOutput(inText, !inText);
-  }
   updateCount();
-  if (elInput.value.trim()) doTranslate();
+  if (elInput.value.trim()) doTranslate(); // 互换后四引擎重新对照翻译
 }
 
-function doCopy() {
-  const t = elOutput.textContent;
+function doCopy(eng) {
+  const out = elResults.querySelector('[data-card="' + eng + '"] [data-out]');
+  const t = out && !out.classList.contains('tr-placeholder') ? out.textContent : '';
   if (!t) return;
   navigator.clipboard?.writeText(t).then(() => {
-    elCopy.textContent = '已复制';
-    setTimeout(() => { elCopy.textContent = '复制'; }, 1200);
+    const btn = elResults.querySelector('[data-card="' + eng + '"] [data-copy]');
+    if (btn) { btn.textContent = TR_EN ? 'Copied' : '已复制'; setTimeout(() => { btn.textContent = ''; }, 1200); }
   }).catch(() => {});
 }
 
 function bind() {
   elFrom = $('tr-from'); elTo = $('tr-to'); elSwap = $('tr-swap');
-  elInput = $('tr-input'); elOutput = $('tr-output'); elClear = $('tr-clear');
-  elCopy = $('tr-copy'); elTranslate = $('tr-translate');
-  elDetect = $('tr-detect'); elLoading = $('tr-loading'); elSource = $('tr-source');
+  elInput = $('tr-input'); elClear = $('tr-clear');
+  elTranslate = $('tr-translate');
+  elDetect = $('tr-detect');
   elCount = $('tr-count'); elErr = $('tr-error');
-  elSpeakIn = $('tr-speak-in'); elSpeakOut = $('tr-speak-out');
-  elEngine = $('tr-engine'); elUsage = $('tr-usage');
+  elSpeakIn = $('tr-speak-in'); elUsage = $('tr-usage');
+  elResults = $('tr-results');
 
   fillSelect(elFrom, true);
   fillSelect(elTo, false);
   elFrom.value = 'auto';
   elTo.value = 'en';
-  elEngine.value = 'auto';
 
   elInput.addEventListener('input', () => { updateCount(); scheduleAuto(); });
   elFrom.addEventListener('change', () => { if (elInput.value.trim()) doTranslate(); });
   elTo.addEventListener('change', () => { if (elInput.value.trim()) doTranslate(); });
-  elEngine.addEventListener('change', () => { updateUsage(); if (elInput.value.trim()) doTranslate(); });
   elTranslate.addEventListener('click', doTranslate);
   elSwap.addEventListener('click', doSwap);
   elClear.addEventListener('click', () => {
-    elInput.value = ''; setOutput('', false); updateCount(); elDetect.textContent = ''; elSource.textContent = ''; elErr.classList.remove('show');
+    elInput.value = ''; updateCount(); elDetect.textContent = ''; elErr.classList.remove('show');
+    for (const eng of ENGINES) setCard(eng.key, 'idle');
   });
-  elCopy.addEventListener('click', doCopy);
   elSpeakIn.addEventListener('click', () => speak(elInput.value, elFrom.value === 'auto' ? (detectLang(elInput.value) || 'en') : elFrom.value));
-  elSpeakOut.addEventListener('click', () => speak(elOutput.textContent, elTo.value));
 
-  setOutput('', true);
+  // 各引擎卡片内的朗读 / 复制按钮，按卡片独立绑定
+  elResults.querySelectorAll('[data-card]').forEach((card) => {
+    const eng = card.getAttribute('data-card');
+    const cb = card.querySelector('[data-copy]');
+    const sb = card.querySelector('[data-speak]');
+    if (cb) cb.addEventListener('click', () => doCopy(eng));
+    if (sb) sb.addEventListener('click', () => {
+      const out = card.querySelector('[data-out]');
+      const t = out && !out.classList.contains('tr-placeholder') ? out.textContent : '';
+      if (t) speak(t, elTo.value);
+    });
+  });
+
+  for (const eng of ENGINES) setCard(eng.key, 'idle');
   updateCount();
   updateUsage(); // 初始化用量显示
 }

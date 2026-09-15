@@ -201,3 +201,54 @@
   display: none;
 }
 .tr-error.show { display: block; }
+
+/* ── 多引擎对照（v4）：源面板独占一行，下方四引擎卡片纵向并排 ── */
+.tr-source-panel { margin-bottom: 1rem; }
+
+.tr-results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.tr-results .tr-panel { min-height: 180px; }
+.tr-results .tr-output { min-height: 118px; }
+.tr-results .tr-panel-head { padding: 0.45rem 0.7rem; }
+
+/* 引擎品牌色边框 + 头部底色 */
+.tr-card-baidu    { border-left: 3px solid #2f6fde !important; }
+.tr-card-baidu .tr-panel-head    { background: #f1f5ff !important; }
+.tr-card-youdao   { border-left: 3px solid #7a5af8 !important; }
+.tr-card-youdao .tr-panel-head   { background: #f6f2ff !important; }
+.tr-card-edge     { border-left: 3px solid #0e8f7f !important; }
+.tr-card-edge .tr-panel-head     { background: #e9f7f5 !important; }
+.tr-card-mymemory { border-left: 3px solid #d98a00 !important; }
+.tr-card-mymemory .tr-panel-head { background: #fff8eb !important; }
+
+/* 引擎徽标：左侧小色点 + 文字 */
+.tr-badge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #445;
+  position: relative;
+  padding-left: 0.75rem;
+  white-space: nowrap;
+}
+.tr-badge::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.tr-badge-baidu::before    { background: #2f6fde; }
+.tr-badge-youdao::before   { background: #7a5af8; }
+.tr-badge-edge::before     { background: #0e8f7f; }
+.tr-badge-mymemory::before { background: #d98a00; }
+
+/* 卡片状态 */
+.tr-status-loading { color: #2f6fde; }
+.tr-status-error   { color: #c0392b; }
