@@ -1,0 +1,334 @@
+/**
+ * 命令行速查工具样式
+ * 独立于博客主题，仅作用于 #cr-app 容器。
+ */
+
+#cr-app {
+  --cr-border: rgba(128, 128, 128, 0.35);
+  --cr-border-strong: rgba(128, 128, 128, 0.55);
+  --cr-bg: rgba(128, 128, 128, 0.07);
+  --cr-bg-hover: rgba(128, 128, 128, 0.14);
+  --cr-bg-selected: rgba(47, 111, 222, 0.12);
+  --cr-bg-active: rgba(47, 111, 222, 0.08);
+  --cr-text: #212529;
+  --cr-text-muted: rgba(128, 128, 128, 0.95);
+  --cr-accent: #2f6fde;
+  --cr-accent-text: #fff;
+  --cr-ok: #1a7f4b;
+  --cr-warn: #a05c00;
+  --cr-err: #c0392b;
+  --cr-radius: 8px;
+  --cr-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+html[mode='dark'] #cr-app {
+  --cr-text: #e9ecef;
+  --cr-text-muted: rgba(190, 190, 190, 0.95);
+  --cr-accent: #5b8ff0;
+  --cr-bg: rgba(255, 255, 255, 0.06);
+  --cr-bg-hover: rgba(255, 255, 255, 0.12);
+  --cr-bg-selected: rgba(91, 143, 240, 0.15);
+  --cr-bg-active: rgba(91, 143, 240, 0.10);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #cr-app {
+    --cr-text: #e9ecef;
+    --cr-text-muted: rgba(190, 190, 190, 0.95);
+    --cr-accent: #5b8ff0;
+    --cr-bg: rgba(255, 255, 255, 0.06);
+    --cr-bg-hover: rgba(255, 255, 255, 0.12);
+    --cr-bg-selected: rgba(91, 143, 240, 0.15);
+    --cr-bg-active: rgba(91, 143, 240, 0.10);
+  }
+}
+
+#cr-app {
+  color: var(--cr-text);
+  font-size: 0.95rem;
+}
+
+/* 搜索栏 */
+.cr-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.cr-search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid var(--cr-border);
+  border-radius: var(--cr-radius);
+  font-size: 0.95rem;
+  background: var(--cr-bg);
+  color: var(--cr-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cr-search-input:focus {
+  outline: none;
+  border-color: var(--cr-accent);
+  box-shadow: 0 0 0 3px rgba(47, 111, 222, 0.15);
+}
+.cr-search-input::placeholder {
+  color: var(--cr-text-muted);
+}
+
+/* 平台筛选 */
+.cr-platforms {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.cr-platform-chip {
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid var(--cr-border);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--cr-bg);
+  color: var(--cr-text);
+  user-select: none;
+}
+.cr-platform-chip:hover {
+  border-color: var(--cr-accent);
+  background: var(--cr-bg-active);
+}
+.cr-platform-chip.cr-active {
+  background: var(--cr-accent);
+  color: var(--cr-accent-text);
+  border-color: var(--cr-accent);
+}
+
+/* 命令卡片 */
+.cr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.cr-card {
+  border: 1px solid var(--cr-border);
+  border-radius: var(--cr-radius);
+  overflow: hidden;
+  background: var(--cr-bg);
+  transition: box-shadow 0.2s;
+}
+.cr-card:hover {
+  box-shadow: var(--cr-shadow);
+}
+.cr-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cr-card-header:hover {
+  background: var(--cr-bg-hover);
+}
+.cr-cmd-name {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cr-accent);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.cr-cmd-desc {
+  flex: 1;
+  color: var(--cr-text);
+  font-size: 0.9rem;
+}
+.cr-cmd-platforms {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+.cr-cmd-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: var(--cr-bg-hover);
+  color: var(--cr-text-muted);
+  border: 1px solid var(--cr-border);
+}
+.cr-expand-icon {
+  font-size: 0.8rem;
+  color: var(--cr-text-muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+.cr-card.cr-open .cr-expand-icon {
+  transform: rotate(90deg);
+}
+
+/* 详情面板 */
+.cr-detail {
+  display: none;
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--cr-border);
+}
+.cr-card.cr-open .cr-detail {
+  display: block;
+}
+
+.cr-section {
+  margin-top: 0.8rem;
+}
+.cr-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+/* 语法块 */
+.cr-syntax {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--cr-border);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+html[mode='dark'] .cr-syntax,
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) .cr-syntax {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+.cr-syntax .cr-kw {
+  color: var(--cr-accent);
+  font-weight: 600;
+}
+.cr-syntax .cr-arg {
+  color: var(--cr-warn);
+}
+.cr-syntax .cr-opt {
+  color: var(--cr-ok);
+}
+.cr-syntax .cr-comment {
+  color: var(--cr-text-muted);
+}
+
+/* 参数表格 */
+.cr-options-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.cr-options-table th {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1.5px solid var(--cr-border-strong);
+  color: var(--cr-text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.cr-options-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--cr-border);
+  vertical-align: top;
+}
+.cr-options-table tr:hover td {
+  background: var(--cr-bg-hover);
+}
+.cr-opt-flag {
+  font-family: monospace;
+  color: var(--cr-ok);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.cr-opt-common {
+  display: inline-block;
+  font-size: 0.65rem;
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+  background: var(--cr-accent);
+  color: var(--cr-accent-text);
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+/* 示例 */
+.cr-example {
+  margin-bottom: 0.5rem;
+}
+.cr-example-desc {
+  font-size: 0.85rem;
+  color: var(--cr-text);
+  margin-bottom: 0.2rem;
+}
+.cr-example-cmd {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--cr-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cr-example-cmd code {
+  flex: 1;
+  overflow-x: auto;
+}
+.cr-copy-btn {
+  background: var(--cr-bg-hover);
+  border: 1px solid var(--cr-border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--cr-text-muted);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.cr-copy-btn:hover {
+  background: var(--cr-accent);
+  color: var(--cr-accent-text);
+  border-color: var(--cr-accent);
+}
+
+/* 提示 */
+.cr-note {
+  background: rgba(160, 92, 0, 0.08);
+  border-left: 3px solid var(--cr-warn);
+  padding: 0.5rem 0.8rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+  color: var(--cr-text);
+  margin-top: 0.6rem;
+}
+
+/* 空状态 */
+.cr-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--cr-text-muted);
+}
+.cr-empty i {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  opacity: 0.5;
+}
+
+/* 统计 */
+.cr-stats {
+  font-size: 0.8rem;
+  color: var(--cr-text-muted);
+  margin-bottom: 0.6rem;
+}

@@ -1,0 +1,223 @@
+/*
+ * Jekyll Tabs - Custom styles
+ * Kodeco-inspired design, fully adaptive to sunyazhou.com dark/light theme
+ */
+
+/* ══════════════════════════════════════
+   CSS 变量定义 — 深色模式（默认）
+   ══════════════════════════════════════ */
+:root {
+  --tab-header-bg:             #2b2b2b;
+  --tab-header-border:         rgba(255,255,255,0.08);
+  --tab-label-color:           rgba(255,255,255,0.45);
+  --tab-label-hover:           rgba(255,255,255,0.85);
+  --tab-label-active:          #ffffff;
+  --tab-active-line:           #f05138;
+  --tab-body-bg:               #1c1c1e;
+  --tab-gutter-bg:             rgba(255,255,255,0.04);
+  --tab-gutter-border:         rgba(255,255,255,0.08);
+  --tab-lineno-color:          rgba(255,255,255,0.25);
+  --tab-copy-btn-bg:           rgba(255,255,255,0.08);
+  --tab-copy-btn-border:       rgba(255,255,255,0.18);
+  --tab-copy-btn-color:        rgba(255,255,255,0.5);
+  --tab-copy-btn-hover-bg:     rgba(255,255,255,0.16);
+  --tab-copy-btn-hover-border: rgba(255,255,255,0.35);
+  --tab-copy-btn-hover-color:  #ffffff;
+}
+
+/* ══════════════════════════════════════
+   浅色模式覆盖
+   匹配博客的 html[mode=light] 和系统浅色
+   ══════════════════════════════════════ */
+html[mode=light] {
+  --tab-header-bg:             #3a3a3c;
+  --tab-header-border:         rgba(255,255,255,0.1);
+  --tab-label-color:           rgba(255,255,255,0.5);
+  --tab-label-hover:           rgba(255,255,255,0.9);
+  --tab-label-active:          #ffffff;
+  --tab-active-line:           #f05138;
+  --tab-body-bg:               #f0f0f0;
+  --tab-gutter-bg:             rgba(0,0,0,0.04);
+  --tab-gutter-border:         rgba(0,0,0,0.08);
+  --tab-lineno-color:          #999999;
+  --tab-copy-btn-bg:           rgba(0,0,0,0.06);
+  --tab-copy-btn-border:       rgba(0,0,0,0.15);
+  --tab-copy-btn-color:        #555555;
+  --tab-copy-btn-hover-bg:     rgba(0,0,0,0.12);
+  --tab-copy-btn-hover-border: rgba(0,0,0,0.3);
+  --tab-copy-btn-hover-color:  #111111;
+}
+
+/* 系统浅色 + 未手动设置模式时 */
+@media (prefers-color-scheme: light) {
+  html:not([mode]) {
+    --tab-header-bg:             #3a3a3c;
+    --tab-header-border:         rgba(255,255,255,0.1);
+    --tab-label-color:           rgba(255,255,255,0.5);
+    --tab-label-hover:           rgba(255,255,255,0.9);
+    --tab-label-active:          #ffffff;
+    --tab-active-line:           #f05138;
+    --tab-body-bg:               #f0f0f0;
+    --tab-gutter-bg:             rgba(0,0,0,0.04);
+    --tab-gutter-border:         rgba(0,0,0,0.08);
+    --tab-lineno-color:          #999999;
+    --tab-copy-btn-bg:           rgba(0,0,0,0.06);
+    --tab-copy-btn-border:       rgba(0,0,0,0.15);
+    --tab-copy-btn-color:        #555555;
+    --tab-copy-btn-hover-bg:     rgba(0,0,0,0.12);
+    --tab-copy-btn-hover-border: rgba(0,0,0,0.3);
+    --tab-copy-btn-hover-color:  #111111;
+  }
+}
+
+/* ══════════════════════════════════════
+   Tab 导航栏
+   ══════════════════════════════════════ */
+ul.tab {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none !important;
+  margin: 1.5rem 0 0 0 !important;
+  padding: 0 0.5rem !important;
+  background: var(--tab-header-bg);
+  border-radius: 10px 10px 0 0;
+  /* 用 border-bottom 做分隔线，配合 li a 的 margin-bottom:-2px 实现压线效果 */
+  border-bottom: 2px solid var(--tab-header-border);
+  gap: 0;
+}
+
+ul.tab li {
+  margin: 0;
+  list-style: none !important;
+}
+
+ul.tab li a {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
+  color: var(--tab-label-color);
+  text-decoration: none !important;
+  border-bottom: 2px solid transparent;
+  /* 关键：负 margin 让 border-bottom 压住 ul.tab 的 border-bottom，实现无缝衔接 */
+  margin-bottom: -2px;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+ul.tab li a:hover {
+  color: var(--tab-label-hover);
+  text-decoration: none !important;
+  border-bottom-color: rgba(255,255,255,0.25);
+}
+
+ul.tab li.active a {
+  color: var(--tab-label-active);
+  border-bottom-color: var(--tab-active-line);
+}
+
+/* ══════════════════════════════════════
+   Tab 内容区
+   ══════════════════════════════════════ */
+ul.tab-content {
+  list-style: none !important;
+  margin: 0 0 1.5rem 0 !important;
+  padding: 0 !important;
+  background: var(--tab-body-bg);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+ul.tab-content > li {
+  display: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+ul.tab-content > li.active {
+  display: block;
+}
+
+/* 内容区内代码块：去掉多余圆角/背景/边距，与容器融合 */
+ul.tab-content > li > div.highlighter-rouge,
+ul.tab-content > li > div.highlight {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+ul.tab-content > li > div.highlighter-rouge pre,
+ul.tab-content > li > div.highlight pre {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  padding: 1rem 1.2rem !important;
+}
+
+/* rouge 行号列修正 */
+ul.tab-content > li .rouge-table {
+  margin: 0;
+  background: transparent;
+}
+
+ul.tab-content > li .rouge-gutter {
+  background: var(--tab-gutter-bg);
+  border-right: 1px solid var(--tab-gutter-border);
+}
+
+ul.tab-content > li .lineno {
+  color: var(--tab-lineno-color);
+  border-right: none;
+  padding: 0 0.8rem;
+}
+
+/* ══════════════════════════════════════
+   复制按钮
+   ══════════════════════════════════════ */
+.jekyll-tabs-copy-btn {
+  background: var(--tab-copy-btn-bg);
+  border: 1px solid var(--tab-copy-btn-border);
+  border-radius: 5px;
+  color: var(--tab-copy-btn-color);
+  cursor: pointer;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  line-height: 1.5;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  z-index: 10;
+}
+
+.jekyll-tabs-copy-btn:hover {
+  color: var(--tab-copy-btn-hover-color);
+  background: var(--tab-copy-btn-hover-bg);
+  border-color: var(--tab-copy-btn-hover-border);
+}
+
+/* ══════════════════════════════════════
+   Toast 提示
+   ══════════════════════════════════════ */
+#jekyll-tabs-copy-to-clipboard-message {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f05138;
+  color: #fff;
+  padding: 0.45rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+#jekyll-tabs-copy-to-clipboard-message.show {
+  opacity: 1;
+}

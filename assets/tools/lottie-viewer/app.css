@@ -1,0 +1,243 @@
+/**
+ * Lottie 动画预览器样式
+ * 独立于博客主题，仅作用于 #lv-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#lv-app {
+  --lv-border: rgba(128, 128, 128, 0.35);
+  --lv-border-strong: rgba(128, 128, 128, 0.55);
+  --lv-bg: rgba(128, 128, 128, 0.07);
+  --lv-bg-hover: rgba(128, 128, 128, 0.14);
+  --lv-text: #212529;
+  --lv-text-muted: rgba(128, 128, 128, 0.95);
+  --lv-accent: #2f6fde;
+  --lv-accent-text: #fff;
+  --lv-ok: #1a7f4b;
+  --lv-warn: #a05c00;
+  --lv-err: #c0392b;
+  --lv-radius: 8px;
+  --lv-canvas-bg: #f0f0f0;
+}
+
+html[mode='dark'] #lv-app {
+  --lv-text: #e9ecef;
+  --lv-text-muted: rgba(190, 190, 190, 0.95);
+  --lv-accent: #5b8ff0;
+  --lv-bg: rgba(255, 255, 255, 0.06);
+  --lv-bg-hover: rgba(255, 255, 255, 0.12);
+  --lv-canvas-bg: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #lv-app {
+    --lv-text: #e9ecef;
+    --lv-text-muted: rgba(190, 190, 190, 0.95);
+    --lv-accent: #5b8ff0;
+    --lv-bg: rgba(255, 255, 255, 0.06);
+    --lv-bg-hover: rgba(255, 255, 255, 0.12);
+    --lv-canvas-bg: #1a1a1a;
+  }
+}
+
+#lv-app {
+  color: var(--lv-text);
+}
+
+/* 上传区域 */
+.lv-upload {
+  border: 2px dashed var(--lv-border-strong);
+  border-radius: var(--lv-radius);
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: var(--lv-bg);
+  margin-bottom: 1.2rem;
+}
+.lv-upload:hover, .lv-upload.lv-dragover {
+  border-color: var(--lv-accent);
+  background: var(--lv-bg-hover);
+}
+.lv-upload i {
+  font-size: 2rem;
+  color: var(--lv-accent);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+.lv-upload-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.lv-upload-hint {
+  font-size: 0.85rem;
+  color: var(--lv-text-muted);
+  margin-top: 0.3rem;
+}
+
+/* 预览区 */
+.lv-preview-wrap {
+  border: 1px solid var(--lv-border);
+  border-radius: var(--lv-radius);
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+  background: var(--lv-canvas-bg);
+  position: relative;
+}
+.lv-canvas {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lv-canvas canvas,
+.lv-canvas svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+.lv-empty {
+  color: var(--lv-text-muted);
+  font-size: 0.95rem;
+}
+
+/* 控制栏 */
+.lv-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--lv-border);
+  flex-wrap: wrap;
+  background: var(--lv-bg);
+}
+.lv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--lv-border-strong);
+  border-radius: var(--lv-radius);
+  background: transparent;
+  color: var(--lv-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.lv-btn:hover {
+  background: var(--lv-bg-hover);
+  border-color: var(--lv-accent);
+}
+.lv-btn.lv-active {
+  background: var(--lv-accent);
+  border-color: var(--lv-accent);
+  color: var(--lv-accent-text);
+}
+.lv-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.lv-seek {
+  flex: 1;
+  min-width: 120px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--lv-border);
+  border-radius: 2px;
+  outline: none;
+}
+.lv-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lv-accent);
+  cursor: pointer;
+}
+.lv-seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lv-accent);
+  cursor: pointer;
+  border: none;
+}
+.lv-time {
+  font-size: 0.8rem;
+  color: var(--lv-text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 信息面板 */
+.lv-info {
+  border: 1px solid var(--lv-border);
+  border-radius: var(--lv-radius);
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+.lv-info-title {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+.lv-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+.lv-info-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+.lv-info-label {
+  color: var(--lv-text-muted);
+}
+.lv-info-value {
+  font-weight: 500;
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: 0.85rem;
+}
+
+/* 背景色选择 */
+.lv-bg-select {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.lv-bg-label {
+  font-size: 0.85rem;
+  color: var(--lv-text-muted);
+  margin-right: 0.3rem;
+}
+.lv-bg-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--lv-border);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.lv-bg-dot:hover {
+  transform: scale(1.1);
+}
+.lv-bg-dot.lv-active {
+  border-color: var(--lv-accent);
+  box-shadow: 0 0 0 2px var(--lv-accent);
+}
+
+/* 状态提示 */
+.lv-status {
+  font-size: 0.9rem;
+  color: var(--lv-text-muted);
+  min-height: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+.lv-status.lv-err { color: var(--lv-err); }
+
+/* 导出按钮 */
+.lv-export {
+  margin-left: auto;
+}

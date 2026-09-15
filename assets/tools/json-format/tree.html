@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON 树形浏览</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/assets/tools/json-format/app.css">
+  <style>
+    /* 全屏树形窗口：无博客主题与侧边栏，最大化树形可视区 */
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body {
+      background: #0f1115;
+      color: #e6e6e6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    @media (prefers-color-scheme: light) {
+      body { background: #fafafa; color: #222; }
+    }
+
+    #jf-app.jf-window-mode {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      box-sizing: border-box;
+      padding: 0.6rem 0.9rem 0.7rem;
+    }
+
+    /* 顶部工具条 */
+    #jf-app.jf-window-mode .jf-win-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--jf-border);
+      margin-bottom: 0.55rem;
+    }
+    #jf-app.jf-window-mode .jf-win-bar .jf-win-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0.3rem 0 0;
+      white-space: nowrap;
+    }
+    #jf-app.jf-window-mode .jf-win-bar .jf-win-hint {
+      font-size: 0.8rem;
+      color: var(--jf-text-muted);
+      white-space: nowrap;
+    }
+    #jf-app.jf-window-mode .jf-win-bar .jf-win-spacer { flex: 1 1 auto; }
+
+    /* 树形主体撑满剩余高度 */
+    #jf-app.jf-window-mode .jf-tree-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    #jf-app.jf-window-mode .jf-tree {
+      flex: 1 1 auto;
+      overflow: auto;
+      max-height: none;
+      font-size: 0.92rem;
+    }
+    #jf-app.jf-window-mode .jf-tree-toolbar {
+      padding-bottom: 0.4rem;
+    }
+
+    /* 返回按钮 */
+    #jf-app.jf-window-mode .jf-btn-back {
+      color: var(--jf-accent);
+      border-color: var(--jf-accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="jf-app" class="jf-window-mode">
+
+    <div class="jf-win-bar">
+      <h1 class="jf-win-title">JSON 树形浏览</h1>
+      <span class="jf-win-hint">每行均为可折叠节点 · hover 图片 URL 自动预览 · 全部为本地渲染</span>
+      <span class="jf-win-spacer"></span>
+      <a class="jf-btn jf-btn-back" href="/tools/json-format/" onclick="history.length>1?history.back()&&0:0">← 返回工具</a>
+    </div>
+
+    <div class="jf-tree-wrap" id="jf-tree-wrap">
+      <div class="jf-tree-toolbar">
+        <input type="search" id="jf-tree-search" class="jf-input jf-tree-search" placeholder="搜索节点（键或值）" spellcheck="false" autocomplete="off">
+        <button type="button" class="jf-btn" id="jf-tree-expand">全部展开</button>
+        <button type="button" class="jf-btn" id="jf-tree-collapse">全部折叠</button>
+      </div>
+      <div class="jf-tree" id="jf-tree" aria-live="polite"></div>
+    </div>
+
+    <div class="jf-status" id="jf-status"></div>
+    <div class="jf-error" id="jf-error" hidden></div>
+    <div class="jf-placeholder" id="jf-placeholder">未获取到 JSON 数据</div>
+
+  </div>
+
+  <script src="/assets/tools/json-format/app.js"></script>
+</body>
+</html>

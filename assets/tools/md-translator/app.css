@@ -1,0 +1,223 @@
+/**
+ * Markdown 中文 → 英文 本地翻译工具样式
+ * 独立于博客主题，仅作用于 #mdt-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#mdt-app {
+  --mdt-border: rgba(128, 128, 128, 0.35);
+  --mdt-border-strong: rgba(128, 128, 128, 0.55);
+  --mdt-bg: rgba(128, 128, 128, 0.07);
+  --mdt-bg-hover: rgba(128, 128, 128, 0.14);
+  --mdt-text: inherit;
+  --mdt-text-muted: rgba(128, 128, 128, 0.95);
+  --mdt-accent: #2f6fde;
+  --mdt-accent-text: #fff;
+  --mdt-ok: #1a7f4b;
+  --mdt-err: #c0392b;
+  --mdt-radius: 8px;
+  --mdt-code-bg: #0d1117;
+  --mdt-code-fg: #c9d1d9;
+}
+
+html[mode='dark'] #mdt-app {
+  --mdt-bg: rgba(255, 255, 255, 0.06);
+  --mdt-bg-hover: rgba(255, 255, 255, 0.12);
+  --mdt-text-muted: rgba(180, 180, 180, 0.9);
+}
+
+* { box-sizing: border-box; }
+
+#mdt-app {
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mdt-text);
+}
+
+.mdt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mdt-btn {
+  appearance: none;
+  border: 1px solid var(--mdt-border-strong);
+  background: var(--mdt-bg);
+  color: var(--mdt-text);
+  padding: 8px 14px;
+  border-radius: var(--mdt-radius);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, opacity .15s, box-shadow .15s;
+}
+.mdt-btn:hover { background: var(--mdt-bg-hover); }
+.mdt-btn:disabled { opacity: .5; cursor: not-allowed; }
+.mdt-btn-primary {
+  background: var(--mdt-accent);
+  border-color: var(--mdt-accent);
+  color: var(--mdt-accent-text);
+}
+.mdt-btn-primary:hover { filter: brightness(1.08); background: var(--mdt-accent); }
+
+.mdt-divider { width: 1px; align-self: stretch; background: var(--mdt-border); margin: 0 4px; }
+
+/* 选项区 */
+.mdt-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  align-items: flex-end;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--mdt-border);
+  border-radius: var(--mdt-radius);
+  background: var(--mdt-bg);
+}
+.mdt-field { display: flex; flex-direction: column; gap: 4px; }
+.mdt-field > span { font-size: 12px; color: var(--mdt-text-muted); }
+.mdt-text, .mdt-select {
+  appearance: none;
+  border: 1px solid var(--mdt-border-strong);
+  background: var(--mdt-bg);
+  color: var(--mdt-text);
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 160px;
+}
+.mdt-text:focus, .mdt-select:focus { outline: 2px solid var(--mdt-accent); outline-offset: 0; }
+.mdt-glossary {
+  min-width: 280px;
+  min-height: 56px;
+  resize: vertical;
+  border: 1px solid var(--mdt-border-strong);
+  background: var(--mdt-bg);
+  color: var(--mdt-text);
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* 主体上下布局：输入在上、输出在下，全宽 */
+.mdt-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.mdt-pane { display: flex; flex-direction: column; min-width: 0; }
+.mdt-pane-label {
+  font-size: 12px;
+  color: var(--mdt-text-muted);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mdt-input, .mdt-output {
+  width: 100%;
+  min-height: 380px;
+  resize: vertical;
+  border: 1px solid var(--mdt-border-strong);
+  border-radius: var(--mdt-radius);
+  background: var(--mdt-code-bg);
+  color: var(--mdt-code-fg);
+  padding: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+.mdt-input:focus, .mdt-output:focus { outline: 2px solid var(--mdt-accent); outline-offset: 0; }
+.mdt-output { background: #0a0e14; }
+
+/* 拖拽区（关键功能：放大、accent 高亮，置于工具栏与选项之间） */
+.mdt-drop {
+  border: 2px dashed var(--mdt-accent);
+  border-radius: var(--mdt-radius);
+  padding: 18px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--mdt-text);
+  background: rgba(47, 111, 222, 0.08);
+  cursor: pointer;
+  text-align: center;
+  transition: background .15s, border-color .15s;
+}
+.mdt-drop:hover, .mdt-drop.mdt-drag {
+  background: rgba(47, 111, 222, 0.18);
+  border-color: var(--mdt-accent);
+}
+.mdt-file-input { display: none; }
+
+/* 翻译完成后高亮下载按钮（提示用户保存到 _posts/en/） */
+.mdt-btn-highlight {
+  background: var(--mdt-ok) !important;
+  border-color: var(--mdt-ok) !important;
+  color: #fff !important;
+  animation: mdt-pulse 1.4s ease-in-out infinite;
+}
+@keyframes mdt-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 127, 75, 0.55); }
+  50%      { box-shadow: 0 0 0 8px rgba(26, 127, 75, 0); }
+}
+
+/* 状态条 */
+.mdt-status {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  min-height: 18px;
+  white-space: pre-wrap;
+  border: 1px solid transparent;
+}
+.mdt-status-ok { color: var(--mdt-ok); background: rgba(26, 127, 75, 0.1); border-color: rgba(26, 127, 75, 0.3); }
+.mdt-status-err { color: var(--mdt-err); background: rgba(192, 57, 43, 0.1); border-color: rgba(192, 57, 43, 0.3); }
+
+/* 翻译进度条（藏在 status 区） */
+.mdt-progress {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mdt-progress-bar-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(128, 128, 128, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.mdt-progress-bar-fill {
+  height: 100%;
+  background: var(--mdt-accent);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.25s ease;
+}
+.mdt-progress-label {
+  font-size: 12px;
+  color: var(--mdt-text-muted);
+  white-space: nowrap;
+  min-width: 100px;
+  text-align: right;
+}
+
+.mdt-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--mdt-text-muted);
+  line-height: 1.7;
+}
+.mdt-note code {
+  background: var(--mdt-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}

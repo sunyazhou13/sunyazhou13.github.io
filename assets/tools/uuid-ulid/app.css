@@ -1,0 +1,151 @@
+/**
+ * UUID / ULID 生成器样式
+ * 独立于博客主题，仅作用于 #uu-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#uu-app {
+  --uu-border: rgba(128, 128, 128, 0.35);
+  --uu-border-strong: rgba(128, 128, 128, 0.55);
+  --uu-bg: rgba(128, 128, 128, 0.07);
+  --uu-bg-hover: rgba(128, 128, 128, 0.14);
+  --uu-text-muted: rgba(128, 128, 128, 0.95);
+  --uu-accent: #2f6fde;
+  --uu-accent-text: #fff;
+  --uu-ok: #1a7f4b;
+  --uu-radius: 8px;
+}
+
+html[mode='dark'] #uu-app {
+  --uu-bg: rgba(255, 255, 255, 0.06);
+  --uu-bg-hover: rgba(255, 255, 255, 0.12);
+  --uu-text-muted: rgba(190, 190, 190, 0.95);
+  --uu-accent: #5b8ff0;
+  --uu-ok: #57c288;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #uu-app {
+    --uu-bg: rgba(255, 255, 255, 0.06);
+    --uu-bg-hover: rgba(255, 255, 255, 0.12);
+    --uu-text-muted: rgba(190, 190, 190, 0.95);
+    --uu-accent: #5b8ff0;
+    --uu-ok: #57c288;
+  }
+}
+
+#uu-app .uu-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.8rem 1.2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--uu-border);
+  border-radius: var(--uu-radius);
+  background: var(--uu-bg);
+}
+
+#uu-app .uu-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--uu-text-muted);
+  margin: 0;
+}
+
+#uu-app .uu-controls select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--uu-border);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+#uu-app .uu-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--uu-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#uu-app .uu-btn:hover:not(:disabled) { background: var(--uu-bg-hover); }
+#uu-app .uu-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#uu-app .uu-btn-primary {
+  background: var(--uu-accent);
+  border-color: var(--uu-accent);
+  color: var(--uu-accent-text);
+}
+
+#uu-app .uu-btn-primary:hover:not(:disabled) { opacity: 0.88; background: var(--uu-accent); }
+
+#uu-app .uu-btn-sm { padding: 0.2rem 0.6rem; font-size: 0.82rem; }
+
+#uu-app .uu-quick {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.7rem 0;
+  font-size: 0.85rem;
+  color: var(--uu-text-muted);
+}
+
+#uu-app .uu-quick-label { flex: none; }
+
+#uu-app .uu-status {
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+  color: var(--uu-text-muted);
+}
+
+#uu-app .uu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#uu-app .uu-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--uu-border);
+  border-radius: var(--uu-radius);
+  background: var(--uu-bg);
+}
+
+#uu-app .uu-idx {
+  flex: none;
+  min-width: 2rem;
+  text-align: right;
+  font-size: 0.82rem;
+  color: var(--uu-text-muted);
+}
+
+#uu-app .uu-val {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+  user-select: all;
+  background: transparent;
+}
+
+#uu-app .uu-btn-copied,
+#uu-app .uu-btn.uu-copied {
+  color: var(--uu-ok);
+  border-color: var(--uu-ok);
+}
+
+@media (max-width: 576px) {
+  #uu-app .uu-controls { margin-left: 0; }
+  #uu-app .uu-row { flex-wrap: wrap; }
+}

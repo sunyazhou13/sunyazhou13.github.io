@@ -1,0 +1,293 @@
+/**
+ * JSON 工具（v4）— 独立于博客主题，仅作用于 #jf-app；暗色适配 Chirpy html[mode=dark]+系统偏好。
+ */
+
+#jf-app {
+  --jf-border: rgba(128, 128, 128, 0.35);
+  --jf-border-strong: rgba(128, 128, 128, 0.55);
+  --jf-bg: rgba(128, 128, 128, 0.07);
+  --jf-bg-hover: rgba(128, 128, 128, 0.14);
+  --jf-text-muted: rgba(128, 128, 128, 0.95);
+  --jf-accent: #2f6fde;
+  --jf-accent-text: #fff;
+  --jf-err: #c0392b;
+  --jf-key: #7f5f2f;
+  --jf-str: #1a7f4b;
+  --jf-num: #2f6fde;
+  --jf-bool: #8e44ad;
+  --jf-null: #7f8c8d;
+  --jf-hl: rgba(255, 200, 0, 0.28);
+}
+
+html[mode='dark'] #jf-app,
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #jf-app {
+    --jf-bg: rgba(255, 255, 255, 0.06);
+    --jf-bg-hover: rgba(255, 255, 255, 0.12);
+    --jf-text-muted: rgba(190, 190, 190, 0.95);
+    --jf-accent: #5b8ff0;
+    --jf-err: #e2735f;
+    --jf-key: #e0c068;
+    --jf-str: #7fd69a;
+    --jf-num: #7fb2ff;
+    --jf-bool: #c39ae0;
+    --jf-null: #9aa3ab;
+    --jf-hl: rgba(255, 200, 0, 0.22);
+  }
+}
+
+#jf-app {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  max-width: 100%;
+}
+
+#jf-app .jf-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+
+#jf-app .jf-hint { color: var(--jf-text-muted); }
+
+#jf-app .jf-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+#jf-app .jf-tools-divider {
+  width: 1px;
+  height: 1.2em;
+  background: var(--jf-border-strong);
+  margin: 0 0.15rem;
+}
+
+#jf-app .jf-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--jf-border-strong);
+  border-radius: 8px;
+  background: var(--jf-bg);
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+  box-shadow: none;
+}
+
+#jf-app .jf-input:focus { outline: none; border-color: var(--jf-accent); }
+#jf-app .jf-input::placeholder { color: var(--jf-text-muted); opacity: 0.75; }
+
+#jf-app .jf-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--jf-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  line-height: 1.4;
+}
+
+#jf-app .jf-btn:hover { background: var(--jf-bg-hover); border-color: var(--jf-accent); }
+
+#jf-app .jf-btn-window { color: var(--jf-accent); border-color: var(--jf-accent); }
+
+#jf-app .jf-btn-accent {
+  background: var(--jf-accent);
+  border-color: var(--jf-accent);
+  color: #fff;
+}
+#jf-app .jf-btn-accent:hover { filter: brightness(1.08); }
+
+#jf-app .jf-status {
+  min-height: 1.3em;
+  font-size: 0.85rem;
+  color: var(--jf-text-muted);
+  margin: 0.3rem 0 0.1rem;
+}
+#jf-app .jf-status-ok { color: #1a7f4b; }
+#jf-app .jf-status-note { color: var(--jf-accent); }
+html[mode='dark'] #jf-app .jf-status-ok,
+@media (prefers-color-scheme: dark) { html:not([mode='light']) #jf-app .jf-status-ok { color: #57c288; } }
+
+/* ---------- 报错块 ---------- */
+
+#jf-app .jf-error {
+  margin-top: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--jf-err);
+  border-left-width: 4px;
+  border-radius: 6px;
+  background: rgba(192, 57, 43, 0.08);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+#jf-app .jf-err-title { font-weight: 600; color: var(--jf-err); margin-bottom: 0.3rem; word-break: break-word; }
+#jf-app .jf-err-pos { color: var(--jf-err); font-weight: 600; }
+#jf-app .jf-err-line code { display: block; white-space: pre-wrap; word-break: break-all; background: var(--jf-bg); border-radius: 4px; padding: 0.25rem 0.5rem; }
+#jf-app .jf-err-caret code { color: var(--jf-err); white-space: pre; }
+#jf-app .jf-err-hint { margin-top: 0.3rem; color: var(--jf-text-muted); }
+#jf-app .jf-placeholder { padding: 0.8rem 0; color: var(--jf-text-muted); font-size: 0.9rem; }
+
+/* ---------- 树形 ---------- */
+
+#jf-app .jf-tree-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+
+#jf-app .jf-tree-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+}
+
+#jf-app .jf-tree-search {
+  flex: 0 1 220px;
+  min-width: 150px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--jf-border-strong);
+  border-radius: 6px;
+  background: var(--jf-bg);
+  color: inherit;
+  font-size: 0.88rem;
+}
+
+#jf-app .jf-tree-search:focus { outline: none; border-color: var(--jf-accent); }
+#jf-app .jf-tree-meta { color: var(--jf-text-muted); font-size: 0.82rem; white-space: nowrap; }
+#jf-app .jf-toolbar-spacer { flex: 1 1 auto; }
+
+#jf-app .jf-tree {
+  padding: 0.6rem 0.3rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  overflow: auto;
+  max-height: 480px;
+  border: 1px solid var(--jf-border);
+  border-radius: 8px;
+  background: var(--jf-bg);
+}
+
+#jf-app .jf-node-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  padding: 0.08rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: background 0.12s ease;
+}
+
+#jf-app .jf-node-row[role='button'] { cursor: pointer; }
+#jf-app .jf-node-row:hover { background: var(--jf-bg-hover); }
+
+#jf-app .jf-twisty { display: inline-block; width: 1em; text-align: center; color: var(--jf-text-muted); font-size: 0.78rem; }
+#jf-app .jf-twisty::before { content: '\25B8'; }
+#jf-app .jf-open > .jf-node-row .jf-twisty::before { content: '\25BE'; }
+#jf-app .jf-twisty-empty::before { content: ''; }
+
+#jf-app .jf-key { color: var(--jf-key); }
+#jf-app .jf-key-idx { color: var(--jf-text-muted); }
+#jf-app .jf-summary { color: var(--jf-text-muted); font-size: 0.8rem; }
+
+#jf-app .jf-val-string { color: var(--jf-str); }
+#jf-app .jf-val-number { color: var(--jf-num); }
+#jf-app .jf-val-boolean { color: var(--jf-bool); }
+#jf-app .jf-val-null { color: var(--jf-null); font-style: italic; }
+
+#jf-app .jf-val-img {
+  cursor: zoom-in;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+#jf-app .jf-has-img > .jf-node-row .jf-val-img::after {
+  content: '\1F5BC';
+  margin-left: 0.2rem;
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+#jf-app .jf-children {
+  display: none;
+  margin-left: 1.05em;
+  padding-left: 0.55em;
+  border-left: 1px dotted var(--jf-border);
+}
+#jf-app .jf-open > .jf-children { display: block; }
+
+#jf-app .jf-hl-node > .jf-node-row {
+  background: var(--jf-hl);
+  box-shadow: inset 0 0 0 1px rgba(255, 200, 0, 0.45);
+}
+
+/* ---------- hover 图片预览浮层（全局，窗口模式共用） ---------- */
+
+.jf-img-pop {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.jf-img-pop-box {
+  width: 280px;
+  max-width: 42vw;
+  min-height: 48px;
+  border: 1px solid rgba(128, 128, 128, 0.55);
+  border-radius: 8px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  background: #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #ccc;
+  padding: 2px;
+}
+
+html[mode='light'] .jf-img-pop-box {
+  background: #fff;
+  color: #555;
+}
+
+.jf-img-pop-box img {
+  display: block;
+  max-width: 100%;
+  max-height: 340px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.jf-img-pop-box.jf-img-pop-err { padding: 0.9rem; align-items: flex-start; }
+
+/* 全屏窗口模式（tree.html） */
+#jf-app.jf-window-mode {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 0.8rem 1.2rem;
+}
+#jf-app.jf-window-mode .jf-tree { max-height: none; flex: 1 1 auto; border: none; background: transparent; }
+#jf-app.jf-window-mode .jf-tree-wrap { flex: 1 1 auto; }
+#jf-app.jf-window-mode .jf-win-return { text-decoration: none; color: var(--jf-accent); font-size: 0.88rem; }
+
+@media (max-width: 640px) {
+  #jf-app .jf-tree-toolbar { align-items: stretch; }
+  #jf-app .jf-tree-search { flex-basis: 100%; }
+  #jf-app .jf-tools { gap: 0.35rem; }
+  #jf-app .jf-btn { padding: 0.35rem 0.7rem; font-size: 0.84rem; }
+}

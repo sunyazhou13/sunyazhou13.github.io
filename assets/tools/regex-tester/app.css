@@ -1,0 +1,190 @@
+/**
+ * 正则表达式测试器样式
+ * 独立于博客主题，仅作用于 #rt-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#rt-app {
+  --rt-border: rgba(128, 128, 128, 0.35);
+  --rt-border-strong: rgba(128, 128, 128, 0.55);
+  --rt-bg: rgba(128, 128, 128, 0.07);
+  --rt-bg-hover: rgba(128, 128, 128, 0.14);
+  --rt-text-muted: rgba(128, 128, 128, 0.95);
+  --rt-accent: #2f6fde;
+  --rt-ok: #1a7f4b;
+  --rt-warn: #a05c00;
+  --rt-err: #c0392b;
+  --rt-mark-bg: rgba(47, 111, 222, 0.22);
+  --rt-mark-bg-dark: rgba(91, 143, 240, 0.28);
+  --rt-radius: 8px;
+}
+
+html[mode='dark'] #rt-app {
+  --rt-bg: rgba(255, 255, 255, 0.06);
+  --rt-bg-hover: rgba(255, 255, 255, 0.12);
+  --rt-text-muted: rgba(190, 190, 190, 0.95);
+  --rt-accent: #5b8ff0;
+  --rt-ok: #57c288;
+  --rt-warn: #e0a94e;
+  --rt-err: #e2735f;
+  --rt-mark-bg: var(--rt-mark-bg-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #rt-app {
+    --rt-bg: rgba(255, 255, 255, 0.06);
+    --rt-bg-hover: rgba(255, 255, 255, 0.12);
+    --rt-text-muted: rgba(190, 190, 190, 0.95);
+    --rt-accent: #5b8ff0;
+    --rt-ok: #57c288;
+    --rt-warn: #e0a94e;
+    --rt-err: #e2735f;
+    --rt-mark-bg: var(--rt-mark-bg-dark);
+  }
+}
+
+#rt-app .rt-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+}
+
+#rt-app .rt-field label {
+  font-size: 0.85rem;
+  color: var(--rt-text-muted);
+  margin: 0;
+}
+
+#rt-app .rt-pattern,
+#rt-app .rt-textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--rt-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  transition: border-color 0.15s ease;
+}
+
+#rt-app .rt-pattern { display: block; }
+#rt-app .rt-textarea { display: block; resize: vertical; line-height: 1.5; }
+
+#rt-app .rt-pattern:focus,
+#rt-app .rt-textarea:focus {
+  outline: none;
+  border-color: var(--rt-accent);
+}
+
+#rt-app .rt-pattern::placeholder,
+#rt-app .rt-textarea::placeholder { color: var(--rt-text-muted); opacity: 0.7; }
+
+#rt-app .rt-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0 0 0.7rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--rt-border);
+  border-radius: var(--rt-radius);
+  background: var(--rt-bg);
+}
+
+#rt-app .rt-flags label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+#rt-app .rt-flags input[type='checkbox'] { accent-color: var(--rt-accent); }
+
+#rt-app .rt-status {
+  margin: 0.5rem 0;
+  font-size: 0.88rem;
+  min-height: 1.1em;
+}
+#rt-app .rt-status-error { color: var(--rt-err); }
+#rt-app .rt-status-warn { color: var(--rt-warn); }
+
+#rt-app .rt-warn {
+  margin: 0.5rem 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--rt-warn);
+  border-radius: var(--rt-radius);
+  background: var(--rt-bg);
+  font-size: 0.85rem;
+  color: var(--rt-warn);
+}
+
+#rt-app .rt-warn-title { font-weight: 600; }
+#rt-app .rt-warn ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+#rt-app .rt-warn li { margin: 0.15rem 0; }
+
+#rt-app .rt-meta {
+  margin: 0.4rem 0;
+  font-size: 0.84rem;
+  color: var(--rt-text-muted);
+}
+
+#rt-app .rt-output {
+  padding: 0.8rem;
+  border: 1px solid var(--rt-border);
+  border-radius: var(--rt-radius);
+  background: var(--rt-bg);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#rt-app .rt-mark {
+  background-color: var(--rt-mark-bg);
+  border-radius: 3px;
+  padding: 0 1px;
+  cursor: default;
+}
+
+#rt-app .rt-groups {
+  margin-top: 1rem;
+}
+
+#rt-app .rt-groups-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+#rt-app .rt-gtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+#rt-app .rt-gtable th,
+#rt-app .rt-gtable td {
+  border: 1px solid var(--rt-border);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+  word-break: break-all;
+}
+
+#rt-app .rt-gtable th {
+  background: var(--rt-bg);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#rt-app .rt-gi { color: var(--rt-text-muted); white-space: nowrap; }
+#rt-app .rt-gpos { color: var(--rt-text-muted); white-space: nowrap; font-family: 'SF Mono', Menlo, monospace; }
+
+#rt-app .rt-groups-more { font-size: 0.82rem; color: var(--rt-text-muted); }
+
+@media (max-width: 576px) {
+  #rt-app .rt-gtable { font-size: 0.8rem; }
+}
