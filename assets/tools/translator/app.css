@@ -1,0 +1,203 @@
+/* 多语在线翻译工具样式 */
+.tr-app {
+  max-width: 960px;
+  margin: 0 auto;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+
+.tr-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.1rem;
+  border-radius: 8px;
+  background: #eef4ff;
+  border: 1px solid #cfe0ff;
+  color: #1f4fa8;
+  font-size: 0.86rem;
+}
+.tr-banner i { color: #2f6fde; }
+
+.tr-langbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.tr-select {
+  flex: 1 1 200px;
+  min-width: 160px;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #cfd6e4;
+  border-radius: 8px;
+  background: #fff;
+  color: #2a2a2a;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+}
+.tr-select:focus { border-color: #2f6fde; box-shadow: 0 0 0 2px rgba(47,111,222,0.15); }
+
+.tr-enginebar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+  flex-wrap: wrap;
+}
+.tr-engine-label {
+  font-size: 0.85rem;
+  color: #667;
+  white-space: nowrap;
+}
+.tr-engine-select { flex: 1 1 260px; min-width: 200px; }
+
+.tr-usage {
+  font-size: 0.78rem;
+  color: #8893a7;
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+.tr-usage .tr-quota-ok { color: #2e9e5b; }
+.tr-usage .tr-quota-warn { color: #d98a00; font-weight: 600; }
+.tr-usage .tr-quota-none { color: #aab; }
+
+.tr-swap {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #cfd6e4;
+  background: #fff;
+  color: #2f6fde;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, background 0.2s;
+}
+.tr-swap:hover { background: #eef4ff; }
+.tr-swap:active { transform: rotate(180deg); }
+
+.tr-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 680px) {
+  .tr-panels { grid-template-columns: 1fr; }
+}
+
+.tr-panel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e6ef;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  min-height: 220px;
+}
+
+.tr-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid #eef1f6;
+  background: #fafbfe;
+  font-size: 0.82rem;
+  color: #667;
+}
+.tr-panel-head .tr-langname { font-weight: 600; color: #445; }
+.tr-panel-head .tr-actions { display: flex; gap: 0.35rem; }
+.tr-icon-btn {
+  border: none;
+  background: transparent;
+  color: #8893a7;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 6px;
+}
+.tr-icon-btn:hover { background: #eef1f6; color: #2f6fde; }
+
+.tr-input,
+.tr-output {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 0.9rem 0.95rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: inherit;
+  color: #2a2a2a;
+  background: transparent;
+  min-height: 160px;
+}
+.tr-output {
+  white-space: pre-wrap;
+  overflow-y: auto;
+  word-break: break-word;
+}
+.tr-output.tr-placeholder { color: #aab; }
+
+.tr-panel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.8rem;
+  border-top: 1px solid #eef1f6;
+  background: #fafbfe;
+  font-size: 0.76rem;
+  color: #99a;
+}
+.tr-loading { color: #2f6fde; }
+.tr-source { color: #8893a7; }
+
+.tr-detect {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: #667;
+}
+.tr-detect b { color: #2f6fde; }
+
+.tr-actions-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  flex-wrap: wrap;
+}
+.tr-btn {
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #cfd6e4;
+  background: #fff;
+  color: #2a2a2a;
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+.tr-btn:hover { background: #f4f7fc; }
+.tr-btn-primary {
+  background: #2f6fde;
+  border-color: #2f6fde;
+  color: #fff;
+}
+.tr-btn-primary:hover { background: #2a63c8; }
+
+.tr-error {
+  margin-top: 0.8rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  background: #fff3f3;
+  border: 1px solid #ffd0d0;
+  color: #c0392b;
+  font-size: 0.86rem;
+  display: none;
+}
+.tr-error.show { display: block; }
