@@ -30,6 +30,7 @@
       routeLoading: '查询中…',
       routeFail: '在线释义服务暂时不可用，请稍后重试（或检查浏览器扩展是否拦截网络请求）',
       routeLocalEmpty: '本地词库暂无释义',
+      apiDefsEmpty: '暂无英英释义',
       emptyInput: '请输入要查询的单词或中文',
       translateFail: '翻译服务暂时不可用，请稍后重试',
       notFound: '未找到"',
@@ -82,6 +83,7 @@
       routeLoading: 'Loading…',
       routeFail: 'Online definitions temporarily unavailable. Please try again later (or check if a browser extension is blocking network requests).',
       routeLocalEmpty: 'No local entry found',
+      apiDefsEmpty: 'No English definition available',
       emptyInput: 'Please enter a word or Chinese text',
       translateFail: 'Translation service is temporarily unavailable. Please try again later.',
       notFound: 'No results for "',
@@ -1478,10 +1480,12 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
   function renderTranslateRow(elId, badge, ok, text) {
     const el = document.getElementById(elId);
     if (!el) return;
+    // 翻译行失败要用翻译自己的文案（translateFail），
+    // 之前错用 routeFail"在线释义服务不可用"，让用户误以为整个词典坏了
     el.innerHTML = '<span class="ed-tag-badge">' + escapeHtml(badge) + '</span> ' +
       (ok && text
         ? '<span>' + escapeHtml(text) + '</span>'
-        : '<span class="ed-route-note">' + T.routeFail + '</span>');
+        : '<span class="ed-route-note">' + T.translateFail + '</span>');
   }
 
   /**
@@ -1530,15 +1534,23 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
   function renderApiSlot(meanings, ok, localEnDefs) {
     const el = document.getElementById('ed-slot-api');
     if (!el) return;
-    el.dataset.apiDone = '1';
     if (ok && meanings && meanings.length > 0) {
+      // API 成功才算定稿：此后本地回退不再覆盖
+      el.dataset.apiDone = '1';
       el.innerHTML = '<div class="ed-section ed-section-api">' + buildApiMeaningsHtml(meanings) + '</div>';
     } else if (localEnDefs) {
+      el.dataset.localDefs = '1';
       // 在线释义不可用时静默回退到本地英英释义，不显示失败文案
       el.innerHTML = '<div class="ed-section ed-section-api">' + buildLocalEnDefsHtml(localEnDefs) + '</div>';
+    } else if (el.dataset.localDefs === '1') {
+      // 竞态兜底：API 先落定（比如 dictionaryapi.dev 秒拒）时 result.enDefs 还没被
+      // localLookup 赋值，参数是空的；但本地英英释义已经渲染过了，保留即可
     } else {
+      // API 挂了且本地也没有：这不是"服务故障"，词典的主释义本来就在本地词库里，
+      // 只是这个词没有英英释义。给温和的"暂无"，别吓用户说服务不可用。
+      // 注意这里刻意不置 apiDone —— 后到的本地英英释义仍允许覆盖这个占位。
       el.innerHTML = '<div class="ed-section-title">' + T.engDefsTitle + '</div>' +
-        '<div class="ed-route-note">' + T.routeFail + '</div>';
+        '<div class="ed-route-note">' + T.apiDefsEmpty + '</div>';
     }
   }
 
@@ -1549,7 +1561,10 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
   function renderApiSlotLocal(enDefs) {
     if (!enDefs) return;
     const el = document.getElementById('ed-slot-api');
+    // apiDone 只在 API 成功填充时才设置（见 renderApiSlot），
+    // API 失败/占位不拦截本地释义的后续覆盖
     if (!el || el.dataset.apiDone === '1') return;
+    el.dataset.localDefs = '1';
     el.innerHTML = '<div class="ed-section ed-section-api">' + buildLocalEnDefsHtml(enDefs) + '</div>';
   }
 
