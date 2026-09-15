@@ -367,7 +367,10 @@ function setCard(eng, state, msg) {
   }
 }
 
-// ── TTS：中文优先用有道真人发音，英文及所有其它语种走浏览器原生 Web Speech ──
+// ── TTS：系统语音为主 + 英文短词走有道真人发音 ──
+// 背景（均已实测）：有道 dictvoice 对英文整句会 500、对中文返回约 0.1s 的坏片段；StreamElements 公共端点已 401 失效；
+// 百度 gettts 有 Referer 校验，跨域（本站）返回空音频。故网络音源只保留「英文词/短词」这一确有价值且可用的场景，
+// 其余一律走系统语音，并显式挑选优质音色——否则浏览器会落到系统默认的搞怪/沙哑音（如 macOS 的 Fred / Albert / Zarvox）。
 function playAudio(url) {
   return new Promise((resolve, reject) => {
     const a = new Audio(url);
@@ -376,41 +379,54 @@ function playAudio(url) {
     a.play().then(resolve).catch(reject);
   });
 }
+
+// 浏览器音色挑选：排除搞怪/低质音色，优先高质真人音色
+let _voices = [];
+function loadVoices() { try { _voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; } catch (e) { _voices = []; } }
+const BAD_VOICES = /(albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|superstar|trinoids|whisper|wobble|zarvox|flo|grandma|grandpa|reed|rocko|sandy|shelley|eddy|fred)/i;
+const GOOD_VOICES = /(samantha|ava|allison|serena|alex|daniel|karen|moira|tessa|nicki|google|enhanced|premium|natural|neural|siri|ting-?ting|mei-?jia|sin-?ji|kyoko|yuna|sora|amelie|thomas|anna|monica|milena|alice|daria|diego|jorge|juan|luca|paulina|matilda|kanya|zuzana|lekha|tarja|mariska|yelda|zosia|damayanti|satu|ioana|laila|hala|katja|melina|vitoria|iwan|maged|yoram|carmit|ellen)/i;
+
+function pickVoice(lang) {
+  if (!_voices.length) loadVoices();
+  const base = String(lang || 'en').toLowerCase().split('-')[0];
+  let pool = _voices.filter((v) => !BAD_VOICES.test(v.name || ''));
+  const exact = pool.filter((v) => String(v.lang || '').toLowerCase().replace('_', '-').split('-')[0] === base);
+  if (exact.length) pool = exact;
+  if (!pool.length) return null;
+  const good = pool.filter((v) => GOOD_VOICES.test(v.name || ''));
+  return good[0] || pool[0];
+}
+
+function speakWeb(text, lang) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice(lang);
+    if (v) { u.voice = v; u.lang = v.lang || lang; } else { u.lang = lang; }
+    u.rate = 1;
+    window.speechSynthesis.speak(u);
+  } catch (e) { /* ignore */ }
+}
+
 function speak(text, lang) {
   if (!text) return;
-  const trimmed = text.trim();
-  // 中文优先用有道真人发音
-  if (lang === 'zh-Hans' || lang === 'zh-Hant' || lang === 'zh-CN') {
-    const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(trimmed) + '&type=1';
+  const t = text.trim();
+  if (!t) return;
+  // 英文「词/短词」（≤2 个词）：有道真人发音（词典音质，跨域可用，实测 hello / hello world 均正常）
+  if (lang === 'en' && t.split(/\s+/).length <= 2) {
+    const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(t) + '&type=2';
     playAudio(url).catch(() => speakWeb(text, lang));
     return;
   }
-  // 英文
-  if (lang === 'en') {
-    // 英文单词（无空格）：有道真人发音
-    if (!/\s/.test(trimmed)) {
-      const url = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(trimmed) + '&type=1';
-      playAudio(url).catch(() => speakWeb(text, lang));
-      return;
-    }
-    // 英文句子/短语：StreamElements Amy（更自然的真人朗读女声）
-    const url = 'https://api.streamelements.com/kappa/v2/speech?voice=Amy&text=' + encodeURIComponent(trimmed);
-    playAudio(url).catch(() => speakWeb(text, lang));
-    return;
-  }
-  // 其它语种 fallback 到浏览器语音
+  // 其余（英文整句 / 中文 / 其它语种）：系统语音，已显式挑选优质音色，避免沙哑默认音
   speakWeb(text, lang);
 }
-function speakWeb(text, lang) {
-  if ('speechSynthesis' in window) {
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang;
-      u.rate = 1;
-      window.speechSynthesis.speak(u);
-    } catch (e) { /* ignore */ }
-  }
+
+// 预热音色列表（Chrome 的 getVoices 首次可能为空，靠 voiceschanged 异步填充）
+if ('speechSynthesis' in window) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
 }
 
 // ── UI 绑定 ──
