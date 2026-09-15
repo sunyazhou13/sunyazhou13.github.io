@@ -57,6 +57,9 @@
       downloadComplete: '全部完成',
       downloadError: '下载中断，请点击重试',
       downloadInterrupted: '下载中断：成功 {ok}/{total}，失败分片: {list}',
+      downloadVerifying: '校验已存分片…',
+      downloadStoreFail: '已下载但写入浏览器存储失败（空间不足或无痕模式）：{list}',
+      downloadQuotaWarn: '浏览器剩余存储空间不足（词库需约 {need}，当前可用 {avail}），请清理本站或其他站点数据后重试',
       retryFailedBtn: '重试失败分片',
       clearCache: '清除缓存',
       clearCacheConfirm: '确定清除已缓存的词库吗？清除后需重新下载才能离线查词。',
@@ -106,6 +109,9 @@
       downloadComplete: 'Complete',
       downloadError: 'Download interrupted, click to retry',
       downloadInterrupted: 'Download interrupted: {ok}/{total} done, failed shards: {list}',
+      downloadVerifying: 'Verifying stored shards…',
+      downloadStoreFail: 'Downloaded but failed to write into browser storage (out of space or private mode): {list}',
+      downloadQuotaWarn: 'Not enough free browser storage (needs ~{need}, only {avail} left). Clear site data and retry.',
       retryFailedBtn: 'Retry Failed Shards',
       clearCache: 'Clear Cache',
       clearCacheConfirm: 'Clear the cached dictionary? You will need to re-download it for offline lookup.',
@@ -230,6 +236,30 @@
       tx.oncomplete = () => resolve();
       tx.onerror = () => reject(tx.error);
     }));
+  }
+
+  /**
+   * 带重试的写入。IndexedDB 连接可能因这些原因失效：
+   *   - 其他标签页触发版本变更，本连接被 onversionchange 关掉
+   *   - openDB 命中 4s 超时保护，把 _dbBroken 置为 true 后永久拒绝
+   *   - 大分片写入期间浏览器回收了连接
+   * 全量下载耗时长，中途掉连接的概率不低。失败时丢弃旧连接、清掉 _dbBroken，
+   * 重新 open 后再写一次，能救回大部分"下载成功但没落盘"。
+   */
+  async function dbPutRetry(store, key, value, retries) {
+    let lastErr = null;
+    const max = (typeof retries === 'number' && retries >= 0) ? retries : 1;
+    for (let i = 0; i <= max; i++) {
+      try {
+        return await dbPut(store, key, value);
+      } catch (e) {
+        lastErr = e;
+        try { if (_db) _db.close(); } catch (err) { /* ignore */ }
+        _db = null;
+        _dbBroken = false; // 允许重新 open，否则后续一律 reject
+      }
+    }
+    throw lastErr || new Error('dbPut failed: ' + store + '/' + key);
   }
 
   function dbCount(store) {
@@ -516,11 +546,59 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
     } catch (e) { return []; }
   }
 
+  // 全量词库落盘所需空间（字节），仅用于下载前的剩余配额预估
+  const DICT_NEEDED_BYTES = 300 * 1024 * 1024;
+
+  function fmtMB(bytes) {
+    return Math.max(1, Math.round(bytes / 1024 / 1024)) + 'MB';
+  }
+
+  /**
+   * 下载前的存储前置检查：
+   * 1. 申请持久化存储（persist）。Chrome/Edge 默认会在磁盘紧张时回收普通站点的
+   *    IndexedDB，这是"前两天还好好的，今天缓存全没了"最常见的原因；拿到持久化
+   *    授权后数据只在用户手动清除时才走。
+   * 2. 预估剩余配额，明显不够就返回告警文案（不阻断下载，交由用户判断）。
+   *    注：Safari 不支持 persist，且对 7 天未访问的站点会回收存储，无法避免。
+   */
+  async function ensureStorage() {
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        let already = false;
+        try {
+          already = navigator.storage.persisted ? await navigator.storage.persisted() : false;
+        } catch (e) { /* persisted 不可用时按未授权处理 */ }
+        if (!already) {
+          try { await navigator.storage.persist(); } catch (e) { /* 不支持则忽略 */ }
+        }
+      }
+    } catch (e) { /* persist 失败不影响下载 */ }
+
+    try {
+      if (navigator.storage && navigator.storage.estimate) {
+        const est = await navigator.storage.estimate();
+        const quota = est.quota || 0;
+        const remaining = quota - (est.usage || 0);
+        // quota=0 表示浏览器不给可信数字（部分隐私模式），跳过告警避免误报
+        if (quota > 0 && remaining > 0 && remaining < DICT_NEEDED_BYTES) {
+          return T.downloadQuotaWarn
+            .replace('{need}', fmtMB(DICT_NEEDED_BYTES))
+            .replace('{avail}', fmtMB(remaining));
+        }
+      }
+    } catch (e) { /* 预估失败不阻断 */ }
+    return '';
+  }
+
   async function downloadAllShards(onProgress) {
     if (_downloading) return;
     _downloading = true;
 
     try {
+      // ── 存储前置检查：申请持久化 + 预估剩余空间（只告警，不阻断）──
+      let quotaWarn = '';
+      try { quotaWarn = await ensureStorage(); } catch (e) {}
+
       // 先检查已缓存的分片
       let cachedKeys = [];
       try { cachedKeys = await dbGetKeys(STORE_NAME); } catch (e) {}
@@ -542,6 +620,10 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       const bigList = toDownload.filter(isBigShard);
       let queue = [...toDownload.filter(l => !isBigShard(l))];
 
+      // 写库失败的分片：网络下载成功但没落盘，必须计入失败，否则刷新后全部丢失
+      let storeFailed = [];
+      let lastStoreErr = null; // 保留真实异常对象，供控制台与下一步定位根因
+
       async function downloadWorker() {
         while (queue.length > 0) {
           const letter = queue.shift();
@@ -549,19 +631,27 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
           onProgress(done, TOTAL_COUNT, T.downloadFetching + letter.toUpperCase() + '.json …');
           try {
             const data = await fetchShardJson(letter, undefined, undefined, (stage) => {
-              // 大分片分段下载：段进度实时回流（如“下载 S.JSON … 段 1-2”）
+              // 大分片分段下载：段进度实时回流（如"下载 S.JSON … 段 1-2"）
               onProgress(done, TOTAL_COUNT, T.downloadFetching + letter.toUpperCase() + '.json … ' + stage);
             });
             _shardCache[letter] = data;
-            try { await dbPut(STORE_NAME, letter, data); } catch (e) {}
-            done++; // 只有真正写库成功才计入进度，失败分片不虚增
+            // 写库必须真的成功才算数。旧写法用 try/catch 吞掉异常后无条件 done++，
+            // 于是配额不足 / 无痕模式 / 库被锁时进度依然跑到 26/26「全部完成」，
+            // 而 IndexedDB 里其实一个分片都没有 —— 典型的假完成。
+            try {
+              await dbPutRetry(STORE_NAME, letter, data, 1);
+              done++;
+            } catch (e) {
+              storeFailed.push(letter);
+              lastStoreErr = e;
+            }
           } catch (e) {
             failed.push(letter);
           }
           const nextLetter = queue[0];
           onProgress(done, TOTAL_COUNT, nextLetter
             ? T.downloadFetching + nextLetter.toUpperCase() + '.json …'
-            : T.downloadComplete);
+            : T.downloadVerifying);
         }
       }
 
@@ -571,21 +661,58 @@ async function fetchShardJson(letter, timeoutMs, sessionSignal, onStage) {
       queue = [...bigList];
       await Promise.all(Array.from({ length: Math.min(2, queue.length) }, downloadWorker));
 
-      // 持久化失败分片（重试按钮、刷新后恢复都依赖它）；全成功则清空该键
-      try { await dbPut(META_STORE, FAILED_SHARDS_KEY, failed); } catch (e) {}
+      // ── 收尾校验：以 IndexedDB 里真实存在的 key 为准 ──
+      // 只信 fetch/dbPut 的返回值是不够的：事务可能静默回滚、配额可能在半途耗尽、
+      // 其他标签页可能在下载期间把库删掉。必须回读一次，用"实际存进去几个"汇报。
+      onProgress(done, TOTAL_COUNT, T.downloadVerifying);
+      let storedSet;
+      try {
+        storedSet = new Set((await dbGetKeys(STORE_NAME)).map(k => String(k).toLowerCase()));
+      } catch (e) {
+        // 连读都读不了 = 存储完全不可用，全部按未落盘处理
+        storedSet = new Set();
+      }
+      const missing = LETTERS.filter(l => !storedSet.has(l));
 
-      // 只有全部分片成功才标记全量下载完成
-      if (failed.length === 0) {
+      // 合并三类失败：网络失败 + 写库失败 + 校验缺失（去重）
+      const allFailed = [];
+      for (const l of failed.concat(storeFailed, missing)) {
+        if (allFailed.indexOf(l) < 0) allFailed.push(l);
+      }
+      // 真实进度 = 实际落盘的分片数
+      done = TOTAL_COUNT - allFailed.length;
+
+      // 持久化失败分片（重试按钮、刷新后恢复都依赖它）；全成功则清空该键
+      try { await dbPut(META_STORE, FAILED_SHARDS_KEY, allFailed); } catch (e) {}
+
+      // 只有全部分片确实落盘，才允许标记全量下载完成
+      if (allFailed.length === 0) {
         try { await dbPut(META_STORE, 'fullDownloaded', Date.now()); } catch (e) {}
       }
 
-      // 最终进度：如实汇报成功 X/26，不再用 total 冒充 100%
-      onProgress(done, TOTAL_COUNT, failed.length > 0
-        ? T.downloadInterrupted
-            .replace('{ok}', String(done))
-            .replace('{total}', String(TOTAL_COUNT))
-            .replace('{list}', failed.map(l => l.toUpperCase()).join(','))
-        : T.downloadComplete);
+      // 落盘失败要留下线索：QuotaExceededError / InvalidStateError / UnknownError
+      // 各自对应不同根因（空间不足、库被关闭、浏览器限制），控制台与 meta 各留一份
+      if (lastStoreErr) {
+        const errName = (lastStoreErr && (lastStoreErr.name || lastStoreErr.message)) || String(lastStoreErr);
+        try { console.error('[dict] 分片写入 IndexedDB 失败：', lastStoreErr); } catch (e) {}
+        try { await dbPut(META_STORE, 'lastStoreError', String(errName)); } catch (e) {}
+      }
+
+      // 最终进度如实汇报：写库失败单独给"空间不足/无痕模式"的提示，不再一律说完成
+      const failList = allFailed.map(l => l.toUpperCase()).join(',');
+      let finalMsg;
+      if (allFailed.length === 0) {
+        finalMsg = T.downloadComplete;
+      } else if (storeFailed.length > 0) {
+        finalMsg = T.downloadStoreFail.replace('{list}', failList);
+      } else {
+        finalMsg = T.downloadInterrupted
+          .replace('{ok}', String(done))
+          .replace('{total}', String(TOTAL_COUNT))
+          .replace('{list}', failList);
+      }
+      if (quotaWarn && allFailed.length > 0) finalMsg += ' — ' + quotaWarn;
+      onProgress(done, TOTAL_COUNT, finalMsg);
     } finally {
       _downloading = false;
     }
