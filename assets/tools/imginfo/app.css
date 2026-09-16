@@ -1,0 +1,246 @@
+/* 图片元数据查看器（Image Metadata Viewer）样式 —— 沿用站点变量体系与暗色适配 */
+#ii-app {
+  --ii-radius: 10px;
+  --ii-border: var(--color-border-secondary, #e2e8f0);
+  --ii-bg: var(--color-bg, #ffffff);
+  --ii-bg-soft: var(--color-bg-soft, #f8fafc);
+  --ii-fg: var(--color-text, #1a202c);
+  --ii-muted: var(--color-text-secondary, #718096);
+  --ii-accent: #2563eb;
+  --ii-ok: #15803d;
+  --ii-err: #dc2626;
+  --ii-warn: #b45309;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 960px;
+  margin: 24px auto 48px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ii-fg);
+}
+html[mode=dark] #ii-app {
+  --ii-border: #334155;
+  --ii-bg: #0f172a;
+  --ii-bg-soft: #16213a;
+  --ii-fg: #e2e8f0;
+  --ii-muted: #94a3b8;
+  --ii-accent: #60a5fa;
+  --ii-ok: #34d399;
+  --ii-err: #f87171;
+  --ii-warn: #fbbf24;
+}
+#ii-app * { box-sizing: border-box; }
+#ii-app [hidden] { display: none !important; }
+
+/* 拖拽区 */
+#ii-app .ii-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 16px;
+  border: 2px dashed var(--ii-border);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .15s, background .15s;
+}
+#ii-app .ii-drop:hover,
+#ii-app .ii-drop:focus-visible,
+#ii-app .ii-drop.ii-drop-active {
+  border-color: var(--ii-accent);
+  background: rgba(37, 99, 235, .06);
+}
+#ii-app .ii-drop i { font-size: 30px; color: var(--ii-accent); }
+#ii-app .ii-drop-title { margin: 0; font-size: 15px; font-weight: 500; }
+#ii-app .ii-drop-sub { margin: 0; font-size: 12.5px; color: var(--ii-muted); }
+
+/* 状态条 */
+#ii-app .ii-status {
+  padding: 10px 14px;
+  border: 1px solid var(--ii-border);
+  border-left: 3px solid var(--ii-accent);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg-soft);
+  font-size: 13px;
+}
+#ii-app .ii-status.ii-err { border-left-color: var(--ii-err); color: var(--ii-err); }
+#ii-app .ii-status.ii-ok { border-left-color: var(--ii-ok); }
+#ii-app .ii-status.ii-warn { border-left-color: var(--ii-warn); }
+
+/* 文件条 */
+#ii-app .ii-filebar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--ii-border);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg);
+  font-size: 13px;
+}
+#ii-app .ii-fname { font-weight: 500; word-break: break-all; }
+#ii-app .ii-fsize { color: var(--ii-muted); }
+#ii-app .ii-spacer { flex: 1 1 auto; }
+
+#ii-app .ii-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--ii-border);
+  border-radius: 8px;
+  background: var(--ii-bg);
+  color: var(--ii-fg);
+  font-size: 13px;
+  cursor: pointer;
+}
+#ii-app .ii-btn:hover { border-color: var(--ii-accent); color: var(--ii-accent); }
+#ii-app .ii-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* 缩略预览 */
+#ii-app .ii-thumb {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--ii-border);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg-soft);
+}
+#ii-app .ii-thumb img {
+  max-height: 160px;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--ii-border);
+  background:
+    repeating-conic-gradient(var(--ii-border) 0% 25%, transparent 0% 50%) 50% / 16px 16px;
+}
+#ii-app .ii-thumb-note { font-size: 12.5px; color: var(--ii-muted); }
+
+/* 摘要卡片 */
+#ii-app .ii-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+#ii-app .ii-card {
+  padding: 10px 12px;
+  border: 1px solid var(--ii-border);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg);
+}
+#ii-app .ii-card-k { font-size: 11.5px; color: var(--ii-muted); }
+#ii-app .ii-card-v { font-size: 14px; font-weight: 500; word-break: break-word; }
+
+/* 视图切换 */
+#ii-app .ii-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+#ii-app .ii-tab {
+  padding: 6px 14px;
+  border: 1px solid var(--ii-border);
+  border-radius: 999px;
+  background: var(--ii-bg);
+  color: var(--ii-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+#ii-app .ii-tab:hover { color: var(--ii-accent); }
+#ii-app .ii-tab.is-active {
+  background: var(--ii-accent);
+  border-color: var(--ii-accent);
+  color: #fff;
+}
+
+/* 分组表格 */
+#ii-app .ii-group {
+  border: 1px solid var(--ii-border);
+  border-radius: var(--ii-radius);
+  overflow: hidden;
+  background: var(--ii-bg);
+}
+#ii-app .ii-group + .ii-group { margin-top: 12px; }
+#ii-app .ii-group-head {
+  padding: 8px 14px;
+  background: var(--ii-bg-soft);
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--ii-border);
+}
+#ii-app .ii-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+#ii-app .ii-table td {
+  padding: 5px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--ii-border);
+}
+#ii-app .ii-table tr:last-child td { border-bottom: none; }
+#ii-app .ii-table td.ii-k { width: 38%; color: var(--ii-muted); }
+#ii-app .ii-table td.ii-v { word-break: break-word; }
+
+/* EXIF 三列（字段 / 值 / 说明与合理范围） */
+#ii-app .ii-table th {
+  padding: 5px 14px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 11.5px;
+  color: var(--ii-muted);
+  background: var(--ii-bg-soft);
+  border-bottom: 1px solid var(--ii-border);
+}
+#ii-app .ii-table-3 td.ii-k, #ii-app .ii-table-3 th.ii-k { width: 22%; }
+#ii-app .ii-table-3 td.ii-v, #ii-app .ii-table-3 th.ii-v { width: 30%; }
+#ii-app .ii-table-3 td.ii-note-col, #ii-app .ii-table-3 th.ii-note-col { width: 48%; }
+#ii-app td.ii-note-col { color: var(--ii-muted); font-size: 12px; line-height: 1.55; }
+
+/* 原始视图 */
+#ii-app .ii-raw {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--ii-border);
+  border-radius: var(--ii-radius);
+  background: var(--ii-bg-soft);
+  font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 520px;
+  overflow: auto;
+}
+
+@media (max-width: 600px) {
+  #ii-app .ii-table td.ii-k { width: 34%; }
+  #ii-app .ii-thumb { flex-direction: column; align-items: flex-start; }
+}
+
+/* 教学 / 格式对照区 */
+#ii-app .ii-edu { margin-top: 26px; }
+#ii-app .ii-edu h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 26px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ii-border);
+}
+#ii-app .ii-edu h3 { font-size: 14px; font-weight: 500; margin: 18px 0 8px; }
+#ii-app .ii-edu p { margin: 6px 0; color: var(--ii-fg); }
+#ii-app .ii-edu ol { margin: 6px 0; padding-left: 20px; }
+#ii-app .ii-edu li { margin: 3px 0; }
+#ii-app .ii-ref-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+#ii-app .ii-ref-table th,
+#ii-app .ii-ref-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--ii-border);
+  vertical-align: top;
+}
+#ii-app .ii-ref-table th { background: var(--ii-bg-soft); font-weight: 500; }
+#ii-app .ii-note {
+  padding: 10px 14px;
+  border-left: 3px solid var(--ii-warn);
+  background: var(--ii-bg-soft);
+  border-radius: 6px;
+  font-size: 13px;
+  margin: 10px 0;
+}

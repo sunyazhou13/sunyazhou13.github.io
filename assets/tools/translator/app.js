@@ -156,14 +156,16 @@ async function myMemoryTranslate(text, from, to) {
   finally { clearTimeout(timer); }
 }
 
-// ── 第三方平台接入（百度 / 有道，纯前端 JSONP，key 明文由站长填写）──
+// ── 第三方平台接入（百度 / 有道，纯前端 JSONP）──
 // 百度/有道翻译 API 不返回 CORS 头，浏览器 fetch 被同源策略拦截；但两者均支持
 // JSONP（callback 参数），<script> 注入可绕过 CORS，故纯前端直连可行、无需后端代理。
-// key 明文置于前端（站长确认可接受），签名在浏览器端计算。
-const BAIDU_APP_ID = '20260915002684843'; // ← 百度翻译 APP ID
-const BAIDU_KEY = 'i9CHCGF50e4KXP0V_Zav';    // ← 百度翻译密钥（MD5 签名用）
-const YOUDAO_APP_KEY = '0ab74a234fee8bd2'; // ← 有道智云 APP KEY
-const YOUDAO_KEY = 'zStrk6Ua52uN6P3onGdWeIOlyNpwhKDY';      // ← 有道智云密钥（SHA256 签名用）
+// key 集中配置在 _config.yml 的 api_keys.translate，由工具页面注入 window.TR_KEYS（见 tools/translator.md）；
+// 明文置于前端（站长确认可接受），签名在浏览器端计算。
+const _TR_KEYS = (typeof window !== 'undefined' && window.TR_KEYS) || {};
+const BAIDU_APP_ID = _TR_KEYS.baidu_app_id || '';     // 百度翻译 APP ID
+const BAIDU_KEY = _TR_KEYS.baidu_key || '';           // 百度翻译密钥（MD5 签名用）
+const YOUDAO_APP_KEY = _TR_KEYS.youdao_app_key || ''; // 有道智云 APP KEY
+const YOUDAO_KEY = _TR_KEYS.youdao_key || '';         // 有道智云密钥（SHA256 签名用）
 
 // ── 免费额度护栏：本地统计百度(字符/月)与有道(请求/天)用量，触顶自动跳过付费通道，只走 Edge/MyMemory 免费通道，杜绝超额扣费 ──
 // 百度按字符计费、超额可能按量扣费，故以字符数守护；有道入门版按请求数限流(超额返回 412 不扣费)，以请求数守护。
