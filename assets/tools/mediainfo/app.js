@@ -1,5 +1,6 @@
 // 媒体信息查看器（MediaInfo）—— 基于官方 mediainfo.js（WASM），纯前端、文件不出本机
 import mediaInfoFactory from './index.min.js';
+import { refEntry } from './refdata.js';
 
 // 页面是否英文版（用于文案本地化）
 const MI_EN = (document.documentElement.lang || '').toLowerCase().indexOf('en') === 0
@@ -216,14 +217,25 @@ function labelOf(k) {
   if (!MI_EN) return FIELD_ZH[k] || k;
   return humanKey(k);
 }
-function toText(tracks, fullMode) {
+// 是否展示「参考值 / 备注」列（由页面开关控制，默认开；开关缺失时按开处理）
+function refOn() {
+  const el = $('mi-show-ref');
+  return el ? el.checked : true;
+}
+function toText(tracks, fullMode, withRef) {
   const out = [];
   for (const t of tracks) {
     out.push(trackType(t));
+    const tt = trackType(t);
     for (const [k, v] of entries(t, fullMode)) {
       const name = labelOf(k);
       const pad = ' '.repeat(Math.max(1, 41 - name.length));
-      out.push(name + pad + ': ' + displayValue(t, k, v));
+      let line = name + pad + ': ' + displayValue(t, k, v);
+      if (withRef) {
+        const info = refEntry(tt, k, MI_EN);
+        if (info) line += '   |   参考: ' + info.ref + '   备注: ' + info.note;
+      }
+      out.push(line);
     }
     out.push('');
   }
@@ -340,6 +352,8 @@ function renderSummary(tracks, fileSize) {
 function renderTree(tracks) {
   const box = $('mi-view-tree');
   box.innerHTML = '';
+  const sr = refOn();
+  const colSpan = sr ? 3 : 2;
   // 按轨道类型分组，同类型多条则依次编号
   const groups = [];
   for (const t of tracks) {
@@ -366,18 +380,31 @@ function renderTree(tracks) {
 
     const table = document.createElement('table');
     table.className = 'mi-table';
+    if (sr) {
+      const thead = document.createElement('thead');
+      const htr = document.createElement('tr');
+      [L('参数', 'Parameter'), L('当前值', 'Value'), L('参考值 / 备注', 'Reference / Note')]
+        .forEach((h) => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          htr.appendChild(th);
+        });
+      thead.appendChild(htr);
+      table.appendChild(thead);
+    }
     const tb = document.createElement('tbody');
     g.items.forEach((t, idx) => {
       if (g.items.length > 1) {
         const tr = document.createElement('tr');
         const td = document.createElement('td');
-        td.colSpan = 2;
+        td.colSpan = colSpan;
         td.className = 'mi-k';
         td.textContent = `${base} #${idx + 1}`;
         td.style.background = 'var(--mi-bg-soft)';
         tr.appendChild(td);
         tb.appendChild(tr);
       }
+      const tt = trackType(t);
       for (const [k, v] of entries(t, false)) {
         const tr = document.createElement('tr');
         const kc = document.createElement('td');
@@ -388,6 +415,25 @@ function renderTree(tracks) {
         vc.textContent = displayValue(t, k, v);
         tr.appendChild(kc);
         tr.appendChild(vc);
+        if (sr) {
+          const rc = document.createElement('td');
+          rc.className = 'mi-ref';
+          const info = refEntry(tt, k, MI_EN);
+          if (info) {
+            const vd = document.createElement('div');
+            vd.className = 'mi-ref-val';
+            vd.textContent = info.ref;
+            const nd = document.createElement('div');
+            nd.className = 'mi-ref-note';
+            nd.textContent = info.note;
+            rc.appendChild(vd);
+            rc.appendChild(nd);
+          } else {
+            rc.classList.add('mi-ref-na');
+            rc.textContent = 'N/A';
+          }
+          tr.appendChild(rc);
+        }
         tb.appendChild(tr);
       }
     });
@@ -492,7 +538,7 @@ function bind() {
   $('mi-copy').addEventListener('click', () => {
     if (!current) return;
     let text = '';
-    if (view === 'tree') text = toText(current.tracks);
+    if (view === 'tree') text = toText(current.tracks, false, refOn());
     else text = $('mi-view-' + view).textContent;
     navigator.clipboard?.writeText(text).then(() => {
       const b = $('mi-copy');
@@ -503,6 +549,9 @@ function bind() {
   for (const b of document.querySelectorAll('#mi-tabs .mi-tab')) {
     b.addEventListener('click', () => showView(b.dataset.view));
   }
+  // 「显示参考值 / 备注」开关：切换时重渲染分组表格
+  const refToggle = $('mi-show-ref');
+  if (refToggle) refToggle.addEventListener('change', () => { if (current) renderTree(current.tracks); });
   // 本地化拖拽区文案
   $('mi-drop-title').textContent = T.dropTitle;
   $('mi-drop-sub').textContent = T.dropSub;
