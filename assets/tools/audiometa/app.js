@@ -552,7 +552,9 @@ async function runTranscode(r, file, key, p, area, wide) {
     const { transcode } = await import(VS('./fftrans.js'));
     const out = await transcode(input, 'in' + TRANSCODE[key], 'out.wav',
       ['-ar', '44100', '-ac', '2', '-c:a', 'pcm_s16le'], null,
-      (prog) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, prog)) * 100) + '%'; });
+      (prog) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, prog)) * 100) + '%'; },
+      // 首次载入 32MB 解码核心的分片下载进度（3 路并行，含 MB 实时读数）
+      (l, tot) => { st.textContent = L('正在载入解码核心', 'Loading the decoding core') + ' ' + (l / 1048576).toFixed(1) + ' / ' + (tot / 1048576).toFixed(1) + ' MB (' + Math.round(l / tot * 100) + '%)'; });
     if (transUrl) { URL.revokeObjectURL(transUrl); transUrl = null; }
     transUrl = URL.createObjectURL(new Blob([out], { type: 'audio/wav' }));
     const audio = document.createElement('audio');
@@ -617,7 +619,8 @@ async function runSpectrum(r, file, body, st, btn) {
       // DSD 转到 88.2 kHz：否则看不到 20 kHz 以上的噪声整形特征
       const ar = (key === 'dsf' || key === 'dff') ? '88200' : '44100';
       pcm = await transcode(input, 'sp' + TRANSCODE[key], 'sp.wav', ['-ar', ar, '-ac', '2', '-c:a', 'pcm_s16le'], null,
-        (p) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, p)) * 100) + '%'; });
+        (p) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, p)) * 100) + '%'; },
+        (l, tot) => { st.textContent = L('正在载入解码核心', 'Loading the decoding core') + ' ' + (l / 1048576).toFixed(1) + ' / ' + (tot / 1048576).toFixed(1) + ' MB (' + Math.round(l / tot * 100) + '%)'; });
     }
     st.textContent = T.specWorking;
     const AC = window.AudioContext || window.webkitAudioContext;
