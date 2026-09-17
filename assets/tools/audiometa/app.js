@@ -1,6 +1,16 @@
 // 音频元数据查看器（Audio Meta）—— 纯前端、零依赖、文件不出本机
 // 字节解析见 ./audioparse.js；本文件只负责渲染与交互。
-import { parseAudio } from './audioparse.js';
+import { parseAudio } from './audioparse.js?v=202609174';
+
+// ── 缓存击穿 ──
+// app.js 自己的版本号来自页面里的 <script src="app.js?v=...">。
+// 动态 import 的兄弟模块（spectrum / fftrans / dff2dsf）默认 URL 不带版本号，
+// 改完这些文件浏览器照样吃旧缓存（踩过坑：波形能看到、DSF 转码却还是旧逻辑）。
+// 这里统一从 import.meta.url 取出页面上那个 v，拼到所有动态 import 上，
+// 以后只要改页面的 ?v=，所有模块一起失效，不用改多处。
+// ⚠️ 上面 audioparse.js 的 ?v= 是静态 import（语法要求字面量），改版本时两处要一起改。
+const AV = (new URL(import.meta.url).searchParams.get('v') || '');
+const VS = (p) => p + (AV ? '?v=' + AV : '');
 
 const AM_EN = (document.documentElement.lang || '').toLowerCase().indexOf('en') === 0
   || /\/en\//.test(location.pathname) || /-en\/?$/.test(location.pathname);
@@ -26,6 +36,35 @@ const T = {
   na: 'N/A',
   coverAlt: L('专辑封面', 'Album cover'),
   coverOf: L('内嵌图片', 'Embedded images'),
+  playTitle: L('试听', 'Preview'),
+  playLoading: L('正在载入解码器…', 'Loading decoder…'),
+  playUnsupported: L('浏览器无法直接播放此格式', 'This format cannot be played by the browser'),
+  playDecoded: L('浏览器解码时长', 'Browser duration'),
+  playParsed: L('解析时长', 'Parsed duration'),
+  playMatch: L('两者一致', 'they match'),
+  playMismatch: L('存在差异', 'mismatch'),
+  playNoParsed: L('解析器未给出时长，无法比对', 'No parsed duration to compare'),
+  playLocal: L('播放同样在本机完成，不上传；大文件载入可能稍慢。', 'Playback is local as well — nothing is uploaded; large files may take a moment.'),
+  playBroken: L('浏览器无法解码该流：缺少对应解码器，或文件已损坏', 'The browser cannot decode this stream: no such decoder, or the file is damaged'),
+  transBtn: L('转码后试听', 'Transcode & play'),
+  transHint: L('首次需载入 32 MB 解码核心，之后同一页面内复用', 'First run loads a 32 MB decoding core; reused afterwards'),
+  transLoading: L('正在载入解码核心（约 32 MB）…', 'Loading the decoding core (~32 MB)…'),
+  transWorking: L('正在转码…', 'Transcoding…'),
+  transDone: L('已由内置 ffmpeg 转为 44.1 kHz / 16 bit PCM（软解预览）', 'Converted by built-in ffmpeg to 44.1 kHz / 16-bit PCM (software decode preview)'),
+  transFail: L('转码失败：', 'Transcode failed: '),
+  transUnsupported: L('该格式没有可用的转码方案', 'No transcoding path for this format'),
+  specTitle: L('波形与频谱', 'Waveform & spectrum'),
+  waveLabel: L('波形（时域）', 'Waveform (time domain)'),
+  specLabel: L('频谱（频域）', 'Spectrum (frequency domain)'),
+  specBtn: L('分析频谱', 'Analyze spectrum'),
+  specWorking: L('正在解码并做 FFT…', 'Decoding and running FFT…'),
+  specFail: L('频谱分析失败：', 'Spectrum analysis failed: '),
+  specCutoff: L('实际有效带宽', 'Actual bandwidth'),
+  specNyq: L('分析上限', 'Analysis Nyquist'),
+  specHF: L('高频段电平', 'HF level'),
+  specUpsampled: L('疑似升采样', 'Possibly upsampled'),
+  specConsistent: L('带宽与标称相符', 'Bandwidth matches the label'),
+  specUncertain: L('带宽偏低，无法确定来源', 'Bandwidth is low; source uncertain'),
 };
 
 const $ = (id) => document.getElementById(id);
@@ -57,7 +96,7 @@ function fmtSampleRate(sr) {
 // ── 字段名 ──
 const FIELD = {
   format: ['格式', 'Format'], container: ['容器', 'Container'], codec: ['音频编码', 'Audio codec'], codecId: ['编码标识', 'Codec ID'],
-  lossless: ['无损', 'Lossless'], sampleRate: ['采样率', 'Sample rate'], bitDepth: ['位深', 'Bit depth'],
+  lossless: ['无损', 'Lossless'], sampleRate: ['采样率', 'Sample rate'], dsdRate: ['DSD 倍率', 'DSD rate'], bitDepth: ['位深', 'Bit depth'],
   channels: ['声道数', 'Channels'], channelLayout: ['声道布局', 'Channel layout'], channelMode: ['声道模式', 'Channel mode'],
   channelType: ['声道类型', 'Channel type'], channelIds: ['声道标识', 'Channel IDs'],
   bitrate: ['码率', 'Bitrate'], bitrateMode: ['码率模式', 'Bitrate mode'], bitrateAvg: ['平均码率', 'Average bitrate'],
@@ -79,7 +118,7 @@ const FIELD = {
 function flabel(k) { const f = FIELD[k]; return f ? (AM_EN ? f[1] : f[0]) : k; }
 
 // ── 技术字段展示顺序 ──
-const TECH_ORDER = ['format', 'container', 'codec', 'codecId', 'lossless', 'duration', 'sampleRate', 'bitDepth', 'channels',
+const TECH_ORDER = ['format', 'container', 'codec', 'codecId', 'lossless', 'duration', 'sampleRate', 'dsdRate', 'bitDepth', 'channels',
   'channelLayout', 'channelMode', 'channelType', 'channelIds', 'bitrate', 'bitrateMode', 'bitrateAvg', 'bitrateMax', 'bitrateNominal',
   'totalSamples', 'totalFrames', 'frameCount', 'frameSize', 'blockSize', 'samplesPerBlock', 'md5', 'fileMD5',
   'compression', 'apeVersion', 'formatVersion', 'encoder', 'audioObjectType', 'objectType', 'bsid', 'validBits', 'channelMask',
@@ -112,6 +151,12 @@ function techNote(k, r) {
       return L('每秒采样点数；常见 44.1k / 48k，Hi-Res 96k+', 'Samples per second; 44.1k / 48k typical, 96k+ is Hi-Res')
         + (common ? ' ' + OKM : ' ' + WARNM + L(' 非常见采样率（可能是升采样）', ' unusual rate (may be upsampled)'));
     }
+    case 'dsdRate': {
+      const dr = t.dsdRate || '';
+      const ok = /^DSD(64|128|256|512|1024)$/.test(dr);
+      return L('相对 44.1 kHz 的倍率；DSD64 = 2.8224 MHz，DSD128 = 5.6448 MHz', 'Multiple of 44.1 kHz; DSD64 = 2.8224 MHz, DSD128 = 5.6448 MHz')
+        + (ok ? ' ' + OKM : ' ' + WARNM + L(' 非常见倍率', ' unusual rate'));
+    }
     case 'bitDepth': {
       const bd = t.bitDepth;
       if (bd === 1) return L('DSD 固定 1 bit', 'DSD is always 1-bit');
@@ -129,6 +174,9 @@ function techNote(k, r) {
     case 'bitrate': {
       const br = t.bitrate;
       if (!br) return '';
+      // DSD 是恒定码率 = 采样率 × 声道数 × 1 bit，不随内容波动
+      if (t.bitDepth === 1 && t.dsdRate) return L('DSD 恒定码率 = 采样率 × 声道数 × 1 bit，不含文件头与块对齐填充',
+        'DSD is constant rate = rate × channels × 1 bit, excluding header and block padding');
       if (t.lossless) return L('无损编码码率随内容波动，仅作参考', 'For lossless this varies with content; indicative only');
       const ok = br >= 32 && br <= 1536;
       return L('每秒数据量；有损常见 96–320 kbps', 'Bits per second; 96–320 kbps typical for lossy') + (ok ? ' ' + OKM : ' ' + WARNM);
@@ -271,7 +319,9 @@ function renderHero(r, file) {
   } else {
     cov.appendChild(placeholder(r));
   }
-  hero.appendChild(cov);
+  const top = document.createElement('div');
+  top.className = 'am-hero-top';
+  top.appendChild(cov);
 
   // 标题区
   const info = document.createElement('div');
@@ -286,6 +336,9 @@ function renderHero(r, file) {
   const subEl = info.querySelector('.am-sub');
   if (sub) subEl.textContent = sub; else subEl.remove();
 
+  // 试听：放在标题下方
+  info.appendChild(renderPlayer(r, file));
+
   const chips = document.createElement('div');
   chips.className = 'am-chips';
   const tech = r.tech || {};
@@ -295,8 +348,9 @@ function renderHero(r, file) {
   if (tech.channels) chips.appendChild(chip(L('声道', 'Channels'), String(tech.channels)));
   if (tech.bitrate) chips.appendChild(chip(L('码率', 'Bitrate'), tech.bitrate + ' kbps'));
   chips.appendChild(chip(L('文件大小', 'File size'), fmtBytes(r.fileSize)));
-  info.appendChild(chips);
-  hero.appendChild(info);
+  top.appendChild(info);
+  hero.appendChild(top);
+  hero.appendChild(chips);
   hero.hidden = false;
 }
 function placeholder(r) {
@@ -305,6 +359,339 @@ function placeholder(r) {
   d.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.1" fill="currentColor"/></svg><span></span>');
   d.querySelector('span').textContent = T.noCover;
   return d;
+}
+
+// ── 试听 ──
+// 浏览器原生解码能力有限：DSD / APE / WMA / AC-3 / DTS 全部没有原生解码器，
+// 这类文件明确告知原因，而不是放一个点不动的播放器。
+const NOPLAY = {
+  dsf: () => L('DSD（DSF）是 1-bit 码流，浏览器没有 DSD 解码器；需先转 PCM（或走 DoP）才能听',
+    'DSD (DSF) is a 1-bit stream; browsers ship no DSD decoder — convert to PCM (or use DoP) first'),
+  dff: () => L('DSD（DFF）是 1-bit 码流，浏览器没有 DSD 解码器；需先转 PCM（或走 DoP）才能听',
+    'DSD (DFF) is a 1-bit stream; browsers ship no DSD decoder — convert to PCM (or use DoP) first'),
+  ape: () => L("Monkey's Audio 是专有闭源格式，主流浏览器均不支持；可用 ffmpeg 转 FLAC 后再听",
+    "Monkey's Audio is proprietary and unsupported by all major browsers — convert to FLAC with ffmpeg first"),
+  wma: () => L('WMA（ASF）仅旧版 Edge / IE 支持；可用 ffmpeg 转 MP3 或 FLAC 后再听',
+    'WMA (ASF) is only supported by legacy Edge/IE — convert to MP3 or FLAC with ffmpeg first'),
+  ac3: () => L('AC-3 是影院/广播用的 Dolby 码流，浏览器不支持；需封装进 MP4/MKV 或转 AAC',
+    'AC-3 is a cinema/broadcast Dolby stream, unsupported by browsers — mux into MP4/MKV or convert to AAC'),
+  dts: () => L('DTS 是影院/多声道码流，浏览器不支持；需转 AC-3 / AAC 后播放',
+    'DTS is a cinema/multichannel stream, unsupported by browsers — convert to AC-3 / AAC first'),
+  m3u: () => L('M3U / M3U8 是纯文本播放列表，本身不含音频数据',
+    'M3U / M3U8 is a plain-text playlist; it holds no audio data'),
+  iso: () => L('SACD ISO 是光盘镜像，不是可直接解码的音频流',
+    'A SACD ISO is a disc image, not a decodable audio stream'),
+};
+
+let playUrl = null;
+function revokePlay() { if (playUrl) { try { URL.revokeObjectURL(playUrl); } catch (e) { } playUrl = null; } }
+
+function noPlayNode(reason) {
+  const d = document.createElement('div');
+  d.className = 'am-noplay';
+  d.insertAdjacentHTML('beforeend', '<b></b><span></span>');
+  d.querySelector('b').textContent = T.playUnsupported + ' — ';
+  d.querySelector('span').textContent = reason;
+  return d;
+}
+
+function playerBox() {
+  const box = document.createElement('div');
+  box.className = 'am-group am-player';
+  const head = document.createElement('div');
+  head.className = 'am-group-head';
+  head.textContent = T.playTitle;
+  box.appendChild(head);
+  const body = document.createElement('div');
+  body.className = 'am-play-body';
+  box.appendChild(body);
+  return { box, body };
+}
+
+// 浏览器放不了、但可以用内置 ffmpeg 转码后试听的格式（值为喂给 ffmpeg 的扩展名）
+const TRANSCODE = { dsf: '.dsf', dff: '.dsf', ape: '.ape', wma: '.wma', ac3: '.ac3', dts: '.dts' };
+
+function renderPlayer(r, file) {
+  const key = r.formatKey || '';
+  if (NOPLAY[key]) {
+    const p = playerBox();
+    p.body.appendChild(noPlayNode(NOPLAY[key]()));
+    if (TRANSCODE[key]) {
+      // 自动开始转码 —— 既然浏览器解不了，就别再让用户多点一次
+      const area = document.createElement('div');
+      area.className = 'am-trans';
+      const hint = document.createElement('span');
+      hint.className = 'am-trans-hint'; hint.textContent = T.transHint;
+      area.appendChild(hint);
+      p.body.appendChild(area);
+      runTranscode(r, file, key, p, area);
+    } else {
+      const area = document.createElement('div');
+      area.className = 'am-trans';
+      const hint = document.createElement('span');
+      hint.className = 'am-trans-hint'; hint.textContent = T.transUnsupported;
+      area.appendChild(hint);
+      p.body.appendChild(area);
+    }
+    return p.box;
+  }
+
+  const p = playerBox();
+  const audio = document.createElement('audio');
+  audio.className = 'am-audio';
+  audio.controls = true;
+  audio.preload = 'metadata';
+  revokePlay();
+  playUrl = URL.createObjectURL(file);
+  audio.src = playUrl;
+  p.body.appendChild(audio);
+
+  // 实时频谱动画（播放时出现，暂停即停在最后一帧）
+  const viz = document.createElement('canvas');
+  viz.className = 'am-viz';
+  const waveCap = document.createElement('div');
+  waveCap.className = 'am-cap'; waveCap.textContent = L('波形', 'Waveform');
+  const wave = document.createElement('canvas');
+  wave.className = 'am-wave';
+  p.body.appendChild(viz);
+  p.body.appendChild(waveCap);
+  p.body.appendChild(wave);
+  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, wave)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); waveCap.remove(); wave.remove(); });
+
+  const meta = document.createElement('div');
+  meta.className = 'am-play-meta';
+  meta.textContent = T.playLoading;
+  p.body.appendChild(meta);
+
+  let settled = false;
+  const fail = (why) => {
+    if (settled) return;
+    settled = true;
+    audio.remove();
+    viz.remove();
+    waveCap.remove();
+    wave.remove();
+    meta.remove();
+    p.body.appendChild(noPlayNode(why));
+  };
+
+  audio.addEventListener('loadedmetadata', () => {
+    if (settled) return;
+    settled = true;
+    const bd = audio.duration, pd = (r.tech || {}).duration;
+    meta.textContent = '';
+    if (!isFinite(bd) || bd <= 0) { meta.textContent = T.playLocal; return; }
+    const a = document.createElement('span');
+    a.className = 'am-mono';
+    a.textContent = T.playDecoded + ' ' + fmtDur(bd);
+    meta.appendChild(a);
+    if (!isFinite(pd) || pd <= 0) {
+      const b = document.createElement('span');
+      b.className = 'am-play-cmp';
+      b.textContent = ' · ' + T.playNoParsed;
+      meta.appendChild(b);
+      return;
+    }
+    const diff = Math.abs(bd - pd), ok = diff <= 0.2;
+    const b = document.createElement('span');
+    b.className = 'am-play-cmp ' + (ok ? 'am-ok' : 'am-warn2');
+    b.textContent = ' · ' + T.playParsed + ' ' + fmtDur(pd) + ' · '
+      + (ok ? OKM + ' ' + T.playMatch : WARNM + ' ' + T.playMismatch + ' ' + diff.toFixed(3) + 's');
+    meta.appendChild(b);
+  });
+  audio.addEventListener('error', () => fail(T.playBroken));
+  return p.box;
+}
+
+let transUrl = null;
+async function runTranscode(r, file, key, p, area) {
+  if (area.dataset.busy === '1') return;
+  area.dataset.busy = '1';
+  area.innerHTML = '';
+  const st = document.createElement('div');
+  st.className = 'am-play-meta';
+  st.textContent = T.transLoading;
+  area.appendChild(st);
+  try {
+    let input = new Uint8Array(await file.arrayBuffer());
+    if (key === 'dff') {
+      const mod = await import(VS('./dff2dsf.js'));
+      input = mod.dffToDsf(input);                       // DFF → DSF（去交错 + 位反转 + 重新分块）
+      st.textContent = L('已重封装为 DSF，正在转码…', 'Re-wrapped as DSF, transcoding…');
+    }
+    const { transcode } = await import(VS('./fftrans.js'));
+    const out = await transcode(input, 'in' + TRANSCODE[key], 'out.wav',
+      ['-ar', '44100', '-ac', '2', '-c:a', 'pcm_s16le'], null,
+      (prog) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, prog)) * 100) + '%'; });
+    if (transUrl) { URL.revokeObjectURL(transUrl); transUrl = null; }
+    transUrl = URL.createObjectURL(new Blob([out], { type: 'audio/wav' }));
+    const audio = document.createElement('audio');
+    audio.className = 'am-audio'; audio.controls = true; audio.preload = 'metadata'; audio.src = transUrl;
+    area.parentNode.insertBefore(audio, area);
+    const viz = document.createElement('canvas');
+    viz.className = 'am-viz';
+    const waveCap = document.createElement('div');
+    waveCap.className = 'am-cap'; waveCap.textContent = L('波形', 'Waveform');
+    const wave = document.createElement('canvas');
+    wave.className = 'am-wave';
+    area.parentNode.insertBefore(viz, area);
+    area.parentNode.insertBefore(waveCap, area);
+    area.parentNode.insertBefore(wave, area);
+    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, wave)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); waveCap.remove(); wave.remove(); });
+    const pd = (r.tech || {}).duration;
+    audio.addEventListener('loadedmetadata', () => {
+      const bd = audio.duration;
+      st.textContent = T.transDone
+        + (isFinite(bd) && bd > 0 ? ' · ' + T.playDecoded + ' ' + fmtDur(bd) : '')
+        + (isFinite(pd) && pd > 0 ? ' · ' + T.playParsed + ' ' + fmtDur(pd) : '');
+    });
+  } catch (e) {
+    st.className = 'am-play-meta am-err-text';
+    st.textContent = T.transFail + ((e && e.message) || e);
+    const retry = document.createElement('button');
+    retry.type = 'button'; retry.className = 'am-btn am-btn-sm'; retry.textContent = T.transBtn;
+    retry.addEventListener('click', () => { area.dataset.busy = ''; runTranscode(r, file, key, p, area); });
+    area.appendChild(retry);
+  }
+}
+
+const khz = (f) => (Math.round(f / 100) / 10) + ' kHz';
+
+function specGroup(r, file) {
+  const box = document.createElement('div');
+  box.className = 'am-group am-spec';
+  const head = document.createElement('div');
+  head.className = 'am-group-head';
+  const span = document.createElement('span'); span.textContent = T.specTitle;
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'am-btn am-btn-sm'; btn.textContent = T.specBtn;
+  head.appendChild(span); head.appendChild(btn);
+  box.appendChild(head);
+  const body = document.createElement('div');
+  body.className = 'am-spec-body';
+  const st = document.createElement('div');
+  st.className = 'am-spec-status';
+  body.appendChild(st);
+  box.appendChild(body);
+  btn.addEventListener('click', () => runSpectrum(r, file, body, st, btn));
+  return box;
+}
+
+async function runSpectrum(r, file, body, st, btn) {
+  if (btn.dataset.busy === '1') return;
+  btn.dataset.busy = '1'; btn.disabled = true;
+  st.className = 'am-spec-status';
+  st.textContent = T.specWorking;
+  let canvas = null;
+  try {
+    const key = r.formatKey || '';
+    let pcm = new Uint8Array(await file.arrayBuffer());
+    if (NOPLAY[key] && TRANSCODE[key]) {
+      let input = pcm;
+      if (key === 'dff') { const m = await import(VS('./dff2dsf.js')); input = m.dffToDsf(input); }
+      const { transcode } = await import(VS('./fftrans.js'));
+      // DSD 转到 88.2 kHz：否则看不到 20 kHz 以上的噪声整形特征
+      const ar = (key === 'dsf' || key === 'dff') ? '88200' : '44100';
+      pcm = await transcode(input, 'sp' + TRANSCODE[key], 'sp.wav', ['-ar', ar, '-ac', '2', '-c:a', 'pcm_s16le'], null,
+        (p) => { st.textContent = T.transWorking + ' ' + Math.round(Math.min(1, Math.max(0, p)) * 100) + '%'; });
+    }
+    st.textContent = T.specWorking;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) throw new Error('浏览器不支持 Web Audio');
+    // 关键：decodeAudioData 会把音频重采样到 AudioContext 的采样率。不指定就用默认的
+    // 44.1 kHz —— 那样 96k / 192k 文件的分析上限被压到 22.05 kHz，真假 Hi-Res 判定彻底失效。
+    // 转码来的按转码后的速率算；原生解码的按文件标称采样率建 context。
+    const wantRaw = (NOPLAY[key] && TRANSCODE[key])
+      ? ((key === 'dsf' || key === 'dff') ? 88200 : 44100)
+      : ((r.tech && r.tech.sampleRate) || 0);
+    let ctx = null;
+    if (wantRaw >= 8000 && wantRaw <= 96000) {
+      try { ctx = new AC({ sampleRate: wantRaw }); } catch (e) { ctx = null; }
+    }
+    if (!ctx) ctx = new AC();
+    const ab = pcm.buffer.slice(pcm.byteOffset, pcm.byteOffset + pcm.byteLength);
+    const buf = await ctx.decodeAudioData(ab);
+    const sp = await import(VS('./spectrum.js'));
+    const spec = sp.analyzeSpectrum(buf);
+
+    const cap = (t) => { const d = document.createElement('div'); d.className = 'am-cap'; d.textContent = t; return d; };
+
+    // 时域：波形（双声道各一条）
+    body.appendChild(cap(T.waveLabel));
+    const wc = document.createElement('canvas');
+    wc.className = 'am-wave';
+    body.appendChild(wc);
+    sp.drawWaveform(wc, sp.computeWaveform(buf, 900), { height: 96 });
+
+    // 频域：频谱 + 截止判定
+    body.appendChild(cap(T.specLabel));
+    canvas = document.createElement('canvas');
+    canvas.className = 'am-spec-canvas';
+    body.appendChild(canvas);
+    sp.drawSpectrum(canvas, spec, { cutoff: spec.cutoff, height: 300 });
+
+    // 判定
+    const isDsd = key === 'dsf' || key === 'dff';
+    const lossy = r.tech && r.tech.lossless === false;
+    // 判据里的「上限」取实际分析的 PCM 奈奎斯特频率，而不是文件标称采样率：
+    // DSD 标称 2.8224 MHz，但我们是转成 88.2 kHz PCM 分析的，拿标称值比没有意义。
+    const nyq = spec.sr / 2;
+    const nominal = (r.tech && r.tech.sampleRate) || spec.sr;
+    let cls = 'am-verdict-ok', title = T.specConsistent, detail = '';
+    if (isDsd) {
+      cls = 'am-verdict-info';
+      title = L('DSD 噪声整形', 'DSD noise shaping');
+      detail = L('高频段噪声随频率抬升，这是 DSD 噪声整形的正常形态，不是缺陷；曲线在超声频段上翘属于预期。',
+        'Noise rises with frequency — that is DSD noise shaping, not a defect; the curve climbing in the ultrasonic band is expected.');
+    } else if (lossy) {
+      cls = 'am-verdict-info';
+      title = L('有损编码的高频截止', 'Lossy codec roll-off');
+      detail = L('有损编码本身就会砍掉高频，此处的截止属于编码行为，不代表母带缺失，不能据此判断真假 Hi-Res。',
+        'Lossy coding removes high frequencies by design; this roll-off says nothing about the master, so it cannot be used to judge Hi-Res authenticity.');
+    } else if (nyq >= 40000 && spec.hfInner !== null && spec.hfInner <= -90) {
+      cls = 'am-verdict-warn'; title = T.specUncertain;
+      detail = L('21 kHz 附近几乎没有内容（' + Math.round(spec.hfInner) + ' dB），母带高频本身就极少，无法据此判断是否升采样。',
+        'There is almost nothing around 21 kHz (' + Math.round(spec.hfInner) + ' dB) — this master has very little HF content, so upsampling cannot be judged from it.');
+    } else if (nyq >= 40000 && spec.hfDrop !== null && spec.hfDrop <= -15) {
+      cls = 'am-verdict-warn';
+      title = T.specUpsampled;
+      detail = L('紧邻 22.05 kHz 的两个窄带（21–22 kHz / 23–25 kHz）落差达 ' + Math.round(-spec.hfDrop)
+        + ' dB —— 天然滚降在这个间隔上只有 1–3 dB，这是砖墙断崖，特征与 44.1 kHz 母带一致，很可能是升采样的“假 Hi-Res”。',
+        'The gap between the two narrow bands straddling 22.05 kHz (21–22 / 23–25 kHz) is ' + Math.round(-spec.hfDrop)
+        + ' dB — natural roll-off only accounts for 1–3 dB across that gap, so this is a brick wall: the signature of a 44.1 kHz master, i.e. likely an upsampled "fake Hi-Res".');
+    } else if (spec.cutoff < nyq * 0.6) {
+      cls = 'am-verdict-warn'; title = T.specUncertain;
+      detail = L('有效带宽明显低于标称奈奎斯特频率，可能是母带本身带宽有限，也可能经过处理。',
+        'Bandwidth is well below the nominal Nyquist — the master may be limited, or the audio may have been processed.');
+    } else {
+      detail = L('内容一直延伸到 ' + khz(spec.cutoff) + '，与标称的 ' + khz(nyq) + ' 相符。',
+        'Content extends to ' + khz(spec.cutoff) + ', consistent with the nominal ' + khz(nyq) + '.');
+    }
+
+    const v = document.createElement('div');
+    v.className = 'am-verdict ' + cls;
+    v.insertAdjacentHTML('beforeend', '<div class="am-verdict-title"></div><div class="am-verdict-detail"></div><div class="am-verdict-nums"></div>');
+    v.querySelector('.am-verdict-title').textContent = title;
+    v.querySelector('.am-verdict-detail').textContent = detail;
+    const nums = v.querySelector('.am-verdict-nums');
+    nums.innerHTML = '';
+    [[T.specCutoff, khz(spec.cutoff)], [T.specNyq, khz(nyq)], [T.specHF, Math.round(spec.hfLevel) + ' dB']]
+      .forEach(([k, val]) => {
+        const d = document.createElement('span');
+        d.className = 'am-vnum';
+        d.insertAdjacentHTML('beforeend', '<i></i><b></b>');
+        d.querySelector('i').textContent = k;
+        d.querySelector('b').textContent = val;
+        nums.appendChild(d);
+      });
+    body.appendChild(v);
+    st.textContent = '';
+  } catch (e) {
+    st.className = 'am-spec-status am-err-text';
+    st.textContent = T.specFail + ((e && e.message) || e);
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 function render(r, file) {
@@ -333,6 +720,10 @@ function render(r, file) {
   }
   const techSec = section(T.techTitle, trows, true);
   if (techSec) box.appendChild(techSec);
+
+  // 频谱分析（纯文本列表 / 光盘镜像不做）
+  const fk = r.formatKey || '';
+  if (fk !== 'm3u' && fk !== 'iso') box.appendChild(specGroup(r, file));
 
   // 标签
   const tags = r.tags || {};
@@ -390,6 +781,7 @@ function setStatus(msg, kind) {
 async function analyze(file) {
   setStatus(T.parsing);
   cur = null;
+  revokePlay();
   $('am-filebar').hidden = false;
   $('am-fname').textContent = file.name;
   $('am-fsize').textContent = fmtBytes(file.size);
@@ -410,6 +802,7 @@ async function analyze(file) {
 
 function reset() {
   if (coverUrl) { URL.revokeObjectURL(coverUrl); coverUrl = null; }
+  revokePlay();
   cur = null;
   $('am-file').value = '';
   $('am-filebar').hidden = true;
@@ -435,16 +828,10 @@ function toText(r) {
 
 function bind() {
   const drop = $('am-drop'), input = $('am-file');
-  drop.addEventListener('click', () => input.click());
-  drop.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+  // 文件输入以透明层覆盖整个拖拽区，点击/拖入由浏览器原生处理（含键盘聚焦后回车），无需再 input.click()
   input.addEventListener('change', () => { if (input.files && input.files[0]) analyze(input.files[0]); });
   ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('am-drop-active'); }));
   ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, () => drop.classList.remove('am-drop-active')));
-  drop.addEventListener('drop', (e) => {
-    e.preventDefault();
-    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-    if (f) analyze(f);
-  });
   ['dragover', 'drop'].forEach((ev) => window.addEventListener(ev, (e) => e.preventDefault()));
   $('am-reset').addEventListener('click', reset);
   $('am-copy').addEventListener('click', (e) => {

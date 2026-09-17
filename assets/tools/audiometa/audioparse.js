@@ -734,6 +734,11 @@ function fillDSF(b, res) {
     res.tech.blockSize = u32le(b, d + 32);
     res.tech.codec = 'DSD'; res.tech.lossless = true;
     res.tech.channelType = channelType === 1 ? '单声道' : (channelType === 2 ? '立体声' : (channelType === 3 ? '3 声道' : (channelType === 4 ? '4 声道' : (channelType === 5 ? '4 声道 (3.0/2.0)' : (channelType === 6 ? '5.1 声道' : (channelType === 7 ? '7.1 声道' : '其他'))))));
+    // DSD 是恒定码率：采样率 × 声道数 × 1 bit（不含文件头与块对齐填充）
+    if (res.tech.sampleRate && res.tech.channels) {
+      res.tech.bitrate = Math.round(res.tech.sampleRate * res.tech.channels / 1000);
+      res.tech.dsdRate = 'DSD' + Math.round(res.tech.sampleRate / 44100);
+    }
   }
   if (metaPtr > 0 && metaPtr + 3 < b.length) fillID3v2(b, res, metaPtr);
 }
@@ -768,6 +773,10 @@ function fillDFF(b, res) {
   }
   if (!res.tech.codec) { res.tech.codec = 'DSD'; res.tech.lossless = true; }
   if (res.tech.sampleRate && !res.tech.bitDepth) res.tech.bitDepth = 1; // DSD 为 1 bit
+  if (res.tech.sampleRate && res.tech.channels) {
+    if (!res.tech.bitrate) res.tech.bitrate = Math.round(res.tech.sampleRate * res.tech.channels / 1000);
+    res.tech.dsdRate = 'DSD' + Math.round(res.tech.sampleRate / 44100);
+  }
   // DFF 无样本总数，用数据块字节数换算：每样本 1 bit
   if (res.tech.dataSize && res.tech.sampleRate && res.tech.channels && !res.tech.duration) {
     res.tech.duration = Math.round(res.tech.dataSize * 8 / (res.tech.sampleRate * res.tech.channels) * 1000) / 1000;
@@ -793,7 +802,6 @@ function fillM3U(b, res) {
 }
 
 // ── AC-3 ──
-const AC3_FRAME_WORDS = [64,64,80,80,96,96,112,112,128,128,160,160,192,192,224,224,256,256,320,320,384,384,448,448,512,512,640,640,768,768,896,896,1024,1024,1152,1152,1280,1280];
 const AC3_BITRATE = [32,32,40,40,48,48,56,56,64,64,80,80,96,96,112,112,128,128,160,160,192,192,224,224,256,256,320,320,384,384,448,448,512,512,576,576,640,640];
 const AC3_ACMOD = [2,1,2,3,3,4,4,5];
 const AC3_CH = ['1+1 (Dual Mono)','1/0 (Mono)','2/0 (Stereo)','3/0','2/1','3/1','2/2','3/2 (5.1)'];
@@ -816,12 +824,25 @@ function fillAC3(b, res) {
   while (q + 6 <= b.length && frames < 200000) {
     if (!(b[q] === 0x0b && b[q + 1] === 0x77)) { q++; continue; }
     const fsc = (b[q + 4] >> 6) & 3, fsz = b[q + 4] & 0x3f;
-    const words = AC3_FRAME_WORDS[fsz];
-    if (words == null) break;
-    const bytes = fsc === 0 ? words * 2 : (fsc === 1 ? words * 2 + ((fsz & 1) ? 0 : 2) : Math.floor(words * 3));
-    if (bytes <= 0) break;
-    dur += 1536 / (fsc === 1 ? 44100 : (fsc === 0 ? 48000 : 32000));
-    frames++; q += bytes;
+    const sr = fsc === 1 ? 44100 : (fsc === 0 ? 48000 : 32000);
+    const br = AC3_BITRATE[fsz];
+    if (br == null) break;
+    // AC-3 帧长 = 码率(bit/s) × 每帧采样数(1536) ÷ 采样率 ÷ 8。
+    // 44.1 kHz 的帧长与 48/32 kHz 不同，不能从帧长码直接查固定表（那是 48 kHz 基准）。
+    const want = Math.max(4, Math.round(br * 1000 * 1536 / (sr * 8)));
+    dur += 1536 / sr;
+    frames++;
+    // 以下一个真正的同步字为准重新对齐（带容差，避开音频数据里偶发的伪同步字）；
+    // 找不到下一个同步字说明已是最后一帧，直接结束。
+    let next = -1;
+    for (let n = q + 4; n + 1 < b.length; n++) {
+      if (b[n] === 0x0b && b[n + 1] === 0x77) {
+        const d = n - q;
+        if (d >= want - 16 && d <= want + 24) { next = n; break; }
+      }
+    }
+    if (next < 0) break;
+    q = next;
   }
   if (frames >= 2) { res.tech.duration = Math.round(dur * 1000) / 1000; res.tech.frameCount = frames; }
 }

@@ -31,9 +31,16 @@ html[mode=dark] #am-app {
   --am-ok: #4ade80;
   --am-warn: #fbbf24;
   --am-err: #f87171;
+  color-scheme: dark;
 }
 #am-app * { box-sizing: border-box; }
 #am-app [hidden] { display: none !important; }
+/* 文件输入：透明覆盖整個拖拽区，由浏览器原生处理点击/拖入（避免 hidden→display:none 在 Safari 上无法触发选择框） */
+#am-app .am-drop { position: relative; }
+#am-app .am-file-overlay {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; padding: 0; opacity: 0; cursor: pointer; font-size: 0; line-height: 0;
+}
 #am-app .am-mono { font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace); }
 
 /* 拖拽区 */
@@ -78,9 +85,10 @@ html[mode=dark] #am-app {
 
 /* 头部：封面 + 关键信息 */
 #am-app .am-hero {
-  display: flex; gap: 18px; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px; padding: 16px;
   border: 1px solid var(--am-line); border-radius: var(--am-r); background: var(--am-bg);
 }
+#am-app .am-hero-top { display: flex; gap: 18px; }
 #am-app .am-cover {
   flex: 0 0 auto; width: 168px; height: 168px; border-radius: 6px; overflow: hidden;
   border: 1px solid var(--am-line); background: var(--am-panel);
@@ -98,7 +106,7 @@ html[mode=dark] #am-app {
 }
 #am-app .am-title { margin: 2px 0 0; font-size: 19px; font-weight: 600; line-height: 1.35; word-break: break-word; }
 #am-app .am-sub { margin: 0; color: var(--am-muted); font-size: 13.5px; word-break: break-word; }
-#am-app .am-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 10px; }
+#am-app .am-chips { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 2px; }
 #am-app .am-chip {
   display: flex; flex-direction: column; gap: 1px; padding: 6px 10px;
   border: 1px solid var(--am-line); border-radius: 6px; background: var(--am-panel);
@@ -130,6 +138,53 @@ html[mode=dark] #am-app {
 #am-app .am-table.am-3col td.am-note { width: 44%; color: var(--am-muted); font-family: inherit; font-size: 12px; line-height: 1.5; }
 #am-app .am-note.am-na { opacity: .5; }
 
+/* 试听 */
+#am-app .am-hero-info .am-player { border: none; background: transparent; margin-top: auto; }
+#am-app .am-hero-info .am-player .am-group-head { display: none; }
+#am-app .am-hero-info .am-play-body { padding: 0; }
+#am-app .am-play-body { padding: 12px 13px; display: flex; flex-direction: column; gap: 8px; }
+#am-app .am-audio { width: 100%; display: block; height: 40px; }
+#am-app .am-viz { width: 100%; height: 84px; display: block; }
+#am-app .am-play-meta { font-size: 12px; color: var(--am-muted); line-height: 1.5; }
+#am-app .am-play-cmp { color: var(--am-muted); }
+#am-app .am-play-cmp.am-ok { color: var(--am-ok); }
+#am-app .am-play-cmp.am-warn2 { color: var(--am-warn); }
+#am-app .am-noplay {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px;
+  padding: 9px 11px; border: 1px dashed var(--am-line); border-radius: 6px;
+  background: var(--am-panel); font-size: 12.5px; color: var(--am-muted);
+}
+#am-app .am-noplay b { color: var(--am-fg); font-weight: 600; }
+
+#am-app .am-trans { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+#am-app .am-trans-hint { font-size: 11.5px; color: var(--am-muted); }
+#am-app .am-btn-primary { border-color: var(--am-accent); color: var(--am-accent); font-weight: 600; }
+#am-app .am-btn-primary:hover { background: color-mix(in srgb, var(--am-accent) 8%, transparent); }
+#am-app .am-err-text { color: var(--am-err); }
+
+/* 频谱 */
+#am-app .am-spec-body { padding: 12px 13px; display: flex; flex-direction: column; gap: 10px; }
+#am-app .am-spec-status { font-size: 12px; color: var(--am-muted); }
+#am-app .am-spec-canvas { width: 100%; display: block; }
+#am-app .am-wave { width: 100%; height: 64px; display: block; margin-top: 4px; }
+#am-app .am-cap { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--am-muted); }
+#am-app .am-verdict {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 9px 11px; border-radius: 6px; border: 1px solid var(--am-line);
+  border-left: 3px solid var(--am-ok); background: var(--am-panel);
+}
+#am-app .am-verdict-warn { border-left-color: var(--am-warn); }
+#am-app .am-verdict-info { border-left-color: var(--am-accent); }
+#am-app .am-verdict-title { font-size: 13px; font-weight: 600; }
+#am-app .am-verdict-detail { font-size: 12.5px; color: var(--am-muted); line-height: 1.55; }
+#am-app .am-verdict-nums { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+#am-app .am-vnum {
+  display: flex; flex-direction: column; padding: 4px 9px; border: 1px solid var(--am-line);
+  border-radius: 5px; background: var(--am-bg);
+}
+#am-app .am-vnum i { font-style: normal; font-size: 10.5px; color: var(--am-muted); text-transform: uppercase; letter-spacing: .03em; }
+#am-app .am-vnum b { font-size: 13px; font-weight: 600; font-family: var(--font-monospace, ui-monospace, Menlo, monospace); }
+
 /* 原始 JSON */
 #am-app .am-raw {
   margin: 0; padding: 10px 13px; background: var(--am-panel);
@@ -138,7 +193,7 @@ html[mode=dark] #am-app {
 }
 
 @media (max-width: 620px) {
-  #am-app .am-hero { flex-direction: column; }
+  #am-app .am-hero-top { flex-direction: column; }
   #am-app .am-cover { width: 100%; height: 200px; }
   #am-app .am-table.am-3col td.am-k { width: 34%; }
   #am-app .am-table.am-3col td.am-v { width: 66%; }
