@@ -212,14 +212,21 @@ export function drawWaveform(canvas, wf, opts) {
 // ── 播放时的实时频谱动画（Web Audio AnalyserNode） ──
 // 频域柱状 + 峰值帽；播放时由音频驱动，暂停时走循环待机动画（不会变成死图）。
 let vCtx = null, vAn = null, vSrc = null, vSrcEl = null, vRaf = 0, vBuf = null;
+// 分声道分析：ChannelSplitter → 两个 Analyser（L / R）
+let vSplit = null, vAnL = null, vAnR = null, vSink = null, vBufL = null, vBufR = null;
 
 const BARS = 64;
 const RAMP = [[0, [56, 138, 221]], [0.34, [29, 158, 117]], [0.66, [239, 159, 39]], [1, [226, 75, 74]]];
+// 双声道配色：左声道金→红（暖），右声道青→蓝（冷）
+const RAMP_L = [[0, [239, 159, 39]], [1, [226, 75, 74]]];
+const RAMP_R = [[0, [45, 212, 191]], [1, [56, 138, 221]]];
+// 柱值算法见下面 bandValues()：只做对数压带 + 带内取最大，不做任何加权/平滑
 
-function rampColor(t) {
+
+function rampColor(ramp, t) {
   t = Math.max(0, Math.min(1, t));
-  for (let i = 0; i < RAMP.length - 1; i++) {
-    const a = RAMP[i], b = RAMP[i + 1];
+  for (let i = 0; i < ramp.length - 1; i++) {
+    const a = ramp[i], b = ramp[i + 1];
     if (t >= a[0] && t <= b[0]) {
       const k = (t - a[0]) / (b[0] - a[0] || 1);
       return 'rgb(' + Math.round(a[1][0] + (b[1][0] - a[1][0]) * k) + ','
@@ -227,7 +234,7 @@ function rampColor(t) {
         + Math.round(a[1][2] + (b[1][2] - a[1][2]) * k) + ')';
     }
   }
-  return 'rgb(226,75,74)';
+  return 'rgb(' + ramp[ramp.length - 1][1].join(',') + ')';
 }
 
 function rrect(g, x, y, w, h, r) {
@@ -244,7 +251,33 @@ function rrect(g, x, y, w, h, r) {
   g.fill();
 }
 
-function vizPaint(canvas, buf, peaks, idleT) {
+// 把某声道的频谱按对数频带压成 BARS 个柱值。
+// 只做「对数压带 + 取带内最大值」—— 不加 A 计权、不加邻柱平均、不加帧间缓动。
+// 实测：A 计权会把低频压到 7.5%（音乐画面「没劲」）；邻柱平均 [1,2,3,5,3,2,1] 会把孤立尖峰
+// 摊到 ±3 根上（峰值只剩 31%）。两者都让频谱又平又钝，所以这里保持最原始的算法。
+function bandValues(buf) {
+  const n = buf.length;
+  const nyq = (vCtx ? vCtx.sampleRate : 48000) / 2;
+  const binHz = n ? nyq / n : 1;
+  const out = new Float32Array(BARS);
+  let prev = 1;
+  for (let i = 0; i < BARS; i++) {
+    const f = 20 * Math.pow(nyq / 20, i / (BARS - 1));
+    const b = Math.min(n - 1, Math.max(prev, Math.round(f / binHz)));
+    let v = 0;
+    for (let k = prev; k <= b; k++) if (buf[k] > v) v = buf[k];
+    prev = b + 1;
+    out[i] = v;
+  }
+  return out;
+}
+
+/**
+ * 画实时频谱。
+ * chans = [{ v, ramp, mirror }]；mirror=true 的声道从右往左画（低频频点在右，高频在中间相遇）。
+ * 传 null 走待机动画；peaks 为「每声道一套」的峰值帽数组。
+ */
+function vizPaint(canvas, chans, peaks, idleT) {
   const dpr = window.devicePixelRatio || 1;
   const W = canvas.clientWidth || 600, H = canvas.clientHeight || 84;
   if (canvas.width !== Math.round(W * dpr)) canvas.width = Math.round(W * dpr);
@@ -254,33 +287,36 @@ function vizPaint(canvas, buf, peaks, idleT) {
   g.clearRect(0, 0, W, H);
 
   const gap = 2, bw = (W - gap * (BARS - 1)) / BARS;
-  const n = buf ? buf.length : 0;
-  const nyq = (vCtx ? vCtx.sampleRate : 48000) / 2;
-  const binHz = n ? nyq / n : 1;
   const top = 6, usable = H - top - 4;
-  let prev = 1;
 
-  for (let i = 0; i < BARS; i++) {
-    let v = 0;
-    if (n) {
-      const f = 20 * Math.pow(nyq / 20, i / (BARS - 1));
-      const b = Math.min(n - 1, Math.max(prev, Math.round(f / binHz)));
-      for (let k = prev; k <= b; k++) if (buf[k] > v) v = buf[k];
-      prev = b + 1;
-    } else if (idleT) {
+  if (!chans) {
+    // 待机：平缓起伏的占位动画
+    for (let i = 0; i < BARS; i++) {
       const w = Math.sin(idleT * 1.7 + i * 0.30) * 0.5 + 0.5;
-      v = 8 + w * 16;
+      const h = Math.max(2, (8 + w * 16) / 255 * usable);
+      g.fillStyle = rampColor(RAMP, i / (BARS - 1));
+      rrect(g, i * (bw + gap), H - 4 - h, bw, h, Math.min(bw / 2, 2));
     }
-    const h = Math.max(2, (v / 255) * usable);
-    const x = i * (bw + gap);
-    g.fillStyle = rampColor(i / (BARS - 1));
-    rrect(g, x, H - 4 - h, bw, h, Math.min(bw / 2, 2));
-    // 峰值帽：慢慢往下掉
-    if (peaks) {
-      if (h >= peaks[i]) peaks[i] = h;
-      else peaks[i] = Math.max(2, peaks[i] - 0.9);
-      g.fillStyle = 'rgba(120,130,145,0.55)';
-      g.fillRect(x, H - 4 - peaks[i] - 2, bw, 2);
+    return;
+  }
+
+  for (let c = 0; c < chans.length; c++) {
+    const ch = chans[c];
+    const mirror = !!ch.mirror;
+    for (let i = 0; i < BARS; i++) {
+      const h = Math.max(2, (ch.v[i] / 255) * usable);
+      const x = (mirror ? (BARS - 1 - i) : i) * (bw + gap);
+      g.globalAlpha = chans.length > 1 ? 0.85 : 1;   // 两声道叠加时半透明，重叠处能看出谁更高
+      g.fillStyle = rampColor(ch.ramp, i / (BARS - 1));
+      rrect(g, x, H - 4 - h, bw, h, Math.min(bw / 2, 2));
+      g.globalAlpha = 1;
+      if (peaks && peaks[c]) {
+        const pk = peaks[c];
+        if (h >= pk[i]) pk[i] = h;
+        else pk[i] = Math.max(2, pk[i] - 0.9);
+        g.fillStyle = 'rgba(120,130,145,0.45)';
+        g.fillRect(x, H - 4 - pk[i] - 2, bw, 2);
+      }
     }
   }
 }
@@ -309,14 +345,15 @@ function armGestureUnlock() {
   document.addEventListener('touchstart', unlockAudio, true);
 }
 
-export function bindVisualizer(audio, canvas) {
+export function bindVisualizer(audio, canvas, chCount) {
   // 关键：vRaf 是模块级唯一变量。重新选歌会再次 bind，若不先停掉上一条循环，
   // 旧循环会和新循环逐帧抢共享的 vSrc / vSrcEl —— 旧循环发现 vSrcEl 不是自己的 audio，
   // 就 disconnect 掉当前的 source、再想给自己的 audio 重建一个（同一 <audio> 重复
   // createMediaElementSource 会抛错），结果把音频图拆烂：换歌后 currentTime 卡在 0、
   // 波形一条平线、彻底没声。实测未修时，第二首的 createMediaElementSource 被调 123 次、抛错 121 次。
   if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; }
-  const peaks = new Float32Array(BARS);
+  const lanes = Math.max(1, Math.min(2, Number(chCount) || 2));   // 只画 L / R 两路
+  const peaks = [new Float32Array(BARS), new Float32Array(BARS)]; // 每声道一套峰值帽
   let idleT = 0;
   armGestureUnlock();
   audio.addEventListener('play', unlockAudio);
@@ -332,12 +369,29 @@ export function bindVisualizer(audio, canvas) {
         if (!vAn) {
           vAn = vCtx.createAnalyser();
           vAn.fftSize = 2048;
-          vAn.smoothingTimeConstant = 0.75;
-          vAn.connect(vCtx.destination);
+          vAn.smoothingTimeConstant = 0.7;
+          vAn.connect(vCtx.destination);   // 主通路：出声
+        }
+        if (!vAnL) {
+          // 分声道：ChannelSplitter 拆出 L / R，各接一个 Analyser。
+          // ⚠️ Analyser 必须挂在通往 destination 的「可达路径」上，否则 Web Audio 不会处理它 → 读数恒为 0。
+          // 这里经一个 0 增益 GainNode 落地：既保证被处理，又不会重复出声。
+          vSplit = vCtx.createChannelSplitter(2);
+          vSink = vCtx.createGain();
+          vSink.gain.value = 0;
+          vSink.connect(vCtx.destination);
+          vAnL = vCtx.createAnalyser(); vAnL.fftSize = 2048; vAnL.smoothingTimeConstant = 0.7;
+          vAnR = vCtx.createAnalyser(); vAnR.fftSize = 2048; vAnR.smoothingTimeConstant = 0.7;
+          vAnL.connect(vSink); vAnR.connect(vSink);
+          vSplit.connect(vAnL, 0);
+          vSplit.connect(vAnR, 1);
         }
         vSrc.connect(vAn);
+        vSrc.connect(vSplit);
         vSrcEl = audio;
         vBuf = new Uint8Array(vAn.frequencyBinCount);
+        vBufL = new Uint8Array(vAnL.frequencyBinCount);
+        vBufR = new Uint8Array(vAnR.frequencyBinCount);
       }
       return true;
     } catch (e) { return false; }
@@ -345,8 +399,13 @@ export function bindVisualizer(audio, canvas) {
   const loop = () => {
     const live = ensure() && !audio.paused && !audio.ended;
     if (live) {
-      vAn.getByteFrequencyData(vBuf);
-      vizPaint(canvas, vBuf, peaks, 0);
+      vAnL.getByteFrequencyData(vBufL);
+      const list = [{ v: bandValues(vBufL), ramp: RAMP_L, mirror: false }];
+      if (lanes >= 2) {
+        vAnR.getByteFrequencyData(vBufR);
+        list.push({ v: bandValues(vBufR), ramp: RAMP_R, mirror: true });   // 右声道镜像：低频在右
+      }
+      vizPaint(canvas, list, peaks, 0);
     } else {
       idleT += 0.035;
       vizPaint(canvas, null, peaks, idleT);

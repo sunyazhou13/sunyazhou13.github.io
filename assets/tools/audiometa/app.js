@@ -1,6 +1,6 @@
 // 音频元数据查看器（Audio Meta）—— 纯前端、零依赖、文件不出本机
 // 字节解析见 ./audioparse.js；本文件只负责渲染与交互。
-import { parseAudio } from './audioparse.js?v=202609186';
+import { parseAudio } from './audioparse.js?v=202609188';
 
 // ── 缓存击穿 ──
 // app.js 自己的版本号来自页面里的 <script src="app.js?v=...">。
@@ -488,7 +488,7 @@ function renderPlayer(r, file, wide) {
   const viz = document.createElement('canvas');
   viz.className = 'am-viz';
   (W || p.body).appendChild(viz);
-  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
+  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
 
   const meta = document.createElement('div');
   meta.className = 'am-play-meta';
@@ -561,7 +561,7 @@ async function runTranscode(r, file, key, p, area, wide) {
     const viz = document.createElement('canvas');     // 频谱跟着 area 走：area 已在整行宽容器里
     viz.className = 'am-viz';
     area.parentNode.insertBefore(viz, area);
-    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
+    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
     const pd = (r.tech || {}).duration;
     audio.addEventListener('loadedmetadata', () => {
       const bd = audio.duration;
