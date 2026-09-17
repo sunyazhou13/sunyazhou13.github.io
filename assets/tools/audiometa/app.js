@@ -1,6 +1,6 @@
 // 音频元数据查看器（Audio Meta）—— 纯前端、零依赖、文件不出本机
 // 字节解析见 ./audioparse.js；本文件只负责渲染与交互。
-import { parseAudio } from './audioparse.js?v=202609180';
+import { parseAudio } from './audioparse.js?v=202609186';
 
 // ── 缓存击穿 ──
 // app.js 自己的版本号来自页面里的 <script src="app.js?v=...">。
@@ -101,21 +101,21 @@ function fmtSampleRate(sr) {
 // ── 字段名 ──
 const FIELD = {
   format: ['格式', 'Format'], container: ['容器', 'Container'], codec: ['音频编码', 'Audio codec'], codecId: ['编码标识', 'Codec ID'],
-  lossless: ['无损', 'Lossless'], sampleRate: ['采样率', 'Sample rate'], dsdRate: ['DSD 倍率', 'DSD rate'], bitDepth: ['位深', 'Bit depth'],
-  channels: ['声道数', 'Channels'], channelLayout: ['声道布局', 'Channel layout'], channelMode: ['声道模式', 'Channel mode'],
+  lossless: ['无损', 'Lossless'], sampleRate: ['采样率', 'Sample rate'], dsdRate: ['DSD 倍率', 'DSD rate'], bitDepth: ['位深', 'Bit depth'], bitOrder: ['位序', 'Bit order'],
+  channels: ['声道数', 'Channels'], channelLayout: ['声道布局', 'Channel layout'], sampleLayout: ['样本交错', 'Sample interleave'], channelMode: ['声道模式', 'Channel mode'],
   channelType: ['声道类型', 'Channel type'], channelIds: ['声道标识', 'Channel IDs'],
   bitrate: ['码率', 'Bitrate'], bitrateMode: ['码率模式', 'Bitrate mode'], bitrateAvg: ['平均码率', 'Average bitrate'],
-  bitrateMax: ['最大码率', 'Max bitrate'], bitrateNominal: ['标称码率', 'Nominal bitrate'],
-  duration: ['时长', 'Duration'], totalSamples: ['样本总数', 'Total samples'], totalFrames: ['帧/块总数', 'Total frames'],
+  bitrateMax: ['最大码率', 'Max bitrate'], bitrateNominal: ['标称码率', 'Nominal bitrate'], overallBitrate: ['总体码率', 'Overall bitrate'],
+  duration: ['时长', 'Duration'], durationSec: ['时长（秒）', 'Duration (s)'], durationMs: ['时长（毫秒）', 'Duration (ms)'], totalSamples: ['样本总数', 'Total samples'], totalFrames: ['帧/块总数', 'Total frames'],
   frameCount: ['帧数', 'Frame count'], frameSize: ['帧字节数', 'Frame size'], blockSize: ['块字节数', 'Block size'],
   samplesPerBlock: ['每块样本数', 'Samples per block'],
   md5: ['流校验 MD5', 'Stream MD5'], fileMD5: ['容器 MD5', 'Container MD5'],
-  compression: ['压缩级别', 'Compression level'], apeVersion: ['APE 版本', 'APE version'], formatVersion: ['格式版本', 'Format version'],
+  compression: ['压缩级别', 'Compression level'], apeVersion: ['APE 版本', 'APE version'], formatVersion: ['格式版本', 'Format version'], formatId: ['格式 ID', 'Format ID'],
   encoder: ['写入器 / 编码器', 'Writing lib / encoder'], granulePos: ['末页 granule', 'Last granule'],
   preSkip: ['前置跳过', 'Pre-skip'], inputSampleRate: ['输入采样率', 'Input sample rate'],
   audioObjectType: ['AAC 对象类型', 'AAC object type'], objectType: ['对象类型', 'Object type'], bsid: ['bsid', 'bsid'],
   validBits: ['有效位深', 'Valid bits'], channelMask: ['声道掩码', 'Channel mask'],
-  dataSize: ['音频数据字节数', 'Audio data bytes'], fileSize: ['容器记录的文件大小', 'File size (in container)'],
+  dataSize: ['音频数据字节数', 'Audio data bytes'], streamPct: ['流占比', 'Stream share'], fileSize: ['容器记录的文件大小', 'File size (in container)'],
   objectCount: ['对象数', 'Object count'], timescale: ['时间基', 'Timescale'],
   entryCount: ['条目数', 'Entry count'], totalDuration: ['列表总时长', 'Total duration'], isStream: ['流式列表', 'Streaming playlist'],
   playlistType: ['列表类型', 'Playlist type'], note: ['备注', 'Note'],
@@ -123,11 +123,11 @@ const FIELD = {
 function flabel(k) { const f = FIELD[k]; return f ? (AM_EN ? f[1] : f[0]) : k; }
 
 // ── 技术字段展示顺序 ──
-const TECH_ORDER = ['format', 'container', 'codec', 'codecId', 'lossless', 'duration', 'sampleRate', 'dsdRate', 'bitDepth', 'channels',
-  'channelLayout', 'channelMode', 'channelType', 'channelIds', 'bitrate', 'bitrateMode', 'bitrateAvg', 'bitrateMax', 'bitrateNominal',
+const TECH_ORDER = ['format', 'container', 'codec', 'codecId', 'lossless', 'duration', 'sampleRate', 'dsdRate', 'bitDepth', 'bitOrder', 'channels',
+  'channelLayout', 'sampleLayout', 'channelMode', 'channelType', 'channelIds', 'bitrate', 'bitrateMode', 'bitrateAvg', 'bitrateMax', 'bitrateNominal', 'overallBitrate',
   'totalSamples', 'totalFrames', 'frameCount', 'frameSize', 'blockSize', 'samplesPerBlock', 'md5', 'fileMD5',
   'compression', 'apeVersion', 'formatVersion', 'encoder', 'audioObjectType', 'objectType', 'bsid', 'validBits', 'channelMask',
-  'dataSize', 'fileSize', 'objectCount', 'timescale', 'granulePos', 'preSkip', 'inputSampleRate',
+  'dataSize', 'streamPct', 'fileSize', 'objectCount', 'timescale', 'granulePos', 'preSkip', 'inputSampleRate',
   'entryCount', 'totalDuration', 'isStream', 'playlistType', 'note'];
 
 // 常见采样率（用于「是否合理」判断）
@@ -148,6 +148,10 @@ function techNote(k, r) {
       if (!d) return L('（未解析出）', '(not resolved)');
       return L('时长 ', 'Length ') + fmtDur(d) + ' ' + OKM;
     }
+    case 'durationSec': return L('同一时长的「秒数」表示（精确到毫秒），便于直接换算码率 / 切割点 / 批处理',
+      'The same duration expressed in seconds (ms precision) — handy for bitrate math, cut points and batch work');
+    case 'durationMs': return L('同一时长的「毫秒数」表示，便于直接用于时间轴 / 字幕 / 剪辑定位',
+      'The same duration expressed in milliseconds — handy for timelines, subtitles and edit points');
     case 'sampleRate': {
       const sr = t.sampleRate;
       if (!sr) return '';
@@ -176,18 +180,29 @@ function techNote(k, r) {
     }
     case 'channelLayout': case 'channelMode': case 'channelType': case 'channelIds':
       return L('声道排列方式', 'Speaker arrangement');
+    case 'sampleLayout': return L('解码后 PCM 的样本排列：交错 = 一帧内各声道样本相邻（L R L R…）；平面 = 每个声道一整条独立序列。规则是「PCM/无损容器 → 交错，有损编码与 DSD → 平面」（按主流解码器如 FFmpeg 的解码输出）；编码前的码流本身不分交不交错。',
+      'PCM sample layout after decoding: interleaved = per-frame channel samples adjacent (L R L R…); planar = one contiguous run per channel. Rule: PCM/lossless containers are interleaved, lossy codecs and DSD are planar, following mainstream decoders such as FFmpeg; the coded bitstream itself is neither.');
     case 'bitrate': {
       const br = t.bitrate;
       if (!br) return '';
+      const est = t.bitrateEst ? L('容器未存码率，由「音频数据量 ÷ 时长」估算；', 'not stored in container — estimated from data size ÷ duration; ') : '';
       // DSD 是恒定码率 = 采样率 × 声道数 × 1 bit，不随内容波动
-      if (t.bitDepth === 1 && t.dsdRate) return L('DSD 恒定码率 = 采样率 × 声道数 × 1 bit，不含文件头与块对齐填充',
+      if (t.bitDepth === 1 && t.dsdRate) return est + L('DSD 恒定码率 = 采样率 × 声道数 × 1 bit，不含文件头与块对齐填充',
         'DSD is constant rate = rate × channels × 1 bit, excluding header and block padding');
-      if (t.lossless) return L('无损编码码率随内容波动，仅作参考', 'For lossless this varies with content; indicative only');
+      if (t.lossless) return est + L('无损编码码率随内容波动，仅作参考', 'For lossless this varies with content; indicative only');
       const ok = br >= 32 && br <= 1536;
-      return L('每秒数据量；有损常见 96–320 kbps', 'Bits per second; 96–320 kbps typical for lossy') + (ok ? ' ' + OKM : ' ' + WARNM);
+      return est + L('每秒数据量；有损常见 96–320 kbps', 'Bits per second; 96–320 kbps typical for lossy') + (ok ? ' ' + OKM : ' ' + WARNM);
     }
     case 'bitrateMode': return L('CBR 固定码率 / VBR 可变码率', 'CBR constant / VBR variable bitrate');
     case 'bitrateAvg': case 'bitrateMax': case 'bitrateNominal': return L('各口径码率（平均 / 峰值 / 标称）', 'Bitrate figures (avg / max / nominal)');
+    case 'overallBitrate': return L('容器层总体码率 = 文件大小 ÷ 时长（含标签 / 封面等开销）—— 与上面「码率」（音频流）不是一回事，MediaInfo 也是分两行列',
+      'Overall/container bitrate = file size ÷ duration (includes tag/art overhead) — distinct from the audio-stream bitrate above');
+    case 'bitOrder': return L('DSD 的比特顺序：Little = LSB 优先，Big = MSB 优先（对应 DSF 格式里的 bitsPerSample 1 / 8）',
+      'DSD bit order: Little = LSB-first, Big = MSB-first (DSF bitsPerSample 1 / 8)');
+    case 'formatId': return L('容器里登记的音频数据类型（DSF 中 0 = 原始 DSD，未压缩）',
+      'Audio data type registered in the container (0 = raw uncompressed DSD in DSF)');
+    case 'streamPct': return L('音频数据占整个文件的百分比；与 100% 的差值就是标签 / 封面 / 头部开销',
+      'Share of the file taken by audio data; the gap to 100% is tag/art/header overhead');
     case 'totalSamples': return L('总采样点数（= 时长 × 采样率）', 'Total samples (= duration × rate)');
     case 'totalFrames': case 'frameCount': return L('编码帧/块总数', 'Total coded frames/blocks');
     case 'frameSize': case 'blockSize': case 'samplesPerBlock': return L('每帧/块的大小', 'Per-frame/block size');
@@ -825,10 +840,16 @@ function render(r, file) {
     if (k === 'sampleRate') v = fmtSampleRate(v);
     if (/bitrate/i.test(k) && typeof v === 'number') v = v + ' kbps';
     if (k === 'dataSize' || k === 'fileSize') v = fmtBytes(v);
+    if (k === 'streamPct' && typeof v === 'number') v = v + '%';
     trows.push([flabel(k), v, techNote(k, r)]);
+    // 时长额外补两行：秒 / 毫秒 —— 有些人就想直接看数值（便于换算/比对）
+    if (k === 'duration' && typeof tech.duration === 'number' && tech.duration > 0) {
+      trows.push([flabel('durationSec'), tech.duration.toFixed(3) + ' s', techNote('durationSec', r)]);
+      trows.push([flabel('durationMs'), Math.round(tech.duration * 1000) + ' ms', techNote('durationMs', r)]);
+    }
   }
   for (const k of Object.keys(tech)) {
-    if (seen.has(k) || k === 'picCount') continue;
+    if (seen.has(k) || k === 'picCount' || k === 'bitrateEst') continue;
     trows.push([flabel(k), tech[k], techNote(k, r)]);
   }
   const techSec = section(T.techTitle, trows, true);

@@ -377,9 +377,15 @@ function fillMP4(b, res) {
     const CODECS = { mp4a: 'AAC (mp4a)', alac: 'ALAC (Apple Lossless)', 'ac-3': 'AC-3', 'ec-3': 'E-AC-3', Opus: 'Opus', fLaC: 'FLAC', lpcm: 'LPCM', samr: 'AMR-NB', sawb: 'AMR-WB' };
     res.tech.codec = CODECS[fmt] || fmt;
     res.tech.lossless = /alac|fLaC|lpcm/i.test(fmt);
-    if (fmt === 'alac') { const alac = findBoxAt(b, entry + 8 + u16be(b, entry + 28), entry + u32be(b, entry), 'alac'); if (alac) { res.tech.sampleRate = u32be(b, alac.data + 20) || res.tech.sampleRate; res.tech.channels = u8(b, alac.data + 25) || res.tech.channels; res.tech.bitDepth = u8(b, alac.data + 25) ? u8(b, alac.data + 21) : res.tech.bitDepth; } }
+    // 子盒子（esds / alac cookie）在 AudioSampleEntry 头之后：v0 = 36 字节，v1 +16，v2 +36。
+    // ⚠️ 旧实现写的 `entry + 8 + u16be(b, entry + 28)` 是错的 —— entry+28 是 compressionID（通常=0），
+    // 等于从 entry+8 开始找，永远找不到 esds → M4A 的真实码率/编码档次（AAC LC）全丢。
+    const seVer = u16be(b, entry + 16);
+    const childStart = entry + 36 + (seVer === 1 ? 16 : seVer === 2 ? 36 : 0);
+    const entryEnd = entry + (u32be(b, entry) || 0);
+    if (fmt === 'alac') { const alac = findBoxAt(b, childStart, entryEnd, 'alac'); if (alac) { res.tech.sampleRate = u32be(b, alac.data + 20) || res.tech.sampleRate; res.tech.channels = u8(b, alac.data + 25) || res.tech.channels; res.tech.bitDepth = u8(b, alac.data + 25) ? u8(b, alac.data + 21) : res.tech.bitDepth; } }
     if (fmt === 'mp4a') {
-      const esds = findBoxAt(b, entry + 8 + u16be(b, entry + 28), entry + u32be(b, entry), 'esds');
+      const esds = findBoxAt(b, childStart, entryEnd, 'esds');
       if (esds) parseEsds(b, esds, res);
     }
     res.tech.codecId = fmt;
@@ -426,9 +432,15 @@ function parseEsds(b, esds, res) {
     p += 1; // objectTypeIndication
     p += 1; // streamType
     p += 3; // bufferSizeDB
-    res.tech.bitrateMax = u32be(b, p); p += 4;
-    res.tech.bitrateAvg = u32be(b, p); p += 4;
-    res.tech.bitrate = Math.round((res.tech.bitrateAvg || res.tech.bitrateMax) / 1000) || null;
+    // esds 里是 bps，统一换算成 kbps，跟 MP3 等其它格式口径一致（否则表格会显示成 256000 kbps）
+    const mxBps = u32be(b, p); p += 4;
+    const avgBps = u32be(b, p); p += 4;
+    if (mxBps) res.tech.bitrateMax = Math.round(mxBps / 1000);
+    if (avgBps) res.tech.bitrateAvg = Math.round(avgBps / 1000);
+    res.tech.bitrate = res.tech.bitrateAvg || res.tech.bitrateMax || null;
+    if (res.tech.bitrateMax && res.tech.bitrateAvg) {
+      res.tech.bitrateMode = (res.tech.bitrateMax > res.tech.bitrateAvg * 1.25) ? 'VBR' : 'CBR';
+    }
     if (b[p] === 0x05) {
       p++; readLen();
       const aot = (b[p] >> 3) & 0x1f;
@@ -739,6 +751,16 @@ function fillDSF(b, res) {
       res.tech.bitrate = Math.round(res.tech.sampleRate * res.tech.channels / 1000);
       res.tech.dsdRate = 'DSD' + Math.round(res.tech.sampleRate / 44100);
     }
+    // 位序：DSF 的 bitsPerSample 字段 1 = LSB 优先（Little），8 = MSB 优先（Big）
+    res.tech.bitOrder = res.tech.bitDepth === 8 ? 'Big（MSB 优先）' : 'Little（LSB 优先）';
+  }
+  // 音频流大小：扫块找 'data'（DSF 各块的 size 字段都是「整块大小（含 12 字节块头）」）
+  for (let q = 0; q + 12 <= b.length;) {
+    const id = sz(b, q, 4);
+    const size = u64le(b, q + 4);
+    if (!/^[\x20-\x7e]{4}$/.test(id) || size < 12 || q + size > b.length) break;
+    if (id === 'data') { res.tech.dataSize = size - 12; break; }
+    q += size;
   }
   if (metaPtr > 0 && metaPtr + 3 < b.length) fillID3v2(b, res, metaPtr);
 }
@@ -887,6 +909,19 @@ function fillDTS(b, res) {
   } catch (e) { /* ignore */ }
 }
 
+// 声道数 → 常见扬声器布局。AC-3 / DTS 的码流自带布局（用自己的），其余格式按声道数推导。
+const CH_LAYOUT = { 1: '单声道 (Mono)', 2: '立体声 (Stereo)', 3: '2.1', 4: '四声道 (Quad)', 5: '5.0', 6: '5.1', 7: '6.1', 8: '7.1' };
+
+// 声道标识（扬声器位置）—— MediaInfo 里显示的「声道布局 : L R」就是这个
+const CH_IDS = { 1: 'M', 2: 'L R', 3: 'L R LFE', 4: 'L R Ls Rs', 5: 'L R C Ls Rs', 6: 'L R C LFE Ls Rs', 7: 'L R C LFE Ls Rs Lb', 8: 'L R C LFE Ls Rs Lb Rb' };
+
+// 解码后 PCM 为「平面 (Planar)」的格式；其余视为「交错 (Interleaved)」。
+// 交错 = 同一帧内各声道样本相邻存放（L R L R…）；平面 = 每个声道一整条独立序列（L…L R…R）。
+// 规则：PCM / 无损容器 → 交错；有损编码与 DSD → 平面。
+// 依据是主流解码器（FFmpeg：mp3/aac/vorbis/opus/wma/ac3/dts 解出来都是 fltp 平面浮点，DSD 是 dsd_*_planar；
+// 而 wav/aiff/ape/flac/alac 解出来是交错整型）。编码前的码流本身不分交不交错。
+const SAMPLE_PLANAR = new Set(['mp3', 'mp2', 'aac', 'ogg', 'opus', 'wma', 'ac3', 'dts', 'dsf', 'dff']);
+
 // ── 主入口 ──
 export function parseAudio(bytes, fileName) {
   const b = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
@@ -924,6 +959,35 @@ export function parseAudio(bytes, fileName) {
     }
     if (res.tech.sampleRate && res.tech.totalSamples && !res.tech.duration) res.tech.duration = res.tech.totalSamples / res.tech.sampleRate;
     if (res.tech.duration) res.tech.duration = Math.round(res.tech.duration * 1000) / 1000;
+    // 通用兜底码率：有些容器本身不存码率（典型是 FLAC 的 STREAMINFO —— 只有采样率/位深/总采样数），
+    // 用「音频数据字节数 / 时长」估一个，别让「码率」整行缺失。
+    // 优先用容器已知的音频数据大小（如 WAV 的 data 块），否则退回整个文件大小（含标签/封面，会略偏高）。
+    if (!res.tech.bitrate && res.tech.duration > 0) {
+      const bytes = res.tech.dataSize || res.tech.audioSize || b.length;
+      const kbps = Math.round(bytes * 8 / res.tech.duration / 1000);
+      if (kbps > 0 && kbps < 200000) { res.tech.bitrate = kbps; res.tech.bitrateEst = true; }
+    }
+    // 声道布局兜底：AC-3 / DTS 在各自解析器里已按码流设好，其余格式这里按声道数推导
+    if (!res.tech.channelLayout && res.tech.channels) {
+      res.tech.channelLayout = CH_LAYOUT[res.tech.channels] || (res.tech.channels + ' 声道');
+    }
+    // 样本交错布局（Interleaved / Planar）—— PCM/无损容器为交错，有损编码与 DSD 为平面
+    if (res.tech.channels) {
+      const fk = res.formatKey || '';
+      // M4A 里 ALAC（无损）是交错、AAC（有损）是平面
+      const planar = fk === 'm4a' ? /AAC/i.test(res.tech.codec || '') : SAMPLE_PLANAR.has(fk);
+      res.tech.sampleLayout = planar ? '平面 (Planar)' : '交错 (Interleaved)';
+      if (!res.tech.channelIds) res.tech.channelIds = CH_IDS[res.tech.channels] || '';
+    }
+    // 总体码率（容器层 = 文件大小 ÷ 时长）—— 与「码率」（音频流）不是一回事，MediaInfo 也是分两行列的
+    if (res.tech.duration > 0) {
+      res.tech.overallBitrate = Math.round(b.length * 8 / res.tech.duration / 1000);
+      // 音频流占整个文件的比例（配合「流大小」看）
+      if (res.tech.dataSize) {
+        const pct = Math.round(res.tech.dataSize / b.length * 1000) / 10;
+        if (pct > 0 && pct <= 100) res.tech.streamPct = pct;
+      }
+    }
   } catch (e) {
     res._error = String((e && e.message) || e);
   }
@@ -1009,6 +1073,24 @@ function fillMPEGAudio(b, res, key) {
     res.tech.duration = Math.round(dur * 1000) / 1000;
     res.tech.bitrateAvg = Math.round(bytes * 8 / dur / 1000);
     res.tech.bitrateMode = (Math.abs(res.tech.bitrateAvg - h.bitrate) <= 2) ? 'CBR' : 'VBR';
+  }
+  // Xing / Info 头 + LAME 扩展：拿编码器标识（MP3 的 STREAMINFO 里没有这信息）
+  // 位置 = 首帧头(4) + side info（MPEG1: 单声道 17 / 其他 32；MPEG2: 9 / 17）
+  const sideInfo = (h.verBits === 3) ? (h.chMode === 3 ? 17 : 32) : (h.chMode === 3 ? 9 : 17);
+  const xp = found.p + 4 + sideInfo;
+  const xt = sz(b, xp, 4);
+  if (xt === 'Xing' || xt === 'Info') {
+    const xflags = u32be(b, xp + 4);
+    let q = xp + 8;
+    if (xflags & 1) q += 4;      // frames
+    if (xflags & 2) q += 4;      // bytes
+    if (xflags & 4) q += 100;    // TOC
+    if (xflags & 8) q += 4;      // quality
+    const lame = sz(b, q, 9);
+    if (/^(LAME|GOGO|L3\.|Lavf|Lavc)/i.test(lame)) {
+      res.tech.encoder = trimNul(lame);
+      if (res.tech.bitrateMode === 'CBR' && xt === 'Xing') res.tech.bitrateMode = 'VBR';
+    }
   }
 }
 
