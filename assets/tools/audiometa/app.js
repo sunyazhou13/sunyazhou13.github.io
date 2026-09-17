@@ -1,6 +1,6 @@
 // 音频元数据查看器（Audio Meta）—— 纯前端、零依赖、文件不出本机
 // 字节解析见 ./audioparse.js；本文件只负责渲染与交互。
-import { parseAudio } from './audioparse.js?v=202609188';
+import { parseAudio } from './audioparse.js?v=202609191';
 
 // ── 缓存击穿 ──
 // app.js 自己的版本号来自页面里的 <script src="app.js?v=...">。

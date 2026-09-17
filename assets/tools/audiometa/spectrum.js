@@ -215,11 +215,12 @@ let vCtx = null, vAn = null, vSrc = null, vSrcEl = null, vRaf = 0, vBuf = null;
 // 分声道分析：ChannelSplitter → 两个 Analyser（L / R）
 let vSplit = null, vAnL = null, vAnR = null, vSink = null, vBufL = null, vBufR = null;
 
-const BARS = 64;
+const BARS = 128;
 const RAMP = [[0, [56, 138, 221]], [0.34, [29, 158, 117]], [0.66, [239, 159, 39]], [1, [226, 75, 74]]];
-// 双声道配色：左声道金→红（暖），右声道青→蓝（冷）
-const RAMP_L = [[0, [239, 159, 39]], [1, [226, 75, 74]]];
-const RAMP_R = [[0, [45, 212, 191]], [1, [56, 138, 221]]];
+// 双声道配色：每个声道一条「底 → 顶」的竖向渐变（借用那篇文章 CAGradientLayer + mask 的思路）。
+// 矮柱只露底部深色、高柱才爬到顶部亮色 —— 颜色随高度自然过渡，比一根一根纯色块柔和得多。
+const GRAD_L = ['#d8442f', '#f7c85c'];   // 左：深红底 → 金顶（暖）
+const GRAD_R = ['#2b6fc4', '#63dcc6'];   // 右：深蓝底 → 青顶（冷）
 // 柱值算法见下面 bandValues()：只做对数压带 + 带内取最大，不做任何加权/平滑
 
 
@@ -251,11 +252,33 @@ function rrect(g, x, y, w, h, r) {
   g.fill();
 }
 
-// 把某声道的频谱按对数频带压成 BARS 个柱值。
-// 只做「对数压带 + 取带内最大值」—— 不加 A 计权、不加邻柱平均、不加帧间缓动。
-// 实测：A 计权会把低频压到 7.5%（音乐画面「没劲」）；邻柱平均 [1,2,3,5,3,2,1] 会把孤立尖峰
-// 摊到 ±3 根上（峰值只剩 31%）。两者都让频谱又平又钝，所以这里保持最原始的算法。
-function bandValues(buf) {
+// 幅度补偿：A 计权会整体压低幅度（尤其低频），乘一个小增益把画面高度找回来
+const GAIN = 1.2;
+// 不做邻柱平均 —— 实测 3 抽头 [1,2,1]/4 会把峰摊到相邻柱、峰变矮变钝，效果差，已移除。
+
+// ── A 计权（等响曲线）──
+// 低频实际能量大、人耳听着却不响。乘一条 A 计权曲线，画面幅度更贴近听感、整体也更平缓。
+// 系数来自 IEC 61672 的 A 计权公式，+2 dB（1.2589×）归一到 1 kHz 附近。
+let aW = null, aWsr = 0;
+function aWeights(sr, bins) {
+  if (aW && aWsr === sr && aW.length === bins) return aW;
+  const c1 = 12194.217 * 12194.217, c2 = 20.598997 * 20.598997;
+  const c3 = 107.65265 * 107.65265, c4 = 737.86223 * 737.86223;
+  const df = sr / 2 / bins;
+  const out = new Float32Array(bins);
+  for (let i = 0; i < bins; i++) {
+    const f2 = (i * df) * (i * df), f4 = f2 * f2;
+    const den = (f2 + c2) * Math.sqrt((f2 + c3) * (f2 + c4)) * (f2 + c1);
+    out[i] = den > 0 ? Math.min(4, 1.2589 * c1 * f4 / den) : 0;
+  }
+  aW = out; aWsr = sr;
+  return out;
+}
+
+// 把某声道的频谱按对数频带压成 BARS 个柱值（含 A 计权）。
+// 不做邻柱平均、不做帧间缓动 —— 邻柱平均会把峰摊到相邻柱（变矮变钝，实测效果差），
+// 帧间缓动又叠在 analyser 的 smoothingTimeConstant 之上变双重平滑，两者都把画面压钝。
+function bandValues(buf, weight) {
   const n = buf.length;
   const nyq = (vCtx ? vCtx.sampleRate : 48000) / 2;
   const binHz = n ? nyq / n : 1;
@@ -265,9 +288,9 @@ function bandValues(buf) {
     const f = 20 * Math.pow(nyq / 20, i / (BARS - 1));
     const b = Math.min(n - 1, Math.max(prev, Math.round(f / binHz)));
     let v = 0;
-    for (let k = prev; k <= b; k++) if (buf[k] > v) v = buf[k];
+    for (let k = prev; k <= b; k++) { const x = buf[k] * weight[k]; if (x > v) v = x; }
     prev = b + 1;
-    out[i] = v;
+    out[i] = Math.min(255, v * GAIN);
   }
   return out;
 }
@@ -286,7 +309,8 @@ function vizPaint(canvas, chans, peaks, idleT) {
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
   g.clearRect(0, 0, W, H);
 
-  const gap = 2, bw = (W - gap * (BARS - 1)) / BARS;
+  // 柱子多了间隙也要跟着收（128 根时用 1px，否则间隙会吃掉太多宽度）
+  const gap = BARS > 80 ? 1 : 2, bw = (W - gap * (BARS - 1)) / BARS;
   const top = 6, usable = H - top - 4;
 
   if (!chans) {
@@ -300,24 +324,33 @@ function vizPaint(canvas, chans, peaks, idleT) {
     return;
   }
 
+  // 每个声道一条竖向渐变（底 → 顶），该声道所有柱子共用 —— 矮柱只露底部深色、高柱才爬到顶部亮色。
+  // 这是那篇文章 CAGradientLayer + mask 的做法：颜色随柱高自然过渡，而不是一根根纯色块。
+  const grads = chans.map((ch) => {
+    const gr = g.createLinearGradient(0, H - 4, 0, 0);
+    gr.addColorStop(0, ch.colors[0]);
+    gr.addColorStop(1, ch.colors[1]);
+    return gr;
+  });
+
   for (let c = 0; c < chans.length; c++) {
     const ch = chans[c];
     const mirror = !!ch.mirror;
+    g.globalAlpha = chans.length > 1 ? 0.9 : 1;   // 两声道叠加时略透，重叠处能看出谁更高
     for (let i = 0; i < BARS; i++) {
       const h = Math.max(2, (ch.v[i] / 255) * usable);
       const x = (mirror ? (BARS - 1 - i) : i) * (bw + gap);
-      g.globalAlpha = chans.length > 1 ? 0.85 : 1;   // 两声道叠加时半透明，重叠处能看出谁更高
-      g.fillStyle = rampColor(ch.ramp, i / (BARS - 1));
+      g.fillStyle = grads[c];
       rrect(g, x, H - 4 - h, bw, h, Math.min(bw / 2, 2));
-      g.globalAlpha = 1;
-      if (peaks && peaks[c]) {
+      if (peaks && peaks[c] && bw >= 3) {   // 柱子太细时峰值帽没意义（会变成噪点），直接不画
         const pk = peaks[c];
         if (h >= pk[i]) pk[i] = h;
         else pk[i] = Math.max(2, pk[i] - 0.9);
-        g.fillStyle = 'rgba(120,130,145,0.45)';
+        g.fillStyle = 'rgba(120,130,145,0.4)';
         g.fillRect(x, H - 4 - pk[i] - 2, bw, 2);
       }
     }
+    g.globalAlpha = 1;
   }
 }
 
@@ -399,11 +432,12 @@ export function bindVisualizer(audio, canvas, chCount) {
   const loop = () => {
     const live = ensure() && !audio.paused && !audio.ended;
     if (live) {
+      const w = aWeights(vCtx.sampleRate, vBufL.length);
       vAnL.getByteFrequencyData(vBufL);
-      const list = [{ v: bandValues(vBufL), ramp: RAMP_L, mirror: false }];
+      const list = [{ v: bandValues(vBufL, w), colors: GRAD_L, mirror: false }];
       if (lanes >= 2) {
         vAnR.getByteFrequencyData(vBufR);
-        list.push({ v: bandValues(vBufR), ramp: RAMP_R, mirror: true });   // 右声道镜像：低频在右
+        list.push({ v: bandValues(vBufR, w), colors: GRAD_R, mirror: true });   // 右声道镜像：低频在右
       }
       vizPaint(canvas, list, peaks, 0);
     } else {
