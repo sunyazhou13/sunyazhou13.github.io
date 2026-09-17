@@ -1,6 +1,6 @@
 // 音频元数据查看器（Audio Meta）—— 纯前端、零依赖、文件不出本机
 // 字节解析见 ./audioparse.js；本文件只负责渲染与交互。
-import { parseAudio } from './audioparse.js?v=202609174';
+import { parseAudio } from './audioparse.js?v=202609180';
 
 // ── 缓存击穿 ──
 // app.js 自己的版本号来自页面里的 <script src="app.js?v=...">。
@@ -31,6 +31,11 @@ const T = {
   rawTagsTitle: L('其他标签（原始键值）', 'Other tags (raw key/value)'),
   playlistTitle: L('播放列表条目', 'Playlist entries'),
   rawTitle: L('原始解析结果（JSON）', 'Raw result (JSON)'),
+  lyricTitle: L('歌词', 'Lyrics'),
+  lyricCopy: L('复制歌词', 'Copy lyrics'),
+  lyricDownload: L('下载 .lrc', 'Download .lrc'),
+  lyricHint: L('按时间戳逐行排列；可复制，或导出为 .lrc 文件', 'One line per timestamp — copy it, or export as an .lrc file'),
+  lyricPlain: L('该文件未带时间戳，按原文展示', 'No timestamps in this file — shown as plain text'),
   colField: L('项目', 'Field'), colValue: L('值', 'Value'), colNote: L('说明 / 合理性', 'Notes / validity'),
   noCover: L('无内嵌封面', 'No embedded cover'),
   na: 'N/A',
@@ -329,15 +334,15 @@ function renderHero(r, file) {
   const t = r.tags || {};
   const title = t.title || file.name;
   const sub = [t.artist, t.album].filter(Boolean).join(' — ');
-  info.insertAdjacentHTML('beforeend',
-    '<div class="am-badge"></div><h3 class="am-title"></h3><p class="am-sub"></p>');
-  info.querySelector('.am-badge').textContent = r.format || r.formatKey;
+  info.insertAdjacentHTML('beforeend', '<h3 class="am-title"></h3><p class="am-sub"></p>');
   info.querySelector('.am-title').textContent = title;
   const subEl = info.querySelector('.am-sub');
   if (sub) subEl.textContent = sub; else subEl.remove();
 
-  // 试听：放在标题下方
-  info.appendChild(renderPlayer(r, file));
+  // 试听：播放控件留在右列；频谱 + 状态行放进「整行宽」容器（稍后 append 到 hero）
+  const wide = document.createElement('div');
+  wide.className = 'am-hero-wide';
+  info.appendChild(renderPlayer(r, file, wide));
 
   const chips = document.createElement('div');
   chips.className = 'am-chips';
@@ -350,8 +355,32 @@ function renderHero(r, file) {
   chips.appendChild(chip(L('文件大小', 'File size'), fmtBytes(r.fileSize)));
   top.appendChild(info);
   hero.appendChild(top);
+  hero.appendChild(wide);
   hero.appendChild(chips);
+  // 音频格式徽标（仿 4K ULTRA HD 标：金色外框 + 黑底金字 + 金字底黑字副标）：挪到卡片右下角
+  const fmt = document.createElement('div');
+  fmt.className = 'am-fmt';
+  fmt.insertAdjacentHTML('beforeend', '<span class="am-fmt-k"></span><span class="am-fmt-v"></span>');
+  const q = qualityTier(r);
+  fmt.children[0].textContent = String(r.formatKey || r.format || '?').toUpperCase();
+  fmt.children[1].textContent = q.sub || q.tier;
+  hero.appendChild(fmt);
   hero.hidden = false;
+}
+
+// 音质等级：给右下角格式徽标当副标（HI-RES / LOSSLESS / DSD / LOSSY）
+function qualityTier(r) {
+  const tech = r.tech || {}, fk = r.formatKey || '';
+  const sr = tech.sampleRate || 0, bd = tech.bitDepth || 0;
+  if (fk === 'm3u') return { tier: 'PLAYLIST', sub: '' };
+  if (fk === 'iso') return { tier: 'SACD', sub: '' };
+  if (fk === 'dsf' || fk === 'dff') {
+    const sub = sr >= 11289600 ? 'DSD256' : sr >= 5644800 ? 'DSD128' : sr >= 2822400 ? 'DSD64' : 'DSD';
+    return { tier: 'DSD', sub };
+  }
+  const lossless = tech.lossless === true || /^(flac|alac|wav|aiff|ape)$/.test(fk);
+  const hires = bd >= 24 || sr > 48000;
+  return { tier: hires ? 'HI-RES' : (lossless ? 'LOSSLESS' : 'LOSSY'), sub: '' };
 }
 function placeholder(r) {
   const d = document.createElement('div');
@@ -411,28 +440,22 @@ function playerBox() {
 // 浏览器放不了、但可以用内置 ffmpeg 转码后试听的格式（值为喂给 ffmpeg 的扩展名）
 const TRANSCODE = { dsf: '.dsf', dff: '.dsf', ape: '.ape', wma: '.wma', ac3: '.ac3', dts: '.dts' };
 
-function renderPlayer(r, file) {
+function renderPlayer(r, file, wide) {
   const key = r.formatKey || '';
+  // 频谱 / 状态行放进「整行宽」容器；没传 wide 时退回播放器体内（旧调用兼容）
+  const W = wide || null;
   if (NOPLAY[key]) {
     const p = playerBox();
     p.body.appendChild(noPlayNode(NOPLAY[key]()));
-    if (TRANSCODE[key]) {
-      // 自动开始转码 —— 既然浏览器解不了，就别再让用户多点一次
-      const area = document.createElement('div');
-      area.className = 'am-trans';
-      const hint = document.createElement('span');
-      hint.className = 'am-trans-hint'; hint.textContent = T.transHint;
-      area.appendChild(hint);
-      p.body.appendChild(area);
-      runTranscode(r, file, key, p, area);
-    } else {
-      const area = document.createElement('div');
-      area.className = 'am-trans';
-      const hint = document.createElement('span');
-      hint.className = 'am-trans-hint'; hint.textContent = T.transUnsupported;
-      area.appendChild(hint);
-      p.body.appendChild(area);
-    }
+    const area = document.createElement('div');
+    area.className = 'am-trans';
+    const hint = document.createElement('span');
+    hint.className = 'am-trans-hint';
+    hint.textContent = TRANSCODE[key] ? T.transHint : T.transUnsupported;
+    area.appendChild(hint);
+    (W || p.body).appendChild(area);
+    // 自动开始转码 —— 既然浏览器解不了，就别再让用户多点一次
+    if (TRANSCODE[key]) runTranscode(r, file, key, p, area, W);
     return p.box;
   }
 
@@ -446,22 +469,16 @@ function renderPlayer(r, file) {
   audio.src = playUrl;
   p.body.appendChild(audio);
 
-  // 实时频谱动画（播放时出现，暂停即停在最后一帧）
+  // 实时频谱动画（播放时出现，暂停即停在最后一帧）—— 放整行宽容器
   const viz = document.createElement('canvas');
   viz.className = 'am-viz';
-  const waveCap = document.createElement('div');
-  waveCap.className = 'am-cap'; waveCap.textContent = L('波形', 'Waveform');
-  const wave = document.createElement('canvas');
-  wave.className = 'am-wave';
-  p.body.appendChild(viz);
-  p.body.appendChild(waveCap);
-  p.body.appendChild(wave);
-  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, wave)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); waveCap.remove(); wave.remove(); });
+  (W || p.body).appendChild(viz);
+  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
 
   const meta = document.createElement('div');
   meta.className = 'am-play-meta';
   meta.textContent = T.playLoading;
-  p.body.appendChild(meta);
+  (W || p.body).appendChild(meta);
 
   let settled = false;
   const fail = (why) => {
@@ -469,8 +486,6 @@ function renderPlayer(r, file) {
     settled = true;
     audio.remove();
     viz.remove();
-    waveCap.remove();
-    wave.remove();
     meta.remove();
     p.body.appendChild(noPlayNode(why));
   };
@@ -504,7 +519,7 @@ function renderPlayer(r, file) {
 }
 
 let transUrl = null;
-async function runTranscode(r, file, key, p, area) {
+async function runTranscode(r, file, key, p, area, wide) {
   if (area.dataset.busy === '1') return;
   area.dataset.busy = '1';
   area.innerHTML = '';
@@ -527,17 +542,11 @@ async function runTranscode(r, file, key, p, area) {
     transUrl = URL.createObjectURL(new Blob([out], { type: 'audio/wav' }));
     const audio = document.createElement('audio');
     audio.className = 'am-audio'; audio.controls = true; audio.preload = 'metadata'; audio.src = transUrl;
-    area.parentNode.insertBefore(audio, area);
-    const viz = document.createElement('canvas');
+    p.body.appendChild(audio);                       // 播放控件留在右列（与标题同列）
+    const viz = document.createElement('canvas');     // 频谱跟着 area 走：area 已在整行宽容器里
     viz.className = 'am-viz';
-    const waveCap = document.createElement('div');
-    waveCap.className = 'am-cap'; waveCap.textContent = L('波形', 'Waveform');
-    const wave = document.createElement('canvas');
-    wave.className = 'am-wave';
     area.parentNode.insertBefore(viz, area);
-    area.parentNode.insertBefore(waveCap, area);
-    area.parentNode.insertBefore(wave, area);
-    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, wave)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); waveCap.remove(); wave.remove(); });
+    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
     const pd = (r.tech || {}).duration;
     audio.addEventListener('loadedmetadata', () => {
       const bd = audio.duration;
@@ -550,7 +559,7 @@ async function runTranscode(r, file, key, p, area) {
     st.textContent = T.transFail + ((e && e.message) || e);
     const retry = document.createElement('button');
     retry.type = 'button'; retry.className = 'am-btn am-btn-sm'; retry.textContent = T.transBtn;
-    retry.addEventListener('click', () => { area.dataset.busy = ''; runTranscode(r, file, key, p, area); });
+    retry.addEventListener('click', () => { area.dataset.busy = ''; runTranscode(r, file, key, p, area, wide); });
     area.appendChild(retry);
   }
 }
@@ -694,6 +703,110 @@ async function runSpectrum(r, file, body, st, btn) {
   }
 }
 
+// ── 歌词：LRC 解析 / 导出 ──
+// LRC 形如：[ti:..][ar:..] [00:00.97]第一句 [00:02.88]第二句 …
+// 非数字标签（ti/ar/al/by/offset…）当头部保留；其余按 [mm:ss.xx] 切成一行一句。
+function lrcParse(raw) {
+  let body = String(raw || '').replace(/\r\n?/g, '\n');
+  const meta = [];
+  body = body.replace(/\[([a-zA-Z]{1,10}):([^\]]*)\]/g, (_, k, v) => { meta.push([k.toLowerCase(), v.trim()]); return ''; });
+  const re = /\[(\d{1,3}):(\d{1,2})(?:[.:](\d{1,3}))?\]/g;
+  const marks = [];
+  let m;
+  while ((m = re.exec(body))) {
+    marks.push({ pos: m.index, end: re.lastIndex, sec: (+m[1]) * 60 + (+m[2]) + (m[3] ? +('0.' + m[3]) : 0) });
+  }
+  // 取每个时间戳之后、下一个时间戳之前的文本
+  const seq = [];
+  for (let i = 0; i < marks.length; i++) {
+    seq.push({ sec: marks[i].sec, text: body.slice(marks[i].end, i + 1 < marks.length ? marks[i + 1].pos : body.length).replace(/\s+/g, ' ').trim() });
+  }
+  // 相邻的空文本时间戳（同词多时间）合并到后面那句
+  const items = [];
+  let pending = [];
+  for (const e of seq) {
+    if (!e.text) { pending.push(e.sec); continue; }
+    items.push({ sec: pending.length ? pending[0] : e.sec, times: pending.concat(e.sec), text: e.text });
+    pending = [];
+  }
+  items.sort((a, b) => a.sec - b.sec);
+  return { meta, items, hasTime: marks.length > 0 };
+}
+
+function fmtLrcTime(sec) {
+  sec = Math.max(0, sec);
+  const m = Math.floor(sec / 60), s = sec - m * 60;
+  return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s.toFixed(2);
+}
+
+function lrcBuild(parsed, rawFallback) {
+  if (!parsed.hasTime) return String(rawFallback || '').replace(/\r\n?/g, '\n').trim() + '\n';
+  const out = [];
+  for (const kv of parsed.meta) out.push('[' + kv[0] + ':' + kv[1] + ']');
+  for (const it of parsed.items) for (const t of it.times) out.push('[' + fmtLrcTime(t) + ']' + it.text);
+  return out.join('\n') + '\n';
+}
+
+function lyricsSection(r) {
+  const raw = (r.tags || {}).lyrics;
+  if (!raw || !String(raw).trim()) return null;
+  const parsed = lrcParse(raw);
+  const lrc = lrcBuild(parsed, raw);
+
+  const box = document.createElement('div');
+  box.className = 'am-group';
+  const head = document.createElement('div');
+  head.className = 'am-group-head';
+  const span = document.createElement('span'); span.textContent = T.lyricTitle;
+  const btns = document.createElement('div'); btns.className = 'am-lyrics-btns';
+  const bc = document.createElement('button'); bc.type = 'button'; bc.className = 'am-btn am-btn-sm'; bc.textContent = T.lyricCopy;
+  const bd = document.createElement('button'); bd.type = 'button'; bd.className = 'am-btn am-btn-sm'; bd.textContent = T.lyricDownload;
+  btns.appendChild(bc); btns.appendChild(bd);
+  head.appendChild(span); head.appendChild(btns);
+  box.appendChild(head);
+
+  if (parsed.hasTime) {
+    const body = document.createElement('div'); body.className = 'am-lyrics-body';
+    for (const it of parsed.items) {
+      const line = document.createElement('div'); line.className = 'am-lrc-line';
+      const tt = document.createElement('span'); tt.className = 'am-lrc-t';
+      tt.textContent = it.times.map((x) => '[' + fmtLrcTime(x) + ']').join('');
+      const xx = document.createElement('span'); xx.className = 'am-lrc-x'; xx.textContent = it.text;
+      line.appendChild(tt); line.appendChild(xx);
+      body.appendChild(line);
+    }
+    box.appendChild(body);
+  } else {
+    const pre = document.createElement('pre'); pre.className = 'am-lrc-plain';
+    pre.textContent = String(raw).replace(/\r\n?/g, '\n').trim();
+    box.appendChild(pre);
+  }
+  const hint = document.createElement('div'); hint.className = 'am-lyrics-hint';
+  hint.textContent = parsed.hasTime ? T.lyricHint : T.lyricPlain;
+  box.appendChild(hint);
+
+  bc.addEventListener('click', () => {
+    const done = () => { bc.textContent = T.copied; setTimeout(() => { bc.textContent = T.lyricCopy; }, 1200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lrc).then(done).catch(() => {});
+    } else {
+      const ta = document.createElement('textarea'); ta.value = lrc;
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { }
+      ta.remove();
+    }
+  });
+  bd.addEventListener('click', () => {
+    const base = String((r.tags || {}).title || r.fileName || 'lyrics')
+      .replace(/\.[^.]+$/, '').replace(/[\\/:*?"<>|]+/g, '_').trim() || 'lyrics';
+    const url = URL.createObjectURL(new Blob([lrc], { type: 'text/plain;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = base + '.lrc';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  });
+  return box;
+}
+
 function render(r, file) {
   renderHero(r, file);
   const box = $('am-view');
@@ -725,21 +838,25 @@ function render(r, file) {
   const fk = r.formatKey || '';
   if (fk !== 'm3u' && fk !== 'iso') box.appendChild(specGroup(r, file));
 
-  // 标签
+  // 标签（歌词单独成块，见 lyricsSection）
   const tags = r.tags || {};
   const grows = [];
   const gseen = new Set();
   for (const k of TAG_ORDER) {
-    if (!tags[k]) continue;
+    if (!tags[k] || k === 'lyrics') continue;
     gseen.add(k);
     grows.push([tlabel(k), tags[k], tagNote(k)]);
   }
   for (const k of Object.keys(tags)) {
-    if (gseen.has(k) || k === '__id3off') continue;
+    if (gseen.has(k) || k === '__id3off' || k === 'lyrics') continue;
     grows.push([tlabel(k), tags[k], tagNote(k)]);
   }
   const tagSec = section(T.tagTitle, grows, true);
   if (tagSec) box.appendChild(tagSec);
+
+  // 歌词：单独一块，按时间戳逐行，可复制 / 导出 .lrc
+  const lyrSec = lyricsSection(r);
+  if (lyrSec) box.appendChild(lyrSec);
 
   // 其他原始标签
   if (r.tagsRaw && r.tagsRaw.length) {

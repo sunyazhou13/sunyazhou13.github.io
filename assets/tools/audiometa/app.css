@@ -85,12 +85,16 @@ html[mode=dark] #am-app {
 
 /* 头部：封面 + 关键信息 */
 #am-app .am-hero {
+  position: relative;
   display: flex; flex-direction: column; gap: 12px; padding: 16px;
   border: 1px solid var(--am-line); border-radius: var(--am-r); background: var(--am-bg);
 }
-#am-app .am-hero-top { display: flex; gap: 18px; }
+/* 封面顶格左上角；stretch 让封面与右列等高 → 封面底边与播放控件底边对齐 */
+#am-app .am-hero-top { display: flex; gap: 18px; align-items: stretch; }
+/* 整行宽区：频谱 + 状态行（横向拉满，不跟着右侧信息列的窄宽走） */
+#am-app .am-hero-wide { display: flex; flex-direction: column; gap: 6px; }
 #am-app .am-cover {
-  flex: 0 0 auto; width: 168px; height: 168px; border-radius: 6px; overflow: hidden;
+  flex: 0 0 auto; width: 168px; height: auto; min-height: 168px; border-radius: 6px; overflow: hidden;
   border: 1px solid var(--am-line); background: var(--am-panel);
   display: flex; align-items: center; justify-content: center;
 }
@@ -100,13 +104,28 @@ html[mode=dark] #am-app {
   width: 100%; height: 100%; color: var(--am-muted); font-size: 12px;
 }
 #am-app .am-hero-info { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-#am-app .am-badge {
-  align-self: flex-start; padding: 2px 8px; border: 1px solid var(--am-line); border-radius: 4px;
-  font-size: 11.5px; letter-spacing: .02em; text-transform: uppercase; color: var(--am-muted);
-}
-#am-app .am-title { margin: 2px 0 0; font-size: 19px; font-weight: 600; line-height: 1.35; word-break: break-word; }
+#am-app .am-title { margin: 2px 0 0; padding-right: 96px; font-size: 19px; font-weight: 600; line-height: 1.35; word-break: break-word; }
 #am-app .am-sub { margin: 0; color: var(--am-muted); font-size: 13.5px; word-break: break-word; }
 #am-app .am-chips { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 2px; }
+
+/* 音频格式徽标：仿 4K ULTRA HD —— 平涂黄底 + 黑色圆角块 + 同色黄字大号格式名 + 黄底黑字副标 */
+#am-app .am-fmt {
+  position: absolute; right: 14px; top: 14px;
+  display: inline-flex; flex-direction: column; align-items: stretch;
+  padding: 4px 4px 5px; border-radius: 6px;
+  background: #f7d648;
+  box-shadow: 0 1px 3px rgba(0,0,0,.20);
+  pointer-events: none;
+}
+#am-app .am-fmt-k {
+  padding: 6px 13px 7px; border-radius: 4px; text-align: center; line-height: 1;
+  background: #0e0e10;
+  color: #f7d648; font-size: 19px; font-weight: 800; letter-spacing: .01em; text-transform: uppercase;
+}
+#am-app .am-fmt-v {
+  padding: 3px 2px 0; text-align: center; line-height: 1.1;
+  color: #12100a; font-size: 10.5px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+}
 #am-app .am-chip {
   display: flex; flex-direction: column; gap: 1px; padding: 6px 10px;
   border: 1px solid var(--am-line); border-radius: 6px; background: var(--am-panel);
@@ -192,9 +211,29 @@ html[mode=dark] #am-app {
   font-size: 11.5px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 420px; overflow: auto;
 }
 
+/* 歌词：单独成块，按时间戳逐行；可复制 / 导出 .lrc */
+#am-app .am-lyrics-btns { display: flex; gap: 8px; }
+#am-app .am-lyrics-body {
+  padding: 10px 13px; display: flex; flex-direction: column;
+  max-height: 440px; overflow: auto;
+}
+#am-app .am-lrc-line { display: flex; gap: 10px; padding: 2px 0; font-size: 13px; line-height: 1.6; }
+#am-app .am-lrc-t {
+  flex: 0 0 auto; min-width: 80px; color: var(--am-muted); font-size: 12px;
+  font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+#am-app .am-lrc-x { flex: 1 1 auto; word-break: break-word; white-space: pre-wrap; }
+#am-app .am-lrc-plain {
+  margin: 0; padding: 10px 13px; white-space: pre-wrap; word-break: break-word;
+  font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 12.5px; line-height: 1.6;
+}
+#am-app .am-lyrics-hint { padding: 0 13px 10px; font-size: 11.5px; color: var(--am-muted); }
+
 @media (max-width: 620px) {
   #am-app .am-hero-top { flex-direction: column; }
   #am-app .am-cover { width: 100%; height: 200px; }
+  #am-app .am-title { padding-right: 0; }
   #am-app .am-table.am-3col td.am-k { width: 34%; }
   #am-app .am-table.am-3col td.am-v { width: 66%; }
   #am-app .am-table.am-3col td.am-note { display: none; }

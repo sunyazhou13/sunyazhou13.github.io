@@ -130,9 +130,88 @@ export function analyzeSpectrum(buf) {
   return { sr, freqs, db, cutoff, hfDrop, hfInner, hfLevel, ref, thr };
 }
 
+/**
+ * 把 AudioBuffer 降采样成 W 个像素列的 (min, max) 包络 —— 静态波形用。
+ * 和实时示波器不同：实时那条是「当前这一小段窗口」，这里要的是「整首歌的包络」，
+ * 所以按列取 min/max 而不是直接抽样（抽样会漏掉瞬态，波形看着像随机噪声）。
+ * 返回 { width, chans: [{ min: Float32Array, max: Float32Array }] }
+ */
+export function computeWaveform(buf, width) {
+  const W = Math.max(1, Math.min(4000, Math.round(width) || 900));
+  const n = buf.length;
+  const chans = [];
+  for (let c = 0; c < buf.numberOfChannels; c++) {
+    const d = buf.getChannelData(c);
+    const mn = new Float32Array(W), mx = new Float32Array(W);
+    const step = n / W;
+    for (let i = 0; i < W; i++) {
+      const s = Math.floor(i * step);
+      const e = Math.min(n, Math.max(s + 1, Math.floor((i + 1) * step)));
+      let lo = 0, hi = 0;
+      for (let j = s; j < e; j++) { const v = d[j]; if (v < lo) lo = v; else if (v > hi) hi = v; }
+      mn[i] = lo; mx[i] = hi;
+    }
+    chans.push({ min: mn, max: mx });
+  }
+  return { width: W, chans };
+}
+
+/**
+ * 画静态波形：每个声道一条泳道（中线 + min/max 包络竖线），风格与站点一致、扁平无渐变。
+ */
+export function drawWaveform(canvas, wf, opts) {
+  const o = opts || {};
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth || 900, H = o.height || 96;
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  canvas.style.height = H + 'px';
+  const g = canvas.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, W, H);
+
+  const chans = (wf && wf.chans) || [];
+  const lanes = Math.max(1, chans.length);
+  const laneH = H / lanes;
+  const dark = isDark();
+
+  // 中线
+  g.strokeStyle = dark ? 'rgba(148,163,184,0.22)' : 'rgba(107,114,128,0.20)';
+  g.lineWidth = 1;
+  for (let c = 0; c < lanes; c++) {
+    const y = Math.round(laneH * (c + 0.5)) + 0.5;
+    g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+  }
+
+  // 包络
+  g.strokeStyle = dark ? 'rgba(91,143,240,0.92)' : 'rgba(47,111,222,0.90)';
+  g.lineWidth = 1;
+  const half = Math.max(2, laneH / 2 - 3);
+  const sx = W / Math.max(1, wf ? wf.width : 1);
+  for (let c = 0; c < chans.length; c++) {
+    const midY = laneH * (c + 0.5);
+    const mn = chans[c].min, mx = chans[c].max;
+    g.beginPath();
+    for (let i = 0; i < (wf ? wf.width : 0); i++) {
+      const x = Math.round(i * sx) + 0.5;
+      g.moveTo(x, midY - mx[i] * half);
+      g.lineTo(x, midY - mn[i] * half);
+    }
+    g.stroke();
+  }
+
+  // 多声道时标 L / R
+  if (lanes > 1 && lanes <= 8) {
+    g.fillStyle = dark ? 'rgba(148,163,184,0.75)' : 'rgba(107,114,128,0.75)';
+    g.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
+    g.textAlign = 'left'; g.textBaseline = 'top';
+    const NM = ['L', 'R', 'C', 'LFE', 'Ls', 'Rs', 'Lb', 'Rb'];
+    for (let c = 0; c < lanes; c++) g.fillText(NM[c] || String(c + 1), 3, laneH * c + 2);
+  }
+}
+
 // ── 播放时的实时频谱动画（Web Audio AnalyserNode） ──
 // 频域柱状 + 峰值帽；播放时由音频驱动，暂停时走循环待机动画（不会变成死图）。
-let vCtx = null, vAn = null, vSrc = null, vSrcEl = null, vRaf = 0, vBuf = null, vTd = null;
+let vCtx = null, vAn = null, vSrc = null, vSrcEl = null, vRaf = 0, vBuf = null;
 
 const BARS = 64;
 const RAMP = [[0, [56, 138, 221]], [0.34, [29, 158, 117]], [0.66, [239, 159, 39]], [1, [226, 75, 74]]];
@@ -213,31 +292,6 @@ export function stopVisualizer(canvas) {
 
 function isDark() { return document.documentElement.getAttribute('mode') === 'dark'; }
 
-// 独立的时域波形（示波器）——画在单独的窄条 canvas 上，不和频率柱重叠
-function drawWave(canvas, td, dark) {
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.clientWidth || 600, H = canvas.clientHeight || 64;
-  if (canvas.width !== Math.round(W * dpr)) canvas.width = Math.round(W * dpr);
-  if (canvas.height !== Math.round(H * dpr)) canvas.height = Math.round(H * dpr);
-  const g = canvas.getContext('2d');
-  g.setTransform(dpr, 0, 0, dpr, 0, 0);
-  g.clearRect(0, 0, W, H);
-  // 示波器基线
-  g.strokeStyle = dark ? 'rgba(148,163,184,0.22)' : 'rgba(107,114,128,0.20)';
-  g.lineWidth = 1;
-  g.beginPath(); g.moveTo(0, Math.round(H / 2) + 0.5); g.lineTo(W, Math.round(H / 2) + 0.5); g.stroke();
-  // 波形
-  g.strokeStyle = dark ? 'rgba(91,143,240,0.95)' : 'rgba(47,111,222,0.92)';
-  g.lineWidth = 1.3; g.lineJoin = 'round';
-  g.beginPath();
-  const n = td.length, sx = W / (n - 1);
-  for (let i = 0; i < n; i++) {
-    const y = H / 2 - ((td[i] - 128) / 128) * (H / 2 - 3);
-    if (i === 0) g.moveTo(0, y); else g.lineTo(i * sx, y);
-  }
-  g.stroke();
-}
-
 // ── Safari 静音坑 ──
 // createMediaElementSource() 之后，<audio> 的声音只能从 AudioContext 出去。
 // 若 AudioContext 是在「非用户手势」的上下文里被创建/resume（例如 DSF 先转码、几秒后才建播放器），
@@ -255,7 +309,7 @@ function armGestureUnlock() {
   document.addEventListener('touchstart', unlockAudio, true);
 }
 
-export function bindVisualizer(audio, canvas, waveCanvas) {
+export function bindVisualizer(audio, canvas) {
   // 关键：vRaf 是模块级唯一变量。重新选歌会再次 bind，若不先停掉上一条循环，
   // 旧循环会和新循环逐帧抢共享的 vSrc / vSrcEl —— 旧循环发现 vSrcEl 不是自己的 audio，
   // 就 disconnect 掉当前的 source、再想给自己的 audio 重建一个（同一 <audio> 重复
@@ -284,7 +338,6 @@ export function bindVisualizer(audio, canvas, waveCanvas) {
         vSrc.connect(vAn);
         vSrcEl = audio;
         vBuf = new Uint8Array(vAn.frequencyBinCount);
-        vTd = new Uint8Array(vAn.fftSize); vTd.fill(128);
       }
       return true;
     } catch (e) { return false; }
@@ -293,13 +346,11 @@ export function bindVisualizer(audio, canvas, waveCanvas) {
     const live = ensure() && !audio.paused && !audio.ended;
     if (live) {
       vAn.getByteFrequencyData(vBuf);
-      vAn.getByteTimeDomainData(vTd);
       vizPaint(canvas, vBuf, peaks, 0);
     } else {
       idleT += 0.035;
       vizPaint(canvas, null, peaks, idleT);
     }
-    if (waveCanvas && vTd) drawWave(waveCanvas, vTd, isDark());
     vRaf = requestAnimationFrame(loop);
   };
   vizPaint(canvas, null, peaks, 0);
