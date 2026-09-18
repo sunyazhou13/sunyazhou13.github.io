@@ -132,8 +132,6 @@ typora-root-url: ..
 
 ![Haerbin Future](/assets/images/20171230FinalSummary/HaerbinFuture.avif)
 
-[原图清晰](/assets/images/20171230FinalSummary/HaerbinFutureBig.avif)
-
 回家过年,这年过得我心情都不在年上,心情很矛盾,过了初七就上班回北京了.我的家在绥化市海伦市.
 
 回北京的两个月时间里,根本都没有什么干活的劲头,于是我就给父母打电话
