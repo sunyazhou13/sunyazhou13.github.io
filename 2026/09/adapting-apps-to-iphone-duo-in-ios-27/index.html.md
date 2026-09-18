@@ -5,8 +5,8 @@ date: 2026-09-18 08:00 +0000
 categories: [iOS]
 tags: [iOS 27, iPhone Duo, Swift, Objective-C, SwiftUI, UIKit, 折叠屏]
 typora-root-url: ".."
-math: true
-mermaid: true
+math: false
+mermaid: false
 ---
 
 ![iPhoneDUO2026](/assets/images/20260918AdaptingAppsToiPhoneDUOIniOS27/iPhoneDuo.avif)

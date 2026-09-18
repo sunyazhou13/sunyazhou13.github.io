@@ -5,8 +5,8 @@ date: 2026-09-18 12:04 +0000
 categories: [iOS]
 tags: [ffmpeg, AVIF, 动图, 视频转码, 图片格式]
 typora-root-url: ".."
-math: true
-mermaid: true
+math: false
+mermaid: false
 ---
 
 # 前言
