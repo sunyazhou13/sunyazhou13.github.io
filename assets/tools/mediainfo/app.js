@@ -21,7 +21,10 @@ const T = {
   fail: L('解析失败：', 'Analysis failed: '),
   copy: L('复制当前视图', 'Copy view'),
   copied: L('已复制', 'Copied'),
+  play: L('播放', 'Play'),
   reset: L('重新选择', 'Choose another'),
+  cantPlay: L('浏览器无法解码该文件的编码（容器或编码不被此浏览器支持），仅可查看信息。',
+    'The browser cannot decode this container/codec, so playback is unavailable — info view still works.'),
   tree: L('分组表格', 'Tree'),
   text: L('文本', 'Text'),
   xml: 'XML',
@@ -278,6 +281,72 @@ function findCover(tracks) {
 let miPromise = null;
 let current = null; // { file, result, tracks }
 let view = 'tree';
+let playUrl = null; // 播放预览用的 object URL（解析后由 current.file 生成）
+
+// 分辨率档位：按长边取档（兼顾竖屏）。返回 { tier: 主标, sub: 副标 }，
+// 用于右上角角标：4K→ULTRA HD、2K→QHD、1080p→FULL HD、720p→HD、480p→SD、SD→SD。
+function resTier(w, h) {
+  if (!w || !h) return { tier: '', sub: '' };
+  const long = Math.max(w, h);
+  if (long >= 3840) return { tier: '4K', sub: 'ULTRA HD' };
+  if (long >= 2560) return { tier: '2K', sub: 'QHD' };
+  if (long >= 1920) return { tier: '1080p', sub: 'FULL HD' };
+  if (long >= 1280) return { tier: '720p', sub: 'HD' };
+  if (long >= 640) return { tier: '480p', sub: 'SD' };
+  return { tier: 'SD', sub: 'SD' };
+}
+
+// 生成右上角分辨率角标（参考 4K Ultra HD logo 风格）：黑框、白底、上主标、下黑条副标。
+function makeResOverlay(tier) {
+  const topSize = tier.tier.length <= 2 ? 55 : (tier.tier.length <= 3 ? 42 : 32);
+  const bottomSize = tier.sub.length <= 2 ? 20 : (tier.sub.length <= 6 ? 16 : 12);
+  const tag = document.createElement('div');
+  tag.className = 'mi-res-overlay';
+  tag.innerHTML = '<svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Resolution ' + esc(tier.tier) + ' ' + esc(tier.sub) + '">\n' +
+    '<title>' + esc(tier.tier) + ' ' + esc(tier.sub) + '</title>\n' +
+    '<rect x="3" y="3" width="114" height="124" rx="8" fill="#ffffff" stroke="#111111" stroke-width="5"/>\n' +
+    '<rect x="8" y="89" width="104" height="33" rx="5" fill="#111111"/>\n' +
+    '<text x="60" y="68" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="' + topSize + '" fill="#111111">' + esc(tier.tier) + '</text>\n' +
+    '<text x="60" y="114" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="' + bottomSize + '" fill="#ffffff" letter-spacing="0.8">' + esc(tier.sub) + '</text>\n' +
+    '</svg>';
+  return tag;
+}
+
+// ── 播放预览 ──
+// 解析只是读 file.slice()，原始 File 仍在内存，直接生成 blob URL 喂给媒体元素即可。
+// 视频轨存在 → <video>（导入即显示画面、暂停态；autoplay=true 时才开播）；纯音频 → <audio>。
+// 浏览器不支持该编码时给明确提示。
+// autostart=false 用于「视频导入后直接出现视口但不播放」；点击播放按钮时传 true 开播。
+function ensurePlayer(autostart) {
+  if (!current) return;
+  const box = $('mi-player');
+  const isVideo = current.tracks.some((t) => trackType(t) === 'Video');
+  // 已创建过则只控制播放/暂停，不重建
+  if (playUrl && box.firstChild) {
+    if (autostart) box.firstChild.play().catch(() => { });
+    return;
+  }
+  if (playUrl) { URL.revokeObjectURL(playUrl); playUrl = null; }
+  box.innerHTML = '';
+  const el = document.createElement(isVideo ? 'video' : 'audio');
+  el.controls = true;
+  el.preload = isVideo ? 'auto' : 'metadata';   // 视频 preload=auto：本地 blob 即读即解，首帧立刻可见
+  if (isVideo) { el.style.maxWidth = '100%'; el.style.borderRadius = '8px'; el.style.background = '#000'; }
+  playUrl = URL.createObjectURL(current.file);
+  el.src = playUrl;
+  el.addEventListener('error', () => {
+    setStatus(T.cantPlay, 'err');
+    box.hidden = true;
+  });
+  box.appendChild(el);
+  box.hidden = false;
+  if (autostart) el.play().catch(() => { /* 自动播放可能被拦截，控件已显示，用户可手动点 */ });
+}
+function stopPlayback() {
+  if (playUrl) { URL.revokeObjectURL(playUrl); playUrl = null; }
+  const box = $('mi-player');
+  if (box) { box.innerHTML = ''; box.hidden = true; }
+}
 
 function getMI() {
   if (!miPromise) {
@@ -308,6 +377,7 @@ function renderSummary(tracks, fileSize) {
   const g = tracks.find((t) => trackType(t) === 'General') || {};
   const v = tracks.find((t) => trackType(t) === 'Video');
   const a = tracks.find((t) => trackType(t) === 'Audio');
+  const tier = v ? resTier(v.Width, v.Height) : { tier: '', sub: '' };
   const cards = [];
   if (g.Format) cards.push([L('容器格式', 'Container'), g.Format]);
   if (g.Duration) cards.push([L('时长', 'Duration'), g.Duration_String || fmtDuration(g.Duration)]);
@@ -326,7 +396,11 @@ function renderSummary(tracks, fileSize) {
   else if (fileSize) cards.push([L('文件大小', 'File size'), fmtBytes(fileSize)]);
   if (v) {
     const res = v.Width && v.Height ? `${v.Width}×${v.Height}` : '';
-    cards.push([L('视频', 'Video'), [v.Format, res].filter(Boolean).join(' · ')]);
+    cards.push([L('视频', 'Video'), [v.Format, res, tier.tier ? '· ' + tier.tier : ''].filter(Boolean).join(' ')]);
+    if (tier.tier) {
+      // 在卡片里保留文字档位，便于复制/搜索
+      cards.push([L('分辨率档位', 'Resolution tier'), tier.tier]);
+    }
   }
   if (a) {
     const ch = a['Channel(s)'] || a.Channels || '';
@@ -346,7 +420,14 @@ function renderSummary(tracks, fileSize) {
     d.appendChild(vv);
     box.appendChild(d);
   }
-  box.hidden = cards.length === 0;
+  // 把画质角标作为独立卡片放在摘要网格末尾（填补空位、纯视觉标识）
+  if (tier.tier) {
+    const badgeCard = document.createElement('div');
+    badgeCard.className = 'mi-card mi-card-badge';
+    badgeCard.appendChild(makeResOverlay(tier));
+    box.appendChild(badgeCard);
+  }
+  box.hidden = cards.length === 0 && !tier.tier;
 }
 
 function renderTree(tracks) {
@@ -474,6 +555,7 @@ function showView(v) {
 async function analyze(file) {
   setStatus(T.loading);
   current = null;
+  stopPlayback();
   $('mi-filebar').hidden = false;
   $('mi-fname').textContent = file.name;
   $('mi-fsize').textContent = fmtBytes(file.size);
@@ -494,6 +576,8 @@ async function analyze(file) {
     renderTree(tracks);
     renderRaw(tracks, file.name);
     renderCover(tracks);
+    // 视频文件导入即显示画面（暂停态，不自动播放）；纯音频留在「播放」按钮后触发
+    if (tracks.some((t) => trackType(t) === 'Video')) ensurePlayer(false);
     $('mi-tabs').hidden = false;
     showView(view);
     setStatus(T.done(tracks.length), 'ok');
@@ -504,6 +588,7 @@ async function analyze(file) {
 
 function reset() {
   current = null;
+  stopPlayback();
   $('mi-file').value = '';
   $('mi-filebar').hidden = true;
   $('mi-summary').hidden = true;
@@ -535,6 +620,7 @@ function bind() {
   ['dragover', 'drop'].forEach((ev) => window.addEventListener(ev, (e) => e.preventDefault()));
 
   $('mi-reset').addEventListener('click', reset);
+  $('mi-play').addEventListener('click', () => ensurePlayer(true));
   $('mi-copy').addEventListener('click', () => {
     if (!current) return;
     let text = '';
@@ -557,6 +643,7 @@ function bind() {
   $('mi-drop-sub').textContent = T.dropSub;
   $('mi-copy').textContent = T.copy;
   $('mi-reset').textContent = T.reset;
+  $('mi-play').textContent = T.play;
   for (const b of document.querySelectorAll('#mi-tabs .mi-tab')) {
     const map = { tree: T.tree, text: T.text, xml: T.xml, json: T.json, full: T.full };
     b.textContent = map[b.dataset.view];

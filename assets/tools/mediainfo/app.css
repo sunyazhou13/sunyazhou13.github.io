@@ -226,6 +226,44 @@ html[mode=dark] #mi-app {
   border: 1px solid var(--mi-border);
 }
 
+/* 播放预览：解析后由内存中的 File 生成 object URL 直接播放 */
+#mi-app .mi-player {
+  position: relative;
+  padding: 12px;
+  border: 1px solid var(--mi-border);
+  border-radius: var(--mi-radius);
+  background: var(--mi-bg-soft);
+  text-align: center;
+}
+#mi-app .mi-player video,
+#mi-app .mi-player audio {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  outline: none;
+}
+/* 播放器右上角的分辨率角标（4K Ultra HD logo 风格） */
+#mi-app .mi-res-overlay {
+  display: block;
+  width: 56px;
+}
+#mi-app .mi-res-overlay svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+#mi-app .mi-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#mi-app .mi-card-badge .mi-res-overlay {
+  width: 64px;
+  margin: 0;
+}
+#mi-app .mi-player video { margin-bottom: 0; }
+
 /* 教学区 */
 #mi-app .mi-edu { margin-top: 26px; }
 #mi-app .mi-edu h2 {
