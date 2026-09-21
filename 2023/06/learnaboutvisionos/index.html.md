@@ -5,6 +5,8 @@ date: 2023-06-09 17:08 +0800
 categories: [iOS, visionOS]
 tags: [visionOS, Swift, SwiftUI]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

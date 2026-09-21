@@ -5,6 +5,8 @@ date: 2021-12-26 00:00:00
 categories: [生活纪实]
 tags: [年终总结]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

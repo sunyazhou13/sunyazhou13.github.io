@@ -5,6 +5,8 @@ date: 2024-08-11 01:55 +0000
 categories: [iOS, SwiftUI]
 tags: [iOS, SwiftUI, Swift, Objective-C, skills]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

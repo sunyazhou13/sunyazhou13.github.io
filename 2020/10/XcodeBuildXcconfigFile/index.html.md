@@ -5,6 +5,8 @@ date: 2020-10-04 11:58:03
 categories: [iOS, 系统理论实践]
 tags: [Algorithm, Objective-C]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

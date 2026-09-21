@@ -5,6 +5,8 @@ date: 2022-04-14 08:50:00.000000000 +08:00
 categories: [iOS, Swift]
 tags: [Swift, AVFoundation, Git]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

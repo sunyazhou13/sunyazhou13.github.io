@@ -5,8 +5,8 @@ date: 2026-08-24 01:21 +0000
 categories: [iOS]
 tags: []
 typora-root-url: ".."
-math: true
-mermaid: true
+math: false
+mermaid: false
 ---
 
 ![国内AI Agent羊毛](/assets/images/20260824AIAgentTools/cover.avif)

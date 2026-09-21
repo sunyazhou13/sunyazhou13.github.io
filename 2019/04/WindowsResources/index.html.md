@@ -5,6 +5,8 @@ date: 2019-04-24 11:26:34
 categories: [系统理论实践]
 tags: [win7]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

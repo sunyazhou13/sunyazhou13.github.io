@@ -6,6 +6,7 @@ categories: [iOS, SwiftUI]
 tags: [iOS, macOS,iPadOS,watchOS, SwiftUI]
 typora-root-url: ..
 math: true
+mermaid: false
 ---
 
 ![CM Motion](/assets/images/20240222MotionShake/CMMotion.avif)

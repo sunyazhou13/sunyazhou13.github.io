@@ -5,6 +5,8 @@ date: 2026-08-22 06:24 +0000
 categories: [iOS, Jekyll]
 tags: [Jekyll, Blog, jekyll-compose, hexo, skills]
 typora-root-url: ".."
+math: false
+mermaid: false
 
 ---
 

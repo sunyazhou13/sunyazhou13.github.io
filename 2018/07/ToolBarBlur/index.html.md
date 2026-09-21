@@ -5,6 +5,8 @@ date: 2018-07-23 18:22:05
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, skills]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

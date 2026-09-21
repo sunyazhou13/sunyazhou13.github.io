@@ -5,6 +5,8 @@ date: 2023-09-12 09:54 +0800
 categories: [iOS, SwiftUI]
 tags: [iOS, macOS,iPadOS,watchOS, SwiftUI]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

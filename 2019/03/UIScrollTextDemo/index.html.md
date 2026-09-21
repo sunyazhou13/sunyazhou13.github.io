@@ -5,6 +5,8 @@ date: 2019-03-21 09:50:20
 categories: [iOS]
 tags: [iOS, 动画, 抖音动画系列, Objective-C, skills]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

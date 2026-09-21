@@ -5,6 +5,8 @@ date: 2018-10-29 18:13:15
 categories: [iOS]
 tags: [iOS, 动画, Objective-C, skills]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

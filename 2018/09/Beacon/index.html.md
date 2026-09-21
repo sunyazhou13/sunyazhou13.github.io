@@ -5,6 +5,8 @@ date: 2018-09-02 12:12:51
 categories: [生活纪实]
 tags: [系统理论实践]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

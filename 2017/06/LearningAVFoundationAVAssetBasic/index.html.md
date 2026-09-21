@@ -5,6 +5,8 @@ date: 2017-06-16 10:11:19
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, AVFoundation, 音视频]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

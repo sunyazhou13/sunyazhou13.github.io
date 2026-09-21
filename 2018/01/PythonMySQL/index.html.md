@@ -5,6 +5,8 @@ date: 2018-01-13 22:27:18
 categories: [系统理论实践]
 tags: [python]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

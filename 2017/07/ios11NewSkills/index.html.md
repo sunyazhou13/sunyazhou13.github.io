@@ -5,6 +5,8 @@ date: 2017-07-13 10:55:15
 categories: [iOS]
 tags: [iOS, macOS, Objective-C]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

@@ -5,6 +5,8 @@ date: 2020-02-07 04:59:11
 categories: [系统理论实践]
 tags: [理论]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

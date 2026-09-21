@@ -5,6 +5,8 @@ date: 2023-04-03 17:10 +0800
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, Cocoapods, skills]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

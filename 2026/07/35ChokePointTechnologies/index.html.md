@@ -5,6 +5,8 @@ date: 2026-07-02 07:59 +0000
 categories: [生活纪实]
 tags: [35项「卡脖子」技术攻坚]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

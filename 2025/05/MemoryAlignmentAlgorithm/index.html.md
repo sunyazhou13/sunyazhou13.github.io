@@ -6,6 +6,7 @@ categories: [iOS, SwiftUI]
 tags: [iOS, SwiftUI, Swift, Objective-C]
 typora-root-url: ..
 math: true
+mermaid: false
 ---
 
 

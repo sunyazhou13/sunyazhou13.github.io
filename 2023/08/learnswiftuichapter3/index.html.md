@@ -5,7 +5,8 @@ date: 2023-08-05 14:13 +0800
 categories: [iOS, SwiftUI]
 tags: [iOS, macOS, Objective-C, SwiftUI]
 typora-root-url: ..
-math: true
+math: false
+mermaid: false
 ---
 
 ![swiftuilogo](/assets/images/20230604LearnSwiftUIChapter1/swiftuilogo.avif)

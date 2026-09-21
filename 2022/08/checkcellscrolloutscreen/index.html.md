@@ -5,6 +5,8 @@ date: 2022-08-01 22:08 +0800
 categories: [系统理论实践]
 tags: [Algorithm, C++]
 typora-root-url: ..
+math: false
+mermaid: false
 
 
 ---

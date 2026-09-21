@@ -5,6 +5,7 @@ date: 2026-08-19 13:54 +0000
 categories: [Test]
 tags: [math, test]
 math: true
+mermaid: false
 ---
 
 # 前言

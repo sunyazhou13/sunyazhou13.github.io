@@ -5,6 +5,8 @@ date: 2019-12-04 18:12:58
 categories: [iOS]
 tags: [iOS, macOS, Objective-C, OpenGL, 图形图象, 音视频]
 typora-root-url: ..
+math: false
+mermaid: false
 
 ---
 

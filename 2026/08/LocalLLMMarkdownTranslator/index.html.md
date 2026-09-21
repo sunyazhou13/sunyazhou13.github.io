@@ -5,7 +5,7 @@ date: 2026-08-27 23:11 +0000
 categories: [iOS]
 tags: [Ollama, 翻译, 本地大模型]
 typora-root-url: ".."
-math: true
+math: false
 mermaid: true
 ---
 
