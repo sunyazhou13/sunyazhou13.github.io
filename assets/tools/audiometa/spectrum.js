@@ -295,6 +295,14 @@ function bandValues(buf, weight) {
   return out;
 }
 
+// 不做 A 计权时用的权重：全 1。配合 smoothingTimeConstant = 0 即「原始」频谱。
+let uW = null, uWn = 0;
+function unitWeights(n) {
+  if (uW && uWn === n) return uW;
+  uW = new Float32Array(n).fill(1); uWn = n;
+  return uW;
+}
+
 /**
  * 画实时频谱。
  * chans = [{ v, ramp, mirror }]；mirror=true 的声道从右往左画（低频频点在右，高频在中间相遇）。
@@ -378,13 +386,18 @@ function armGestureUnlock() {
   document.addEventListener('touchstart', unlockAudio, true);
 }
 
-export function bindVisualizer(audio, canvas, chCount) {
+export function bindVisualizer(audio, canvas, chCount, opts) {
   // 关键：vRaf 是模块级唯一变量。重新选歌会再次 bind，若不先停掉上一条循环，
   // 旧循环会和新循环逐帧抢共享的 vSrc / vSrcEl —— 旧循环发现 vSrcEl 不是自己的 audio，
   // 就 disconnect 掉当前的 source、再想给自己的 audio 重建一个（同一 <audio> 重复
   // createMediaElementSource 会抛错），结果把音频图拆烂：换歌后 currentTime 卡在 0、
   // 波形一条平线、彻底没声。实测未修时，第二首的 createMediaElementSource 被调 123 次、抛错 121 次。
   if (vRaf) { cancelAnimationFrame(vRaf); vRaf = 0; }
+  const o = opts || {};
+  const legacyRaw = o.raw === true;                           // 兼容旧写法：raw = 不计权 + 不平滑
+  const useWeight = legacyRaw ? false : o.weight !== false;   // 是否 A 计权（默认开）
+  const useSmooth = legacyRaw ? false : o.smooth !== false;   // 是否帧间平滑（默认开）
+  const sm = useSmooth ? 0.7 : 0;
   const lanes = Math.max(1, Math.min(2, Number(chCount) || 2));   // 只画 L / R 两路
   const peaks = [new Float32Array(BARS), new Float32Array(BARS)]; // 每声道一套峰值帽
   let idleT = 0;
@@ -402,7 +415,7 @@ export function bindVisualizer(audio, canvas, chCount) {
         if (!vAn) {
           vAn = vCtx.createAnalyser();
           vAn.fftSize = 2048;
-          vAn.smoothingTimeConstant = 0.7;
+          vAn.smoothingTimeConstant = sm;
           vAn.connect(vCtx.destination);   // 主通路：出声
         }
         if (!vAnL) {
@@ -413,8 +426,8 @@ export function bindVisualizer(audio, canvas, chCount) {
           vSink = vCtx.createGain();
           vSink.gain.value = 0;
           vSink.connect(vCtx.destination);
-          vAnL = vCtx.createAnalyser(); vAnL.fftSize = 2048; vAnL.smoothingTimeConstant = 0.7;
-          vAnR = vCtx.createAnalyser(); vAnR.fftSize = 2048; vAnR.smoothingTimeConstant = 0.7;
+          vAnL = vCtx.createAnalyser(); vAnL.fftSize = 2048; vAnL.smoothingTimeConstant = sm;
+          vAnR = vCtx.createAnalyser(); vAnR.fftSize = 2048; vAnR.smoothingTimeConstant = sm;
           vAnL.connect(vSink); vAnR.connect(vSink);
           vSplit.connect(vAnL, 0);
           vSplit.connect(vAnR, 1);
@@ -426,14 +439,19 @@ export function bindVisualizer(audio, canvas, chCount) {
         vBufL = new Uint8Array(vAnL.frequencyBinCount);
         vBufR = new Uint8Array(vAnR.frequencyBinCount);
       }
+      // 同一页面内模式可能切换，每次校正平滑系数
+      vAn.smoothingTimeConstant = sm;
+      if (vAnL) vAnL.smoothingTimeConstant = sm;
+      if (vAnR) vAnR.smoothingTimeConstant = sm;
       return true;
     } catch (e) { return false; }
   };
   const loop = () => {
     const live = ensure() && !audio.paused && !audio.ended;
     if (live) {
-      const w = aWeights(vCtx.sampleRate, vBufL.length);
       vAnL.getByteFrequencyData(vBufL);
+      // useWeight：A 计权曲线 / 全 1 权重；useSmooth：平滑 0.7 / 0。频带映射始终是 bandValues。
+      const w = useWeight ? aWeights(vCtx.sampleRate, vBufL.length) : unitWeights(vBufL.length);
       const list = [{ v: bandValues(vBufL, w), colors: GRAD_L, mirror: false }];
       if (lanes >= 2) {
         vAnR.getByteFrequencyData(vBufR);

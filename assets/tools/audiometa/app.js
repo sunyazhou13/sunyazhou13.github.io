@@ -488,7 +488,7 @@ function renderPlayer(r, file, wide) {
   const viz = document.createElement('canvas');
   viz.className = 'am-viz';
   (W || p.body).appendChild(viz);
-  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
+  import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels, { weight: false })).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
 
   const meta = document.createElement('div');
   meta.className = 'am-play-meta';
@@ -563,7 +563,7 @@ async function runTranscode(r, file, key, p, area, wide) {
     const viz = document.createElement('canvas');     // 频谱跟着 area 走：area 已在整行宽容器里
     viz.className = 'am-viz';
     area.parentNode.insertBefore(viz, area);
-    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels)).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
+    import(VS('./spectrum.js')).then((m) => m.bindVisualizer(audio, viz, (r.tech || {}).channels, { weight: false })).catch((e) => { console.warn('[am-viz]', e && e.message); viz.remove(); });
     const pd = (r.tech || {}).duration;
     audio.addEventListener('loadedmetadata', () => {
       const bd = audio.duration;

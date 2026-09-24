@@ -1,0 +1,134 @@
+/* 本地音乐播放器样式 —— 纯本地、零依赖，主题自适应（浅色 / 深色） */
+.mu-app { font-size: 0.95rem; }
+.mu-app.mu-drag { outline: 2px dashed #2f6fde; outline-offset: 6px; border-radius: 12px; }
+
+.mu-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.8rem 0; }
+.mu-btn {
+  font: inherit; padding: 0.45rem 0.7rem; line-height: 1;
+  border: 1px solid rgba(128,128,128,.35); border-radius: 8px;
+  background: transparent; color: inherit; cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.mu-btn:hover:not(:disabled) { border-color: #2f6fde; }
+.mu-btn:disabled { opacity: .4; cursor: not-allowed; }
+.mu-btn-primary { background: #2f6fde; color: #fff; border-color: #2f6fde; font-weight: 600; }
+.mu-btn-primary:hover:not(:disabled) { background: #2560c4; border-color: #2560c4; }
+.mu-toggle.active { border-color: #2f6fde; color: #2f6fde; background: rgba(47,111,222,.08); }
+.mu-sep { flex: 0 0 1px; height: 1.4rem; background: rgba(128,128,128,.3); margin: 0 .15rem; }
+.mu-now {
+  margin-left: auto; opacity: .82; max-width: 50%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+
+.mu-mode { font-size: .78rem; opacity: .7; padding: .2rem .5rem; border: 1px solid rgba(128,128,128,.3); border-radius: 999px; white-space: nowrap; }
+
+/* 播放器主面板（封面 + 标题 + 歌词 + 元数据 + 播控）纵向布局 */
+.mu-player {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .9rem; margin: .2rem 0 1rem; padding: 1rem;
+  border: 1px solid rgba(128,128,128,.22); border-radius: 14px; background: rgba(128,128,128,.04);
+}
+.mu-cover-wrap { width: 200px; height: 200px; flex: 0 0 auto; }
+/* 频谱：封面下方整条、左右拉满，不遮挡封面 */
+.mu-viz-wrap { width: 100%; margin: .2rem 0; }
+.mu-viz { width: 100%; height: 150px; display: block; }
+.mu-disc {
+  position: relative; width: 200px; height: 200px; border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.85) 0 5%, transparent 5%),
+    repeating-radial-gradient(circle at center, #1b1b20 0 2px, #26262d 2px 4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.06);
+  display: flex; align-items: center; justify-content: center;
+  animation: mu-spin 30s linear infinite; animation-play-state: paused;
+}
+.mu-disc::after { content: ''; position: absolute; width: 13px; height: 13px; border-radius: 50%; background: rgba(255,255,255,.5); box-shadow: 0 0 0 4px rgba(0,0,0,.4); }
+.mu-disc.has-cover::after { display: none; }   /* 有真实封面时隐藏中心轴孔，避免盖住专辑图 */
+.mu-cover { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.85); background: rgba(128,128,128,.18); box-shadow: 0 0 0 4px rgba(0,0,0,.25); }
+.mu-cover[hidden] { display: none; }
+.mu-playing .mu-disc { animation-play-state: running; }
+@keyframes mu-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+.mu-meta { width: 100%; max-width: 640px; text-align: center; min-width: 0; }   /* 与 .mu-controls 同宽 → 元数据左缘对齐「上一曲」按钮 */
+.mu-title { font-size: 1.2rem; font-weight: 600; line-height: 1.4; word-break: break-word; }
+.mu-sub { opacity: .72; margin: .2rem 0 .6rem; word-break: break-word; }
+
+/* 歌词（跟唱 / 纯文本 / 暂无） */
+.mu-lyrics {
+  width: 100%; max-height: 200px; overflow-y: auto; overflow-x: hidden; margin: .5rem 0 .2rem; padding: .4rem .6rem; text-align: center;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+  scrollbar-width: thin; scrollbar-color: rgba(128,128,128,.4) transparent;
+}
+.mu-lyrics::-webkit-scrollbar { width: 6px; height: 6px; }
+.mu-lyrics::-webkit-scrollbar-track { background: transparent; }
+.mu-lyrics::-webkit-scrollbar-thumb { background: rgba(128,128,128,.4); border-radius: 3px; }
+.mu-lyric-line { padding: .28rem .4rem; font-size: .96rem; line-height: 1.5; opacity: .5; transition: opacity .2s, color .2s; }
+.mu-lyric-line.active { opacity: 1; color: var(--mu-accent, #2f6fde); font-weight: 600; }
+.mu-lyric-empty { padding: 2rem 1rem; opacity: .45; font-size: .92rem; }
+.mu-lyric-plain { padding: .4rem; white-space: pre-wrap; text-align: left; opacity: .85; font-size: .9rem; line-height: 1.6; }
+.mu-lyric-note { text-align: center; font-size: .78rem; opacity: .5; margin-top: .4rem; }
+
+/* 元数据：纵向排列，每项独占一行，左对齐 */
+.mu-fields { display: flex; flex-direction: column; gap: .28rem; margin: .6rem 0 0; width: 100%; text-align: left; }
+.mu-fields > div { display: flex; align-items: baseline; gap: .5rem; min-width: 0; }
+.mu-fields dt { font-size: .74rem; opacity: .55; white-space: nowrap; flex: 0 0 auto; min-width: 3.2rem; }
+.mu-fields dd { margin: 0; font-size: .84rem; word-break: break-word; }
+.mu-path { word-break: break-all; }
+
+/* 播放列表两行：标题 + 歌手 */
+.mu-name { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
+.mu-name-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mu-name-artist { font-size: .78rem; opacity: .55; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 深色 */
+[mode='dark'] .mu-mode { border-color: rgba(255,255,255,.25); }
+[mode='dark'] .mu-player { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.14); }
+[mode='dark'] .mu-cover { border-color: rgba(255,255,255,.6); }
+[mode='dark'] .mu-lyric-line.active { color: var(--mu-accent-dark, #5b8ff0); }
+[mode='dark'] .mu-lyrics { scrollbar-color: rgba(255,255,255,.28) transparent; }
+[mode='dark'] .mu-lyrics::-webkit-scrollbar-thumb { background: rgba(255,255,255,.28); }
+[mode='dark'] .mu-fields dt { opacity: .5; }
+
+.mu-status { min-height: 1.4rem; margin: .25rem 0 .6rem; color: #c0392b; font-size: .88rem; }
+.mu-status.ok { color: #2e7d32; }
+
+.mu-playlist { margin-top: .8rem; }
+
+.mu-list {
+  list-style: none; margin: 0; padding: 0; max-height: 62vh; min-height: 180px; overflow: auto;
+  border: 1px solid rgba(128,128,128,.25); border-radius: 10px;
+}
+.mu-list li {
+  display: flex; gap: .6rem; align-items: center; padding: .5rem .75rem;
+  border-bottom: 1px solid rgba(128,128,128,.12); cursor: pointer;
+}
+.mu-list li:last-child { border-bottom: none; }
+.mu-list li:hover { background: rgba(47,111,222,.08); }
+.mu-list li.active { background: rgba(47,111,222,.15); }
+.mu-empty { justify-content: center; padding: 3rem 1rem; opacity: .5; cursor: default; }
+.mu-empty:hover { background: transparent !important; }
+[mode='dark'] .mu-empty { opacity: .45; }
+.mu-idx { width: 1.7rem; text-align: right; opacity: .5; font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+.mu-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 播控条（自绘，替代原生 <audio controls>，避免与顶部按钮重复） */
+.mu-controls { width: 100%; max-width: 640px; display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.mu-ctl { padding: .4rem .6rem; }
+.mu-ctl-play { min-width: 2.8rem; font-size: 1.05rem; }
+.mu-ctl-mode { min-width: 2.6rem; }
+.mu-vol { flex: 0 1 84px; min-width: 64px; height: 4px; accent-color: #2f6fde; cursor: pointer; }
+.mu-time { font-variant-numeric: tabular-nums; font-size: .76rem; opacity: .7; flex: 0 0 auto; min-width: 2.4rem; text-align: center; }
+.mu-seek { flex: 1 1 140px; min-width: 120px; height: 4px; accent-color: #2f6fde; cursor: pointer; }
+.mu-seek:disabled { opacity: .4; cursor: not-allowed; }
+.mu-audio { display: none; }
+
+/* 深色 */
+[mode='dark'] .mu-btn { border-color: rgba(255,255,255,.22); }
+[mode='dark'] .mu-btn:hover:not(:disabled) { border-color: #5b8ff0; }
+[mode='dark'] .mu-btn-primary { background: #3b82f6; border-color: #3b82f6; }
+[mode='dark'] .mu-btn-primary:hover:not(:disabled) { background: #2f6fde; }
+[mode='dark'] .mu-toggle.active { border-color: #5b8ff0; color: #5b8ff0; background: rgba(91,143,240,.12); }
+[mode='dark'] .mu-list { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.03); }
+[mode='dark'] .mu-list li:hover { background: rgba(91,143,240,.12); }
+[mode='dark'] .mu-list li.active { background: rgba(91,143,240,.2); }
+[mode='dark'] .mu-sep { background: rgba(255,255,255,.22); }
