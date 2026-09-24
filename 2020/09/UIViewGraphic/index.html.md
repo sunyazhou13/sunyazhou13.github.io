@@ -42,7 +42,7 @@ mermaid: false
 > 来历
 一般大家都会认为Auto Layout这个东西是苹果自己搞出来的，其实不然，早在1997年Alan Borning, Kim Marriott, Peter Stuckey等人就发布了《Solving Linear Arithmetic Constraints for User Interface Applications》论文（[论文地址:http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)）提出了在解决布局问题的Cassowary constraint-solving算法实现，并且将代码发布在他们搭建的[Cassowary网站上http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/)。后来更多开发者用各种语言来写Cassowary，比如说pybee用python写的自从它发布以来JavaScript，.NET，JAVA，Smalltall和C++都有相应的库。2011年苹果将这个算法运用到了自家的布局引擎中，美其名曰Auto Layout。
 
-论文下载链接比较慢,我下载了一份[Cassowary原文放到了我的博客 大家可以自由下载](/assets/images/20200920UIViewGraphic/Cassowary.pdf).
+论文下载链接比较慢,我下载了一份[Cassowary原文 大家可以自由下载](https://github.com/sunyazhou13/blogfiles/blob/main/Cassowary.pdf).
 
 **AutoLayout的原理就是用Cassowary算法来将布局问题抽象成线性不等式，并分解成多个位置间的约束**  
 因为多了计算视图大小frame的过程,所以性能肯定没有指定Frame坐标要快.

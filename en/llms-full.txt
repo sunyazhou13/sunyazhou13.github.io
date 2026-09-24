@@ -24191,7 +24191,7 @@ Here's the main question list:
 > Origin
 Most people assume Auto Layout is something Apple invented. Actually, no — as early as 1997, Alan Borning, Kim Marriott, Peter Stuckey and others published the paper "Solving Linear Arithmetic Constraints for User Interface Applications" ([paper link: http://constraints.cs.washington.edu/solvers/uist97.html](http://constraints.cs.washington.edu/solvers/uist97.html)), which proposed the Cassowary constraint-solving algorithm implementation for layout problems, and released the code on their [Cassowary website http://constraints.cs.washington.edu/cassowary/](http://constraints.cs.washington.edu/cassowary/). Later, more developers wrote Cassowary in various languages — for example, pybee's Python implementation at https://github.com/pybee/cassowary. Since its release, JavaScript, .NET, JAVA, Smalltalk, and C++ all have corresponding libraries. In 2011, Apple applied this algorithm in its own layout engine, grandly naming it Auto Layout.
 
-The paper's download link is rather slow, so I downloaded a copy of the [Cassowary original paper and put it on my blog — feel free to download](/assets/images/20200920UIViewGraphic/Cassowary.pdf).
+The paper's download link is rather slow, so I downloaded a copy of the [Cassowary original paper — feel free to download](https://github.com/sunyazhou13/blogfiles/blob/main/Cassowary.pdf).
 
 **The principle of AutoLayout is using the Cassowary algorithm to abstract layout problems into linear inequalities, decomposed into constraints between multiple positions**
 Since it adds the process of computing view size frames, its performance is definitely not as fast as specifying Frame coordinates directly.
@@ -37851,7 +37851,7 @@ Finally, deploy (deloy) to production, which avoids various problems caused by i
 
 ### Using Python to operate MySQL
 
-There's nothing special here, just the coding part. Before using it, click [here to download](/assets/images/20180113PythonMySQL/DoubanMovieClean.txt) this text file
+There's nothing special here, just the coding part. Before using it, click [here to download](https://github.com/sunyazhou13/blogfiles/blob/main/DoubanMovieClean.txt) this text file
 
 
 We'll use `sublime text` to create a new `text.py` file
