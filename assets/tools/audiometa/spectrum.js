@@ -214,6 +214,8 @@ export function drawWaveform(canvas, wf, opts) {
 let vCtx = null, vAn = null, vSrc = null, vSrcEl = null, vRaf = 0, vBuf = null;
 // 分声道分析：ChannelSplitter → 两个 Analyser（L / R）
 let vSplit = null, vAnL = null, vAnR = null, vSink = null, vBufL = null, vBufR = null;
+let vSmL = null, vSmR = null;   // 非对称平滑的上一帧值
+let ensureWarned = false;       // ensure() 异常只告警一次
 
 const BARS = 128;
 const RAMP = [[0, [56, 138, 221]], [0.34, [29, 158, 117]], [0.66, [239, 159, 39]], [1, [226, 75, 74]]];
@@ -301,6 +303,20 @@ function unitWeights(n) {
   if (uW && uWn === n) return uW;
   uW = new Float32Array(n).fill(1); uWn = n;
   return uW;
+}
+
+// 非对称平滑的默认参数（攻击快 / 释放慢）。想在单个工具上调，传 opts.asym 覆盖即可。
+const ASYM_DEFAULT = { up: 0.72, down: 0.12 };
+
+// 非对称平滑（攻击快 / 释放慢）：上升用 up、回落用 down，原地更新并返回 prev。
+// Web Audio 内置的 smoothingTimeConstant 是对称指数平滑（升降同系数），瞬态会被拖慢；
+// 这里分开两个系数，瞬态跟得上、回落又稳。up/down ∈ (0,1]，越大越快。
+function smoothAsym(prev, next, up, down) {
+  for (let i = 0; i < next.length; i++) {
+    const k = next[i] > prev[i] ? up : down;
+    prev[i] += (next[i] - prev[i]) * k;
+  }
+  return prev;
 }
 
 /**
@@ -397,7 +413,13 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
   const legacyRaw = o.raw === true;                           // 兼容旧写法：raw = 不计权 + 不平滑
   const useWeight = legacyRaw ? false : o.weight !== false;   // 是否 A 计权（默认开）
   const useSmooth = legacyRaw ? false : o.smooth !== false;   // 是否帧间平滑（默认开）
-  const sm = useSmooth ? 0.7 : 0;
+  // 非对称平滑（攻击快 / 释放慢）**默认开启**：传 opts.asym 可覆盖参数，
+  // 传 asym:false 退回内置对称平滑，传 smooth:false 则完全不平滑。
+  // 启用时把 analyser 自带的对称平滑关掉，避免双重平滑。
+  const asym = (legacyRaw || o.smooth === false) ? null
+    : (o.asym === false ? null
+      : ((o.asym && o.asym.up > 0 && o.asym.down > 0) ? o.asym : ASYM_DEFAULT));
+  const sm = asym ? 0 : (useSmooth ? 0.7 : 0);
   // 可选：自定义 AnalyserNode 的 dB 窗口 [minDecibels, maxDecibels]。
   // 默认 -100…-30 太宽松 —— 低电平内容也会顶到高位，看起来「小声柱子也很高」。收紧后动态范围更大。
   const dbWin = Array.isArray(o.db) && o.db.length === 2 && o.db[0] < o.db[1] ? o.db : null;
@@ -441,6 +463,7 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
         vBuf = new Uint8Array(vAn.frequencyBinCount);
         vBufL = new Uint8Array(vAnL.frequencyBinCount);
         vBufR = new Uint8Array(vAnR.frequencyBinCount);
+        vSmL = null; vSmR = null;   // 换源时清掉非对称平滑的历史
       }
       // 同一页面内模式可能切换，每次校正平滑系数与 dB 窗口
       vAn.smoothingTimeConstant = sm;
@@ -452,18 +475,26 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
         if (vAnR) { vAnR.minDecibels = dbWin[0]; vAnR.maxDecibels = dbWin[1]; }
       }
       return true;
-    } catch (e) { return false; }
+    } catch (e) {
+      // 静默吞异常会让「频谱不动」这类问题极难排查：只报一次
+      if (!ensureWarned) { ensureWarned = true; console.warn('[spectrum] ensure() failed:', e && (e.name + ': ' + e.message)); }
+      return false;
+    }
   };
   const loop = () => {
     const live = ensure() && !audio.paused && !audio.ended;
     if (live) {
       vAnL.getByteFrequencyData(vBufL);
-      // useWeight：A 计权曲线 / 全 1 权重；useSmooth：平滑 0.7 / 0。频带映射始终是 bandValues。
+      // useWeight：A 计权曲线 / 全 1 权重。频带映射始终是 bandValues。
       const w = useWeight ? aWeights(vCtx.sampleRate, vBufL.length) : unitWeights(vBufL.length);
-      const list = [{ v: bandValues(vBufL, w), colors: GRAD_L, mirror: false }];
+      let vL = bandValues(vBufL, w);
+      if (asym) { if (!vSmL) vSmL = new Float32Array(vL.length); vL = smoothAsym(vSmL, vL, asym.up, asym.down); }
+      const list = [{ v: vL, colors: GRAD_L, mirror: false }];
       if (lanes >= 2) {
         vAnR.getByteFrequencyData(vBufR);
-        list.push({ v: bandValues(vBufR, w), colors: GRAD_R, mirror: true });   // 右声道镜像：低频在右
+        let vR = bandValues(vBufR, w);
+        if (asym) { if (!vSmR) vSmR = new Float32Array(vR.length); vR = smoothAsym(vSmR, vR, asym.up, asym.down); }
+        list.push({ v: vR, colors: GRAD_R, mirror: true });   // 右声道镜像：低频在右
       }
       vizPaint(canvas, list, peaks, 0);
     } else {

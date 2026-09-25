@@ -504,6 +504,7 @@ function bindViz() {
     // 默认 -100…-30（70dB 跨度）太宽松 → 低电平也顶到高位（"小声柱子也很高"）。
     // 实测 AnalyserNode 读数比真实 dBFS 低约 14dB（Blackman 窗 + FFT 归一化），
     // 取 [-66, -12]（54dB 跨度）：-1dBFS 峰值≈94%、-40dBFS 弱音≈22%、更弱≈0。
+    // 平滑：非对称平滑（攻击快/释放慢）已是 spectrum.js 的默认行为，这里无需显式传。
     m.bindVisualizer(audio, vizCanvas, 2, { weight: false, db: [-66, -12] });
   }).catch((e) => { console.warn('[mu-viz]', e && e.message); });
 }
