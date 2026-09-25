@@ -398,6 +398,9 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
   const useWeight = legacyRaw ? false : o.weight !== false;   // 是否 A 计权（默认开）
   const useSmooth = legacyRaw ? false : o.smooth !== false;   // 是否帧间平滑（默认开）
   const sm = useSmooth ? 0.7 : 0;
+  // 可选：自定义 AnalyserNode 的 dB 窗口 [minDecibels, maxDecibels]。
+  // 默认 -100…-30 太宽松 —— 低电平内容也会顶到高位，看起来「小声柱子也很高」。收紧后动态范围更大。
+  const dbWin = Array.isArray(o.db) && o.db.length === 2 && o.db[0] < o.db[1] ? o.db : null;
   const lanes = Math.max(1, Math.min(2, Number(chCount) || 2));   // 只画 L / R 两路
   const peaks = [new Float32Array(BARS), new Float32Array(BARS)]; // 每声道一套峰值帽
   let idleT = 0;
@@ -439,10 +442,15 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
         vBufL = new Uint8Array(vAnL.frequencyBinCount);
         vBufR = new Uint8Array(vAnR.frequencyBinCount);
       }
-      // 同一页面内模式可能切换，每次校正平滑系数
+      // 同一页面内模式可能切换，每次校正平滑系数与 dB 窗口
       vAn.smoothingTimeConstant = sm;
       if (vAnL) vAnL.smoothingTimeConstant = sm;
       if (vAnR) vAnR.smoothingTimeConstant = sm;
+      if (dbWin) {
+        vAn.minDecibels = dbWin[0]; vAn.maxDecibels = dbWin[1];
+        if (vAnL) { vAnL.minDecibels = dbWin[0]; vAnL.maxDecibels = dbWin[1]; }
+        if (vAnR) { vAnR.minDecibels = dbWin[0]; vAnR.maxDecibels = dbWin[1]; }
+      }
       return true;
     } catch (e) { return false; }
   };

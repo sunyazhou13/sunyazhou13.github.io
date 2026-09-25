@@ -200,8 +200,8 @@ function hslToHex(h, s, l) {
   const f = (n) => { const k = (n + h * 12) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
   return '#' + [f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, '0')).join('');
 }
-// 从 RGBA 像素里挑主色：跳过近黑/近白/灰，按「数量 × 鲜明度」选最优量化桶。返回 [r,g,b] 或 null。
-function pickAccent(d) {
+// 把 RGBA 像素量化成色桶（跳过近黑/近白/灰），按「数量 × 鲜明度」降序返回
+function colorBins(d) {
   const bins = new Map();
   for (let i = 0; i < d.length; i += 4) {
     if (d[i + 3] < 128) continue;
@@ -213,14 +213,27 @@ function pickAccent(d) {
     let e = bins.get(k); if (!e) { e = { n: 0, r: 0, g: 0, b: 0, s: 0 }; bins.set(k, e); }
     e.n++; e.r += r; e.g += gg; e.b += b; e.s += sat;
   }
-  let best = null, bestScore = -1;
-  for (const e of bins.values()) {
-    const score = e.n * (e.s / e.n + 0.15);                     // 数量 × 鲜明度
-    if (score > bestScore) { bestScore = score; best = e; }
-  }
-  return best ? [best.r / best.n, best.g / best.n, best.b / best.n] : null;
+  return [...bins.values()]
+    .map((e) => ({ r: e.r / e.n, g: e.g / e.n, b: e.b / e.n, score: e.n * (e.s / e.n + 0.15) }))
+    .sort((a, b) => b.score - a.score);
 }
-const accentCache = new Map();   // coverUrl -> { light, dark } | null
+// 主色（当前歌词高亮用）
+function pickAccent(d) {
+  const t = colorBins(d)[0];
+  return t ? [t.r, t.g, t.b] : null;
+}
+// 调色板：取 n 个「色相拉开」的色，用于渐变
+function pickPalette(d, n) {
+  const out = [];
+  for (const c of colorBins(d)) {
+    if (out.length >= n) break;
+    const [h, s, l] = rgbToHsl(c.r, c.g, c.b);
+    if (out.some((o) => { const dh = Math.abs(o.h - h); return Math.min(dh, 1 - dh) < 0.09; })) continue;
+    out.push({ h, s, l });
+  }
+  return out;
+}
+const accentCache = new Map();   // coverUrl -> { light, dark, palette } | null
 function extractAccent(url) {
   if (accentCache.has(url)) return Promise.resolve(accentCache.get(url));
   return new Promise((resolve) => {
@@ -232,12 +245,18 @@ function extractAccent(url) {
         c.width = N; c.height = N;
         const g = c.getContext('2d', { willReadFrequently: true });
         g.drawImage(img, 0, 0, N, N);
-        const rgb = pickAccent(g.getImageData(0, 0, N, N).data);
+        const data = g.getImageData(0, 0, N, N).data;
+        const rgb = pickAccent(data);
         if (!rgb) return done(null);
         const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+        const palette = pickPalette(data, 4)
+          .map((o) => hslToHex(o.h, Math.min(0.85, Math.max(0.55, o.s)), Math.min(0.72, Math.max(0.46, o.l))));
+        if (!palette.length) palette.push(hslToHex(h, Math.max(0.6, s), Math.min(0.7, Math.max(0.5, l))));
+        while (palette.length < 4) palette.push(palette[palette.length - 1]);   // 补足 4 色，渐变更顺
         done({
           light: hslToHex(h, Math.max(0.6, s), Math.min(0.54, Math.max(0.40, l))),          // 浅色主题：偏深
           dark: hslToHex(h, Math.max(0.55, s), Math.min(0.80, Math.max(0.62, l + 0.18))),   // 深色主题：提亮
+          palette,                                                                          // 渐变用多色
         });
       } catch (e) { done(null); }
     };
@@ -245,10 +264,12 @@ function extractAccent(url) {
     img.src = url;
   });
 }
+const G_VARS = ['--mu-g1', '--mu-g2', '--mu-g3', '--mu-g4'];
 function applyAccent(t) {
   if (!t || !t.coverUrl) {
     appEl.style.removeProperty('--mu-accent');
     appEl.style.removeProperty('--mu-accent-dark');
+    G_VARS.forEach((v) => appEl.style.removeProperty(v));
     return;
   }
   const url = t.coverUrl;
@@ -257,6 +278,7 @@ function applyAccent(t) {
     if (!pair || !cur || cur.coverUrl !== url) return;          // 换歌了就别套旧颜色
     appEl.style.setProperty('--mu-accent', pair.light);
     appEl.style.setProperty('--mu-accent-dark', pair.dark);
+    (pair.palette || []).forEach((c, i) => { if (G_VARS[i]) appEl.style.setProperty(G_VARS[i], c); });
   });
 }
 
@@ -478,8 +500,11 @@ function bindViz() {
   const w = Math.max(300, Math.floor(vizCanvas.getBoundingClientRect().width || 600));
   vizCanvas.width = w; vizCanvas.height = 180;
   import(VS('../audiometa/spectrum.js')).then((m) => {
-    // weight:false = 不做 A 计权（保留频带轴）；平滑保持默认开启
-    m.bindVisualizer(audio, vizCanvas, 2, { weight: false });
+    // weight:false 不做 A 计权；db 收紧 AnalyserNode 的 dB 窗口。
+    // 默认 -100…-30（70dB 跨度）太宽松 → 低电平也顶到高位（"小声柱子也很高"）。
+    // 实测 AnalyserNode 读数比真实 dBFS 低约 14dB（Blackman 窗 + FFT 归一化），
+    // 取 [-66, -12]（54dB 跨度）：-1dBFS 峰值≈94%、-40dBFS 弱音≈22%、更弱≈0。
+    m.bindVisualizer(audio, vizCanvas, 2, { weight: false, db: [-66, -12] });
   }).catch((e) => { console.warn('[mu-viz]', e && e.message); });
 }
 

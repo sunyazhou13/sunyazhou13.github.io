@@ -24,16 +24,36 @@
 
 /* 播放器主面板（封面 + 标题 + 歌词 + 元数据 + 播控）纵向布局 */
 .mu-player {
+  position: relative;
   display: flex; flex-direction: column; align-items: center;
   gap: .9rem; margin: .2rem 0 1rem; padding: 1rem;
   border: 1px solid rgba(128,128,128,.22); border-radius: 14px; background: rgba(128,128,128,.04);
 }
-.mu-cover-wrap { width: 200px; height: 200px; flex: 0 0 auto; }
-/* 频谱：封面下方整条、左右拉满，不遮挡封面 */
-.mu-viz-wrap { width: 100%; margin: .2rem 0; }
-.mu-viz { width: 100%; height: 150px; display: block; }
+/* 封面吸色 → 缓慢流动的渐变背景（多色） */
+.mu-player::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(120deg,
+    var(--mu-g1, #2f6fde), var(--mu-g2, #7F77DD), var(--mu-g3, #1D9E75), var(--mu-g1, #2f6fde));
+  background-size: 300% 300%;
+  animation: mu-bggrad 26s ease-in-out infinite;
+  opacity: .18;
+}
+.mu-player > * { position: relative; z-index: 1; }
+@keyframes mu-bggrad {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .mu-player::after { animation: none; } }
+.mu-cover-wrap { width: 240px; height: 240px; flex: 0 0 auto; }
+/* 频谱：独立一条，放在歌词**下方**（上下两块，互不遮挡，不是叠在一起）。
+   左右出血铺满卡片、贴齐卡片底边；--1rem 抵消 .mu-player 的 1rem padding */
+/* 外层负责「出血铺满 + 贴卡底」，左右各留 16px 内缩 —— 避开卡片底部 14px 倒角弧区，
+   否则紧贴边缘的柱子会被圆角切掉。canvas 自身不再设圆角。 */
+.mu-vizbar { width: calc(100% + 2rem); margin: 0 -1rem -1rem; padding: 0 16px; }
+.mu-viz { display: block; width: 100%; height: 150px; }
 .mu-disc {
-  position: relative; width: 200px; height: 200px; border-radius: 50%;
+  position: relative; width: 240px; height: 240px; border-radius: 50%;
   background:
     radial-gradient(circle at center, rgba(0,0,0,.85) 0 5%, transparent 5%),
     repeating-radial-gradient(circle at center, #1b1b20 0 2px, #26262d 2px 4px);
@@ -43,7 +63,7 @@
 }
 .mu-disc::after { content: ''; position: absolute; width: 13px; height: 13px; border-radius: 50%; background: rgba(255,255,255,.5); box-shadow: 0 0 0 4px rgba(0,0,0,.4); }
 .mu-disc.has-cover::after { display: none; }   /* 有真实封面时隐藏中心轴孔，避免盖住专辑图 */
-.mu-cover { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.85); background: rgba(128,128,128,.18); box-shadow: 0 0 0 4px rgba(0,0,0,.25); }
+.mu-cover { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.85); background: rgba(128,128,128,.18); box-shadow: 0 0 0 5px rgba(0,0,0,.25); }
 .mu-cover[hidden] { display: none; }
 .mu-playing .mu-disc { animation-play-state: running; }
 @keyframes mu-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
@@ -54,15 +74,19 @@
 
 /* 歌词（跟唱 / 纯文本 / 暂无） */
 .mu-lyrics {
-  width: 100%; max-height: 200px; overflow-y: auto; overflow-x: hidden; margin: .5rem 0 .2rem; padding: .4rem .6rem; text-align: center;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
-          mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+  width: 100%; max-height: 200px; overflow-y: auto; overflow-x: hidden; margin: 0; padding: .4rem .6rem; text-align: center;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   scrollbar-width: thin; scrollbar-color: rgba(128,128,128,.4) transparent;
 }
 .mu-lyrics::-webkit-scrollbar { width: 6px; height: 6px; }
 .mu-lyrics::-webkit-scrollbar-track { background: transparent; }
 .mu-lyrics::-webkit-scrollbar-thumb { background: rgba(128,128,128,.4); border-radius: 3px; }
-.mu-lyric-line { padding: .28rem .4rem; font-size: .96rem; line-height: 1.5; opacity: .5; transition: opacity .2s, color .2s; }
+.mu-lyric-line {
+  padding: .28rem .4rem; font-size: .98rem; line-height: 1.5; opacity: .8;
+  text-shadow: 0 1px 1px rgba(255,255,255,.6), 0 0 6px rgba(255,255,255,.45);
+  transition: opacity .2s, color .2s;
+}
 .mu-lyric-line.active { opacity: 1; color: var(--mu-accent, #2f6fde); font-weight: 600; }
 .mu-lyric-empty { padding: 2rem 1rem; opacity: .45; font-size: .92rem; }
 .mu-lyric-plain { padding: .4rem; white-space: pre-wrap; text-align: left; opacity: .85; font-size: .9rem; line-height: 1.6; }
@@ -83,8 +107,10 @@
 /* 深色 */
 [mode='dark'] .mu-mode { border-color: rgba(255,255,255,.25); }
 [mode='dark'] .mu-player { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.14); }
+[mode='dark'] .mu-player::after { opacity: .26; }
 [mode='dark'] .mu-cover { border-color: rgba(255,255,255,.6); }
 [mode='dark'] .mu-lyric-line.active { color: var(--mu-accent-dark, #5b8ff0); }
+[mode='dark'] .mu-lyric-line { text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 0 6px rgba(0,0,0,.45); }
 [mode='dark'] .mu-lyrics { scrollbar-color: rgba(255,255,255,.28) transparent; }
 [mode='dark'] .mu-lyrics::-webkit-scrollbar-thumb { background: rgba(255,255,255,.28); }
 [mode='dark'] .mu-fields dt { opacity: .5; }
