@@ -30,6 +30,41 @@ export const VIZ_PALETTES = [
 // 没有封面时的默认四段渐变（蓝→绿→琥珀→红）
 const RAMP_FALLBACK = ['#2b6fc4', '#1d9e75', '#ef9f27', '#e24b4a'];
 
+// 主体样式（单选）：决定"数据用什么形体画出来"
+export const VIZ_STYLES = [
+  { id: 'fill', name: '填充色带' },
+  { id: 'mesh', name: '线框网格' },
+  { id: 'bars', name: '立体柱林' },
+  { id: 'blocks', name: '立体方块' },
+  { id: 'points', name: '点云' },
+  { id: 'streaks', name: '粒子流' },
+];
+// 叠加层（可多选）：附加在主体之上，互不冲突
+export const VIZ_OVERLAYS = [
+  { id: 'grid', name: '网格地板' },
+  { id: 'cage', name: '三维网格笼' },
+  { id: 'mirror', name: '水面倒影' },
+  { id: 'glow', name: '辉光' },
+  { id: 'peaks', name: '峰值轨迹' },
+];
+// 效果预设（单选）：一次把「主体样式 + 叠加层（+ 推荐配色）」整套选中，之后仍可单独微调。
+// style/ov 是必选，pal 可选 —— 只有在预设里写了 pal 才会顺带切配色。
+export const VIZ_PRESETS = [
+  { id: 'classic', name: '经典瀑布', desc: '填充色带', style: 'fill', ov: {} },
+  { id: 'ridge', name: '线框山脊', desc: '骨架网格', style: 'mesh', ov: {} },
+  { id: 'bars', name: '柱林', desc: '每频带一根柱', style: 'bars', ov: {} },
+  { id: 'city', name: '立体方块', desc: '像 3D 柱状图', style: 'blocks', ov: {} },
+  { id: 'cloud', name: '点云', desc: '轻盈散点', style: 'points', ov: {} },
+  { id: 'rain', name: '粒子流', desc: '点沿时间拉丝', style: 'streaks', ov: {} },
+  { id: 'meas', name: '测量视图', desc: '填充 + 峰值轨迹', style: 'fill', ov: { peaks: true } },
+  { id: 'stage', name: '舞台倒影', desc: '填充 + 倒影', style: 'fill', ov: { mirror: true } },
+  { id: 'cagebox', name: '网格笼', desc: '填充 + 三维网格笼', style: 'fill', ov: { cage: true } },
+  { id: 'cyber', name: '赛博网格', desc: '柱林 + 网格地板 + 辉光（配暗场霓虹）', style: 'bars', ov: { grid: true, glow: true }, pal: 'neon' },
+  { id: 'tron', name: '网格点阵', desc: '点云 + 网格地板 + 倒影（配暗场霓虹）', style: 'points', ov: { grid: true, mirror: true }, pal: 'neon' },
+  { id: 'neonbars', name: '霓虹柱林', desc: '柱林 + 辉光', style: 'bars', ov: { glow: true } },
+  { id: 'aurora', name: '极光帘幕', desc: '点云 + 倒影 + 辉光（配暗场霓虹最佳）', style: 'points', ov: { mirror: true, glow: true }, pal: 'neon' },
+];
+
 export function createViz3D(canvas, readoutEl, opts) {
   const o = opts || {};
   const BANDS = o.bands || 64;          // 频率方向的分辨率
@@ -94,6 +129,18 @@ export function createViz3D(canvas, readoutEl, opts) {
     palBg = '';
   }
   applyPalette(palId);
+
+  // ── 样式 / 叠加层状态 ──
+  let styleId = o.style || 'fill';
+  const ov = { grid: false, cage: false, mirror: false, glow: false, peaks: false };
+  (function () { const oo = o.overlays || {}; for (const k in ov) if (k in oo) ov[k] = !!oo[k]; })();
+  // 每帧的几何投影缓存（扁平数组，避免每帧造几万个临时对象）
+  // 索引：slot = (层号 * 2 + 声道) * BANDS + 带号
+  const GA = LAYERS * 2 * BANDS;
+  const gBx = new Float32Array(GA), gBy = new Float32Array(GA);
+  const gTx = new Float32Array(GA), gTy = new Float32Array(GA);
+  const gSkip = new Uint8Array(LAYERS * 2);
+  const gPkB = new Int16Array(LAYERS), gPkC = new Uint8Array(LAYERS);
 
   const XTICK_ALL = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 40000];
   const YTICK_ALL = [0, -10, -20, -30, -40, -50, -60, -70, -80];   // 以 dBFS 标注（0 = 满量程）
@@ -266,40 +313,47 @@ export function createViz3D(canvas, readoutEl, opts) {
     return true;
   }
 
-  function ribbon(base, top, topColor, botColor, alpha) {
-    let mnY = 1e9, mxY = -1e9;
-    for (let b = 0; b < BANDS; b++) {
-      if (top[b].y < mnY) mnY = top[b].y;
-      if (base[b].y > mxY) mxY = base[b].y;
+  // ── 路径工具：一律从扁平数组取点（不再每帧新建点对象）──
+  function pathBase(slot) {
+    g.beginPath();
+    for (let b = 0; b < BANDS; b++) { const i = slot + b; b ? g.lineTo(gBx[i], gBy[i]) : g.moveTo(gBx[i], gBy[i]); }
+  }
+  function pathFill(slot) {
+    g.beginPath();
+    for (let b = 0; b < BANDS; b++) { const i = slot + b; b ? g.lineTo(gBx[i], gBy[i]) : g.moveTo(gBx[i], gBy[i]); }
+    for (let b = BANDS - 1; b >= 0; b--) { const i = slot + b; g.lineTo(gTx[i], gTy[i]); }
+    g.closePath();
+  }
+  function pathTop(slot) {
+    g.beginPath();
+    for (let b = 0; b < BANDS; b++) { const i = slot + b; b ? g.lineTo(gTx[i], gTy[i]) : g.moveTo(gTx[i], gTy[i]); }
+  }
+  // 顶层描边。辉光 = 粗半透明打底 + 细亮线两层；**绝不用 shadowBlur**（96 条色带会卡死）
+  function strokeTop(slot, style, alpha) {
+    if (ov.glow) {
+      g.globalAlpha = Math.min(1, alpha * 0.30); g.strokeStyle = style; g.lineWidth = 5;
+      pathTop(slot); g.stroke();
     }
-    const gd = g.createLinearGradient(0, mnY - 2, 0, mxY + 2);
-    gd.addColorStop(0, topColor);
-    gd.addColorStop(1, botColor);
-    g.globalAlpha = alpha;
-    g.fillStyle = gd;
-    g.beginPath();
-    for (let b = 0; b < BANDS; b++) { b ? g.lineTo(base[b].x, base[b].y) : g.moveTo(base[b].x, base[b].y); }
-    for (let b = BANDS - 1; b >= 0; b--) g.lineTo(top[b].x, top[b].y);
-    g.closePath(); g.fill();
-    g.strokeStyle = topColor; g.lineWidth = 1;
-    g.beginPath();
-    for (let b = 0; b < BANDS; b++) { b ? g.lineTo(top[b].x, top[b].y) : g.moveTo(top[b].x, top[b].y); }
-    g.stroke();
+    g.globalAlpha = Math.min(1, alpha + (ov.glow ? 0.25 : 0));
+    g.strokeStyle = style; g.lineWidth = ov.glow ? 1.3 : 1;
+    pathTop(slot); g.stroke();
     g.globalAlpha = 1;
   }
-
-  // 多段渐变版（「跟随卡片」用）：颜色沿**频率轴**铺开，填充与脊线共用同一个渐变
-  function ribbonGrad(base, top, gd, alpha) {
-    g.globalAlpha = alpha; g.fillStyle = gd;
-    g.beginPath();
-    for (let b = 0; b < BANDS; b++) { b ? g.lineTo(base[b].x, base[b].y) : g.moveTo(base[b].x, base[b].y); }
-    for (let b = BANDS - 1; b >= 0; b--) g.lineTo(top[b].x, top[b].y);
-    g.closePath(); g.fill();
-    g.globalAlpha = Math.min(1, alpha + 0.25); g.strokeStyle = gd; g.lineWidth = 1;
-    g.beginPath();
-    for (let b = 0; b < BANDS; b++) { b ? g.lineTo(top[b].x, top[b].y) : g.moveTo(top[b].x, top[b].y); }
-    g.stroke();
-    g.globalAlpha = 1;
+  // 垂直（电平方向）渐变：两色方案
+  function gradOf(slot, cTop, cBot, alpha) {
+    let mnY = 1e9, mxY = -1e9;
+    for (let b = 0; b < BANDS; b++) { const i = slot + b; if (gTy[i] < mnY) mnY = gTy[i]; if (gBy[i] > mxY) mxY = gBy[i]; }
+    const gd = g.createLinearGradient(0, mnY - 2, 0, mxY + 2);
+    gd.addColorStop(0, css(hexToRgb(cTop), Math.min(1, alpha + 0.35)));
+    gd.addColorStop(1, css(hexToRgb(cBot), 0.10));
+    return gd;
+  }
+  // 沿频率轴的多段渐变（「跟随卡片」用；L 正序 / R 倒序）
+  function rampOf(slot, ci) {
+    const stops = ci === 0 ? palRamp : palRamp.slice().reverse();
+    const gd = g.createLinearGradient(gBx[slot], gBy[slot], gBx[slot + BANDS - 1], gBy[slot + BANDS - 1]);
+    stops.forEach((c, i) => gd.addColorStop(stops.length > 1 ? i / (stops.length - 1) : 0, c));
+    return gd;
   }
 
   function render() {
@@ -341,7 +395,61 @@ export function createViz3D(canvas, readoutEl, opts) {
       g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(bBack.x, bBack.y); g.stroke();
     });
 
-    // 色带：远 → 近（画家算法），每层 L/R 两条，沿时间轴错开半个层距
+    // 叠加层：网格地板（延伸到数据盒之外的发光网格 —— Tron / retrowave 那种）
+    if (ov.grid) {
+      // 用 R 声道那侧的颜色：霓虹/扁平配色下它是青蓝，和 L 的暖色互补，网格才不会和数据糊在一起
+      const gc = palRampMode ? palRamp[palRamp.length - 1] : palR[0];
+      const EX = 1.25, N = 10;                  // 向外延伸比例 / 每个方向的格数
+      const step = (1 + 2 * EX) / N;
+      g.lineWidth = 1; g.strokeStyle = gc;
+      for (let i = 0; i <= N; i++) {
+        const f = -EX + i * step;
+        // 沿 X 方向的线（固定 fz）：越靠前越亮，向远处淡出 → 有纵深
+        g.globalAlpha = 0.04 + 0.30 * Math.max(0, Math.min(1, f));
+        g.beginPath();
+        for (let j = 0; j <= 12; j++) { const p = project(j / 12, f, 0, S); j ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y); }
+        g.stroke();
+        // 沿 Z 方向的线（固定 fx）：越靠中间越亮，两侧淡出
+        g.globalAlpha = 0.04 + 0.22 * Math.max(0, 1 - Math.abs(f - 0.5) * 1.4);
+        g.beginPath();
+        for (let j = 0; j <= 12; j++) { const p = project(f, j / 12, 0, S); j ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y); }
+        g.stroke();
+      }
+      // 最远那条边描亮一点 —— 强化"网格无限延伸"的感觉
+      g.globalAlpha = 0.55; g.lineWidth = 1.5;
+      g.beginPath();
+      for (let j = 0; j <= 12; j++) { const p = project(j / 12, -EX, 0, S); j ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y); }
+      g.stroke();
+      g.globalAlpha = 1;
+    }
+
+    // 叠加层：三维网格笼（地板 + 天花板 + 四面墙全铺满网格）
+    if (ov.cage) {
+      g.strokeStyle = ink(0.14); g.lineWidth = 0.5; g.globalAlpha = 0.75;
+      const seg = (a, b) => {
+        const p1 = project(a[0], a[1], a[2], S), p2 = project(b[0], b[1], b[2], S);
+        g.beginPath(); g.moveTo(p1.x, p1.y); g.lineTo(p2.x, p2.y); g.stroke();
+      };
+      const lvs = YTICK_ALL.map((db) => (db - dbOffset - dbLo) / ((dbHi - dbLo) || 1)).filter((l) => l > 0.001 && l < 0.999);
+      const NZ = 6;
+      // 天花板
+      xticks.forEach((hz) => { const fx = fxOf(hz); seg([fx, 0, 1], [fx, 1, 1]); });
+      for (let j = 0; j <= NZ; j++) seg([0, j / NZ, 1], [1, j / NZ, 1]);
+      // 左右墙（fx=0 / fx=1）：等电平线 + 竖向时间线
+      [0, 1].forEach((fx) => {
+        lvs.forEach((lv) => seg([fx, 0, lv], [fx, 1, lv]));
+        for (let j = 0; j <= NZ; j++) seg([fx, j / NZ, 0], [fx, j / NZ, 1]);
+      });
+      // 前后墙（fz=0 / fz=1）：等电平线 + 竖向频率线
+      [0, 1].forEach((fz) => {
+        lvs.forEach((lv) => seg([0, fz, lv], [1, fz, lv]));
+        xticks.forEach((hz) => { const fx = fxOf(hz); seg([fx, fz, 0], [fx, fz, 1]); });
+      });
+      g.globalAlpha = 1;
+    }
+
+    // ── 主体样式 + 叠加层 ──
+    // 第一步：把每层几何**一次性**投影进扁平数组（远→近排序只影响绘制顺序，不影响索引）。
     const order = [];
     for (let i = 0; i < L; i++) {
       const fz = L > 1 ? i / (L - 1) : 1;
@@ -349,26 +457,26 @@ export function createViz3D(canvas, readoutEl, opts) {
     }
     order.sort((a, b) => a.z - b.z);
     const OFF = 0.005;
+    const CH = mono ? 1 : 2;
     let hiIdx = -1, hiD = 34 * 34, hiCh = 0;
     for (const it of order) {
       const e = entries[it.i];
-      const t = L > 1 ? it.i / (L - 1) : 1;
-      const fog = (0.16 + 0.54 * t) * (it.fresh ? 1.5 : 1);
-      const chans = palRampMode
-        ? [[e.lvL, 1, null, null], [e.lvR, -1, null, null]]
-        : [[e.lvL, 1, palL[0], palL[1]], [e.lvR, -1, palR[0], palR[1]]];
-      for (let ci = 0; ci < chans.length; ci++) {
-        if (mono && ci === 1) continue;               // 单声道只画一路
-        const v = chans[ci][0], sgn = chans[ci][1], cTop = chans[ci][2], cBot = chans[ci][3];
-        let mxv = 0;
-        for (let b = 0; b < BANDS; b++) if (v[b] > mxv) mxv = v[b];
-        if (mxv < 0.02) continue;      // 该声道这一层基本静音 → 不画（否则零电平的平坦线会叠成一张"板"）
-        const fz = Math.max(0, Math.min(1, it.fz + sgn * OFF));
-        const base = [], top = [];
+      let pkB = -1, pkV = -1, pkC = 0;
+      for (let ci = 0; ci < CH; ci++) {
+        const v = ci === 0 ? e.lvL : e.lvR;
+        let mxv = 0, mb = 0;
+        for (let b = 0; b < BANDS; b++) if (v[b] > mxv) { mxv = v[b]; mb = b; }
+        if (mxv > pkV) { pkV = mxv; pkB = mb; pkC = ci; }
+        const s2 = it.i * 2 + ci;
+        if (mxv < 0.02) { gSkip[s2] = 1; continue; }   // 该层该声道基本静音 → 不画（否则零电平线会叠成一张"板"）
+        gSkip[s2] = 0;
+        const fz = Math.max(0, Math.min(1, it.fz + (ci === 0 ? OFF : -OFF)));
+        const slot = s2 * BANDS;
         for (let b = 0; b < BANDS; b++) {
           const fx = (b + 0.5) / BANDS;
           const pb = project(fx, fz, 0, S), pt = project(fx, fz, v[b], S);
-          base.push(pb); top.push(pt);
+          const i2 = slot + b;
+          gBx[i2] = pb.x; gBy[i2] = pb.y; gTx[i2] = pt.x; gTy[i2] = pt.y;
           if (mouse) {
             const vx = pt.x - pb.x, vy = pt.y - pb.y;
             const wx = mouse.x - pb.x, wy = mouse.y - pb.y;
@@ -380,16 +488,115 @@ export function createViz3D(canvas, readoutEl, opts) {
             if (d2 < hiD) { hiD = d2; hiIdx = it.i * BANDS + b; hiCh = ci; }
           }
         }
-        if (palRampMode) {
-          // 沿频率轴的多段渐变；L 正序 / R 倒序 → 同一频率处左右声道颜色不同
-          const stops = ci === 0 ? palRamp : palRamp.slice().reverse();
-          const gd = g.createLinearGradient(base[0].x, base[0].y, base[BANDS - 1].x, base[BANDS - 1].y);
-          stops.forEach((c, i) => gd.addColorStop(stops.length > 1 ? i / (stops.length - 1) : 0, c));
-          ribbonGrad(base, top, gd, Math.min(1, fog));
-        } else {
-          ribbon(base, top, css(hexToRgb(cTop), Math.min(1, fog + 0.35)), css(hexToRgb(cBot), 0.10), Math.min(1, fog));
+      }
+      gPkB[it.i] = pkB; gPkC[it.i] = pkC;
+    }
+
+    // 第二步：按当前样式绘制（远 → 近）
+    for (const it of order) {
+      const t = L > 1 ? it.i / (L - 1) : 1;
+      const fog = Math.min(1, (0.16 + 0.54 * t) * (it.fresh ? 1.5 : 1));
+      for (let ci = 0; ci < CH; ci++) {
+        const s2 = it.i * 2 + ci;
+        if (gSkip[s2]) continue;
+        const slot = s2 * BANDS;
+        const cTop = ci === 0 ? palL[0] : palR[0], cBot = ci === 0 ? palL[1] : palR[1];
+        const solid = palRampMode ? rampOf(slot, ci) : css(hexToRgb(cTop), 1);
+        if (styleId === 'fill') {
+          const gd = palRampMode ? rampOf(slot, ci) : gradOf(slot, cTop, cBot, fog);
+          g.globalAlpha = fog; g.fillStyle = gd; pathFill(slot); g.fill();
+          strokeTop(slot, gd, fog);
+        } else if (styleId === 'mesh') {
+          // 骨架要**两个方向都稀疏**才是网格：脊线每 3 层画一条（96 条全画会糊成"刷毛"）
+          if (it.i % 3 === 0) strokeTop(slot, css(hexToRgb(cTop), 0.85), fog);
+        } else if (styleId === 'bars') {
+          // 每 2 层、每 2 个频带画一根，否则 64×96=6144 根线会糊成一整块（实测确认过）
+          if (it.i % 2 !== 0) continue;
+          g.globalAlpha = fog; g.strokeStyle = solid; g.lineWidth = 1;
+          g.beginPath();
+          for (let b = 0; b < BANDS; b += 2) { const i2 = slot + b; g.moveTo(gBx[i2], gBy[i2]); g.lineTo(gTx[i2], gTy[i2]); }
+          g.stroke();
+          if (ov.glow) { g.globalAlpha = fog * 0.3; g.lineWidth = 3; g.stroke(); }
+        } else if (styleId === 'blocks') {
+          g.globalAlpha = fog; g.fillStyle = solid;
+          for (let b = 0; b < BANDS - 1; b++) {
+            const i2 = slot + b, j2 = slot + b + 1;
+            g.beginPath();
+            g.moveTo(gBx[i2], gBy[i2]); g.lineTo(gBx[j2], gBy[j2]);
+            g.lineTo(gTx[j2], gTy[j2]); g.lineTo(gTx[i2], gTy[i2]);
+            g.closePath(); g.fill();
+          }
+          g.globalAlpha = Math.min(1, fog + 0.3); g.strokeStyle = css(hexToRgb(cTop), 0.7); g.lineWidth = 0.8;
+          pathTop(slot); g.stroke();
+        } else if (styleId === 'points') {
+          g.globalAlpha = Math.min(1, fog * 0.95); g.fillStyle = solid;
+          for (let b = 0; b < BANDS; b++) { const i2 = slot + b; g.fillRect(gTx[i2] - 0.9, gTy[i2] - 0.9, 1.8, 1.8); }
+        } else if (styleId === 'streaks') {
+          const prev = (it.i - 1) * 2 + ci;
+          const hasPrev = it.i > 0 && !gSkip[prev];
+          g.globalAlpha = Math.min(1, fog * 0.8); g.strokeStyle = solid; g.lineWidth = 1.2;
+          g.beginPath();
+          for (let b = 0; b < BANDS; b++) {
+            const i2 = slot + b;
+            const py2 = hasPrev ? gTy[prev * BANDS + b] : gBy[i2];
+            g.moveTo(gTx[i2], gTy[i2]); g.lineTo(gTx[i2], py2);
+          }
+          g.stroke();
+          g.globalAlpha = Math.min(1, fog); g.fillStyle = solid;
+          for (let b = 0; b < BANDS; b++) { const i2 = slot + b; g.fillRect(gTx[i2] - 0.8, gTy[i2] - 0.8, 1.6, 1.6); }
+        }
+        g.globalAlpha = 1;
+
+        // 叠加层：水面倒影（同层镜像到地面之下，α 压低）
+        if (ov.mirror) {
+          const gd = palRampMode ? rampOf(slot, ci) : css(hexToRgb(cBot), 1);
+          g.globalAlpha = Math.min(1, fog * 0.26); g.fillStyle = gd;
+          g.beginPath();
+          for (let b = 0; b < BANDS; b++) { const i2 = slot + b; b ? g.lineTo(gBx[i2], gBy[i2]) : g.moveTo(gBx[i2], gBy[i2]); }
+          for (let b = BANDS - 1; b >= 0; b--) { const i2 = slot + b; g.lineTo(gTx[i2], 2 * gBy[i2] - gTy[i2]); }
+          g.closePath(); g.fill();
+          g.globalAlpha = Math.min(1, fog * 0.5); g.strokeStyle = gd; g.lineWidth = 1;
+          g.beginPath();
+          for (let b = 0; b < BANDS; b++) { const i2 = slot + b; const yy = 2 * gBy[i2] - gTy[i2]; b ? g.lineTo(gTx[i2], yy) : g.moveTo(gTx[i2], yy); }
+          g.stroke();
+          g.globalAlpha = 1;
         }
       }
+    }
+
+    // 叠加层：线框网格的纵向骨架（沿时间方向把各层的同频带连起来）
+    // 和脊线保持同一稀疏度（每 3 层一个节点、每 4 个频带一条线）→ 才是一个能看的网格
+    if (styleId === 'mesh') {
+      g.globalAlpha = 0.6; g.lineWidth = 0.8;
+      for (let ci = 0; ci < CH; ci++) {
+        g.strokeStyle = css(hexToRgb(ci === 0 ? palL[0] : palR[0]), 0.6);
+        for (let b = 0; b < BANDS; b += 4) {
+          g.beginPath();
+          let started = false;
+          for (let li = 0; li < L; li += 3) {
+            const s2 = li * 2 + ci;
+            if (gSkip[s2]) continue;
+            const i2 = s2 * BANDS + b;
+            if (started) g.lineTo(gTx[i2], gTy[i2]); else { g.moveTo(gTx[i2], gTy[i2]); started = true; }
+          }
+          g.stroke();
+        }
+      }
+      g.globalAlpha = 1;
+    }
+    // 叠加层：峰值轨迹（每层峰值点连成一条线）
+    if (ov.peaks) {
+      g.globalAlpha = 0.95; g.lineWidth = 1.6; g.strokeStyle = ink(0.55);
+      g.beginPath();
+      let started = false;
+      for (let li = 0; li < L; li++) {
+        const b = gPkB[li], ci = gPkC[li];
+        if (b < 0 || gSkip[li * 2 + ci]) continue;
+        const i2 = (li * 2 + ci) * BANDS + b;
+        if (started) g.lineTo(gTx[i2], gTy[i2]); else { g.moveTo(gTx[i2], gTy[i2]); started = true; }
+      }
+      g.stroke();
+      g.globalAlpha = 1;
     }
 
     // ── 中轴参考线已按要求移除（原来三条轴线穿过体积中心，视觉上像"插在数据里的三条棍"）──
@@ -585,6 +792,20 @@ export function createViz3D(canvas, readoutEl, opts) {
       coverColors = (list || []).slice();
       if (palId === 'cover') deriveCover();
       else if (palId === 'theme') palRamp = coverColors.length >= 2 ? coverColors.slice() : RAMP_FALLBACK.slice();
+    },
+    // 主体样式（单选）
+    setStyle: function (id) { styleId = VIZ_STYLES.some((s) => s.id === id) ? id : 'fill'; },
+    // 叠加层（可多选）：mirror / glow / peaks
+    setOverlay: function (id, on) { if (id in ov) ov[id] = !!on; },
+    overlayState: function () { return { mirror: ov.mirror, glow: ov.glow, peaks: ov.peaks }; },
+    // 效果预设：一次套用「样式 + 叠加层（+ 推荐配色）」
+    applyPreset: function (id) {
+      const p = VIZ_PRESETS.filter((x) => x.id === id)[0];
+      if (!p) return false;
+      styleId = p.style;
+      for (const k in ov) ov[k] = !!(p.ov && p.ov[k]);
+      if (p.pal) applyPalette(p.pal);
+      return true;
     },
     paletteId: function () { return palId; },
     // 诊断：层数 / 命中 / 频率范围 / 渲染耗时（用于核对 96 层×双声道是否够 60fps）

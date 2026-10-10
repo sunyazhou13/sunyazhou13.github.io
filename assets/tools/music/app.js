@@ -72,6 +72,15 @@ const viz3dBtn = $('mu-3d-btn');
 const viz3dResetBtn = $('mu-viz3d-reset');
 const viz3dWideChk = $('mu-viz3d-wide');
 const viz3dPalSel = $('mu-viz3d-pal');
+const viz3dStyleSel = $('mu-viz3d-style');
+const viz3dPresetSel = $('mu-viz3d-preset');
+const viz3dOv = {
+  grid: $('mu-viz3d-ov-grid'),
+  cage: $('mu-viz3d-ov-cage'),
+  mirror: $('mu-viz3d-ov-mirror'),
+  glow: $('mu-viz3d-ov-glow'),
+  peaks: $('mu-viz3d-ov-peaks'),
+};
 // 播放信息面板
 const coverEl = $('mu-cover');
 const coverWrapEl = $('mu-cover-wrap');
@@ -541,30 +550,89 @@ function bindViz() {
 let v3 = null, v3loading = null;
 // dB 窗口是 analyser 的属性（2D 与 3D 共用）：「弱音可见」放宽到 −90…−20，代价是小声的柱子会变高。
 let vizDbWide = false;
-// 3D 配色：选项由 viz3d.js 的 VIZ_PALETTES 提供，选择记在 localStorage（换歌不丢）
+// 3D 外观选项：配色 / 样式 / 叠加层。清单都由 viz3d.js 提供（只存在一处），选择记在 localStorage
 const PAL_KEY = 'mu-viz3d-pal';
-function initPaletteSelect(m) {
-  if (!viz3dPalSel || !v3) return;
-  viz3dPalSel.innerHTML = '';
-  (m.VIZ_PALETTES || []).forEach((p) => {
-    const op = document.createElement('option');
-    op.value = p.id; op.textContent = p.name;
-    viz3dPalSel.appendChild(op);
-  });
-  let saved = 'contrast';
-  try { saved = localStorage.getItem(PAL_KEY) || saved; } catch (e) { /* 忽略 */ }
-  if (!viz3dPalSel.querySelector('option[value="' + saved + '"]')) saved = 'contrast';
-  viz3dPalSel.value = saved;
-  // 先把当前封面的候选色补给 3D（否则「跟随卡片 / 封面吸色」会退化成默认渐变），再应用配色
-  v3.setCoverColors(G_VARS.map((k) => appEl.style.getPropertyValue(k).trim()).filter(Boolean));
-  v3.setPalette(saved);
+const STYLE_KEY = 'mu-viz3d-style';
+const OV_KEY = 'mu-viz3d-ov-';
+const PRESET_KEY = 'mu-viz3d-preset';
+let vizPresets = [];
+function saveOpt(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* 忽略 */ } }
+function readOpt(k, dflt) { try { return localStorage.getItem(k) || dflt; } catch (e) { return dflt; } }
+// 预设 → 三个控件 + 落盘（之后手动改动会把预设切成「自定义」）
+function applyPresetToList(p) {
+  if (!p) return;
+  if (viz3dStyleSel) { viz3dStyleSel.value = p.style; saveOpt(STYLE_KEY, p.style); }
+  for (const k in viz3dOv) {
+    const el = viz3dOv[k];
+    if (!el) continue;
+    const on = !!(p.ov && p.ov[k]);
+    el.checked = on;
+    saveOpt(OV_KEY + k, on ? '1' : '0');
+  }
+  if (p.pal && viz3dPalSel) { viz3dPalSel.value = p.pal; saveOpt(PAL_KEY, p.pal); }
+}
+// 手动改了任一维度 → 预设标记为「自定义」
+function markCustom() { if (viz3dPresetSel) { viz3dPresetSel.value = 'custom'; saveOpt(PRESET_KEY, 'custom'); } }
+function initVizOpts(m) {
+  if (!v3) return;
+  vizPresets = m.VIZ_PRESETS || [];
+  // 1) 效果预设（会顺带写好样式/叠加层/配色的存档）
+  if (viz3dPresetSel) {
+    viz3dPresetSel.innerHTML = '';
+    vizPresets.forEach((p) => {
+      const op = document.createElement('option');
+      op.value = p.id; op.textContent = p.name + '（' + p.desc + '）';
+      viz3dPresetSel.appendChild(op);
+    });
+    const cu = document.createElement('option');
+    cu.value = 'custom'; cu.textContent = '自定义';
+    viz3dPresetSel.appendChild(cu);
+    const pid = readOpt(PRESET_KEY, 'classic');
+    const p = vizPresets.filter((x) => x.id === pid)[0];
+    if (p) { applyPresetToList(p); v3.applyPreset(p.id); viz3dPresetSel.value = p.id; }
+    else viz3dPresetSel.value = 'custom';
+  }
+  // 2) 三个维度按存档恢复（预设已经写过存档，所以这里读到的就是预设值）
+  if (viz3dPalSel) {
+    viz3dPalSel.innerHTML = '';
+    (m.VIZ_PALETTES || []).forEach((p) => {
+      const op = document.createElement('option');
+      op.value = p.id; op.textContent = p.name;
+      viz3dPalSel.appendChild(op);
+    });
+    let saved = readOpt(PAL_KEY, 'contrast');
+    if (!viz3dPalSel.querySelector('option[value="' + saved + '"]')) saved = 'contrast';
+    viz3dPalSel.value = saved;
+    // 先把当前封面的候选色补给 3D（否则「跟随卡片 / 封面吸色」会退化成默认渐变），再应用配色
+    v3.setCoverColors(G_VARS.map((k) => appEl.style.getPropertyValue(k).trim()).filter(Boolean));
+    v3.setPalette(saved);
+  }
+  if (viz3dStyleSel) {
+    viz3dStyleSel.innerHTML = '';
+    (m.VIZ_STYLES || []).forEach((s) => {
+      const op = document.createElement('option');
+      op.value = s.id; op.textContent = s.name;
+      viz3dStyleSel.appendChild(op);
+    });
+    let st = readOpt(STYLE_KEY, 'fill');
+    if (!viz3dStyleSel.querySelector('option[value="' + st + '"]')) st = 'fill';
+    viz3dStyleSel.value = st;
+    v3.setStyle(st);
+  }
+  for (const k in viz3dOv) {
+    const el = viz3dOv[k];
+    if (!el) continue;
+    const on = readOpt(OV_KEY + k, '0') === '1';
+    el.checked = on;
+    v3.setOverlay(k, on);
+  }
 }
 function ensureViz3d() {
   if (v3) return Promise.resolve(v3);
   if (v3loading) return v3loading;
   v3loading = import(VS('./viz3d.js')).then((m) => {
     v3 = m.createViz3D(viz3dCanvas, viz3dRead, { bands: 64, layers: 96, captureHz: 20 });
-    initPaletteSelect(m);
+    initVizOpts(m);
     // 诊断钩子：仅当 URL 带 ?mu3ddebug 时挂到 window，便于排查「看不见 / 点不中」
     if (/[?&]mu3ddebug/.test(location.search)) window.__muV3 = v3;
     return v3;
@@ -696,10 +764,34 @@ coverEl.addEventListener('error', () => { coverEl.hidden = true; if (discEl) dis
 updateVolIcon();
 if (viz3dBtn) viz3dBtn.addEventListener('click', toggleViz3d);
 if (viz3dResetBtn) viz3dResetBtn.addEventListener('click', () => { if (v3) v3.reset(); });
+if (viz3dPresetSel) viz3dPresetSel.addEventListener('change', () => {
+  const id = viz3dPresetSel.value;
+  saveOpt(PRESET_KEY, id);
+  if (id === 'custom') return;
+  const p = vizPresets.filter((x) => x.id === id)[0];
+  if (!p || !v3) return;
+  v3.applyPreset(id);            // 一次套用样式 + 叠加层（+ 推荐配色）
+  applyPresetToList(p);          // 三个控件同步 + 落盘
+});
 if (viz3dPalSel) viz3dPalSel.addEventListener('change', () => {
   if (v3) v3.setPalette(viz3dPalSel.value);
-  try { localStorage.setItem(PAL_KEY, viz3dPalSel.value); } catch (e) { /* 忽略 */ }
+  saveOpt(PAL_KEY, viz3dPalSel.value);
+  markCustom();
 });
+if (viz3dStyleSel) viz3dStyleSel.addEventListener('change', () => {
+  if (v3) v3.setStyle(viz3dStyleSel.value);
+  saveOpt(STYLE_KEY, viz3dStyleSel.value);
+  markCustom();
+});
+for (const k in viz3dOv) {
+  const el = viz3dOv[k];
+  if (!el) continue;
+  el.addEventListener('change', () => {
+    if (v3) v3.setOverlay(k, el.checked);
+    saveOpt(OV_KEY + k, el.checked ? '1' : '0');
+    markCustom();
+  });
+}
 if (viz3dWideChk) viz3dWideChk.addEventListener('change', () => {
   vizDbWide = !!viz3dWideChk.checked;
   bindViz();     // 重新绑定：ensure() 会把新的 min/maxDecibels 写进 analyser（2D 条同步生效）

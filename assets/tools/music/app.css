@@ -55,7 +55,7 @@
 /* 3D 时频立体视图面板（默认折叠，点播放条的「3D」展开） */
 .mu-viz3d { width: 100%; margin: .2rem 0 0; }
 .mu-viz3d-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .35rem; flex-wrap: wrap; }
-.mu-viz3d-ctl { display: flex; align-items: center; gap: .5rem; }
+.mu-viz3d-ctl { display: flex; align-items: center; gap: .5rem .7rem; flex-wrap: wrap; justify-content: flex-end; }
 .mu-viz3d-chk { display: flex; align-items: center; gap: .25rem; font-size: .78rem; opacity: .78; white-space: nowrap; cursor: pointer; }
 .mu-viz3d-chk select { font-size: .78rem; padding: 1px 4px; border-radius: 6px; cursor: pointer; }
 .mu-viz3d-title { font-size: .78rem; opacity: .62; }
