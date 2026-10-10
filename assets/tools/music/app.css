@@ -52,6 +52,24 @@
    否则紧贴边缘的柱子会被圆角切掉。canvas 自身不再设圆角。 */
 .mu-vizbar { width: calc(100% + 2rem); margin: 0 -1rem -1rem; padding: 0 16px; }
 .mu-viz { display: block; width: 100%; height: 150px; }
+/* 3D 时频立体视图面板（默认折叠，点播放条的「3D」展开） */
+.mu-viz3d { width: 100%; margin: .2rem 0 0; }
+.mu-viz3d-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .35rem; flex-wrap: wrap; }
+.mu-viz3d-ctl { display: flex; align-items: center; gap: .5rem; }
+.mu-viz3d-chk { display: flex; align-items: center; gap: .25rem; font-size: .78rem; opacity: .78; white-space: nowrap; cursor: pointer; }
+.mu-viz3d-chk select { font-size: .78rem; padding: 1px 4px; border-radius: 6px; cursor: pointer; }
+.mu-viz3d-title { font-size: .78rem; opacity: .62; }
+.mu-viz3d-canvas {
+  display: block; width: 100%; height: 380px;
+  border: 1px solid rgba(128,128,128,.22); border-radius: 10px;
+  background: rgba(128,128,128,.05); touch-action: none; cursor: grab;
+  user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+}
+.mu-viz3d-read {
+  margin-top: .35rem; font-size: .78rem; opacity: .72;
+  min-height: 1.1em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums;
+}
+[mode='dark'] .mu-viz3d-canvas { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
 .mu-disc {
   position: relative; width: 240px; height: 240px; border-radius: 50%;
   background:

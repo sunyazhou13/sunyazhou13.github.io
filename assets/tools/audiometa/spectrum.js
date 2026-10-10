@@ -308,6 +308,12 @@ function unitWeights(n) {
 // 非对称平滑的默认参数（攻击快 / 释放慢）。想在单个工具上调，传 opts.asym 覆盖即可。
 const ASYM_DEFAULT = { up: 0.72, down: 0.12 };
 
+// AnalyserNode 的 dB 读数比**真实 dBFS 低约 14 dB**（Blackman 窗相干增益 + FFT 归一化造成；
+// 实测标定：−24.5 dBFS 正弦读 −38.6、−58.5 dBFS 正弦读 −72.6，两者差恒为 14.1）。
+// 对外标注一律用 dBFS = 读数 + 该偏移，这样刻度上的数字才是绝对的、可跨曲目比较的。
+// 注：minDecibels / maxDecibels 本身仍是 analyser 刻度，传入时要先减掉这个偏移。
+const ANALYSER_DB_OFFSET = 14.1;
+
 // 非对称平滑（攻击快 / 释放慢）：上升用 up、回落用 down，原地更新并返回 prev。
 // Web Audio 内置的 smoothingTimeConstant 是对称指数平滑（升降同系数），瞬态会被拖慢；
 // 这里分开两个系数，瞬态跟得上、回落又稳。up/down ∈ (0,1]，越大越快。
@@ -423,6 +429,9 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
   // 可选：自定义 AnalyserNode 的 dB 窗口 [minDecibels, maxDecibels]。
   // 默认 -100…-30 太宽松 —— 低电平内容也会顶到高位，看起来「小声柱子也很高」。收紧后动态范围更大。
   const dbWin = Array.isArray(o.db) && o.db.length === 2 && o.db[0] < o.db[1] ? o.db : null;
+  // 每帧广播：把这一帧的原始 bin 数据交给订阅者（3D 时频视图等），两路可视化共享同一次采集。
+  // 注意：回调里拿到的是可复用的内部缓冲，必须在回调内同步消费完（需要留存就自己 copy）。
+  const onFrame = typeof o.onFrame === 'function' ? o.onFrame : null;
   const lanes = Math.max(1, Math.min(2, Number(chCount) || 2));   // 只画 L / R 两路
   const peaks = [new Float32Array(BARS), new Float32Array(BARS)]; // 每声道一套峰值帽
   let idleT = 0;
@@ -439,7 +448,7 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
         vSrc = vCtx.createMediaElementSource(audio);
         if (!vAn) {
           vAn = vCtx.createAnalyser();
-          vAn.fftSize = 2048;
+          vAn.fftSize = 4096;
           vAn.smoothingTimeConstant = sm;
           vAn.connect(vCtx.destination);   // 主通路：出声
         }
@@ -451,8 +460,8 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
           vSink = vCtx.createGain();
           vSink.gain.value = 0;
           vSink.connect(vCtx.destination);
-          vAnL = vCtx.createAnalyser(); vAnL.fftSize = 2048; vAnL.smoothingTimeConstant = sm;
-          vAnR = vCtx.createAnalyser(); vAnR.fftSize = 2048; vAnR.smoothingTimeConstant = sm;
+          vAnL = vCtx.createAnalyser(); vAnL.fftSize = 4096; vAnL.smoothingTimeConstant = sm;
+          vAnR = vCtx.createAnalyser(); vAnR.fftSize = 4096; vAnR.smoothingTimeConstant = sm;
           vAnL.connect(vSink); vAnR.connect(vSink);
           vSplit.connect(vAnL, 0);
           vSplit.connect(vAnR, 1);
@@ -497,6 +506,19 @@ export function bindVisualizer(audio, canvas, chCount, opts) {
         list.push({ v: vR, colors: GRAD_R, mirror: true });   // 右声道镜像：低频在右
       }
       vizPaint(canvas, list, peaks, 0);
+      if (onFrame) {
+        onFrame({
+          lb: vBufL,
+          rb: lanes >= 2 ? vBufR : null,
+          sampleRate: vCtx.sampleRate,
+          fftSize: vAn.fftSize,
+          db: dbWin || [vAn.minDecibels, vAn.maxDecibels],
+          dbOffset: ANALYSER_DB_OFFSET,          // dBFS = 读数 + 该偏移（供 3D 视图按 dBFS 标注）
+          channels: lanes,
+          time: audio.currentTime,               // 真实播放时刻（秒）—— 时间轴据此换算，掉帧也不错位
+          wall: performance.now() / 1000,        // 墙钟，用于检测丢帧
+        });
+      }
     } else {
       idleT += 0.035;
       vizPaint(canvas, null, peaks, idleT);

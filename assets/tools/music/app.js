@@ -65,6 +65,13 @@ const totEl = $('mu-tot');
 const volEl = $('mu-vol');
 const volBtn = $('mu-vol-btn');
 const vizCanvas = $('mu-viz');
+const viz3dPanel = $('mu-viz3d');
+const viz3dCanvas = $('mu-viz3d-canvas');
+const viz3dRead = $('mu-viz3d-read');
+const viz3dBtn = $('mu-3d-btn');
+const viz3dResetBtn = $('mu-viz3d-reset');
+const viz3dWideChk = $('mu-viz3d-wide');
+const viz3dPalSel = $('mu-viz3d-pal');
 // 播放信息面板
 const coverEl = $('mu-cover');
 const coverWrapEl = $('mu-cover-wrap');
@@ -270,6 +277,7 @@ function applyAccent(t) {
     appEl.style.removeProperty('--mu-accent');
     appEl.style.removeProperty('--mu-accent-dark');
     G_VARS.forEach((v) => appEl.style.removeProperty(v));
+    if (v3) v3.setCoverColors([]);
     return;
   }
   const url = t.coverUrl;
@@ -279,6 +287,8 @@ function applyAccent(t) {
     appEl.style.setProperty('--mu-accent', pair.light);
     appEl.style.setProperty('--mu-accent-dark', pair.dark);
     (pair.palette || []).forEach((c, i) => { if (G_VARS[i]) appEl.style.setProperty(G_VARS[i], c); });
+    // 顺带把封面候选色喂给 3D 视图（「封面吸色」方案用）
+    if (v3) v3.setCoverColors((pair.palette || []).slice());
   });
 }
 
@@ -289,6 +299,9 @@ function updateNowPlaying() {
   else { coverEl.hidden = true; coverEl.removeAttribute('src'); }
   if (discEl) discEl.classList.toggle('has-cover', !!t.coverUrl);
   applyAccent(t);
+  // 真实声道数变了就重绑一次（analyser 的声道分路要跟着变）
+  const chN = Math.max(1, Math.min(2, (t.meta && t.meta.tech && t.meta.tech.channels) || 2));
+  if (chN !== vizLanes) { vizLanes = chN; bindViz(); }
   const tags = (t.meta && t.meta.tags) || {};
   titleEl.textContent = tags.title || t.name;
   subEl.textContent = [tags.artist, tags.album].filter(Boolean).join(' — ');
@@ -471,6 +484,7 @@ async function loadAndPlay(i, forceTranscode) {
       audio.src = currentUrl;
     }
     bindViz();
+    maybeAutoOpenViz3d();
     try { await audio.play(); } catch (e) { /* 自动播放可能被策略拦截，用户可手动点 */ }
   } catch (e) {
     if (!forceTranscode) { try { return await loadAndPlay(i, true); } catch (_) {} }
@@ -496,6 +510,16 @@ async function transcodeToUrl(file, ext) {
   return URL.createObjectURL(new Blob([out], { type: 'audio/wav' }));
 }
 
+// 真实声道数（1/2）：2D 频谱条与 3D 视图都据此决定画一路还是两路 —— 单声道不再假装有 R
+let vizLanes = 2;
+// dB 窗口用 **dBFS** 表达（0 = 满量程），Y 轴据此标注；传入 spectrum.js 前减去标定偏移转成 analyser 刻度。
+// 偏移见 spectrum.js 的 ANALYSER_DB_OFFSET：analyser 读数 ≈ 真实 dBFS − 14.1（实测标定）。
+const DB_OFF = 14.1;
+const DBFS_WIN = { normal: [-54, 0], wide: [-78, -8] };
+function vizDbWin() {
+  const w = vizDbWide ? DBFS_WIN.wide : DBFS_WIN.normal;
+  return [w[0] - DB_OFF, w[1] - DB_OFF];
+}
 function bindViz() {
   const w = Math.max(300, Math.floor(vizCanvas.getBoundingClientRect().width || 600));
   vizCanvas.width = w; vizCanvas.height = 180;
@@ -505,8 +529,66 @@ function bindViz() {
     // 实测 AnalyserNode 读数比真实 dBFS 低约 14dB（Blackman 窗 + FFT 归一化），
     // 取 [-66, -12]（54dB 跨度）：-1dBFS 峰值≈94%、-40dBFS 弱音≈22%、更弱≈0。
     // 平滑：非对称平滑（攻击快/释放慢）已是 spectrum.js 的默认行为，这里无需显式传。
-    m.bindVisualizer(audio, vizCanvas, 2, { weight: false, db: [-66, -12] });
+    // onFrame：把每帧原始 bin 广播给 3D 视图 —— 两路可视化共享同一次采集，不重复读 FFT。
+    m.bindVisualizer(audio, vizCanvas, vizLanes, {
+      weight: false, db: vizDbWin(),
+      onFrame: (f) => { if (v3 && v3.isVisible()) v3.push(f); },
+    });
   }).catch((e) => { console.warn('[mu-viz]', e && e.message); });
+}
+
+// ── 3D 时频立体视图（懒创建：面板打开时才加载模块 + 启动渲染循环）──
+let v3 = null, v3loading = null;
+// dB 窗口是 analyser 的属性（2D 与 3D 共用）：「弱音可见」放宽到 −90…−20，代价是小声的柱子会变高。
+let vizDbWide = false;
+// 3D 配色：选项由 viz3d.js 的 VIZ_PALETTES 提供，选择记在 localStorage（换歌不丢）
+const PAL_KEY = 'mu-viz3d-pal';
+function initPaletteSelect(m) {
+  if (!viz3dPalSel || !v3) return;
+  viz3dPalSel.innerHTML = '';
+  (m.VIZ_PALETTES || []).forEach((p) => {
+    const op = document.createElement('option');
+    op.value = p.id; op.textContent = p.name;
+    viz3dPalSel.appendChild(op);
+  });
+  let saved = 'contrast';
+  try { saved = localStorage.getItem(PAL_KEY) || saved; } catch (e) { /* 忽略 */ }
+  if (!viz3dPalSel.querySelector('option[value="' + saved + '"]')) saved = 'contrast';
+  viz3dPalSel.value = saved;
+  // 先把当前封面的候选色补给 3D（否则「跟随卡片 / 封面吸色」会退化成默认渐变），再应用配色
+  v3.setCoverColors(G_VARS.map((k) => appEl.style.getPropertyValue(k).trim()).filter(Boolean));
+  v3.setPalette(saved);
+}
+function ensureViz3d() {
+  if (v3) return Promise.resolve(v3);
+  if (v3loading) return v3loading;
+  v3loading = import(VS('./viz3d.js')).then((m) => {
+    v3 = m.createViz3D(viz3dCanvas, viz3dRead, { bands: 64, layers: 96, captureHz: 20 });
+    initPaletteSelect(m);
+    // 诊断钩子：仅当 URL 带 ?mu3ddebug 时挂到 window，便于排查「看不见 / 点不中」
+    if (/[?&]mu3ddebug/.test(location.search)) window.__muV3 = v3;
+    return v3;
+  }).catch((e) => { console.warn('[mu-viz3d]', e && e.message); v3loading = null; return null; });
+  return v3loading;
+}
+function toggleViz3d() {
+  if (!viz3dPanel) return;
+  const open = viz3dPanel.hidden;
+  viz3dPanel.hidden = !open;
+  if (viz3dBtn) viz3dBtn.classList.toggle('active', open);
+  if (open) ensureViz3d().then((v) => {
+    if (v) v.setVisible(true);
+    // 面板在卡片最底部（歌词 + 2D 频谱条之下），展开后可能还在屏幕外 → 滚到视野中央
+    if (viz3dPanel.scrollIntoView) viz3dPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  else if (v3) v3.setVisible(false);
+}
+// 首次载入歌曲时自动展开一次 3D 面板 —— 否则入口太隐蔽，用户根本不知道有这个视图存在。
+let v3autoDone = false;
+function maybeAutoOpenViz3d() {
+  if (v3autoDone || !viz3dPanel) return;
+  v3autoDone = true;
+  if (viz3dPanel.hidden) toggleViz3d();
 }
 
 // ── 控件 ──
@@ -612,5 +694,15 @@ playBtn.textContent = '▶';
 // 封面 blob 解码失败时退回黑胶占位
 coverEl.addEventListener('error', () => { coverEl.hidden = true; if (discEl) discEl.classList.remove('has-cover'); });
 updateVolIcon();
+if (viz3dBtn) viz3dBtn.addEventListener('click', toggleViz3d);
+if (viz3dResetBtn) viz3dResetBtn.addEventListener('click', () => { if (v3) v3.reset(); });
+if (viz3dPalSel) viz3dPalSel.addEventListener('change', () => {
+  if (v3) v3.setPalette(viz3dPalSel.value);
+  try { localStorage.setItem(PAL_KEY, viz3dPalSel.value); } catch (e) { /* 忽略 */ }
+});
+if (viz3dWideChk) viz3dWideChk.addEventListener('change', () => {
+  vizDbWide = !!viz3dWideChk.checked;
+  bindViz();     // 重新绑定：ensure() 会把新的 min/maxDecibels 写进 analyser（2D 条同步生效）
+});
 updateMode();
 updateControls();
