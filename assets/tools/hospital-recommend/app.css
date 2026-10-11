@@ -1,0 +1,290 @@
+/**
+ * 北京医院推荐工具样式
+ * 独立于博客主题，仅作用于页面里的 .hr-grid / .hr-card。
+ */
+
+#hr-app {
+  --hr-border: rgba(128, 128, 128, 0.35);
+  --hr-border-strong: rgba(128, 128, 128, 0.55);
+  --hr-bg: rgba(128, 128, 128, 0.07);
+  --hr-bg-hover: rgba(128, 128, 128, 0.14);
+  --hr-text-muted: rgba(128, 128, 128, 0.95);
+  --hr-accent: #2f6fde;
+  --hr-radius: 8px;
+  --hr-panel: #ffffff;
+}
+
+html[mode='dark'] #hr-app {
+  --hr-bg: rgba(255, 255, 255, 0.06);
+  --hr-bg-hover: rgba(255, 255, 255, 0.12);
+  --hr-text-muted: rgba(190, 190, 190, 0.95);
+  --hr-accent: #5b8ff0;
+  --hr-panel: #1e1e1e;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #hr-app {
+    --hr-bg: rgba(255, 255, 255, 0.06);
+    --hr-bg-hover: rgba(255, 255, 255, 0.12);
+    --hr-text-muted: rgba(190, 190, 190, 0.95);
+    --hr-accent: #5b8ff0;
+    --hr-panel: #1e1e1e;
+  }
+}
+
+#hr-app .hr-section { margin-top: 1.8rem; }
+#hr-app .hr-section:first-child { margin-top: 0; }
+
+#hr-app .hr-cat-title {
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--hr-border);
+  color: var(--hr-accent);
+}
+
+#hr-app .hr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.85rem;
+}
+
+#hr-app .hr-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  background: var(--hr-bg);
+  color: inherit;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#hr-app .hr-card:hover {
+  background: var(--hr-bg-hover);
+  border-color: var(--hr-accent);
+  box-shadow: 0 2px 10px rgba(47, 111, 222, 0.12);
+}
+
+#hr-app .hr-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.1rem;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* 首字母色块 */
+#hr-app .hr-dot {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hr-app .hr-c0 { background: #2f6fde; }
+#hr-app .hr-c1 { background: #1d9e75; }
+#hr-app .hr-c2 { background: #ef9f27; }
+#hr-app .hr-c3 { background: #d8442f; }
+#hr-app .hr-c4 { background: #7d5bd6; }
+#hr-app .hr-c5 { background: #0f9bb5; }
+
+#hr-app .hr-icowrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}
+
+#hr-app .hr-icon {
+  position: absolute;
+  inset: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+#hr-app .hr-icowrap.hr-loaded .hr-dot { visibility: hidden; }
+
+#hr-app .hr-name {
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 医院全称（名称行下方，独立一行） */
+#hr-app .hr-fullname {
+  display: block;
+  margin-top: -0.15rem;
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--hr-text-muted);
+  white-space: normal;
+  word-break: break-all;
+}
+
+#hr-app .hr-desc {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#hr-app .hr-addr,
+#hr-app .hr-booking {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--hr-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+#hr-app .hr-addr i,
+#hr-app .hr-book-row i {
+  color: var(--hr-accent);
+  width: 1.1em;
+  text-align: center;
+  margin-right: 0.2rem;
+}
+
+#hr-app .hr-book-row {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: normal;
+}
+
+#hr-app .hr-empty {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--hr-text-muted);
+}
+
+/* 提示文案里的两行挂号说明（在 #hr-app 作用域之外，故全局定义） */
+.hr-tip {
+  display: block;
+  margin-top: 0.35rem;
+  line-height: 1.6;
+}
+
+/* 卡片底部操作按钮：复制全名 / 导航 */
+#hr-app .hr-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--hr-border);
+}
+
+#hr-app .hr-btn {
+  flex: 1 1 auto;
+  padding: 0.42rem 0.6rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  line-height: 1.2;
+  color: var(--hr-accent);
+  background: transparent;
+  border: 1px solid var(--hr-border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+#hr-app .hr-btn:hover {
+  background: var(--hr-bg-hover);
+  border-color: var(--hr-accent);
+}
+#hr-app .hr-btn.is-done {
+  color: #1d9e75;
+  border-color: #1d9e75;
+}
+
+/* 导航模态框 */
+#hr-app .hr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#hr-app .hr-modal[hidden] { display: none; }
+#hr-app .hr-modal-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+#hr-app .hr-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 380px);
+  max-height: 82vh;
+  overflow: auto;
+  padding: 1.15rem 1.2rem 1.25rem;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border-strong);
+  border-radius: var(--hr-radius);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+  color: inherit;
+}
+#hr-app .hr-modal-close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.55rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+#hr-app .hr-modal-title {
+  margin: 0 1.6rem 0.8rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--hr-accent);
+  word-break: break-all;
+}
+#hr-app .hr-modal-campus { margin-bottom: 0.85rem; }
+#hr-app .hr-modal-campus-label {
+  font-size: 0.8rem;
+  color: var(--hr-text-muted);
+  margin-bottom: 0.4rem;
+}
+#hr-app .hr-modal-campus-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+#hr-app .hr-modal-campus-row .hr-campus { flex: 0 1 auto; }
+#hr-app .hr-campus.is-active {
+  background: var(--hr-accent);
+  border-color: var(--hr-accent);
+  color: #fff;
+}
+#hr-app .hr-modal-maps {
+  display: flex;
+  gap: 0.6rem;
+}
+#hr-app .hr-modal-maps .hr-map { flex: 1 1 auto; }
