@@ -171,6 +171,76 @@ html[mode='dark'] #hr-app {
   white-space: normal;
 }
 
+/* ---------- 可折叠的院区/门诊部明细 ----------
+   用原生 <details>，不引入任何 JS；仅在 campuses 里填了 addr 的医院渲染。
+   颜色全部从 --hr-* 变量派生，深浅色切换无需额外规则。 */
+#hr-app .hr-branches {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--hr-text-muted);
+}
+
+#hr-app .hr-branches-sum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px dashed var(--hr-border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--hr-accent);
+  line-height: 1.4;
+  list-style: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+#hr-app .hr-branches-sum::-webkit-details-marker { display: none; }
+#hr-app .hr-branches-sum i { width: 1.1em; text-align: center; }
+#hr-app .hr-branches-sum:hover {
+  background: var(--hr-bg-hover);
+  border-color: color-mix(in srgb, var(--hr-accent) 45%, transparent);
+}
+#hr-app .hr-branches-sum:focus-visible {
+  outline: 2px solid var(--hr-accent);
+  outline-offset: 2px;
+}
+/* 展开指示三角：纯 CSS，不额外加元素 */
+#hr-app .hr-branches-sum::after {
+  content: "▾";
+  font-size: 0.85em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+#hr-app .hr-branches[open] .hr-branches-sum::after { transform: rotate(180deg); }
+
+#hr-app .hr-branch-list {
+  margin: 0.5rem 0 0;
+  padding: 0.55rem 0 0 0.1rem;
+  list-style: none;
+  border-top: 1px solid var(--hr-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+#hr-app .hr-branch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  padding-left: 0.55rem;
+  border-left: 2px solid color-mix(in srgb, var(--hr-accent) 35%, transparent);
+  line-height: 1.4;
+}
+#hr-app .hr-branch-name { font-weight: 600; }
+#hr-app .hr-branch-addr { opacity: 0.85; }
+#hr-app .hr-branch-tel {
+  align-self: flex-start;
+  color: var(--hr-accent);
+  text-decoration: none !important;
+  font-variant-numeric: tabular-nums;
+}
+#hr-app .hr-branch-tel:hover { text-decoration: underline !important; }
+
 #hr-app .hr-empty {
   margin: 1.2rem 0 0;
   text-align: center;
