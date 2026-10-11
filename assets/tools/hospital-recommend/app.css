@@ -288,3 +288,189 @@ html[mode='dark'] #hr-app {
   gap: 0.6rem;
 }
 #hr-app .hr-modal-maps .hr-map { flex: 1 1 auto; }
+
+/* ========== 症状索引区块（hs-*） ========== */
+.hs-wrap {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  background: var(--hr-bg);
+}
+.hs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.hs-titles { min-width: 0; }
+.hs-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--hr-accent);
+}
+.hs-sub {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  color: var(--hr-text-muted);
+}
+.hs-searchwrap {
+  position: relative;
+  flex: 0 1 240px;
+}
+.hs-input {
+  width: 100%;
+  padding: 0.4rem 1.6rem 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  color: inherit;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border-strong);
+  border-radius: var(--hr-radius);
+}
+.hs-input:focus {
+  outline: none;
+  border-color: var(--hr-accent);
+}
+.hs-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.3rem;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1;
+  font-size: 1rem;
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.hs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+.hs-chips-label {
+  font-size: 0.75rem;
+  color: var(--hr-text-muted);
+  margin-right: 0.1rem;
+}
+.hs-chip {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  color: inherit;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hs-chip:hover {
+  background: var(--hr-bg-hover);
+  border-color: var(--hr-accent);
+}
+.hs-chip-more { color: var(--hr-accent); }
+.hs-all {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+  padding: 0.5rem;
+  background: var(--hr-bg);
+  border-radius: var(--hr-radius);
+}
+.hs-chip-sm { font-size: 0.75rem; }
+
+.hs-result {
+  margin-top: 0.7rem;
+  padding: 0.75rem;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+}
+.hs-rhead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+.hs-rname { font-size: 0.95rem; font-weight: 600; }
+.hs-urgency {
+  padding: 0.1rem 0.5rem;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.hs-urgency.is-emergency {
+  color: #a12d2d;
+  background: rgba(200, 40, 40, 0.12);
+  border-color: rgba(200, 40, 40, 0.4);
+  font-weight: 600;
+}
+.hs-urgency.is-soon {
+  color: #8a5a10;
+  background: rgba(200, 140, 20, 0.12);
+  border-color: rgba(200, 140, 20, 0.4);
+}
+.hs-urgency.is-normal {
+  color: #2a6a3f;
+  background: rgba(40, 150, 80, 0.12);
+  border-color: rgba(40, 150, 80, 0.4);
+}
+.hs-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--hr-text-muted);
+}
+.hs-deptrow, .hs-hospitals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.hs-deptlabel {
+  font-size: 0.78rem;
+  color: var(--hr-text-muted);
+  flex-shrink: 0;
+}
+.hs-depts { font-size: 0.85rem; }
+.hs-dept-link, .hs-dept-tag {
+  color: var(--hr-accent);
+  text-decoration: none;
+}
+.hs-dept-link { border-bottom: 1px dashed var(--hr-accent); }
+.hs-sep { color: var(--hr-text-muted); }
+.hs-hosp-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.hs-hosp {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  color: inherit;
+  background: var(--hr-bg);
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hs-hosp:hover { background: var(--hr-bg-hover); border-color: var(--hr-accent); color: var(--hr-accent); }
+.hs-cover {
+  margin: 0.7rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--hr-text-muted);
+  opacity: 0.85;
+}
+.hs-data { display: none; }
+
+/* 点医院名跳转后卡片高亮 */
+#hr-app .hr-card.is-flash {
+  border-color: var(--hr-accent);
+  box-shadow: 0 0 0 2px var(--hr-accent);
+}
