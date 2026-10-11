@@ -50,6 +50,15 @@ html[mode='dark'] #hr-app {
   gap: 0.85rem;
 }
 
+/* 门诊部明细展开时，同一行的其它卡片不要再被拉成等高。
+   网格默认 align-items:stretch，一行里最高的卡片决定行高 →「北大口腔」展开 700px 时，
+   左边「北京口腔」会被撑成一个巨大的空盒子。
+   这里只在「本行确实有卡片展开」时给没展开的卡片放开高度约束，
+   默认状态仍是等高，保持原本整齐的外观（:has() 与本文件已用的 color-mix 同代兼容）。 */
+#hr-app .hr-grid:has(.hr-branches[open]) .hr-card:not(:has(.hr-branches[open])) {
+  align-self: start;
+}
+
 #hr-app .hr-card {
   display: flex;
   flex-direction: column;
@@ -169,6 +178,47 @@ html[mode='dark'] #hr-app {
   display: inline-flex;
   align-items: baseline;
   white-space: normal;
+}
+
+/* 电话 / 时间（与地址同层级，图标同色同宽） */
+#hr-app .hr-phone,
+#hr-app .hr-hours,
+#hr-app .hr-emergency {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--hr-text-muted);
+  display: flex;
+  align-items: baseline;
+}
+#hr-app .hr-phone i,
+#hr-app .hr-hours i,
+#hr-app .hr-emergency i {
+  color: var(--hr-accent);
+  width: 1.1em;
+  text-align: center;
+  margin-right: 0.2rem;
+}
+#hr-app .hr-tel {
+  color: inherit;
+  text-decoration: none !important;
+  font-variant-numeric: tabular-nums;
+}
+#hr-app .hr-tel:hover {
+  color: var(--hr-accent);
+  text-decoration: underline !important;
+}
+
+/* ---------- 急诊行：区分「24 小时」与「无急诊 / 部分科室不开放」----------
+   图标统一用救护车；数据里出现否定表述（无急诊 / 不开放 / 不设）时整行弱化，
+   避免被误读成「随时能去」。肯定与否定在视觉上必须能一眼分开。 */
+#hr-app .hr-emergency {
+  flex-wrap: wrap;
+}
+#hr-app .hr-emergency.hr-em-none {
+  opacity: 0.72;
+}
+#hr-app .hr-emergency.hr-em-none i {
+  color: var(--hr-text-muted);
 }
 
 /* ---------- 可折叠的院区/门诊部明细 ----------
