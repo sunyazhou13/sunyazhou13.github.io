@@ -43,6 +43,14 @@
 
   let SYMPTOMS = [];
 
+  // 动画减配：系统开启 prefers-reduced-motion 时，平滑滚动降级为瞬时跳转
+  const reduceMotion = (function () {
+    try {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { return false; }
+  })();
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
+
   function parseData() {
     const nodes = document.querySelectorAll('.hs-symptom-data');
     SYMPTOMS = Array.prototype.map.call(nodes, function (el) {
@@ -133,6 +141,11 @@
     }).join('');
 
     result.hidden = false;
+
+    // 同步 chips 选中态（aria-pressed），键盘/读屏用户可感知当前选中哪一条
+    document.querySelectorAll('.hs-chip[data-sym]').forEach(function (chip) {
+      chip.setAttribute('aria-pressed', chip.getAttribute('data-sym') === sym.id ? 'true' : 'false');
+    });
   }
 
   function clearResult() {
@@ -158,13 +171,38 @@
     const cards = document.querySelectorAll('.hr-card');
     for (let i = 0; i < cards.length; i++) {
       if ((cards[i].dataset.name || '').trim() === name) {
-        cards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        cards[i].classList.add('is-flash');
-        setTimeout(function () { cards[i].classList.remove('is-flash'); }, 1800);
+        cards[i].scrollIntoView({ behavior: scrollBehavior, block: 'center' });
+        if (reduceMotion) {
+          // 减配模式下不做高亮闪烁（避免不适），仅短暂描边提示
+          cards[i].classList.add('is-flash');
+          setTimeout(function () { cards[i].classList.remove('is-flash'); }, 600);
+        } else {
+          cards[i].classList.add('is-flash');
+          setTimeout(function () { cards[i].classList.remove('is-flash'); }, 1800);
+        }
         return;
       }
     }
     // 找不到卡片时静默忽略（数据已校验，这里只是兜底）
+  }
+
+  // 展开「全部症状」时补齐未预渲染的 chips（首屏只渲染 30 个）
+  function fillAllChips(allEl) {
+    const existing = allEl.querySelectorAll('.hs-chip[data-sym]').length;
+    if (existing >= SYMPTOMS.length) return;
+    const frag = document.createDocumentFragment();
+    SYMPTOMS.forEach(function (s) {
+      if (allEl.querySelector('.hs-chip[data-sym="' + s.id + '"]')) return;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'hs-chip hs-chip-sm';
+      b.setAttribute('data-nopopup', '');
+      b.setAttribute('data-sym', s.id);
+      b.setAttribute('aria-pressed', 'false');
+      b.textContent = L === 'en' ? (s.en || s.zh) : s.zh;
+      frag.appendChild(b);
+    });
+    allEl.appendChild(frag);
   }
 
   function bind() {
@@ -173,23 +211,27 @@
     const more = document.getElementById('hs-more');
     const all = document.getElementById('hs-all');
 
-    // chip 点击
-    document.querySelectorAll('.hs-chip[data-sym]').forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        const id = chip.getAttribute('data-sym');
-        const sym = SYMPTOMS.find(function (s) { return s.id === id; });
-        if (sym) {
-          if (input) input.value = (L === 'en' ? sym.en : sym.zh);
-          render(sym);
-          if (clear) clear.hidden = false;
-        }
-      });
+    // chip 点击：用事件委托（不用一次性绑定），因为展开「全部症状」时 JS 会动态新增 chips
+    document.addEventListener('click', function (e) {
+      const chip = e.target.closest('.hs-chip[data-sym]');
+      if (!chip) return;
+      const id = chip.getAttribute('data-sym');
+      const sym = SYMPTOMS.find(function (s) { return s.id === id; });
+      if (sym) {
+        const inputEl = document.getElementById('hs-input');
+        const clearEl = document.getElementById('hs-clear');
+        if (inputEl) inputEl.value = (L === 'en' ? sym.en : sym.zh);
+        render(sym);
+        if (clearEl) clearEl.hidden = false;
+      }
     });
 
-    // 展开/收起全部症状
+    // 展开/收起全部症状。首屏只渲染了前 30 个，展开时从数据节点补全其余。
     if (more && all) {
       more.addEventListener('click', function () {
+        if (all.hidden) fillAllChips(all);
         all.hidden = !all.hidden;
+        more.setAttribute('aria-expanded', all.hidden ? 'false' : 'true');
         more.textContent = all.hidden
           ? T.more + '（' + SYMPTOMS.length + '）'
           : (L === 'en' ? 'Show less' : '收起');
@@ -238,7 +280,7 @@
           e.preventDefault();
           const id = deptLink.getAttribute('href').slice(1);
           const sec = document.getElementById(id);
-          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (sec) sec.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
           return;
         }
         const hospBtn = e.target.closest('.hs-hosp');

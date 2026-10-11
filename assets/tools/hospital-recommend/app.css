@@ -194,28 +194,53 @@ html[mode='dark'] #hr-app {
   border-top: 1px solid var(--hr-border);
 }
 
+/* ---------- 操作按钮：复制（次操作）/ 导航（主操作） ----------
+   分级思路：靠「有无底色 + 字色冷暖」区分，不靠面积，保持克制。
+   所有颜色从 --hr-accent 派生（color-mix），深浅色自动跟随，无需写死值。
+     导航 = 主操作：accent 淡底 + accent 字 + accent 描边
+     复制 = 次操作：无底色 + 中性字 + 中性描边
+   色值：浅色 accent=#2f6fde / 深色 accent=#5b8ff0，派生后两端对比度都够。 */
 #hr-app .hr-btn {
   flex: 1 1 auto;
   padding: 0.42rem 0.6rem;
   font-size: 0.82rem;
   font-family: inherit;
   line-height: 1.2;
-  color: var(--hr-accent);
-  background: transparent;
-  border: 1px solid var(--hr-border-strong);
   border-radius: 6px;
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
-#hr-app .hr-btn:hover {
-  background: var(--hr-bg-hover);
-  border-color: var(--hr-accent);
+
+/* 次操作：复制全名 —— 中性、无底色 */
+#hr-app .hr-copy {
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: 1px solid var(--hr-border-strong);
 }
-#hr-app .hr-btn.is-done {
+#hr-app .hr-copy:hover {
+  background: var(--hr-bg-hover);
+  color: var(--hr-accent);
+  border-color: color-mix(in srgb, var(--hr-accent) 45%, transparent);
+}
+
+/* 主操作：导航 —— accent 淡底 + 同色系 */
+#hr-app .hr-nav {
+  color: var(--hr-accent);
+  background: color-mix(in srgb, var(--hr-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hr-accent) 42%, transparent);
+}
+#hr-app .hr-nav:hover {
+  background: color-mix(in srgb, var(--hr-accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--hr-accent) 62%, transparent);
+}
+
+/* 复制成功反馈：绿色 + 淡底，1.5s 后由 JS 移除 is-done */
+#hr-app .hr-copy.is-done {
   color: #1d9e75;
-  border-color: #1d9e75;
+  background: color-mix(in srgb, #1d9e75 10%, transparent);
+  border-color: color-mix(in srgb, #1d9e75 45%, transparent);
 }
 
 /* 导航模态框 */
@@ -473,4 +498,50 @@ html[mode='dark'] #hr-app {
 #hr-app .hr-card.is-flash {
   border-color: var(--hr-accent);
   box-shadow: 0 0 0 2px var(--hr-accent);
+}
+
+/* ========== 键盘可达性：focus-visible ==========
+   原先全站无焦点样式，键盘用户看不到焦点位置。
+   用 :focus-visible 而非 :focus —— 只在键盘操作时显示，鼠标点击不显示，保持视觉干净。 */
+#hr-app .hr-btn:focus-visible,
+#hr-app .hs-chip:focus-visible,
+#hr-app .hs-hosp:focus-visible,
+#hr-app .hs-clear:focus-visible,
+#hr-app .hs-dept-link:focus-visible,
+#hr-app .hr-head:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--hr-accent) 62%, transparent);
+  outline-offset: 2px;
+}
+#hr-app .hs-input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--hr-accent) 62%, transparent);
+  outline-offset: 1px;
+  border-color: var(--hr-accent);
+}
+/* 症状 chips 选中态（aria-pressed=true）用不同视觉，不依赖颜色单一维度 */
+#hr-app .hs-chip[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hr-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--hr-accent) 50%, transparent);
+  color: var(--hr-accent);
+}
+
+/* ========== 动画减配 ==========
+   前庭功能障碍用户对平滑滚动/闪烁敏感；系统开启 reduce 时全部降级为瞬时。 */
+@media (prefers-reduced-motion: reduce) {
+  #hr-app *,
+  #hr-app *::before,
+  #hr-app *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========== 信息核对日期 ==========
+   挂号渠道、院区等有时效性，标注核对时间让读者知道信息新鲜度。 */
+#hr-app .hr-verified {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.68rem;
+  color: var(--hr-text-muted);
+  opacity: 0.6;
 }
