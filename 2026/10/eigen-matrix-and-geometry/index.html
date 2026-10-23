@@ -1,0 +1,819 @@
+<!DOCTYPE html><html lang="zh" ><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.5.1"><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Eigen 用法笔记：矩阵运算与几何变换" /><meta name="author" content="孙亚洲" /><meta property="og:locale" content="zh_Hans" /><meta name="description" content="macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Isometry3d 的用法与互转，附真实控制台输出。" /><meta name="twitter:description" property="og:description" content="macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Isometry3d 的用法与互转，附真实控制台输出。" /><link rel="canonical" href="https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" /><meta property="og:url" content="https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" /><meta property="og:site_name" content="迈腾大队长" /><meta property="og:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2026-10-23T07:26:00+00:00" /><meta property="article:modified_time" content="2026-10-23T07:26:00+00:00" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://www.sunyazhou.com/assets/images/avatar.jpg" /><meta name="twitter:title" content="Eigen 用法笔记：矩阵运算与几何变换" /><meta name="google-site-verification" content="Xo29j227HYVdC-vDA_-qJwvDP3PIo-lC78CFeBvhrDA" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"孙亚洲"},"dateModified":"2026-10-23T07:26:00+00:00","datePublished":"2026-10-23T07:26:00+00:00","description":"macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Isometry3d 的用法与互转，附真实控制台输出。","headline":"Eigen 用法笔记：矩阵运算与几何变换","image":"https://www.sunyazhou.com/assets/images/avatar.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://www.sunyazhou.com/assets/images/avatar.jpg"},"name":"孙亚洲"},"url":"https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/"}</script><title>Eigen 用法笔记：矩阵运算与几何变换 | 迈腾大队长</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="stylesheet" href="/assets/AISource/bootstrap/bootstrap.min.css"><link rel="stylesheet" href="/assets/AISource/fontawesome/all.min.css"><link rel="stylesheet" href="/assets/AISource/glightbox/glightbox.min.css"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /><link rel="stylesheet" href="/assets/AISource/jekyll-tabs/tabs.css"> <script src="/assets/AISource/jquery/jquery.min.js"></script> <script defer src="/assets/AISource/popper/popper.min.js"></script> <script defer src="/assets/AISource/bootstrap/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/assets/js/code-copy.js"></script> <script defer src="/assets/AISource/jekyll-tabs/tabs.js"></script> <script src="/assets/AISource/glightbox/glightbox.min.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-72CBVB74WB"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-72CBVB74WB'); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/images/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">迈腾大队长</a></div><div class="site-subtitle font-italic">不断学习, 与时俱进</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3"></i> <span>主页</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3"></i> <span>归档</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3"></i> <span>分类</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3"></i> <span>标签</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tools/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-toolbox ml-xl-3 mr-xl-3"></i> <span>工具</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/projects/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-paint-brush ml-xl-3 mr-xl-3"></i> <span>作品</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3"></i> <span>关于</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap mt-4"> <a id="lang-toggle-wrapper" class="lang-toggle" href="/en/2026/10/eigen-matrix-and-geometry/" title="English" aria-label="Switch to English"> <i class="lang-toggle-icon fas fa-language "></i> <i class="lang-toggle-icon fas fa-earth-asia lang-invisible"></i> </a> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } get isResolvedDarkMode() { if (this.isLightMode) { return false; } return this.isSysDarkPrefer; } updateCommentStyle() { var theme = "github-light"; if (this.isResolvedDarkMode) { theme = "photon-dark"; } let comment = document.querySelector("iframe.utterances-frame"); if (comment == null) { return; } comment.contentWindow.postMessage( { type: "set-theme", theme: theme }, "https://utteranc.es/" ); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateCommentStyle(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/sunyazhou13" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['sunyazhou','111.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> 主页 </a> </span> <span>Eigen 用法笔记：矩阵运算与几何变换</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="搜索..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><article class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Eigen 用法笔记：矩阵运算与几何变换</h1><div class="post-meta text-muted d-flex flex-column"><div> 　由 <span class="author"> 孙亚洲 </span> 发布于 <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Fri, Oct 23, 2026, 7:26 AM +0000" > 10-23 <i class="unloaded">2026-10-23T07:26:00+00:00</i> </span></div></div><div class="post-content"><h1 id="前言">前言</h1><p>本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持!</p><hr /><p>这篇是我的《视觉 SLAM 十四讲》学习笔记第三讲的配套记录。</p><p>之所以单独为 Eigen 写一篇，是因为后面所有章节都绕不开它：第四讲的 Sophus 是对 <code class="language-plaintext highlighter-rouge">SO(3)</code> / <code class="language-plaintext highlighter-rouge">SE(3)</code> 的封装，底层还是 Eigen 的矩阵；第六讲之后的 g2o 和 Ceres，顶点、边、误差项、雅可比，全是 Eigen 类型。<strong>这一讲要是没把用法记牢，后面每写一行代码都要回头翻书</strong>。</p><p>所以我干脆把书里 <code class="language-plaintext highlighter-rouge">ch3/useEigen</code> 和 <code class="language-plaintext highlighter-rouge">ch3/useGeometry</code> 两个例子完整跑一遍，把代码、输出、踩到的坑都记下来，当作自己的速查表。以后忘了 <code class="language-plaintext highlighter-rouge">coeffs()</code> 的顺序是 <code class="language-plaintext highlighter-rouge">(x,y,z,w)</code> 还是 <code class="language-plaintext highlighter-rouge">(w,x,y,z)</code>，直接搜这篇文章就行。</p><hr /><h2 id="一先把-eigen-装好macos-篇">一、先把 Eigen 装好（macOS 篇）</h2><p>书上的环境是 Ubuntu + <code class="language-plaintext highlighter-rouge">sudo apt install libeigen3-dev</code>，装完头文件在 <code class="language-plaintext highlighter-rouge">/usr/include/eigen3</code>。macOS 上没有这个路径，得自己接。</p><h3 id="1-装哪个版本">1. 装哪个版本</h3><p>Homebrew 默认的 <code class="language-plaintext highlighter-rouge">eigen</code> 现在是 <strong>5.0.1</strong>。这个版本比我用的书、也比后面要装的 Sophus / g2o / Ceres 都要新一大代——Eigen 5 里 <code class="language-plaintext highlighter-rouge">eulerAngles()</code> 已经被标成 deprecated（建议改用 <code class="language-plaintext highlighter-rouge">canonicalEulerAngles()</code>），而书上的代码到处在用 <code class="language-plaintext highlighter-rouge">eulerAngles</code>。</p><p>所以别装默认那个，装版本化的：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>brew <span class="nb">install </span>eigen@3
+</pre></table></code></div></div><p>装完是 <strong>3.4.1</strong>，和书上的 3.3/3.4、和我板子上（RK3576 / Debian）的 3.4.0 是同一代，行为一致。</p><p><code class="language-plaintext highlighter-rouge">eigen@3</code> 是 <strong>keg-only</strong> 的，意思是它不会被软链到 <code class="language-plaintext highlighter-rouge">/opt/homebrew/include</code>，以免和 Eigen 5 打架。所以它的头文件在：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>/opt/homebrew/opt/eigen@3/include/eigen3
+</pre></table></code></div></div><p>两个版本可以共存，互不干扰。</p><h3 id="2-为什么裸编译会报-eigencore-file-not-found">2. 为什么裸编译会报 <code class="language-plaintext highlighter-rouge">Eigen/Core file not found</code></h3><p>装完之后我照着视频敲：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>c++ eigenGeometry.cpp <span class="nt">-o</span> eigenGeometry
+</pre></table></code></div></div><p>结果：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>eigenGeometry.cpp:5:10: fatal error: 'Eigen/Core' file not found
+</pre></table></code></div></div><p>原因很简单：<strong>这条命令没带任何 <code class="language-plaintext highlighter-rouge">-I</code></strong>。<code class="language-plaintext highlighter-rouge">#include &lt;Eigen/Core&gt;</code> 让编译器去默认搜索路径里找 <code class="language-plaintext highlighter-rouge">Eigen/Core</code>，而 <code class="language-plaintext highlighter-rouge">/opt/homebrew/opt/eigen@3/include/eigen3</code> 不在默认路径里。Linux 上能过，是因为很多发行版会把 <code class="language-plaintext highlighter-rouge">/usr/include</code> 当默认路径，而 Eigen 恰好被 <code class="language-plaintext highlighter-rouge">libeigen3-dev</code> 放在 <code class="language-plaintext highlighter-rouge">/usr/include/eigen3</code>——<strong>它其实也需要 <code class="language-plaintext highlighter-rouge">-I</code></strong>，只是书上用 CMake，路径已经在 <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> 里写好了，你没察觉而已。</p><h3 id="3-三种解决方式按需选">3. 三种解决方式，按需选</h3><p><strong>方式一，单次加 <code class="language-plaintext highlighter-rouge">-I</code></strong>，最直接：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>c++ <span class="nt">-I</span>/opt/homebrew/opt/eigen@3/include/eigen3 eigenGeometry.cpp <span class="nt">-o</span> eigenGeometry
+</pre></table></code></div></div><p><strong>方式二，写进 zsh 环境变量</strong>（我用的是这个）。编译器会读 <code class="language-plaintext highlighter-rouge">CPLUS_INCLUDE_PATH</code>，设一次，之后任何目录裸编译都能找到：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="c"># 追加到 ~/.zshrc</span>
+<span class="nb">export </span><span class="nv">CPLUS_INCLUDE_PATH</span><span class="o">=</span><span class="s2">"/opt/homebrew/opt/eigen@3/include/eigen3</span><span class="k">${</span><span class="nv">CPLUS_INCLUDE_PATH</span>:+:<span class="nv">$CPLUS_INCLUDE_PATH</span><span class="k">}</span><span class="s2">"</span>
+</pre></table></code></div></div><p>改完 <code class="language-plaintext highlighter-rouge">source ~/.zshrc</code> 或者开个新终端标签生效。验证一下：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="nb">echo</span> <span class="nv">$CPLUS_INCLUDE_PATH</span>
+<span class="c"># /opt/homebrew/opt/eigen@3/include/eigen3</span>
+</pre></table></code></div></div><p>之后再敲 <code class="language-plaintext highlighter-rouge">c++ eigenGeometry.cpp -o eigenGeometry</code> 就通了，不用再写 <code class="language-plaintext highlighter-rouge">-I</code>。</p><p>注意 <code class="language-plaintext highlighter-rouge">${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}</code> 这个写法——如果直接写 <code class="language-plaintext highlighter-rouge">"...:$CPLUS_INCLUDE_PATH"</code> 而变量原本为空，结尾会留一个孤零零的冒号，某些编译器会把空项当成「当前目录」，不是我们想要的效果。</p><p><strong>方式三，用 CMake</strong>，也是书上的方式。<code class="language-plaintext highlighter-rouge">ch3/useEigen/CMakeLists.txt</code> 里两行关键：</p><div class="language-cmake highlighter-rouge"><div class="code-header"> <span data-label-text="Cmake"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="c1"># CMake 4.x 已经不支持 cmake_minimum_required(VERSION 2.8) 了，书上原来是 2.8</span>
+<span class="nb">cmake_minimum_required</span><span class="p">(</span> VERSION 3.10 <span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span> useEigen <span class="p">)</span>
+
+<span class="c1"># 指向 keg-only 的 eigen@3</span>
+<span class="nb">include_directories</span><span class="p">(</span> <span class="s2">"/opt/homebrew/opt/eigen@3/include/eigen3"</span> <span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span> eigenMatrix eigenMatrix.cpp <span class="p">)</span>
+</pre></table></code></div></div><p>然后：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nb">cd </span>ch3/useEigen
+<span class="nb">mkdir</span> <span class="nt">-p</span> build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build
+cmake .. <span class="o">&amp;&amp;</span> make <span class="nt">-j8</span>
+./eigenMatrix
+</pre></table></code></div></div><h3 id="4-在-clion-里怎么配">4. 在 CLion 里怎么配</h3><p>我平时用 CLion，这段单独写——它和命令行是两套逻辑，不搞清楚会白折腾半天。</p><p><strong>先说为什么上面那招在 CLion 里失效。</strong> <code class="language-plaintext highlighter-rouge">~/.zshrc</code> 里的 <code class="language-plaintext highlighter-rouge">CPLUS_INCLUDE_PATH</code> 只对「从终端启动的进程」生效。CLion 从 Dock 或 Finder 打开时，继承的是 launchd 的环境，<code class="language-plaintext highlighter-rouge">~/.zshrc</code> 压根没被读过。所以经常出现这种情况：终端里 <code class="language-plaintext highlighter-rouge">c++ eigenGeometry.cpp</code> 早就编得过了，CLion 里还是满屏红波浪线。</p><p><strong>第一步，打开对目录。</strong> <code class="language-plaintext highlighter-rouge">slambook</code> 根目录<strong>没有</strong> <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code>——整本书是几十个互相独立的 CMake 小工程，不是一个大工程。所以别把 <code class="language-plaintext highlighter-rouge">slambook</code> 整个拖进 CLion，它会提示找不到 CMake 工程。要打开的是具体那一讲的目录：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>slambook/ch3/useEigen        有 CMakeLists.txt，可以打开
+slambook/ch3/useGeometry     有，可以打开
+slambook/                    没有，打不开
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">File → Open</code> 选到 <code class="language-plaintext highlighter-rouge">useEigen</code> 这一层，CLion 会自动把它当 CMake 项目加载。</p><p><strong>第二步，让 CMake 找得到 Eigen。</strong> 两种写法，任选一种。</p><p>跟书上一致，直接写死路径：</p><div class="language-cmake highlighter-rouge"><div class="code-header"> <span data-label-text="Cmake"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nb">include_directories</span><span class="p">(</span> <span class="s2">"/opt/homebrew/opt/eigen@3/include/eigen3"</span> <span class="p">)</span>
+</pre></table></code></div></div><p>或者用 <code class="language-plaintext highlighter-rouge">find_package</code>，更规范一点：</p><div class="language-cmake highlighter-rouge"><div class="code-header"> <span data-label-text="Cmake"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nb">find_package</span><span class="p">(</span> Eigen3 3.4 REQUIRED <span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span> eigenMatrix eigenMatrix.cpp <span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span> eigenMatrix PRIVATE Eigen3::Eigen <span class="p">)</span>
+</pre></table></code></div></div><p>第二种有个前提：<code class="language-plaintext highlighter-rouge">eigen@3</code> 是 keg-only，不在 CMake 的默认搜索路径里，直接 <code class="language-plaintext highlighter-rouge">find_package</code> 是找不到的。得告诉 CLion 去哪找，位置在：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Settings → Build, Execution, Deployment → CMake → CMake options
+</pre></table></code></div></div><p>填一行：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>-DCMAKE_PREFIX_PATH=/opt/homebrew/opt/eigen@3
+</pre></table></code></div></div><p>我这份 <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> 用的是第一种写法，所以把 <code class="language-plaintext highlighter-rouge">useEigen</code> 直接拖进 CLion 就能编，不用动任何设置。第二种适合你想让工程更「正规」、以后还要接别的库的场合。</p><p><strong>这里有个真坑，我专门测过：不锁版本会悄悄用上 Eigen 5。</strong></p><p><code class="language-plaintext highlighter-rouge">find_package(Eigen3 REQUIRED)</code> 后面要是不写版本号，CMake 会去默认路径里找到 Homebrew 的 <strong>Eigen 5.0.1</strong>，然后痛痛快快接受——不报错、不警告。接着你代码里的 <code class="language-plaintext highlighter-rouge">eulerAngles()</code> 就开始刷 deprecated，行为也可能和书上对不上。实测对比：</p><div class="table-wrapper"><table><thead><tr><th>CMakeLists 写法<th>实际命中的版本<tbody><tr><td><code class="language-plaintext highlighter-rouge">find_package(Eigen3 REQUIRED)</code>，不设 prefix<td><strong>5.0.1</strong><tr><td><code class="language-plaintext highlighter-rouge">find_package(Eigen3 3.4 REQUIRED)</code> + prefix 指向 <code class="language-plaintext highlighter-rouge">eigen@3</code><td><strong>3.4.1</strong></table></div><p>所以那个 <code class="language-plaintext highlighter-rouge">3.4</code> 必须写，它不是装饰。</p><p><strong>第三步，几个 CLion 的日常操作。</strong></p><ul><li><strong>改完 <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> 要点 Reload</strong>：<code class="language-plaintext highlighter-rouge">Tools → CMake → Reload CMake Project</code>，或者点编辑器顶部弹出的 <code class="language-plaintext highlighter-rouge">Reload changes</code> 横幅。不 reload 的话，补全和构建还按旧配置走，改了半天没反应就是这个原因。<li><strong>构建目录是 <code class="language-plaintext highlighter-rouge">cmake-build-debug/</code></strong>，不是我们手敲的 <code class="language-plaintext highlighter-rouge">build/</code>。两套目录并存没关系，但别指望 CLion 编出来的东西出现在 <code class="language-plaintext highlighter-rouge">build/</code> 里。<li><strong>运行不用开终端</strong>：每个 <code class="language-plaintext highlighter-rouge">add_executable</code> CLion 都会自动建一个运行配置，右上角下拉选中 <code class="language-plaintext highlighter-rouge">eigenMatrix</code>，点绿三角即可，输出在下方 Run 窗口。<li><strong><code class="language-plaintext highlighter-rouge">#include &lt;Eigen/Core&gt;</code> 标红但能编过</strong>：这是代码洞察没拿到 include 路径，不是代码写错了。先 Reload CMake Project，还红就 <code class="language-plaintext highlighter-rouge">File → Invalidate Caches</code> 清缓存重启。<li><strong>别引入第二套编译器</strong>：Toolchain 保持 <code class="language-plaintext highlighter-rouge">Xcode</code> / <code class="language-plaintext highlighter-rouge">AppleClang</code> 就行（<code class="language-plaintext highlighter-rouge">Settings → Toolchains</code>）。书上第四讲有个 <code class="language-plaintext highlighter-rouge">1e-4d</code> 字面量，clang 直接报 <code class="language-plaintext highlighter-rouge">invalid suffix 'd'</code>，gcc 却能吃下去——两套编译器并存时，这种差异足够让人怀疑自己代码写错了。</ul><blockquote><p>顺带一句，<code class="language-plaintext highlighter-rouge">CMake 4.x</code> 那个报错在 CLion 里长得一模一样：<code class="language-plaintext highlighter-rouge">cmake_minimum_required(VERSION 2.8)</code> 会直接抛 <code class="language-plaintext highlighter-rouge">Compatibility with CMake &lt; 3.5 has been removed</code>，工程根本加载不出来。书上所有例子都得改成 <code class="language-plaintext highlighter-rouge">3.10</code>。</p></blockquote><hr /><h2 id="二第一部分eigen-的基本用法">二、第一部分：Eigen 的基本用法</h2><p>源码在 <code class="language-plaintext highlighter-rouge">ch3/useEigen/eigenMatrix.cpp</code>。书里的注释写得很细，我按自己的理解重排一遍，把「为什么要这样写」补上。</p><p>先把完整源码和一次完整运行的输出放在这儿——下面逐段拆的时候，只挑相关的几行出来讲，随时可以翻回来对照。</p><h3 id="完整源码">完整源码</h3><p><code class="language-plaintext highlighter-rouge">ch3/useEigen/eigenMatrix.cpp</code> 全文，103 行：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+</pre><td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="cp">#include</span> <span class="cpf">&lt;ctime&gt;</span><span class="cp">
+</span><span class="c1">// Eigen 部分</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Eigen/Core&gt;</span><span class="cp">
+</span><span class="c1">// 稠密矩阵的代数运算（逆，特征值等）</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Eigen/Dense&gt;</span><span class="cp">
+</span>
+<span class="cp">#define MATRIX_SIZE 50
+</span>
+<span class="cm">/****************************
+* 本程序演示了 Eigen 基本类型的使用
+****************************/</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Eigen 中所有向量和矩阵都是Eigen::Matrix，它是一个模板类。它的前三个参数为：数据类型，行，列</span>
+    <span class="c1">// 声明一个2*3的float矩阵</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">matrix_23</span><span class="p">;</span>
+
+    <span class="c1">// 同时，Eigen 通过 typedef 提供了许多内置类型，不过底层仍是Eigen::Matrix</span>
+    <span class="c1">// 例如 Vector3d 实质上是 Eigen::Matrix&lt;double, 3, 1&gt;，即三维向量</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_3d</span><span class="p">;</span>
+	<span class="c1">// 这是一样的</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">&gt;</span> <span class="n">vd_3d</span><span class="p">;</span>
+
+    <span class="c1">// Matrix3d 实质上是 Eigen::Matrix&lt;double, 3, 3&gt;</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">matrix_33</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span> <span class="c1">//初始化为零</span>
+    <span class="c1">// 如果不确定矩阵大小，可以使用动态大小的矩阵</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Dynamic</span> <span class="o">&gt;</span> <span class="n">matrix_dynamic</span><span class="p">;</span>
+    <span class="c1">// 更简单的</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span> <span class="n">matrix_x</span><span class="p">;</span>
+    <span class="c1">// 这种类型还有很多，我们不一一列举</span>
+
+    <span class="c1">// 下面是对Eigen阵的操作</span>
+    <span class="c1">// 输入数据（初始化）</span>
+    <span class="n">matrix_23</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="c1">// 输出</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_23</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 用()访问矩阵中的元素</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">matrix_23</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 矩阵和向量相乘（实际上仍是矩阵和矩阵）</span>
+    <span class="n">v_3d</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">vd_3d</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">;</span>
+    <span class="c1">// 但是在Eigen里你不能混合两种不同类型的矩阵，像这样是错的</span>
+    <span class="c1">// Eigen::Matrix&lt;double, 2, 1&gt; result_wrong_type = matrix_23 * v_3d;</span>
+    <span class="c1">// 应该显式转换</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">matrix_23</span><span class="p">.</span><span class="n">cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">*</span> <span class="n">v_3d</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">result2</span> <span class="o">=</span> <span class="n">matrix_23</span> <span class="o">*</span> <span class="n">vd_3d</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result2</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 同样你不能搞错矩阵的维度</span>
+    <span class="c1">// 试着取消下面的注释，看看Eigen会报什么错</span>
+    <span class="c1">// Eigen::Matrix&lt;double, 2, 3&gt; result_wrong_dimension = matrix_23.cast&lt;double&gt;() * v_3d;</span>
+
+    <span class="c1">// 一些矩阵运算</span>
+    <span class="c1">// 四则运算就不演示了，直接用+-*/即可。</span>
+    <span class="n">matrix_33</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Random</span><span class="p">();</span>      <span class="c1">// 随机数矩阵</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>      <span class="c1">// 转置</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>            <span class="c1">// 各元素和</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">trace</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>          <span class="c1">// 迹</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span><span class="o">*</span><span class="n">matrix_33</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>               <span class="c1">// 数乘</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>        <span class="c1">// 逆</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">determinant</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>    <span class="c1">// 行列式</span>
+
+    <span class="c1">// 特征值</span>
+    <span class="c1">// 实对称矩阵可以保证对角化成功</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">SelfAdjointEigenSolver</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">&gt;</span> <span class="n">eigen_solver</span> <span class="p">(</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">*</span><span class="n">matrix_33</span> <span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Eigen values = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">eigen_solver</span><span class="p">.</span><span class="n">eigenvalues</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Eigen vectors = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">eigen_solver</span><span class="p">.</span><span class="n">eigenvectors</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 解方程</span>
+    <span class="c1">// 我们求解 matrix_NN * x = v_Nd 这个方程</span>
+    <span class="c1">// N的大小在前边的宏里定义，它由随机数生成</span>
+    <span class="c1">// 直接求逆自然是最直接的，但是求逆运算量大</span>
+
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span> <span class="o">&gt;</span> <span class="n">matrix_NN</span><span class="p">;</span>
+    <span class="n">matrix_NN</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Random</span><span class="p">(</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span> <span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span> <span class="kt">double</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span>  <span class="mi">1</span><span class="o">&gt;</span> <span class="n">v_Nd</span><span class="p">;</span>
+    <span class="n">v_Nd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Random</span><span class="p">(</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span><span class="mi">1</span> <span class="p">);</span>
+
+    <span class="kt">clock_t</span> <span class="n">time_stt</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span> <span class="c1">// 计时</span>
+    <span class="c1">// 直接求逆</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="n">MATRIX_SIZE</span><span class="p">,</span><span class="mi">1</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">matrix_NN</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span><span class="o">*</span><span class="n">v_Nd</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span><span class="s">"time use in normal inverse is "</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">*</span> <span class="p">(</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_stt</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span> <span class="o">&lt;&lt;</span> <span class="s">"ms"</span><span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+	<span class="c1">// 通常用矩阵分解来求，例如QR分解，速度会快很多</span>
+    <span class="n">time_stt</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">matrix_NN</span><span class="p">.</span><span class="n">colPivHouseholderQr</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">v_Nd</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span><span class="s">"time use in Qr decomposition is "</span> <span class="o">&lt;&lt;</span><span class="mi">1000</span><span class="o">*</span>  <span class="p">(</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_stt</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span> <span class="o">&lt;&lt;</span><span class="s">"ms"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="完整输出">完整输出</h3><p><code class="language-plaintext highlighter-rouge">./eigenMatrix</code> 跑一次，控制台原样打印这么多行（34 行，其中最后两行计时每次都会浮动）：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre>1 2 3
+4 5 6
+1	2	3
+4	5	6
+10
+28
+32
+77
+ -0.999984 -0.0826997  -0.905911
+ -0.736924  0.0655345   0.357729
+  0.511211  -0.562082   0.358593
+
+ -0.999984  -0.736924   0.511211
+-0.0826997  0.0655345  -0.562082
+ -0.905911   0.357729   0.358593
+-1.99453
+-0.575857
+ -9.99984 -0.826997  -9.05911
+ -7.36924  0.655345   3.57729
+  5.11211  -5.62082   3.58593
+ -0.370316  -0.888554 -0.0491136
+ -0.737309  -0.172358   -1.69072
+ -0.627782   0.996559   0.208558
+-0.606436
+Eigen values =
+0.281738
+0.548924
+   2.378
+Eigen vectors =
+ 0.213003 -0.511493  0.832469
+ 0.972431  0.193748  -0.12977
+-0.094913   0.83716   0.53866
+time use in normal inverse is 0.061ms
+time use in Qr decomposition is 0.022ms
+</pre></table></code></div></div><h3 id="1-一切都是-matrix类型-行-列">1. 一切都是 <code class="language-plaintext highlighter-rouge">Matrix&lt;类型, 行, 列&gt;</code></h3><p>Eigen 里没有单独的「向量」类型，向量就是列数为 1 的矩阵。</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="c1">// 2 行 3 列的 float 矩阵</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">matrix_23</span><span class="p">;</span>
+
+<span class="c1">// Vector3d 就是 Eigen::Matrix&lt;double, 3, 1&gt;，只是起了个好记的名字</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_3d</span><span class="p">;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">vd_3d</span><span class="p">;</span>   <span class="c1">// 和上面类似，但元素是 float</span>
+
+<span class="c1">// Matrix3d 就是 Eigen::Matrix&lt;double, 3, 3&gt;</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">matrix_33</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
+</pre></table></code></div></div><p>常用别名记几个就够：</p><div class="table-wrapper"><table><thead><tr><th>写法<th>实际类型<tbody><tr><td><code class="language-plaintext highlighter-rouge">Vector3d</code><td><code class="language-plaintext highlighter-rouge">Matrix&lt;double, 3, 1&gt;</code><tr><td><code class="language-plaintext highlighter-rouge">Matrix3d</code><td><code class="language-plaintext highlighter-rouge">Matrix&lt;double, 3, 3&gt;</code><tr><td><code class="language-plaintext highlighter-rouge">MatrixXd</code><td>动态大小 <code class="language-plaintext highlighter-rouge">double</code> 矩阵<tr><td><code class="language-plaintext highlighter-rouge">Matrix&lt;float, Eigen::Dynamic, Eigen::Dynamic&gt;</code><td>动态大小 <code class="language-plaintext highlighter-rouge">float</code> 矩阵</table></div><p>不定大小的场合用 <code class="language-plaintext highlighter-rouge">Dynamic</code>，比如点数事先不知道的 BA 问题。</p><h3 id="2-初始化和访问">2. 初始化和访问</h3><p><code class="language-plaintext highlighter-rouge">&lt;&lt;</code> 是按行填，这点和 <code class="language-plaintext highlighter-rouge">std::cin</code> 的直觉一致：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">matrix_23</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_23</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>访问用圆括号 <code class="language-plaintext highlighter-rouge">(i, j)</code>，不是方括号：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_23</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>输出：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>1 2 3
+4 5 6
+1	2	3	
+4	5	6	
+</pre></table></code></div></div><h3 id="3-类型必须一致维度必须匹配">3. 类型必须一致，维度必须匹配</h3><p>这是 Eigen 最「烦」也最「好」的地方——它把错误挡在编译期。</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">v_3d</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">vd_3d</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">;</span>
+
+<span class="c1">// 编译不过：float 矩阵乘 double 向量，Eigen 不给你隐式转换</span>
+<span class="c1">// Eigen::Matrix&lt;double, 2, 1&gt; result_wrong_type = matrix_23 * v_3d;</span>
+
+<span class="c1">// 正确写法：显式 cast</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">matrix_23</span><span class="p">.</span><span class="n">cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">*</span> <span class="n">v_3d</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>          <span class="c1">// 10  28</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">result2</span> <span class="o">=</span> <span class="n">matrix_23</span> <span class="o">*</span> <span class="n">vd_3d</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result2</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>         <span class="c1">// 32  77</span>
+</pre></table></code></div></div><p>顺手验算一下：<code class="language-plaintext highlighter-rouge">(1,2,3)·(3,2,1) = 3+4+3 = 10</code>，<code class="language-plaintext highlighter-rouge">(4,5,6)·(3,2,1) = 12+10+6 = 28</code>，对得上。<code class="language-plaintext highlighter-rouge">vd_3d = (4,5,6)</code> 那组是 <code class="language-plaintext highlighter-rouge">4+10+18=32</code>、<code class="language-plaintext highlighter-rouge">16+25+36=77</code>。</p><p>维度搞错也是这样，编译期就炸：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="c1">// 2x3 乘 3x1 得到 2x1，写成 2x3 就错</span>
+<span class="c1">// Eigen::Matrix&lt;double, 2, 3&gt; result_wrong_dimension = matrix_23.cast&lt;double&gt;() * v_3d;</span>
+</pre></table></code></div></div><p>书上特意让你取消注释去试试——<strong>这个错误信息值得看一次</strong>，Eigen 的模板报错很长，但关键那行会告诉你维度对不上。</p><h3 id="4-基本运算">4. 基本运算</h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">matrix_33</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Random</span><span class="p">();</span>   <span class="c1">// 随机数矩阵（不 srand 播种则序列固定）</span>
+
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   <span class="c1">// 转置</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>         <span class="c1">// 所有元素之和</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">trace</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>       <span class="c1">// 迹（对角线之和）</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">matrix_33</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>          <span class="c1">// 数乘</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>     <span class="c1">// 逆</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">determinant</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// 行列式</span>
+</pre></table></code></div></div><p>我这次跑出来的：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre> -0.999984 -0.0826997  -0.905911
+ -0.736924  0.0655345   0.357729
+  0.511211  -0.562082   0.358593
+
+ -0.999984  -0.736924   0.511211
+-0.0826997  0.0655345  -0.562082
+ -0.905911   0.357729   0.358593
+-1.99453      ← sum
+-0.575857     ← trace
+ -9.99984 -0.826997  -9.05911
+ -7.36924  0.655345   3.57729
+  5.11211  -5.62082   3.58593
+ -0.370316  -0.888554 -0.0491136
+ -0.737309  -0.172358   -1.69072
+ -0.627782   0.996559   0.208558
+-0.606436     ← determinant
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">trace = -0.999984 + 0.0655345 + 0.358593 = -0.575857</code>，和输出对上了。</p><blockquote><p>这里得纠正一个我一开始的误解。<code class="language-plaintext highlighter-rouge">Random()</code> 听起来应该每次都不同，但它底层是 <code class="language-plaintext highlighter-rouge">std::rand()</code>，不调 <code class="language-plaintext highlighter-rouge">srand()</code> 播种的话序列是固定的。我连跑两次比对过：<strong>34 行输出里只有最后两行计时不一样，矩阵数值一模一样</strong>。所以你跑出来的数和上面相同不是巧合。想换一组，自己调 <code class="language-plaintext highlighter-rouge">srand()</code> 去。</p></blockquote><h3 id="5-特征值为什么乘一个-at-a">5. 特征值：为什么乘一个 <code class="language-plaintext highlighter-rouge">A^T A</code></h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">SelfAdjointEigenSolver</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">&gt;</span> <span class="n">eigen_solver</span> <span class="p">(</span> <span class="n">matrix_33</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">*</span> <span class="n">matrix_33</span> <span class="p">);</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Eigen values = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">eigen_solver</span><span class="p">.</span><span class="n">eigenvalues</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Eigen vectors = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">eigen_solver</span><span class="p">.</span><span class="n">eigenvectors</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>注意这里乘的是 <code class="language-plaintext highlighter-rouge">matrix_33.transpose() * matrix_33</code>，不是 <code class="language-plaintext highlighter-rouge">matrix_33</code> 本身。</p><p>原因：<code class="language-plaintext highlighter-rouge">SelfAdjointEigenSolver</code> 顾名思义只处理<strong>自伴随矩阵</strong>（实对称矩阵），而随机的 <code class="language-plaintext highlighter-rouge">matrix_33</code> 一般不对称，直接丢进去是不合法的。<code class="language-plaintext highlighter-rouge">A^T A</code> 一定是半正定对称的，所以先转成对称形式再求特征值——这也是最小二乘、PCA、协方差矩阵那一套的标准操作。</p><p>输出：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>Eigen values = 
+0.281738
+0.548924
+   2.378
+Eigen vectors = 
+ 0.213003 -0.511493  0.832469
+ 0.972431  0.193748  -0.12977
+-0.094913   0.83716   0.53866
+</pre></table></code></div></div><p>特征向量是按列排的，第 i 列对应第 i 个特征值。</p><h3 id="6-解方程别直接求逆">6. 解方程：别直接求逆</h3><p>书中这段是全篇最有实操价值的地方。要解 <code class="language-plaintext highlighter-rouge">matrix_NN * x = v_Nd</code>，直觉做法是 <code class="language-plaintext highlighter-rouge">x = A^{-1} b</code>：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="o">&gt;</span> <span class="n">matrix_NN</span><span class="p">;</span>
+<span class="n">matrix_NN</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Random</span><span class="p">(</span><span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">);</span>   <span class="c1">// MATRIX_SIZE = 50</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">v_Nd</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">::</span><span class="n">Random</span><span class="p">(</span><span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="kt">clock_t</span> <span class="n">time_stt</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">MATRIX_SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">matrix_NN</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">v_Nd</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"time use in normal inverse is "</span>
+     <span class="o">&lt;&lt;</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_stt</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span> <span class="o">&lt;&lt;</span> <span class="s">"ms"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+<span class="c1">// 换成 QR 分解</span>
+<span class="n">time_stt</span> <span class="o">=</span> <span class="n">clock</span><span class="p">();</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">matrix_NN</span><span class="p">.</span><span class="n">colPivHouseholderQr</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">v_Nd</span><span class="p">);</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"time use in Qr decomposition is "</span>
+     <span class="o">&lt;&lt;</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_stt</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">CLOCKS_PER_SEC</span> <span class="o">&lt;&lt;</span> <span class="s">"ms"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>我的机器上（M4）：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>time use in normal inverse is 0.061ms
+time use in Qr decomposition is 0.022ms
+</pre></table></code></div></div><p><strong>快了将近 3 倍</strong>。不过这个数每次跑都会浮动（我另一次是 0.058 / 0.022），看量级就行，别当基准测试。而且 50×50 的规模太小，差距不明显；矩阵一大，求逆的 <code class="language-plaintext highlighter-rouge">O(n^3)</code> 常系数会比分解法难看得多，数值稳定性也差。SLAM 里的正规方程动辄几百上千维，绝不能直接求逆。</p><p>记住这条规则：<strong>解线性方程组用 <code class="language-plaintext highlighter-rouge">.solve()</code>，不要 <code class="language-plaintext highlighter-rouge">.inverse() *</code></strong>。Eigen 提供一堆分解可选：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">lu</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>                    <span class="c1">// 一般方阵</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">colPivHouseholderQr</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>   <span class="c1">// 一般矩阵，稳定</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">llt</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>                   <span class="c1">// 正定对称</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">ldlt</span><span class="p">().</span><span class="n">solve</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>                  <span class="c1">// 半正定</span>
+</pre></table></code></div></div><hr /><h2 id="三第二部分eigen-的几何模块">三、第二部分：Eigen 的几何模块</h2><p>源码在 <code class="language-plaintext highlighter-rouge">ch3/useGeometry/eigenGeometry.cpp</code>。这部分是给 SLAM 打地基的——刚体变换的四种表示法，全在这里。</p><p>先说结论，一张表：</p><div class="table-wrapper"><table><thead><tr><th>表示<th>类型<th>参数个数<th>主要用途<tbody><tr><td>旋转矩阵<td><code class="language-plaintext highlighter-rouge">Matrix3d</code><td>9（实际自由度 3）<td>参与运算、求逆方便<tr><td>旋转向量<td><code class="language-plaintext highlighter-rouge">AngleAxisd</code><td>4（轴 3 + 角 1）<td>构造直观、无冗余<tr><td>欧拉角<td><code class="language-plaintext highlighter-rouge">Vector3d</code><td>3<td>给人看<tr><td>四元数<td><code class="language-plaintext highlighter-rouge">Quaterniond</code><td>4<td>存储、插值、优化</table></div><p>完整源码和完整输出同样先放这儿，篇幅不大，一共 60 行代码、24 行输出。</p><h3 id="完整源码-1">完整源码</h3><p><code class="language-plaintext highlighter-rouge">ch3/useGeometry/eigenGeometry.cpp</code> 全文：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+</pre><td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;Eigen/Core&gt;</span><span class="cp">
+</span><span class="c1">// Eigen 几何模块</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Eigen/Geometry&gt;</span><span class="cp">
+</span>
+<span class="cm">/****************************
+* 本程序演示了 Eigen 几何模块的使用方法
+****************************/</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Eigen/Geometry 模块提供了各种旋转和平移的表示</span>
+    <span class="c1">// 3D 旋转矩阵直接使用 Matrix3d 或 Matrix3f</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+    <span class="c1">// 旋转向量使用 AngleAxis, 它底层不直接是Matrix，但运算可以当作矩阵（因为重载了运算符）</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span> <span class="n">rotation_vector</span> <span class="p">(</span> <span class="n">M_PI</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="p">(</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>     <span class="c1">//沿 Z 轴旋转 45 度</span>
+    <span class="n">cout</span> <span class="p">.</span><span class="n">precision</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"rotation matrix =</span><span class="se">\n</span><span class="s">"</span><span class="o">&lt;&lt;</span><span class="n">rotation_vector</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>                <span class="c1">//用matrix()转换成矩阵</span>
+    <span class="c1">// 也可以直接赋值</span>
+    <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">rotation_vector</span><span class="p">.</span><span class="n">toRotationMatrix</span><span class="p">();</span>
+    <span class="c1">// 用 AngleAxis 可以进行坐标变换</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v</span> <span class="p">(</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span> <span class="p">);</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_rotated</span> <span class="o">=</span> <span class="n">rotation_vector</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"(1,0,0) after rotation = "</span><span class="o">&lt;&lt;</span><span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="c1">// 或者用旋转矩阵</span>
+    <span class="n">v_rotated</span> <span class="o">=</span> <span class="n">rotation_matrix</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"(1,0,0) after rotation = "</span><span class="o">&lt;&lt;</span><span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 欧拉角: 可以将旋转矩阵直接转换成欧拉角</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">euler_angles</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">.</span><span class="n">eulerAngles</span> <span class="p">(</span> <span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span> <span class="p">);</span> <span class="c1">// ZYX顺序，即roll pitch yaw顺序</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"yaw pitch roll = "</span><span class="o">&lt;&lt;</span><span class="n">euler_angles</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 欧氏变换矩阵使用 Eigen::Isometry</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span> <span class="n">T</span><span class="o">=</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>                <span class="c1">// 虽然称为3d，实质上是4＊4的矩阵</span>
+    <span class="n">T</span><span class="p">.</span><span class="n">rotate</span> <span class="p">(</span> <span class="n">rotation_vector</span> <span class="p">);</span>                                     <span class="c1">// 按照rotation_vector进行旋转</span>
+    <span class="n">T</span><span class="p">.</span><span class="n">pretranslate</span> <span class="p">(</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="p">(</span> <span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span> <span class="p">)</span> <span class="p">);</span>                     <span class="c1">// 把平移向量设成(1,3,4)</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Transform matrix = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">T</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 用变换矩阵进行坐标变换</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_transformed</span> <span class="o">=</span> <span class="n">T</span><span class="o">*</span><span class="n">v</span><span class="p">;</span>                              <span class="c1">// 相当于R*v+t</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"v tranformed = "</span><span class="o">&lt;&lt;</span><span class="n">v_transformed</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// 对于仿射和射影变换，使用 Eigen::Affine3d 和 Eigen::Projective3d 即可，略</span>
+
+    <span class="c1">// 四元数</span>
+    <span class="c1">// 可以直接把AngleAxis赋值给四元数，反之亦然</span>
+    <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="p">(</span> <span class="n">rotation_vector</span> <span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"quaternion = </span><span class="se">\n</span><span class="s">"</span><span class="o">&lt;&lt;</span><span class="n">q</span><span class="p">.</span><span class="n">coeffs</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>   <span class="c1">// 请注意coeffs的顺序是(x,y,z,w),w为实部，前三者为虚部</span>
+    <span class="c1">// 也可以把旋转矩阵赋给它</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="p">(</span> <span class="n">rotation_matrix</span> <span class="p">);</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"quaternion = </span><span class="se">\n</span><span class="s">"</span><span class="o">&lt;&lt;</span><span class="n">q</span><span class="p">.</span><span class="n">coeffs</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="c1">// 使用四元数旋转一个向量，使用重载的乘法即可</span>
+    <span class="n">v_rotated</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">v</span><span class="p">;</span> <span class="c1">// 注意数学上是qvq^{-1}</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">"(1,0,0) after rotation = "</span><span class="o">&lt;&lt;</span><span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h3 id="完整输出-1">完整输出</h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre>rotation matrix =
+ 0.707 -0.707      0
+ 0.707  0.707      0
+     0      0      1
+(1,0,0) after rotation = 0.707 0.707     0
+(1,0,0) after rotation = 0.707 0.707     0
+yaw pitch roll = 0.785    -0     0
+Transform matrix =
+ 0.707 -0.707      0      1
+ 0.707  0.707      0      3
+     0      0      1      4
+     0      0      0      1
+v tranformed = 1.71 3.71    4
+quaternion =
+    0
+    0
+0.383
+0.924
+quaternion =
+    0
+    0
+0.383
+0.924
+(1,0,0) after rotation = 0.707 0.707     0
+</pre></table></code></div></div><h3 id="1-旋转向量轴--角">1. 旋转向量：轴 + 角</h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
+
+<span class="c1">// 沿 Z 轴旋转 45 度</span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span> <span class="nf">rotation_vector</span><span class="p">(</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+
+<span class="n">cout</span><span class="p">.</span><span class="n">precision</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"rotation matrix =</span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">rotation_vector</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   <span class="c1">// 用 matrix() 转成矩阵</span>
+
+<span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">rotation_vector</span><span class="p">.</span><span class="n">toRotationMatrix</span><span class="p">();</span>   <span class="c1">// 也可以直接赋值</span>
+</pre></table></code></div></div><p>这里 <code class="language-plaintext highlighter-rouge">cout.precision(3)</code> 只影响显示，不影响计算。输出：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>rotation matrix =
+ 0.707 -0.707      0
+ 0.707  0.707      0
+     0      0      1
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">0.707</code> 就是 <code class="language-plaintext highlighter-rouge">√2/2</code>，45° 的 cos 和 sin。</p><p><code class="language-plaintext highlighter-rouge">AngleAxisd</code> 底层不是 <code class="language-plaintext highlighter-rouge">Matrix</code>，但它重载了运算符，多数场合可以当矩阵用。</p><h3 id="2-用旋转向量转一个向量">2. 用旋转向量转一个向量</h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="nf">v</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_rotated</span> <span class="o">=</span> <span class="n">rotation_vector</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>      <span class="c1">// 直接乘，AngleAxis 支持</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"(1,0,0) after rotation = "</span> <span class="o">&lt;&lt;</span> <span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+<span class="n">v_rotated</span> <span class="o">=</span> <span class="n">rotation_matrix</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>                      <span class="c1">// 或者用矩阵乘</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"(1,0,0) after rotation = "</span> <span class="o">&lt;&lt;</span> <span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>两行输出一样：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>(1,0,0) after rotation = 0.707 0.707     0
+</pre></table></code></div></div><p>绕 Z 轴转 45°，<code class="language-plaintext highlighter-rouge">(1,0,0)</code> 确实应该转到 <code class="language-plaintext highlighter-rouge">(0.707, 0.707, 0)</code>。画个图就能想明白：</p><p><a class="popup" href="/assets/images/20261023EigenMatrixAndGeometry/rot-z45.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20261023EigenMatrixAndGeometry/rot-z45.avif" alt="绕 Z 轴旋转 45 度" /></a></p><blockquote><p><code class="language-plaintext highlighter-rouge">transpose()</code> 是为了让向量横着打印。Eigen 的向量默认是列向量，直接 <code class="language-plaintext highlighter-rouge">cout &lt;&lt; v</code> 会竖着打好几行。</p></blockquote><h3 id="3-欧拉角注意顺序也注意坑">3. 欧拉角：注意顺序，也注意坑</h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">euler_angles</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// ZYX</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"yaw pitch roll = "</span> <span class="o">&lt;&lt;</span> <span class="n">euler_angles</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">eulerAngles(2, 1, 0)</code> 里的 <code class="language-plaintext highlighter-rouge">2, 1, 0</code> 是指旋转轴的枚举顺序：0=X、1=Y、2=Z。所以 <code class="language-plaintext highlighter-rouge">2,1,0</code> 是「先绕 Z，再绕 Y，最后绕 X」——也就是导航里常说的 <strong>yaw-pitch-roll（偏航-俯仰-滚转）</strong>。返回的 <code class="language-plaintext highlighter-rouge">Vector3d</code> 也按这个顺序排列。</p><p>输出：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>yaw pitch roll = 0.785    -0  0
+</pre></table></code></div></div><p>0.785 = π/4，和我们设的 45° 一致。中间那个 <code class="language-plaintext highlighter-rouge">-0</code> 是浮点数的符号位，等于 0，别被它吓到。</p><p><strong>这里有两个坑</strong>：</p><p>第一，欧拉角有 12 种顺序（<code class="language-plaintext highlighter-rouge">eulerAngles</code> 的六个参数排列组合），不同领域习惯不同。航空常用 ZYX，机器人学有时用 ZYZ。<strong>顺序写错，结果完全不同</strong>，而且不会报错，只会给你一个看起来正常但错的数。</p><p>第二，欧拉角有万向锁（Gimbal Lock）。当 pitch 接近 ±90° 时，yaw 和 roll 会退化成同一个自由度，解不唯一。所以<strong>欧拉角只适合给人看，不适合存状态、不适合参与优化</strong>。</p><p>顺便记一笔：Eigen 5 把 <code class="language-plaintext highlighter-rouge">eulerAngles()</code> 标成了 deprecated，理由是它返回的角度范围不唯一。3.4.x 上还能正常用，但以后升级会看到警告。</p><h3 id="4-欧氏变换矩阵isometry3d">4. 欧氏变换矩阵：<code class="language-plaintext highlighter-rouge">Isometry3d</code></h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span> <span class="n">T</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>   <span class="c1">// 名字叫 3d，实质是 4x4</span>
+<span class="n">T</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">rotation_vector</span><span class="p">);</span>                             <span class="c1">// 设置旋转</span>
+<span class="n">T</span><span class="p">.</span><span class="n">pretranslate</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>              <span class="c1">// 设置平移</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Transform matrix = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">T</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>输出：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>Transform matrix = 
+ 0.707 -0.707      0      1
+ 0.707  0.707      0      3
+     0      0      1      4
+     0      0      0      1
+</pre></table></code></div></div><p><a class="popup" href="/assets/images/20261023EigenMatrixAndGeometry/isometry-4x4.avif"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/images/20261023EigenMatrixAndGeometry/isometry-4x4.avif" alt="Isometry3d 的 4×4 齐次矩阵分块" /></a></p><p><strong><code class="language-plaintext highlighter-rouge">Isometry3d</code> 虽然带个 “3d”，但它存的是 4×4 矩阵</strong>——因为齐次坐标需要多一维。名字容易误导，第一次用会愣一下。真正的 3×3 旋转在左上角，平移在第四列，最后一行是 <code class="language-plaintext highlighter-rouge">0 0 0 1</code>。</p><p>关于 <code class="language-plaintext highlighter-rouge">pretranslate</code> 和 <code class="language-plaintext highlighter-rouge">translate</code> 的区别，这里要特别注意：</p><ul><li><code class="language-plaintext highlighter-rouge">translate(t)</code> 是<strong>右乘</strong>，<code class="language-plaintext highlighter-rouge">T = T * Translation(t)</code>，平移在<strong>当前坐标系</strong>下解释<li><code class="language-plaintext highlighter-rouge">pretranslate(t)</code> 是<strong>左乘</strong>，<code class="language-plaintext highlighter-rouge">T = Translation(t) * T</code>，平移在<strong>世界坐标系</strong>下解释</ul><p>书上用 <code class="language-plaintext highlighter-rouge">pretranslate</code>，所以在单位矩阵上操作时两者结果一样，看不出区别。但如果你先旋转再 <code class="language-plaintext highlighter-rouge">pretranslate</code>，平移向量是加在世界系里的——<strong>这是最容易写错的地方之一</strong>。</p><p>用变换矩阵转坐标：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">v_transformed</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>   <span class="c1">// 相当于 R*v + t</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"v tranformed = "</span> <span class="o">&lt;&lt;</span> <span class="n">v_transformed</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>v tranformed = 1.71 3.71    4
+</pre></table></code></div></div><p>验算：<code class="language-plaintext highlighter-rouge">R*v = (0.707, 0.707, 0)</code>，加个 <code class="language-plaintext highlighter-rouge">t = (1, 3, 4)</code>，得 <code class="language-plaintext highlighter-rouge">(1.707, 3.707, 4)</code>。对。</p><p>（书上这里把 <code class="language-plaintext highlighter-rouge">transformed</code> 拼成了 <code class="language-plaintext highlighter-rouge">tranformed</code>，输出的字符串就长这样，不是我看错。）</p><p>仿射变换和射影变换分别用 <code class="language-plaintext highlighter-rouge">Eigen::Affine3d</code> 和 <code class="language-plaintext highlighter-rouge">Eigen::Projective3d</code>，用法类似，书上略过了。</p><h3 id="5-四元数coeffs-的顺序是个大坑">5. 四元数：<code class="language-plaintext highlighter-rouge">coeffs()</code> 的顺序是个大坑</h3><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span><span class="n">rotation_vector</span><span class="p">);</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"quaternion = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">q</span><span class="p">.</span><span class="n">coeffs</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">);</span>   <span class="c1">// 也可以从旋转矩阵构造</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"quaternion = </span><span class="se">\n</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">q</span><span class="p">.</span><span class="n">coeffs</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><p>两次输出一样：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>quaternion = 
+    0
+    0
+0.383
+0.924
+</pre></table></code></div></div><p><strong><code class="language-plaintext highlighter-rouge">coeffs()</code> 的存储顺序是 <code class="language-plaintext highlighter-rouge">(x, y, z, w)</code>，实部 <code class="language-plaintext highlighter-rouge">w</code> 在最后</strong>。这和数学书上习惯写的 <code class="language-plaintext highlighter-rouge">q = w + xi + yj + zk</code>（实部在前）正好相反，也和很多论文、很多库的顺序不同。第一次看到 <code class="language-plaintext highlighter-rouge">0.924</code> 在最后一项，很容易以为哪里错了。</p><p>验算一下：绕 Z 轴转 45°，四元数应该是 <code class="language-plaintext highlighter-rouge">(cos22.5°, 0, 0, sin22.5°)</code> 按 <code class="language-plaintext highlighter-rouge">(w,x,y,z)</code> 排，即 <code class="language-plaintext highlighter-rouge">w=0.924, z=0.383</code>。而 <code class="language-plaintext highlighter-rouge">coeffs()</code> 给出的是 <code class="language-plaintext highlighter-rouge">(0, 0, 0.383, 0.924)</code>——<code class="language-plaintext highlighter-rouge">x=y=0</code>、<code class="language-plaintext highlighter-rouge">z=0.383</code>、<code class="language-plaintext highlighter-rouge">w=0.924</code>，正确。</p><p>如果你要按数学书写顺序取，用 <code class="language-plaintext highlighter-rouge">q.w()</code>、<code class="language-plaintext highlighter-rouge">q.x()</code>、<code class="language-plaintext highlighter-rouge">q.y()</code>、<code class="language-plaintext highlighter-rouge">q.z()</code> 单独访问，别直接拷 <code class="language-plaintext highlighter-rouge">coeffs()</code> 的内存。</p><p>用四元数旋转向量：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">v_rotated</span> <span class="o">=</span> <span class="n">q</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>   <span class="c1">// 数学上是 q v q^{-1}</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"(1,0,0) after rotation = "</span> <span class="o">&lt;&lt;</span> <span class="n">v_rotated</span><span class="p">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>(1,0,0) after rotation = 0.707 0.707     0
+</pre></table></code></div></div><p>Eigen 重载了 <code class="language-plaintext highlighter-rouge">*</code>，内部自动做 <code class="language-plaintext highlighter-rouge">q v q^{-1}</code>，不用自己写。<strong>但要注意：只有单位四元数才代表纯旋转</strong>，用之前最好 <code class="language-plaintext highlighter-rouge">q.normalize()</code> 一下（从 <code class="language-plaintext highlighter-rouge">AngleAxis</code> 或旋转矩阵构造出来的已经是单位的）。</p><h3 id="6-四种表示之间怎么转">6. 四种表示之间怎么转</h3><p>这张表建议直接抄下来：</p><div class="language-cpp highlighter-rouge"><div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">// 旋转向量 -&gt; 旋转矩阵</span>
+<span class="n">Matrix3d</span> <span class="n">R</span> <span class="o">=</span> <span class="n">angle_axis</span><span class="p">.</span><span class="n">toRotationMatrix</span><span class="p">();</span>
+<span class="n">Matrix3d</span> <span class="n">R2</span> <span class="o">=</span> <span class="n">angle_axis</span><span class="p">.</span><span class="n">matrix</span><span class="p">();</span>
+
+<span class="c1">// 旋转矩阵 -&gt; 旋转向量 / 四元数 / 欧拉角</span>
+<span class="n">AngleAxisd</span> <span class="nf">aa</span><span class="p">(</span><span class="n">R</span><span class="p">);</span>
+<span class="n">Quaterniond</span> <span class="nf">q</span><span class="p">(</span><span class="n">R</span><span class="p">);</span>
+<span class="n">Vector3d</span> <span class="n">euler</span> <span class="o">=</span> <span class="n">R</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 旋转矩阵 &lt;-&gt; 四元数</span>
+<span class="n">Matrix3d</span> <span class="n">R3</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">toRotationMatrix</span><span class="p">();</span>
+<span class="n">Quaterniond</span> <span class="nf">q2</span><span class="p">(</span><span class="n">R3</span><span class="p">);</span>
+
+<span class="c1">// 四元数 -&gt; 旋转向量</span>
+<span class="n">AngleAxisd</span> <span class="nf">aa2</span><span class="p">(</span><span class="n">q2</span><span class="p">);</span>
+</pre></table></code></div></div><p>Eigen 的构造函数基本吃遍各种表示，转来转去很方便。<strong>但每次转换都有精度损失和奇异性风险</strong>——尤其是欧拉角，能不用就不用。</p><hr /><h2 id="四几个容易翻车的地方集中记一下">四、几个容易翻车的地方，集中记一下</h2><p>写完上面两段，我把踩过的坑列成清单，方便以后自查：</p><div class="table-wrapper"><table><thead><tr><th>坑<th>表现<th>正确做法<tbody><tr><td>混用 <code class="language-plaintext highlighter-rouge">float</code> / <code class="language-plaintext highlighter-rouge">double</code><td>编译报一大串模板错误<td><code class="language-plaintext highlighter-rouge">.cast&lt;double&gt;()</code> 显式转换<tr><td>直接 <code class="language-plaintext highlighter-rouge">A.inverse() * b</code> 解方程<td>慢、且数值不稳<td><code class="language-plaintext highlighter-rouge">A.xxx().solve(b)</code><tr><td><code class="language-plaintext highlighter-rouge">SelfAdjointEigenSolver</code> 传非对称矩阵<td>结果没有意义（不一定报错）<td>传 <code class="language-plaintext highlighter-rouge">A^T A</code> 或协方差矩阵<tr><td><code class="language-plaintext highlighter-rouge">coeffs()</code> 顺序<td>以为 <code class="language-plaintext highlighter-rouge">w</code> 在第一个<td>顺序是 <code class="language-plaintext highlighter-rouge">(x,y,z,w)</code>，<code class="language-plaintext highlighter-rouge">w</code> 在最后<tr><td><code class="language-plaintext highlighter-rouge">Isometry3d</code> 是 3×3<td>以为只有 9 个元素<td>实际是 4×4 齐次矩阵<tr><td><code class="language-plaintext highlighter-rouge">pretranslate</code> vs <code class="language-plaintext highlighter-rouge">translate</code><td>平移方向莫名不对<td><code class="language-plaintext highlighter-rouge">pre</code> 是左乘（世界系），非 <code class="language-plaintext highlighter-rouge">pre</code> 是右乘（当前系）<tr><td>欧拉角顺序写错<td>数值看着正常但是错的<td>写明 <code class="language-plaintext highlighter-rouge">eulerAngles(2,1,0)</code> 并注释含义<tr><td>对向量用 <code class="language-plaintext highlighter-rouge">cout &lt;&lt;</code><td>竖着打好多行<td><code class="language-plaintext highlighter-rouge">.transpose()</code><tr><td>以为 <code class="language-plaintext highlighter-rouge">Random()</code> 每次都不同<td>跑两次结果一样，怀疑没重新编译<td>不播种时序列固定，只有计时会变<tr><td>终端能编、CLion 标红<td>以为代码写错了<td>环境变量只对终端进程生效，IDE 里靠 CMake 的 <code class="language-plaintext highlighter-rouge">include_directories</code></table></div><p>还有三个 macOS 特有的：</p><ul><li><strong>CMake 4.x 不再支持 <code class="language-plaintext highlighter-rouge">cmake_minimum_required(VERSION 2.8)</code></strong>，书上所有 <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> 都得改成 <code class="language-plaintext highlighter-rouge">3.10</code>，否则报 <code class="language-plaintext highlighter-rouge">Compatibility with CMake &lt; 3.5 has been removed</code><li><strong>AppleClang 不接受 <code class="language-plaintext highlighter-rouge">1e-4d</code> 这种字面量</strong>（<code class="language-plaintext highlighter-rouge">d</code> 后缀是 GCC 扩展）。第四讲 <code class="language-plaintext highlighter-rouge">useSophus.cpp</code> 里就有一处，会报 <code class="language-plaintext highlighter-rouge">invalid suffix 'd' on floating constant</code>，改成 <code class="language-plaintext highlighter-rouge">1e-4</code> 即可<li><strong><code class="language-plaintext highlighter-rouge">find_package(Eigen3)</code> 不写版本号</strong>会悄悄命中 Homebrew 的 Eigen 5.0.1，不报错但 <code class="language-plaintext highlighter-rouge">eulerAngles()</code> 立刻变 deprecated。写成 <code class="language-plaintext highlighter-rouge">find_package(Eigen3 3.4 REQUIRED)</code>，并配好 <code class="language-plaintext highlighter-rouge">CMAKE_PREFIX_PATH</code></ul><hr /><h2 id="五这套东西和-slam-的关系">五、这套东西和 SLAM 的关系</h2><p>跑完这两个例子，我才算真正理解为什么书要从这里开始。</p><p>第三讲看上去只是在练 API，其实是把后面所有章节的<strong>词汇表</strong>提前铺好了：</p><ul><li>第四讲引入 Sophus，<code class="language-plaintext highlighter-rouge">Sophus::SO3d</code> / <code class="language-plaintext highlighter-rouge">SE3d</code> 内部就是 <code class="language-plaintext highlighter-rouge">Eigen::Matrix3d</code> + <code class="language-plaintext highlighter-rouge">Eigen::Quaterniond</code>，<code class="language-plaintext highlighter-rouge">log()</code> / <code class="language-plaintext highlighter-rouge">exp()</code> 映射的也是李代数向量（<code class="language-plaintext highlighter-rouge">Eigen::Matrix&lt;double,6,1&gt;</code>）<li>第六讲非线性优化，误差项、雅可比矩阵、正规方程 <code class="language-plaintext highlighter-rouge">H Δx = b</code>，<code class="language-plaintext highlighter-rouge">H</code> 和 <code class="language-plaintext highlighter-rouge">b</code> 都是 Eigen 的矩阵，解方程用的正是上面说的 <code class="language-plaintext highlighter-rouge">.ldlt().solve()</code><li>第七讲特征点法、第八讲直接法、第十三讲稠密建图，全部围绕 <code class="language-plaintext highlighter-rouge">SE3</code> 变换和 Eigen 矩阵运算转<li>g2o 和 Ceres 的接口，参数块、顶点估计值、信息矩阵，清一色 Eigen 类型</ul><p>所以我把它当字典用：写代码时忘了某个 API，回来搜一下。</p><h3 id="我的环境版本留个底">我的环境版本，留个底</h3><div class="table-wrapper"><table><thead><tr><th>组件<th>版本<th>说明<tbody><tr><td>Eigen<td>3.4.1<td><code class="language-plaintext highlighter-rouge">brew install eigen@3</code>，keg-only<tr><td>系统<td>macOS (Apple Silicon, M4)<td>AppleClang<tr><td>编译器<td>AppleClang 21.0<td>Xcode 自带<tr><td>CMake<td>4.4.4<td>注意不支持 2.8</table></div><p>后面几讲还要装 Sophus、OpenCV、g2o、Ceres、PCL、Pangolin，版本搭配的坑更多，我会另开一篇记。</p><h3 id="代码在哪">代码在哪</h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>slambook/ch3/useEigen/eigenMatrix.cpp       ← 第一部分
+slambook/ch3/useGeometry/eigenGeometry.cpp  ← 第二部分
+</pre></table></code></div></div><p>跑法：</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span> <button aria-label="copy" data-title-succeed="已复制"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="nb">cd </span>slambook/ch3/useEigen <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build <span class="o">&amp;&amp;</span> cmake .. <span class="o">&amp;&amp;</span> make <span class="nt">-j8</span> <span class="o">&amp;&amp;</span> ./eigenMatrix
+<span class="nb">cd </span>slambook/ch3/useGeometry <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build <span class="o">&amp;&amp;</span> cmake .. <span class="o">&amp;&amp;</span> make <span class="nt">-j8</span> <span class="o">&amp;&amp;</span> ./eigenGeometry
+</pre></table></code></div></div><p>CLion 里这些都不用敲：<code class="language-plaintext highlighter-rouge">File → Open</code> 打开对应目录，右上角下拉选目标，点绿三角就行。</p><hr /><h2 id="写在最后">写在最后</h2><p>这一讲的内容不多，但密度很高。我当时看完视频觉得「懂了」，真正敲一遍才发现 <code class="language-plaintext highlighter-rouge">pretranslate</code> 的位置、<code class="language-plaintext highlighter-rouge">coeffs()</code> 的顺序这些细节全是坑。</p><p>所以记录这件事本身是有价值的——不是为了教别人，是为了三个月后自己还能看懂。</p><p>下一篇是第四讲，Sophus 和李代数。那才是真正开始疼的地方。</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA%E5%AE%9E%E8%B7%B5/'>系统理论实践</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/eigen/" class="post-tag no-text-decoration" >Eigen</a> <a href="/tags/slam/" class="post-tag no-text-decoration" >SLAM</a> <a href="/tags/c%2B%2B/" class="post-tag no-text-decoration" >C++</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-tag no-text-decoration" >线性代数</a> <a href="/tags/%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/" class="post-tag no-text-decoration" >几何变换</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 该博客文章由作者通过 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 进行授权。</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Eigen 用法笔记：矩阵运算与几何变换 - 迈腾大队长&url=https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Eigen 用法笔记：矩阵运算与几何变换 - 迈腾大队长&u=https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Eigen 用法笔记：矩阵运算与几何变换 - 迈腾大队长&url=https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <a href="http://service.weibo.com/share/share.php?title=Eigen 用法笔记：矩阵运算与几何变换 - 迈腾大队长&url=https://www.sunyazhou.com/2026/10/eigen-matrix-and-geometry/" data-toggle="tooltip" data-placement="top" title="Weibo" target="_blank" rel="noopener" aria-label="Weibo"> <i class="fa-fw fab fa-weibo"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></article></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>最近更新</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/2020/09/UIViewGraphic/">阿里、字节：一套高效的iOS面试题之视图&图形</a><li><a href="/2020/09/UIViewGraphic/">阿里、字节：一套高效的iOS面试题之视图&图形</a><li><a href="/2018/01/PythonMySQL/">使用Python操作MySQL数据库</a><li><a href="/2018/01/PythonMySQL/">使用Python操作MySQL数据库</a><li><a href="/2026/08/mathformula/">数学公式渲染</a></ul></div><div id="access-tags"> <span>热门标签</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">文章目录</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>接下来阅读</h3><div class="card-deck mb-4"><div class="card"> <a href="/2022/07/lrucache/"><div class="card-body"> <span class="timeago small" > 2022-07-01 <i class="unloaded">2022-07-01T06:35:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>LRU 缓存</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 如题 请你设计并实现一个满足LRU(最近最少使用)缓存 约束的数据结构。 实现LRUCache类： LRUCache(int capa...</p></div></div></a></div><div class="card"> <a href="/2022/07/kthlargest/"><div class="card-body"> <span class="timeago small" > 2022-07-01 <i class="unloaded">2022-07-01T06:44:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>数组中的第K个最大元素</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 如题 给定整数数组nums和整数k，请返回数组中第k个最大的元素。 请注意，你需要找的是数组排序后的第k个最大的元素，而不是第k个不同的元素...</p></div></div></a></div><div class="card"> <a href="/2022/07/threesum/"><div class="card-body"> <span class="timeago small" > 2022-07-01 <i class="unloaded">2022-07-01T06:55:00+00:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>三数之和</h3><div class="text-muted small"><p> 前言 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或分享,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以使用RSS方式订阅本站,感谢支持! 如题 给你一个包含n个整数的数组nums，判断nums中是否存在三个元素a，b，c ，使得 a + b + c = 0？请你找出所有和为0且不...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/2026/09/convert-video-to-animated-avif-with-ffmpeg/" class="btn btn-outline-primary"><p>ffmpeg 视频转动图 AVIF：一条命令讲透</p></a> <span class="btn btn-outline-primary disabled"><p>-</p></span></div><div class="giscus-container pt-3"> <script> (function () { 'use strict'; var THEME_LIGHT = 'light'; var THEME_DARK = 'dark_dimmed'; function currentTheme() { var mode = document.documentElement.getAttribute('mode'); if (mode === 'dark') { return THEME_DARK; } if (mode === 'light') { return THEME_LIGHT; } return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? THEME_DARK : THEME_LIGHT; } function giscusLang() { var lang = 'zh-Hans'; if (lang.indexOf('zh') === 0) { return 'zh-CN'; } return lang.slice(0, 2); } function loadGiscus() { var s = document.createElement('script'); var attrs = { src: 'https://giscus.app/client.js', 'data-repo': 'sunyazhou13/sunyazhou13.github.io', 'data-repo-id': 'MDEwOlJlcG9zaXRvcnkzODc1NTk1OA==', 'data-category': 'Announcements', 'data-category-id': 'DIC_kwDOAk9eds4DDwpN', 'data-mapping': 'pathname', 'data-strict': '0', 'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-theme': currentTheme(), 'data-input-position': 'bottom', 'data-lang': giscusLang(), 'data-loading': 'lazy', crossorigin: 'anonymous', async: '' }; Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); }); document.querySelector('.giscus-container').appendChild(s); } /* follow the mode toggle: update giscus theme without reloading */ function updateGiscusTheme() { var iframe = document.querySelector('iframe.giscus-frame'); if (!iframe) { return; } iframe.contentWindow.postMessage( { giscus: { setConfig: { theme: currentTheme() } } }, 'https://giscus.app' ); } new MutationObserver(function (mutations) { mutations.forEach(function (m) { if (m.attributeName === 'mode') { updateGiscusTheme(); } }); }).observe(document.documentElement, { attributes: true }); loadGiscus(); })(); </script></div></div></div></div><script type="text/javascript" src="/assets/AISource/lozad/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script> <script> (function() { if (typeof GLightbox === 'undefined') return; if (document.querySelector('.popup') === null) return; GLightbox({ selector: '.popup' }); /* Fix Chrome a11y warning: "Blocked aria-hidden on an element because its descendant retained focus". Blur the trigger link *before* GLightbox applies aria-hidden to the page wrapper; capture phase guarantees this runs ahead of GLightbox's own click handler. */ document.addEventListener('click', function(e) { var link = e.target && e.target.closest ? e.target.closest('a.popup') : null; if (link && link.blur) link.blur(); }, true); })(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> <img src="/assets/img/icpicon.avif" alt="国徽图标" width="16" height="16" style="vertical-align: -0.15em; margin-right: 4px;"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=11011502040726" target="_blank" rel="noopener">京公网安备11011502040726号</a> <span class="mx-2">|</span> <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">京ICP备2026059592号-1</a> <span class="mx-2">|</span> © 2026 <a href="https://github.com/sunyazhou13">sunyazhou</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，否则本网站上的博客文章均由作者根据知识共享许可协议 - 署名标示 4.0（CC BY 4.0）进行授权许可。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0"> 本博客由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，使用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> 作为主题</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">热门标签</h4><a class="post-tag" href="/tags/objective-c/">Objective C</a> <a class="post-tag" href="/tags/ios/">iOS</a> <a class="post-tag" href="/tags/macos/">macOS</a> <a class="post-tag" href="/tags/skills/">skills</a> <a class="post-tag" href="/tags/swift/">Swift</a> <a class="post-tag" href="/tags/swiftui/">SwiftUI</a> <a class="post-tag" href="/tags/algorithm/">Algorithm</a> <a class="post-tag" href="/tags/c++/">C++</a> <a class="post-tag" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a> <a class="post-tag" href="/tags/avfoundation/">AVFoundation</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="/assets/AISource/simple-jekyll-search/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://www.sunyazhou.com{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
