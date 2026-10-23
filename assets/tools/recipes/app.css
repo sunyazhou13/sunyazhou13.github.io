@@ -1,0 +1,418 @@
+/**
+ * 菜谱工具样式
+ * 独立于博客主题，仅作用于页面里的 #rc-app 内部。
+ * 主色走番茄红 / 珊瑚（食物感），与「北京医院推荐」的蓝、「网址导航」区分开。
+ *
+ * 配色分两档（2026-10-24）：
+ *   --rc-accent       可视主色，用于圆点 / 边框 / 竖轴等非文字元素
+ *   --rc-accent-text  文字专用加深版，保证 12px 小字达到 4.5:1 对比度
+ */
+
+#rc-app {
+  --rc-border: rgba(128, 128, 128, 0.3);
+  --rc-border-strong: rgba(128, 128, 128, 0.55);
+  --rc-bg: rgba(128, 128, 128, 0.055);
+  --rc-bg-hover: rgba(128, 128, 128, 0.11);
+  --rc-muted: rgba(128, 128, 128, 0.95);
+  --rc-meta: rgba(95, 95, 95, 0.95);
+  --rc-accent: #e05252;
+  --rc-accent-text: #c43939;
+  --rc-accent-soft: rgba(224, 82, 82, 0.12);
+  --rc-warn: #c0392b;
+  --rc-panel: #ffffff;
+  --rc-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --rc-radius: 10px;
+
+  /* 时间线竖轴与四种步骤类型的节点色 */
+  --rc-line: rgba(128, 128, 128, 0.28);
+  --rc-ty-prep: #4a8c5a;
+  --rc-ty-season: #e05252;
+  --rc-ty-cook: #2f6fde;
+  --rc-ty-wait: rgba(128, 128, 128, 0.85);
+  /* 类型标签的文字色（比节点色深一档，小字号也要够对比度） */
+  --rc-ty-prep-text: #3a7349;
+  --rc-ty-season-text: #b83232;
+  --rc-ty-cook-text: #245bb5;
+  --rc-ty-wait-text: #555555;
+}
+
+html[mode='dark'] #rc-app {
+  --rc-bg: rgba(255, 255, 255, 0.05);
+  --rc-bg-hover: rgba(255, 255, 255, 0.1);
+  --rc-muted: rgba(206, 206, 206, 0.98);
+  --rc-meta: rgba(200, 200, 200, 0.92);
+  --rc-accent: #f0837a;
+  --rc-accent-text: #f0837a;
+  --rc-accent-soft: rgba(240, 131, 122, 0.16);
+  --rc-warn: #f0a58a;
+  --rc-panel: #1e1e1e;
+  --rc-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --rc-line: rgba(255, 255, 255, 0.16);
+  --rc-ty-prep: #7cc490;
+  --rc-ty-season: #f0837a;
+  --rc-ty-cook: #5b8ff0;
+  --rc-ty-wait: rgba(190, 190, 190, 0.85);
+  --rc-ty-prep-text: #7cc490;
+  --rc-ty-season-text: #f0837a;
+  --rc-ty-cook-text: #6f9df2;
+  --rc-ty-wait-text: rgba(205, 205, 205, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #rc-app {
+    --rc-bg: rgba(255, 255, 255, 0.05);
+    --rc-bg-hover: rgba(255, 255, 255, 0.1);
+    --rc-muted: rgba(206, 206, 206, 0.98);
+    --rc-meta: rgba(200, 200, 200, 0.92);
+    --rc-accent: #f0837a;
+    --rc-accent-text: #f0837a;
+    --rc-accent-soft: rgba(240, 131, 122, 0.16);
+    --rc-warn: #f0a58a;
+    --rc-panel: #1e1e1e;
+    --rc-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    --rc-line: rgba(255, 255, 255, 0.16);
+    --rc-ty-prep: #7cc490;
+    --rc-ty-season: #f0837a;
+    --rc-ty-cook: #5b8ff0;
+    --rc-ty-wait: rgba(190, 190, 190, 0.85);
+    --rc-ty-prep-text: #7cc490;
+    --rc-ty-season-text: #f0837a;
+    --rc-ty-cook-text: #6f9df2;
+    --rc-ty-wait-text: rgba(205, 205, 205, 0.95);
+  }
+}
+
+#rc-app .rc-section { margin-top: 2rem; }
+#rc-app .rc-section:first-child { margin-top: 0; }
+
+#rc-app .rc-cat-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--rc-border);
+  color: var(--rc-accent-text);
+}
+
+/* 分类后的菜数徽章 */
+#rc-app .rc-cat-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--rc-accent-text);
+  background: var(--rc-accent-soft);
+}
+
+/* ── 卡片 ── */
+#rc-app .rc-card {
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+  background: var(--rc-panel);
+  margin-bottom: 0.7rem;
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+#rc-app .rc-card:hover {
+  border-color: var(--rc-border-strong);
+  box-shadow: var(--rc-shadow);
+  transform: translateY(-1px);
+}
+#rc-app .rc-card[open] {
+  border-color: color-mix(in srgb, var(--rc-accent) 45%, transparent);
+  box-shadow: var(--rc-shadow);
+}
+
+#rc-app .rc-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.15s ease;
+}
+#rc-app .rc-head::-webkit-details-marker { display: none; }
+#rc-app .rc-head:hover { background: var(--rc-bg-hover); }
+#rc-app .rc-head:hover .rc-arrow { color: var(--rc-accent); }
+
+#rc-app .rc-title {
+  font-weight: 600;
+  font-size: 1.04rem;
+  flex: 1 1 auto;
+  letter-spacing: 0.01em;
+}
+
+/* 来源账号标签：只在能确证出处的那道菜上显示 */
+#rc-app .rc-src {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.02rem 0.45rem;
+  border: 1px solid var(--rc-border);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  color: var(--rc-meta);
+  white-space: nowrap;
+}
+#rc-app .rc-src i { font-size: 0.6rem; opacity: 0.8; }
+
+#rc-app .rc-dur {
+  font-size: 0.78rem;
+  color: var(--rc-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  white-space: nowrap;
+}
+
+#rc-app .rc-arrow {
+  color: var(--rc-muted);
+  font-size: 0.8rem;
+  transition: transform 0.2s ease, color 0.15s ease;
+}
+#rc-app .rc-card[open] .rc-arrow { transform: rotate(180deg); color: var(--rc-accent); }
+
+#rc-app .rc-body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--rc-border);
+}
+
+/* ── 时间概览：总耗时 / 动手 / 提前准备 ── */
+#rc-app .rc-overview {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.8rem;
+  align-items: baseline;
+  margin: 0.8rem 0 0.7rem;
+  padding: 0.65rem 0.8rem;
+  background: var(--rc-bg);
+  border: 1px solid var(--rc-border);
+  border-left: 4px solid var(--rc-accent);
+  border-radius: 8px;
+}
+#rc-app .rc-ov-k {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  font-size: 0.8rem;
+  color: var(--rc-muted);
+  white-space: nowrap;
+}
+#rc-app .rc-ov-k i { font-size: 0.78rem; opacity: 0.9; }
+#rc-app .rc-ov-v { font-size: 0.9rem; font-weight: 600; }
+/* 真有提前准备（泡发 / 腌制 / 定型）才用警示色，写「无」的不抢眼 */
+#rc-app .rc-ov-prep { color: var(--rc-warn); }
+
+#rc-app .rc-summary {
+  margin: 0.5rem 0 0.9rem;
+  font-size: 0.88rem;
+  color: var(--rc-muted);
+  line-height: 1.6;
+}
+
+/* ── 配料三栏 ── */
+#rc-app .rc-ing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+#rc-app .rc-ing-col {
+  background: var(--rc-bg);
+  border: 1px solid var(--rc-border);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+
+#rc-app .rc-sub {
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--rc-accent-text);
+  letter-spacing: 0.02em;
+}
+
+#rc-app .rc-ul { margin: 0; padding: 0; list-style: none; }
+#rc-app .rc-ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.17rem 0;
+  font-size: 0.85rem;
+}
+#rc-app .rc-in { font-weight: 500; }
+#rc-app .rc-am {
+  color: var(--rc-accent-text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+#rc-app .rc-note {
+  flex: 1 1 100%;
+  font-size: 0.75rem;
+  color: var(--rc-muted);
+}
+
+/* ── 制作时间线（归档样式：左标签 + 竖轴 + 圆点 + 右内容）── */
+#rc-app .rc-tl-note {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  color: var(--rc-muted);
+  line-height: 1.55;
+}
+
+#rc-app .rc-tl {
+  list-style: none;
+  margin: 0 0 1.1rem;
+  padding: 0.15rem 0 0.15rem 6.4rem;
+  position: relative;
+}
+
+/* 竖轴 */
+#rc-app .rc-tl::before {
+  content: "";
+  position: absolute;
+  left: 5.9rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 2px;
+  background: var(--rc-line);
+}
+
+#rc-app .rc-tl-item {
+  position: relative;
+  padding: 0.28rem 0 0.28rem 1.5rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* 节点圆点：实心 + 一圈淡色光晕，颜色按步骤类型 */
+#rc-app .rc-tl-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-0.5rem - 5px);
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ty, var(--rc-accent));
+  box-shadow: 0 0 0 2px var(--rc-panel),
+              0 0 0 4px color-mix(in srgb, var(--ty, var(--rc-accent)) 16%, transparent);
+}
+
+/* 等待类用空心点，区别于「要动手」的步骤 */
+#rc-app .rc-tl-item.rc-ty-wait::before {
+  background: var(--rc-panel);
+  border: 2px solid var(--rc-ty-wait);
+}
+
+#rc-app .rc-ty-prep   { --ty: var(--rc-ty-prep);   --ty-text: var(--rc-ty-prep-text); }
+#rc-app .rc-ty-season { --ty: var(--rc-ty-season); --ty-text: var(--rc-ty-season-text); }
+#rc-app .rc-ty-cook   { --ty: var(--rc-ty-cook);   --ty-text: var(--rc-ty-cook-text); }
+#rc-app .rc-ty-wait   { --ty: var(--rc-ty-wait);   --ty-text: var(--rc-ty-wait-text); }
+
+/* 左侧标签列：上行「第 N 步」，下行灰色相对时间点 */
+#rc-app .rc-tl-time {
+  position: absolute;
+  left: -6.2rem;
+  width: 4.1rem;
+  text-align: right;
+  line-height: 1.25;
+}
+#rc-app .rc-step-no {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--rc-accent-text);
+  white-space: nowrap;
+}
+#rc-app .rc-step-t {
+  display: block;
+  font-family: var(--bs-font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 0.72rem;
+  color: var(--rc-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 可并行徽章 */
+#rc-app .rc-par-badge {
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.02rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #0b6f5b;
+  background: rgba(15, 138, 114, 0.13);
+  vertical-align: 0.08rem;
+}
+#rc-app .rc-par-badge i { font-size: 0.64rem; margin-right: 0.15rem; }
+
+html[mode='dark'] #rc-app .rc-par-badge {
+  color: #4ecca8;
+  background: rgba(78, 204, 168, 0.16);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #rc-app .rc-par-badge {
+    color: #4ecca8;
+    background: rgba(78, 204, 168, 0.16);
+  }
+}
+
+/* 并行只靠徽章标识；标签与其它步骤保持同一左边界（不缩进） */
+
+/* 类型标签 */
+#rc-app .rc-tl-tag {
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.02rem 0.38rem;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--ty-text, var(--rc-accent-text));
+  background: color-mix(in srgb, var(--ty, var(--rc-accent)) 14%, transparent);
+  vertical-align: 0.08rem;
+}
+
+#rc-app .rc-tl-text { color: inherit; }
+
+/* 估算值标记 */
+#rc-app .rc-est {
+  display: inline-block;
+  margin-left: 0.25rem;
+  color: var(--rc-muted);
+  font-size: 0.85rem;
+  cursor: help;
+}
+
+@media all and (max-width: 576px) {
+  #rc-app .rc-tl { padding-left: 5.4rem; }
+  #rc-app .rc-tl::before { left: 4.85rem; }
+  #rc-app .rc-tl-time { left: -5.2rem; width: 3.4rem; }
+  #rc-app .rc-tl-item::before { left: calc(-0.55rem - 5px); }
+}
+
+/* ── 要点 ── */
+#rc-app .rc-tips { margin: 0; padding: 0; list-style: none; }
+#rc-app .rc-tips li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.24rem 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--rc-warn);
+}
+#rc-app .rc-tips li i { flex: 0 0 auto; font-size: 0.8rem; }
+#rc-app .rc-tips li span { flex: 1 1 auto; color: inherit; }
+
+#rc-app .rc-empty { color: var(--rc-muted); font-size: 0.9rem; }
