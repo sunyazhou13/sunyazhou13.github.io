@@ -83,7 +83,80 @@ html[mode='dark'] #rc-app {
 }
 
 #rc-app .rc-section { margin-top: 2rem; }
-#rc-app .rc-section:first-child { margin-top: 0; }
+/* 搜索框是第一个子元素，所以这里必须用 first-of-type 而不是 first-child */
+#rc-app .rc-section:first-of-type { margin-top: 0; }
+
+/* ── 搜索框（渐进增强：没有 JS 就不显示，原生 details 照常能用）── */
+#rc-app .rc-search { display: none; }
+html.rc-js #rc-app .rc-search {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.3rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+  background: var(--rc-panel);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+html.rc-js #rc-app .rc-search:focus-within {
+  border-color: color-mix(in srgb, var(--rc-accent) 55%, transparent);
+  box-shadow: 0 0 0 3px var(--rc-accent-soft);
+}
+/* 过滤时把说明段落收起来，结果区更干净 */
+#rc-app.rc-searching .hint { display: none; }
+#rc-app .rc-q-ico { flex: 0 0 auto; color: var(--rc-meta); font-size: 0.85rem; }
+#rc-app .rc-q {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.15rem 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.92rem;
+}
+#rc-app .rc-q::placeholder { color: var(--rc-muted); }
+#rc-app .rc-q::-webkit-search-cancel-button,
+#rc-app .rc-q::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+#rc-app .rc-q-clear {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rc-bg-hover);
+  color: var(--rc-meta);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+#rc-app .rc-q-clear:hover { color: var(--rc-accent-text); }
+#rc-app .rc-q-count {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--rc-meta);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+#rc-app .rc-noresult {
+  margin: 0 0 1.2rem;
+  padding: 1.4rem 1rem;
+  border: 1px dashed var(--rc-border);
+  border-radius: var(--rc-radius);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--rc-meta);
+}
+/* hidden 属性对 <details>/<section> 一律生效，别被其它 display 规则盖掉 */
+#rc-app .rc-card[hidden],
+#rc-app .rc-section[hidden] { display: none !important; }
 
 #rc-app .rc-cat-title {
   display: flex;
