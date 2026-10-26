@@ -149,6 +149,9 @@ export function createViz3D(canvas, readoutEl, opts) {
   const entries = [];                    // 最旧 → 最新：[{ lvL, lvR, rawL, rawR, binLo, binHi, t, wall }]
   const smL = new Float32Array(BANDS), smR = new Float32Array(BANDS);
   let dbLo = -66, dbHi = -12, dbOffset = 14.1;
+  // 刻度基准：0 = dBFS 绝对刻度（0 = 满量程）；−20 = 0 VU 参考（0 dB = −20 dBFS，广播惯例）
+  // 只影响**标注**，坐标轴的归一化映射完全不变。
+  let scaleRef = 0;
   let FMIN = 20, FMAX = 16000, LOGSPAN = Math.log(FMAX / FMIN);
   let binHz = 11.72, binsN = 2048, mono = false;
   const bandLo = new Float32Array(BANDS), bandHi = new Float32Array(BANDS), bandMid = new Float32Array(BANDS);
@@ -290,6 +293,16 @@ export function createViz3D(canvas, readoutEl, opts) {
 
   // dbOffset：analyser 读数 → 真实 dBFS 的标定偏移（由 spectrum.js 的帧广播给出，实测 14.1 dB）
   const dbOf = (v) => dbLo + v * (dbHi - dbLo) + dbOffset;
+
+  // 按当前刻度基准格式化数字：dBFS 原样；0 VU 参考时整体 +20（满量程 = +20 dB，节目落在 0 附近）
+  function dbTxt(dbfs, digits) {
+    const v = dbfs - scaleRef;
+    let s = digits === undefined ? String(Math.round(v)) : v.toFixed(digits);
+    if (/^-0(\.0+)?$/.test(s)) s = s.replace('-', '');       // 别出现 "-0"
+    if (v > 0 && s.charAt(0) !== '-') s = '+' + s;           // 正数显式带 +
+    return s;
+  }
+  const dbUnit = () => (scaleRef ? ' dB' : ' dBFS');
 
   // 带底色的文字（轴穿中心后标签会压在色带上，加一层半透明底保证可读）
   // 自带**避让**：与已放置的标签重叠就不画 —— 侧视时三条轴的外缘会叠在一起，
@@ -615,9 +628,13 @@ export function createViz3D(canvas, readoutEl, opts) {
       const lv = (db - dbOffset - dbLo) / ((dbHi - dbLo) || 1);
       if (lv < 0 || lv > 1) return;
       const p = project(0, 1, lv, S);
-      tag(db + ' dB', p.x - 6, p.y, 'right', ink(0.68));
+      tag(dbTxt(db) + ' dB', p.x - 6, p.y, 'right', ink(0.68));
     });
-    tag('电平 dBFS（0 = 满量程）', YA.x - 6, YA.y - 16, 'right', ink(0.58), 13);
+    // Y 轴标题：右对齐贴轴，但画布窄时轴会靠左 → 先量字宽，必要时整体右移，避免被左边缘裁掉
+    const capTxt = scaleRef ? '电平 dB（0 = −20 dBFS）' : '电平 dBFS（0 = 满量程）';
+    g.font = '13px system-ui, -apple-system, sans-serif';
+    const capW = g.measureText(capTxt).width;
+    tag(capTxt, Math.max(8 + capW, YA.x - 6), YA.y - 16, 'right', ink(0.58), 13);
 
     // X 刻度标注（前下沿）
     xticks.forEach((hz) => {
@@ -653,8 +670,8 @@ export function createViz3D(canvas, readoutEl, opts) {
       const pk = (v) => { let b = 0, m = -1; for (let i = 0; i < BANDS; i++) if (v[i] > m) { m = v[i]; b = i; } return act(b); };
       const pkv = (v) => { let m = -1; for (let i = 0; i < BANDS; i++) if (v[i] > m) m = v[i]; return m; };
       const fmt = (hz) => (hz >= 1000 ? (hz / 1000).toFixed(2) + ' kHz' : Math.round(hz) + ' Hz');
-      let txt = 'L 峰值 ' + fmt(pk(e.lvL)) + ' · ' + dbOf(pkv(e.lvL)).toFixed(1) + ' dBFS';
-      txt += mono ? '　（单声道）' : '　R 峰值 ' + fmt(pk(e.lvR)) + ' · ' + dbOf(pkv(e.lvR)).toFixed(1) + ' dBFS';
+      let txt = 'L 峰值 ' + fmt(pk(e.lvL)) + ' · ' + dbTxt(dbOf(pkv(e.lvL)), 1) + dbUnit();
+      txt += mono ? '　（单声道）' : '　R 峰值 ' + fmt(pk(e.lvR)) + ' · ' + dbTxt(dbOf(pkv(e.lvR)), 1) + dbUnit();
       tag(txt, 8, 16, 'left', ink(0.72));
     }
 
@@ -680,7 +697,7 @@ export function createViz3D(canvas, readoutEl, opts) {
         const hzNom = bandMid[bi];
         const fmtHz = (x) => (x >= 1000 ? (x / 1000).toFixed(2) + ' kHz' : Math.round(x) + ' Hz');
         const off = Math.abs(hzAct - hzNom) / hzAct > 0.12 ? '（轴位 ' + fmtHz(hzNom) + '）' : '';
-        const d = (v, r) => dbOf(v[bi]).toFixed(1) + ' dBFS（原始 ' + dbOf(r[bi]).toFixed(1) + '）';
+        const d = (v, r) => dbTxt(dbOf(v[bi]), 1) + dbUnit() + '（原始 ' + dbTxt(dbOf(r[bi]), 1) + '）';
         readoutEl.textContent =
           fmtHz(hzAct) + off + '　·　带 #' + (bi + 1) + '/' + BANDS +
           '　·　L ' + d(e.lvL, e.rawL) +
@@ -795,6 +812,8 @@ export function createViz3D(canvas, readoutEl, opts) {
     },
     // 主体样式（单选）
     setStyle: function (id) { styleId = VIZ_STYLES.some((s) => s.id === id) ? id : 'fill'; },
+    // 刻度基准：0 = dBFS 绝对刻度；−20 = 0 VU 参考（只影响标注，不改坐标映射）
+    setScale: function (ref) { scaleRef = ref === -20 ? -20 : 0; },
     // 叠加层（可多选）：mirror / glow / peaks
     setOverlay: function (id, on) { if (id in ov) ov[id] = !!on; },
     overlayState: function () { return { mirror: ov.mirror, glow: ov.glow, peaks: ov.peaks }; },

@@ -69,6 +69,12 @@
   margin-top: .35rem; font-size: .78rem; opacity: .72;
   min-height: 1.1em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums;
 }
+/* Y 轴读法：放在画布正下方，比折叠在文档里更容易被看到 */
+.mu-viz3d-guide {
+  margin-top: .4rem; font-size: .76rem; line-height: 1.6; opacity: .82;
+  overflow-wrap: anywhere;
+}
+.mu-viz3d-guide b { font-weight: 600; opacity: 1; }
 [mode='dark'] .mu-viz3d-canvas { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
 .mu-disc {
   position: relative; width: 240px; height: 240px; border-radius: 50%;

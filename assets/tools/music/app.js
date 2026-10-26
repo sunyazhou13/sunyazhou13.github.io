@@ -71,6 +71,10 @@ const viz3dRead = $('mu-viz3d-read');
 const viz3dBtn = $('mu-3d-btn');
 const viz3dResetBtn = $('mu-viz3d-reset');
 const viz3dWideChk = $('mu-viz3d-wide');
+const viz3dRangeEl = $('mu-viz3d-range');   // 面板读法里那句「当前窗口 0 → −54 dBFS」
+const viz3dUnitEl = $('mu-viz3d-unit');
+const viz3dGuideLead = $('mu-viz3d-guide-lead');
+const viz3dScaleSel = $('mu-viz3d-scale');
 const viz3dPalSel = $('mu-viz3d-pal');
 const viz3dStyleSel = $('mu-viz3d-style');
 const viz3dPresetSel = $('mu-viz3d-preset');
@@ -529,6 +533,30 @@ function vizDbWin() {
   const w = vizDbWide ? DBFS_WIN.wide : DBFS_WIN.normal;
   return [w[0] - DB_OFF, w[1] - DB_OFF];
 }
+// 面板上「当前窗口」那行随开关与刻度基准同步（真减号 − 显示；0 VU 参考时整体 +20）
+function updateVizRange() {
+  if (!viz3dRangeEl) return;
+  const w = vizDbWide ? DBFS_WIN.wide : DBFS_WIN.normal;
+  const ref = vizDbScale;
+  const n = (v) => {
+    const x = Math.round(v - ref);
+    const s = String(x).replace('-', '−');
+    return x > 0 ? '+' + s : s;
+  };
+  viz3dRangeEl.textContent = n(w[1]) + ' → ' + n(w[0]);
+  if (viz3dUnitEl) viz3dUnitEl.textContent = ref ? 'dB' : 'dBFS';
+}
+// 读法第一句随刻度基准变化：dBFS 说「满量程」，0 VU 说「对齐电平」
+function updateVizScaleText() {
+  if (viz3dGuideLead) {
+    viz3dGuideLead.textContent = vizDbScale
+      ? L('0 dB = −20 dBFS 对齐电平（满量程是 +20 dB）',
+        '0 dB = the −20 dBFS alignment level (full scale sits at +20 dB)')
+      : L('0 dBFS = 满量程（数字域的上限，也是最响的一格）',
+        '0 dBFS = full scale (the digital ceiling — the loudest step)');
+  }
+  updateVizRange();
+}
 function bindViz() {
   const w = Math.max(300, Math.floor(vizCanvas.getBoundingClientRect().width || 600));
   vizCanvas.width = w; vizCanvas.height = 180;
@@ -550,11 +578,14 @@ function bindViz() {
 let v3 = null, v3loading = null;
 // dB 窗口是 analyser 的属性（2D 与 3D 共用）：「弱音可见」放宽到 −90…−20，代价是小声的柱子会变高。
 let vizDbWide = false;
+// Y 轴读数的参考点：0 = dBFS（满量程），−20 = 广播惯例的 0 VU。只改**标注**，坐标映射与采集窗口不变。
+let vizDbScale = 0;
 // 3D 外观选项：配色 / 样式 / 叠加层。清单都由 viz3d.js 提供（只存在一处），选择记在 localStorage
 const PAL_KEY = 'mu-viz3d-pal';
 const STYLE_KEY = 'mu-viz3d-style';
 const OV_KEY = 'mu-viz3d-ov-';
 const PRESET_KEY = 'mu-viz3d-preset';
+const SCALE_KEY = 'mu-viz3d-scale';
 let vizPresets = [];
 function saveOpt(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* 忽略 */ } }
 function readOpt(k, dflt) { try { return localStorage.getItem(k) || dflt; } catch (e) { return dflt; } }
@@ -626,6 +657,8 @@ function initVizOpts(m) {
     el.checked = on;
     v3.setOverlay(k, on);
   }
+  // 3) 刻度基准（存档在启动时已读进 vizDbScale，这里只需告诉 3D 模块）
+  v3.setScale(vizDbScale);
 }
 function ensureViz3d() {
   if (v3) return Promise.resolve(v3);
@@ -795,6 +828,20 @@ for (const k in viz3dOv) {
 if (viz3dWideChk) viz3dWideChk.addEventListener('change', () => {
   vizDbWide = !!viz3dWideChk.checked;
   bindViz();     // 重新绑定：ensure() 会把新的 min/maxDecibels 写进 analyser（2D 条同步生效）
+  updateVizRange();
+});
+// 刻度基准切换：只改读数与基准线（0 dB），采集窗口纹丝不动
+if (viz3dScaleSel) viz3dScaleSel.addEventListener('change', () => {
+  vizDbScale = viz3dScaleSel.value === 'vu' ? -20 : 0;
+  saveOpt(SCALE_KEY, viz3dScaleSel.value);
+  if (v3) v3.setScale(vizDbScale);
+  updateVizScaleText();
 });
 updateMode();
 updateControls();
+// 存档要在面板首次打开前就读进来，否则读法文案会先按 dBFS 显示一下再跳
+if (viz3dScaleSel) {
+  viz3dScaleSel.value = readOpt(SCALE_KEY, 'dbfs') === 'vu' ? 'vu' : 'dbfs';
+  vizDbScale = viz3dScaleSel.value === 'vu' ? -20 : 0;
+}
+updateVizScaleText();
