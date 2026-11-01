@@ -1,0 +1,250 @@
+/**
+ * 图片格式转换工具样式
+ * 独立于博客主题，仅作用于 #wic-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#wic-app {
+  --wic-border: rgba(128, 128, 128, 0.35);
+  --wic-border-strong: rgba(128, 128, 128, 0.55);
+  --wic-bg: rgba(128, 128, 128, 0.07);
+  --wic-bg-hover: rgba(128, 128, 128, 0.14);
+  --wic-text: inherit;
+  --wic-text-muted: rgba(128, 128, 128, 0.95);
+  --wic-accent: #2f6fde;
+  --wic-accent-text: #fff;
+  --wic-ok: #1a7f4b;
+  --wic-warn: #a05c00;
+  --wic-err: #c0392b;
+  --wic-radius: 8px;
+}
+
+html[mode='dark'] #wic-app {
+  --wic-bg: rgba(255, 255, 255, 0.06);
+  --wic-bg-hover: rgba(255, 255, 255, 0.12);
+  --wic-text-muted: rgba(190, 190, 190, 0.95);
+  --wic-accent: #5b8ff0;
+  --wic-ok: #57c288;
+  --wic-warn: #e0a94e;
+  --wic-err: #e2735f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #wic-app {
+    --wic-bg: rgba(255, 255, 255, 0.06);
+    --wic-bg-hover: rgba(255, 255, 255, 0.12);
+    --wic-text-muted: rgba(190, 190, 190, 0.95);
+    --wic-accent: #5b8ff0;
+    --wic-ok: #57c288;
+    --wic-warn: #e0a94e;
+    --wic-err: #e2735f;
+  }
+}
+
+#wic-app .wic-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#wic-app .wic-hint {
+  color: var(--wic-text-muted);
+}
+
+#wic-app .wic-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--wic-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+#wic-app .wic-badge-ok { color: var(--wic-ok); border-color: var(--wic-ok); }
+#wic-app .wic-badge-warn { color: var(--wic-warn); border-color: var(--wic-warn); }
+#wic-app .wic-badge-error { color: var(--wic-err); border-color: var(--wic-err); }
+#wic-app .wic-badge-loading { color: var(--wic-text-muted); }
+
+#wic-app .wic-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 2.2rem 1rem;
+  border: 2px dashed var(--wic-border-strong);
+  border-radius: var(--wic-radius);
+  background: var(--wic-bg);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#wic-app .wic-drop:hover,
+#wic-app .wic-drop:focus-visible,
+#wic-app .wic-drop.wic-drop-active {
+  background: var(--wic-bg-hover);
+  border-color: var(--wic-accent);
+  outline: none;
+}
+
+#wic-app .wic-drop i {
+  font-size: 1.8rem;
+  color: var(--wic-accent);
+}
+
+#wic-app .wic-drop-title { margin: 0; font-weight: 500; }
+#wic-app .wic-drop-sub { margin: 0; font-size: 0.85rem; color: var(--wic-text-muted); }
+
+#wic-app .wic-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--wic-border);
+  border-radius: var(--wic-radius);
+  background: var(--wic-bg);
+}
+
+#wic-app .wic-options label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--wic-text-muted);
+  margin: 0;
+}
+
+#wic-app .wic-options select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--wic-border);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+#wic-app .wic-options input[type='range'] {
+  width: 140px;
+  accent-color: var(--wic-accent);
+}
+
+#wic-app .wic-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+#wic-app .wic-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--wic-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#wic-app .wic-btn:hover:not(:disabled) { background: var(--wic-bg-hover); }
+#wic-app .wic-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#wic-app .wic-btn-primary {
+  background: var(--wic-accent);
+  border-color: var(--wic-accent);
+  color: var(--wic-accent-text);
+}
+
+#wic-app .wic-btn-primary:hover:not(:disabled) { opacity: 0.88; background: var(--wic-accent); }
+
+#wic-app .wic-btn-sm {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.82rem;
+}
+
+#wic-app .wic-summary {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.9rem;
+  border-left: 3px solid var(--wic-accent);
+  border-radius: 4px;
+  background: var(--wic-bg);
+  font-size: 0.9rem;
+}
+
+#wic-app .wic-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#wic-app .wic-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--wic-border);
+  border-radius: var(--wic-radius);
+  background: var(--wic-bg);
+}
+
+#wic-app .wic-item.wic-status-error { border-color: var(--wic-err); }
+#wic-app .wic-item.wic-status-done { border-color: var(--wic-ok); }
+
+#wic-app .wic-thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--wic-border);
+  background: var(--wic-bg-hover);
+  flex: none;
+}
+
+#wic-app .wic-info {
+  flex: 1;
+  min-width: 0;
+}
+
+#wic-app .wic-name {
+  font-weight: 500;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#wic-app .wic-meta {
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--wic-text-muted);
+}
+
+#wic-app .wic-meta-done { color: var(--wic-ok); }
+
+#wic-app .wic-side {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+}
+
+#wic-app .wic-status { font-size: 0.82rem; white-space: nowrap; }
+
+#wic-app .wic-status-text-queued { color: var(--wic-text-muted); }
+#wic-app .wic-status-text-running { color: var(--wic-accent); }
+#wic-app .wic-status-text-done { color: var(--wic-ok); }
+#wic-app .wic-status-text-skipped { color: var(--wic-warn); }
+#wic-app .wic-status-text-error { color: var(--wic-err); }
+
+@media (max-width: 576px) {
+  #wic-app .wic-actions { margin-left: 0; width: 100%; }
+  #wic-app .wic-item { flex-wrap: wrap; }
+}

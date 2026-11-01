@@ -1,0 +1,184 @@
+/* 地理编码查询（Geocoder）样式 —— 沿用站点变量体系与暗色适配 */
+#geo-app {
+  --geo-radius: 10px;
+  --geo-border: var(--color-border-secondary, #e2e8f0);
+  --geo-bg: var(--color-bg, #ffffff);
+  --geo-bg-soft: var(--color-bg-soft, #f8fafc);
+  --geo-fg: var(--color-text, #1a202c);
+  --geo-muted: var(--color-text-secondary, #718096);
+  --geo-accent: #2563eb;
+  --geo-ok: #15803d;
+  --geo-err: #dc2626;
+  --geo-tencent: #1a6eff;
+  --geo-amap: #16a34a;
+  --geo-osm: #7e57c2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 960px;
+  margin: 24px auto 48px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--geo-fg);
+}
+html[mode=dark] #geo-app {
+  --geo-border: #334155;
+  --geo-bg: #0f172a;
+  --geo-bg-soft: #16213a;
+  --geo-fg: #e2e8f0;
+  --geo-muted: #94a3b8;
+  --geo-accent: #60a5fa;
+  --geo-ok: #34d399;
+  --geo-err: #f87171;
+}
+#geo-app * { box-sizing: border-box; }
+#geo-app [hidden] { display: none !important; }
+
+/* 提供商 + 模式 */
+#geo-app .geo-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--geo-border);
+  border-radius: var(--geo-radius);
+  background: var(--geo-bg-soft);
+}
+#geo-app .geo-topbar label { font-size: 13px; color: var(--geo-muted); }
+#geo-app select,
+#geo-app input[type="text"] {
+  padding: 7px 10px;
+  border: 1px solid var(--geo-border);
+  border-radius: 8px;
+  background: var(--geo-bg);
+  color: var(--geo-fg);
+  font-size: 13.5px;
+  font-family: inherit;
+}
+#geo-app select { min-width: 220px; }
+#geo-app input[type="text"] { min-width: 160px; }
+#geo-app select:focus,
+#geo-app input[type="text"]:focus { outline: 2px solid var(--geo-accent); outline-offset: 1px; }
+
+#geo-app .geo-modes { display: flex; flex-wrap: wrap; gap: 6px; }
+#geo-app .geo-mode {
+  padding: 6px 14px;
+  border: 1px solid var(--geo-border);
+  border-radius: 999px;
+  background: var(--geo-bg);
+  color: var(--geo-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+#geo-app .geo-mode:hover { color: var(--geo-accent); }
+#geo-app .geo-mode.is-active { background: var(--geo-accent); border-color: var(--geo-accent); color: #fff; }
+
+/* 表单 */
+#geo-app .geo-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--geo-border);
+  border-radius: var(--geo-radius);
+  background: var(--geo-bg);
+}
+#geo-app .geo-field { display: flex; flex-direction: column; gap: 5px; }
+#geo-app .geo-field > span { font-size: 12px; color: var(--geo-muted); }
+#geo-app .geo-btn {
+  padding: 8px 20px;
+  border: 1px solid var(--geo-accent);
+  border-radius: 8px;
+  background: var(--geo-accent);
+  color: #fff;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+#geo-app .geo-btn:hover { filter: brightness(1.06); }
+#geo-app .geo-btn:disabled { opacity: .55; cursor: not-allowed; }
+
+#geo-app #geo-status {
+  padding: 9px 14px;
+  border: 1px solid var(--geo-border);
+  border-left: 3px solid var(--geo-accent);
+  border-radius: var(--geo-radius);
+  background: var(--geo-bg-soft);
+  font-size: 13px;
+}
+
+/* 结果卡片 */
+#geo-app .geo-results { display: flex; flex-direction: column; gap: 12px; }
+#geo-app .geo-card {
+  border: 1px solid var(--geo-border);
+  border-left: 4px solid var(--geo-muted);
+  border-radius: var(--geo-radius);
+  background: var(--geo-bg);
+  overflow: hidden;
+}
+#geo-app .geo-card[data-prov="tencent"] { border-left-color: var(--geo-tencent); }
+#geo-app .geo-card[data-prov="amap"] { border-left-color: var(--geo-amap); }
+#geo-app .geo-card[data-prov="osm"] { border-left-color: var(--geo-osm); }
+#geo-app .geo-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--geo-bg-soft);
+  border-bottom: 1px solid var(--geo-border);
+  font-size: 13px;
+  font-weight: 500;
+}
+#geo-app .geo-badge { padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 500; }
+#geo-app .geo-badge.is-ok { color: var(--geo-ok); border: 1px solid var(--geo-ok); }
+#geo-app .geo-badge.is-err { color: var(--geo-err); border: 1px solid var(--geo-err); }
+#geo-app .geo-card-body { padding: 12px 14px; }
+#geo-app .geo-addr { margin: 0; font-size: 15px; font-weight: 500; }
+#geo-app .geo-coords {
+  margin: 0;
+  font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+#geo-app .geo-sub { margin: 6px 0 0; font-size: 12.5px; color: var(--geo-muted); }
+#geo-app .geo-err { margin: 0; font-size: 13px; color: var(--geo-err); }
+
+#geo-app .geo-json-wrap { border-top: 1px solid var(--geo-border); }
+#geo-app .geo-json-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 14px;
+  background: var(--geo-bg-soft);
+  font-size: 12.5px;
+  color: var(--geo-muted);
+}
+#geo-app .geo-copy {
+  padding: 3px 10px;
+  border: 1px solid var(--geo-border);
+  border-radius: 6px;
+  background: var(--geo-bg);
+  color: var(--geo-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+#geo-app .geo-copy:hover { border-color: var(--geo-accent); color: var(--geo-accent); }
+#geo-app .geo-json {
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--geo-bg-soft);
+  font-family: var(--font-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 11.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  #geo-app .geo-field { flex: 1 1 100%; }
+  #geo-app select, #geo-app input[type="text"] { width: 100%; min-width: 0; }
+}

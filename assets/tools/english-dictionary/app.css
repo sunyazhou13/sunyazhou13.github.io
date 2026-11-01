@@ -1,0 +1,649 @@
+/**
+ * 英汉智能词典样式 v4
+ * 独立于博客主题，仅作用于 #ed-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#ed-app {
+  --ed-border: rgba(128, 128, 128, 0.35);
+  --ed-border-strong: rgba(128, 128, 128, 0.55);
+  --ed-bg: rgba(128, 128, 128, 0.07);
+  --ed-bg-hover: rgba(128, 128, 128, 0.14);
+  --ed-text: inherit;
+  --ed-text-muted: rgba(128, 128, 128, 0.95);
+  --ed-accent: #2f6fde;
+  --ed-accent-text: #fff;
+  --ed-accent-bg: rgba(47, 111, 222, 0.1);
+  --ed-ok: #1a7f4b;
+  --ed-warn: #a05c00;
+  --ed-radius: 8px;
+  --ed-radius-sm: 6px;
+
+  /* 标签徽章配色 */
+  --ed-tag-exam: #6f42c1;
+  --ed-tag-exam-bg: rgba(111, 66, 193, 0.12);
+  --ed-field-medical: #c0392b;
+  --ed-field-medical-bg: rgba(192, 57, 43, 0.1);
+  --ed-field-computing: #2980b9;
+  --ed-field-computing-bg: rgba(41, 128, 185, 0.1);
+  --ed-field-chemistry: #27ae60;
+  --ed-field-chemistry-bg: rgba(39, 174, 96, 0.1);
+  --ed-field-economics: #e67e22;
+  --ed-field-economics-bg: rgba(230, 126, 34, 0.1);
+  --ed-field-law: #8e44ad;
+  --ed-field-law-bg: rgba(142, 68, 173, 0.1);
+  --ed-field-other: #7f8c8d;
+  --ed-field-other-bg: rgba(127, 140, 141, 0.1);
+  --ed-collins-color: #e74c3c;
+  --ed-oxford-color: #2c3e50;
+  --ed-oxford-bg: rgba(44, 62, 80, 0.1);
+}
+
+html[mode='dark'] #ed-app {
+  --ed-bg: rgba(255, 255, 255, 0.06);
+  --ed-bg-hover: rgba(255, 255, 255, 0.12);
+  --ed-text-muted: rgba(190, 190, 190, 0.95);
+  --ed-accent: #5b8ff0;
+  --ed-accent-bg: rgba(91, 143, 240, 0.12);
+  --ed-ok: #57c288;
+
+  --ed-tag-exam: #b388e8;
+  --ed-tag-exam-bg: rgba(179, 136, 232, 0.15);
+  --ed-field-medical: #e2735f;
+  --ed-field-medical-bg: rgba(226, 115, 95, 0.15);
+  --ed-field-computing: #5dade2;
+  --ed-field-computing-bg: rgba(93, 173, 226, 0.15);
+  --ed-field-chemistry: #58d68d;
+  --ed-field-chemistry-bg: rgba(88, 214, 141, 0.15);
+  --ed-field-economics: #f5b041;
+  --ed-field-economics-bg: rgba(245, 176, 65, 0.15);
+  --ed-field-law: #bb8fce;
+  --ed-field-law-bg: rgba(187, 143, 206, 0.15);
+  --ed-field-other: #aab7b8;
+  --ed-field-other-bg: rgba(170, 183, 184, 0.15);
+  --ed-collins-color: #ff6b6b;
+  --ed-oxford-color: #d5dbdb;
+  --ed-oxford-bg: rgba(213, 219, 219, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #ed-app {
+    --ed-bg: rgba(255, 255, 255, 0.06);
+    --ed-bg-hover: rgba(255, 255, 255, 0.12);
+    --ed-text-muted: rgba(190, 190, 190, 0.95);
+    --ed-accent: #5b8ff0;
+    --ed-accent-bg: rgba(91, 143, 240, 0.12);
+    --ed-ok: #57c288;
+
+    --ed-tag-exam: #b388e8;
+    --ed-tag-exam-bg: rgba(179, 136, 232, 0.15);
+    --ed-field-medical: #e2735f;
+    --ed-field-medical-bg: rgba(226, 115, 95, 0.15);
+    --ed-field-computing: #5dade2;
+    --ed-field-computing-bg: rgba(93, 173, 226, 0.15);
+    --ed-field-chemistry: #58d68d;
+    --ed-field-chemistry-bg: rgba(88, 214, 141, 0.15);
+    --ed-field-economics: #f5b041;
+    --ed-field-economics-bg: rgba(245, 176, 65, 0.15);
+    --ed-field-law: #bb8fce;
+    --ed-field-law-bg: rgba(187, 143, 206, 0.15);
+    --ed-field-other: #aab7b8;
+    --ed-field-other-bg: rgba(170, 183, 184, 0.15);
+    --ed-collins-color: #ff6b6b;
+    --ed-oxford-color: #d5dbdb;
+    --ed-oxford-bg: rgba(213, 219, 219, 0.12);
+  }
+}
+
+/* ── Banner ────────────────────────────────────────── */
+
+#ed-app .ed-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--ed-text-muted);
+}
+
+#ed-app .ed-banner i {
+  color: var(--ed-ok);
+  flex: none;
+}
+
+#ed-app .ed-banner a {
+  color: var(--ed-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── 全量下载 ──────────────────────────────────────── */
+
+#ed-app .ed-download-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+
+#ed-app .ed-btn-download {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ed-accent);
+  border-radius: var(--ed-radius-sm);
+  background: var(--ed-accent);
+  color: var(--ed-accent-text);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+#ed-app .ed-btn-download:hover { opacity: 0.88; }
+#ed-app .ed-btn-download:disabled { opacity: 0.6; cursor: default; }
+
+#ed-app .ed-btn-download.ed-btn-secondary {
+  background: transparent;
+  color: var(--ed-accent);
+}
+
+/* 清除缓存按钮：幽灵样式，hover 变红提示破坏性操作 */
+#ed-app .ed-btn-clear {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ed-border-strong);
+  border-radius: var(--ed-radius-sm);
+  background: transparent;
+  color: var(--ed-text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+#ed-app .ed-btn-clear:hover {
+  color: var(--ed-field-medical);
+  border-color: var(--ed-field-medical);
+  background: var(--ed-field-medical-bg);
+}
+
+#ed-app .ed-btn-clear[hidden] {
+  display: none;
+}
+
+#ed-app .ed-download-hint {
+  font-size: 0.78rem;
+  color: var(--ed-text-muted);
+}
+
+#ed-app .ed-download-progress {
+  width: 100%;
+  height: 1.6rem;
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-border);
+  border-radius: var(--ed-radius-sm);
+  overflow: hidden;
+  position: relative;
+  margin-top: 0.4rem;
+}
+
+#ed-app .ed-progress-bar {
+  height: 100%;
+  background: var(--ed-accent);
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+#ed-app .ed-progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--ed-text);
+  text-shadow: 0 0 3px rgba(255,255,255,0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.5rem;
+}
+
+html[mode='dark'] #ed-app .ed-progress-text {
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #ed-app .ed-progress-text {
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ── 搜索框 ─────────────────────────────────────────── */
+
+#ed-app .ed-search-wrap {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.8rem 0 1rem;
+}
+
+#ed-app .ed-input {
+  flex: 1;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--ed-border-strong);
+  border-radius: var(--ed-radius-sm);
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: border-color 0.15s ease;
+}
+
+#ed-app .ed-input:focus {
+  outline: none;
+  border-color: var(--ed-accent);
+}
+
+#ed-app .ed-input::placeholder {
+  color: var(--ed-text-muted);
+  opacity: 0.7;
+}
+
+#ed-app .ed-btn-search {
+  flex: none;
+  padding: 0.5rem 1.3rem;
+  border: 1px solid var(--ed-accent);
+  border-radius: var(--ed-radius-sm);
+  background: var(--ed-accent);
+  color: var(--ed-accent-text);
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+#ed-app .ed-btn-search:hover { opacity: 0.88; }
+#ed-app .ed-btn-search:active { opacity: 0.75; }
+
+/* ── 结果区 ────────────────────────────────────────── */
+
+#ed-app .ed-results {
+  margin-top: 0.5rem;
+}
+
+#ed-app .ed-placeholder,
+#ed-app .ed-loading {
+  padding: 1.6rem 1rem;
+  border: 1px dashed var(--ed-border-strong);
+  border-radius: var(--ed-radius);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ed-text-muted);
+}
+
+#ed-app .ed-loading {
+  border-style: solid;
+}
+
+#ed-app .ed-loading::after {
+  content: '';
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.4rem;
+  border: 2px solid var(--ed-border-strong);
+  border-top-color: var(--ed-accent);
+  border-radius: 50%;
+  animation: ed-spin 0.7s linear infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes ed-spin {
+  to { transform: rotate(360deg); }
+}
+
+#ed-app .ed-placeholder[hidden],
+#ed-app .ed-loading[hidden],
+#ed-app .ed-content[hidden] {
+  display: none;
+}
+
+#ed-app .ed-content {
+  animation: ed-fade-in 0.2s ease;
+}
+
+@keyframes ed-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 单词标题行 ─────────────────────────────────────── */
+
+#ed-app .ed-word-header {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--ed-border);
+}
+
+#ed-app .ed-word-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#ed-app .ed-word {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+#ed-app .ed-phonetic {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  color: var(--ed-accent);
+  font-family: 'Lucida Console', monospace;
+  font-style: italic;
+}
+
+#ed-app .ed-btn-speak {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--ed-border-strong);
+  border-radius: 50%;
+  background: var(--ed-bg);
+  color: var(--ed-accent);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+#ed-app .ed-btn-speak:hover {
+  background: var(--ed-accent-bg);
+  border-color: var(--ed-accent);
+}
+
+#ed-app .ed-btn-speak:active {
+  transform: scale(0.92);
+}
+
+/* ── 标签徽章行 ─────────────────────────────────────── */
+
+#ed-app .ed-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+#ed-app .ed-pos-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background: var(--ed-accent-bg);
+  color: var(--ed-accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+#ed-app .ed-oxford-badge {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  background: var(--ed-oxford-bg);
+  color: var(--ed-oxford-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+#ed-app .ed-collins {
+  color: var(--ed-collins-color);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+#ed-app .ed-tag-badge {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  background: var(--ed-tag-exam-bg);
+  color: var(--ed-tag-exam);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* ── 专业领域徽章行 ────────────────────────────────── */
+
+#ed-app .ed-fields-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+
+#ed-app .ed-field-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+#ed-app .ed-field-medical {
+  background: var(--ed-field-medical-bg);
+  color: var(--ed-field-medical);
+  border-color: var(--ed-field-medical-bg);
+}
+
+#ed-app .ed-field-computing {
+  background: var(--ed-field-computing-bg);
+  color: var(--ed-field-computing);
+}
+
+#ed-app .ed-field-chemistry {
+  background: var(--ed-field-chemistry-bg);
+  color: var(--ed-field-chemistry);
+}
+
+#ed-app .ed-field-economics {
+  background: var(--ed-field-economics-bg);
+  color: var(--ed-field-economics);
+}
+
+#ed-app .ed-field-law {
+  background: var(--ed-field-law-bg);
+  color: var(--ed-field-law);
+}
+
+#ed-app .ed-field-electronics,
+#ed-app .ed-field-mechanical,
+#ed-app .ed-field-architecture,
+#ed-app .ed-field-physics,
+#ed-app .ed-field-biology,
+#ed-app .ed-field-pharma,
+#ed-app .ed-field-mining,
+#ed-app .ed-field-botany,
+#ed-app .ed-field-zoology,
+#ed-app .ed-field-sports,
+#ed-app .ed-field-name,
+#ed-app .ed-field-place,
+#ed-app .ed-field-other {
+  background: var(--ed-field-other-bg);
+  color: var(--ed-field-other);
+}
+
+/* ── 释义分区 ───────────────────────────────────────── */
+
+#ed-app .ed-section {
+  margin: 0.8rem 0;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--ed-border);
+  border-radius: var(--ed-radius);
+  background: var(--ed-bg);
+}
+
+#ed-app .ed-section + .ed-section {
+  margin-top: 0.6rem;
+}
+
+#ed-app .ed-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ed-text-muted);
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--ed-accent);
+}
+
+/* ── 中文释义 ───────────────────────────────────────── */
+
+#ed-app .ed-translation p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+#ed-app .ed-translation p:first-child {
+  margin-top: 0;
+}
+
+/* ── 翻译结果 ───────────────────────────────────────── */
+
+#ed-app .ed-translation-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ── 英文释义 ───────────────────────────────────────── */
+
+#ed-app .ed-pos-group {
+  margin: 0.5rem 0;
+}
+
+#ed-app .ed-pos-group + .ed-pos-group {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--ed-border);
+}
+
+#ed-app .ed-api-pos {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background: var(--ed-accent-bg);
+  color: var(--ed-accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+#ed-app .ed-defs {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+#ed-app .ed-defs li {
+  margin: 0.35rem 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+#ed-app .ed-def {
+  color: inherit;
+}
+
+#ed-app .ed-example {
+  display: block;
+  margin-top: 0.2rem;
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--ed-border-strong);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ed-text-muted);
+}
+
+#ed-app .ed-syn-ant {
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  color: var(--ed-text-muted);
+}
+
+#ed-app .ed-syn-label {
+  font-weight: 600;
+}
+
+#ed-app .ed-syn-list {
+  color: inherit;
+}
+
+/* ── 数据来源标记 ──────────────────────────────────── */
+
+#ed-app .ed-sources {
+  margin-top: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--ed-border);
+  font-size: 0.78rem;
+  color: var(--ed-text-muted);
+  text-align: right;
+}
+
+/* ── 响应式 ────────────────────────────────────────── */
+
+@media (max-width: 576px) {
+  #ed-app .ed-word {
+    font-size: 1.35rem;
+  }
+
+  #ed-app .ed-phonetic {
+    font-size: 0.95rem;
+  }
+
+  #ed-app .ed-search-wrap {
+    flex-direction: column;
+  }
+
+  #ed-app .ed-btn-search {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #ed-app .ed-badges-row {
+    gap: 0.25rem;
+  }
+
+  #ed-app .ed-field-badge {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+  }
+}

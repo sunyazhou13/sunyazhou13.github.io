@@ -1,0 +1,265 @@
+/**
+ * 图片转 AVIF 工具样式
+ * 独立于博客主题，仅作用于 #avt-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好（未显式切换时）。
+ */
+
+#avt-app {
+  --avt-border: rgba(128, 128, 128, 0.35);
+  --avt-border-strong: rgba(128, 128, 128, 0.55);
+  --avt-bg: rgba(128, 128, 128, 0.07);
+  --avt-bg-hover: rgba(128, 128, 128, 0.14);
+  --avt-text: inherit;
+  --avt-text-muted: rgba(128, 128, 128, 0.95);
+  --avt-accent: #2f6fde;
+  --avt-accent-text: #fff;
+  --avt-ok: #1a7f4b;
+  --avt-warn: #a05c00;
+  --avt-err: #c0392b;
+  --avt-radius: 8px;
+}
+
+html[mode='dark'] #avt-app {
+  --avt-bg: rgba(255, 255, 255, 0.06);
+  --avt-bg-hover: rgba(255, 255, 255, 0.12);
+  --avt-text-muted: rgba(190, 190, 190, 0.95);
+  --avt-accent: #5b8ff0;
+  --avt-ok: #57c288;
+  --avt-warn: #e0a94e;
+  --avt-err: #e2735f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #avt-app {
+    --avt-bg: rgba(255, 255, 255, 0.06);
+    --avt-bg-hover: rgba(255, 255, 255, 0.12);
+    --avt-text-muted: rgba(190, 190, 190, 0.95);
+    --avt-accent: #5b8ff0;
+    --avt-ok: #57c288;
+    --avt-warn: #e0a94e;
+    --avt-err: #e2735f;
+  }
+}
+
+#avt-app .avt-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#avt-app .avt-hint {
+  color: var(--avt-text-muted);
+}
+
+#avt-app .avt-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--avt-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+#avt-app .avt-badge-ok { color: var(--avt-ok); border-color: var(--avt-ok); }
+#avt-app .avt-badge-warn { color: var(--avt-warn); border-color: var(--avt-warn); }
+#avt-app .avt-badge-error { color: var(--avt-err); border-color: var(--avt-err); }
+#avt-app .avt-badge-loading { color: var(--avt-text-muted); }
+
+#avt-app .avt-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 2.2rem 1rem;
+  border: 2px dashed var(--avt-border-strong);
+  border-radius: var(--avt-radius);
+  background: var(--avt-bg);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#avt-app .avt-drop:hover,
+#avt-app .avt-drop:focus-visible,
+#avt-app .avt-drop.avt-drop-active {
+  background: var(--avt-bg-hover);
+  border-color: var(--avt-accent);
+  outline: none;
+}
+
+#avt-app .avt-drop i {
+  font-size: 1.8rem;
+  color: var(--avt-accent);
+}
+
+#avt-app .avt-drop-title { margin: 0; font-weight: 500; }
+#avt-app .avt-drop-sub { margin: 0; font-size: 0.85rem; color: var(--avt-text-muted); }
+
+#avt-app .avt-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--avt-border);
+  border-radius: var(--avt-radius);
+  background: var(--avt-bg);
+}
+
+#avt-app .avt-options label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--avt-text-muted);
+  margin: 0;
+}
+
+#avt-app .avt-options select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--avt-border);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+#avt-app .avt-options input[type='range'] {
+  width: 140px;
+  accent-color: var(--avt-accent);
+}
+
+#avt-app .avt-options label.avt-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  padding-bottom: 0.35rem;
+  cursor: pointer;
+}
+
+#avt-app .avt-options label.avt-check input[type='checkbox'] {
+  accent-color: var(--avt-accent);
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+}
+
+#avt-app .avt-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+#avt-app .avt-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--avt-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#avt-app .avt-btn:hover:not(:disabled) { background: var(--avt-bg-hover); }
+#avt-app .avt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#avt-app .avt-btn-primary {
+  background: var(--avt-accent);
+  border-color: var(--avt-accent);
+  color: var(--avt-accent-text);
+}
+
+#avt-app .avt-btn-primary:hover:not(:disabled) { opacity: 0.88; background: var(--avt-accent); }
+
+#avt-app .avt-btn-sm {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.82rem;
+}
+
+#avt-app .avt-summary {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.9rem;
+  border-left: 3px solid var(--avt-accent);
+  border-radius: 4px;
+  background: var(--avt-bg);
+  font-size: 0.9rem;
+}
+
+#avt-app .avt-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#avt-app .avt-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--avt-border);
+  border-radius: var(--avt-radius);
+  background: var(--avt-bg);
+}
+
+#avt-app .avt-item.avt-status-error { border-color: var(--avt-err); }
+#avt-app .avt-item.avt-status-done { border-color: var(--avt-ok); }
+
+#avt-app .avt-thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--avt-border);
+  background: var(--avt-bg-hover);
+  flex: none;
+}
+
+#avt-app .avt-info {
+  flex: 1;
+  min-width: 0;
+}
+
+#avt-app .avt-name {
+  font-weight: 500;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#avt-app .avt-meta {
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--avt-text-muted);
+}
+
+#avt-app .avt-meta-done { color: var(--avt-ok); }
+
+#avt-app .avt-side {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+}
+
+#avt-app .avt-status { font-size: 0.82rem; white-space: nowrap; }
+
+#avt-app .avt-status-text-queued { color: var(--avt-text-muted); }
+#avt-app .avt-status-text-running { color: var(--avt-accent); }
+#avt-app .avt-status-text-done { color: var(--avt-ok); }
+#avt-app .avt-status-text-skipped { color: var(--avt-warn); }
+#avt-app .avt-status-text-error { color: var(--avt-err); }
+
+@media (max-width: 576px) {
+  #avt-app .avt-actions { margin-left: 0; width: 100%; }
+  #avt-app .avt-item { flex-wrap: wrap; }
+}

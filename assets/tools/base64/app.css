@@ -1,0 +1,218 @@
+/**
+ * Base64 编码解码工具样式
+ * 独立于博客主题，仅作用于 #b64-app 容器。
+ * 暗色模式适配 Chirpy 的 html[mode=dark] 属性 + 系统偏好。
+ */
+
+#b64-app {
+  --b64-border: rgba(128, 128, 128, 0.35);
+  --b64-border-strong: rgba(128, 128, 128, 0.55);
+  --b64-bg: rgba(128, 128, 128, 0.07);
+  --b64-bg-hover: rgba(128, 128, 128, 0.14);
+  --b64-text: inherit;
+  --b64-text-muted: rgba(128, 128, 128, 0.95);
+  --b64-accent: #2f6fde;
+  --b64-accent-text: #fff;
+  --b64-ok: #1a7f4b;
+  --b64-warn: #a05c00;
+  --b64-err: #c0392b;
+  --b64-radius: 8px;
+}
+
+html[mode='dark'] #b64-app {
+  --b64-bg: rgba(255, 255, 255, 0.06);
+  --b64-bg-hover: rgba(255, 255, 255, 0.12);
+  --b64-text-muted: rgba(190, 190, 190, 0.95);
+  --b64-accent: #5b8ff0;
+  --b64-ok: #57c288;
+  --b64-warn: #e0a94e;
+  --b64-err: #e2735f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #b64-app {
+    --b64-bg: rgba(255, 255, 255, 0.06);
+    --b64-bg-hover: rgba(255, 255, 255, 0.12);
+    --b64-text-muted: rgba(190, 190, 190, 0.95);
+    --b64-accent: #5b8ff0;
+    --b64-ok: #57c288;
+    --b64-warn: #e0a94e;
+    --b64-err: #e2735f;
+  }
+}
+
+#b64-app .b64-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#b64-app .b64-hint {
+  color: var(--b64-text-muted);
+}
+
+#b64-app .b64-input-wrap,
+#b64-app .b64-options,
+#b64-app .b64-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.8rem 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--b64-border);
+  border-radius: var(--b64-radius);
+  background: var(--b64-bg);
+}
+
+#b64-app .b64-label {
+  font-size: 0.85rem;
+  color: var(--b64-text-muted);
+  margin: 0;
+}
+
+#b64-app .b64-input {
+  width: 100%;
+  min-height: 96px;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--b64-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+#b64-app .b64-input:focus {
+  outline: none;
+  border-color: var(--b64-accent);
+}
+
+#b64-app .b64-input::placeholder {
+  color: var(--b64-text-muted);
+  opacity: 0.7;
+}
+
+#b64-app .b64-options label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+#b64-app .b64-options input[type='checkbox'] {
+  accent-color: var(--b64-accent);
+}
+
+#b64-app .b64-options code {
+  background: var(--b64-bg-hover);
+  border-radius: 4px;
+  padding: 0 0.25rem;
+}
+
+#b64-app .b64-actions {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#b64-app .b64-btn {
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--b64-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#b64-app .b64-btn:hover:not(:disabled) { background: var(--b64-bg-hover); }
+#b64-app .b64-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+#b64-app .b64-btn-primary { min-width: 6.5rem; font-weight: 500; }
+
+#b64-app .b64-btn-active,
+#b64-app .b64-btn-primary:active {
+  background: var(--b64-accent);
+  border-color: var(--b64-accent);
+  color: var(--b64-accent-text);
+}
+
+#b64-app .b64-btn-copy {
+  flex: none;
+  font-size: 0.82rem;
+}
+
+#b64-app .b64-btn-copy.b64-copied {
+  color: var(--b64-ok);
+  border-color: var(--b64-ok);
+}
+
+#b64-app .b64-placeholder {
+  padding: 1.6rem 1rem;
+  border: 1px dashed var(--b64-border-strong);
+  border-radius: var(--b64-radius);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--b64-text-muted);
+}
+
+#b64-app .b64-output {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--b64-border);
+  border-radius: var(--b64-radius);
+  background: var(--b64-bg);
+}
+
+#b64-app .b64-output[hidden],
+#b64-app .b64-error[hidden] {
+  display: none;
+}
+
+#b64-app .b64-result {
+  min-height: 96px;
+  margin: 0;
+  word-break: break-all;
+  user-select: all;
+}
+
+#b64-app .b64-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#b64-app .b64-meta {
+  font-size: 0.82rem;
+  color: var(--b64-text-muted);
+}
+
+#b64-app .b64-error {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--b64-err);
+  border-radius: var(--b64-radius);
+  color: var(--b64-err);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 576px) {
+  #b64-app .b64-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #b64-app .b64-btn-copy { margin-left: auto; }
+}

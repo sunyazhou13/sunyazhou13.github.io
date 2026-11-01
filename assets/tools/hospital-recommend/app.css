@@ -1,0 +1,667 @@
+/**
+ * 北京医院推荐工具样式
+ * 独立于博客主题，仅作用于页面里的 .hr-grid / .hr-card。
+ */
+
+#hr-app {
+  --hr-border: rgba(128, 128, 128, 0.35);
+  --hr-border-strong: rgba(128, 128, 128, 0.55);
+  --hr-bg: rgba(128, 128, 128, 0.07);
+  --hr-bg-hover: rgba(128, 128, 128, 0.14);
+  --hr-text-muted: rgba(128, 128, 128, 0.95);
+  --hr-accent: #2f6fde;
+  --hr-radius: 8px;
+  --hr-panel: #ffffff;
+}
+
+html[mode='dark'] #hr-app {
+  --hr-bg: rgba(255, 255, 255, 0.06);
+  --hr-bg-hover: rgba(255, 255, 255, 0.12);
+  --hr-text-muted: rgba(190, 190, 190, 0.95);
+  --hr-accent: #5b8ff0;
+  --hr-panel: #1e1e1e;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([mode='light']) #hr-app {
+    --hr-bg: rgba(255, 255, 255, 0.06);
+    --hr-bg-hover: rgba(255, 255, 255, 0.12);
+    --hr-text-muted: rgba(190, 190, 190, 0.95);
+    --hr-accent: #5b8ff0;
+    --hr-panel: #1e1e1e;
+  }
+}
+
+#hr-app .hr-section { margin-top: 1.8rem; }
+#hr-app .hr-section:first-child { margin-top: 0; }
+
+#hr-app .hr-cat-title {
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--hr-border);
+  color: var(--hr-accent);
+}
+
+#hr-app .hr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.85rem;
+}
+
+/* 门诊部明细展开时，同一行的其它卡片不要再被拉成等高。
+   网格默认 align-items:stretch，一行里最高的卡片决定行高 →「北大口腔」展开 700px 时，
+   左边「北京口腔」会被撑成一个巨大的空盒子。
+   这里只在「本行确实有卡片展开」时给没展开的卡片放开高度约束，
+   默认状态仍是等高，保持原本整齐的外观（:has() 与本文件已用的 color-mix 同代兼容）。 */
+#hr-app .hr-grid:has(.hr-branches[open]) .hr-card:not(:has(.hr-branches[open])) {
+  align-self: start;
+}
+
+#hr-app .hr-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  background: var(--hr-bg);
+  color: inherit;
+  text-decoration: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#hr-app .hr-card:hover {
+  background: var(--hr-bg-hover);
+  border-color: var(--hr-accent);
+  box-shadow: 0 2px 10px rgba(47, 111, 222, 0.12);
+}
+
+#hr-app .hr-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.1rem;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* 首字母色块 */
+#hr-app .hr-dot {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hr-app .hr-c0 { background: #2f6fde; }
+#hr-app .hr-c1 { background: #1d9e75; }
+#hr-app .hr-c2 { background: #ef9f27; }
+#hr-app .hr-c3 { background: #d8442f; }
+#hr-app .hr-c4 { background: #7d5bd6; }
+#hr-app .hr-c5 { background: #0f9bb5; }
+
+#hr-app .hr-icowrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}
+
+#hr-app .hr-icon {
+  position: absolute;
+  inset: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+#hr-app .hr-icowrap.hr-loaded .hr-dot { visibility: hidden; }
+
+#hr-app .hr-name {
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 医院全称（名称行下方，独立一行） */
+#hr-app .hr-fullname {
+  display: block;
+  margin-top: -0.15rem;
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--hr-text-muted);
+  white-space: normal;
+  word-break: break-all;
+}
+
+#hr-app .hr-desc {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#hr-app .hr-addr,
+#hr-app .hr-booking {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--hr-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+#hr-app .hr-addr i,
+#hr-app .hr-book-row i {
+  color: var(--hr-accent);
+  width: 1.1em;
+  text-align: center;
+  margin-right: 0.2rem;
+}
+
+#hr-app .hr-book-row {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: normal;
+}
+
+/* 电话 / 时间（与地址同层级，图标同色同宽） */
+#hr-app .hr-phone,
+#hr-app .hr-hours,
+#hr-app .hr-emergency {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--hr-text-muted);
+  display: flex;
+  align-items: baseline;
+}
+#hr-app .hr-phone i,
+#hr-app .hr-hours i,
+#hr-app .hr-emergency i {
+  color: var(--hr-accent);
+  width: 1.1em;
+  text-align: center;
+  margin-right: 0.2rem;
+}
+#hr-app .hr-tel {
+  color: inherit;
+  text-decoration: none !important;
+  font-variant-numeric: tabular-nums;
+}
+#hr-app .hr-tel:hover {
+  color: var(--hr-accent);
+  text-decoration: underline !important;
+}
+
+/* ---------- 急诊行：区分「24 小时」与「无急诊 / 部分科室不开放」----------
+   图标统一用救护车；数据里出现否定表述（无急诊 / 不开放 / 不设）时整行弱化，
+   避免被误读成「随时能去」。肯定与否定在视觉上必须能一眼分开。 */
+#hr-app .hr-emergency {
+  flex-wrap: wrap;
+}
+#hr-app .hr-emergency.hr-em-none {
+  opacity: 0.72;
+}
+#hr-app .hr-emergency.hr-em-none i {
+  color: var(--hr-text-muted);
+}
+
+/* ---------- 可折叠的院区/门诊部明细 ----------
+   用原生 <details>，不引入任何 JS；仅在 campuses 里填了 addr 的医院渲染。
+   颜色全部从 --hr-* 变量派生，深浅色切换无需额外规则。 */
+#hr-app .hr-branches {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--hr-text-muted);
+}
+
+#hr-app .hr-branches-sum {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px dashed var(--hr-border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--hr-accent);
+  line-height: 1.4;
+  list-style: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+#hr-app .hr-branches-sum::-webkit-details-marker { display: none; }
+#hr-app .hr-branches-sum i { width: 1.1em; text-align: center; }
+#hr-app .hr-branches-sum:hover {
+  background: var(--hr-bg-hover);
+  border-color: color-mix(in srgb, var(--hr-accent) 45%, transparent);
+}
+#hr-app .hr-branches-sum:focus-visible {
+  outline: 2px solid var(--hr-accent);
+  outline-offset: 2px;
+}
+/* 展开指示三角：纯 CSS，不额外加元素 */
+#hr-app .hr-branches-sum::after {
+  content: "▾";
+  font-size: 0.85em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+#hr-app .hr-branches[open] .hr-branches-sum::after { transform: rotate(180deg); }
+
+#hr-app .hr-branch-list {
+  margin: 0.5rem 0 0;
+  padding: 0.55rem 0 0 0.1rem;
+  list-style: none;
+  border-top: 1px solid var(--hr-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+#hr-app .hr-branch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  padding-left: 0.55rem;
+  border-left: 2px solid color-mix(in srgb, var(--hr-accent) 35%, transparent);
+  line-height: 1.4;
+}
+#hr-app .hr-branch-name { font-weight: 600; }
+#hr-app .hr-branch-addr { opacity: 0.85; }
+#hr-app .hr-branch-tel {
+  align-self: flex-start;
+  color: var(--hr-accent);
+  text-decoration: none !important;
+  font-variant-numeric: tabular-nums;
+}
+#hr-app .hr-branch-tel:hover { text-decoration: underline !important; }
+
+#hr-app .hr-empty {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--hr-text-muted);
+}
+
+/* 提示文案里的两行挂号说明（在 #hr-app 作用域之外，故全局定义） */
+.hr-tip {
+  display: block;
+  margin-top: 0.35rem;
+  line-height: 1.6;
+}
+
+/* 卡片底部操作按钮：复制全名 / 导航 */
+#hr-app .hr-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--hr-border);
+}
+
+/* ---------- 操作按钮：复制（次操作）/ 导航（主操作） ----------
+   分级思路：靠「有无底色 + 字色冷暖」区分，不靠面积，保持克制。
+   所有颜色从 --hr-accent 派生（color-mix），深浅色自动跟随，无需写死值。
+     导航 = 主操作：accent 淡底 + accent 字 + accent 描边
+     复制 = 次操作：无底色 + 中性字 + 中性描边
+   色值：浅色 accent=#2f6fde / 深色 accent=#5b8ff0，派生后两端对比度都够。 */
+#hr-app .hr-btn {
+  flex: 1 1 auto;
+  padding: 0.42rem 0.6rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  line-height: 1.2;
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* 次操作：复制全名 —— 中性、无底色 */
+#hr-app .hr-copy {
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: 1px solid var(--hr-border-strong);
+}
+#hr-app .hr-copy:hover {
+  background: var(--hr-bg-hover);
+  color: var(--hr-accent);
+  border-color: color-mix(in srgb, var(--hr-accent) 45%, transparent);
+}
+
+/* 主操作：导航 —— accent 淡底 + 同色系 */
+#hr-app .hr-nav {
+  color: var(--hr-accent);
+  background: color-mix(in srgb, var(--hr-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hr-accent) 42%, transparent);
+}
+#hr-app .hr-nav:hover {
+  background: color-mix(in srgb, var(--hr-accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--hr-accent) 62%, transparent);
+}
+
+/* 复制成功反馈：绿色 + 淡底，1.5s 后由 JS 移除 is-done */
+#hr-app .hr-copy.is-done {
+  color: #1d9e75;
+  background: color-mix(in srgb, #1d9e75 10%, transparent);
+  border-color: color-mix(in srgb, #1d9e75 45%, transparent);
+}
+
+/* 导航模态框 */
+#hr-app .hr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#hr-app .hr-modal[hidden] { display: none; }
+#hr-app .hr-modal-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+#hr-app .hr-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 380px);
+  max-height: 82vh;
+  overflow: auto;
+  padding: 1.15rem 1.2rem 1.25rem;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border-strong);
+  border-radius: var(--hr-radius);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+  color: inherit;
+}
+#hr-app .hr-modal-close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.55rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+#hr-app .hr-modal-title {
+  margin: 0 1.6rem 0.8rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--hr-accent);
+  word-break: break-all;
+}
+#hr-app .hr-modal-campus { margin-bottom: 0.85rem; }
+#hr-app .hr-modal-campus-label {
+  font-size: 0.8rem;
+  color: var(--hr-text-muted);
+  margin-bottom: 0.4rem;
+}
+#hr-app .hr-modal-campus-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+#hr-app .hr-modal-campus-row .hr-campus { flex: 0 1 auto; }
+#hr-app .hr-campus.is-active {
+  background: var(--hr-accent);
+  border-color: var(--hr-accent);
+  color: #fff;
+}
+#hr-app .hr-modal-maps {
+  display: flex;
+  gap: 0.6rem;
+}
+#hr-app .hr-modal-maps .hr-map { flex: 1 1 auto; }
+
+/* ========== 症状索引区块（hs-*） ========== */
+.hs-wrap {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  background: var(--hr-bg);
+}
+.hs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.hs-titles { min-width: 0; }
+.hs-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--hr-accent);
+}
+.hs-sub {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  color: var(--hr-text-muted);
+}
+.hs-searchwrap {
+  position: relative;
+  flex: 0 1 240px;
+}
+.hs-input {
+  width: 100%;
+  padding: 0.4rem 1.6rem 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  color: inherit;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border-strong);
+  border-radius: var(--hr-radius);
+}
+.hs-input:focus {
+  outline: none;
+  border-color: var(--hr-accent);
+}
+.hs-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.3rem;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1;
+  font-size: 1rem;
+  color: var(--hr-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.hs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+.hs-chips-label {
+  font-size: 0.75rem;
+  color: var(--hr-text-muted);
+  margin-right: 0.1rem;
+}
+.hs-chip {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  color: inherit;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hs-chip:hover {
+  background: var(--hr-bg-hover);
+  border-color: var(--hr-accent);
+}
+.hs-chip-more { color: var(--hr-accent); }
+.hs-all {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+  padding: 0.5rem;
+  background: var(--hr-bg);
+  border-radius: var(--hr-radius);
+}
+.hs-chip-sm { font-size: 0.75rem; }
+
+.hs-result {
+  margin-top: 0.7rem;
+  padding: 0.75rem;
+  background: var(--hr-panel);
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+}
+.hs-rhead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+.hs-rname { font-size: 0.95rem; font-weight: 600; }
+.hs-urgency {
+  padding: 0.1rem 0.5rem;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.hs-urgency.is-emergency {
+  color: #a12d2d;
+  background: rgba(200, 40, 40, 0.12);
+  border-color: rgba(200, 40, 40, 0.4);
+  font-weight: 600;
+}
+.hs-urgency.is-soon {
+  color: #8a5a10;
+  background: rgba(200, 140, 20, 0.12);
+  border-color: rgba(200, 140, 20, 0.4);
+}
+.hs-urgency.is-normal {
+  color: #2a6a3f;
+  background: rgba(40, 150, 80, 0.12);
+  border-color: rgba(40, 150, 80, 0.4);
+}
+.hs-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--hr-text-muted);
+}
+.hs-deptrow, .hs-hospitals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.hs-deptlabel {
+  font-size: 0.78rem;
+  color: var(--hr-text-muted);
+  flex-shrink: 0;
+}
+.hs-depts { font-size: 0.85rem; }
+.hs-dept-link, .hs-dept-tag {
+  color: var(--hr-accent);
+  text-decoration: none;
+}
+.hs-dept-link { border-bottom: 1px dashed var(--hr-accent); }
+.hs-sep { color: var(--hr-text-muted); }
+.hs-hosp-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.hs-hosp {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  color: inherit;
+  background: var(--hr-bg);
+  border: 1px solid var(--hr-border);
+  border-radius: var(--hr-radius);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hs-hosp:hover { background: var(--hr-bg-hover); border-color: var(--hr-accent); color: var(--hr-accent); }
+.hs-cover {
+  margin: 0.7rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--hr-text-muted);
+  opacity: 0.85;
+}
+.hs-data { display: none; }
+
+/* 点医院名跳转后卡片高亮 */
+#hr-app .hr-card.is-flash {
+  border-color: var(--hr-accent);
+  box-shadow: 0 0 0 2px var(--hr-accent);
+}
+
+/* ========== 键盘可达性：focus-visible ==========
+   原先全站无焦点样式，键盘用户看不到焦点位置。
+   用 :focus-visible 而非 :focus —— 只在键盘操作时显示，鼠标点击不显示，保持视觉干净。 */
+#hr-app .hr-btn:focus-visible,
+#hr-app .hs-chip:focus-visible,
+#hr-app .hs-hosp:focus-visible,
+#hr-app .hs-clear:focus-visible,
+#hr-app .hs-dept-link:focus-visible,
+#hr-app .hr-head:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--hr-accent) 62%, transparent);
+  outline-offset: 2px;
+}
+#hr-app .hs-input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--hr-accent) 62%, transparent);
+  outline-offset: 1px;
+  border-color: var(--hr-accent);
+}
+/* 症状 chips 选中态（aria-pressed=true）用不同视觉，不依赖颜色单一维度 */
+#hr-app .hs-chip[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hr-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--hr-accent) 50%, transparent);
+  color: var(--hr-accent);
+}
+
+/* ========== 动画减配 ==========
+   前庭功能障碍用户对平滑滚动/闪烁敏感；系统开启 reduce 时全部降级为瞬时。 */
+@media (prefers-reduced-motion: reduce) {
+  #hr-app *,
+  #hr-app *::before,
+  #hr-app *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========== 信息核对日期 ==========
+   挂号渠道、院区等有时效性，标注核对时间让读者知道信息新鲜度。 */
+#hr-app .hr-verified {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.68rem;
+  color: var(--hr-text-muted);
+  opacity: 0.6;
+}
