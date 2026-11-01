@@ -261,7 +261,7 @@ struct CertifiedPuppy2 {
 - [Wikipedia 上的 “Data structure alignment”](https://en.wikipedia.org/wiki/Data_structure_alignment)  
 - [Swift 文档中的 “Type Layout” 文章](https://github.com/apple/swift/blob/master/docs/ABI/TypeLayout.rst)，解释了如何计算结构体的大小（size）、步长（stride）和对齐方式（alignment）。  
 - [LLVM 中的 `getAlignOf` 源码](https://github.com/apple/swift-llvm/blob/stable/lib/IR/Constants.cpp#L1800-L1811)
-- [Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数](:))
+- Swift 的 `UnsafeMutableRawPointer.allocate(byteCount:alignment:)`，带有大小和对齐参数
 
 # 总结
 
