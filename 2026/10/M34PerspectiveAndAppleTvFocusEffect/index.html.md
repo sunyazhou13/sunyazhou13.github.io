@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "m34 透视与 Apple TV 焦点卡片：从一个矩阵参数到一根滑杆"
+title: "SwiftUI 3D 悬停卡片m34动效实现"
 description: "macOS 剪贴板工具里的卡片悬停倾斜效果。从 m34 与齐次坐标讲起，实测标定 SwiftUI perspective 与 m34 的换算关系（0.6 才等于 tvOS 的 1/500），复原 Apple TV 焦点卡的四件套，并解决 3D 变换篡改命中区导致的 60fps 闪烁。"
 date: 2026-10-31 08:30 +0000
 categories: [iOS, SwiftUI]

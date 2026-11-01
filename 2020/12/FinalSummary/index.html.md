@@ -26,8 +26,6 @@ mermaid: false
 
 打工人要学会自娱自乐,写总结这个东西,我是学习着iOS技术大佬 [唐巧](https://blog.devtang.com/)和 iOS领域顶级开发者[喵神](https://onevcat.com/), 看着两位出色的iOS 开发者 每年都会在自己的博客上发布年总结,作为一个后来者我应该向他们学习记录个人的成长.
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="750" height="110" loading="lazy" sandbox="allow-popups allow-scripts allow-same-origin" src="https://www.xiami.com/webapp/embed-player?autoPlay=0&id=388407"></iframe>
-
 
 
 ## 2020回顾

@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"folder_exclude_patterns": [
+				"_site",
+				".git",
+				".jekyll-cache",
+				".sass-cache",
+				".bundle",
+				".container",
+				"node_modules",
+				"assets/images",
+				"assets/AISource",
+				"assets/tools/english-dictionary/data"
+			],
+			"file_exclude_patterns": [
+				"*.avif",
+				"*.webp",
+				"*.psd",
+				"*.sketch",
+				"*.mp3",
+				"*.m4a",
+				"*.flac",
+				"*.wav",
+				"*.ogg",
+				"*.wasm",
+				"*.zst",
+				"*.sqlite",
+				"*.p2",
+				"*.zip"
+			]
+		}
+	],
+	"settings": {
+		"tab_size": 2,
+		"translate_tabs_to_spaces": true,
+		"word_wrap": true,
+		"ensure_newline_at_eof_on_save": true,
+		"trim_trailing_white_space_on_save": "not_on_caret",
+		"highlight_line": true,
+		"index_files": true
+	}
+}
