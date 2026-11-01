@@ -1,1 +1,0 @@
-<script type="module" src="/assets/tools/translator/app.js?v=20260916i"></script>
