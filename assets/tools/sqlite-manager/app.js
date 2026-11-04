@@ -112,6 +112,12 @@
       sampleTitle: '示例',
       loadSample: '加载示例',
       draftRestored: '已恢复上次未保存的数据库',
+      pwTitle: '打开数据库',
+      pwLabel: '密码（留空 = 明文库）',
+      pwPlaceholder: 'SQLCipher 加密库请填写密码',
+      pwHint: 'DB Browser for SQLite 默认即 SQLCipher 4，填密码即可直接打开；密码不会被上传或保存。',
+      pwCancel: '取消',
+      pwOpen: '打开',
     },
     en: {
       engineLoading: 'Loading SQLite engine…',
@@ -200,6 +206,12 @@
       sampleTitle: 'Sample',
       loadSample: 'Load Sample',
       draftRestored: 'Restored your unsaved database',
+      pwTitle: 'Open Database',
+      pwLabel: 'Password (leave blank for unencrypted)',
+      pwPlaceholder: 'Enter password for SQLCipher databases',
+      pwHint: 'DB Browser for SQLite defaults to SQLCipher 4 — just enter the password. It is never uploaded or stored.',
+      pwCancel: 'Cancel',
+      pwOpen: 'Open',
     },
   };
 
@@ -212,7 +224,7 @@
   // ──────────────────────────────────────────────────
   // Worker 封装（sql.js + PapaParse 在 Worker 线程运行）
   // ──────────────────────────────────────────────────
-  const WORKER_URL = '/assets/tools/sqlite-manager/worker.js?v=5';
+  const WORKER_URL = '/assets/tools/sqlite-manager/worker.js?v=7';
   let worker = null;
   let workerReady = false;
   let reqId = 0;
@@ -308,7 +320,7 @@
 
   // 写操作后标记脏，防抖 1s 后把当前库快照存入 IndexedDB
   function markDirty() {
-    if (!state.hasDb) return;
+    if (!state.hasDb || state.encrypted) return;
     clearTimeout(saveTimer);
     saveTimer = setTimeout(async () => {
       try {
@@ -391,6 +403,7 @@
   const state = {
     hasDb: false,
     dbName: '',
+    encrypted: false, // 当前库是否为 SQLCipher 加密库（加密库跳过自动草稿，避免明文落盘）
     tables: [],   // {name, type:'table'}
     views: [],    // {name, type:'view'}
     currentTable: null,
@@ -708,6 +721,7 @@
   async function newDb() {
     await rpc('new');
     state.hasDb = true;
+    state.encrypted = false;
     state.dbName = 'untitled.sqlite';
     state.currentTable = null;
     state.isView = false;
@@ -722,13 +736,17 @@
 
   async function openFile(file) {
     if (!workerReady) return;
+    // 先询问密码：留空 = 明文库；填写 = SQLCipher 加密库（DB Browser 默认即 SQLCipher 4）
+    const key = await askPassword();
+    if (key === null) return; // 用户取消
     const reader = new FileReader();
     reader.onload = async () => {
       try {
         const u8 = new Uint8Array(reader.result);
-        await rpc('open', { bytes: u8 }, [u8.buffer]);
+        await rpc('open', { bytes: u8, key }, [u8.buffer]);
         state.hasDb = true;
         state.dbName = file.name;
+        state.encrypted = !!(key && key.length);
         state.currentTable = null;
         state.isView = false;
         state.mode = 'empty';
@@ -737,13 +755,50 @@
         await refreshSchema();
         render();
         toast(t('dbMeta', state.tables.length, state.views.length));
-        markDirty();
+        if (!state.encrypted) markDirty();
       } catch (e) {
         toast(t('errLoadFile') + e.message, 'err');
       }
     };
     reader.onerror = () => toast(t('errLoadFile') + 'IO', 'err');
     reader.readAsArrayBuffer(file);
+  }
+
+  // 打开文件前询问密码；返回 string（可能为空）或 null（取消）
+  function askPassword() {
+    return new Promise((resolve) => {
+      const html = `
+        <div class="sm-modal-head"><span>${t('pwTitle')}</span><button class="sm-modal-close" data-action="pw-close">&times;</button></div>
+        <div class="sm-modal-body">
+          <div class="sm-field">
+            <label>${t('pwLabel')}</label>
+            <input class="sm-input" id="sm-pw" type="password" placeholder="${t('pwPlaceholder')}" autofocus>
+          </div>
+          <div style="font-size:.76rem;color:var(--sm-text-muted);line-height:1.5">
+            ${t('pwHint')}
+          </div>
+        </div>
+        <div class="sm-modal-foot">
+          <button class="sm-btn sm-btn-ghost" data-action="pw-cancel">${t('pwCancel')}</button>
+          <button class="sm-btn sm-btn-primary" data-action="pw-ok">${t('pwOpen')}</button>
+        </div>`;
+      openModal(html);
+      const input = $('#sm-pw');
+      if (input) setTimeout(() => input.focus(), 0);
+      const finish = (val) => { closeModal(); resolve(val); };
+      const onDocClick = (ev) => {
+        const a = ev.target.closest('[data-action]');
+        if (!a) return;
+        const act = a.getAttribute('data-action');
+        if (act === 'pw-ok') { document.removeEventListener('click', onDocClick); finish(input ? input.value : ''); }
+        else if (act === 'pw-cancel' || act === 'pw-close') { document.removeEventListener('click', onDocClick); finish(null); }
+      };
+      document.addEventListener('click', onDocClick);
+      if (input) input.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') { document.removeEventListener('click', onDocClick); finish(input.value); }
+        else if (ev.key === 'Escape') { document.removeEventListener('click', onDocClick); finish(null); }
+      });
+    });
   }
 
   async function saveDb() {
@@ -761,6 +816,7 @@
   async function closeDb() {
     await rpc('close').catch(() => {});
     state.hasDb = false;
+    state.encrypted = false;
     state.dbName = '';
     state.tables = [];
     state.views = [];
