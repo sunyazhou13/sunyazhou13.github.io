@@ -41,6 +41,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          # 站点 artifact 约 153MB，Pages 更新常超过默认 600000ms(10min) 而被误判超时取消
-          timeout: 1800000
