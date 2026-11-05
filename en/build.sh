@@ -1,6 +1,22 @@
 #!/bin/sh
+
+# 让 bundle exec jekyll 找得到 RVM gemset。
+# 非交互 / 新开的终端里 RVM 常常没初始化，GEM_PATH 只剩 ruby 自带目录，
+# 于是 tools/build.sh 里的 `bundle exec jekyll b` 会报 Bundler::GemNotFound
+# （"Could not find jekyll-4.4.1, jekyll-polyglot-1.14.0, ... in locally installed gems"）。
+# 这里按当前 ruby 版本把 gemset 补进 GEM_PATH；已经设置好的终端不重复覆盖。
+RUBY_GEMS_DIR="$(ruby -e 'print Gem.default_dir')"
+GEMSET_DIR="$HOME/.rvm/gems/ruby-$(ruby -e 'print RUBY_VERSION')"
+if [ -d "$GEMSET_DIR" ]; then
+  [ -n "${GEM_HOME:-}" ] || export GEM_HOME="$GEMSET_DIR"
+  case ":${GEM_PATH:-}:" in
+    *":$GEMSET_DIR:"*) ;;
+    *) export GEM_PATH="$GEMSET_DIR:${GEMSET_DIR}@global:$RUBY_GEMS_DIR${GEM_PATH:+:$GEM_PATH}" ;;
+  esac
+fi
+
 ./tools/build.sh
-rm _site/config.codekit3 _site/build.sh _site/Brewfile _site/Brewfile.lock.json
+rm -f _site/config.codekit3 _site/build.sh _site/Brewfile _site/Brewfile.lock.json
 
 # --delete 不能省。
 # macOS 主盘是大小写不敏感的：_posts 里把文件改名（尤其是只改大小写，
