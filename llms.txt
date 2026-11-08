@@ -3,237 +3,286 @@
 > The blog of @sunyazhou. Writing about technology (mainly iOS), hey ball, and life.
 >
 > sunyazhou 的博客，关于技术（主要是 iOS）、台球和生活。
+>
+> 每篇文章除下方列出的简洁 Markdown 路径外，均保留 `index.html.md` 原始镜像（兼容旧链接）。
 
 ## 文章
 
-- [SwiftUI 3D 悬停卡片m34动效实现](https://sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect/index.html.md):  #SwiftUI #macOS #3D 变换 #m34 #CATransform3D #tvOS #交互设计 
-- [Rufus 制作 Windows 启动 U 盘教程](https://sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial/index.html.md): 前言 #Rufus #Windows #启动U盘 #装机 #工具 
-- [Eigen 用法笔记：矩阵运算与几何变换](https://sunyazhou.com/2026/10/EigenMatrixAndGeometry/index.html.md): 前言 #Eigen #SLAM #C++ #线性代数 #几何变换 
-- [ffmpeg 视频转动图 AVIF：一条命令讲透](https://sunyazhou.com/2026/09/ConvertVideoToAnimatedAvifWithFfmpeg/index.html.md): 前言 #ffmpeg #AVIF #动图 #视频转码 #图片格式 
-- [iOS 27 适配 iPhone Duo：六个新 API 的 Swift / Objective-C 整理](https://sunyazhou.com/2026/09/AdaptingAppsToIphoneDuoInIos27/index.html.md):  #iOS 27 #iPhone Duo #Swift #Objective-C #SwiftUI #UIKit #折叠屏 
-- [用本地大模型离线翻译博客：Ollama + Qwen2.5 实战](https://sunyazhou.com/2026/08/LocalLLMMarkdownTranslator/index.html.md):  #Ollama #翻译 #本地大模型 
-- [国内免费的AI Agent算力工具](https://sunyazhou.com/2026/08/Aiagenttools/index.html.md):  
-- [Jekyll-compose完全指南:你可能不知道的七个命令](https://sunyazhou.com/2026/08/Jekyllcomposecompleteguide/index.html.md):  #Jekyll #Blog #jekyll-compose #hexo #skills 
-- [Jekyll博客支持类Hexo的文章模板与多语言创建](https://sunyazhou.com/2026/08/Jekyllpostscaffoldmultilang/index.html.md):  #Jekyll #Blog #hexo #polyglot #skills 
-- [CMU 15-462/662 计算机图形学：全算法与公式](https://sunyazhou.com/2026/08/Cmu15/index.html.md):  #cmu #graphics #algorithm #math #learning 
-- [数学公式渲染](https://sunyazhou.com/2026/08/Mathformula/index.html.md): 前言 #math #test 
-- [跨平台桌面框架选型深度对比：一个 iOS 开发者的 Qt6 之旅](https://sunyazhou.com/2026/07/Crossplatformdesktopframeworkcomparison/index.html.md):  #Electron #Tauri #Qt6 #Flutter #React Native #uni-app #Taro #Python #LangChain #Deno #鸿蒙 #微信小程序 #AI Agent 
-- [35项「卡脖子」技术攻坚进展梳理](https://sunyazhou.com/2026/07/35ChokePointTechnologies/index.html.md):  #35项「卡脖子」技术攻坚 
-- [LLVM `__attribute__` 完全指南.](https://sunyazhou.com/2026/07/LLVMAttributeCompleteGuide/index.html.md): 前言 #skills #iOS #Swift #Objective-C #LLVM 
-- [在 SwiftUI 的 Stack 中避免使用 Spacer](https://sunyazhou.com/2026/03/Avoidspacersinswiftuistacks/index.html.md): 前言 #skills #iOS #Swift #Objective-C 
-- [使用 SwiftUI Canvas 实现魔幻粒子效果](https://sunyazhou.com/2026/03/Magicalparticleeffectswithswiftuicanvas/index.html.md): 前言 #skills #iOS #Swift #Objective-C 
-- [Jekyll博客支持Tab切换代码块](https://sunyazhou.com/2026/03/JekyllTabsCodeBlock/index.html.md):  #skills #iOS #Swift #Objective-C 
-- [使用libtag库获取音频metadata元数据](https://sunyazhou.com/2026/01/Audiometadata/index.html.md): 前言 #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [2025年终总结](https://sunyazhou.com/2025/12/Finalsummary/index.html.md):  #年终总结 
-- [揭秘 AI 编码代理：用 Swift 构建你自己的Agent](https://sunyazhou.com/2025/11/Swiftaiagent/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C 
-- [在 iOS 中使用 UIBezierPath 插值点](https://sunyazhou.com/2025/10/InterpolatingPointsInIosWithUibezierpath/index.html.md): 前言 #iOS #macOS #Objective-C 
-- [GPU内存对齐算法](https://sunyazhou.com/2025/05/MemoryAlignmentAlgorithm/index.html.md):  #iOS #SwiftUI #Swift #Objective-C 
-- [Swift结构体实例内存布局的基础知识](https://sunyazhou.com/2025/02/TheBasicsOnTheMemoryLayoutOfSwiftStructInstances/index.html.md):  #iOS #SwiftUI #Swift #Objective-C 
-- [如何使用unsafe Swift指针类型直接访问内存并与C交互](https://sunyazhou.com/2025/02/UnsafeSwiftUsingPointersAndInteractingWithC/index.html.md):  #iOS #SwiftUI #Swift #Objective-C 
-- [2024年终总结](https://sunyazhou.com/2024/12/FinalSummary/index.html.md): 将一切困难踩在脚下 #年终总结 
-- [CoreText渲染字体的时如何计算字体所需要的高度?](https://sunyazhou.com/2024/11/Coretextcalculatedheight/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [iOS的dSYM中ARM Thread State寄存器有哪些？](https://sunyazhou.com/2024/11/Armthreadstate/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [SwiftUI中的Image修改器(视图修饰符)有哪些？](https://sunyazhou.com/2024/10/Swiftuiimage/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [iOS卡顿监控代码](https://sunyazhou.com/2024/10/Hangmonitor/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C #skills 
-- [UIImage镜像](https://sunyazhou.com/2024/10/UIImageMirror/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C #skills 
-- [CFNotification进程间通讯](https://sunyazhou.com/2024/09/Cfnotificationprocesscommunication/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [在Objective-C中多层block嵌套时如何使用weak self和strong self](https://sunyazhou.com/2024/08/Multiblockembedded/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [NSIntegerMax整数溢出问题记录](https://sunyazhou.com/2024/08/Dispatchafternsintegermax/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C #skills 
-- [PickingInMetal](https://sunyazhou.com/2024/08/PickingInMetal/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C 
-- [Swift中的do catch](https://sunyazhou.com/2024/08/Docatchinswift/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [iOS中如何解决跨天日期变化](https://sunyazhou.com/2024/07/UIApplicationSignificantTimeChangeNotification/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [swiftUI中添加拟合手势MagnificationGesture](https://sunyazhou.com/2024/07/Magnificationgesture/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [使用UIViewRepresentable  在SwiftUI中桥接 UIKit 视图](https://sunyazhou.com/2024/07/UIViewrepresentable/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [Kerning文字排版计算](https://sunyazhou.com/2024/07/Kerning/index.html.md): 前言 #iOS #iPadOS #watchOS #SwiftUI #Masonry 
-- [hitTest标准写法](https://sunyazhou.com/2024/07/Hitteststd/index.html.md): 前言 #Objective-C 
-- [平滑阶梯函数smoothstep](https://sunyazhou.com/2024/05/Smoothstep/index.html.md): 前言 #iOS #macOS #Objective-C #Swift 
-- [HarmonyOS动画分类](https://sunyazhou.com/2024/05/ArkTSAnimation/index.html.md):  #鸿蒙OS开发 #HarmonyOS #ArkTS #Ark动画 
-- [保持原UIImage缩放比的计算方法](https://sunyazhou.com/2024/04/Keepimagescale/index.html.md): 前言 #iOS #iPadOS #watchOS #SwiftUI #Masonry 
-- [使用Masonry高阶方法对子视图统一布局](https://sunyazhou.com/2024/03/Masonryrelayoutviews/index.html.md): 前言 #iOS #iPadOS #watchOS #SwiftUI #Masonry 
-- [运动传感器摇晃检测](https://sunyazhou.com/2024/02/MotionShake/index.html.md):  #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [iOS控制中心收藏按钮likeCommand动画](https://sunyazhou.com/2024/01/Mpremotecommandlikecommand/index.html.md): 前言 #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [ArkTS和ArkUI基础语法](https://sunyazhou.com/2024/01/ArkTSBasic/index.html.md):  #鸿蒙OS开发 #HarmonyOS #ArkTS 
-- [解决如何从鸿蒙手机传文件到macOS](https://sunyazhou.com/2024/01/HarmonyPhoneSendFileTomacOS/index.html.md):  #鸿蒙OS开发 #HarmonyOS 
-- [鸿蒙启动页面开发](https://sunyazhou.com/2024/01/HarmonyOSLaunchPage/index.html.md):  #鸿蒙OS开发 #HarmonyOS 
-- [2023年终总结](https://sunyazhou.com/2023/12/FinalSummary/index.html.md): 繁华的北京二环东四十条天桥夜景 #年终总结 
-- [SQL语句的标准](https://sunyazhou.com/2023/10/Sqlstandard/index.html.md): 前言 #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [解决iOS小组件开发中widgetURL问题](https://sunyazhou.com/2023/09/ios17widgetURL/index.html.md):  #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [SwiftUI第五章学习总结](https://sunyazhou.com/2023/09/Learnswiftuichapter5/index.html.md): 前言 #iOS #macOS #Objective-C #SwiftUI 
-- [SwiftUI第四章学习总结](https://sunyazhou.com/2023/09/Learnswiftuichapter4/index.html.md): 前言 #iOS #macOS #Objective-C #SwiftUI 
-- [SwiftUI第三章学习总结](https://sunyazhou.com/2023/08/Learnswiftuichapter3/index.html.md):  #iOS #macOS #Objective-C #SwiftUI 
-- [开发iOS17小组件](https://sunyazhou.com/2023/08/ios17widget/index.html.md): 前言 #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [SwiftUI可用性检测,解决小组件iOS17 available问题](https://sunyazhou.com/2023/08/Swiftuiextention1/index.html.md): 前言 #iOS #macOS #iPadOS #watchOS #SwiftUI 
-- [SwiftUI第二章学习总结](https://sunyazhou.com/2023/06/Learnswiftuichapter2/index.html.md):  #iOS #macOS #Objective-C #SwiftUI 
-- [解决iOS16 WKWebview无法调试问题](https://sunyazhou.com/2023/06/ios16wkwebview/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [UIImage黑白滤镜](https://sunyazhou.com/2023/06/Blackwhitefilter/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [学习如何在visionOS上开发APP](https://sunyazhou.com/2023/06/Learnaboutvisionos/index.html.md):  #visionOS #Swift #SwiftUI 
-- [Shell脚本批量将heic转png和webp](https://sunyazhou.com/2023/06/Batchconvertheictopng/index.html.md): 前言 #macOS #Xcode #skills 
-- [SwiftUI第一章学习总结](https://sunyazhou.com/2023/06/Learnswiftuichapter1/index.html.md):  #iOS #macOS #Objective-C #SwiftUI 
-- [CocoaPods完全使用指南](https://sunyazhou.com/2023/04/Cocoapodsuserguide/index.html.md):  #iOS #macOS #Objective-C #Cocoapods #skills 
-- [pod仓库的常用命令](https://sunyazhou.com/2023/04/Podcommands/index.html.md):  #iOS #macOS #Objective-C #Cocoapods #skills 
-- [如何在pod中的podspec使用XCAssets](https://sunyazhou.com/2023/03/Podxcassets/index.html.md):  #iOS #macOS #Objective-C #Cocoapods #skills 
-- [Flutter中的Form表单](https://sunyazhou.com/2023/03/Flutterformtextfield/index.html.md):  #iOS #Dart #Objective-C #skills 
-- [使用SwiftUI绘制环形 Slider](https://sunyazhou.com/2023/03/Circularsliderview/index.html.md): 前言 #iOS #SwiftUI #Swift #Objective-C #skills 
-- [Flutter的有状态StatefulWidget生命周期](https://sunyazhou.com/2023/03/Flutterlifecycle/index.html.md):  #iOS #Dart #Objective-C #skills 
-- [whimsical模块设计](https://sunyazhou.com/2023/03/Whimsical/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [objc中的类型安全转换](https://sunyazhou.com/2023/03/Safecast/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [iOS中NSDate是否是今天Today](https://sunyazhou.com/2023/02/NSDateIsToday/index.html.md):  #iOS #Swift #Objective-C #skills 
-- [博客的图片资源优化](https://sunyazhou.com/2023/02/Webpenhancement/index.html.md): 前言 #Linux #shell 
-- [如何使用jekyll发布一篇文章](https://sunyazhou.com/2023/02/Jekyllpost/index.html.md): 前言 #Linux #shell 
-- [Swift中的defer关键字](https://sunyazhou.com/2023/02/SwiftDefer/index.html.md): 前言 #iOS #Swift #Objective-C #skills 
-- [2022年终总结](https://sunyazhou.com/2022/12/FinalSummary/index.html.md):  #年终总结 
-- [模仿Q音径向渐变动画](https://sunyazhou.com/2022/12/Gradientlayeranimation/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [《The Sunyazhou Theory Ⅱ》的诞生](https://sunyazhou.com/2022/12/Thesunyazhoutheoryii/index.html.md):  #理论 
-- [SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject](https://sunyazhou.com/2022/11/Swiftuipropertywrapper/index.html.md):  #iOS #SwiftUI #Swift #Objective-C #skills 
-- [NS-OPTIONS的用法](https://sunyazhou.com/2022/09/Howtousensoptions/index.html.md): 前言 #iOS #Swift #Objective-C #skills 
-- [FB内存检测工具分享](https://sunyazhou.com/2022/09/Fbmemorychecktool/index.html.md):  #iOS #Swift #Objective-C #skills 
-- [iOS开发中的字符串枚举](https://sunyazhou.com/2022/08/NSStringEnum/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [检查Cell是否滚动出屏幕之外](https://sunyazhou.com/2022/08/Checkcellscrolloutscreen/index.html.md): 前言 #Algorithm #C++ 
-- [iOS面试问题记录](https://sunyazhou.com/2022/07/iosinterviewproblems/index.html.md): 前言 #iOS #Swift #Objective-C #skills 
-- [iOS中的OOM](https://sunyazhou.com/2022/07/iosoom/index.html.md):  #iOS #Swift #Objective-C #skills 
-- [iOS中的崩溃类型](https://sunyazhou.com/2022/07/ioscrashtype/index.html.md):  #iOS #Swift #Objective-C #skills 
-- [iOS寻找两个UIView的最近的公共父类](https://sunyazhou.com/2022/07/Commonsuperview/index.html.md):  #Algorithm #C++ 
-- [二叉树的前、中、后序遍历](https://sunyazhou.com/2022/07/Binarytreeorder/index.html.md):  #Algorithm #C++ 
-- [岛屿数量](https://sunyazhou.com/2022/07/Islandscount/index.html.md):  #Algorithm #C++ 
-- [最长回文子串](https://sunyazhou.com/2022/07/Longestpalindrome/index.html.md):  #Algorithm #C++ 
-- [合并两个有序数组](https://sunyazhou.com/2022/07/Mergesortarray/index.html.md):  #Algorithm #C++ 
-- [二叉树的最近公共祖先](https://sunyazhou.com/2022/07/Commonancestor/index.html.md):  #Algorithm #C++ 
-- [搜索旋转排序数组](https://sunyazhou.com/2022/07/Searchrotatearray/index.html.md):  #Algorithm #C++ 
-- [二叉树的锯齿形层序遍历](https://sunyazhou.com/2022/07/Zigzaglevelorder/index.html.md):  #Algorithm #C++ 
-- [环形链表](https://sunyazhou.com/2022/07/Cyclelinktable/index.html.md):  #Algorithm #C++ 
-- [二叉树的层序遍历](https://sunyazhou.com/2022/07/Binarytreelevelorder/index.html.md):  #Algorithm #C++ 
-- [两数之和](https://sunyazhou.com/2022/07/Twosum/index.html.md):  #Algorithm #C++ 
-- [合并两个有序链表](https://sunyazhou.com/2022/07/Mergetwolists/index.html.md):  #Algorithm #C++ 
-- [最大子数组和](https://sunyazhou.com/2022/07/Maxsubarray/index.html.md):  #Algorithm #C++ 
-- [三数之和](https://sunyazhou.com/2022/07/Threesum/index.html.md):  #Algorithm #C++ 
-- [数组中的第K个最大元素](https://sunyazhou.com/2022/07/Kthlargest/index.html.md):  #Algorithm #C++ 
-- [LRU 缓存](https://sunyazhou.com/2022/07/Lrucache/index.html.md):  #Algorithm #C++ 
-- [无重复字符的最长子串](https://sunyazhou.com/2022/07/Longestsubstring/index.html.md):  #Algorithm #C++ 
-- [反转链表](https://sunyazhou.com/2022/07/Reverselist/index.html.md):  #Algorithm #C++ 
-- [macos鼠标软件MOS](https://sunyazhou.com/2022/04/Mos/index.html.md):  #Swift #AVFoundation #Git 
-- [开发分支管理模型](https://sunyazhou.com/2022/04/BranchManage/index.html.md):  #Swift #AVFoundation #Git 
-- [开源YZ3DMenu导航菜单](https://sunyazhou.com/2022/04/YZ3DMenu/index.html.md):  #Swift #AVFoundation 
-- [深入理解CVPixelBufferRef](https://sunyazhou.com/2022/04/CVPixelBufferRef/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [2021年终总结](https://sunyazhou.com/2021/12/FinalSummary/index.html.md):  #年终总结 
-- [iOS开发高手课01-建立你自己的iOS开发知识体系](https://sunyazhou.com/2021/12/iOSLessonsStudyNotes1/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [如何计算文本中某些单词出现的频率](https://sunyazhou.com/2021/12/WordFrepuency/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [swift中求一个集合中子集](https://sunyazhou.com/2021/10/SwiftSubSets/index.html.md): 前言 #iOS #Swift #Objective-C #skills 
-- [如何判断NSString是纯数字类型](https://sunyazhou.com/2021/06/CheckNSStringIsPureInteger/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [WCDB实践记录](https://sunyazhou.com/2021/04/WCDBPractice/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [UTIs苹果官方的文件扩展名全集](https://sunyazhou.com/2021/02/UTIsOfficalFileExtensionName/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [滚动文本设置渐变颜色](https://sunyazhou.com/2021/01/TextGradient/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [获取UIWindow的边界距离](https://sunyazhou.com/2021/01/SafeAreaEdges/index.html.md): 前言 #iOS #Swift #Objective-C 
-- [2020年终总结](https://sunyazhou.com/2020/12/FinalSummary/index.html.md): 2020年8月 舒兰服务区.结束北漂回家的路上. #年终总结 
-- [解决iOS系统时间被修改的问题](https://sunyazhou.com/2020/12/iOSsynchronousTimeWithServer/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [解决iOS调用系统相册不显示中文问题](https://sunyazhou.com/2020/10/WebviewSystemLanguage/index.html.md): 前言 #iOS #macOS #Objective-C #Swift #skills 
-- [修复Xcode Source Editor在masOS的扩展中不显示](https://sunyazhou.com/2020/10/XcodeSourceEditorNotWork/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [Pod spec集成第三framework和.a工作记录](https://sunyazhou.com/2020/10/PodSpec/index.html.md):  #iOS #Swift #Objective-C #Cocoapods #skills 
-- [使用Xcode配置文件来管理不同的环境设置](https://sunyazhou.com/2020/10/XcodeBuildXcconfigFile/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之性能优化](https://sunyazhou.com/2020/09/iOSinterviewPerformanceOptimization/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之视图&图形](https://sunyazhou.com/2020/09/UIViewGraphic/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之多线程](https://sunyazhou.com/2020/09/GCD/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之Block](https://sunyazhou.com/2020/09/Block/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之Runloop&KVO](https://sunyazhou.com/2020/09/iOSinterviewAnswers5/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之NSNotification相关](https://sunyazhou.com/2020/09/iOSinterviewAnswers4/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之runtime相关问题3](https://sunyazhou.com/2020/08/iOSinterviewAnswers3/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之runtime相关问题2](https://sunyazhou.com/2020/08/iOSinterviewAnswers2/index.html.md):  #Algorithm #Objective-C 
-- [阿里、字节：一套高效的iOS面试题之runtime相关问题1](https://sunyazhou.com/2020/07/iOSinterviewAnswers1/index.html.md):  #Algorithm #Objective-C 
-- [Cocoapods清华镜像](https://sunyazhou.com/2020/04/CocoapodsProblems/index.html.md): 前言 #iOS #macOS #Objective-C #skills #Cocoapods 
-- [使用Masonry处理UIView的safeArea边界布局问题](https://sunyazhou.com/2020/04/MasonryTricks/index.html.md): 前言 #iOS #macOS #Objective-C #Masonry 
-- [(转)深度理解 NSURLProtocol](https://sunyazhou.com/2020/03/NSURLProtocol/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [《孙亚洲理论》的诞生](https://sunyazhou.com/2020/02/SunyazhouTheory/index.html.md):  #理论 
-- [2019年终总结](https://sunyazhou.com/2019/12/FinalSummary/index.html.md):  #年终总结 
-- [简单了解LLDB调试工具chisel](https://sunyazhou.com/2019/12/Chisel/index.html.md):  #iOS #macOS #Objective-C #Swift #skills 
-- [图形示意绘制工具](https://sunyazhou.com/2019/12/MathGraphicTool/index.html.md):  #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
-- [使用Masonry约束实现简单的高级拖拽视图](https://sunyazhou.com/2019/09/MasonryPanViewDemo/index.html.md):  #iOS #macOS #Objective-C #Swift #Masonry 
-- [UITraitCollection详解](https://sunyazhou.com/2019/09/UITraitCollection/index.html.md):  #iOS #macOS #Objective-C #Swift #skills 
-- [从零学习OpenGLES的纹理渲染](https://sunyazhou.com/2019/09/OpenGLESDemo1/index.html.md):  #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
-- [做一个简单的Loading动画](https://sunyazhou.com/2019/07/LoadingAnimationI/index.html.md):  #iOS #动画 #Objective-C #skills 
-- [CentOS7安装iptables防火墙](https://sunyazhou.com/2019/05/CentosIptables/index.html.md): 前言 #Linux #shell 
-- [Cleaner For Xcode编译](https://sunyazhou.com/2019/05/CleanerForXcodeBuild/index.html.md):  #iOS #macOS #Objective-C #Swift #skills 
-- [Windows装机教程](https://sunyazhou.com/2019/04/WindowsResources/index.html.md): 前言 #win7 
-- [AVRoutePickerView](https://sunyazhou.com/2019/04/AVRoutePickerView/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #AVKit #音视频 
-- [iOS抖音滚动字幕](https://sunyazhou.com/2019/03/UIScrollTextDemo/index.html.md):  #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [Mac上的一些好软件推荐](https://sunyazhou.com/2019/02/Tools/index.html.md): 前言 #iOS #macOS #Objective-C #Swift #skills 
-- [2018年终总结](https://sunyazhou.com/2018/12/FinalSummary/index.html.md):  #年终总结 
-- [iOS抖音的转场动画](https://sunyazhou.com/2018/12/AwemeTransition/index.html.md): 前言 #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [探测UIPanGesture的滑动方向](https://sunyazhou.com/2018/12/DetectingPanGestureDirection/index.html.md): 前言 #iOS #Objective-C #Swift #skills 
-- [iOS抖音点赞动画实现](https://sunyazhou.com/2018/11/LikeAnimation/index.html.md): 前言 #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [iOS视频加载动画](https://sunyazhou.com/2018/11/PlayLoadingAnimation/index.html.md): 前言 #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [iOS所有Animation相关可用的Keypath](https://sunyazhou.com/2018/11/AllKeypathOfCALayer/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [iOS抖音右下角专辑动画](https://sunyazhou.com/2018/11/AwemeAlbumAnimation/index.html.md): 前言 #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [iOS抖音的上下滑实现](https://sunyazhou.com/2018/11/AwemeTopBottomScrollDemo/index.html.md): 前言 #iOS #动画 #抖音动画系列 #Objective-C #skills 
-- [iOS数字倍数动画](https://sunyazhou.com/2018/10/LabelDanceAnimation/index.html.md): 前言 #iOS #动画 #Objective-C #skills 
-- [iOS呼吸动画](https://sunyazhou.com/2018/09/BreathAnimation/index.html.md): 前言 #iOS #动画 #Objective-C #skills 
-- [iOS扩大UIButton的点击的响应范围](https://sunyazhou.com/2018/09/IncreasingTapAreaOfButton/index.html.md): 前言 #iOS #Objective-C #skills 
-- [iOS键盘动画细节](https://sunyazhou.com/2018/09/KeyboardAnimation/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [船与灯塔](https://sunyazhou.com/2018/09/Beacon/index.html.md): 前言 #系统理论实践 
-- [iOS中CPU线程调试高级技巧](https://sunyazhou.com/2018/08/CPUThreadDebug/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [Taptic Engine振动反馈](https://sunyazhou.com/2018/08/TapticEngineFeedback/index.html.md):  #iOS #Objective-C #skills 
-- [利用UIToolBar做高斯模糊背景](https://sunyazhou.com/2018/07/ToolBarBlur/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [Linux 终端 Bash 常用快捷键介绍及经验](https://sunyazhou.com/2018/07/LinuxBash/index.html.md):  #系统理论实践 #macOS #skills 
-- [Objective-C中使用正则去除非数字字母汉字](https://sunyazhou.com/2018/06/FilterString/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [使用NSAttributeString实现不同颜色大小显示](https://sunyazhou.com/2018/06/NSAttributeString/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [Swift4.2中的随机数](https://sunyazhou.com/2018/06/SwiftRandom/index.html.md):  #iOS #macOS #Objective-C #Swift #skills 
-- [Swift中的随机数](https://sunyazhou.com/2018/06/Random/index.html.md):  #iOS #macOS #Objective-C #Swift #skills 
-- [UIView不同方向的导角](https://sunyazhou.com/2018/05/HowToCreateTopBottomRoundedCornersForViews/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [手动管理UIViewController的生命周期](https://sunyazhou.com/2018/05/ManualControlUIViewControllerLifeCycle/index.html.md): 前言 #iOS #macOS #Objective-C 
-- [AudioUnit](https://sunyazhou.com/2018/05/AudioUnit/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [深入理解RunLoop](https://sunyazhou.com/2018/04/RunLoop/index.html.md):  #iOS #macOS #Objective-C 
-- [Swift 4 中的数组技巧](https://sunyazhou.com/2018/03/Swft4ArraySkills/index.html.md): 前言 #iOS #macOS #Objective-C #Swift #skills 
-- [什么是符号表?](https://sunyazhou.com/2018/03/WhatIsThedSYM/index.html.md):  #iOS #macOS #Objective-C 
-- [计算机图形渲染的流程](https://sunyazhou.com/2018/03/ComputerGraphicsRenderingProcess/index.html.md):  #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
-- [Learning AV Foundation(五)播放视频](https://sunyazhou.com/2018/03/LearningAVFoundationPlayingVideo/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [NLP分词WordEmbeding](https://sunyazhou.com/2018/02/WordEmbeding/index.html.md):  #python 
-- [使用Python操作MySQL数据库](https://sunyazhou.com/2018/01/PythonMySQL/index.html.md):  #python 
-- [AVAudioSession-Category各种姿势](https://sunyazhou.com/2018/01/AVAudioSessionCategory/index.html.md): 前言 #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [2017年终总结](https://sunyazhou.com/2017/12/FinalSummary/index.html.md):  #年终总结 
-- [Markdown中插入音频文件](https://sunyazhou.com/2017/12/MarkdownAudio/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [音频声像Pan值电平左右声道平衡](https://sunyazhou.com/2017/12/AudioPan/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [UICollectionViewCell添加KVO](https://sunyazhou.com/2017/12/CellAddKVO/index.html.md):  #iOS #Objective-C #skills 
-- [论一个优雅的模态转场的自我修养](https://sunyazhou.com/2017/10/ElegantPresentTransition/index.html.md): 前言 #iOS #Objective-C 
-- [markdown嵌入折叠标签](https://sunyazhou.com/2017/10/MarkdownSkill/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [理解UIView的绘制](https://sunyazhou.com/2017/10/UIViewRendering/index.html.md):  #iOS #Objective-C 
-- [DeviceCheck](https://sunyazhou.com/2017/09/DeviceCheck/index.html.md):  #iOS #macOS #Objective-C 
-- [Markdown插入表格语法](https://sunyazhou.com/2017/09/MarkdownTable/index.html.md): 前言 #skills 
-- [如何使用Charles截获https请求](https://sunyazhou.com/2017/09/CharlesCaptureHttps/index.html.md): 前言 #iOS #macOS #Objective-C #skills 
-- [ARKit](https://sunyazhou.com/2017/08/ARKit/index.html.md): 前言 #iOS #macOS #Objective-C 
-- [Learning AV Foundation(四)AVAsset元数据(高级篇)](https://sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [iOS 11 新技能](https://sunyazhou.com/2017/07/ios11NewSkills/index.html.md):  #iOS #macOS #Objective-C 
-- [iOS生成随机UIColor颜色代码](https://sunyazhou.com/2017/07/Arc4RandomColor/index.html.md): 12345678- (UIColor *)randomColor{ CGFloat hue = ( arc4random() % 256 / 256.0 ); // 0.0 to 1.0 CGFloat saturation =... #iOS #macOS #Objective-C 
-- [iOS获取各种文件目录的路径](https://sunyazhou.com/2017/06/GetSandboxPathios/index.html.md): 12345678910// 获取沙盒主目录路径NSString *homeDir = NSHomeDirectory();// 获取Documents目录路径NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];// 获取Library的目录路径NSString *libDir = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];// 获取Caches目录路径NSString... #iOS #macOS #Objective-C 
-- [iOS Android Php RSA加密解密通配方案](https://sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/index.html.md):  #iOS #macOS #Objective-C 
-- [Xcode开启静态分析器](https://sunyazhou.com/2017/06/EnableStaticAnalyer/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [如何在Objective-C中废弃一个方法](https://sunyazhou.com/2017/06/HowToDeprecatedAMothodInObjC/index.html.md): 前言 #iOS #macOS #Objective-C 
-- [Xcode9新功能 无线真机调试](https://sunyazhou.com/2017/06/XcodeDebugViaWireless/index.html.md): 效果今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行 #iOS #macOS #Objective-C #skills 
-- [Learning AV Foundation(四)AVAsset元数据(基础篇)](https://sunyazhou.com/2017/06/LearningAVFoundationAVAssetBasic/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [OpenGL编程语言-glsl基础](https://sunyazhou.com/2017/05/OpenGLglslLanguage/index.html.md): 前言 #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
-- [自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色](https://sunyazhou.com/2017/05/NSTableRowViewMouseTrackColor/index.html.md): ``` objc#import “BDRowView.h” #iOS #macOS #Objective-C 
-- [如何在macOS/MAC OS X上创建替身文件](https://sunyazhou.com/2017/05/HowToCreateSymbolicLinkOnMacosInCode/index.html.md):  #iOS #macOS #Objective-C 
-- [向往计算机科学相关专业的必学经典](https://sunyazhou.com/2017/04/CmputerScienceAndTechnologyClassic/index.html.md):  #系统理论实践 
-- [如何在iOS/macOS系统中创建文件时创建唯一的文件名](https://sunyazhou.com/2017/04/UniqueFilenameInSystem/index.html.md):  #iOS #macOS #Objective-C 
-- [Xcode快捷键](https://sunyazhou.com/2017/04/XcodeShortcuts/index.html.md):  #iOS #macOS #Objective-C #skills 
-- [隐私及敏感数据访问权限(Access privacy-sensitive data)](https://sunyazhou.com/2017/03/AccessPrivacySensitive/index.html.md): 在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app’s Info.plist must... #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [Learning AV Foundation(三)AVAudioRecorder](https://sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [判断NSWindow是否全屏](https://sunyazhou.com/2017/03/CheckNSWindowisFullScreen/index.html.md): ``` objc@interface NSWindow (FullScreen) #macOS #Objective-C 
-- [Learning AV Foundation(二)AVAudioPlayer](https://sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [Learning AV Foundation(一)汉字语音朗读](https://sunyazhou.com/2017/03/LearningAVFoundationAVSpeechSynthesizer/index.html.md):  #iOS #macOS #Objective-C #AVFoundation #音视频 
-- [macOS上模拟发送键盘事件](https://sunyazhou.com/2017/02/macOSsimulateKeyboradNSEvent/index.html.md):  #iOS #macOS #Objective-C 
-- [使用终端删除NSUserDefault的内容](https://sunyazhou.com/2017/02/ClearNSUserDefaultCcontent/index.html.md): 前言  大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息 #iOS #macOS #Objective-C 
-- [iOS如何让二维码/条形码扫描框跟随二维码移动](https://sunyazhou.com/2017/02/ScanBoundsTracking/index.html.md): 前言 #iOS #macOS #Objective-C 
-- [iOS语言本地化/国际化一些技巧](https://sunyazhou.com/2017/02/iOSInternationalizationLanguageSkills/index.html.md): 代码获取国际化语言数组获取当前app使用的语言123    NSArray *langArr1 = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];    NSString *language1 = langArr1.firstObject;    NSLog(@"模拟器语言：%@",language1); #iOS #macOS #Objective-C 
-- [搭建hexo博客教程](https://sunyazhou.com/2017/02/BuildHexoBlogTutorial/index.html.md):   Jekyll迁移到Hexo搭建个人博客 #skills 
-- [DFS算法扫描上传文件/文件夹](https://sunyazhou.com/2017/02/DFSAlgorithm/index.html.md): DFS需求背景  在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况1231. 如果文件里面包含子文件夹的N层嵌套2. 如何过滤非空文件夹3. 如何处理根层文件夹没有文件那么文件目录也需要创建举例例子 #iOS #macOS #Objective-C #Swift 
-- [如何使用git管理代码](https://sunyazhou.com/2017/02/HowToUseGitManageCode/index.html.md):  #iOS #macOS #Git #skills 
-- [Webview的NSScrollView禁用滑动功能](https://sunyazhou.com/2017/02/HowtToDisableWebviewNSScrollViewScroll/index.html.md): 在webview的WebFrameLoadDelegate代理里面实现如下代码 #macOS #Objective-C 
-- [iOS开发知识点积累](https://sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate/index.html.md):   搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来发现不但栈溢出，堆也快存不住海量的iOS技术文章了。。。唉于是我的chrome上保留了所有经典的文章标签和浏览器网页地址，现在我想把它整理出来放在博客里，方便查找某技术实现的代码(其实我的原百度云小伙伴实习生都觉得我能对某种技术存储如此详细赶到惊叹).好了 我们开始iOS知识点技术导航 #iOS #macOS #Objective-C #音视频 
-- [学习macOS开发的路线](https://sunyazhou.com/2017/01/LearningmacOSdevelopmentShortcut/index.html.md): 开发总结 #iOS #macOS #Objective-C #skills 
-- [UIViewController代码规范](https://sunyazhou.com/2017/01/UIViewControllerCodeStandard/index.html.md): pragma 标准写法 #iOS #Swift #macOS 
+- [SwiftUI 3D 悬停卡片m34动效实现](https://www.sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect.md): macOS 剪贴板工具里的卡片悬停倾斜效果。从 m34 与齐次坐标讲起，实测标定 SwiftUI perspective 与 m34 的换算关系（0.6 才等于 tvOS 的 1/500），复原 Ap… #SwiftUI #macOS #3D 变换 #m34 #CATransform3D #tvOS #交互设计 
+- [Rufus 制作 Windows 启动 U 盘教程](https://www.sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial.md): 整理 Rufus 这款免费开源装机工具的用法，手把手教你制作 Windows 11/10 启动 U 盘，详解分区方案、文件系统等关键选项，并标注官方与参考来源，方便后续装机。 #Rufus #Windows #启动U盘 #装机 #工具 
+- [Eigen 用法笔记：矩阵运算与几何变换](https://www.sunyazhou.com/2026/10/EigenMatrixAndGeometry.md): macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Iso… #Eigen #SLAM #C++ #线性代数 #几何变换 
+- [ffmpeg 视频转动图 AVIF：一条命令讲透](https://www.sunyazhou.com/2026/09/ConvertVideoToAnimatedAvifWithFfmpeg.md): 上面这张动图就是从一段 4.3 秒的录屏转出来的， 571 KB ，无限循环播放。素材是 Apple 官方的 iPhone Duo 折叠演示片段。 就这一条。原文件 19.9 MB，出来 571 KB… #ffmpeg #AVIF #动图 #视频转码 #图片格式 
+- [iOS 27 适配 iPhone Duo：六个新 API 的 Swift / Objective-C 整理](https://www.sunyazhou.com/2026/09/AdaptingAppsToIphoneDuoInIos27.md): 写在前面：这是一篇"纸上谈兵"的整理 先说清楚三件事，免得后面有人照着抄然后来骂我： 1. 我没有 Xcode 27.1 beta ，也没有 iPhone Duo 的模拟器（Device Hub）。所… #iOS 27 #iPhone Duo #Swift #Objective-C #SwiftUI #UIKit #折叠屏 
+- [用本地大模型离线翻译博客：Ollama + Qwen2.5 实战](https://www.sunyazhou.com/2026/08/LocalLLMMarkdownTranslator.md): 大模型（LLM）不仅能聊天写代码，翻译也是它的强项。但多数人第一反应是开个 ChatGPT 或翻译 API——要联网、要账号、要付费，内容还得出境。 其实你自己的 Mac 就能跑一个开源大模型，离线把… #Ollama #翻译 #本地大模型 
+- [国内免费的AI Agent算力工具](https://www.sunyazhou.com/2026/08/Aiagenttools.md): 以下是补充了 写作背景 后的完整报告： 2026年中国AI办公智能体市场全览报告 报告日期 ：2026年8月24日 数据来源 ：易观《2026年Q2中国办公智能体平台市场洞察报告》、德本咨询(DBC)… 
+- [Jekyll-compose完全指南:你可能不知道的七个命令](https://www.sunyazhou.com/2026/08/Jekyllcomposecompleteguide.md): 上一篇文章里给博客做了类 Hexo 的文章模板和多语言创建, 当时为了确认 bundle exec jekyll post 的能力边界, 把本机安装的 jekyll-compose 0.12.0 源码… #Jekyll #Blog #jekyll-compose #hexo #skills 
+- [Jekyll博客支持类Hexo的文章模板与多语言创建](https://www.sunyazhou.com/2026/08/Jekyllpostscaffoldmultilang.md): 写博客这几年,建文章的流程一直有点别扭. 本站基于 Jekyll + Chirpy 主题,创建文章用的是 jekyll-compose 提供的命令: 之前从 Hexo 转过来的朋友都知道, Hexo… #Jekyll #Blog #hexo #polyglot #skills 
+- [CMU 15-462/662 计算机图形学：全算法与公式](https://www.sunyazhou.com/2026/08/Cmu15.md): 本文整理自 CMU 15-462/662《Computer Graphics》(Keenan Crane 主讲) 完整课程，按讲义粒度收录 每一讲的算法与公式 。记号约定：向量用粗体，矩阵用大写字母，… #cmu #graphics #algorithm #math #learning 
+- [数学公式渲染](https://www.sunyazhou.com/2026/08/Mathformula.md): 本文用于测试 MathJax 3.2.2 的公式渲染，写法遵循官方 Chirpy 主题规范：块级公式用 $$...$$，行内公式用 $...$（ 不要 用 javascript const price… #math #test 
+- [跨平台桌面框架选型深度对比：一个 iOS 开发者的 Qt6 之旅](https://www.sunyazhou.com/2026/07/Crossplatformdesktopframeworkcomparison.md): 我是一名 iOS 开发者，日常和 Swift、Objective-C、Metal、SwiftUI 打交道。最近开始系统学习 Qt6，动机很明确： 用 AI Agent 赋能一批老旧的企业级原生桌面应用… #Electron #Tauri #Qt6 #Flutter #React Native #uni-app #Taro #Python #LangChain #Deno #鸿蒙 #微信小程序 #AI Agent 
+- [35项「卡脖子」技术攻坚进展梳理](https://www.sunyazhou.com/2026/07/35ChokePointTechnologies.md): 在2019年的年终总结中,我记录着我们曾经被国外 卡脖子 的35(之前写的34)项顶尖技术,最近有时间整理一下进展,2026年了我们已经突破了12项,我希望每个人都记着这些曾经我们内心中最深刻的痛.我… #35项「卡脖子」技术攻坚 
+- [LLVM `__attribute__` 完全指南.](https://www.sunyazhou.com/2026/07/LLVMAttributeCompleteGuide.md): LLVM attribute 完全指南 —— iOS / macOS 开发者的必修课 覆盖 Objective-C、C、Swift 互操作场景，从基础到系统框架内部用法，尽量不遗漏细节。 1. 什么是… #skills #iOS #Swift #Objective-C #LLVM 
+- [在 SwiftUI 的 Stack 中避免使用 Spacer](https://www.sunyazhou.com/2026/03/Avoidspacersinswiftuistacks.md): 作者： Pavel Zak 发布： 2023年4月6日 原文： https://nerdyak.tech/development/2023/04/06/avoid-swiftui-spacers-in… #skills #iOS #Swift #Objective-C 
+- [使用 SwiftUI Canvas 实现魔幻粒子效果](https://www.sunyazhou.com/2026/03/Magicalparticleeffectswithswiftuicanvas.md): 作者： Pavel Zak 发布： 2024年6月27日 原文： https://nerdyak.tech/development/2024/06/27/particle-effects-with-S… #skills #iOS #Swift #Objective-C 
+- [Jekyll博客支持Tab切换代码块](https://www.sunyazhou.com/2026/03/JekyllTabsCodeBlock.md): 写博客时经常需要同时展示 Swift 和 Objective-C 两种语言的代码,或者同一个功能的多种实现方式.以前只能把代码块一个个堆在一起,阅读体验很差. 这次给博客加上了 Tab 切换代码块 的… #skills #iOS #Swift #Objective-C 
+- [使用libtag库获取音频metadata元数据](https://www.sunyazhou.com/2026/01/Audiometadata.md): 最近开发一个功能需要获取音频文件的原始数据,需要支持大部分市面上的音频文件,于是找AI帮忙发现一个叫libtag目前最新版本是2.1.1,这是一个C++的库,需要objc++混编. 经过一顿操作AI,… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [2025年终总结](https://www.sunyazhou.com/2025/12/Finalsummary.md): 这一年是AI辅助编程的元年,也是AI引领时代浪潮的开始. 我尝试从几个这一年影响较大的主题出发,以自己这个"社会边角料"的视角贯穿式写一下2025,用以证明我肤浅的认知是否肤浅. AI时代之DeepS… #年终总结 
+- [揭秘 AI 编码代理：用 Swift 构建你自己的Agent](https://www.sunyazhou.com/2025/11/Swiftaiagent.md): 揭秘 AI 编码代理：用 Swift 构建你自己的代理 AI 编码代理感觉像魔法一样。你输入一个请求，它们就会搜索文件、编写代码、重构函数，并且似乎"知道"下一步该做什么。很神奇，对吧？ 但秘密在于：… #iOS #SwiftUI #Swift #Objective-C 
+- [在 iOS 中使用 UIBezierPath 插值点](https://www.sunyazhou.com/2025/10/InterpolatingPointsInIosWithUibezierpath.md): 最近开发需要处理利用贝塞尔曲线解决平滑的动效,读了一篇Catmull-Rom的论文,记录一下这篇文章. Interpolating Points in iOS with UIBezierPath 最近… #iOS #macOS #Objective-C 
+- [GPU内存对齐算法](https://www.sunyazhou.com/2025/05/MemoryAlignmentAlgorithm.md): 在学习《Metal》 GPU着色器编程中 有一章讲解GPU资源堆(Resource Heap)的参数缓冲(Arguments Buffer)中需要从CPU送资源到GPU时遇到一段代码计算资源的内存占用… #iOS #SwiftUI #Swift #Objective-C 
+- [Swift结构体实例内存布局的基础知识](https://www.sunyazhou.com/2025/02/TheBasicsOnTheMemoryLayoutOfSwiftStructInstances.md): 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到swift中的结构体实例的内存布局,我把这些整理了一下. 大小、步长和对齐(Size, Stride, Align… #iOS #SwiftUI #Swift #Objective-C 
+- [如何使用unsafe Swift指针类型直接访问内存并与C交互](https://www.sunyazhou.com/2025/02/UnsafeSwiftUsingPointersAndInteractingWithC.md): 2024年学习《Metal.by.Tutorials.4th.2023.12》中有提到如何使用Unsafe Swift 指针和C交互,主要是在内存中如何标识C的内容,下面这篇文章是书中介绍的英文文章我… #iOS #SwiftUI #Swift #Objective-C 
+- [2024年终总结](https://www.sunyazhou.com/2024/12/FinalSummary.md): 岁末天寒，回首流年远。 风霜雨雪征途漫，梦想未曾改变。 经济通缩卷起，尽显人之无力. 裁员压榨凋敝, 前途渺茫寥寂. 2024年冬纪念那些曾毫无人文主义精神和艺术气质的企业在互联网的浪潮变革洗礼中对待… #年终总结 
+- [CoreText渲染字体的时如何计算字体所需要的高度?](https://www.sunyazhou.com/2024/11/Coretextcalculatedheight.md): 主要是使用 CTFramesetterSuggestFrameSizeWithConstraints 计算文本的高度和宽度，记得要给CTFramesetterRef 设置相关的属性（行间距和自动换行）… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [iOS的dSYM中ARM Thread State寄存器有哪些？](https://www.sunyazhou.com/2024/11/Armthreadstate.md): 很久以前记得很多人经常面试喜欢问 iOS的dSYM中ARM Thread State的寄存器有哪些,分别代表什么意思? 基于一段数据 我们简单记录一下这个问题 这是一段线程崩溃后的的 主线程crash… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [SwiftUI中的Image修改器(视图修饰符)有哪些？](https://www.sunyazhou.com/2024/10/Swiftuiimage.md): 在SwiftUI中，Image视图可以用来显示图片资源。你可以通过多种修改器（即视图修饰符）来改变Image的外观和行为。以下是一些常用的Image修改器： 1.nterpolation：设置图片的插… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [iOS卡顿监控代码](https://www.sunyazhou.com/2024/10/Hangmonitor.md): 监控原理是注册runloop观察者，检测耗时，记录调用栈，上报后台分析。长时间卡顿后，若未进入下一个活跃状态，则标记为卡死崩溃上报。 以下是一个 iOS 卡死监控的代码示例： 以上代码中 HangMo… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [UIImage镜像](https://www.sunyazhou.com/2024/10/UIImageMirror.md): 示例代码记录 #iOS #SwiftUI #Swift #Objective-C #skills 
+- [CFNotification进程间通讯](https://www.sunyazhou.com/2024/09/Cfnotificationprocesscommunication.md): 在iOS开发中，应用扩展（App Extensions）与其容器应用（Containing App）在不同的进程中运行。这种隔离带来了一个挑战：当你需要在主应用和它的扩展之间进行通信时。虽然NSNot… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [在Objective-C中多层block嵌套时如何使用weak self和strong self](https://www.sunyazhou.com/2024/08/Multiblockembedded.md): 在Objective-C中如何 正确的使用 block的 weakSelf和 strongSelf在 多层blokc 在Objective-C中，weak self和strong self用于解决循环… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [NSIntegerMax整数溢出问题记录](https://www.sunyazhou.com/2024/08/Dispatchafternsintegermax.md): 最近开发 测试同学提了一个bug, 首页底部tab的气泡一闪而过瞬间消失,认真追踪代码后发现,配置后台下发-1,客户端同学把这个-1替换成了NSIntegerMax 如下代码,是控制一个气泡 从展示到… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [PickingInMetal](https://www.sunyazhou.com/2024/08/PickingInMetal.md): 当学习到第十二的时候遇到了一个之前想解决却从未找到答案的方式。如何检测 一个3D场景中某个元素的点击问题,比如引入一个3D场景在手机端或者PC端, 通过手指触摸或者鼠标点击能知道 我点击是哪个3D模型 #iOS #SwiftUI #Swift #Objective-C 
+- [Swift中的do catch](https://www.sunyazhou.com/2024/08/Docatchinswift.md): Swift中的do-catch语句 在Swift中，do-catch语句是用于异常处理的机制。它允许你执行可能会抛出错误的代码块（在do块中），并捕获这些错误（在catch块中）以便处理。这是Swif… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [iOS中如何解决跨天日期变化](https://www.sunyazhou.com/2024/07/UIApplicationSignificantTimeChangeNotification.md): 最近工作中遇到一个需求是 当app在前台并且 过午夜12点时 触发某些逻辑,而且还需要在前台触发, 也就是说如果在后台挂起状态 回到前台才要触发,一般用于一些签到之类的逻辑. UIApplicatio… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [swiftUI中添加拟合手势MagnificationGesture](https://www.sunyazhou.com/2024/07/Magnificationgesture.md): MagnificationGesture 介绍 MagnificationGesture 是SwiftUI中用于处理缩放手势的手势识别器。它允许用户通过捏合（即两个手指靠近或远离）的手势来放大或缩小视… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [使用UIViewRepresentable  在SwiftUI中桥接 UIKit 视图](https://www.sunyazhou.com/2024/07/UIViewrepresentable.md): UIViewRepresentable介绍 UIViewRepresentable 是 SwiftUI 框架中的一个协议，它主要用于在 SwiftUI 环境中封装 UIKit 视图（UIView 及其… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [Kerning文字排版计算](https://www.sunyazhou.com/2024/07/Kerning.md): 记录一段代码用于解决iOS文字排版的技术问题 #iOS #iPadOS #watchOS #SwiftUI #Masonry 
+- [hitTest标准写法](https://www.sunyazhou.com/2024/07/Hitteststd.md): 代码review出现问题记录以下,hittest的标准写法 #Objective-C 
+- [平滑阶梯函数smoothstep](https://www.sunyazhou.com/2024/05/Smoothstep.md): 如何控制一个值 在某个区间内,使其不超过最大区间极限和最小区间的极限？ 在开发中我们经常计算一些区间值,:如下 显然这是刚学C语言时候的我写出来的毫无技术含量的代码. 这种写法虽然一行代码搞定,显得N… #iOS #macOS #Objective-C #Swift 
+- [HarmonyOS动画分类](https://www.sunyazhou.com/2024/05/ArkTSAnimation.md): 在鸿蒙开发中动画分类比iOS开发的分类更加丰富,包含如下动画类别 属性动画(animation) 显式动画(animateTo) 关键帧动画(keyframeAnimationTo) 转场动画(Tra… #鸿蒙OS开发 #HarmonyOS #ArkTS #Ark动画 
+- [保持原UIImage缩放比的计算方法](https://www.sunyazhou.com/2024/04/Keepimagescale.md): 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或引用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以… #iOS #iPadOS #watchOS #SwiftUI #Masonry 
+- [使用Masonry高阶方法对子视图统一布局](https://www.sunyazhou.com/2024/03/Masonryrelayoutviews.md): 在开发过程中,经常遇到某些入口的出现和消失不是按照指定的时序发生,比如 上面这三个入口,出现的时机不区分先后,但是出现的顺序是固定的, 这里就存在一些很不好处理的问题, 比如A视图出现 依赖B视图的位… #iOS #iPadOS #watchOS #SwiftUI #Masonry 
+- [运动传感器摇晃检测](https://www.sunyazhou.com/2024/02/MotionShake.md): 本文具有强烈的个人感情色彩,如有观看不适,请尽快关闭. 本文仅作为个人学习记录使用,也欢迎在许可协议范围内转载或引用,请尊重版权并且保留原文链接,谢谢您的理解合作. 如果您觉得本站对您能有帮助,您可以… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [iOS控制中心收藏按钮likeCommand动画](https://www.sunyazhou.com/2024/01/Mpremotecommandlikecommand.md): 最近开发中,产品要求在音频播放控制中心中增加 收藏按钮, 查看了QQ音乐和网易云音乐发现他们都已经有了此按钮,然而在酷我音乐的app切后台锁屏后这个按钮没有漏出,查了一下代码发现按钮没有添加,于是加了… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [ArkTS和ArkUI基础语法](https://www.sunyazhou.com/2024/01/ArkTSBasic.md): DevEco Studio快捷键 在看过几遍鸿蒙教程视频和文档后,我觉得把容易遗忘的基础都记录下来,以备后续使用的时候随时查找. 首先我们要了解一下一个组件是组成UI的基本单元,我们要明确自定义组件和… #鸿蒙OS开发 #HarmonyOS #ArkTS 
+- [解决如何从鸿蒙手机传文件到macOS](https://www.sunyazhou.com/2024/01/HarmonyPhoneSendFileTomacOS.md): 最近学习中遇到了一个问题,用mac电脑开发鸿蒙, 公司内部的测试机是HUAWEI Mate 60 Pro, 安装的是HarmonyOS NEXT Developer Preview. 对于一个新式手机… #鸿蒙OS开发 #HarmonyOS 
+- [鸿蒙启动页面开发](https://www.sunyazhou.com/2024/01/HarmonyOSLaunchPage.md): 2024年技术不能只停留在嘴上,行胜于言,经过几个月的鸿蒙开发的学习,觉得还是要把容易忘记的内容记录下来,今天 带了的第一个简单代码是开启鸿蒙开发的入门篇,做一个简单的闪屏页 这里使用的Harmony… #鸿蒙OS开发 #HarmonyOS 
+- [2023年终总结](https://www.sunyazhou.com/2023/12/FinalSummary.md): 这不是AI写的诗哈,chatGPT目前还写不出我这水(低)平(档). 这一年,我想用B站上非常nice三国周郎的经典PUA语录来抒发一下不堪回首的2023, "近日养伤,深感人生之艰难,就像那不息之长… #年终总结 
+- [SQL语句的标准](https://www.sunyazhou.com/2023/10/Sqlstandard.md): 最近工作太忙,没有保证博客的产出,今天偶有时间来探讨一下最近看到的一篇文章 orona技术专题-时序数据分析 来自于网易云音乐技术团队, 这篇文章简单的阐述了一下做数据统计相关的大数据工作, 不过这不… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [解决iOS小组件开发中widgetURL问题](https://www.sunyazhou.com/2023/09/ios17widgetURL.md): 最近再开发iOS17的小组件遇到一个非常奇怪且很脑残的问题 在小组件开发过程中有如下代码使用深度链接(deeping URL )调用open URL 打开host app. 当我第一次使用下面代码的时… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [SwiftUI第五章学习总结](https://www.sunyazhou.com/2023/09/Learnswiftuichapter5.md): 最近坚持学习swiftUI,周末有空把第四章都看完了,我这里说的看是动手实践+教程学习.记录一些容易遗忘的内容 处理tabbar透明问题问题 处理单位格式化问题 用SwiftUI写完各种UI后发现 t… #iOS #macOS #Objective-C #SwiftUI 
+- [SwiftUI第四章学习总结](https://www.sunyazhou.com/2023/09/Learnswiftuichapter4.md): 最近坚持学习swiftUI,周末有空把第四章都看完了,我这里说的看是动手实践+教程学习.记录一些容易遗忘的内容 SwiftUI中对应的UIKit相似组件 @AppStorage UserDefault… #iOS #macOS #Objective-C #SwiftUI 
+- [SwiftUI第三章学习总结](https://www.sunyazhou.com/2023/08/Learnswiftuichapter3.md): 最近坚持学习swiftUI已经学习到第三章了,把一些重要的内容都记录下来 present子VC 用enum管理icon 注释中可以使用markdown extension写法 在swiftUI中不能说… #iOS #macOS #Objective-C #SwiftUI 
+- [开发iOS17小组件](https://www.sunyazhou.com/2023/08/ios17widget.md): iOS17关于小组件的WWDC WWDC23中提供了一些关于小组件的视频,最近开发小组件遇到了一些问题,在这里解读一下视频中的内容 Bring widgets to new places Bring… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [SwiftUI可用性检测,解决小组件iOS17 available问题](https://www.sunyazhou.com/2023/08/Swiftuiextention1.md): 最近在开发iOS17上的小组件使用SwiftUI框架,第一次进行工程化遇到一个 api可用性检测问题 之前的小组件是锁屏小组件,在iOS16上运行,最近iOS17更新了新内容,导致运行起来之后被提示需… #iOS #macOS #iPadOS #watchOS #SwiftUI 
+- [SwiftUI第二章学习总结](https://www.sunyazhou.com/2023/06/Learnswiftuichapter2.md): 最近在听B站以为来自祖国宝岛台湾省的一个女博主(声音很嗲dia)讲解SwiftUI课程,讲的不错把学习的内容记录下来: @propertyWrapper VStack、HStack、ZStack等使用… #iOS #macOS #Objective-C #SwiftUI 
+- [解决iOS16 WKWebview无法调试问题](https://www.sunyazhou.com/2023/06/ios16wkwebview.md): 最近在IOS16更新后,无法在mac端的safari看到调试信息了.这让我很是头疼,经过查各种资料发现一个Aeppl WebKit团队很脑残的一个操作 Enabling the Inspection… #iOS #macOS #Objective-C #skills 
+- [UIImage黑白滤镜](https://www.sunyazhou.com/2023/06/Blackwhitefilter.md): 最近开发功能产品有一个需求是这样的,将一张图片变成黑白图片,我们第一想法是加render着色,然而着色不产品想要的需求,产品的意思是加黑白滤镜,之前开发的同事曾经搞过一些私有API做混淆的方式实现了公… #iOS #macOS #Objective-C #skills 
+- [学习如何在visionOS上开发APP](https://www.sunyazhou.com/2023/06/Learnaboutvisionos.md): visionOS 可以理解为新的运行在苹果头显上的iOS系统, 用苹果的话就是各种高大上什么空间技术...。里面会用到SwiftUI, UIKit, RealityKit和ARKit框架，在visio… #visionOS #Swift #SwiftUI 
+- [Shell脚本批量将heic转png和webp](https://www.sunyazhou.com/2023/06/Batchconvertheictopng.md): 如何批量将HECI图片转成png 最近公司搞活动需要我们组织小组业余爱好并记录美好生活,避免不了拍一些照片,我手机忘记了设置所以拍摄出来的照片都是HEIC(H.265)编码的格式,然而公司需要的是把这… #macOS #Xcode #skills 
+- [SwiftUI第一章学习总结](https://www.sunyazhou.com/2023/06/Learnswiftuichapter1.md): 最近在听B站以为来自祖国宝岛台湾省的一个女博主(声音很嗲dia)讲解SwiftUI课程,讲的不错把学习的内容记录下来: 1-5 第一章补充：some View、排版规则、设计细节 - SwiftUI… #iOS #macOS #Objective-C #SwiftUI 
+- [CocoaPods完全使用指南](https://www.sunyazhou.com/2023/04/Cocoapodsuserguide.md): 在我的技术认知里, Cocoapods已经成为每一位iOS开发者必备的技能之一,然后这么多年过去了,在我认为它已经过时了的时候居然还有人对这个东西玩的不透彻,今天我就把我这么多年使用的经验高阶部分全部… #iOS #macOS #Objective-C #Cocoapods #skills 
+- [pod仓库的常用命令](https://www.sunyazhou.com/2023/04/Podcommands.md): 单独更新某个pod spec的仓库索引 push本地 repo 的podspec到远端私有源站 这里的push操作会自动触发git push.把podspec推送到远端索引仓库,后面加了一堆参数是为了… #iOS #macOS #Objective-C #Cocoapods #skills 
+- [如何在pod中的podspec使用XCAssets](https://www.sunyazhou.com/2023/03/Podxcassets.md): 最近这几年,移动端工程的开发模式逐渐变成面向pod开发,就是工程大了以后每个模块和业务就变成了单独的pod. 在这种使用pod的背景下,我们的开发资源例如图片、文本文件、plist、音频文件等等会被创… #iOS #macOS #Objective-C #Cocoapods #skills 
+- [Flutter中的Form表单](https://www.sunyazhou.com/2023/03/Flutterformtextfield.md): 在学习flutter中处理用户名和密码输入的问题时,Flutter这边轻松搞定,学完后发现flutter内置的能力非常强大.下面是记录用户名密码输入的简单demo. 上面的代码不但具备输入框的功能,还… #iOS #Dart #Objective-C #skills 
+- [使用SwiftUI绘制环形 Slider](https://www.sunyazhou.com/2023/03/Circularsliderview.md): SwiftUI绘制环形 Slider 最近看到一篇文章讲述简单的用SwiftUI绘制一个圆形Slider,经过亲手实践果然很简单,记录一下代码实现和效果. SwiftUI写代码很快,api非常多,比U… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [Flutter的有状态StatefulWidget生命周期](https://www.sunyazhou.com/2023/03/Flutterlifecycle.md): 最近在负责波点音乐的相关开发,由于波点是用flutter写的,所以周末不得不做一些Flutter开发的功课来弥补自己在移动端技术栈的缺失. Flutter的生命周期主要是StatefulWidget和… #iOS #Dart #Objective-C #skills 
+- [whimsical模块设计](https://www.sunyazhou.com/2023/03/Whimsical.md): 在很多开发中经常会对模块进行技术设计,其中用到很多绘图的工具,最近发现一个很好的国外在线设计工具 https://whimsical.com/ 收藏开发过程中一些工具方便提高工作效率 #iOS #macOS #Objective-C #skills 
+- [objc中的类型安全转换](https://www.sunyazhou.com/2023/03/Safecast.md): Cast也叫柯里化,就是一种简单的类型转换过程.在iOS中我们经常对某种数据类型进行强制转换.每次不得不写一些臃肿的代码,于是大家习惯写成宏来check 某实例变量是否数据某class. 下面代码分享… #iOS #macOS #Objective-C #skills 
+- [iOS中NSDate是否是今天Today](https://www.sunyazhou.com/2023/02/NSDateIsToday.md): 每天的iOS开发过程中经常会出现Check一些逻辑是否每天仅发生一次,一般我们的通用是用NSDate判断是否是今天,然后对NSDate做持久化存储 eg: MMKV、或者NSUserDefault,但… #iOS #Swift #Objective-C #skills 
+- [博客的图片资源优化](https://www.sunyazhou.com/2023/02/Webpenhancement.md): 最近周末有点时间,对博客的资源图片进行了整体优化,优化后图片资源减少了一半.要不然以目前我写文章的速度,不出几年连同资源很快就会超过1G.如果超过1G的话github pages将停止对仓库提供支持,… #Linux #shell 
+- [如何使用jekyll发布一篇文章](https://www.sunyazhou.com/2023/02/Jekyllpost.md): 我的博客开始使用的是hexo,后来喵神 把博客换成以jekyll的形式,我还是很喜欢的.可是之前hexo要写一篇文章直接就可以用 的形式 通过模板生成一个markdown文件. 然而新的https:/… #Linux #shell 
+- [Swift中的defer关键字](https://www.sunyazhou.com/2023/02/SwiftDefer.md): 在swift中有一个关键字非常 类似 try catch finally中的finally,在一个代码块中执行完成后 执行最后的收尾代码完成一些收尾工作. 清理工作、回收资源 跟 swift 文档举的… #iOS #Swift #Objective-C #skills 
+- [2022年终总结](https://www.sunyazhou.com/2022/12/FinalSummary.md): 这是坚持写年终总结的第5个年头了,如果非要给今年的总结写个主题的话我肤浅的认为每天都活在自我否定后的不断妥协中的一年最为贴切. 2021年终总结 2020年终总结 2019年终总结 2018年终总结… #年终总结 
+- [模仿Q音径向渐变动画](https://www.sunyazhou.com/2022/12/Gradientlayeranimation.md): 深入CAGradientLayer 最近开发功能,视觉设计同学对QQ音乐的桌面歌词预览图的流体渐变动画很感兴趣,想让开发这边实现这个效果. 仔细观察歌词背景( 若不是我左右眼都是5.0 我第一次看到Q… #iOS #macOS #Objective-C #skills 
+- [《The Sunyazhou Theory Ⅱ》的诞生](https://www.sunyazhou.com/2022/12/Thesunyazhoutheoryii.md): 由于基础知识薄弱，我所做到的内容仅限于学习和观察到的一些事实，未能上升为理论学说. 非著名的《The Sunyazhou Theory II》 未来自动驾驶必须且一定是眼睛(摄像头)+耳朵(雷达超声波… #理论 
+- [SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject](https://www.sunyazhou.com/2022/11/Swiftuipropertywrapper.md): 本文主要讲述SwiftUI中的属性包装器，这些包装器都是用来数据绑定的，作为视图的唯一真值来源，四种方式在实现功能上有细微差别。最后会进行总结比较 State Binding ObservableOb… #iOS #SwiftUI #Swift #Objective-C #skills 
+- [NS-OPTIONS的用法](https://www.sunyazhou.com/2022/09/Howtousensoptions.md): 枚举示例代码片段(可复制使用) #iOS #Swift #Objective-C #skills 
+- [FB内存检测工具分享](https://www.sunyazhou.com/2022/09/Fbmemorychecktool.md): 如果申请一大块内存没有被release这属于内存泄漏,并不属于内存竞争导致的持有,根本原因是没有正确的release. 在常规流程下(正常 alloc,release或者 malloc free,亦或… #iOS #Swift #Objective-C #skills 
+- [iOS开发中的字符串枚举](https://www.sunyazhou.com/2022/08/NSStringEnum.md): 在Objective-C中并没有一个专门的类型来定义字符串枚举.我们常用的枚举都是整形,并且自动伸长累加+1. 在C++中有专门的枚举类,但是在iOS的objc中并没有C++中的专门枚举类,今天就来学… #iOS #macOS #Objective-C #skills 
+- [检查Cell是否滚动出屏幕之外](https://www.sunyazhou.com/2022/08/Checkcellscrolloutscreen.md): 如何检测一个cell滑动到屏幕以外? #Algorithm #C++ 
+- [iOS面试问题记录](https://www.sunyazhou.com/2022/07/iosinterviewproblems.md): NSObject Category问题 如果一个给NSObject对象扩展Category, 下面的代码能调用吗？ 因为对象的isa指针最终指向元类,元类也就是自己的实例,所以会调用到实例方法。 下面… #iOS #Swift #Objective-C #skills 
+- [iOS中的OOM](https://www.sunyazhou.com/2022/07/iosoom.md): 在iOS开发中，可能会经常看到app用着用着就崩溃了，而在后台查看崩溃栈的时候，找不到崩溃日志。其实这大多数的可能是系统产生了低内存崩溃，也就是OOM(还有一种可能是主线程卡死，导致watchdog杀… #iOS #Swift #Objective-C #skills 
+- [iOS中的崩溃类型](https://www.sunyazhou.com/2022/07/ioscrashtype.md): 崩溃通常是指操作系统向正在运行的程序发送的信号，所以我们在查看崩溃日志时，常常看到如下错误摘要：Application received signal SIGSEGV。一般来说，常见的崩溃类型有以下几… #iOS #Swift #Objective-C #skills 
+- [iOS寻找两个UIView的最近的公共父类](https://www.sunyazhou.com/2022/07/Commonsuperview.md): 本题类似二叉树寻找最近公共父节点,可以参考masonry的实现 Masonry 算法之 最近公共父视图 #Algorithm #C++ 
+- [二叉树的前、中、后序遍历](https://www.sunyazhou.com/2022/07/Binarytreeorder.md): 给定一个二叉树的根节点root，返回 它的前序、中序、后序遍历 。 144. 二叉树的前序遍历 94. 二叉树的中序遍历 145. 二叉树的后序遍历 引用自codetop #Algorithm #C++ 
+- [岛屿数量](https://www.sunyazhou.com/2022/07/Islandscount.md): 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。 此外，你可以假设该网格的四条边… #Algorithm #C++ 
+- [最长回文子串](https://www.sunyazhou.com/2022/07/Longestpalindrome.md): 给你一个字符串s，找到s中最长的回文子串。 5. 最长回文子串 引用自codetop #Algorithm #C++ 
+- [合并两个有序数组](https://www.sunyazhou.com/2022/07/Mergesortarray.md): 给你两个按非递减顺序排列的整数数组nums1和nums2，另有两个整数m和n ，分别表示nums1和nums2中的元素数目。 请你合并 nums2 到nums1中，使合并后的数组同样按非递减顺序排列。… #Algorithm #C++ 
+- [二叉树的最近公共祖先](https://www.sunyazhou.com/2022/07/Commonancestor.md): 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深… #Algorithm #C++ 
+- [搜索旋转排序数组](https://www.sunyazhou.com/2022/07/Searchrotatearray.md): 整数数组nums按升序排列，数组中的值 互不相同 。 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转，使数组变为 [nums[k], n… #Algorithm #C++ 
+- [二叉树的锯齿形层序遍历](https://www.sunyazhou.com/2022/07/Zigzaglevelorder.md): 给你二叉树的根节点root，返回其节点值的锯齿形层序遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。 103. 二叉树的锯齿形层序遍历 引用自codetop #Algorithm #C++ 
+- [环形链表](https://www.sunyazhou.com/2022/07/Cyclelinktable.md): 给你一个链表的头节点head，判断链表中是否有环。 如果链表中有某个节点，可以通过连续跟踪next指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数pos来表示链表尾连接到链… #Algorithm #C++ 
+- [二叉树的层序遍历](https://www.sunyazhou.com/2022/07/Binarytreelevelorder.md): 给你二叉树的根节点root，返回其节点值的层序遍历.（即逐层地，从左到右访问所有节点）. 102. 二叉树的层序遍历 引用自codetop #Algorithm #C++ 
+- [两数之和](https://www.sunyazhou.com/2022/07/Twosum.md): 给定一个整数数组nums和一个整数目标值target，请你在该数组中找出和为目标值 target的那两个整数，并返回它们的数组下标。 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里… #Algorithm #C++ 
+- [合并两个有序链表](https://www.sunyazhou.com/2022/07/Mergetwolists.md): 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 21. 合并两个有序链表 引用自codetop #Algorithm #C++ 
+- [最大子数组和](https://www.sunyazhou.com/2022/07/Maxsubarray.md): 给你一个整数数组nums，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。 子数组是数组中的一个连续部分。 53. 最大子数组和 引用自codetop #Algorithm #C++ 
+- [三数之和](https://www.sunyazhou.com/2022/07/Threesum.md): 给你一个包含n个整数的数组nums，判断nums中是否存在三个元素a，b，c ，使得 a + b + c = 0？请你找出所有和为0且不重复的三元组。 注意：答案中不可以包含重复的三元组。 15. 三… #Algorithm #C++ 
+- [数组中的第K个最大元素](https://www.sunyazhou.com/2022/07/Kthlargest.md): 给定整数数组nums和整数k，请返回数组中第k个最大的元素。 请注意，你需要找的是数组排序后的第k个最大的元素，而不是第k个不同的元素。 215. 数组中的第K个最大元素 引用自codetop #Algorithm #C++ 
+- [LRU 缓存](https://www.sunyazhou.com/2022/07/Lrucache.md): 请你设计并实现一个满足LRU(最近最少使用)缓存 约束的数据结构。 实现LRUCache类： LRUCache(int capacity)以 正整数 作为容量capacity初始化LRU缓存 int… #Algorithm #C++ 
+- [无重复字符的最长子串](https://www.sunyazhou.com/2022/07/Longestsubstring.md): 给定一个字符串 s，请你找出其中不含有重复字符的 最长子串 的长度。 3. 无重复字符的最长子串 引用自codetop #Algorithm #C++ 
+- [反转链表](https://www.sunyazhou.com/2022/07/Reverselist.md): 给你单链表的头节点head，请你反转链表，并返回反转后的链表。 206. 反转链表 引用自codetop #Algorithm #C++ 
+- [macos鼠标软件MOS](https://www.sunyazhou.com/2022/04/Mos.md): 推荐一个好用的mac上使用鼠标的软件 免费开源mac上使用windows鼠标滑动自然的软件mos 可以让windows上的鼠标滚轮滑动像苹果触摸板一样丝滑 #Swift #AVFoundation #Git 
+- [开发分支管理模型](https://www.sunyazhou.com/2022/04/BranchManage.md): 一种适合客户端开发的分支管理模型 首先DEV代表开发分支 首先RB代表发版分支 注意此名称和思路借鉴之前快手开发的内部分支管理. 当开发完成提测后自动开出下个版本的RB和DEV分支.这样循环往复.实现… #Swift #AVFoundation #Git 
+- [开源YZ3DMenu导航菜单](https://www.sunyazhou.com/2022/04/YZ3DMenu.md): 这个菜单是个3D菜单,之前在一个叫cosmos的app中出现,之前一直想找个时间把这个功能搞出来开源.之后出现了一个类似微博的开源项目Cosmos 这一阵子有时间 把这个组件重写一遍. 通过tabba… #Swift #AVFoundation 
+- [深入理解CVPixelBufferRef](https://www.sunyazhou.com/2022/04/CVPixelBufferRef.md): 在iOS里，我们经常能看到CVPixelBufferRef这个类型，在Camera采集返回的数据里得到一个CMSampleBufferRef,而每个CMSampleBufferRef里则包含一个CVP… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [2021年终总结](https://www.sunyazhou.com/2021/12/FinalSummary.md): 年底了,交作业,这一年无业游民蹉跎了不少.回冰城生活了一年又双叒叕的回到了曾今奋斗的根据地-首都北京.别问为什么生活所迫. 这一年过很不顺利,家人生病,外祖母离世,工作不稳定,疫情常态化延续... 几… #年终总结 
+- [iOS开发高手课01-建立你自己的iOS开发知识体系](https://www.sunyazhou.com/2021/12/iOSLessonsStudyNotes1.md): 首先致敬一下iOS领域开发者-戴铭,我也非常推荐大家买它的课程,本篇文章主要是学习时记录的笔记,记录大佬讲述的内容. Awesome 系列，就是专门用来搜集各类资料的，其中 iOS 的 Awesome… #iOS #macOS #Objective-C #skills 
+- [如何计算文本中某些单词出现的频率](https://www.sunyazhou.com/2021/12/WordFrepuency.md): 最近在学习一些Swift中的语法,有些比较有意思的内容我都记了笔记 如何读入一个文本文件，确定所有单词的使用频率并从高到低排序，打印出所有单词及其频率的排序列表？ 这道题目出自计算机科学史上的著名事件… #iOS #macOS #Objective-C #skills 
+- [swift中求一个集合中子集](https://www.sunyazhou.com/2021/10/SwiftSubSets.md): 最近在学习一些Swift中的语法,有些比较有意思的内容我都记了笔记 问题 给定一个集合,求这个集合中有多少真子集？ #iOS #Swift #Objective-C #skills 
+- [如何判断NSString是纯数字类型](https://www.sunyazhou.com/2021/06/CheckNSStringIsPureInteger.md): 在iOS开发过程中是否有这样的需求,单纯判断NSString中是否是纯数字,如下面代码 我第一时间想到用正则匹配数字并连续,但是这样貌似不是便捷方式. 经过知识索引搜索,我找到了如下解决方式 使用NS… #iOS #macOS #Objective-C #skills 
+- [WCDB实践记录](https://www.sunyazhou.com/2021/04/WCDBPractice.md): 洲哥最近在跟 WCDB 斗智斗勇,公司做 IM,一套很老的代码需要维护,为了打好底层基础,解决上层业务问题决定按批次从原来的 FMDB 迁移到 WCDB. 在使用 WCDB 的过程中遇到了一个很低级的… #iOS #macOS #Objective-C #skills 
+- [UTIs苹果官方的文件扩展名全集](https://www.sunyazhou.com/2021/02/UTIsOfficalFileExtensionName.md): 最近开发过程中遇到了一个很低级的问题,有点类似网盘app里面要区分各种文件类型,然后找出对应的文件归属icon并显示,作为一个极客精神的iOS开发者,我想找到一种文件扩展名集合并不需要自己命名枚举值,… #iOS #macOS #Objective-C #skills 
+- [滚动文本设置渐变颜色](https://www.sunyazhou.com/2021/01/TextGradient.md): 最近看到搜狐发表了一篇文章,其中有一段是文本如何添加渐变颜色,使用非mask的方式.因为mask的方式非常耗费性能,因为mask会触发离屏渲染.今天的demo中我使用了原来的demo作为例子 核心实现… #iOS #macOS #Objective-C #skills 
+- [获取UIWindow的边界距离](https://www.sunyazhou.com/2021/01/SafeAreaEdges.md): 2021第一篇发布记录开发中遇到的费时间问题 新工程经常遇到解决刘海屏的距离问题 #iOS #Swift #Objective-C 
+- [2020年终总结](https://www.sunyazhou.com/2020/12/FinalSummary.md): 七年辛苦北漂之身,一日还乡重归故人. 倘若有天若有人问, 征尘仆仆烟尘滚滚. 回首成败暂且不论,我给自己打十几分. 言不求实语不求真, 纵为利刃依默无闻. 2020年了 这是搬砖的第7个年头,记录生活… #年终总结 
+- [解决iOS系统时间被修改的问题](https://www.sunyazhou.com/2020/12/iOSsynchronousTimeWithServer.md): GMT:(Greenwich Mean Time)格林尼治标准时间。这是以英国格林尼治天文台观测结果得出的时间，这是英国格林尼治当地时间，这个地方的当地时间过去被当成世界标准的时间。 UT:(Univ… #iOS #macOS #Objective-C #skills 
+- [解决iOS调用系统相册不显示中文问题](https://www.sunyazhou.com/2020/10/WebviewSystemLanguage.md): 最近开发遇到一个bug,在h5中点击选择iOS系统相册,显示的是英文的 在Xcode的plist中加入如下代码 也可以 在 info.plist里面添加Localized resources can… #iOS #macOS #Objective-C #Swift #skills 
+- [修复Xcode Source Editor在masOS的扩展中不显示](https://www.sunyazhou.com/2020/10/XcodeSourceEditorNotWork.md): 这几天要对代码进行对齐发现经常用的 XAlign插件不起作用了,一看设置中发现 扩展中没有了Xcode Source Editor 通过网络上查询找到一篇靠谱的方式 特记录下来 当Xcode的多个副本… #iOS #macOS #Objective-C #skills 
+- [Pod spec集成第三framework和.a工作记录](https://www.sunyazhou.com/2020/10/PodSpec.md): 最近开发过程经常遇到工程中集成第三方工程中的时候 使用pod的方式集成.总忘记链接 第三方库的方式和podspec的写法.所以记录下来容易忘记的内容 我们在测试工程目录下创建一个目录 起名叫 demo… #iOS #Swift #Objective-C #Cocoapods #skills 
+- [使用Xcode配置文件来管理不同的环境设置](https://www.sunyazhou.com/2020/10/XcodeBuildXcconfigFile.md): 最近工程遇到了一个环境切换的问题,想到了 .xcconfig 文件的用处. 查了一圈搜索引擎大家的搞法真是各种抄袭.遇到的问题没有一个能正式解决的 下面是我遇到的问题,我尝试解决一下. 创建xccon… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之性能优化](https://www.sunyazhou.com/2020/09/iOSinterviewPerformanceOptimization.md): 本篇我们来讲一下 阿里、字节：一套高效的iOS面试题 中的性能优化相关的问题. 1. 如何做启动优化，如何监控 2. 如何做卡顿优化，如何监控 3. 如何做耗电优化，如何监控 4. 如何做网络优化，如… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之视图&图形](https://www.sunyazhou.com/2020/09/UIViewGraphic.md): 本篇我们来讲一下 阿里、字节：一套高效的iOS面试题 中的视图&图形相关的问题. 1. AutoLayout的原理，性能如何 2. UIView &amp; CALayer的区别 3. 事件响应链 4… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之多线程](https://www.sunyazhou.com/2020/09/GCD.md): 本篇我们来讲一下 阿里、字节：一套高效的iOS面试题 中的多线程相关的问题. 这一篇我们来解答下多线程问题,主要以GCD为主: iOS开发中有多少类型的线程？分别对比 GCD有哪些队列，默认提供哪些队… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之Block](https://www.sunyazhou.com/2020/09/Block.md): 这一篇我们来研究一下objc的block并回答一下面试中的下列问题: 1.block的内部实现，结构体是什么样的 2.block是类吗，有哪些类型 3.一个int变量被 block 修饰与否的区别？b… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之Runloop&KVO](https://www.sunyazhou.com/2020/09/iOSinterviewAnswers5.md): 前几篇我们一路讲了内存,关联对象、ARC、AutoreleasePool、weak对象, NSNotifacionCenter等, 今天这一篇我们来讲一下 Runloop和KVO app如何接收到触摸… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之NSNotification相关](https://www.sunyazhou.com/2020/09/iOSinterviewAnswers4.md): 前3篇中已经讲完了内存管理,今天我们继续完成阿里、字节：一套高效的iOS面试题的通知部分. 主要内容包含如下: 实现原理（结构设计、通知如何存储的、name&observer&SEL之间的关系等） 通… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之runtime相关问题3](https://www.sunyazhou.com/2020/08/iOSinterviewAnswers3.md): runtime相关问题之内存部分的关联属性或者hook相关的Method Swizzle 经过前两期内容 我们这期来讲一下 内存部分的剩余问题 主要包含如下: 1. Method Swizzle注意事… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之runtime相关问题2](https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2.md): 本篇我们来讲一下 阿里、字节：一套高效的iOS面试题 中的runtime相关问题部分的内存管理相关的内容. runtime相关问题之 内存管理 weak的实现原理？SideTable的结构是什么样的… #Algorithm #Objective-C 
+- [阿里、字节：一套高效的iOS面试题之runtime相关问题1](https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1.md): 记得过年时候 有一个微信公众号 的面试题引起了我的关注,但是只有问题没有答案,由于最近半年时间太忙了,博客几乎停更了一个季度,所以今天我打算把这个面试题的答案 整理一下,方便后续iOS开发者需要时可时… #Algorithm #Objective-C 
+- [Cocoapods清华镜像](https://www.sunyazhou.com/2020/04/CocoapodsProblems.md): 这几天开发 总遇到疑难杂症 是因为我的cocoapods升级到了1.9.1,导致各种问题 然后还被和谐,无奈找到如下解决cocoapods各种问题的解决方式 对于旧版的 CocoaPods 可以使用如… #iOS #macOS #Objective-C #skills #Cocoapods 
+- [使用Masonry处理UIView的safeArea边界布局问题](https://www.sunyazhou.com/2020/04/MasonryTricks.md): iOS11之后推出的safeArea 用于处理刘海屏幕的问题.如果自己处理起来可能比较 麻烦 又需要判断 版本又需要判断 API的可用性. 清明假期 在家没事写个demo 解决如何更快捷处理屏幕的边界… #iOS #macOS #Objective-C #Masonry 
+- [(转)深度理解 NSURLProtocol](https://www.sunyazhou.com/2020/03/NSURLProtocol.md): NSURLProtocol 是什么 NSURLProtocol 是 Foundation 框架中URL Loading System的一部分。它可以让开发者可以在不修改应用内原始请求代码的情况下，去改… #iOS #macOS #Objective-C #skills 
+- [《孙亚洲理论》的诞生](https://www.sunyazhou.com/2020/02/SunyazhouTheory.md): 由于基础知识薄弱，我所做到的内容仅限于学习和观察到的一些事实，未能上升为理论学说. 非著名的《The Sunyazhou Theory》 国家要想发展必须从提高生产力上入手，技术是目前为止人类发现唯一… #理论 
+- [2019年终总结](https://www.sunyazhou.com/2019/12/FinalSummary.md): 望极天涯博渐卑,而立三十我是谁. 压年抑岁匆匆过,回头碌碌变无为. 人言北漂薪资高,力图迈进皆煎熬. 星辰大海尽在此,诗与远方路迢迢. 年终了,墨守成规交出2019的年终总结 工作 装修 日本之旅 生… #年终总结 
+- [简单了解LLDB调试工具chisel](https://www.sunyazhou.com/2019/12/Chisel.md): 最近比较懒 Xcdeo每次启动的时候都会报一个找不到某某python文件的log在lldb中,为了一探究竟,花了点时间简单修复了 这个问题我要是回答完都会被iOS开发者笑话死,这个工具facebook… #iOS #macOS #Objective-C #Swift #skills 
+- [图形示意绘制工具](https://www.sunyazhou.com/2019/12/MathGraphicTool.md): 以前经常写一些动画需要描述示意图形的运动图.这样能生动形象的表述我所讲述的内容到底是什么样的 最近发现了一个网站,专门做数学图形绘制 https://www.geogebra.org/ 这里数学上用的… #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
+- [使用Masonry约束实现简单的高级拖拽视图](https://www.sunyazhou.com/2019/09/MasonryPanViewDemo.md): 最近开发遇到一个上图的需求,做一个挂件能四处拖动并且上边还时不时的展示一个tips气泡的Label,在尽量使用少的代码来实现这个功能,作为我手一名iOS开发人员必须严格考究这个需求,显然这有点麻烦,一… #iOS #macOS #Objective-C #Swift #Masonry 
+- [UITraitCollection详解](https://www.sunyazhou.com/2019/09/UITraitCollection.md): 最近在适配iOS13 有个Dark Mode的暗黑模式, 为了适配这个模式不得不在UIView和UIViewController以及UIWindow中复写如下方法 这里有个UITraitCollect… #iOS #macOS #Objective-C #Swift #skills 
+- [从零学习OpenGLES的纹理渲染](https://www.sunyazhou.com/2019/09/OpenGLESDemo1.md): Demo #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
+- [做一个简单的Loading动画](https://www.sunyazhou.com/2019/07/LoadingAnimationI.md): 由于最近工作忙到坐地铁回家都能睡着,博客没能及时更新,今天抽个时间写个加载动画,废话不多说上图. (颜色可以自定义哈,非常简单,小白自己可以随便改) 创建一个UIView的子类UILoadingVie… #iOS #动画 #Objective-C #skills 
+- [CentOS7安装iptables防火墙](https://www.sunyazhou.com/2019/05/CentosIptables.md): 最近翻墙总不稳定 最后发现是防火墙配置问题今天 记录一下 CentOS7默认的防火墙不是iptables,而是firewalle. 安装iptable iptable-service 禁用/停止自带的… #Linux #shell 
+- [Cleaner For Xcode编译](https://www.sunyazhou.com/2019/05/CleanerForXcodeBuild.md): 最近公司给配发一个最新版的macbook pro, 然后经过一顿折腾以后发现原来的软件 无法 迁移过来或者迁移起来比较费劲.于是就有了这篇文章. 由于mac磁盘空间有限,不得不借助一些第三方软件清理磁… #iOS #macOS #Objective-C #Swift #skills 
+- [Windows装机教程](https://www.sunyazhou.com/2019/04/WindowsResources.md): 为了解决每次都重装windows电脑系统浪费时间,干脆整理一篇文章记录一下,方便后续修电脑总忘记各种工具 第一步:制作前的软件、硬件准备：8G及以上U盘一个都可以， 一台可正常可上网的电脑 第二步:用… #win7 
+- [AVRoutePickerView](https://www.sunyazhou.com/2019/04/AVRoutePickerView.md): demo点击这里下载 #iOS #macOS #Objective-C #AVFoundation #AVKit #音视频 
+- [iOS抖音滚动字幕](https://www.sunyazhou.com/2019/03/UIScrollTextDemo.md): 很久没更新博客了(家里事情比较多时间太紧迫加上工作时间有限),今天给大家带来的是抖音得滚动字幕,也就是音乐专辑的专辑名称 废话不多说上图 支持蒙版渐变模糊 可调节 支持富文本字符串用于显示表情或者图片… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [Mac上的一些好软件推荐](https://www.sunyazhou.com/2019/02/Tools.md): 新年第一篇 把自己用的比较好的工具都记录下来 没当没有网络的时候 或者拿到新mac的时候由于没有什么软件截屏,不得不用QQ或者微信自带的截屏.这就逼着我不得不安装这两个app，有了Snipaste 跟… #iOS #macOS #Objective-C #Swift #skills 
+- [2018年终总结](https://www.sunyazhou.com/2018/12/FinalSummary.md): 埋头苦干尽五年,晨起面镜白发先. 一年到头不见泪,岁月荏苒冬却寒. 仿佛回到一三年,北京站前望着天. 北漂掘金那刻起,人生已无再少年. 我要是能像你那么潇洒就好了,有时候你能做的事情我却做不到,我相信… #年终总结 
+- [iOS抖音的转场动画](https://www.sunyazhou.com/2018/12/AwemeTransition.md): 这几天比较忙,今天给大家带来的是抖音的转场动画实现 废话不多说上图 这里需要用到前一篇文章的上下滑demo 学习这篇文章之前推荐看下喵神的iOS7中的ViewController转场切换 如果对转场不… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [探测UIPanGesture的滑动方向](https://www.sunyazhou.com/2018/12/DetectingPanGestureDirection.md): 这几天遇到一个问题 就是拖动手势作用在一个view上的时候 无法区分方向 于是找到stackOverFlow上的答案 记录一下 #iOS #Objective-C #Swift #skills 
+- [iOS抖音点赞动画实现](https://www.sunyazhou.com/2018/11/LikeAnimation.md): hi 大家好 又跟大家见面了,今天给大家分享的是抖音的点赞动画的实现, 废话不多说上图 CAShapeLayer和贝赛尔曲线绘制三角形 组合动画的时间技巧 我习惯写完文章的demo都附在文章底部,如果… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [iOS视频加载动画](https://www.sunyazhou.com/2018/11/PlayLoadingAnimation.md): 这几天一直跟开源的抖音demo斗智斗勇,今天跟大家分享的是抖音中或者快手中加载视频的动画 这里我们可以看到 我们实际上创建的是一个 1pt宽度 0.5 pt的宽度 的视图 关键在scaleAnimat… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [iOS所有Animation相关可用的Keypath](https://www.sunyazhou.com/2018/11/AllKeypathOfCALayer.md): 在Core Animation中 我们经常使用CABasicAnimation或者它的子类做一些动画 一般情况下我们都要用到Keypath,最近在研究动画,想整理一下所有可用的Keypath在iOS的… #iOS #macOS #Objective-C #skills 
+- [iOS抖音右下角专辑动画](https://www.sunyazhou.com/2018/11/AwemeAlbumAnimation.md): 前两天分享了 抖音 上下滑切换 ,今天给和大家分享的是抖音右小角底部的专辑动画 首先需要3涨素材 这个在demo中就可以找到哈 1. ContrainerView 2. Background Laye… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [iOS抖音的上下滑实现](https://www.sunyazhou.com/2018/11/AwemeTopBottomScrollDemo.md): 一直一来都在 研究抖音App做的短视频 上下滑动 的技术实现, 今天写了个demo,方便学习技术技巧和记录知识, 其实就是一个UITableView改变上下显示范围. talk is cheap sh… #iOS #动画 #抖音动画系列 #Objective-C #skills 
+- [iOS数字倍数动画](https://www.sunyazhou.com/2018/10/LabelDanceAnimation.md): 写了一个简单的利用 透明度和 缩放 实现的 数字倍数动画 利用一个透明度从 0 1之间的alpha,然后缩放 之后加到动画组实现一下就好了 切记动画完成最好移除 否则可能引起动画内存问题 如果实现 d… #iOS #动画 #Objective-C #skills 
+- [iOS呼吸动画](https://www.sunyazhou.com/2018/09/BreathAnimation.md): 快放假了, 怕十一文章更新不及时,早点完成文章,保证每个月 2篇的产出量, 今天给大家带来的是 呼吸动画, 做的不是特别好. 内部头像呼吸放大缩小 无限循环 每次放大同时需要背景还有一张图也放大 并且… #iOS #动画 #Objective-C #skills 
+- [iOS扩大UIButton的点击的响应范围](https://www.sunyazhou.com/2018/09/IncreasingTapAreaOfButton.md): 开发过程中经常遇到UIButton点击区域太小 又不想 改动按钮的大小. 今天的文章和大家分享一下解决这种问题的代码 子类话UIButton 复写 它的hitTest:方法 子类话UIButton 复… #iOS #Objective-C #skills 
+- [iOS键盘动画细节](https://www.sunyazhou.com/2018/09/KeyboardAnimation.md): 很久没写技术文章里,本篇记录了一下一个键盘弹出的小细节动画,像微信一样流程 细节核心主要是通知中的一些key 下面的通知是接收 键盘将要出现的通知UIKeyboardWillShowNotificat… #iOS #macOS #Objective-C #skills 
+- [船与灯塔](https://www.sunyazhou.com/2018/09/Beacon.md): 荷兰🇳🇱被称为"海上马车夫"，今天讲述的故事与海上马车夫的有关的爱情故事，但它属于东方，属于中国。 它是一搜小船，船上有两只船桨，这艘船从驶出造船厂的时候，就被定义为普通货物运输船只，载重不超过1吨，… #系统理论实践 
+- [iOS中CPU线程调试高级技巧](https://www.sunyazhou.com/2018/08/CPUThreadDebug.md): 最近在开发直播,发现CPU性能被打满后导致CPU降频,发热严重,然后卡顿... 为了定位这个问题我们花费了至少 3天的时间 一点一点跟踪CPU的线程代码,当遇到C++的thread的时候没有符号表,只… #iOS #macOS #Objective-C #skills 
+- [Taptic Engine振动反馈](https://www.sunyazhou.com/2018/08/TapticEngineFeedback.md): Taptic Engine 是苹果产品上推出的全新震动模块，该元件最早出现在 Apple Watch 中。iPhone 6s 和 iPhone 6s Plus 中，也同样内置了Taptic Engin… #iOS #Objective-C #skills 
+- [利用UIToolBar做高斯模糊背景](https://www.sunyazhou.com/2018/07/ToolBarBlur.md): 也可以使用UIBlurEffect UIBlurEffectStyle UIBlurEffectStyleExtraLight,//额外亮度，（高亮风格） UIBlurEffectStyleLight… #iOS #macOS #Objective-C #skills 
+- [Linux 终端 Bash 常用快捷键介绍及经验](https://www.sunyazhou.com/2018/07/LinuxBash.md): bash实质上是一个可执行程序，一个用户的工作环境。 在每一个shell下可以再打开一个shell，新打开的shell可以称为子shell，每一个shell之间是相互独立的。 可以使用pstree命令… #系统理论实践 #macOS #skills 
+- [Objective-C中使用正则去除非数字字母汉字](https://www.sunyazhou.com/2018/06/FilterString.md): 今天碰到个需求,PM要求输入框中取出非字母数字汉字的输入. 在网上找了一圈大多都是使用谓词去判断时候包含,没有几个给出相应的处理字符串. 我找到了3种 处理字符串的方式 方案1 使用谓词过滤 方案2… #iOS #macOS #Objective-C #skills 
+- [使用NSAttributeString实现不同颜色大小显示](https://www.sunyazhou.com/2018/06/NSAttributeString.md): 最近开发需求遇到一个比较简单但又棘手的问题.先看需求 一个UILabel显示不同大小颜色的字符串,当然我们首先的想到属性字符串,但是注意: 我们这里要处理国际化完成的字符串也就是说： 必须在国际化完成… #iOS #macOS #Objective-C #skills 
+- [Swift4.2中的随机数](https://www.sunyazhou.com/2018/06/SwiftRandom.md): 在上一篇文章发布不久WWDC2018就拉开了序幕,让我觉得有一点比较蛋疼的(a bit of pain) 是swift4.2中增加了系统的随机数支持.所以不得不完善的好上一篇文章的缺漏和新技术的研究学… #iOS #macOS #Objective-C #Swift #skills 
+- [Swift中的随机数](https://www.sunyazhou.com/2018/06/Random.md): 今天儿童节,写一篇随机数技术文章纪念留守儿童(资深)的童年. 在我们开发的过程中，经常用到求取一些随机数,今天列举几种写篇文章 首先是这个arc4random() arc4random()使用了arc… #iOS #macOS #Objective-C #Swift #skills 
+- [UIView不同方向的导角](https://www.sunyazhou.com/2018/05/HowToCreateTopBottomRoundedCornersForViews.md): 开发中总因为一些比较蛋疼的导角问题而困扰着我们,尤其是我们要给一个UIView导角成 左上 、左下。。。 这种需求很值得用代码实现一下, 今天突然在AppCode找到了一篇好文章.于是有了下文 如果像… #iOS #macOS #Objective-C #skills 
+- [手动管理UIViewController的生命周期](https://www.sunyazhou.com/2018/05/ManualControlUIViewControllerLifeCycle.md): 话说很久不用UIViewController的不常用 的API渐渐的都没有了印象,在 iOS 客户端中，多个 childViewController 的页面是个很常见的交互设计,最早的网易新闻,今日头… #iOS #macOS #Objective-C 
+- [AudioUnit](https://www.sunyazhou.com/2018/05/AudioUnit.md): 声音的渲染在iOS平台上回直接使用AudioUnit的API来完成.用来实现一些类似大叔,KTV,耳返等效果.... 今天带领大家深入了解和学习一下这些音效. 声音变声一般都是发生在 一端采集录制另一… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [深入理解RunLoop](https://www.sunyazhou.com/2018/04/RunLoop.md): RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，这篇文章将从CFRunLoop的源码入手，介绍 RunLoop 的概念以及底层实现原理。之后会介绍一下在 iOS 中，苹果是如何利用R… #iOS #macOS #Objective-C 
+- [Swift 4 中的数组技巧](https://www.sunyazhou.com/2018/03/Swft4ArraySkills.md): 年前买了本Swift 进阶(swift4.0),过完年回来正在一点点学习,不得不说喵神写的东西还是不错的,￥69元对广大程序员来说已经不算啥了.如果感兴趣可以买一本,真心不错 当我从头来学习数组的时候… #iOS #macOS #Objective-C #Swift #skills 
+- [什么是符号表?](https://www.sunyazhou.com/2018/03/WhatIsThedSYM.md): iOS 开发中经常回定位 bug 通过崩溃堆栈,此时我们需要借助符号表来恢复内存地址对应代码调用信息,为了解开这个大家耳熟能详却总有人问的问题的面纱,我在 bugle 平台和一些文章中收集了相关知识整… #iOS #macOS #Objective-C 
+- [计算机图形渲染的流程](https://www.sunyazhou.com/2018/03/ComputerGraphicsRenderingProcess.md): 今天在网上找到了一篇有价值的文章,来说明计算机中的图像渲染流程以及像素点计算和坐标点相关的知识. 计算机的绘图过程可以简单用流水线来说明，而产品(数据)就是经过流水线作业(渲染)到屏幕的图像。这条流水… #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
+- [Learning AV Foundation(五)播放视频](https://www.sunyazhou.com/2018/03/LearningAVFoundationPlayingVideo.md): 很久没有写Learning AV Foundation相关的文章了,言归正传 本篇介绍一下简单的视频播放 了解视频播放之前我们来看戏AVPlayer需要的一些组件模型 AVPlayer是一个用来播放基… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [NLP分词WordEmbeding](https://www.sunyazhou.com/2018/02/WordEmbeding.md): 学习过程中记录一下python代码 哈工大分词 jieba分词 stanford分词 #python 
+- [使用Python操作MySQL数据库](https://www.sunyazhou.com/2018/01/PythonMySQL.md): 为了实现不斷學習 與時俱進周末把大部分时间放在了学习Python上. 在最近的学习中有一些有价值的部分都摘录整理出来放到博客上,以免后续用到的时候忘记时回来翻翻博客. 我是在study.163.com… #python 
+- [AVAudioSession-Category各种姿势](https://www.sunyazhou.com/2018/01/AVAudioSessionCategory.md): 2018新年第一篇, 梳理AVAudioSession的Category,解决音频开发中的各种播放被打断或者首次启动时无声音的问题 由于iOS系统的特殊性,所有App共用一个AVAudioSessio… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [2017年终总结](https://www.sunyazhou.com/2017/12/FinalSummary.md): 时间像车轮一样在飞转 历史像江河一样在流淌 整整走过了365个风雨历程 2017年过的如此不寻常 一度春夏秋冬 一度雨雪风霜 一度翻山越岭 一度起伏延宕 又一年过去了,我也得墨守成规的按时交出我的年终… #年终总结 
+- [Markdown中插入音频文件](https://www.sunyazhou.com/2017/12/MarkdownAudio.md): 喜欢在博客文章打开的时候 播放一首背景音乐, 但Markdown本身是不支持插入音频视频,带着这个疑问开始这篇文章. markdown其实就是 一种html的转换语法,其实内部也同时支持直接写html… #iOS #macOS #Objective-C #skills 
+- [音频声像Pan值电平左右声道平衡](https://www.sunyazhou.com/2017/12/AudioPan.md): 最近在开发多媒体音视频相关业务,期间遇到的问题这里全做记录下来,下面是同事提供的一个例子我整理出来,以备后续开发遇到此类问题有个备案. 最近开发音频涉及到左右声道调节,基于左右声道的音量实现 声音环绕… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [UICollectionViewCell添加KVO](https://www.sunyazhou.com/2017/12/CellAddKVO.md): 都一个多月没更新博客了,这一段时间太忙了. 这篇带来的分享内容是 如何正确的给一个UICollectionViewCell添加KVO监听 . 由于目前在开发短视频相关的SDK,面向的多数都是小白开发者… #iOS #Objective-C #skills 
+- [论一个优雅的模态转场的自我修养](https://www.sunyazhou.com/2017/10/ElegantPresentTransition.md): 在开发过程中虽然 UI 这个活很没技术含量,但有时候还是需要做些的特别的转场效果.本教程参考UIPresentationController Tutorial: Getting Started 这篇博… #iOS #Objective-C 
+- [markdown嵌入折叠标签](https://www.sunyazhou.com/2017/10/MarkdownSkill.md): 这几天一直在开十九大,导致我的梯子翻墙不好使了,就在此时喵神发表了一篇博文 关于 Swift Error 的分类 每次看喵神的文章就像诸葛亮跟周瑜聊天一样如饮美酒,我不能自比诸葛孔明和周公瑾. 当我仔… #iOS #macOS #Objective-C #skills 
+- [理解UIView的绘制](https://www.sunyazhou.com/2017/10/UIViewRendering.md): 最近研究OpenGL ES相关和 GPU 相关 发现这篇文章很具有参考的入门价值. 理解 UIView 的绘制, UIView 是如何显示到 Screen 上的? 首先要从Runloop开始说,iOS… #iOS #Objective-C 
+- [DeviceCheck](https://www.sunyazhou.com/2017/09/DeviceCheck.md): iOS11 苹果改动了一个比较引开发者关注的亮点 UDID之类的写到系统 keychain 的唯一标识会随着 app 删除而删除 这个问题在微博上已经争论好几天 iOS11新的设备唯一标识 DCDev… #iOS #macOS #Objective-C 
+- [Markdown插入表格语法](https://www.sunyazhou.com/2017/09/MarkdownTable.md): 以前总用 markdown 插入表格不成功 这篇分享一下 markdown 如何插入表格 默认标题栏 居中对齐 , 内容居左对齐. -:表示内容和标题栏居右对齐. :-表示内容和标题栏居左对齐. :-… #skills 
+- [如何使用Charles截获https请求](https://www.sunyazhou.com/2017/09/CharlesCaptureHttps.md): 如何使用charles在iOS设备上截获https的请求 官网下载就行了 至于破解之类的 自行google吧 我这里使用的是Charles 4.1.3版本 目前应该是最新的 手机连上电脑，点击“设置-… #iOS #macOS #Objective-C #skills 
+- [ARKit](https://www.sunyazhou.com/2017/08/ARKit.md): 本篇会从广泛介绍到详细介绍,也就是从粗粒度向细粒度逐渐过渡讲解. 期间有任何问题请大家集思广益,多多指教. AR技术介绍 ARKit工作原理及流程介绍 ARKit简单代码实现 ARKit框架所有API… #iOS #macOS #Objective-C 
+- [Learning AV Foundation(四)AVAsset元数据(高级篇)](https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior.md): 这一篇 我们将学习解决如何一套代码解析大部分 多媒体格式的文件然后形成通用的 model - 元数据键值空间标准化 MediaItem (一个直接对外的接口) MetaData (元数据model)… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [iOS 11 新技能](https://www.sunyazhou.com/2017/07/ios11NewSkills.md): 在swift代码中经常可以看到 某个API 适用于 iOS10.0 在Xcode9 中, 编译器增加了 Objective-C 版本的 API 可用性检查 通过API AVAILABLE宏来标注方法的… #iOS #macOS #Objective-C 
+- [iOS生成随机UIColor颜色代码](https://www.sunyazhou.com/2017/07/Arc4RandomColor.md): 我们通常接触到的颜色空间是RGB，其实常用的还有HSV又叫HSB。 HSV即Hue, Saturation, Value. 什么意思呢？ 先看一张图 HSV这个color space可以用上图的圆柱体… #iOS #macOS #Objective-C 
+- [iOS获取各种文件目录的路径](https://www.sunyazhou.com/2017/06/GetSandboxPathios.md): iOS获取各种文件目录的路径 #iOS #macOS #Objective-C 
+- [iOS Android Php RSA加密解密通配方案](https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp.md): RSA非对称加密 原理 各种。。。 请自行百度 最近开发涉及到如何使用RSA进行鉴权 等技术。。。老实说 我找了一圈根本就找到一个真正能在 iOS、Android、web跑通的代码. 浪费了好几天开发… #iOS #macOS #Objective-C 
+- [Xcode开启静态分析器](https://www.sunyazhou.com/2017/06/EnableStaticAnalyer.md): Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器(static analyer) ，用来执行代码控制流和数据流的分析，可以发现许多编译器检查不出的问题。 你可以在 Xcode… #iOS #macOS #Objective-C #skills 
+- [如何在Objective-C中废弃一个方法](https://www.sunyazhou.com/2017/06/HowToDeprecatedAMothodInObjC.md): 最新在从事SDK方向的开发 有的时候 不能轻易的把某个API去掉 因为有些人还在使用 于是为了保留 相关方法 并标识为弃用 的方式 我采用如下代码 我想标识一个方法使用其它方式传入某个参数 例如:控制… #iOS #macOS #Objective-C 
+- [Xcode9新功能 无线真机调试](https://www.sunyazhou.com/2017/06/XcodeDebugViaWireless.md): 今天小伙伴(王可成)发现Xcode有个很方便的功能 可以真机无线调试运行 第二步 点勾选 via network 剩下的工作就是拔掉那个我们非常讨厌而且有不得不用还死贵且总折头处的白色数据线了 注意:… #iOS #macOS #Objective-C #skills 
+- [Learning AV Foundation(四)AVAsset元数据(基础篇)](https://www.sunyazhou.com/2017/06/LearningAVFoundationAVAssetBasic.md): 前言 本篇讲述的AVAsset元数据(可以简单理解成 比如一个mp3音频格式的model信息. title:xxxx, art:刘德华, album:专辑 爱你一万年.... 等这些数据的来源). 当… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [OpenGL编程语言-glsl基础](https://www.sunyazhou.com/2017/05/OpenGLglslLanguage.md): 最近在研究OpenGL 被各种陌生的名词虐成狗,所以记录下来一些学习知识点供学习和参考. GLSL(OpenGL Shading Language) 是OpenGL的着色器语言,纯粹的和GPU打交道的… #iOS #macOS #Objective-C #OpenGL #图形图象 #音视频 
+- [自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色](https://www.sunyazhou.com/2017/05/NSTableRowViewMouseTrackColor.md): 自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色 #iOS #macOS #Objective-C 
+- [如何在macOS/MAC OS X上创建替身文件](https://www.sunyazhou.com/2017/05/HowToCreateSymbolicLinkOnMacosInCode.md): 熟悉WIN 开发的同学一定很熟悉快捷方式,在macOS上叫做替身 最近开发插件相关逻辑 发现需要把插件复制到指定目录所以有了此文 如果你深刻的理解了内存管理的原理，软连接就如同内存管理中的“指向指针的… #iOS #macOS #Objective-C 
+- [向往计算机科学相关专业的必学经典](https://www.sunyazhou.com/2017/04/CmputerScienceAndTechnologyClassic.md): 前言 无论是何时毕业,何时参加工作,我的这篇文章将是大家迈进大学校门之前或者过程中荐举之章. 学习好一定要坚持下去,学习不好并不代表以后没有机会 , 如果你大学想学的是计算机相关专业,我可以把我之所学… #系统理论实践 
+- [如何在iOS/macOS系统中创建文件时创建唯一的文件名](https://www.sunyazhou.com/2017/04/UniqueFilenameInSystem.md): 当我无数次看到大家写代码的时候总是以一个时间戳+arc4random()创建某文件的时候 深感心碎,难道操作系统就没有提供相关的函数么 于是 我找到了如下代码 解决大家因为创建文件重名问题. 切记文件… #iOS #macOS #Objective-C 
+- [Xcode快捷键](https://www.sunyazhou.com/2017/04/XcodeShortcuts.md): 前言 在iOS和macOS开发者中积累了一些快捷操作记录下来 command+0 =显示/隐藏左侧面板 command+option+0 =显示/隐藏右侧面板 command+shift+y =显示/… #iOS #macOS #Objective-C #skills 
+- [隐私及敏感数据访问权限(Access privacy-sensitive data)](https://www.sunyazhou.com/2017/03/AccessPrivacySensitive.md): 在你访问照相机、通讯录、等等隐私以及敏感数据之前，你必须请求授权。否则你的app会在你尝试访问这些隐私时崩溃。Xcode会log这些： This app has crashed because it… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [Learning AV Foundation(三)AVAudioRecorder](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder.md): 在AV Foundation中使用AVAudioRecorder类添加音频录制功能和使用AVAudioPlayer一样简单, 都是在Audio Queue Server上层构建的.同时支持macOS和… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [判断NSWindow是否全屏](https://www.sunyazhou.com/2017/03/CheckNSWindowisFullScreen.md): refs:How to know if a NSWindow is fullscreen in Mac OS X Lion? #macOS #Objective-C 
+- [Learning AV Foundation(二)AVAudioPlayer](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer.md): 开篇 -- 最近在学习AV Foundation 试图把学习内容记录下来 并参考一些博客文章 本期的内容是AVAudioPlayer 音频文件的生成过程是将声音信息 采样 、 量化 和 编码 产生的数… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [Learning AV Foundation(一)汉字语音朗读](https://www.sunyazhou.com/2017/03/LearningAVFoundationAVSpeechSynthesizer.md): 最近在研究AV Foundation 框架 发现有一本书叫做 AV Foundation开发秘籍：实践掌握iOS & OS X 应用的视听处理技术 然后google查了一下英文版叫 Learning… #iOS #macOS #Objective-C #AVFoundation #音视频 
+- [macOS上模拟发送键盘事件](https://www.sunyazhou.com/2017/02/macOSsimulateKeyboradNSEvent.md): 最近在开发macOS远程协助功能, 需要模拟从windows传过来的键盘事件映射成macOS NSEvent, macOS上模拟事件都是底层的CoreGraphic的class,下面说下实现的片断代码… #iOS #macOS #Objective-C 
+- [使用终端删除NSUserDefault的内容](https://www.sunyazhou.com/2017/02/ClearNSUserDefaultCcontent.md): 前言 -- 大家对NSUserDefaults非常熟悉 今天给大家讲一下如何用终端清理NSUserDefaults的信息 NSUserDefaults和win开发的注册表一样 用于存储一些标记位 最近… #iOS #macOS #Objective-C 
+- [iOS如何让二维码/条形码扫描框跟随二维码移动](https://www.sunyazhou.com/2017/02/ScanBoundsTracking.md): 开发过程中经常会遇到二维码条形码,但总会有一个比较蛋疼的问题 如何让二维码的扫描框跟随扫码到的二维码移动跟踪呢(就是智能探测扫描的layer.bounds)？ 这里有一篇文字讲述了开发过程我这里就不赘… #iOS #macOS #Objective-C 
+- [iOS语言本地化/国际化一些技巧](https://www.sunyazhou.com/2017/02/iOSInternationalizationLanguageSkills.md): 代码获取国际化语言数组 -- 获取当前app使用的语言 切换语言 en代表 英语, zh-Hans 简体中文, zh-Hant 繁体中文. 修改scheme切换启动语言 -- AppleLanguag… #iOS #macOS #Objective-C 
+- [搭建hexo博客教程](https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial.md): Jekyll迁移到Hexo搭建个人博客 HEXO + Github 搭建自己的博客系统 利用Hexo和Github Pages搭建个人博客 github pages 配置 大家自行google吧 真的… #skills 
+- [DFS算法扫描上传文件/文件夹](https://www.sunyazhou.com/2017/02/DFSAlgorithm.md): DFS需求背景 -- 在开发过程中难免会遇到类似 上传文件夹的功能,但是上传文件夹会遇到一种情况 1. 如果文件里面包含子文件夹的N层嵌套 2. 如何过滤非空文件夹 3. 如何处理根层文件夹没有文件那… #iOS #macOS #Objective-C #Swift 
+- [如何使用git管理代码](https://www.sunyazhou.com/2017/02/HowToUseGitManageCode.md): username 一般代表提交的本机用户名 email@you.com 一般是邮箱地址 执行完成之后在本地创建一个 .git 的隐藏文件夹包含git的信息在里面 git status 命令会显示当前代… #iOS #macOS #Git #skills 
+- [Webview的NSScrollView禁用滑动功能](https://www.sunyazhou.com/2017/02/HowtToDisableWebviewNSScrollViewScroll.md): 在webview的WebFrameLoadDelegate代理里面实现如下代码 以上代码属于macOS上的开发内容. #macOS #Objective-C 
+- [iOS开发知识点积累](https://www.sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate.md): 搞了很久iOS开发, 以前都是用脑子记某种技术文章和技术实现的代码,但是当一个人的大脑超过一定存储极限的时候就会出现栈溢出(其实我比较笨)，后来开始逐渐记某博客的是谁写的，或者技巧实现的代码。。。后来… #iOS #macOS #Objective-C #音视频 
+- [学习macOS开发的路线](https://www.sunyazhou.com/2017/01/LearningmacOSdevelopmentShortcut.md): 1. 学习完所有 raywenderlich 的 macOS 开发教程 2. Cocoa Programming for OS X (5th Edition) 必看(英文版没有中文) 3. [[Adv… #iOS #macOS #Objective-C #skills 
+- [UIViewController代码规范](https://www.sunyazhou.com/2017/01/UIViewControllerCodeStandard.md): UIViewController生命周期方法 在 Objective-C 中，UIViewController 的生命周期方法涵盖了视图控制器从创建到销毁的整个过程。以下是这些方法的全面列表，包括它们… #iOS #Swift #macOS 
+
+## 工具
+
+- [图片转 AVIF](https://www.sunyazhou.com/tools/image-to-avif.md): PNG / JPEG / WebP / GIF 批量转 AVIF，动图逐帧转码保留动画，纯本地转换不上传（WASM libaom）
+- [图片主色调提取](https://www.sunyazhou.com/tools/color-picker.md): 上传图片自动分析全部像素提取主色调，三种色彩量化算法（K-Means 聚类 / 中值切割 / 直方图统计）可选，颜色数量与采样精度可调，按占比输出 HEX + RGB 并生成 Swift / Obje…
+- [色彩格式转换](https://www.sunyazhou.com/tools/color-converter.md): HEX / RGB / HSL / SwiftUI / UIColor / Android / CSS 等色彩格式互转，实时联动、吸管取色、预设色板、一键复制，纯本地处理不上传
+- [图片格式转换](https://www.sunyazhou.com/tools/webp-heic.md): PNG / JPEG / GIF / BMP / AVIF / HEIC 等互转 WebP / JPEG / PNG，纯本地转换不上传
+- [图片元数据查看器](https://www.sunyazhou.com/tools/imginfo.md): 拖入图片即本地解析出完整技术参数：格式、尺寸、位深、色彩类型、透明通道、是否动画、EXIF 相机信息、ICC 色彩配置，支持 PNG/JPEG/GIF/WebP/AVIF/HEIC/TIFF/BMP …
+- [地理编码查询](https://www.sunyazhou.com/tools/geocoder.md): 浏览器内做地理编码（地址→经纬度）与逆地理编码（经纬度→地址）：可选腾讯 / 高德（国内）与 Google / OpenStreetMap（国外），支持 WGS-84 / GCJ-02 / BD-09…
+- [二维码生成解析](https://www.sunyazhou.com/tools/qrcode.md): 文本生成二维码图片（可选纠错级别、下载 PNG），上传二维码图片解析出文本/链接，纯本地处理不上传
+- [Base64 编码解码](https://www.sunyazhou.com/tools/base64.md): 文本与 Base64 互转，支持标准与 URL 安全（Base64URL）变体，编码解码、一键复制，纯本地处理不上传
+- [进制转换](https://www.sunyazhou.com/tools/base-converter.md): 二进制 / 八进制 / 十进制 / 十六进制实时联动互转，支持任意大整数，纯本地计算不上传
+- [字符串 Hash](https://www.sunyazhou.com/tools/hash-string.md): 输入字符串点击生成 MD5 / SHA1 / SHA256 / SHA384 / SHA512，支持大小写切换与一键复制，纯本地计算不上传
+- [JSON → Swift 互转](https://www.sunyazhou.com/tools/json-to-swift.md): 输入 JSON 生成 Swift Codable 结构体，或输入 Swift 生成示例 JSON。支持嵌套对象、蛇形命名、CodingKeys 自动生成，提供 Swift / Objective-C …
+- [3D 模型多视口分析](https://www.sunyazhou.com/tools/3d-viewer.md): 单渲染器四视口分析 3D 模型：线框看骨架、UV 棋盘格看皮囊、PBR 看光影、法线/深度看异常，四视口相机联动，支持 GLB/glTF/OBJ/FBX/STL/USDZ 加载与格式导出、点对点测距、…
+- [JSON 工具](https://www.sunyazhou.com/tools/json-format.md): JSON 常用处理一条龙：树形浏览（展开/折叠、搜索、图片链接 hover 预览）、格式化/压缩/按键排序、宽容解析自动修复（尾逗号/单引号/无引号键/注释）、复制与下载 .json，错误定位行列，纯…
+- [时间戳转换](https://www.sunyazhou.com/tools/timestamp.md): 实时显示当前日期时间精确到毫秒，Unix 时间戳与日期互转，优先兼容 Apple NSDate 带毫秒 Double 格式，自动识别秒/毫秒/小数时间戳，提供 Swift / Objective-C …
+- [XML 工具](https://www.sunyazhou.com/tools/xml-viewer.md): XML 树形浏览、格式化、压缩、复制与下载
+- [图片隐私脱敏器](https://www.sunyazhou.com/tools/exif-stripper.md): 上传图片展示全部 EXIF 元数据（GPS 坐标、设备型号、拍摄时间等），一键抹除后下载，对比擦除前后文件大小与 metadata 占比，纯本地解析 JPEG/PNG 不上传
+- [九宫格切图](https://www.sunyazhou.com/tools/grid-crop.md): 上传图片按 3×3 切成 9 张，主体锚点保护自动调整网格避免人物被拦腰切断，支持平移微调，预览后打包下载全部 9 张，纯本地处理不上传
+- [URL 编码解码](https://www.sunyazhou.com/tools/url-encode.md): 文本与 URL 编码（%20%2F）互转，支持 encodeURIComponent 与 encodeURI 两种模式，双向一键互换、一键复制，纯本地处理不上传
+- [JWT 在线解析器](https://www.sunyazhou.com/tools/jwt-parser.md): 粘贴 JWT 自动解码 Header 与 Payload 为 JSON 树，高亮过期时间并计算剩余天数，内置 HMAC-SHA256 签名校验、篡改演示，纯本地解析不上传
+- [UUID / ULID 生成器](https://www.sunyazhou.com/tools/uuid-ulid.md): 一键批量生成 1 / 10 / 100 个 UUID v4 与 ULID，支持复制单个或全部、换一批，纯本地生成不上传
+- [正则表达式测试器](https://www.sunyazhou.com/tools/regex-tester.md): 输入正则与测试文本实时高亮所有匹配项，展示捕获分组与匹配数量，提供回溯 / 复杂度监控并对灾难性回溯写法给出警示，纯本地计算不上传
+- [英汉智能词典](https://www.sunyazhou.com/tools/english-dictionary.md): 输入英文或中文自动识别语言查词翻译，内置 ECDICT 339 万词条本地词库（按首字母分片按需下载缓存到 IndexedDB 离线可用），在线 API 补充英文详细释义与例句，浏览器语音合成发音，纯…
+- [多语在线翻译](https://www.sunyazhou.com/tools/translator.md): 输入文字选择源/目标语言即可在线翻译成 50+ 种语言，与英汉智能词典相互独立，专注多语种自由互译。源语言支持自动检测，百度 / 有道 / Edge / MyMemory 四引擎并排对照，纯前端直连第…
+- [Markdown 中文转英文](https://www.sunyazhou.com/tools/md-translator.md): 粘贴中文 Markdown 一键译为英文 Markdown，本地 Ollama + Qwen2.5 离线运行不上传，自动保留代码块 / front matter / 链接与图片地址，术语可锁定不译，适…
+- [Lottie 动画预览器](https://www.sunyazhou.com/tools/lottie-viewer.md): 上传 Lottie JSON 或 dotLottie 文件预览动画，支持播放控制、进度拖拽、速度调节、循环切换、背景色切换、动画信息展示、导出当前帧 PNG，纯本地渲染不上传（lottie-web +…
+- [PAG 动画预览器](https://www.sunyazhou.com/tools/pag-viewer.md): 上传 PAG 文件预览动画，支持播放控制、进度拖拽、速度调节、循环切换、背景色切换、动画信息展示、导出当前帧 PNG，基于腾讯 libpag WASM 引擎，纯本地渲染不上传
+- [CocoaPods 速查手册](https://www.sunyazhou.com/tools/command-reference.md): CocoaPods 命令与 Podspec DSL 速查参考，内置 111 条 CLI 命令与 DSL 方法的详细语法、参数说明、用法示例与注意事项，支持分类筛选与实时搜索，纯本地不上传
+- [媒体信息查看器](https://www.sunyazhou.com/tools/mediainfo.md): 拖入音视频文件即本地解析出 MediaInfo 级技术参数（容器、时长、码率、分辨率、视频与音频编码、色彩信息、字幕轨），支持分组表格 / 文本 / XML / JSON 四种视图与一键复制，附音视频…
+- [音频元数据查看器](https://www.sunyazhou.com/tools/audiometa.md): 拖入音频文件即本地解析出元数据标签（标题 / 艺术家 / 专辑 / 音轨 / 年份 / 流派 / 歌词 / ReplayGain 等）与技术参数（编码、采样率、位深、声道、码率、时长、是否无损），并展…
+- [劳动仲裁助手](https://www.sunyazhou.com/tools/labor-arbitration.md): 被裁员后的维权一站式工具：12个月平均工资计算器、经济补偿金/赔偿金/年假工资/加班费估算、仲裁全流程指南、仲裁申请书一键生成模板。依据《劳动合同法》设计，纯本地不上传
+- [北京医院推荐](https://www.sunyazhou.com/tools/hospital-recommend.md): 北京医院推荐：按骨科、心脑血管、儿科、口腔等专攻方向整理医院官网、地址与挂号方式（北京114 微信公众号 + 医院 app/公众号）
+- [工程师菜谱](https://www.sunyazhou.com/tools/recipes.md): 把做菜视频的口播整理成能照着做的文字版：配料配比、分步流程、避坑要点，配比保留原话口径不擅自改成精确数字，制作时间线按真实烹饪节奏排并标出可并行步骤，支持搜菜名或搜配料
+- [SQLite 数据库管理器](https://www.sunyazhou.com/tools/sqlite-manager.md): 浏览器内直接运行的 SQLite 管理工具：新建/打开 .sqlite 文件（支持 SQLCipher 加密库，输入密码即可）、执行 SQL、浏览编辑表数据、导入导出 CSV 与 SQL，基于 SQL…
+- [网址导航](https://www.sunyazhou.com/tools/bookmarks.md): 常用网址速查：点一下就在新标签页打开，卡片显示名称、一句话说明与域名。清单在 _data/bookmarks.yml 里手动维护，改完重新构建即生效，纯静态无脚本
+- [App 推荐](https://www.sunyazhou.com/tools/app-recommend.md): 半导体 / IC 芯片查询类 App 推荐：半导小芯、芯查查等，点击卡片跳转官网或下载页
+- [本地音乐播放器](https://www.sunyazhou.com/tools/music.md): 选择音乐文件夹，浏览器本机深度遍历出所有支持的歌曲形成播放列表，随时切换/随机/循环播放，并用实时频带可视化展示左右声道频谱；支持 FLAC / ALAC / APE / WAV / AIFF / D…
+
+## 站点导航
+
+- [归档](https://www.sunyazhou.com/tabs/archives/): 文章归档列表，按时间倒序
+- [分类](https://www.sunyazhou.com/tabs/categories/): 文章分类
+- [标签](https://www.sunyazhou.com/tabs/tags/): 所有文章标签
+- [工具](https://www.sunyazhou.com/tabs/tools/): 纯前端小工具合集，所有处理都在浏览器本地完成，文件不会被上传
+- [作品](https://www.sunyazhou.com/tabs/projects/): 所有作品
+- [关于](https://www.sunyazhou.com/tabs/about/): 关于我
 
 ## 可选资源
 
-- [归档](https://sunyazhou.com/tabs/archives/): 文章归档列表
-- [分类](https://sunyazhou.com/tabs/categories/): 文章分类
-- [标签](https://sunyazhou.com/tabs/tags/): 所有文章标签
-- [作品](https://sunyazhou.com/tabs/projects/): 所有作品
-- [关于](https://sunyazhou.com/about/): 关于我
+
+- [English content](https://www.sunyazhou.com/en/llms-full.txt): 英文版全量内容索引
+- [RSS](https://www.sunyazhou.com/feed.xml): Atom 订阅源
+

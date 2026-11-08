@@ -1,6 +1,8 @@
-
-URL: https://sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect/index.html.md
+# llms-full.txt> 全量文章内容，每篇含简洁 Markdown 路径（`/YYYY/MM/slug.md`）与兼容镜像（`index.html.md`）。
+URL: https://www.sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect.md
+Mirror: https://www.sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect/index.html.md
 Published At: 2026-10-31 08:30:00 +0000
+Description: macOS 剪贴板工具里的卡片悬停倾斜效果。从 m34 与齐次坐标讲起，实测标定 SwiftUI perspective 与 m34 的换算关系（0.6 才等于 tvOS 的 1/500），复原 Apple TV 焦点卡的四件套，并解决 3D 变换篡改命中区导致的 60fps 闪烁。
 
 # SwiftUI 3D 悬停卡片m34动效实现
 
@@ -355,8 +357,10 @@ MTPASTE_TILT_TEST="2:0.9,-0.5" ./MTPastePro --show
 
 
 
-URL: https://sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial/index.html.md
+URL: https://www.sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial.md
+Mirror: https://www.sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial/index.html.md
 Published At: 2026-10-31 06:32:00 +0000
+Description: 整理 Rufus 这款免费开源装机工具的用法，手把手教你制作 Windows 11/10 启动 U 盘，详解分区方案、文件系统等关键选项，并标注官方与参考来源，方便后续装机。
 
 # Rufus 制作 Windows 启动 U 盘教程
 
@@ -485,8 +489,10 @@ Windows 11 官方要求 TPM 2.0、安全启动，并且安装时要联网、登�
 
 
 
-URL: https://sunyazhou.com/2026/10/EigenMatrixAndGeometry/index.html.md
+URL: https://www.sunyazhou.com/2026/10/EigenMatrixAndGeometry.md
+Mirror: https://www.sunyazhou.com/2026/10/EigenMatrixAndGeometry/index.html.md
 Published At: 2026-10-23 07:26:00 +0000
+Description: macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Isometry3d 的用法与互转，附真实控制台输出。
 
 # Eigen 用法笔记：矩阵运算与几何变换
 
@@ -1386,7 +1392,8 @@ CLion 里这些都不用敲：`File → Open` 打开对应目录，右上角下�
 
 
 
-URL: https://sunyazhou.com/2026/09/ConvertVideoToAnimatedAvifWithFfmpeg/index.html.md
+URL: https://www.sunyazhou.com/2026/09/ConvertVideoToAnimatedAvifWithFfmpeg.md
+Mirror: https://www.sunyazhou.com/2026/09/ConvertVideoToAnimatedAvifWithFfmpeg/index.html.md
 Published At: 2026-09-18 12:04:00 +0000
 
 # ffmpeg 视频转动图 AVIF：一条命令讲透
@@ -1581,7 +1588,8 @@ ffprobe -v error -show_entries stream=nb_frames,width,height -of default=noprint
 
 
 
-URL: https://sunyazhou.com/2026/09/AdaptingAppsToIphoneDuoInIos27/index.html.md
+URL: https://www.sunyazhou.com/2026/09/AdaptingAppsToIphoneDuoInIos27.md
+Mirror: https://www.sunyazhou.com/2026/09/AdaptingAppsToIphoneDuoInIos27/index.html.md
 Published At: 2026-09-18 08:00:00 +0000
 
 # iOS 27 适配 iPhone Duo：六个新 API 的 Swift / Objective-C 整理
@@ -2102,7 +2110,8 @@ AVCaptureDeviceDiscoverySession *session =
 
 
 
-URL: https://sunyazhou.com/2026/08/LocalLLMMarkdownTranslator/index.html.md
+URL: https://www.sunyazhou.com/2026/08/LocalLLMMarkdownTranslator.md
+Mirror: https://www.sunyazhou.com/2026/08/LocalLLMMarkdownTranslator/index.html.md
 Published At: 2026-08-27 23:11:00 +0000
 
 # 用本地大模型离线翻译博客：Ollama + Qwen2.5 实战
@@ -2580,7 +2589,8 @@ rm -rf ~/.ollama
 
 
 
-URL: https://sunyazhou.com/2026/08/Aiagenttools/index.html.md
+URL: https://www.sunyazhou.com/2026/08/Aiagenttools.md
+Mirror: https://www.sunyazhou.com/2026/08/Aiagenttools/index.html.md
 Published At: 2026-08-24 01:21:00 +0000
 
 # 国内免费的AI Agent算力工具
@@ -2870,7 +2880,8 @@ Published At: 2026-08-24 01:21:00 +0000
 
 
 
-URL: https://sunyazhou.com/2026/08/Jekyllcomposecompleteguide/index.html.md
+URL: https://www.sunyazhou.com/2026/08/Jekyllcomposecompleteguide.md
+Mirror: https://www.sunyazhou.com/2026/08/Jekyllcomposecompleteguide/index.html.md
 Published At: 2026-08-22 06:24:00 +0000
 
 # Jekyll-compose完全指南:你可能不知道的七个命令
@@ -3017,7 +3028,8 @@ export JEKYLL_EDITOR="open -a Typora"
 
 
 
-URL: https://sunyazhou.com/2026/08/Jekyllpostscaffoldmultilang/index.html.md
+URL: https://www.sunyazhou.com/2026/08/Jekyllpostscaffoldmultilang.md
+Mirror: https://www.sunyazhou.com/2026/08/Jekyllpostscaffoldmultilang/index.html.md
 Published At: 2026-08-22 06:06:00 +0000
 
 # Jekyll博客支持类Hexo的文章模板与多语言创建
@@ -3278,7 +3290,8 @@ assets/images/20260822MyNewPost/
 
 
 
-URL: https://sunyazhou.com/2026/08/Cmu15/index.html.md
+URL: https://www.sunyazhou.com/2026/08/Cmu15.md
+Mirror: https://www.sunyazhou.com/2026/08/Cmu15/index.html.md
 Published At: 2026-08-20 04:16:00 +0000
 
 # CMU 15-462/662 计算机图形学：全算法与公式
@@ -4010,7 +4023,8 @@ $$L_o = L_e + \int_\Omega f_r\, L_i \cos\theta\, d\omega_i$$
 [B站课程链接](https://www.bilibili.com/video/BV1Kn3q6yEic/?spm_id_from=333.1391.0.0&p=26)
 
 
-URL: https://sunyazhou.com/2026/08/Mathformula/index.html.md
+URL: https://www.sunyazhou.com/2026/08/Mathformula.md
+Mirror: https://www.sunyazhou.com/2026/08/Mathformula/index.html.md
 Published At: 2026-08-19 13:54:00 +0000
 
 # 数学公式渲染
@@ -4512,7 +4526,8 @@ $$
 
 
 
-URL: https://sunyazhou.com/2026/07/Crossplatformdesktopframeworkcomparison/index.html.md
+URL: https://www.sunyazhou.com/2026/07/Crossplatformdesktopframeworkcomparison.md
+Mirror: https://www.sunyazhou.com/2026/07/Crossplatformdesktopframeworkcomparison/index.html.md
 Published At: 2026-07-03 02:45:00 +0000
 
 # 跨平台桌面框架选型深度对比：一个 iOS 开发者的 Qt6 之旅
@@ -5663,7 +5678,8 @@ AI Agent 桌面开发的特点是**多语言混合 + 多进程调试**，推荐�
 
 
 
-URL: https://sunyazhou.com/2026/07/35ChokePointTechnologies/index.html.md
+URL: https://www.sunyazhou.com/2026/07/35ChokePointTechnologies.md
+Mirror: https://www.sunyazhou.com/2026/07/35ChokePointTechnologies/index.html.md
 Published At: 2026-07-02 07:59:00 +0000
 
 # 35项「卡脖子」技术攻坚进展梳理
@@ -5758,7 +5774,8 @@ Published At: 2026-07-02 07:59:00 +0000
 
 
 
-URL: https://sunyazhou.com/2026/07/LLVMAttributeCompleteGuide/index.html.md
+URL: https://www.sunyazhou.com/2026/07/LLVMAttributeCompleteGuide.md
+Mirror: https://www.sunyazhou.com/2026/07/LLVMAttributeCompleteGuide/index.html.md
 Published At: 2026-07-01 02:58:00 +0000
 
 # LLVM `__attribute__` 完全指南.
@@ -6842,7 +6859,8 @@ visibility("hidden")                internal / fileprivate
 
 
 
-URL: https://sunyazhou.com/2026/03/Avoidspacersinswiftuistacks/index.html.md
+URL: https://www.sunyazhou.com/2026/03/Avoidspacersinswiftuistacks.md
+Mirror: https://www.sunyazhou.com/2026/03/Avoidspacersinswiftuistacks/index.html.md
 Published At: 2026-03-16 03:38:00 +0000
 
 # 在 SwiftUI 的 Stack 中避免使用 Spacer
@@ -6936,7 +6954,8 @@ HStack(spacing: 12) {
 
 
 
-URL: https://sunyazhou.com/2026/03/Magicalparticleeffectswithswiftuicanvas/index.html.md
+URL: https://www.sunyazhou.com/2026/03/Magicalparticleeffectswithswiftuicanvas.md
+Mirror: https://www.sunyazhou.com/2026/03/Magicalparticleeffectswithswiftuicanvas/index.html.md
 Published At: 2026-03-16 03:36:00 +0000
 
 # 使用 SwiftUI Canvas 实现魔幻粒子效果
@@ -7238,7 +7257,8 @@ struct ParticleCanvasView: View {
 
 
 
-URL: https://sunyazhou.com/2026/03/JekyllTabsCodeBlock/index.html.md
+URL: https://www.sunyazhou.com/2026/03/JekyllTabsCodeBlock.md
+Mirror: https://www.sunyazhou.com/2026/03/JekyllTabsCodeBlock/index.html.md
 Published At: 2026-03-01 08:50:00 +0000
 
 # Jekyll博客支持Tab切换代码块
@@ -7518,7 +7538,8 @@ console.log(greet("孙亚洲"));
 效果符合预期,点击 Tab 不会跳顶,dark/light 双主题自动适配,代码高亮与原有 rouge 渲染完全兼容.
 
 
-URL: https://sunyazhou.com/2026/01/Audiometadata/index.html.md
+URL: https://www.sunyazhou.com/2026/01/Audiometadata.md
+Mirror: https://www.sunyazhou.com/2026/01/Audiometadata/index.html.md
 Published At: 2026-01-23 16:06:00 +0000
 
 # 使用libtag库获取音频metadata元数据
@@ -8368,7 +8389,8 @@ libtag的库我是以本地pod的形式集成的,功能完好,需要使用自取
 2026年还是要坚持写博客.这篇文章介绍一下 音频元数据的工具类.善于积累细节,工作中一定用得到.
 
 
-URL: https://sunyazhou.com/2025/12/Finalsummary/index.html.md
+URL: https://www.sunyazhou.com/2025/12/Finalsummary.md
+Mirror: https://www.sunyazhou.com/2025/12/Finalsummary/index.html.md
 Published At: 2025-12-31 01:00:00 +0000
 
 # 2025年终总结
@@ -8620,7 +8642,8 @@ B站上找的学习课程,因为要学习写着色器.需要控制骨骼动画�
 
 
 
-URL: https://sunyazhou.com/2025/11/Swiftaiagent/index.html.md
+URL: https://www.sunyazhou.com/2025/11/Swiftaiagent.md
+Mirror: https://www.sunyazhou.com/2025/11/Swiftaiagent/index.html.md
 Published At: 2025-11-17 05:09:00 +0000
 
 # 揭秘 AI 编码代理：用 Swift 构建你自己的Agent
@@ -9267,7 +9290,8 @@ Nimbo：更新了！现在在 3 次错误猜测后，它会给你一个提示，
 
 
 
-URL: https://sunyazhou.com/2025/10/InterpolatingPointsInIosWithUibezierpath/index.html.md
+URL: https://www.sunyazhou.com/2025/10/InterpolatingPointsInIosWithUibezierpath.md
+Mirror: https://www.sunyazhou.com/2025/10/InterpolatingPointsInIosWithUibezierpath/index.html.md
 Published At: 2025-10-20 22:48:00 +0000
 
 # 在 iOS 中使用 UIBezierPath 插值点
@@ -9353,7 +9377,8 @@ UIBezierPath* bezierPath = [UIBezierPath bezierPath];
 
 
 
-URL: https://sunyazhou.com/2025/05/MemoryAlignmentAlgorithm/index.html.md
+URL: https://www.sunyazhou.com/2025/05/MemoryAlignmentAlgorithm.md
+Mirror: https://www.sunyazhou.com/2025/05/MemoryAlignmentAlgorithm/index.html.md
 Published At: 2025-05-11 07:30:00 +0000
 
 # GPU内存对齐算法
@@ -9472,7 +9497,8 @@ $$
 其中 `%` 可通过 `& (align - 1)` 优化（当 `align` 是 2 的幂时）。
 
 
-URL: https://sunyazhou.com/2025/02/TheBasicsOnTheMemoryLayoutOfSwiftStructInstances/index.html.md
+URL: https://www.sunyazhou.com/2025/02/TheBasicsOnTheMemoryLayoutOfSwiftStructInstances.md
+Mirror: https://www.sunyazhou.com/2025/02/TheBasicsOnTheMemoryLayoutOfSwiftStructInstances/index.html.md
 Published At: 2025-02-23 12:17:00 +0000
 
 # Swift结构体实例内存布局的基础知识
@@ -9737,7 +9763,8 @@ struct CertifiedPuppy2 {
 ](https://swiftunboxed.com/internals/size-stride-alignment/)
 
 
-URL: https://sunyazhou.com/2025/02/UnsafeSwiftUsingPointersAndInteractingWithC/index.html.md
+URL: https://www.sunyazhou.com/2025/02/UnsafeSwiftUsingPointersAndInteractingWithC.md
+Mirror: https://www.sunyazhou.com/2025/02/UnsafeSwiftUsingPointersAndInteractingWithC/index.html.md
 Published At: 2025-02-22 14:15:00 +0000
 
 # 如何使用unsafe Swift指针类型直接访问内存并与C交互
@@ -10526,7 +10553,8 @@ UInt64.randomized
 
 
 
-URL: https://sunyazhou.com/2024/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2024/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2024/12/FinalSummary/index.html.md
 Published At: 2024-12-31 23:53:00 +0000
 
 # 2024年终总结
@@ -10761,7 +10789,8 @@ Published At: 2024-12-31 23:53:00 +0000
 2024再见.
 
 
-URL: https://sunyazhou.com/2024/11/Coretextcalculatedheight/index.html.md
+URL: https://www.sunyazhou.com/2024/11/Coretextcalculatedheight.md
+Mirror: https://www.sunyazhou.com/2024/11/Coretextcalculatedheight/index.html.md
 Published At: 2024-11-06 02:25:00 +0000
 
 # CoreText渲染字体的时如何计算字体所需要的高度?
@@ -10826,7 +10855,8 @@ Published At: 2024-11-06 02:25:00 +0000
 记录一些容易遗忘的代码
 
 
-URL: https://sunyazhou.com/2024/11/Armthreadstate/index.html.md
+URL: https://www.sunyazhou.com/2024/11/Armthreadstate.md
+Mirror: https://www.sunyazhou.com/2024/11/Armthreadstate/index.html.md
 Published At: 2024-11-04 02:31:00 +0000
 
 # iOS的dSYM中ARM Thread State寄存器有哪些？
@@ -10949,7 +10979,8 @@ atos命令会输出导致崩溃的函数名和行号。例如：
 记录一下容易被遗忘的内容, 帮助修复工程中crash的问题
 
 
-URL: https://sunyazhou.com/2024/10/Swiftuiimage/index.html.md
+URL: https://www.sunyazhou.com/2024/10/Swiftuiimage.md
+Mirror: https://www.sunyazhou.com/2024/10/Swiftuiimage/index.html.md
 Published At: 2024-10-28 10:35:00 +0000
 
 # SwiftUI中的Image修改器(视图修饰符)有哪些？
@@ -11114,7 +11145,8 @@ Published At: 2024-10-28 10:35:00 +0000
  
 
 
-URL: https://sunyazhou.com/2024/10/Hangmonitor/index.html.md
+URL: https://www.sunyazhou.com/2024/10/Hangmonitor.md
+Mirror: https://www.sunyazhou.com/2024/10/Hangmonitor/index.html.md
 Published At: 2024-10-22 05:01:00 +0000
 
 # iOS卡顿监控代码
@@ -11331,7 +11363,8 @@ int main(int argc, char * argv[]) {
 ](https://mp.weixin.qq.com/s/X96VdTsskmNVCoqMzZjbgg)
 
 
-URL: https://sunyazhou.com/2024/10/UIImageMirror/index.html.md
+URL: https://www.sunyazhou.com/2024/10/UIImageMirror.md
+Mirror: https://www.sunyazhou.com/2024/10/UIImageMirror/index.html.md
 Published At: 2024-10-16 01:46:00 +0000
 
 # UIImage镜像
@@ -11404,7 +11437,8 @@ Published At: 2024-10-16 01:46:00 +0000
 
 
 
-URL: https://sunyazhou.com/2024/09/Cfnotificationprocesscommunication/index.html.md
+URL: https://www.sunyazhou.com/2024/09/Cfnotificationprocesscommunication.md
+Mirror: https://www.sunyazhou.com/2024/09/Cfnotificationprocesscommunication/index.html.md
 Published At: 2024-09-02 12:08:00 +0000
 
 # CFNotification进程间通讯
@@ -11655,7 +11689,8 @@ struct BroadcastView: View {
 [CFNotificationCenter文档](https://developer.apple.com/documentation/corefoundation/cfnotificationcenter)
 
 
-URL: https://sunyazhou.com/2024/08/Multiblockembedded/index.html.md
+URL: https://www.sunyazhou.com/2024/08/Multiblockembedded.md
+Mirror: https://www.sunyazhou.com/2024/08/Multiblockembedded/index.html.md
 Published At: 2024-08-22 12:32:00 +0000
 
 # 在Objective-C中多层block嵌套时如何使用weak self和strong self
@@ -11715,7 +11750,8 @@ Published At: 2024-08-22 12:32:00 +0000
 在这个示例中，我们在每一层方法中都使用了`__weak typeof(self) weakSelf = self;`来创建弱引用，并在下一层方法中使用`__weak typeof(weakSelf) weakSelf2 = weakSelf;`。最后，在最内层的方法中，我们使用`__strong typeof(weakSelf3) strongSelf = weakSelf3;`来获取一个强引用，以便在该层方法中使用。
 
 
-URL: https://sunyazhou.com/2024/08/Dispatchafternsintegermax/index.html.md
+URL: https://www.sunyazhou.com/2024/08/Dispatchafternsintegermax.md
+Mirror: https://www.sunyazhou.com/2024/08/Dispatchafternsintegermax/index.html.md
 Published At: 2024-08-19 01:50:00 +0000
 
 # NSIntegerMax整数溢出问题记录
@@ -11869,7 +11905,8 @@ const int64_t SecondsInADay = 86400LL;
 
 
 
-URL: https://sunyazhou.com/2024/08/PickingInMetal/index.html.md
+URL: https://www.sunyazhou.com/2024/08/PickingInMetal.md
+Mirror: https://www.sunyazhou.com/2024/08/PickingInMetal/index.html.md
 Published At: 2024-08-12 08:55:00 +0000
 
 # PickingInMetal
@@ -11926,7 +11963,8 @@ https://www.fasterthan.life/blog/2017/7/11/i-am-graphics-and-so-can-you-part-1
 
 
 
-URL: https://sunyazhou.com/2024/08/Docatchinswift/index.html.md
+URL: https://www.sunyazhou.com/2024/08/Docatchinswift.md
+Mirror: https://www.sunyazhou.com/2024/08/Docatchinswift/index.html.md
 Published At: 2024-08-11 01:55:00 +0000
 
 # Swift中的do catch
@@ -12004,7 +12042,8 @@ do {
 
 
 
-URL: https://sunyazhou.com/2024/07/UIApplicationSignificantTimeChangeNotification/index.html.md
+URL: https://www.sunyazhou.com/2024/07/UIApplicationSignificantTimeChangeNotification.md
+Mirror: https://www.sunyazhou.com/2024/07/UIApplicationSignificantTimeChangeNotification/index.html.md
 Published At: 2024-07-31 03:17:00 +0000
 
 # iOS中如何解决跨天日期变化
@@ -12079,7 +12118,8 @@ If your app is currently suspended, this message is queued until your app return
 
 
 
-URL: https://sunyazhou.com/2024/07/Magnificationgesture/index.html.md
+URL: https://www.sunyazhou.com/2024/07/Magnificationgesture.md
+Mirror: https://www.sunyazhou.com/2024/07/Magnificationgesture/index.html.md
 Published At: 2024-07-27 14:29:00 +0000
 
 # swiftUI中添加拟合手势MagnificationGesture
@@ -12139,7 +12179,8 @@ struct MagnificationGestureDemo: View {
 `MagnificationGesture`是SwiftUI中一个非常实用的手势识别器，它允许开发者通过简单的代码实现复杂的缩放手势交互效果。在开发需要缩放功能的应用时，`MagnificationGesture`是一个不可或缺的工具。
 
 
-URL: https://sunyazhou.com/2024/07/UIViewrepresentable/index.html.md
+URL: https://www.sunyazhou.com/2024/07/UIViewrepresentable.md
+Mirror: https://www.sunyazhou.com/2024/07/UIViewrepresentable/index.html.md
 Published At: 2024-07-26 14:28:00 +0000
 
 # 使用UIViewRepresentable  在SwiftUI中桥接 UIKit 视图
@@ -12237,7 +12278,8 @@ struct MyButton: UIViewRepresentable {
 通过理解 `makeCoordinator` 的调用时机，你可以更有效地在 SwiftUI 应用中桥接 UIKit 视图，并处理它们之间的事件和交互。
 
 
-URL: https://sunyazhou.com/2024/07/Kerning/index.html.md
+URL: https://www.sunyazhou.com/2024/07/Kerning.md
+Mirror: https://www.sunyazhou.com/2024/07/Kerning/index.html.md
 Published At: 2024-07-18 07:01:00 +0000
 
 # Kerning文字排版计算
@@ -12280,7 +12322,8 @@ CTRunGetPositions(run, CFRangeMake(0, 0), glyphPositions);//这个应该拿到�
 以上代码需要写demo验证.
 
 
-URL: https://sunyazhou.com/2024/07/Hitteststd/index.html.md
+URL: https://www.sunyazhou.com/2024/07/Hitteststd.md
+Mirror: https://www.sunyazhou.com/2024/07/Hitteststd/index.html.md
 Published At: 2024-07-02 08:01:00 +0000
 
 # hitTest标准写法
@@ -12326,7 +12369,8 @@ Published At: 2024-07-02 08:01:00 +0000
 代码review出现问题记录以下,hittest的标准写法
 
 
-URL: https://sunyazhou.com/2024/05/Smoothstep/index.html.md
+URL: https://www.sunyazhou.com/2024/05/Smoothstep.md
+Mirror: https://www.sunyazhou.com/2024/05/Smoothstep/index.html.md
 Published At: 2024-05-15 01:42:00 +0000
 
 # 平滑阶梯函数smoothstep
@@ -12423,7 +12467,8 @@ inline xx_smoothstep(T minEdge, T maxEdge, value) {
 
 
 
-URL: https://sunyazhou.com/2024/05/ArkTSAnimation/index.html.md
+URL: https://www.sunyazhou.com/2024/05/ArkTSAnimation.md
+Mirror: https://www.sunyazhou.com/2024/05/ArkTSAnimation/index.html.md
 Published At: 2024-05-05 11:05:00 +0000
 
 # HarmonyOS动画分类
@@ -12809,7 +12854,8 @@ Text(item).ft_text()
 鸿蒙开发已经学了3遍了,有时候需要记录一些动画和内容.全当学习笔记.希望能帮助其它开发者.
 
 
-URL: https://sunyazhou.com/2024/04/Keepimagescale/index.html.md
+URL: https://www.sunyazhou.com/2024/04/Keepimagescale.md
+Mirror: https://www.sunyazhou.com/2024/04/Keepimagescale/index.html.md
 Published At: 2024-04-02 09:16:00 +0000
 
 # 保持原UIImage缩放比的计算方法
@@ -12852,7 +12898,8 @@ Published At: 2024-04-02 09:16:00 +0000
 开发过程中有一些经常忘记,却很容易的计算方法,当用到的时候很难找,记录一下代码片段
 
 
-URL: https://sunyazhou.com/2024/03/Masonryrelayoutviews/index.html.md
+URL: https://www.sunyazhou.com/2024/03/Masonryrelayoutviews.md
+Mirror: https://www.sunyazhou.com/2024/03/Masonryrelayoutviews/index.html.md
 Published At: 2024-03-22 13:24:00 +0000
 
 # 使用Masonry高阶方法对子视图统一布局
@@ -13140,7 +13187,8 @@ CGFloat leadSpace = CGRectGetWidth(self.frame) - allEntries.count * MTContainerS
 [本文demo 点击下载](https://github.com/sunyazhou13/MasonryRelayoutDemo)
 
 
-URL: https://sunyazhou.com/2024/02/MotionShake/index.html.md
+URL: https://www.sunyazhou.com/2024/02/MotionShake.md
+Mirror: https://www.sunyazhou.com/2024/02/MotionShake/index.html.md
 Published At: 2024-02-21 06:56:00 +0000
 
 # 运动传感器摇晃检测
@@ -13688,7 +13736,8 @@ if (enableShake) {
 
 
 
-URL: https://sunyazhou.com/2024/01/Mpremotecommandlikecommand/index.html.md
+URL: https://www.sunyazhou.com/2024/01/Mpremotecommandlikecommand.md
+Mirror: https://www.sunyazhou.com/2024/01/Mpremotecommandlikecommand/index.html.md
 Published At: 2024-01-25 05:03:00 +0000
 
 # iOS控制中心收藏按钮likeCommand动画
@@ -13766,7 +13815,8 @@ if (@available(iOS 17.1, *)) {
 开发中总会出现一些奇奇怪怪的API,善于积累,勤于实践,记录过程,解决问题,以上就是本章的全部内容.
 
 
-URL: https://sunyazhou.com/2024/01/ArkTSBasic/index.html.md
+URL: https://www.sunyazhou.com/2024/01/ArkTSBasic.md
+Mirror: https://www.sunyazhou.com/2024/01/ArkTSBasic/index.html.md
 Published At: 2024-01-19 02:19:00 +0000
 
 # ArkTS和ArkUI基础语法
@@ -14918,7 +14968,8 @@ struct FlexPage {
 随时积累记录
 
 
-URL: https://sunyazhou.com/2024/01/HarmonyPhoneSendFileTomacOS/index.html.md
+URL: https://www.sunyazhou.com/2024/01/HarmonyPhoneSendFileTomacOS.md
+Mirror: https://www.sunyazhou.com/2024/01/HarmonyPhoneSendFileTomacOS/index.html.md
 Published At: 2024-01-16 01:49:00 +0000
 
 # 解决如何从鸿蒙手机传文件到macOS
@@ -15077,7 +15128,8 @@ export PATH=${OHPM_HOME}/bin:${PATH}
 
 
 
-URL: https://sunyazhou.com/2024/01/HarmonyOSLaunchPage/index.html.md
+URL: https://www.sunyazhou.com/2024/01/HarmonyOSLaunchPage.md
+Mirror: https://www.sunyazhou.com/2024/01/HarmonyOSLaunchPage/index.html.md
 Published At: 2024-01-15 12:55:00 +0000
 
 # 鸿蒙启动页面开发
@@ -15175,7 +15227,8 @@ struct Home {
 今天的简单的介绍启动闪屏页的简单开发,大家可以基于这个做一些广告和启动页配置.至于复杂的内容有待后续探索,感谢观看.
 
 
-URL: https://sunyazhou.com/2023/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2023/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2023/12/FinalSummary/index.html.md
 Published At: 2023-12-31 08:02:00 +0000
 
 # 2023年终总结
@@ -15487,7 +15540,8 @@ ArkUI实战 文档
 2023年在不知不觉中就到了年终,有时候真的感叹,我还能赶上 1打头和2打头的 年份,跨世纪的事我赶上了,时间过得真的太快了,没怎么开始一年就结束了,希望2024年我开启新的学习计划,持续输出高精尖技术文章,拓宽认知,早日实现共同富裕,2024 平稳度过就好, 明年见!
 
 
-URL: https://sunyazhou.com/2023/10/Sqlstandard/index.html.md
+URL: https://www.sunyazhou.com/2023/10/Sqlstandard.md
+Mirror: https://www.sunyazhou.com/2023/10/Sqlstandard/index.html.md
 Published At: 2023-10-31 02:01:00 +0000
 
 # SQL语句的标准
@@ -15621,7 +15675,8 @@ ORDER BY toStartOfDay(uploadTime) ASC
 [SQL 参考的 orona技术专题-时序数据分析](https://mp.weixin.qq.com/s/CMgxtw0AisqtNeY1gRgJsQ) 
 
 
-URL: https://sunyazhou.com/2023/09/ios17widgetURL/index.html.md
+URL: https://www.sunyazhou.com/2023/09/ios17widgetURL.md
+Mirror: https://www.sunyazhou.com/2023/09/ios17widgetURL/index.html.md
 Published At: 2023-09-12 01:54:00 +0000
 
 # 解决iOS小组件开发中widgetURL问题
@@ -15737,7 +15792,8 @@ HStack(alignment: .bottom) {
 [小组件开发相关文章](https://mp.weixin.qq.com/s/684dX2rFCUq1Tum6D0oJeA) 
 
 
-URL: https://sunyazhou.com/2023/09/Learnswiftuichapter5/index.html.md
+URL: https://www.sunyazhou.com/2023/09/Learnswiftuichapter5.md
+Mirror: https://www.sunyazhou.com/2023/09/Learnswiftuichapter5/index.html.md
 Published At: 2023-09-09 07:55:00 +0000
 
 # SwiftUI第五章学习总结
@@ -15900,7 +15956,8 @@ var desciption : String {
 * 6-11 影片中提到的，ObservableObject 會讓整個 View 進到 MainActor，[這篇文章](https://oleb.net/2022/swiftui-task-mainactor/)詳細講了關於 View struct 神秘的 @MainActor 情況。再一次強調，我覺得不用太在意這個，遇到這個錯誤就直接改進 MainActor 中就好。.
 
 
-URL: https://sunyazhou.com/2023/09/Learnswiftuichapter4/index.html.md
+URL: https://www.sunyazhou.com/2023/09/Learnswiftuichapter4.md
+Mirror: https://www.sunyazhou.com/2023/09/Learnswiftuichapter4/index.html.md
 Published At: 2023-09-03 02:51:00 +0000
 
 # SwiftUI第四章学习总结
@@ -16158,7 +16215,8 @@ extension Food: Codable{
 
 
 
-URL: https://sunyazhou.com/2023/08/Learnswiftuichapter3/index.html.md
+URL: https://www.sunyazhou.com/2023/08/Learnswiftuichapter3.md
+Mirror: https://www.sunyazhou.com/2023/08/Learnswiftuichapter3/index.html.md
 Published At: 2023-08-05 06:13:00 +0000
 
 # SwiftUI第三章学习总结
@@ -16324,7 +16382,8 @@ func maxWidth() -> some View {
 
 
 
-URL: https://sunyazhou.com/2023/08/ios17widget/index.html.md
+URL: https://www.sunyazhou.com/2023/08/ios17widget.md
+Mirror: https://www.sunyazhou.com/2023/08/ios17widget/index.html.md
 Published At: 2023-08-04 06:56:00 +0000
 
 # 开发iOS17小组件
@@ -16479,7 +16538,8 @@ iOS小组件有一些细微改动的,经过WWDC分析 我们还是需要认真�
 
 
 
-URL: https://sunyazhou.com/2023/08/Swiftuiextention1/index.html.md
+URL: https://www.sunyazhou.com/2023/08/Swiftuiextention1.md
+Mirror: https://www.sunyazhou.com/2023/08/Swiftuiextention1/index.html.md
 Published At: 2023-08-02 09:13:00 +0000
 
 # SwiftUI可用性检测,解决小组件iOS17 available问题
@@ -16586,7 +16646,8 @@ struct MomentsWidget: Widget {
 [参考stackoverflow](https://stackoverflow.com/questions/76595240/widget-on-ios-17-beta-device-adopt-containerbackground-api)
 
 
-URL: https://sunyazhou.com/2023/06/Learnswiftuichapter2/index.html.md
+URL: https://www.sunyazhou.com/2023/06/Learnswiftuichapter2.md
+Mirror: https://www.sunyazhou.com/2023/06/Learnswiftuichapter2/index.html.md
 Published At: 2023-06-18 10:52:00 +0000
 
 # SwiftUI第二章学习总结
@@ -16881,7 +16942,8 @@ HStack {
 [2-1 排版练习 (1/2) - SwiftUI 新手入门](https://www.bilibili.com/video/BV1pW4y1j7MC/?spm_id_from=333.788&vd_source=9309f71afe97e633abeadc8407870e76)
 
 
-URL: https://sunyazhou.com/2023/06/ios16wkwebview/index.html.md
+URL: https://www.sunyazhou.com/2023/06/ios16wkwebview.md
+Mirror: https://www.sunyazhou.com/2023/06/ios16wkwebview/index.html.md
 Published At: 2023-06-15 00:24:00 +0000
 
 # 解决iOS16 WKWebview无法调试问题
@@ -16921,7 +16983,8 @@ webView.inspectable = YES;
 
 
 
-URL: https://sunyazhou.com/2023/06/Blackwhitefilter/index.html.md
+URL: https://www.sunyazhou.com/2023/06/Blackwhitefilter.md
+Mirror: https://www.sunyazhou.com/2023/06/Blackwhitefilter/index.html.md
 Published At: 2023-06-14 01:37:00 +0000
 
 # UIImage黑白滤镜
@@ -17035,7 +17098,8 @@ Published At: 2023-06-14 01:37:00 +0000
 
 
 
-URL: https://sunyazhou.com/2023/06/Learnaboutvisionos/index.html.md
+URL: https://www.sunyazhou.com/2023/06/Learnaboutvisionos.md
+Mirror: https://www.sunyazhou.com/2023/06/Learnaboutvisionos/index.html.md
 Published At: 2023-06-09 09:08:00 +0000
 
 # 学习如何在visionOS上开发APP
@@ -17237,7 +17301,8 @@ Apple提供了一套全面的工具来帮助您为visionOS构建出色的应用�
 [Learn about visionOS官方地址](https://developer.apple.com/visionos/learn/)
 
 
-URL: https://sunyazhou.com/2023/06/Batchconvertheictopng/index.html.md
+URL: https://www.sunyazhou.com/2023/06/Batchconvertheictopng.md
+Mirror: https://www.sunyazhou.com/2023/06/Batchconvertheictopng/index.html.md
 Published At: 2023-06-07 02:01:00 +0000
 
 # Shell脚本批量将heic转png和webp
@@ -17370,7 +17435,8 @@ brew install webp
 [点击这里下载本文的脚本文件](https://github.com/sunyazhou13/BatchConvertImagesShells)
 
 
-URL: https://sunyazhou.com/2023/06/Learnswiftuichapter1/index.html.md
+URL: https://www.sunyazhou.com/2023/06/Learnswiftuichapter1.md
+Mirror: https://www.sunyazhou.com/2023/06/Learnswiftuichapter1/index.html.md
 Published At: 2023-06-04 05:32:00 +0000
 
 # SwiftUI第一章学习总结
@@ -17496,7 +17562,8 @@ struct ContentView_Previews: PreviewProvider {
 ](https://www.bilibili.com/video/BV1CG411776w/?p=6&spm_id_from=pageDriver)
 
 
-URL: https://sunyazhou.com/2023/04/Cocoapodsuserguide/index.html.md
+URL: https://www.sunyazhou.com/2023/04/Cocoapodsuserguide.md
+Mirror: https://www.sunyazhou.com/2023/04/Cocoapodsuserguide/index.html.md
 Published At: 2023-04-26 03:22:00 +0000
 
 # CocoaPods完全使用指南
@@ -18549,7 +18616,8 @@ Cocoapods发展这么多年却依然服役于现有的iOS工程,足以说明其�
 [Pod spec集成第三framework和.a工作记录](https://www.sunyazhou.com/2020/10/PodSpec/)  
 
 
-URL: https://sunyazhou.com/2023/04/Podcommands/index.html.md
+URL: https://www.sunyazhou.com/2023/04/Podcommands.md
+Mirror: https://www.sunyazhou.com/2023/04/Podcommands/index.html.md
 Published At: 2023-04-03 09:10:00 +0000
 
 # pod仓库的常用命令
@@ -18588,7 +18656,8 @@ pod repo push sunyazhou-specs xxxxlib.podspec --allow-warnings --use-libraries -
 
 
 
-URL: https://sunyazhou.com/2023/03/Podxcassets/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Podxcassets.md
+Mirror: https://www.sunyazhou.com/2023/03/Podxcassets/index.html.md
 Published At: 2023-03-22 02:08:00 +0000
 
 # 如何在pod中的podspec使用XCAssets
@@ -18733,7 +18802,8 @@ UIImage *image = [UIImage yzToolsImageNamed:@"power"];
 这里就给大家提供demo了,都是一些技巧.
 
 
-URL: https://sunyazhou.com/2023/03/Flutterformtextfield/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Flutterformtextfield.md
+Mirror: https://www.sunyazhou.com/2023/03/Flutterformtextfield/index.html.md
 Published At: 2023-03-18 06:50:00 +0000
 
 # Flutter中的Form表单
@@ -19051,7 +19121,8 @@ class TextDemo extends StatelessWidget {
 
 
 
-URL: https://sunyazhou.com/2023/03/Circularsliderview/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Circularsliderview.md
+Mirror: https://www.sunyazhou.com/2023/03/Circularsliderview/index.html.md
 Published At: 2023-03-17 12:38:00 +0000
 
 # 使用SwiftUI绘制环形 Slider
@@ -19169,7 +19240,8 @@ SwiftUI写代码很快,api非常多,比UIKit便携了很多,也简单了很多,�
 ](https://mp.weixin.qq.com/s/DUFEB5aOTx1jurPP4gP0MQ)
 
 
-URL: https://sunyazhou.com/2023/03/Flutterlifecycle/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Flutterlifecycle.md
+Mirror: https://www.sunyazhou.com/2023/03/Flutterlifecycle/index.html.md
 Published At: 2023-03-12 06:38:00 +0000
 
 # Flutter的有状态StatefulWidget生命周期
@@ -19325,7 +19397,8 @@ flutter: ContentWidgetState的 build被调用
 [参考](https://www.geeksforgeeks.org/life-cycle-of-flutter-widgets/)
 
 
-URL: https://sunyazhou.com/2023/03/Whimsical/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Whimsical.md
+Mirror: https://www.sunyazhou.com/2023/03/Whimsical/index.html.md
 Published At: 2023-03-08 03:09:00 +0000
 
 # whimsical模块设计
@@ -19351,7 +19424,8 @@ Published At: 2023-03-08 03:09:00 +0000
 
 
 
-URL: https://sunyazhou.com/2023/03/Safecast/index.html.md
+URL: https://www.sunyazhou.com/2023/03/Safecast.md
+Mirror: https://www.sunyazhou.com/2023/03/Safecast/index.html.md
 Published At: 2023-03-06 02:28:00 +0000
 
 # objc中的类型安全转换
@@ -19419,7 +19493,8 @@ id YZSafeCast(id obj, Class classType)
 [demo](https://github.com/sunyazhou13/SafeCastDemo)
 
 
-URL: https://sunyazhou.com/2023/02/NSDateIsToday/index.html.md
+URL: https://www.sunyazhou.com/2023/02/NSDateIsToday.md
+Mirror: https://www.sunyazhou.com/2023/02/NSDateIsToday/index.html.md
 Published At: 2023-02-13 11:39:00 +0000
 
 # iOS中NSDate是否是今天Today
@@ -19536,7 +19611,8 @@ BOOL inToday = [[NSCalendar currentCalendar] isDateInToday:date]
 [demo](https://github.com/sunyazhou13/NSDateSpeedDemo)
 
 
-URL: https://sunyazhou.com/2023/02/Webpenhancement/index.html.md
+URL: https://www.sunyazhou.com/2023/02/Webpenhancement.md
+Mirror: https://www.sunyazhou.com/2023/02/Webpenhancement/index.html.md
 Published At: 2023-02-05 09:09:00 +0000
 
 # 博客的图片资源优化
@@ -19617,7 +19693,8 @@ read_dir $1
 就目前这个案例,手动改肯定是十分累并且全是体力活,一定要学会驾驭技术,用技术去解决实际问题.
 
 
-URL: https://sunyazhou.com/2023/02/Jekyllpost/index.html.md
+URL: https://www.sunyazhou.com/2023/02/Jekyllpost.md
+Mirror: https://www.sunyazhou.com/2023/02/Jekyllpost/index.html.md
 Published At: 2023-02-02 02:21:00 +0000
 
 # 如何使用jekyll发布一篇文章
@@ -19708,7 +19785,8 @@ bundle exec jekyll post "jekyllpost"
 
 
 
-URL: https://sunyazhou.com/2023/02/SwiftDefer/index.html.md
+URL: https://www.sunyazhou.com/2023/02/SwiftDefer.md
+Mirror: https://www.sunyazhou.com/2023/02/SwiftDefer/index.html.md
 Published At: 2023-02-01 02:10:58 +0000
 
 # Swift中的defer关键字
@@ -19823,7 +19901,8 @@ The above example uses a defer statement to ensure that the `open(_:)` function 
 
 
 
-URL: https://sunyazhou.com/2022/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2022/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2022/12/FinalSummary/index.html.md
 Published At: 2022-12-24 06:54:00 +0000
 
 # 2022年终总结
@@ -20110,7 +20189,8 @@ TME下面的产品
 
 
 
-URL: https://sunyazhou.com/2022/12/Gradientlayeranimation/index.html.md
+URL: https://www.sunyazhou.com/2022/12/Gradientlayeranimation.md
+Mirror: https://www.sunyazhou.com/2022/12/Gradientlayeranimation/index.html.md
 Published At: 2022-12-07 08:00:00 +0000
 
 # 模仿Q音径向渐变动画
@@ -20478,7 +20558,8 @@ self.backgroundView.layer.masksToBounds = true //超出屏幕截掉
 
 
 
-URL: https://sunyazhou.com/2022/12/Thesunyazhoutheoryii/index.html.md
+URL: https://www.sunyazhou.com/2022/12/Thesunyazhoutheoryii.md
+Mirror: https://www.sunyazhou.com/2022/12/Thesunyazhoutheoryii/index.html.md
 Published At: 2022-12-03 03:32:00 +0000
 
 # 《The Sunyazhou Theory Ⅱ》的诞生
@@ -20532,7 +20613,8 @@ Published At: 2022-12-03 03:32:00 +0000
 
 
 
-URL: https://sunyazhou.com/2022/11/Swiftuipropertywrapper/index.html.md
+URL: https://www.sunyazhou.com/2022/11/Swiftuipropertywrapper.md
+Mirror: https://www.sunyazhou.com/2022/11/Swiftuipropertywrapper/index.html.md
 Published At: 2022-11-25 10:45:00 +0000
 
 # SwiftUI属性包装器:State、Binding、ObservableObject、EnvironmentObject
@@ -20729,7 +20811,8 @@ struct ContentView: View {
 
 
 
-URL: https://sunyazhou.com/2022/09/Howtousensoptions/index.html.md
+URL: https://www.sunyazhou.com/2022/09/Howtousensoptions.md
+Mirror: https://www.sunyazhou.com/2022/09/Howtousensoptions/index.html.md
 Published At: 2022-09-16 09:02:00 +0000
 
 # NS-OPTIONS的用法
@@ -20818,7 +20901,8 @@ typedef NS_OPTIONS(NSUInteger, YZOptionsFlag) {
 ```
 
 
-URL: https://sunyazhou.com/2022/09/Fbmemorychecktool/index.html.md
+URL: https://www.sunyazhou.com/2022/09/Fbmemorychecktool.md
+Mirror: https://www.sunyazhou.com/2022/09/Fbmemorychecktool/index.html.md
 Published At: 2022-09-16 02:11:00 +0000
 
 # FB内存检测工具分享
@@ -20935,7 +21019,8 @@ NSLog(@"%@", retainCycles);
 [automatic-memory-leak-detection-on-ios](https://engineering.fb.com/2016/04/13/ios/automatic-memory-leak-detection-on-ios/)
 
 
-URL: https://sunyazhou.com/2022/08/NSStringEnum/index.html.md
+URL: https://www.sunyazhou.com/2022/08/NSStringEnum.md
+Mirror: https://www.sunyazhou.com/2022/08/NSStringEnum/index.html.md
 Published At: 2022-08-22 11:23:00 +0000
 
 # iOS开发中的字符串枚举
@@ -21024,7 +21109,8 @@ CA_EXTERN CAMediaTimingFunctionName const kCAMediaTimingFunctionDefault
 [参考 初探 `NS_STRING_ENUM`](https://juejin.cn/post/6844903638226173966)
 
 
-URL: https://sunyazhou.com/2022/08/Checkcellscrolloutscreen/index.html.md
+URL: https://www.sunyazhou.com/2022/08/Checkcellscrolloutscreen.md
+Mirror: https://www.sunyazhou.com/2022/08/Checkcellscrolloutscreen/index.html.md
 Published At: 2022-08-01 14:08:00 +0000
 
 # 检查Cell是否滚动出屏幕之外
@@ -21055,7 +21141,8 @@ Published At: 2022-08-01 14:08:00 +0000
 
 
 
-URL: https://sunyazhou.com/2022/07/iosinterviewproblems/index.html.md
+URL: https://www.sunyazhou.com/2022/07/iosinterviewproblems.md
+Mirror: https://www.sunyazhou.com/2022/07/iosinterviewproblems/index.html.md
 Published At: 2022-07-14 00:58:00 +0000
 
 # iOS面试问题记录
@@ -21166,7 +21253,8 @@ NSLog(@"end %d, %p",a,&a);
 开发中的细节问题要善于研其根究其本, 善于学习和积累是成为一个优秀开发者的必要条件.
 
 
-URL: https://sunyazhou.com/2022/07/iosoom/index.html.md
+URL: https://www.sunyazhou.com/2022/07/iosoom.md
+Mirror: https://www.sunyazhou.com/2022/07/iosoom/index.html.md
 Published At: 2022-07-11 03:04:00 +0000
 
 # iOS中的OOM
@@ -21490,7 +21578,8 @@ facebook和微信的Matrix都是采用的排除法。在Matrix初始化的时候
 实践方案 快影iOS端如何实现OOM率下降80%+
 
 
-URL: https://sunyazhou.com/2022/07/ioscrashtype/index.html.md
+URL: https://www.sunyazhou.com/2022/07/ioscrashtype.md
+Mirror: https://www.sunyazhou.com/2022/07/ioscrashtype/index.html.md
 Published At: 2022-07-11 01:53:00 +0000
 
 # iOS中的崩溃类型
@@ -21565,7 +21654,8 @@ crash log类型不限于上述这些,结合实际跟踪将会找到影响的崩�
 ](http://shevakuilin.com/ios-crashprotection/)
 
 
-URL: https://sunyazhou.com/2022/07/Commonsuperview/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Commonsuperview.md
+Mirror: https://www.sunyazhou.com/2022/07/Commonsuperview/index.html.md
 Published At: 2022-07-05 00:12:00 +0000
 
 # iOS寻找两个UIView的最近的公共父类
@@ -21622,7 +21712,8 @@ Published At: 2022-07-05 00:12:00 +0000
 Masonry 算法之 最近公共父视图
 
 
-URL: https://sunyazhou.com/2022/07/Binarytreeorder/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Binarytreeorder.md
+Mirror: https://www.sunyazhou.com/2022/07/Binarytreeorder/index.html.md
 Published At: 2022-07-04 09:58:00 +0000
 
 # 二叉树的前、中、后序遍历
@@ -21710,7 +21801,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Islandscount/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Islandscount.md
+Mirror: https://www.sunyazhou.com/2022/07/Islandscount/index.html.md
 Published At: 2022-07-04 09:50:00 +0000
 
 # 岛屿数量
@@ -21798,7 +21890,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Longestpalindrome/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Longestpalindrome.md
+Mirror: https://www.sunyazhou.com/2022/07/Longestpalindrome/index.html.md
 Published At: 2022-07-04 09:41:00 +0000
 
 # 最长回文子串
@@ -21868,7 +21961,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Mergesortarray/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Mergesortarray.md
+Mirror: https://www.sunyazhou.com/2022/07/Mergesortarray/index.html.md
 Published At: 2022-07-04 09:25:00 +0000
 
 # 合并两个有序数组
@@ -21938,7 +22032,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Commonancestor/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Commonancestor.md
+Mirror: https://www.sunyazhou.com/2022/07/Commonancestor/index.html.md
 Published At: 2022-07-04 09:12:00 +0000
 
 # 二叉树的最近公共祖先
@@ -22036,7 +22131,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Searchrotatearray/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Searchrotatearray.md
+Mirror: https://www.sunyazhou.com/2022/07/Searchrotatearray/index.html.md
 Published At: 2022-07-04 06:53:00 +0000
 
 # 搜索旋转排序数组
@@ -22121,7 +22217,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Zigzaglevelorder/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Zigzaglevelorder.md
+Mirror: https://www.sunyazhou.com/2022/07/Zigzaglevelorder/index.html.md
 Published At: 2022-07-04 06:19:00 +0000
 
 # 二叉树的锯齿形层序遍历
@@ -22212,7 +22309,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Cyclelinktable/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Cyclelinktable.md
+Mirror: https://www.sunyazhou.com/2022/07/Cyclelinktable/index.html.md
 Published At: 2022-07-04 06:09:00 +0000
 
 # 环形链表
@@ -22294,7 +22392,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Binarytreelevelorder/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Binarytreelevelorder.md
+Mirror: https://www.sunyazhou.com/2022/07/Binarytreelevelorder/index.html.md
 Published At: 2022-07-04 02:10:00 +0000
 
 # 二叉树的层序遍历
@@ -22379,7 +22478,8 @@ public:
 
 
 
-URL: https://sunyazhou.com/2022/07/Twosum/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Twosum.md
+Mirror: https://www.sunyazhou.com/2022/07/Twosum/index.html.md
 Published At: 2022-07-04 02:03:00 +0000
 
 # 两数之和
@@ -22446,7 +22546,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Mergetwolists/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Mergetwolists.md
+Mirror: https://www.sunyazhou.com/2022/07/Mergetwolists/index.html.md
 Published At: 2022-07-01 07:38:00 +0000
 
 # 合并两个有序链表
@@ -22517,7 +22618,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Maxsubarray/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Maxsubarray.md
+Mirror: https://www.sunyazhou.com/2022/07/Maxsubarray/index.html.md
 Published At: 2022-07-01 07:29:00 +0000
 
 # 最大子数组和
@@ -22578,7 +22680,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Threesum/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Threesum.md
+Mirror: https://www.sunyazhou.com/2022/07/Threesum/index.html.md
 Published At: 2022-07-01 06:55:00 +0000
 
 # 三数之和
@@ -22658,7 +22761,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Kthlargest/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Kthlargest.md
+Mirror: https://www.sunyazhou.com/2022/07/Kthlargest/index.html.md
 Published At: 2022-07-01 06:44:00 +0000
 
 # 数组中的第K个最大元素
@@ -22734,7 +22838,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Lrucache/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Lrucache.md
+Mirror: https://www.sunyazhou.com/2022/07/Lrucache/index.html.md
 Published At: 2022-07-01 06:35:00 +0000
 
 # LRU 缓存
@@ -22870,7 +22975,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Longestsubstring/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Longestsubstring.md
+Mirror: https://www.sunyazhou.com/2022/07/Longestsubstring/index.html.md
 Published At: 2022-07-01 05:21:00 +0000
 
 # 无重复字符的最长子串
@@ -22941,7 +23047,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/07/Reverselist/index.html.md
+URL: https://www.sunyazhou.com/2022/07/Reverselist.md
+Mirror: https://www.sunyazhou.com/2022/07/Reverselist/index.html.md
 Published At: 2022-07-01 04:36:00 +0000
 
 # 反转链表
@@ -22996,7 +23103,8 @@ public:
 [引用自codetop](https://codetop.cc/home)
 
 
-URL: https://sunyazhou.com/2022/04/Mos/index.html.md
+URL: https://www.sunyazhou.com/2022/04/Mos.md
+Mirror: https://www.sunyazhou.com/2022/04/Mos/index.html.md
 Published At: 2022-04-25 01:28:00 +0000
 
 # macos鼠标软件MOS
@@ -23021,7 +23129,8 @@ Published At: 2022-04-25 01:28:00 +0000
 
 
 
-URL: https://sunyazhou.com/2022/04/BranchManage/index.html.md
+URL: https://www.sunyazhou.com/2022/04/BranchManage.md
+Mirror: https://www.sunyazhou.com/2022/04/BranchManage/index.html.md
 Published At: 2022-04-14 00:50:00 +0000
 
 # 开发分支管理模型
@@ -23082,7 +23191,8 @@ sunyazhou
 
 
 
-URL: https://sunyazhou.com/2022/04/YZ3DMenu/index.html.md
+URL: https://www.sunyazhou.com/2022/04/YZ3DMenu.md
+Mirror: https://www.sunyazhou.com/2022/04/YZ3DMenu/index.html.md
 Published At: 2022-04-13 01:50:00 +0000
 
 # 开源YZ3DMenu导航菜单
@@ -23133,7 +23243,8 @@ Published At: 2022-04-13 01:50:00 +0000
 
 
 
-URL: https://sunyazhou.com/2022/04/CVPixelBufferRef/index.html.md
+URL: https://www.sunyazhou.com/2022/04/CVPixelBufferRef.md
+Mirror: https://www.sunyazhou.com/2022/04/CVPixelBufferRef/index.html.md
 Published At: 2022-04-06 01:50:00 +0000
 
 # 深入理解CVPixelBufferRef
@@ -23267,7 +23378,8 @@ glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 
 
-URL: https://sunyazhou.com/2021/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2021/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2021/12/FinalSummary/index.html.md
 Published At: 2021-12-26 00:00:00 +0000
 
 # 2021年终总结
@@ -23713,7 +23825,8 @@ PS5我不能再错过了,有能力就下手吧,刚好公积金按月支取到账
 2022年见.
 
 
-URL: https://sunyazhou.com/2021/12/iOSLessonsStudyNotes1/index.html.md
+URL: https://www.sunyazhou.com/2021/12/iOSLessonsStudyNotes1.md
+Mirror: https://www.sunyazhou.com/2021/12/iOSLessonsStudyNotes1/index.html.md
 Published At: 2021-12-23 01:30:00 +0000
 
 # iOS开发高手课01-建立你自己的iOS开发知识体系
@@ -23766,7 +23879,8 @@ iOS开发务必求精,理解原理和细节，同时开阔眼界，紧跟技术�
 
 
 
-URL: https://sunyazhou.com/2021/12/WordFrepuency/index.html.md
+URL: https://www.sunyazhou.com/2021/12/WordFrepuency.md
+Mirror: https://www.sunyazhou.com/2021/12/WordFrepuency/index.html.md
 Published At: 2021-12-12 08:08:08 +0000
 
 # 如何计算文本中某些单词出现的频率
@@ -23909,7 +24023,8 @@ print(c)
 技术要求我们不断学习,周末的时光不能浪费. 学习了一个下午,把重要的内容都记录了下来,如果你看的不是很懂建议认真学习一遍swift就会了.
 
 
-URL: https://sunyazhou.com/2021/10/SwiftSubSets/index.html.md
+URL: https://www.sunyazhou.com/2021/10/SwiftSubSets.md
+Mirror: https://www.sunyazhou.com/2021/10/SwiftSubSets/index.html.md
 Published At: 2021-10-16 08:30:00 +0000
 
 # swift中求一个集合中子集
@@ -24016,7 +24131,8 @@ for subSet in getSubSets(testSet) {
 
 
 
-URL: https://sunyazhou.com/2021/06/CheckNSStringIsPureInteger/index.html.md
+URL: https://www.sunyazhou.com/2021/06/CheckNSStringIsPureInteger.md
+Mirror: https://www.sunyazhou.com/2021/06/CheckNSStringIsPureInteger/index.html.md
 Published At: 2021-06-23 00:30:00 +0000
 
 # 如何判断NSString是纯数字类型
@@ -24106,7 +24222,8 @@ if (result) {
 [demo地址](https://github.com/sunyazhou13/NSScanner)
 
 
-URL: https://sunyazhou.com/2021/04/WCDBPractice/index.html.md
+URL: https://www.sunyazhou.com/2021/04/WCDBPractice.md
+Mirror: https://www.sunyazhou.com/2021/04/WCDBPractice/index.html.md
 Published At: 2021-04-06 10:58:36 +0000
 
 # WCDB实践记录
@@ -24209,7 +24326,8 @@ SQL: UPDATE msg_10003600 SET chatMsgHeight=? WHERE ((messageId='936542df77de4177
 
 
 
-URL: https://sunyazhou.com/2021/02/UTIsOfficalFileExtensionName/index.html.md
+URL: https://www.sunyazhou.com/2021/02/UTIsOfficalFileExtensionName.md
+Mirror: https://www.sunyazhou.com/2021/02/UTIsOfficalFileExtensionName/index.html.md
 Published At: 2021-02-21 10:40:31 +0000
 
 # UTIs苹果官方的文件扩展名全集
@@ -24635,7 +24753,8 @@ CF_ASSUME_NONNULL_END
 软件地址
 
 
-URL: https://sunyazhou.com/2021/01/TextGradient/index.html.md
+URL: https://www.sunyazhou.com/2021/01/TextGradient.md
+Mirror: https://www.sunyazhou.com/2021/01/TextGradient/index.html.md
 Published At: 2021-01-21 20:00:29 +0000
 
 # 滚动文本设置渐变颜色
@@ -24704,7 +24823,8 @@ CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)grad
 [参考 带你实现完整的 iOS 视频弹幕系统](https://mp.weixin.qq.com/s/4pWrwmZBEbrca2uxIt3o6w)
 
 
-URL: https://sunyazhou.com/2021/01/SafeAreaEdges/index.html.md
+URL: https://www.sunyazhou.com/2021/01/SafeAreaEdges.md
+Mirror: https://www.sunyazhou.com/2021/01/SafeAreaEdges/index.html.md
 Published At: 2021-01-18 13:43:41 +0000
 
 # 获取UIWindow的边界距离
@@ -24761,7 +24881,8 @@ Published At: 2021-01-18 13:43:41 +0000
 
 
 
-URL: https://sunyazhou.com/2020/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2020/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2020/12/FinalSummary/index.html.md
 Published At: 2020-12-30 23:30:00 +0000
 
 # 2020年终总结
@@ -24993,7 +25114,8 @@ Published At: 2020-12-30 23:30:00 +0000
 
 
 
-URL: https://sunyazhou.com/2020/12/iOSsynchronousTimeWithServer/index.html.md
+URL: https://www.sunyazhou.com/2020/12/iOSsynchronousTimeWithServer.md
+Mirror: https://www.sunyazhou.com/2020/12/iOSsynchronousTimeWithServer/index.html.md
 Published At: 2020-12-05 21:12:31 +0000
 
 # 解决iOS系统时间被修改的问题
@@ -25249,7 +25371,8 @@ CTimestamp::CTimestamp()
 
 
 
-URL: https://sunyazhou.com/2020/10/WebviewSystemLanguage/index.html.md
+URL: https://www.sunyazhou.com/2020/10/WebviewSystemLanguage.md
+Mirror: https://www.sunyazhou.com/2020/10/WebviewSystemLanguage/index.html.md
 Published At: 2020-10-27 13:57:30 +0000
 
 # 解决iOS调用系统相册不显示中文问题
@@ -25286,7 +25409,8 @@ Published At: 2020-10-27 13:57:30 +0000
 感谢大家观看 到位挠挠了
 
 
-URL: https://sunyazhou.com/2020/10/XcodeSourceEditorNotWork/index.html.md
+URL: https://www.sunyazhou.com/2020/10/XcodeSourceEditorNotWork.md
+Mirror: https://www.sunyazhou.com/2020/10/XcodeSourceEditorNotWork/index.html.md
 Published At: 2020-10-16 16:05:42 +0000
 
 # 修复Xcode Source Editor在masOS的扩展中不显示
@@ -25324,7 +25448,8 @@ $ lsregister -f /Applications/Xcode.app
 记录经常遇到的问题.
 
 
-URL: https://sunyazhou.com/2020/10/PodSpec/index.html.md
+URL: https://www.sunyazhou.com/2020/10/PodSpec.md
+Mirror: https://www.sunyazhou.com/2020/10/PodSpec/index.html.md
 Published At: 2020-10-10 07:52:18 +0000
 
 # Pod spec集成第三framework和.a工作记录
@@ -25404,7 +25529,8 @@ end
 工程中移除了framework 因为github不允许上传超过100m以上的文件.很坑 大家下载后看下写法就好了.
 
 
-URL: https://sunyazhou.com/2020/10/XcodeBuildXcconfigFile/index.html.md
+URL: https://www.sunyazhou.com/2020/10/XcodeBuildXcconfigFile.md
+Mirror: https://www.sunyazhou.com/2020/10/XcodeBuildXcconfigFile/index.html.md
 Published At: 2020-10-04 11:58:03 +0000
 
 # 使用Xcode配置文件来管理不同的环境设置
@@ -25532,7 +25658,8 @@ SYZ_TEST = @"https:\/\/xxxxx.com/"
 
 
 
-URL: https://sunyazhou.com/2020/09/iOSinterviewPerformanceOptimization/index.html.md
+URL: https://www.sunyazhou.com/2020/09/iOSinterviewPerformanceOptimization.md
+Mirror: https://www.sunyazhou.com/2020/09/iOSinterviewPerformanceOptimization/index.html.md
 Published At: 2020-09-22 09:42:48 +0000
 
 # 阿里、字节：一套高效的iOS面试题之性能优化
@@ -25579,7 +25706,8 @@ Published At: 2020-09-22 09:42:48 +0000
 
 
 
-URL: https://sunyazhou.com/2020/09/UIViewGraphic/index.html.md
+URL: https://www.sunyazhou.com/2020/09/UIViewGraphic.md
+Mirror: https://www.sunyazhou.com/2020/09/UIViewGraphic/index.html.md
 Published At: 2020-09-20 11:40:47 +0000
 
 # 阿里、字节：一套高效的iOS面试题之视图&图形
@@ -25745,7 +25873,8 @@ CGImageSource开头的哪些,根据合理利用时机和操作系统资源调整
 简单回答了一些图形相关的问题,大部分都是iOS离屏渲染,这个地方大家要认真学习.很多资料看起来比较耗时.
 
 
-URL: https://sunyazhou.com/2020/09/GCD/index.html.md
+URL: https://www.sunyazhou.com/2020/09/GCD.md
+Mirror: https://www.sunyazhou.com/2020/09/GCD/index.html.md
 Published At: 2020-09-19 11:09:28 +0000
 
 # 阿里、字节：一套高效的iOS面试题之多线程
@@ -25978,7 +26107,8 @@ dispatch_sync(dispatch_get_main_queue(), ^{
 
 
 
-URL: https://sunyazhou.com/2020/09/Block/index.html.md
+URL: https://www.sunyazhou.com/2020/09/Block.md
+Mirror: https://www.sunyazhou.com/2020/09/Block/index.html.md
 Published At: 2020-09-17 14:34:10 +0000
 
 # 阿里、字节：一套高效的iOS面试题之Block
@@ -26367,7 +26497,8 @@ ARC下会对这个对象强引用，MRC下不会
 
 
 
-URL: https://sunyazhou.com/2020/09/iOSinterviewAnswers5/index.html.md
+URL: https://www.sunyazhou.com/2020/09/iOSinterviewAnswers5.md
+Mirror: https://www.sunyazhou.com/2020/09/iOSinterviewAnswers5/index.html.md
 Published At: 2020-09-02 11:23:24 +0000
 
 # 阿里、字节：一套高效的iOS面试题之Runloop&KVO
@@ -26589,7 +26720,8 @@ objc_registerClassPair(customClass);
 
 
 
-URL: https://sunyazhou.com/2020/09/iOSinterviewAnswers4/index.html.md
+URL: https://www.sunyazhou.com/2020/09/iOSinterviewAnswers4.md
+Mirror: https://www.sunyazhou.com/2020/09/iOSinterviewAnswers4/index.html.md
 Published At: 2020-09-01 10:15:27 +0000
 
 # 阿里、字节：一套高效的iOS面试题之NSNotification相关
@@ -26773,7 +26905,8 @@ typedef	struct Obs {
 
 
 
-URL: https://sunyazhou.com/2020/08/iOSinterviewAnswers3/index.html.md
+URL: https://www.sunyazhou.com/2020/08/iOSinterviewAnswers3.md
+Mirror: https://www.sunyazhou.com/2020/08/iOSinterviewAnswers3/index.html.md
 Published At: 2020-08-31 16:52:25 +0000
 
 # 阿里、字节：一套高效的iOS面试题之runtime相关问题3
@@ -27045,7 +27178,8 @@ respondsToSelector:
 
 
 
-URL: https://sunyazhou.com/2020/08/iOSinterviewAnswers2/index.html.md
+URL: https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2.md
+Mirror: https://www.sunyazhou.com/2020/08/iOSinterviewAnswers2/index.html.md
 Published At: 2020-08-08 14:54:07 +0000
 
 # 阿里、字节：一套高效的iOS面试题之runtime相关问题2
@@ -28242,7 +28376,8 @@ ALWAYS_INLINE bool objc_object::rootRelease(bool performDealloc, bool handleUnde
 
 
 
-URL: https://sunyazhou.com/2020/07/iOSinterviewAnswers1/index.html.md
+URL: https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1.md
+Mirror: https://www.sunyazhou.com/2020/07/iOSinterviewAnswers1/index.html.md
 Published At: 2020-07-06 09:52:47 +0000
 
 # 阿里、字节：一套高效的iOS面试题之runtime相关问题1
@@ -29252,7 +29387,8 @@ super的方法会成功调用，但是这是多余的，因为runtime会自动�
 
 
 
-URL: https://sunyazhou.com/2020/04/CocoapodsProblems/index.html.md
+URL: https://www.sunyazhou.com/2020/04/CocoapodsProblems.md
+Mirror: https://www.sunyazhou.com/2020/04/CocoapodsProblems/index.html.md
 Published At: 2020-04-10 07:13:59 +0000
 
 # Cocoapods清华镜像
@@ -29297,7 +29433,8 @@ source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 [参考CocoaPods 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/CocoaPods/)
 
 
-URL: https://sunyazhou.com/2020/04/MasonryTricks/index.html.md
+URL: https://www.sunyazhou.com/2020/04/MasonryTricks.md
+Mirror: https://www.sunyazhou.com/2020/04/MasonryTricks/index.html.md
 Published At: 2020-04-07 11:54:39 +0000
 
 # 使用Masonry处理UIView的safeArea边界布局问题
@@ -29408,7 +29545,8 @@ iOS11之后推出的safeArea 用于处理刘海屏幕的问题.如果自己处�
 [本文Demo](https://github.com/sunyazhou13/MasonryTrickDemo)
 
 
-URL: https://sunyazhou.com/2020/03/NSURLProtocol/index.html.md
+URL: https://www.sunyazhou.com/2020/03/NSURLProtocol.md
+Mirror: https://www.sunyazhou.com/2020/03/NSURLProtocol/index.html.md
 Published At: 2020-03-20 11:34:22 +0000
 
 # (转)深度理解 NSURLProtocol
@@ -29783,7 +29921,8 @@ if ([cls respondsToSelector:sel]) {
 
 
 
-URL: https://sunyazhou.com/2020/02/SunyazhouTheory/index.html.md
+URL: https://www.sunyazhou.com/2020/02/SunyazhouTheory.md
+Mirror: https://www.sunyazhou.com/2020/02/SunyazhouTheory/index.html.md
 Published At: 2020-02-07 04:59:11 +0000
 
 # 《孙亚洲理论》的诞生
@@ -29823,7 +29962,8 @@ Published At: 2020-02-07 04:59:11 +0000
 
 
 
-URL: https://sunyazhou.com/2019/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2019/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2019/12/FinalSummary/index.html.md
 Published At: 2019-12-30 23:30:00 +0000
 
 # 2019年终总结
@@ -30422,7 +30562,8 @@ __也许习大大看完我的第二个五年计划也会潸然泪下.__
 
 
 
-URL: https://sunyazhou.com/2019/12/Chisel/index.html.md
+URL: https://www.sunyazhou.com/2019/12/Chisel.md
+Mirror: https://www.sunyazhou.com/2019/12/Chisel/index.html.md
 Published At: 2019-12-06 11:09:25 +0000
 
 # 简单了解LLDB调试工具chisel
@@ -30547,7 +30688,8 @@ command script import /Users/sunyazhou/Library/Application\ Support/Reveal/Revea
 [参考 iOS开发调试概览](https://www.cnblogs.com/kenshincui/p/11953536.html)
 
 
-URL: https://sunyazhou.com/2019/12/MathGraphicTool/index.html.md
+URL: https://www.sunyazhou.com/2019/12/MathGraphicTool.md
+Mirror: https://www.sunyazhou.com/2019/12/MathGraphicTool/index.html.md
 Published At: 2019-12-04 18:12:58 +0000
 
 # 图形示意绘制工具
@@ -30576,7 +30718,8 @@ Published At: 2019-12-04 18:12:58 +0000
 
 
 
-URL: https://sunyazhou.com/2019/09/MasonryPanViewDemo/index.html.md
+URL: https://www.sunyazhou.com/2019/09/MasonryPanViewDemo.md
+Mirror: https://www.sunyazhou.com/2019/09/MasonryPanViewDemo/index.html.md
 Published At: 2019-09-26 20:05:20 +0000
 
 # 使用Masonry约束实现简单的高级拖拽视图
@@ -30702,7 +30845,8 @@ make.centerX.greaterThanOrEqualTo(self.widgetView.mas_left).offset(-10);
 [demo下载](https://github.com/sunyazhou13/PanViewDemo)
 
 
-URL: https://sunyazhou.com/2019/09/UITraitCollection/index.html.md
+URL: https://www.sunyazhou.com/2019/09/UITraitCollection.md
+Mirror: https://www.sunyazhou.com/2019/09/UITraitCollection/index.html.md
 Published At: 2019-09-16 18:49:05 +0000
 
 # UITraitCollection详解
@@ -30865,7 +31009,8 @@ Published At: 2019-09-16 18:49:05 +0000
 
 
 
-URL: https://sunyazhou.com/2019/09/OpenGLESDemo1/index.html.md
+URL: https://www.sunyazhou.com/2019/09/OpenGLESDemo1.md
+Mirror: https://www.sunyazhou.com/2019/09/OpenGLESDemo1/index.html.md
 Published At: 2019-09-06 10:19:48 +0000
 
 # 从零学习OpenGLES的纹理渲染
@@ -31185,7 +31330,8 @@ void main (void) {
 [学习参考](http://www.lymanli.com/2019/02/17/ios-opengles-render-texture/)
 
 
-URL: https://sunyazhou.com/2019/07/LoadingAnimationI/index.html.md
+URL: https://www.sunyazhou.com/2019/07/LoadingAnimationI.md
+Mirror: https://www.sunyazhou.com/2019/07/LoadingAnimationI/index.html.md
 Published At: 2019-07-26 11:13:44 +0000
 
 # 做一个简单的Loading动画
@@ -31391,7 +31537,8 @@ Demo我给在下面也把相关的文章参考 放在下方,有兴趣大家可�
 
 
 
-URL: https://sunyazhou.com/2019/05/CentosIptables/index.html.md
+URL: https://www.sunyazhou.com/2019/05/CentosIptables.md
+Mirror: https://www.sunyazhou.com/2019/05/CentosIptables/index.html.md
 Published At: 2019-05-28 10:06:24 +0000
 
 # CentOS7安装iptables防火墙
@@ -31538,7 +31685,8 @@ systemctl restart iptables.service
 ```
 
 
-URL: https://sunyazhou.com/2019/05/CleanerForXcodeBuild/index.html.md
+URL: https://www.sunyazhou.com/2019/05/CleanerForXcodeBuild.md
+Mirror: https://www.sunyazhou.com/2019/05/CleanerForXcodeBuild/index.html.md
 Published At: 2019-05-17 16:37:43 +0000
 
 # Cleaner For Xcode编译
@@ -31598,7 +31746,8 @@ Xcode是占用mac空间最大的app,无论从内存、磁盘io、系统资源 �
 
 
 
-URL: https://sunyazhou.com/2019/04/WindowsResources/index.html.md
+URL: https://www.sunyazhou.com/2019/04/WindowsResources.md
+Mirror: https://www.sunyazhou.com/2019/04/WindowsResources/index.html.md
 Published At: 2019-04-24 11:26:34 +0000
 
 # Windows装机教程
@@ -31754,7 +31903,8 @@ U盘刻录安装原版系统教程
 [I tell you神奇的镜像下载网站 绝对纯洁](http://msdn.itellyou.cn/)
 
 
-URL: https://sunyazhou.com/2019/04/AVRoutePickerView/index.html.md
+URL: https://www.sunyazhou.com/2019/04/AVRoutePickerView.md
+Mirror: https://www.sunyazhou.com/2019/04/AVRoutePickerView/index.html.md
 Published At: 2019-04-17 15:19:52 +0000
 
 # AVRoutePickerView
@@ -31855,7 +32005,8 @@ if (@available(iOS 11.0, *)) {
 [demo点击这里下载](https://github.com/sunyazhou13/AVRoutePickerViewDemo)
 
 
-URL: https://sunyazhou.com/2019/03/UIScrollTextDemo/index.html.md
+URL: https://www.sunyazhou.com/2019/03/UIScrollTextDemo.md
+Mirror: https://www.sunyazhou.com/2019/03/UIScrollTextDemo/index.html.md
 Published At: 2019-03-21 09:50:20 +0000
 
 # iOS抖音滚动字幕
@@ -32156,7 +32307,8 @@ NSString * const kSeparateText          = @"   ";   //3个空格
 
 
 
-URL: https://sunyazhou.com/2019/02/Tools/index.html.md
+URL: https://www.sunyazhou.com/2019/02/Tools.md
+Mirror: https://www.sunyazhou.com/2019/02/Tools/index.html.md
 Published At: 2019-02-15 10:40:15 +0000
 
 # Mac上的一些好软件推荐
@@ -32279,7 +32431,8 @@ Background Music的功能非常简单，在MacBook中分别控制不同软件的
 参考ithome
 
 
-URL: https://sunyazhou.com/2018/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2018/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2018/12/FinalSummary/index.html.md
 Published At: 2018-12-28 23:04:41 +0000
 
 # 2018年终总结
@@ -32794,7 +32947,8 @@ __小牛 N1s 动力版__
 
 
 
-URL: https://sunyazhou.com/2018/12/AwemeTransition/index.html.md
+URL: https://www.sunyazhou.com/2018/12/AwemeTransition.md
+Mirror: https://www.sunyazhou.com/2018/12/AwemeTransition/index.html.md
 Published At: 2018-12-21 10:12:07 +0000
 
 # iOS抖音的转场动画
@@ -33317,7 +33471,8 @@ if (!self.isInteracting && vel.x < 0) {
 
 
 
-URL: https://sunyazhou.com/2018/12/DetectingPanGestureDirection/index.html.md
+URL: https://www.sunyazhou.com/2018/12/DetectingPanGestureDirection.md
+Mirror: https://www.sunyazhou.com/2018/12/DetectingPanGestureDirection/index.html.md
 Published At: 2018-12-06 13:59:46 +0000
 
 # 探测UIPanGesture的滑动方向
@@ -33348,7 +33503,8 @@ Published At: 2018-12-06 13:59:46 +0000
 [参考](https://stackoverflow.com/questions/11777281/detecting-the-direction-of-pan-gesture-in-ios)
 
 
-URL: https://sunyazhou.com/2018/11/LikeAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/11/LikeAnimation.md
+Mirror: https://www.sunyazhou.com/2018/11/LikeAnimation/index.html.md
 Published At: 2018-11-27 11:16:14 +0000
 
 # iOS抖音点赞动画实现
@@ -33546,7 +33702,8 @@ pathAnim.duration = duration * 0.8f;
 [直接下载zip](https://github.com/sunyazhou13/LikeDemo/archive/master.zip)
 
 
-URL: https://sunyazhou.com/2018/11/PlayLoadingAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/11/PlayLoadingAnimation.md
+Mirror: https://www.sunyazhou.com/2018/11/PlayLoadingAnimation/index.html.md
 Published At: 2018-11-14 14:14:39 +0000
 
 # iOS视频加载动画
@@ -33665,7 +33822,8 @@ scaleAnimation.toValue = @(1.0f * ScreenWidth);
 
 
 
-URL: https://sunyazhou.com/2018/11/AllKeypathOfCALayer/index.html.md
+URL: https://www.sunyazhou.com/2018/11/AllKeypathOfCALayer.md
+Mirror: https://www.sunyazhou.com/2018/11/AllKeypathOfCALayer/index.html.md
 Published At: 2018-11-13 11:46:45 +0000
 
 # iOS所有Animation相关可用的Keypath
@@ -33920,7 +34078,8 @@ size.height
 
 
 
-URL: https://sunyazhou.com/2018/11/AwemeAlbumAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/11/AwemeAlbumAnimation.md
+Mirror: https://www.sunyazhou.com/2018/11/AwemeAlbumAnimation/index.html.md
 Published At: 2018-11-08 11:52:06 +0000
 
 # iOS抖音右下角专辑动画
@@ -34343,7 +34502,8 @@ animationGroup.beginTime = CACurrentMediaTime() + delayTime;
 
 
 
-URL: https://sunyazhou.com/2018/11/AwemeTopBottomScrollDemo/index.html.md
+URL: https://www.sunyazhou.com/2018/11/AwemeTopBottomScrollDemo.md
+Mirror: https://www.sunyazhou.com/2018/11/AwemeTopBottomScrollDemo/index.html.md
 Published At: 2018-11-06 17:55:09 +0000
 
 # iOS抖音的上下滑实现
@@ -34535,7 +34695,8 @@ __是的我们要自己监听自己的成员变量去搞些事情__.
 
 
 
-URL: https://sunyazhou.com/2018/10/LabelDanceAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/10/LabelDanceAnimation.md
+Mirror: https://www.sunyazhou.com/2018/10/LabelDanceAnimation/index.html.md
 Published At: 2018-10-29 18:13:15 +0000
 
 # iOS数字倍数动画
@@ -34617,7 +34778,8 @@ self.comboLabel.font = [UIFont fontWithName:@"AvenirNext-BoldItalic" size:50];
 
 
 
-URL: https://sunyazhou.com/2018/09/BreathAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/09/BreathAnimation.md
+Mirror: https://www.sunyazhou.com/2018/09/BreathAnimation/index.html.md
 Published At: 2018-09-29 10:09:30 +0000
 
 # iOS呼吸动画
@@ -34787,7 +34949,8 @@ scaleOpacityGroup.repeatCount = FLT_MAX;
 [Demo在这里下载](https://github.com/sunyazhou13/BreathAnimation)
 
 
-URL: https://sunyazhou.com/2018/09/IncreasingTapAreaOfButton/index.html.md
+URL: https://www.sunyazhou.com/2018/09/IncreasingTapAreaOfButton.md
+Mirror: https://www.sunyazhou.com/2018/09/IncreasingTapAreaOfButton/index.html.md
 Published At: 2018-09-20 09:40:06 +0000
 
 # iOS扩大UIButton的点击的响应范围
@@ -34876,7 +35039,8 @@ CGRectInset(<#CGRect rect#>, <#CGFloat dx#>, <#CGFloat dy#>)
 
 
 
-URL: https://sunyazhou.com/2018/09/KeyboardAnimation/index.html.md
+URL: https://www.sunyazhou.com/2018/09/KeyboardAnimation.md
+Mirror: https://www.sunyazhou.com/2018/09/KeyboardAnimation/index.html.md
 Published At: 2018-09-18 09:49:58 +0000
 
 # iOS键盘动画细节
@@ -35007,7 +35171,8 @@ Published At: 2018-09-18 09:49:58 +0000
 
 
 
-URL: https://sunyazhou.com/2018/09/Beacon/index.html.md
+URL: https://www.sunyazhou.com/2018/09/Beacon.md
+Mirror: https://www.sunyazhou.com/2018/09/Beacon/index.html.md
 Published At: 2018-09-02 12:12:51 +0000
 
 # 船与灯塔
@@ -35066,7 +35231,8 @@ Published At: 2018-09-02 12:12:51 +0000
 
 
 
-URL: https://sunyazhou.com/2018/08/CPUThreadDebug/index.html.md
+URL: https://www.sunyazhou.com/2018/08/CPUThreadDebug.md
+Mirror: https://www.sunyazhou.com/2018/08/CPUThreadDebug/index.html.md
 Published At: 2018-08-17 17:19:23 +0000
 
 # iOS中CPU线程调试高级技巧
@@ -35215,7 +35381,8 @@ CPU调试的过程非常麻烦,而且中间过程的代码多数都是C++的调�
 
 
 
-URL: https://sunyazhou.com/2018/08/TapticEngineFeedback/index.html.md
+URL: https://www.sunyazhou.com/2018/08/TapticEngineFeedback.md
+Mirror: https://www.sunyazhou.com/2018/08/TapticEngineFeedback/index.html.md
 Published At: 2018-08-13 14:28:04 +0000
 
 # Taptic Engine振动反馈
@@ -35390,7 +35557,8 @@ if (@available(iOS 10.0, *)) {
 全文完
 
 
-URL: https://sunyazhou.com/2018/07/ToolBarBlur/index.html.md
+URL: https://www.sunyazhou.com/2018/07/ToolBarBlur.md
+Mirror: https://www.sunyazhou.com/2018/07/ToolBarBlur/index.html.md
 Published At: 2018-07-23 18:22:05 +0000
 
 # 利用UIToolBar做高斯模糊背景
@@ -35465,7 +35633,8 @@ UIBlurEffectStyle
 
 
 
-URL: https://sunyazhou.com/2018/07/LinuxBash/index.html.md
+URL: https://www.sunyazhou.com/2018/07/LinuxBash.md
+Mirror: https://www.sunyazhou.com/2018/07/LinuxBash/index.html.md
 Published At: 2018-07-18 09:29:39 +0000
 
 # Linux 终端 Bash 常用快捷键介绍及经验
@@ -35547,7 +35716,8 @@ Published At: 2018-07-18 09:29:39 +0000
 
 
 
-URL: https://sunyazhou.com/2018/06/FilterString/index.html.md
+URL: https://www.sunyazhou.com/2018/06/FilterString.md
+Mirror: https://www.sunyazhou.com/2018/06/FilterString/index.html.md
 Published At: 2018-06-25 18:35:17 +0000
 
 # Objective-C中使用正则去除非数字字母汉字
@@ -35656,7 +35826,8 @@ Published At: 2018-06-25 18:35:17 +0000
 
 
 
-URL: https://sunyazhou.com/2018/06/NSAttributeString/index.html.md
+URL: https://www.sunyazhou.com/2018/06/NSAttributeString.md
+Mirror: https://www.sunyazhou.com/2018/06/NSAttributeString/index.html.md
 Published At: 2018-06-15 10:10:58 +0000
 
 # 使用NSAttributeString实现不同颜色大小显示
@@ -35885,7 +36056,8 @@ if (@available(iOS 9.0, *)) {
 
 
 
-URL: https://sunyazhou.com/2018/06/SwiftRandom/index.html.md
+URL: https://www.sunyazhou.com/2018/06/SwiftRandom.md
+Mirror: https://www.sunyazhou.com/2018/06/SwiftRandom/index.html.md
 Published At: 2018-06-08 09:18:03 +0000
 
 # Swift4.2中的随机数
@@ -36105,7 +36277,8 @@ randomSuit.rawValue // → "♠"
 
 
 
-URL: https://sunyazhou.com/2018/06/Random/index.html.md
+URL: https://www.sunyazhou.com/2018/06/Random.md
+Mirror: https://www.sunyazhou.com/2018/06/Random/index.html.md
 Published At: 2018-06-01 17:30:56 +0000
 
 # Swift中的随机数
@@ -36268,7 +36441,8 @@ print(arr)
 
 
 
-URL: https://sunyazhou.com/2018/05/HowToCreateTopBottomRoundedCornersForViews/index.html.md
+URL: https://www.sunyazhou.com/2018/05/HowToCreateTopBottomRoundedCornersForViews.md
+Mirror: https://www.sunyazhou.com/2018/05/HowToCreateTopBottomRoundedCornersForViews/index.html.md
 Published At: 2018-05-15 09:58:00 +0000
 
 # UIView不同方向的导角
@@ -36477,7 +36651,8 @@ iOS一些简单的动画导角比较常用所以记录下来,希望大家多多�
 [本文Demo](https://github.com/sunyazhou13/TopBottomCornerDemo)
 
 
-URL: https://sunyazhou.com/2018/05/ManualControlUIViewControllerLifeCycle/index.html.md
+URL: https://www.sunyazhou.com/2018/05/ManualControlUIViewControllerLifeCycle.md
+Mirror: https://www.sunyazhou.com/2018/05/ManualControlUIViewControllerLifeCycle/index.html.md
 Published At: 2018-05-08 12:01:27 +0000
 
 # 手动管理UIViewController的生命周期
@@ -36678,7 +36853,8 @@ fromVC 必须已经是 self 的子控制器；toVC 需要先 addChild 再调用 
 全文完
 
 
-URL: https://sunyazhou.com/2018/05/AudioUnit/index.html.md
+URL: https://www.sunyazhou.com/2018/05/AudioUnit.md
+Mirror: https://www.sunyazhou.com/2018/05/AudioUnit/index.html.md
 Published At: 2018-05-07 14:59:41 +0000
 
 # AudioUnit
@@ -37305,7 +37481,8 @@ Audio Unit的相关技术学习点比较多大家灵活掌握运用,不懂没关
 
 
 
-URL: https://sunyazhou.com/2018/04/RunLoop/index.html.md
+URL: https://www.sunyazhou.com/2018/04/RunLoop.md
+Mirror: https://www.sunyazhou.com/2018/04/RunLoop/index.html.md
 Published At: 2018-04-02 14:16:34 +0000
 
 # 深入理解RunLoop
@@ -38027,7 +38204,8 @@ AFURLConnectionOperation 这个类是基于 `NSURLConnection` 构建的，其希
 [参考](https://blog.ibireme.com/2015/05/18/runloop/#base)
 
 
-URL: https://sunyazhou.com/2018/03/Swft4ArraySkills/index.html.md
+URL: https://www.sunyazhou.com/2018/03/Swft4ArraySkills.md
+Mirror: https://www.sunyazhou.com/2018/03/Swft4ArraySkills/index.html.md
 Published At: 2018-03-14 10:17:56 +0000
 
 # Swift 4 中的数组技巧
@@ -38125,7 +38303,8 @@ for (num, element) in array.enumerated() {
 
 
 
-URL: https://sunyazhou.com/2018/03/WhatIsThedSYM/index.html.md
+URL: https://www.sunyazhou.com/2018/03/WhatIsThedSYM.md
+Mirror: https://www.sunyazhou.com/2018/03/WhatIsThedSYM/index.html.md
 Published At: 2018-03-08 11:14:12 +0000
 
 # 什么是符号表?
@@ -38294,7 +38473,8 @@ App 启动时间：过去，现在和未来
 
 
 
-URL: https://sunyazhou.com/2018/03/ComputerGraphicsRenderingProcess/index.html.md
+URL: https://www.sunyazhou.com/2018/03/ComputerGraphicsRenderingProcess.md
+Mirror: https://www.sunyazhou.com/2018/03/ComputerGraphicsRenderingProcess/index.html.md
 Published At: 2018-03-05 12:11:41 +0000
 
 # 计算机图形渲染的流程
@@ -38366,7 +38546,8 @@ HiDPI是苹果的一项绘图技术，结合这种技术，计算机座标系统
 
 
 
-URL: https://sunyazhou.com/2018/03/LearningAVFoundationPlayingVideo/index.html.md
+URL: https://www.sunyazhou.com/2018/03/LearningAVFoundationPlayingVideo.md
+Mirror: https://www.sunyazhou.com/2018/03/LearningAVFoundationPlayingVideo/index.html.md
 Published At: 2018-03-04 16:56:06 +0000
 
 # Learning AV Foundation(五)播放视频
@@ -39051,7 +39232,8 @@ AirPlay相信大部分iOS开发者都耳熟能详,这个东西是用于无线方
 [详细demo请参考](https://github.com/sunyazhou13/Learning-AV-Foundation-Demos)
 
 
-URL: https://sunyazhou.com/2018/02/WordEmbeding/index.html.md
+URL: https://www.sunyazhou.com/2018/02/WordEmbeding.md
+Mirror: https://www.sunyazhou.com/2018/02/WordEmbeding/index.html.md
 Published At: 2018-02-04 12:24:30 +0000
 
 # NLP分词WordEmbeding
@@ -39108,7 +39290,8 @@ model.similarity(u'男人',  u'女人')
 
 
 
-URL: https://sunyazhou.com/2018/01/PythonMySQL/index.html.md
+URL: https://www.sunyazhou.com/2018/01/PythonMySQL.md
+Mirror: https://www.sunyazhou.com/2018/01/PythonMySQL/index.html.md
 Published At: 2018-01-13 22:27:18 +0000
 
 # 使用Python操作MySQL数据库
@@ -39473,7 +39656,8 @@ db.close()
 全文完
 
 
-URL: https://sunyazhou.com/2018/01/AVAudioSessionCategory/index.html.md
+URL: https://www.sunyazhou.com/2018/01/AVAudioSessionCategory.md
+Mirror: https://www.sunyazhou.com/2018/01/AVAudioSessionCategory/index.html.md
 Published At: 2018-01-12 10:32:18 +0000
 
 # AVAudioSession-Category各种姿势
@@ -39859,7 +40043,8 @@ AVAudioSessionSilenceSecondaryAudioHintTypeKey
 
 
 
-URL: https://sunyazhou.com/2017/12/FinalSummary/index.html.md
+URL: https://www.sunyazhou.com/2017/12/FinalSummary.md
+Mirror: https://www.sunyazhou.com/2017/12/FinalSummary/index.html.md
 Published At: 2017-12-31 10:46:20 +0000
 
 # 2017年终总结
@@ -40378,7 +40563,8 @@ __他当年高考的时候,数学打了`149`分(150满分),让涛兄很不能释
 
 
 
-URL: https://sunyazhou.com/2017/12/MarkdownAudio/index.html.md
+URL: https://www.sunyazhou.com/2017/12/MarkdownAudio.md
+Mirror: https://www.sunyazhou.com/2017/12/MarkdownAudio/index.html.md
 Published At: 2017-12-27 12:04:07 +0000
 
 # Markdown中插入音频文件
@@ -40441,7 +40627,8 @@ https://music.163.com/outchain/player?type=2&id=34341360&auto=0&height=66
 
 
 
-URL: https://sunyazhou.com/2017/12/AudioPan/index.html.md
+URL: https://www.sunyazhou.com/2017/12/AudioPan.md
+Mirror: https://www.sunyazhou.com/2017/12/AudioPan/index.html.md
 Published At: 2017-12-19 11:40:13 +0000
 
 # 音频声像Pan值电平左右声道平衡
@@ -40533,7 +40720,8 @@ typedef NS_ENUM(NSUInteger, KSYMCChannelType) {
 
 
 
-URL: https://sunyazhou.com/2017/12/CellAddKVO/index.html.md
+URL: https://www.sunyazhou.com/2017/12/CellAddKVO.md
+Mirror: https://www.sunyazhou.com/2017/12/CellAddKVO/index.html.md
 Published At: 2017-12-15 17:05:10 +0000
 
 # UICollectionViewCell添加KVO
@@ -40940,7 +41128,8 @@ demo我就不写了 可以参考[我们的短视频 demo](https://github.com/ksv
 
 
 
-URL: https://sunyazhou.com/2017/10/ElegantPresentTransition/index.html.md
+URL: https://www.sunyazhou.com/2017/10/ElegantPresentTransition.md
+Mirror: https://www.sunyazhou.com/2017/10/ElegantPresentTransition/index.html.md
 Published At: 2017-10-31 11:32:17 +0000
 
 # 论一个优雅的模态转场的自我修养
@@ -41027,7 +41216,8 @@ Published At: 2017-10-31 11:32:17 +0000
 
 
 
-URL: https://sunyazhou.com/2017/10/MarkdownSkill/index.html.md
+URL: https://www.sunyazhou.com/2017/10/MarkdownSkill.md
+Mirror: https://www.sunyazhou.com/2017/10/MarkdownSkill/index.html.md
 Published At: 2017-10-25 16:10:35 +0000
 
 # markdown嵌入折叠标签
@@ -41115,7 +41305,8 @@ markdown如何改字体颜色, 如下代码:
 全文完 
 
 
-URL: https://sunyazhou.com/2017/10/UIViewRendering/index.html.md
+URL: https://www.sunyazhou.com/2017/10/UIViewRendering.md
+Mirror: https://www.sunyazhou.com/2017/10/UIViewRendering/index.html.md
 Published At: 2017-10-16 13:00:30 +0000
 
 # 理解UIView的绘制
@@ -41349,7 +41540,8 @@ label.layer.rasterizationScale = label.layer.contentsScale;
 
 
 
-URL: https://sunyazhou.com/2017/09/DeviceCheck/index.html.md
+URL: https://www.sunyazhou.com/2017/09/DeviceCheck.md
+Mirror: https://www.sunyazhou.com/2017/09/DeviceCheck/index.html.md
 Published At: 2017-09-30 09:45:25 +0000
 
 # DeviceCheck
@@ -41537,7 +41729,8 @@ json 的示例:
 
 
 
-URL: https://sunyazhou.com/2017/09/MarkdownTable/index.html.md
+URL: https://www.sunyazhou.com/2017/09/MarkdownTable.md
+Mirror: https://www.sunyazhou.com/2017/09/MarkdownTable/index.html.md
 Published At: 2017-09-29 18:01:08 +0000
 
 # Markdown插入表格语法
@@ -41612,7 +41805,8 @@ demo:
 
 
 
-URL: https://sunyazhou.com/2017/09/CharlesCaptureHttps/index.html.md
+URL: https://www.sunyazhou.com/2017/09/CharlesCaptureHttps.md
+Mirror: https://www.sunyazhou.com/2017/09/CharlesCaptureHttps/index.html.md
 Published At: 2017-09-01 23:17:09 +0000
 
 # 如何使用Charles截获https请求
@@ -41710,7 +41904,8 @@ __必须到 通用->关于本机->证书信任设置__去信任 证书
 全文完
 
 
-URL: https://sunyazhou.com/2017/08/ARKit/index.html.md
+URL: https://www.sunyazhou.com/2017/08/ARKit.md
+Mirror: https://www.sunyazhou.com/2017/08/ARKit/index.html.md
 Published At: 2017-08-30 14:50:43 +0000
 
 # ARKit
@@ -42643,7 +42838,8 @@ typedef NS_ENUM(NSInteger, ARTrackingStateReason) {
 
 
 
-URL: https://sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/index.html.md
+URL: https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior.md
+Mirror: https://www.sunyazhou.com/2017/08/LearningAVFoundationAVAssetSenior/index.html.md
 Published At: 2017-08-07 20:36:46 +0000
 
 # Learning AV Foundation(四)AVAsset元数据(高级篇)
@@ -43078,7 +43274,8 @@ typedef void(^CompletionHandler)(BOOL complete);
 
 
 
-URL: https://sunyazhou.com/2017/07/ios11NewSkills/index.html.md
+URL: https://www.sunyazhou.com/2017/07/ios11NewSkills.md
+Mirror: https://www.sunyazhou.com/2017/07/ios11NewSkills/index.html.md
 Published At: 2017-07-13 10:55:15 +0000
 
 # iOS 11 新技能
@@ -43209,7 +43406,8 @@ class API_AVAILABLE(ios(11.0), macos(10.13)) XXXClassA;
 
 
 
-URL: https://sunyazhou.com/2017/07/Arc4RandomColor/index.html.md
+URL: https://www.sunyazhou.com/2017/07/Arc4RandomColor.md
+Mirror: https://www.sunyazhou.com/2017/07/Arc4RandomColor/index.html.md
 Published At: 2017-07-04 17:45:28 +0000
 
 # iOS生成随机UIColor颜色代码
@@ -43240,7 +43438,8 @@ Value指的是色彩的明度，作用是控制色彩的明暗变化。它同样
 [色彩引用](https://zhuanlan.zhihu.com/p/31202175)
 
 
-URL: https://sunyazhou.com/2017/06/GetSandboxPathios/index.html.md
+URL: https://www.sunyazhou.com/2017/06/GetSandboxPathios.md
+Mirror: https://www.sunyazhou.com/2017/06/GetSandboxPathios/index.html.md
 Published At: 2017-06-26 16:44:22 +0000
 
 # iOS获取各种文件目录的路径
@@ -43261,7 +43460,8 @@ NSString *tmpDir =  NSTemporaryDirectory();
 
 
 
-URL: https://sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/index.html.md
+URL: https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp.md
+Mirror: https://www.sunyazhou.com/2017/06/RsaUniversalCrossPlatformiOSAndroidPhp/index.html.md
 Published At: 2017-06-26 10:42:47 +0000
 
 # iOS Android Php RSA加密解密通配方案
@@ -43959,7 +44159,8 @@ base64的代码我已经把代码实现写到`CRSA.m`了 如果像剥离很简�
 
 
 
-URL: https://sunyazhou.com/2017/06/EnableStaticAnalyer/index.html.md
+URL: https://www.sunyazhou.com/2017/06/EnableStaticAnalyer.md
+Mirror: https://www.sunyazhou.com/2017/06/EnableStaticAnalyer/index.html.md
 Published At: 2017-06-20 15:07:33 +0000
 
 # Xcode开启静态分析器
@@ -43995,7 +44196,8 @@ Clang 编译器（也就是 XCode 使用的编译器）有一个 静态分析器
 
 
 
-URL: https://sunyazhou.com/2017/06/HowToDeprecatedAMothodInObjC/index.html.md
+URL: https://www.sunyazhou.com/2017/06/HowToDeprecatedAMothodInObjC.md
+Mirror: https://www.sunyazhou.com/2017/06/HowToDeprecatedAMothodInObjC/index.html.md
 Published At: 2017-06-16 16:40:26 +0000
 
 # 如何在Objective-C中废弃一个方法
@@ -44044,7 +44246,8 @@ __attribute__((deprecated("此方法已弃用,请使用xxxxx:方法")));
 
 
 
-URL: https://sunyazhou.com/2017/06/XcodeDebugViaWireless/index.html.md
+URL: https://www.sunyazhou.com/2017/06/XcodeDebugViaWireless.md
+Mirror: https://www.sunyazhou.com/2017/06/XcodeDebugViaWireless/index.html.md
 Published At: 2017-06-16 11:07:46 +0000
 
 # Xcode9新功能 无线真机调试
@@ -44083,7 +44286,8 @@ Published At: 2017-06-16 11:07:46 +0000
 
 
 
-URL: https://sunyazhou.com/2017/06/LearningAVFoundationAVAssetBasic/index.html.md
+URL: https://www.sunyazhou.com/2017/06/LearningAVFoundationAVAssetBasic.md
+Mirror: https://www.sunyazhou.com/2017/06/LearningAVFoundationAVAssetBasic/index.html.md
 Published At: 2017-06-16 10:11:19 +0000
 
 # Learning AV Foundation(四)AVAsset元数据(基础篇)
@@ -44527,7 +44731,8 @@ AVMetadataItem 可以理解成它是一个 专用于元数据的 字典(key: val
 
 
 
-URL: https://sunyazhou.com/2017/05/OpenGLglslLanguage/index.html.md
+URL: https://www.sunyazhou.com/2017/05/OpenGLglslLanguage.md
+Mirror: https://www.sunyazhou.com/2017/05/OpenGLglslLanguage/index.html.md
 Published At: 2017-05-30 20:32:33 +0000
 
 # OpenGL编程语言-glsl基础
@@ -44877,7 +45082,8 @@ v4.xxyy;    // 重复分量
 
 
 
-URL: https://sunyazhou.com/2017/05/NSTableRowViewMouseTrackColor/index.html.md
+URL: https://www.sunyazhou.com/2017/05/NSTableRowViewMouseTrackColor.md
+Mirror: https://www.sunyazhou.com/2017/05/NSTableRowViewMouseTrackColor/index.html.md
 Published At: 2017-05-10 15:24:20 +0000
 
 # 自定义NSTableRowView实现鼠标跟踪动态显示选中/非选中颜色
@@ -44950,7 +45156,8 @@ Published At: 2017-05-10 15:24:20 +0000
 
 
 
-URL: https://sunyazhou.com/2017/05/HowToCreateSymbolicLinkOnMacosInCode/index.html.md
+URL: https://www.sunyazhou.com/2017/05/HowToCreateSymbolicLinkOnMacosInCode.md
+Mirror: https://www.sunyazhou.com/2017/05/HowToCreateSymbolicLinkOnMacosInCode/index.html.md
 Published At: 2017-05-09 17:41:17 +0000
 
 # 如何在macOS/MAC OS X上创建替身文件
@@ -45018,7 +45225,8 @@ Published At: 2017-05-09 17:41:17 +0000
 
 
 
-URL: https://sunyazhou.com/2017/04/CmputerScienceAndTechnologyClassic/index.html.md
+URL: https://www.sunyazhou.com/2017/04/CmputerScienceAndTechnologyClassic.md
+Mirror: https://www.sunyazhou.com/2017/04/CmputerScienceAndTechnologyClassic/index.html.md
 Published At: 2017-04-29 09:15:21 +0000
 
 # 向往计算机科学相关专业的必学经典
@@ -45188,7 +45396,8 @@ Published At: 2017-04-29 09:15:21 +0000
 
 
 
-URL: https://sunyazhou.com/2017/04/UniqueFilenameInSystem/index.html.md
+URL: https://www.sunyazhou.com/2017/04/UniqueFilenameInSystem.md
+Mirror: https://www.sunyazhou.com/2017/04/UniqueFilenameInSystem/index.html.md
 Published At: 2017-04-20 16:35:42 +0000
 
 # 如何在iOS/macOS系统中创建文件时创建唯一的文件名
@@ -45243,7 +45452,8 @@ OK 希望大家有收获
 
 
 
-URL: https://sunyazhou.com/2017/04/XcodeShortcuts/index.html.md
+URL: https://www.sunyazhou.com/2017/04/XcodeShortcuts.md
+Mirror: https://www.sunyazhou.com/2017/04/XcodeShortcuts/index.html.md
 Published At: 2017-04-06 10:36:30 +0000
 
 # Xcode快捷键
@@ -45342,7 +45552,8 @@ Published At: 2017-04-06 10:36:30 +0000
 
 
 
-URL: https://sunyazhou.com/2017/03/AccessPrivacySensitive/index.html.md
+URL: https://www.sunyazhou.com/2017/03/AccessPrivacySensitive.md
+Mirror: https://www.sunyazhou.com/2017/03/AccessPrivacySensitive/index.html.md
 Published At: 2017-03-29 10:54:40 +0000
 
 # 隐私及敏感数据访问权限(Access privacy-sensitive data)
@@ -45462,7 +45673,8 @@ Published At: 2017-03-29 10:54:40 +0000
 > 注意:_上线前务必换成友好的提醒文案._
 
 
-URL: https://sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/index.html.md
+URL: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder.md
+Mirror: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioRecorder/index.html.md
 Published At: 2017-03-28 09:40:18 +0000
 
 # Learning AV Foundation(三)AVAudioRecorder
@@ -46625,7 +46837,8 @@ __最终[Demo](https://github.com/sunyazhou13/AVAudioRecorderDemo)__
 欢迎大家指正错误 全文完
 
 
-URL: https://sunyazhou.com/2017/03/CheckNSWindowisFullScreen/index.html.md
+URL: https://www.sunyazhou.com/2017/03/CheckNSWindowisFullScreen.md
+Mirror: https://www.sunyazhou.com/2017/03/CheckNSWindowisFullScreen/index.html.md
 Published At: 2017-03-23 14:03:32 +0000
 
 # 判断NSWindow是否全屏
@@ -46650,7 +46863,8 @@ Published At: 2017-03-23 14:03:32 +0000
 refs:[How to know if a NSWindow is fullscreen in Mac OS X Lion?](http://stackoverflow.com/questions/6815917/how-to-know-if-a-nswindow-is-fullscreen-in-mac-os-x-lion)
 
 
-URL: https://sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/index.html.md
+URL: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer.md
+Mirror: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVAudioPlayer/index.html.md
 Published At: 2017-03-17 10:26:06 +0000
 
 # Learning AV Foundation(二)AVAudioPlayer
@@ -47172,7 +47386,8 @@ __文章的最终[demo](https://github.com/sunyazhou13/AVAudioPlayerDemo)__
 
 
 
-URL: https://sunyazhou.com/2017/03/LearningAVFoundationAVSpeechSynthesizer/index.html.md
+URL: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVSpeechSynthesizer.md
+Mirror: https://www.sunyazhou.com/2017/03/LearningAVFoundationAVSpeechSynthesizer/index.html.md
 Published At: 2017-03-11 12:38:53 +0000
 
 # Learning AV Foundation(一)汉字语音朗读
@@ -47435,7 +47650,8 @@ __最终的demo 支持iOS和macOS:[Learning-AV-Foundation(一)汉字语音朗读
 
 
 
-URL: https://sunyazhou.com/2017/02/macOSsimulateKeyboradNSEvent/index.html.md
+URL: https://www.sunyazhou.com/2017/02/macOSsimulateKeyboradNSEvent.md
+Mirror: https://www.sunyazhou.com/2017/02/macOSsimulateKeyboradNSEvent/index.html.md
 Published At: 2017-02-22 16:17:00 +0000
 
 # macOS上模拟发送键盘事件
@@ -47640,7 +47856,8 @@ enum {
 
 
 
-URL: https://sunyazhou.com/2017/02/ClearNSUserDefaultCcontent/index.html.md
+URL: https://www.sunyazhou.com/2017/02/ClearNSUserDefaultCcontent.md
+Mirror: https://www.sunyazhou.com/2017/02/ClearNSUserDefaultCcontent/index.html.md
 Published At: 2017-02-20 19:05:01 +0000
 
 # 使用终端删除NSUserDefault的内容
@@ -47680,7 +47897,8 @@ macOS应用沙盒权限(如下图)  `~/Library/Containers/<my app>/Data/Library/
 全文完
 
 
-URL: https://sunyazhou.com/2017/02/ScanBoundsTracking/index.html.md
+URL: https://www.sunyazhou.com/2017/02/ScanBoundsTracking.md
+Mirror: https://www.sunyazhou.com/2017/02/ScanBoundsTracking/index.html.md
 Published At: 2017-02-18 19:08:56 +0000
 
 # iOS如何让二维码/条形码扫描框跟随二维码移动
@@ -47740,7 +47958,8 @@ func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects m
 全文完
 
 
-URL: https://sunyazhou.com/2017/02/iOSInternationalizationLanguageSkills/index.html.md
+URL: https://www.sunyazhou.com/2017/02/iOSInternationalizationLanguageSkills.md
+Mirror: https://www.sunyazhou.com/2017/02/iOSInternationalizationLanguageSkills/index.html.md
 Published At: 2017-02-17 10:01:19 +0000
 
 # iOS语言本地化/国际化一些技巧
@@ -47808,7 +48027,8 @@ Published At: 2017-02-17 10:01:19 +0000
 全文完
 
 
-URL: https://sunyazhou.com/2017/02/BuildHexoBlogTutorial/index.html.md
+URL: https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial.md
+Mirror: https://www.sunyazhou.com/2017/02/BuildHexoBlogTutorial/index.html.md
 Published At: 2017-02-10 10:24:25 +0000
 
 # 搭建hexo博客教程
@@ -47841,7 +48061,8 @@ github pages  配置 大家自行google吧 真的很简单
 支持https
 
 
-URL: https://sunyazhou.com/2017/02/DFSAlgorithm/index.html.md
+URL: https://www.sunyazhou.com/2017/02/DFSAlgorithm.md
+Mirror: https://www.sunyazhou.com/2017/02/DFSAlgorithm/index.html.md
 Published At: 2017-02-10 10:07:55 +0000
 
 # DFS算法扫描上传文件/文件夹
@@ -48017,7 +48238,8 @@ DFS需求背景
 也可学一下:[Swift Depth First Search](https://www.raywenderlich.com/157949/swift-algorithm-club-depth-first-search)
 
 
-URL: https://sunyazhou.com/2017/02/HowToUseGitManageCode/index.html.md
+URL: https://www.sunyazhou.com/2017/02/HowToUseGitManageCode.md
+Mirror: https://www.sunyazhou.com/2017/02/HowToUseGitManageCode/index.html.md
 Published At: 2017-02-09 19:35:45 +0000
 
 # 如何使用git管理代码
@@ -48332,7 +48554,8 @@ git config --global credential.helper manager
 
 
 
-URL: https://sunyazhou.com/2017/02/HowtToDisableWebviewNSScrollViewScroll/index.html.md
+URL: https://www.sunyazhou.com/2017/02/HowtToDisableWebviewNSScrollViewScroll.md
+Mirror: https://www.sunyazhou.com/2017/02/HowtToDisableWebviewNSScrollViewScroll/index.html.md
 Published At: 2017-02-09 13:37:28 +0000
 
 # Webview的NSScrollView禁用滑动功能
@@ -48354,7 +48577,8 @@ Published At: 2017-02-09 13:37:28 +0000
 
 
 
-URL: https://sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate/index.html.md
+URL: https://www.sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate.md
+Mirror: https://www.sunyazhou.com/2017/01/iOSDevelopmentKnowledgePointAccumulate/index.html.md
 Published At: 2017-01-18 13:44:57 +0000
 
 # iOS开发知识点积累
@@ -48546,7 +48770,8 @@ __[HYFileManager](https://github.com/sunyazhou13/HYFileManager)__
 
 
 
-URL: https://sunyazhou.com/2017/01/LearningmacOSdevelopmentShortcut/index.html.md
+URL: https://www.sunyazhou.com/2017/01/LearningmacOSdevelopmentShortcut.md
+Mirror: https://www.sunyazhou.com/2017/01/LearningmacOSdevelopmentShortcut/index.html.md
 Published At: 2017-01-13 11:38:30 +0000
 
 # 学习macOS开发的路线
@@ -48578,7 +48803,8 @@ __[巧神](http://blog.devtang.com/)__
 
 
 
-URL: https://sunyazhou.com/2017/01/UIViewControllerCodeStandard/index.html.md
+URL: https://www.sunyazhou.com/2017/01/UIViewControllerCodeStandard.md
+Mirror: https://www.sunyazhou.com/2017/01/UIViewControllerCodeStandard/index.html.md
 Published At: 2017-01-13 11:18:07 +0000
 
 # UIViewController代码规范
@@ -48808,5 +49034,6 @@ Published At: 2017-01-13 11:18:07 +0000
 ```
 
 这段代码展示了 `UIViewController` 生命周期方法的基本实现。在实际应用中，你需要根据具体需求在这些方法中添加相应的逻辑。例如，在 `viewDidLoad` 中初始化视图，在 `viewWillAppear:` 中更新 UI，在 `viewWillDisappear:` 中保存状态等。
+
 
 

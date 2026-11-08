@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# 任何一步失败立即中止，避免「构建失败仍继续 rsync 并 push」把残缺产物发布上线。
+set -e
+
 # 让 bundle exec jekyll 找得到 RVM gemset。
 # 非交互 / 新开的终端里 RVM 常常没初始化，GEM_PATH 只剩 ruby 自带目录，
 # 于是 tools/build.sh 里的 `bundle exec jekyll b` 会报 Bundler::GemNotFound
