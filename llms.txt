@@ -8,6 +8,7 @@
 
 ## 文章
 
+- [让浮动窗口拖不出屏幕：macOS 与 iOS 的边界夹取](https://www.sunyazhou.com/2026/11/KeepFloatingViewInsideScreen.md): 从被拖到屏幕外的悬浮工具条说起：用 visibleFrame 做每帧四边夹取，用绝对增量替代逐帧累加，再把这套办法搬到 iOS 的父视图 bounds 与安全区。两版示意图 + 可直接抄的代码。 #macOS #AppKit #SwiftUI #UIKit #拖拽交互 #窗口管理 
 - [SwiftUI 3D 悬停卡片m34动效实现](https://www.sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect.md): macOS 剪贴板工具里的卡片悬停倾斜效果。从 m34 与齐次坐标讲起，实测标定 SwiftUI perspective 与 m34 的换算关系（0.6 才等于 tvOS 的 1/500），复原 Ap… #SwiftUI #macOS #3D 变换 #m34 #CATransform3D #tvOS #交互设计 
 - [Rufus 制作 Windows 启动 U 盘教程](https://www.sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial.md): 整理 Rufus 这款免费开源装机工具的用法，手把手教你制作 Windows 11/10 启动 U 盘，详解分区方案、文件系统等关键选项，并标注官方与参考来源，方便后续装机。 #Rufus #Windows #启动U盘 #装机 #工具 
 - [Eigen 用法笔记：矩阵运算与几何变换](https://www.sunyazhou.com/2026/10/EigenMatrixAndGeometry.md): macOS 上装好 Eigen 3.4.1 并配好 zsh 环境变量，然后把《视觉 SLAM 十四讲》第三讲完整跑一遍：矩阵运算、解线性方程组、特征值，以及旋转矩阵、旋转向量、欧拉角、四元数和 Iso… #Eigen #SLAM #C++ #线性代数 #几何变换 
