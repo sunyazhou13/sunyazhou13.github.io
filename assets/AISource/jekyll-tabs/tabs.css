@@ -1,133 +1,144 @@
 /*
- * Jekyll Tabs - Custom styles
- * Kodeco-inspired design, fully adaptive to sunyazhou.com dark/light theme
+ * Jekyll Tabs — sunyazhou.com
+ *
+ * 设计：把「Tab 栏 + 代码区」做成 ONE 代码窗口。
+ *   标题栏 = Tab 标签 + 唯一一个复制按钮（无 macOS 圆点）
+ *   内容区 = 纯代码（隐藏每个面板里重复的 Chirpy .code-header）
+ *
+ * 配色全部复用 Chirpy 主题变量，随 mode=light / mode=dark 自动切换，
+ * 不再硬编码深/浅色，避免与站内原生代码块割裂。
  */
 
-/* ══════════════════════════════════════
-   CSS 变量定义 — 深色模式（默认）
-   ══════════════════════════════════════ */
-:root {
-  --tab-header-bg:             #2b2b2b;
-  --tab-header-border:         rgba(255,255,255,0.08);
-  --tab-label-color:           rgba(255,255,255,0.45);
-  --tab-label-hover:           rgba(255,255,255,0.85);
-  --tab-label-active:          #ffffff;
-  --tab-active-line:           #f05138;
-  --tab-body-bg:               #1c1c1e;
-  --tab-gutter-bg:             rgba(255,255,255,0.04);
-  --tab-gutter-border:         rgba(255,255,255,0.08);
-  --tab-lineno-color:          rgba(255,255,255,0.25);
-  --tab-copy-btn-bg:           rgba(255,255,255,0.08);
-  --tab-copy-btn-border:       rgba(255,255,255,0.18);
-  --tab-copy-btn-color:        rgba(255,255,255,0.5);
-  --tab-copy-btn-hover-bg:     rgba(255,255,255,0.16);
-  --tab-copy-btn-hover-border: rgba(255,255,255,0.35);
-  --tab-copy-btn-hover-color:  #ffffff;
+ul.tab,
+ul.tab-content {
+  --jt-bg: var(--highlight-bg-color, #f7f7f7);
+  --jt-border: var(--highlight-lineno-border-color, #e9ecef);
+  --jt-radius: 10px;
 }
 
 /* ══════════════════════════════════════
-   浅色模式覆盖
-   匹配博客的 html[mode=light] 和系统浅色
-   ══════════════════════════════════════ */
-html[mode=light] {
-  --tab-header-bg:             #3a3a3c;
-  --tab-header-border:         rgba(255,255,255,0.1);
-  --tab-label-color:           rgba(255,255,255,0.5);
-  --tab-label-hover:           rgba(255,255,255,0.9);
-  --tab-label-active:          #ffffff;
-  --tab-active-line:           #f05138;
-  --tab-body-bg:               #f0f0f0;
-  --tab-gutter-bg:             rgba(0,0,0,0.04);
-  --tab-gutter-border:         rgba(0,0,0,0.08);
-  --tab-lineno-color:          #999999;
-  --tab-copy-btn-bg:           rgba(0,0,0,0.06);
-  --tab-copy-btn-border:       rgba(0,0,0,0.15);
-  --tab-copy-btn-color:        #555555;
-  --tab-copy-btn-hover-bg:     rgba(0,0,0,0.12);
-  --tab-copy-btn-hover-border: rgba(0,0,0,0.3);
-  --tab-copy-btn-hover-color:  #111111;
-}
-
-/* 系统浅色 + 未手动设置模式时 */
-@media (prefers-color-scheme: light) {
-  html:not([mode]) {
-    --tab-header-bg:             #3a3a3c;
-    --tab-header-border:         rgba(255,255,255,0.1);
-    --tab-label-color:           rgba(255,255,255,0.5);
-    --tab-label-hover:           rgba(255,255,255,0.9);
-    --tab-label-active:          #ffffff;
-    --tab-active-line:           #f05138;
-    --tab-body-bg:               #f0f0f0;
-    --tab-gutter-bg:             rgba(0,0,0,0.04);
-    --tab-gutter-border:         rgba(0,0,0,0.08);
-    --tab-lineno-color:          #999999;
-    --tab-copy-btn-bg:           rgba(0,0,0,0.06);
-    --tab-copy-btn-border:       rgba(0,0,0,0.15);
-    --tab-copy-btn-color:        #555555;
-    --tab-copy-btn-hover-bg:     rgba(0,0,0,0.12);
-    --tab-copy-btn-hover-border: rgba(0,0,0,0.3);
-    --tab-copy-btn-hover-color:  #111111;
-  }
-}
-
-/* ══════════════════════════════════════
-   Tab 导航栏
+   标题栏
    ══════════════════════════════════════ */
 ul.tab {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   list-style: none !important;
   margin: 1.5rem 0 0 0 !important;
-  padding: 0 0.5rem !important;
-  background: var(--tab-header-bg);
-  border-radius: 10px 10px 0 0;
-  /* 用 border-bottom 做分隔线，配合 li a 的 margin-bottom:-2px 实现压线效果 */
-  border-bottom: 2px solid var(--tab-header-border);
-  gap: 0;
+  padding: 0 0.75rem !important;
+  background: var(--jt-bg);
+  border: 1px solid var(--jt-border);
+  border-radius: var(--jt-radius) var(--jt-radius) 0 0;
+  /* 胶囊之间留缝；min-height 负责把 30px 胶囊和 40px 复制按钮统一居中到 49px */
+  gap: 0.15rem;
+  min-height: 3.0625rem;
 }
 
-ul.tab li {
-  margin: 0;
+/* 按用户要求去掉 macOS 三圆点，标题栏只留 Tab 标签 + 复制按钮 */
+
+ul.tab > li {
+  display: flex;
+  /* 激活态 li 可能比普通 li 高几像素；让 <a> 在 li 内居中，文字中心才一致 */
+  align-items: center;
+  /* 必须 !important：Bootstrap/Chirpy 的 li + li 会给后续标签加 margin-top:4.8px，
+     在横向 flex 标题栏里会把第 2 个及之后的标签整体推低 2.4px */
+  margin: 0 !important;
   list-style: none !important;
 }
 
-ul.tab li a {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  font-size: 0.82rem;
-  font-weight: 600;
+/* !important 用于挡住全站 %link-color / %link-underline 对 a 的覆盖 */
+ul.tab > li > a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* 胶囊选中态：自身 30px 高，由标题栏 flex 居中，不再靠撑满标题栏来对齐 */
+  height: 1.875rem;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.3;
   font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
-  color: var(--tab-label-color);
-  text-decoration: none !important;
-  border-bottom: 2px solid transparent;
-  /* 关键：负 margin 让 border-bottom 压住 ul.tab 的 border-bottom，实现无缝衔接 */
-  margin-bottom: -2px;
-  background: transparent;
-  cursor: pointer;
   letter-spacing: 0.3px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-ul.tab li a:hover {
-  color: var(--tab-label-hover);
+  white-space: nowrap;
+  color: var(--text-color, #333) !important;
+  /* 0.8 保证 0.82rem 小字在明暗两种底色下都 >= 4.5:1 */
+  opacity: 0.8;
   text-decoration: none !important;
-  border-bottom-color: rgba(255,255,255,0.25);
+  background: transparent;
+  border: 0 !important;
+  cursor: pointer;
+  transition: color 0.15s ease, opacity 0.15s ease, background-color 0.15s ease;
 }
 
-ul.tab li.active a {
-  color: var(--tab-label-active);
-  border-bottom-color: var(--tab-active-line);
+ul.tab > li > a:hover {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.1);
+  text-decoration: none !important;
+}
+
+/* 胶囊选中态：淡品牌色底 + 主文本色字。
+   不用品牌色字是因为深色主题下 #cf6c6c 落在淡红底上只有约 3.6:1，不达标；
+   主文本色在明暗两套底色下都 >= 5:1，选中信号交给胶囊底色。 */
+ul.tab > li.active > a,
+ul.tab > li.active > a:hover {
+  color: var(--text-color, #333) !important;
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.16);
+  background: color-mix(in srgb, var(--link-color, #8e2a2a) 16%, transparent);
+}
+
+ul.tab > li > a:focus-visible,
+.tab-copy-btn:focus-visible {
+  outline: 2px solid var(--link-color, #8e2a2a);
+  outline-offset: -2px;
+  border-radius: 999px;
+}
+
+/* 标题栏右侧：全组唯一的复制按钮 */
+ul.tab > li.tab-copy {
+  margin-left: auto !important;
+  align-items: center;
+  padding-right: 0.35rem;
+}
+
+.tab-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted-color, gray);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.tab-copy-btn i { font-size: 0.9rem; }
+
+.tab-copy-btn:hover {
+  color: var(--text-color, #333);
+  background: rgba(128, 128, 128, 0.18);
+}
+
+.tab-copy-btn[data-copied] {
+  color: var(--clipboard-checked-color, #43c743);
 }
 
 /* ══════════════════════════════════════
-   Tab 内容区
+   内容区
    ══════════════════════════════════════ */
 ul.tab-content {
   list-style: none !important;
   margin: 0 0 1.5rem 0 !important;
   padding: 0 !important;
-  background: var(--tab-body-bg);
-  border-radius: 0 0 10px 10px;
+  background: var(--jt-bg);
+  border: 1px solid var(--jt-border);
+  border-top: 0;
+  border-radius: 0 0 var(--jt-radius) var(--jt-radius);
   overflow: hidden;
 }
 
@@ -138,74 +149,65 @@ ul.tab-content > li {
   list-style: none !important;
 }
 
-ul.tab-content > li.active {
-  display: block;
-}
+ul.tab-content > li.active { display: block; }
 
-/* 内容区内代码块：去掉多余圆角/背景/边距，与容器融合 */
+/* 内层代码块：去掉 Chirpy 自带的圆角 / 描边 / 底色 / 外边距，融入窗口 */
+ul.tab-content > li > div[class^='language-'],
 ul.tab-content > li > div.highlighter-rouge,
 ul.tab-content > li > div.highlight {
-  margin-bottom: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-ul.tab-content > li > div.highlighter-rouge pre,
-ul.tab-content > li > div.highlight pre {
-  border-radius: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   background: transparent !important;
-  padding: 1rem 1.2rem !important;
 }
 
-/* rouge 行号列修正 */
+/* 每个面板里 Chirpy 自动加的 code-header 是冗余的：语言已由 Tab 标签表达 */
+ul.tab-content .code-header { display: none !important; }
+
+ul.tab-content > li .highlight {
+  padding: 0.55rem 0 0.65rem;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+ul.tab-content > li pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
 ul.tab-content > li .rouge-table {
   margin: 0;
   background: transparent;
 }
 
 ul.tab-content > li .rouge-gutter {
-  background: var(--tab-gutter-bg);
-  border-right: 1px solid var(--tab-gutter-border);
+  background: transparent;
+  border-right: 1px solid var(--jt-border);
 }
 
 ul.tab-content > li .lineno {
-  color: var(--tab-lineno-color);
-  border-right: none;
-  padding: 0 0.8rem;
+  color: var(--highlight-lineno-color, #c2c6cc) !important;
+  border-right: none !important;
+  padding: 0 0.85rem !important;
 }
 
-/* ══════════════════════════════════════
-   复制按钮
-   ══════════════════════════════════════ */
-.jekyll-tabs-copy-btn {
-  background: var(--tab-copy-btn-bg);
-  border: 1px solid var(--tab-copy-btn-border);
-  border-radius: 5px;
-  color: var(--tab-copy-btn-color);
-  cursor: pointer;
-  font-size: 0.72rem;
-  padding: 3px 8px;
-  line-height: 1.5;
-  transition: color 0.15s, background 0.15s, border-color 0.15s;
-  z-index: 10;
-}
+/* 官方 jekyll-tabs 的复制按钮已关闭；此规则兜底，防止旧缓存的 JS 把按钮塞回来 */
+ul.tab-content .jekyll-tabs-copy-btn { display: none !important; }
 
-.jekyll-tabs-copy-btn:hover {
-  color: var(--tab-copy-btn-hover-color);
-  background: var(--tab-copy-btn-hover-bg);
-  border-color: var(--tab-copy-btn-hover-border);
-}
-
-/* ══════════════════════════════════════
-   Toast 提示
-   ══════════════════════════════════════ */
+/* toast 保留（若将来重新开启官方复制按钮） */
 #jekyll-tabs-copy-to-clipboard-message {
   position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  background: #f05138;
+  background: var(--link-color, #8e2a2a);
   color: #fff;
   padding: 0.45rem 1.2rem;
   border-radius: 20px;
@@ -218,6 +220,4 @@ ul.tab-content > li .lineno {
   white-space: nowrap;
 }
 
-#jekyll-tabs-copy-to-clipboard-message.show {
-  opacity: 1;
-}
+#jekyll-tabs-copy-to-clipboard-message.show { opacity: 1; }
