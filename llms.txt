@@ -8,6 +8,7 @@
 
 ## 文章
 
+- [UIVisualEffectView 教程：从入门开始](https://www.sunyazhou.com/2026/11/UIVisualEffectViewTutorialGettingStarted.md): 从像素层面讲清模糊（Gaussian blur）的原理与设计取舍，再用一个童话阅读 App 一步步给界面加上 UIBlurEffect、UIVibrancyEffect 鲜活效果，并处理「减弱透明度」… #iOS #UIKit #UIVisualEffectView #UIBlurEffect #UIVibrancyEffect #模糊 #无障碍 
 - [让浮动窗口拖不出屏幕：macOS 与 iOS 的边界夹取](https://www.sunyazhou.com/2026/11/KeepFloatingViewInsideScreen.md): 从被拖到屏幕外的悬浮工具条说起：用 visibleFrame 做每帧四边夹取，用绝对增量替代逐帧累加，再把这套办法搬到 iOS 的父视图 bounds 与安全区。两版示意图 + 可直接抄的代码。 #macOS #AppKit #SwiftUI #UIKit #拖拽交互 #窗口管理 
 - [SwiftUI 3D 悬停卡片m34动效实现](https://www.sunyazhou.com/2026/10/M34PerspectiveAndAppleTvFocusEffect.md): macOS 剪贴板工具里的卡片悬停倾斜效果。从 m34 与齐次坐标讲起，实测标定 SwiftUI perspective 与 m34 的换算关系（0.6 才等于 tvOS 的 1/500），复原 Ap… #SwiftUI #macOS #3D 变换 #m34 #CATransform3D #tvOS #交互设计 
 - [Rufus 制作 Windows 启动 U 盘教程](https://www.sunyazhou.com/2026/10/RufusWindowsBootableUsbTutorial.md): 整理 Rufus 这款免费开源装机工具的用法，手把手教你制作 Windows 11/10 启动 U 盘，详解分区方案、文件系统等关键选项，并标注官方与参考来源，方便后续装机。 #Rufus #Windows #启动U盘 #装机 #工具 
